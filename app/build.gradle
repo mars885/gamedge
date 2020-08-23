@@ -63,13 +63,11 @@ dependencies {
     implementation deps.constraintLayout
     implementation deps.recyclerView
     implementation deps.viewPager2
+    implementation deps.lifecycleCommonJava8
     implementation deps.coreKtx
     implementation deps.commonsCore
     implementation deps.commonsKtx
     implementation deps.commonsWidgets
-
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 
     testImplementation deps.jUnit
     androidTestImplementation deps.jUnitExt
