@@ -36,9 +36,12 @@ ext {
         navUiKtxVersion: "2.3.0",
         constraintLayoutVersion: "1.1.3",
         recyclerViewVersion: "1.1.0",
+        viewPager2Version: "1.0.0",
+        lifecycleRuntimeVersion: "2.2.0",
         coreKtxVersion: "1.3.1",
         commonsCoreVersion: "1.0.0",
         commonsKtxVersion: "1.0.0",
+        commonsWidgets: "1.0.0",
         jUnitVersion: "4.13",
         jUnitExtVersion: "1.1.1"
     ]
@@ -53,9 +56,12 @@ ext {
         navUiKtx: "androidx.navigation:navigation-ui-ktx:${depVersions.navUiKtxVersion}",
         constraintLayout: "androidx.constraintlayout:constraintlayout:${depVersions.constraintLayoutVersion}",
         recyclerView: "androidx.recyclerview:recyclerview:${depVersions.recyclerViewVersion}",
+        viewPager2: "androidx.viewpager2:viewpager2:${depVersions.viewPager2Version}",
+        lifecycleRuntime: "androidx.lifecycle:lifecycle-runtime:${depVersions.lifecycleRuntimeVersion}",
         coreKtx: "androidx.core:core-ktx:${depVersions.coreKtxVersion}",
         commonsCore: "com.paulrybitskyi.commons:commons-core:${depVersions.commonsCoreVersion}",
         commonsKtx: "com.paulrybitskyi.commons:commons-ktx:${depVersions.commonsKtxVersion}",
+        commonsWidgets: "com.paulrybitskyi.commons:commons-widgets:${depVersions.commonsWidgets}",
         jUnit: "junit:junit:${depVersions.jUnitVersion}",
         jUnitExt: "androidx.test.ext:junit:${depVersions.jUnitExtVersion}"
     ]

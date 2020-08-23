@@ -16,7 +16,45 @@
 
 package com.paulrybitskyi.gamedge.ui.dashboard
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
+import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.gamedge.R
+import com.paulrybitskyi.gamedge.databinding.FragmentDashboardBinding
+import com.paulrybitskyi.gamedge.utils.setItemColors
+import com.paulrybitskyi.gamedge.utils.viewBinding
 
-internal class DashboardFragment : Fragment(R.layout.fragment_dashboard)
+internal class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
+
+
+    private val binding by viewBinding(FragmentDashboardBinding::bind)
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        init()
+    }
+
+
+    private fun init() {
+        initBottomNavigation()
+        initNavigationViewPager()
+    }
+
+
+    private fun initBottomNavigation() = with(binding.bottomNav) {
+        setItemColors(
+            unselectedStateColor = getColor(R.color.navigation_item_color_state_unselected),
+            selectedStateColor = getColor(R.color.navigation_item_color_state_selected)
+        )
+    }
+
+
+    private fun initNavigationViewPager() = with(binding.navigationViewPager) {
+
+    }
+
+
+}

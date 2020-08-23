@@ -18,19 +18,6 @@
 
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="Gamedge"/>
-
-    <style name="Gamedge.DashboardBottomNavigation" parent="Widget.Design.BottomNavigationView">
-        <item name="android:textSize">@dimen/dashboard_bottom_navigation_item_text_size</item>
-        <item name="android:fontFamily">@string/font_family_medium</item>
-        <item name="menu">@menu/dashboard_navigation_menu</item>
-        <item name="labelVisibilityMode">labeled</item>
-    </style>
+    <dimen name="dashboard_bottom_navigation_item_text_size">14sp</dimen>
 
 </resources>

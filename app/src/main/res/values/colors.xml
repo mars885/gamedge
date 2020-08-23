@@ -21,5 +21,11 @@
     <color name="colorPrimary">#2B303C</color>
     <color name="colorPrimaryDark">#222630</color>
     <color name="colorAccent">#F55663</color>
+    <color name="colorContentContainer">#1c2028</color>
+    <color name="colorPrimaryText">#FFFFFF</color>
+    <color name="colorSecondaryText">#809aaf</color>
+
+    <color name="navigation_item_color_state_unselected">@color/colorSecondaryText</color>
+    <color name="navigation_item_color_state_selected">@color/colorAccent</color>
 
 </resources>

@@ -16,13 +16,17 @@
   ~ limitations under the License.
 -->
 
-<resources>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <string name="app_name">Gamedge</string>
+    <item
+        android:id="@+id/navigation_item_discover"
+        android:title="@string/dashboard_navigation_menu_item_discover"
+        android:icon="@drawable/air_balloon"/>
 
-    <string name="dashboard_title">Dashboard</string>
+    <item
+        android:id="@+id/navigation_item_favorites"
+        android:title="@string/dashboard_navigation_menu_item_favorites"
+        android:icon="@drawable/star"/>
 
-    <string name="dashboard_navigation_menu_item_discover">Discover</string>
-    <string name="dashboard_navigation_menu_item_favorites">Favorites</string>
-
-</resources>
+</menu>
