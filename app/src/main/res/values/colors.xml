@@ -18,8 +18,8 @@
 
 <resources>
 
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#2B303C</color>
+    <color name="colorPrimaryDark">#222630</color>
+    <color name="colorAccent">#F55663</color>
 
 </resources>
