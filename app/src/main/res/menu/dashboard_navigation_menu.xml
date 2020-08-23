@@ -22,7 +22,7 @@
     <item
         android:id="@+id/navigation_item_discover"
         android:title="@string/dashboard_navigation_menu_item_discover"
-        android:icon="@drawable/air_balloon"/>
+        android:icon="@drawable/compass_rose"/>
 
     <item
         android:id="@+id/navigation_item_favorites"
