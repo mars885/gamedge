@@ -18,6 +18,8 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion appConfig.compileSdkVersion
@@ -52,6 +54,10 @@ android {
     kotlinOptions {
         jvmTarget = appConfig.kotlinCompatibilityVersion
     }
+
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -64,10 +70,13 @@ dependencies {
     implementation deps.recyclerView
     implementation deps.viewPager2
     implementation deps.lifecycleCommonJava8
+    implementation deps.daggerHilt
     implementation deps.coreKtx
     implementation deps.commonsCore
     implementation deps.commonsKtx
     implementation deps.commonsWidgets
+
+    kapt deps.daggerHiltCompiler
 
     testImplementation deps.jUnit
     androidTestImplementation deps.jUnitExt

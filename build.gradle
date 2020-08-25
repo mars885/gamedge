@@ -28,6 +28,7 @@ buildscript {
     dependencies {
         classpath deps.androidGradlePlugin
         classpath deps.kotlinGradlePlugin
+        classpath deps.daggerHiltGradlePlugin
         classpath deps.gradleVersionsPlugin
     }
 }
