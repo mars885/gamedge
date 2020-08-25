@@ -20,13 +20,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_item_discover"
-        android:title="@string/dashboard_navigation_menu_item_discover"
+        android:id="@+id/dashboard_bottom_navigation_item_discover"
+        android:title="@string/dashboard_bottom_navigation_item_discover"
         android:icon="@drawable/compass_rose"/>
 
     <item
-        android:id="@+id/navigation_item_favorites"
-        android:title="@string/dashboard_navigation_menu_item_favorites"
+        android:id="@+id/dashboard_bottom_navigation_item_favorites"
+        android:title="@string/dashboard_bottom_navigation_item_favorites"
         android:icon="@drawable/star"/>
 
 </menu>

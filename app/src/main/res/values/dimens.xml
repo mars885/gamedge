@@ -18,6 +18,10 @@
 
 <resources>
 
-    <dimen name="dashboard_bottom_navigation_item_text_size">14sp</dimen>
+    <!-- Bottom Navigation -->
+    <dimen name="bottom_navigation_item_text_size">14sp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_title_text_size">20sp</dimen>
 
 </resources>

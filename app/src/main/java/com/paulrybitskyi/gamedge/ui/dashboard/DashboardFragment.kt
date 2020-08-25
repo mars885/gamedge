@@ -17,11 +17,13 @@
 package com.paulrybitskyi.gamedge.ui.dashboard
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.databinding.FragmentDashboardBinding
+import com.paulrybitskyi.gamedge.ui.dashboard.DashboardPage.Companion.toDashboardPageFromMenuItemId
 import com.paulrybitskyi.gamedge.utils.setItemColors
 import com.paulrybitskyi.gamedge.utils.viewBinding
 
@@ -29,6 +31,8 @@ internal class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
 
     private val binding by viewBinding(FragmentDashboardBinding::bind)
+
+    private lateinit var viewPagerAdapter: DashboardViewPagerAdapter
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,21 +43,47 @@ internal class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
 
     private fun init() {
+        initToolbar()
         initBottomNavigation()
-        initNavigationViewPager()
+        initViewPager()
+    }
+
+
+    private fun initToolbar() = with(binding.toolbar) {
+        setBackgroundColor(getColor(R.color.toolbar_background_color))
     }
 
 
     private fun initBottomNavigation() = with(binding.bottomNav) {
         setItemColors(
-            unselectedStateColor = getColor(R.color.navigation_item_color_state_unselected),
-            selectedStateColor = getColor(R.color.navigation_item_color_state_selected)
+            unselectedStateColor = getColor(R.color.bottom_navigation_item_color_state_unselected),
+            selectedStateColor = getColor(R.color.bottom_navigation_item_color_state_selected)
         )
+        setOnNavigationItemSelectedListener(::onNavigationItemSelected)
     }
 
 
-    private fun initNavigationViewPager() = with(binding.navigationViewPager) {
+    private fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+        binding.viewPager.setCurrentItem(menuItem.toPagePosition(), false)
+        return true
+    }
 
+
+    private fun MenuItem.toPagePosition(): Int {
+        return itemId.toDashboardPageFromMenuItemId().position
+    }
+
+
+    private fun initViewPager() = with(binding.viewPager) {
+        adapter = initAdapter()
+        offscreenPageLimit = viewPagerAdapter.itemCount
+        isUserInputEnabled = false
+    }
+
+
+    private fun initAdapter(): DashboardViewPagerAdapter {
+        return DashboardViewPagerAdapter(this@DashboardFragment)
+            .also { viewPagerAdapter = it }
     }
 
 

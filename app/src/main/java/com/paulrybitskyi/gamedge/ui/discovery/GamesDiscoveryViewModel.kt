@@ -14,5 +14,8 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.ui.discovery.fragment
+package com.paulrybitskyi.gamedge.ui.discovery
 
+import androidx.lifecycle.ViewModel
+
+internal class GamesDiscoveryViewModel : ViewModel()

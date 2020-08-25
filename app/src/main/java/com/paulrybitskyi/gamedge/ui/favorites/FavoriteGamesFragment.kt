@@ -16,3 +16,29 @@
 
 package com.paulrybitskyi.gamedge.ui.favorites
 
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
+import com.paulrybitskyi.gamedge.R
+import com.paulrybitskyi.gamedge.databinding.FragmentFavoriteGamesBinding
+import com.paulrybitskyi.gamedge.utils.viewBinding
+
+internal class FavoriteGamesFragment : Fragment(R.layout.fragment_favorite_games) {
+
+
+    private val binding by viewBinding(FragmentFavoriteGamesBinding::bind)
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        init()
+    }
+
+
+    private fun init() {
+
+    }
+
+
+}

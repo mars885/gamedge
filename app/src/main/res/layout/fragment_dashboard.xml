@@ -19,27 +19,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.paulrybitskyi.commons.widgets.toolbar.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:toolbar_titleText="@string/dashboard_toolbar_title"
+        app:toolbar_rightButtonIcon="@drawable/magnify"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/viewPager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Gamedge.Toolbar"/>
+
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/navigationViewPager"
+        android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:background="@color/colorContentContainer"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintBottom_toTopOf="@+id/bottomNav"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:background="@color/colorContentContainer"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/colorPrimary"
-        android:theme="@style/Gamedge.DashboardBottomNavigation"
-        app:layout_constraintTop_toBottomOf="@id/navigationViewPager"
+        android:theme="@style/Gamedge.BottomNavigationView"
+        app:menu="@menu/dashboard_bottom_navigation_menu"
+        app:layout_constraintTop_toBottomOf="@id/viewPager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

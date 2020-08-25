@@ -22,15 +22,23 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
     <style name="Gamedge"/>
 
-    <style name="Gamedge.DashboardBottomNavigation" parent="Widget.Design.BottomNavigationView">
-        <item name="android:textSize">@dimen/dashboard_bottom_navigation_item_text_size</item>
+    <style name="Gamedge.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="android:textSize">@dimen/bottom_navigation_item_text_size</item>
         <item name="android:fontFamily">@string/font_family_medium</item>
-        <item name="menu">@menu/dashboard_navigation_menu</item>
         <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <style name="Gamedge.Toolbar">
+        <item name="toolbar_titleTextColor">@color/toolbar_title_text_color</item>
+        <item name="toolbar_buttonIconColor">@color/toolbar_button_icon_color</item>
+        <item name="toolbar_titleTextSize">@dimen/toolbar_title_text_size</item>
+        <item name="toolbar_titleTextGravity">left</item>
     </style>
 
 </resources>

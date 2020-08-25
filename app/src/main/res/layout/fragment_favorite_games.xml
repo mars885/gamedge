@@ -16,13 +16,12 @@
   ~ limitations under the License.
 -->
 
-<resources>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorContentContainer">
 
-    <string name="app_name">Gamedge</string>
 
-    <!-- Dashboard -->
-    <string name="dashboard_toolbar_title">Dashboard</string>
-    <string name="dashboard_bottom_navigation_item_discover">Discover</string>
-    <string name="dashboard_bottom_navigation_item_favorites">Favorites</string>
 
-</resources>
+</androidx.constraintlayout.widget.ConstraintLayout>

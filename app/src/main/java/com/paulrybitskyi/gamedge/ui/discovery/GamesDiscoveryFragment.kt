@@ -14,5 +14,31 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.ui.discovery.fragment
+package com.paulrybitskyi.gamedge.ui.discovery
 
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
+import com.paulrybitskyi.gamedge.R
+import com.paulrybitskyi.gamedge.databinding.FragmentGamesDiscoveryBinding
+import com.paulrybitskyi.gamedge.utils.viewBinding
+
+internal class GamesDiscoveryFragment : Fragment(R.layout.fragment_games_discovery) {
+
+
+    private val binding by viewBinding(FragmentGamesDiscoveryBinding::bind)
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        init()
+    }
+
+
+    private fun init() {
+
+    }
+
+
+}

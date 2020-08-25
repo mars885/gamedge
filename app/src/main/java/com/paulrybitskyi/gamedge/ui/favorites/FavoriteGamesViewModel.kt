@@ -16,3 +16,6 @@
 
 package com.paulrybitskyi.gamedge.ui.favorites
 
+import androidx.lifecycle.ViewModel
+
+internal class FavoriteGamesViewModel : ViewModel()

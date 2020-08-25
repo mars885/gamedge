@@ -25,7 +25,13 @@
     <color name="colorPrimaryText">#FFFFFF</color>
     <color name="colorSecondaryText">#809aaf</color>
 
-    <color name="navigation_item_color_state_unselected">@color/colorSecondaryText</color>
-    <color name="navigation_item_color_state_selected">@color/colorAccent</color>
+    <!-- Bottom Navigation -->
+    <color name="bottom_navigation_item_color_state_unselected">@color/colorSecondaryText</color>
+    <color name="bottom_navigation_item_color_state_selected">@color/colorAccent</color>
+
+    <!-- Toolbar -->
+    <color name="toolbar_background_color">@color/colorPrimary</color>
+    <color name="toolbar_title_text_color">@color/colorPrimaryText</color>
+    <color name="toolbar_button_icon_color">@color/colorPrimaryText</color>
 
 </resources>
