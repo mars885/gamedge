@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+package com.paulrybitskyi.gameedge.domain.model
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation deps.kotlinResult
-}
-
-sourceCompatibility = appConfig.javaCompatibilityVersion
-targetCompatibility = appConfig.javaCompatibilityVersion
+data class Pagination(
+    val offset: Int = 0,
+    val limit: Int = 50,
+)

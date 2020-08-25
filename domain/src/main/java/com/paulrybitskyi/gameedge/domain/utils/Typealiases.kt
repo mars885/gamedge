@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+package com.paulrybitskyi.gameedge.domain.utils
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+import com.github.michaelbull.result.Result
 
-    implementation deps.kotlinResult
-}
-
-sourceCompatibility = appConfig.javaCompatibilityVersion
-targetCompatibility = appConfig.javaCompatibilityVersion
+internal typealias RepositoryResult<T> = Result<T, Throwable>

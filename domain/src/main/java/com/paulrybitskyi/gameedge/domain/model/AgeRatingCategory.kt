@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+package com.paulrybitskyi.gameedge.domain.model
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+enum class AgeRatingCategory {
 
-    implementation deps.kotlinResult
+    ESRB,
+    PEGI,
+
 }
-
-sourceCompatibility = appConfig.javaCompatibilityVersion
-targetCompatibility = appConfig.javaCompatibilityVersion

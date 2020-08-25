@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+package com.paulrybitskyi.gameedge.domain.model
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+enum class WebsiteCategory {
 
-    implementation deps.kotlinResult
+    OFFICIAL,
+    WIKIA,
+    WIKIPEDIA,
+    FACEBOOK,
+    TWITTER,
+    TWITCH,
+    INSTAGRAM,
+    YOUTUBE,
+    STEAM,
+    REDDIT,
+    DISCORD,
+
 }
-
-sourceCompatibility = appConfig.javaCompatibilityVersion
-targetCompatibility = appConfig.javaCompatibilityVersion
