@@ -51,6 +51,10 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
+    implementation project(":domain")
+
+    implementation deps.kotlinResult
+
     testImplementation deps.jUnit
     androidTestImplementation deps.jUnitExt
 }
