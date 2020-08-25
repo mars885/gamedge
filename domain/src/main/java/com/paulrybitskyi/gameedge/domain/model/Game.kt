@@ -32,6 +32,7 @@ data class Game(
     val screenshots: List<Image>,
     val genres: List<Genre>,
     val platforms: List<Platform>,
+    val playerPerspectives: List<PlayerPerspective>,
     val themes: List<Theme>,
     val modes: List<Mode>,
     val keywords: List<Keyword>,

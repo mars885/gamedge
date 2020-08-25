@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gameedge.domain.repositories
 
 import com.paulrybitskyi.gameedge.domain.model.Game
-import com.paulrybitskyi.gameedge.domain.model.Pagination
+import com.paulrybitskyi.gameedge.domain.repositories.utils.Pagination
 import com.paulrybitskyi.gameedge.domain.utils.RepositoryResult
 
 interface GamesRepository {

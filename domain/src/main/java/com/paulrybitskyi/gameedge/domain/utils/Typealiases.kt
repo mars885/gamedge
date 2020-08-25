@@ -18,4 +18,4 @@ package com.paulrybitskyi.gameedge.domain.utils
 
 import com.github.michaelbull.result.Result
 
-internal typealias RepositoryResult<T> = Result<T, Throwable>
+typealias RepositoryResult<T> = Result<T, Throwable>

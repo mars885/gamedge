@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.model
+package com.paulrybitskyi.gameedge.domain.repositories.utils
 
 data class Pagination(
     val offset: Int = 0,
