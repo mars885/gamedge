@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.data.datastores
 
 import com.paulrybitskyi.gamedge.data.utils.DataStoreResult
-import com.paulrybitskyi.gameedge.domain.model.Game
+import com.paulrybitskyi.gameedge.domain.entities.Game
 import com.paulrybitskyi.gameedge.domain.repositories.utils.Pagination
 
 interface GamesDataStore {
