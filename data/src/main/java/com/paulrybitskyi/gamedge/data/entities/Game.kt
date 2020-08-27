@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.data.entities
 
 data class Game(
     val id: Int,
+    val hypeCount: Int,
     val releaseDate: Long,
     val criticsRating: Double,
     val usersRating: Double,
@@ -38,4 +39,5 @@ data class Game(
     val keywords: List<Keyword>,
     val involvedCompanies: List<InvolvedCompany>,
     val websites: List<Website>,
+    val similarGames: List<Int>
 )

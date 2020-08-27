@@ -22,7 +22,7 @@ import com.paulrybitskyi.gameedge.domain.repositories.utils.Pagination
 import com.paulrybitskyi.gameedge.domain.repositories.GamesRepository
 import com.paulrybitskyi.gameedge.domain.utils.RepositoryResult
 
-internal class GamesRepositoryImpl(
+class GamesRepositoryImpl(
     private val cacheDataStore: GamesDataStore,
     private val databaseDataStore: GamesDataStore,
     private val serverDataStore: GamesDataStore

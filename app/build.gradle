@@ -63,6 +63,9 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
+    implementation project(":data")
+    implementation project(":igdb-api")
+
     implementation deps.appCompat
     implementation deps.navFragmentKtx
     implementation deps.navUiKtx
@@ -71,6 +74,7 @@ dependencies {
     implementation deps.viewPager2
     implementation deps.lifecycleCommonJava8
     implementation deps.daggerHilt
+    implementation deps.kotlinResult
     implementation deps.coreKtx
     implementation deps.commonsCore
     implementation deps.commonsKtx

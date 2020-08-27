@@ -17,6 +17,5 @@
 package com.paulrybitskyi.gamedge.data.entities
 
 data class PlayerPerspective(
-    val id: Int,
     val name: String,
 )

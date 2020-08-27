@@ -19,6 +19,7 @@ apply plugin: "com.github.ben-manes.versions"
 
 buildscript {
     apply from: "gradle/configs/app_config.gradle"
+    apply from: "gradle/utils.gradle"
 
     repositories {
         google()

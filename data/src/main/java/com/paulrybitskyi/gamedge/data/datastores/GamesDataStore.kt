@@ -16,24 +16,24 @@
 
 package com.paulrybitskyi.gamedge.data.datastores
 
+import com.paulrybitskyi.gamedge.data.utils.DataCompany
+import com.paulrybitskyi.gamedge.data.utils.DataGame
 import com.paulrybitskyi.gamedge.data.utils.DataStoreResult
-import com.paulrybitskyi.gameedge.domain.entities.Game
-import com.paulrybitskyi.gameedge.domain.repositories.utils.Pagination
 
 interface GamesDataStore {
 
-    suspend fun searchGames(searchQuery: String, pagination: Pagination): DataStoreResult<List<Game>>
+    suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): DataStoreResult<List<DataGame>>
 
-    suspend fun getPopularGames(pagination: Pagination): DataStoreResult<List<Game>>
+    suspend fun getPopularGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>>
 
-    suspend fun getRecentlyReleasedGames(pagination: Pagination): DataStoreResult<List<Game>>
+    suspend fun getRecentlyReleasedGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>>
 
-    suspend fun getComingSoonGames(pagination: Pagination): DataStoreResult<List<Game>>
+    suspend fun getComingSoonGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>>
 
-    suspend fun getMostAnticipatedGames(pagination: Pagination): DataStoreResult<List<Game>>
+    suspend fun getMostAnticipatedGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>>
 
-    suspend fun getCompanyGames(companyId: Int, pagination: Pagination): DataStoreResult<List<Game>>
+    suspend fun getCompanyGames(company: DataCompany, offset: Int, limit: Int): DataStoreResult<List<DataGame>>
 
-    suspend fun getSimilarGames(gameId: Int, pagination: Pagination): DataStoreResult<List<Game>>
+    suspend fun getSimilarGames(game: DataGame, offset: Int, limit: Int): DataStoreResult<List<DataGame>>
 
 }

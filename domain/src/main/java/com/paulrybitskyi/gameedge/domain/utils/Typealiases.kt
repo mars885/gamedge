@@ -17,5 +17,23 @@
 package com.paulrybitskyi.gameedge.domain.utils
 
 import com.github.michaelbull.result.Result
+import com.paulrybitskyi.gameedge.domain.entities.*
 
-typealias RepositoryResult<T> = Result<T, Throwable>
+
+typealias RepositoryResult<T> = Result<T, Error>
+
+typealias DomainAgeRating = AgeRating
+typealias DomainAgeRatingCategory = AgeRatingCategory
+typealias DomainCompany = Company
+typealias DomainGame = Game
+typealias DomainGenre = Genre
+typealias DomainImage = Image
+typealias DomainInvolvedCompany = InvolvedCompany
+typealias DomainKeyword = Keyword
+typealias DomainMode = Mode
+typealias DomainPlatform = Platform
+typealias DomainPlayerPerspective = PlayerPerspective
+typealias DomainTheme = Theme
+typealias DomainTimeToBeat = TimeToBeat
+typealias DomainWebsite = Website
+typealias DomainWebsiteCategory = WebsiteCategory

@@ -17,5 +17,24 @@
 package com.paulrybitskyi.gamedge.data.utils
 
 import com.github.michaelbull.result.Result
+import com.paulrybitskyi.gamedge.data.entities.*
 
-typealias DataStoreResult<T> = Result<T, Throwable>
+
+typealias DataStoreResult<T> = Result<T, Error>
+
+typealias DataAgeRating = AgeRating
+typealias DataAgeRatingCategory = AgeRatingCategory
+typealias DataAgeRatingType = AgeRatingType
+typealias DataCompany = Company
+typealias DataGame = Game
+typealias DataGenre = Genre
+typealias DataImage = Image
+typealias DataInvolvedCompany = InvolvedCompany
+typealias DataKeyword = Keyword
+typealias DataMode = Mode
+typealias DataPlatform = Platform
+typealias DataPlayerPerspective = PlayerPerspective
+typealias DataTheme = Theme
+typealias DataTimeToBeat = TimeToBeat
+typealias DataWebsite = Website
+typealias DataWebsiteCategory = WebsiteCategory

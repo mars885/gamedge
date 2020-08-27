@@ -17,6 +17,5 @@
 package com.paulrybitskyi.gamedge.data.entities
 
 data class Platform(
-    val id: Int,
     val abbreviation: String,
 )

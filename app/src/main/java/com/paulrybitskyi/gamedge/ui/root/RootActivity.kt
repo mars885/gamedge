@@ -18,5 +18,7 @@ package com.paulrybitskyi.gamedge.ui.root
 
 import androidx.appcompat.app.AppCompatActivity
 import com.paulrybitskyi.gamedge.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 internal class RootActivity : AppCompatActivity(R.layout.activity_root)

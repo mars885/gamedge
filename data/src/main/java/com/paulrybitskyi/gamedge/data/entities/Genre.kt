@@ -17,6 +17,5 @@
 package com.paulrybitskyi.gamedge.data.entities
 
 data class Genre(
-    val id: Int,
     val name: String,
 )

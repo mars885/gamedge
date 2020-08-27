@@ -14,12 +14,26 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di
+package com.paulrybitskyi.gamedge.igdb.api.adapters
 
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.paulrybitskyi.gamedge.igdb.api.entities.AgeRatingCategory
+import com.paulrybitskyi.gamedge.igdb.api.entities.AgeRatingCategory.Companion.asAgeRatingCategory
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.ToJson
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal object CoreModule
+internal class AgeRatingCategoryAdapter {
+
+
+    @FromJson
+    fun fromJson(category: Int): AgeRatingCategory {
+        return category.asAgeRatingCategory()
+    }
+
+
+    @ToJson
+    fun toJson(ageRatingCategory: AgeRatingCategory): Int {
+        return ageRatingCategory.value
+    }
+
+
+}

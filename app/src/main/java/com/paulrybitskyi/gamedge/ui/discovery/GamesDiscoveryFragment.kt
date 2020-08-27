@@ -22,7 +22,9 @@ import androidx.fragment.app.Fragment
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.databinding.FragmentGamesDiscoveryBinding
 import com.paulrybitskyi.gamedge.utils.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 internal class GamesDiscoveryFragment : Fragment(R.layout.fragment_games_discovery) {
 
 

@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.data.entities
 
 data class Website(
-    val id: Int,
     val url: String,
     val category: WebsiteCategory,
     val isTrusted: Boolean,

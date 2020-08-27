@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.data.entities
 
 data class AgeRating(
-    val id: Int,
     val category: AgeRatingCategory,
     val type: AgeRatingType,
 )
