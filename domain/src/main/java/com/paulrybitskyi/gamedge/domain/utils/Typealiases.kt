@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.utils
+package com.paulrybitskyi.gamedge.domain.utils
 
 import com.github.michaelbull.result.Result
-import com.paulrybitskyi.gameedge.domain.entities.*
+import com.paulrybitskyi.gamedge.domain.entities.*
 
 
 typealias RepositoryResult<T> = Result<T, Error>

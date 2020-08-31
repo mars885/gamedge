@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.entities
+package com.paulrybitskyi.gamedge.domain.entities
 
-enum class AgeRatingCategory {
-
-    UNKNOWN,
-    ESRB,
-    PEGI,
-
-}
+data class Keyword(
+    val name: String,
+)

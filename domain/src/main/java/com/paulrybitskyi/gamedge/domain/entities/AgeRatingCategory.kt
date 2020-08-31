@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.entities
+package com.paulrybitskyi.gamedge.domain.entities
 
-enum class WebsiteCategory {
+enum class AgeRatingCategory {
 
     UNKNOWN,
-    OFFICIAL,
-    WIKIA,
-    WIKIPEDIA,
-    FACEBOOK,
-    TWITTER,
-    TWITCH,
-    INSTAGRAM,
-    YOUTUBE,
-    STEAM,
-    REDDIT,
-    DISCORD,
+    ESRB,
+    PEGI,
 
 }

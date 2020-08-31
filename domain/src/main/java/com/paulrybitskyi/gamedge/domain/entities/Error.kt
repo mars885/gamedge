@@ -14,8 +14,16 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.entities
+package com.paulrybitskyi.gamedge.domain.entities
 
-data class Genre(
-    val name: String,
-)
+sealed class Error {
+
+    data class ClientError(val message: String) : Error()
+
+    data class NetworkError(val message: String) : Error()
+
+    object ServiceUnavailable : Error()
+
+    data class Unknown(val message: String) : Error()
+
+}

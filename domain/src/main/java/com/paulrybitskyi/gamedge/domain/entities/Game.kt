@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.entities
+package com.paulrybitskyi.gamedge.domain.entities
 
 data class Game(
     val id: Int,

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.repositories
+package com.paulrybitskyi.gamedge.domain.repositories
 
-import com.paulrybitskyi.gameedge.domain.entities.Game
-import com.paulrybitskyi.gameedge.domain.repositories.utils.Pagination
-import com.paulrybitskyi.gameedge.domain.utils.RepositoryResult
+import com.paulrybitskyi.gamedge.domain.entities.Game
+import com.paulrybitskyi.gamedge.domain.repositories.utils.Pagination
+import com.paulrybitskyi.gamedge.domain.utils.RepositoryResult
 
 interface GamesRepository {
 

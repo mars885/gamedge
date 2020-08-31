@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.repositories.utils
+package com.paulrybitskyi.gamedge.domain.entities
 
-data class Pagination(
-    val offset: Int = 0,
-    val limit: Int = 50,
+data class Theme(
+    val name: String,
 )

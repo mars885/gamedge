@@ -17,10 +17,10 @@
 package com.paulrybitskyi.gamedge.data.repositories
 
 import com.paulrybitskyi.gamedge.data.datastores.GamesDataStore
-import com.paulrybitskyi.gameedge.domain.entities.Game
-import com.paulrybitskyi.gameedge.domain.repositories.utils.Pagination
-import com.paulrybitskyi.gameedge.domain.repositories.GamesRepository
-import com.paulrybitskyi.gameedge.domain.utils.RepositoryResult
+import com.paulrybitskyi.gamedge.domain.entities.Game
+import com.paulrybitskyi.gamedge.domain.repositories.utils.Pagination
+import com.paulrybitskyi.gamedge.domain.repositories.GamesRepository
+import com.paulrybitskyi.gamedge.domain.utils.RepositoryResult
 
 class GamesRepositoryImpl(
     private val cacheDataStore: GamesDataStore,

@@ -14,8 +14,21 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.entities
+package com.paulrybitskyi.gamedge.domain.entities
 
-data class PlayerPerspective(
-    val name: String,
-)
+enum class WebsiteCategory {
+
+    UNKNOWN,
+    OFFICIAL,
+    WIKIA,
+    WIKIPEDIA,
+    FACEBOOK,
+    TWITTER,
+    TWITCH,
+    INSTAGRAM,
+    YOUTUBE,
+    STEAM,
+    REDDIT,
+    DISCORD,
+
+}

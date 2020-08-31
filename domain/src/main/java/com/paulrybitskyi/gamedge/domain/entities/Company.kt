@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.entities
+package com.paulrybitskyi.gamedge.domain.entities
 
-data class Theme(
+data class Company(
     val name: String,
+    val developedGames: List<Int>,
 )

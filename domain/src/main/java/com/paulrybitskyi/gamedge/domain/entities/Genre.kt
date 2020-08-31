@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.entities
+package com.paulrybitskyi.gamedge.domain.entities
 
-data class TimeToBeat(
-    val completely: Int,
-    val hastily: Int,
-    val normally: Int,
+data class Genre(
+    val name: String,
 )

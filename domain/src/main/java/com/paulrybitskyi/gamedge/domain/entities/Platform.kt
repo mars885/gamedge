@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.entities
+package com.paulrybitskyi.gamedge.domain.entities
 
-data class AgeRating(
-    val category: AgeRatingCategory,
-    val type: AgeRatingType,
+data class Platform(
+    val abbreviation: String,
 )

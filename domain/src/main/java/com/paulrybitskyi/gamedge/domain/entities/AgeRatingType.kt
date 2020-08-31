@@ -14,8 +14,22 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gameedge.domain.entities
+package com.paulrybitskyi.gamedge.domain.entities
 
-data class Keyword(
-    val name: String,
-)
+enum class AgeRatingType {
+
+    UNKNOWN,
+    THREE,
+    SEVEN,
+    TWELVE,
+    SIXTEEN,
+    EIGHTEEN,
+    RP,
+    EC,
+    E,
+    E10,
+    T,
+    M,
+    AO,
+
+}
