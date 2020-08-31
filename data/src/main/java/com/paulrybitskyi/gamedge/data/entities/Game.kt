@@ -23,6 +23,7 @@ data class Game(
     val criticsRating: Double,
     val usersRating: Double,
     val totalRating: Double,
+    val popularity: Double,
     val name: String,
     val summary: String,
     val storyline: String,
@@ -39,5 +40,5 @@ data class Game(
     val keywords: List<Keyword>,
     val involvedCompanies: List<InvolvedCompany>,
     val websites: List<Website>,
-    val similarGames: List<Int>
+    val similarGames: List<Int>,
 )
