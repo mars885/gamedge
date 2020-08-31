@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+import com.paulrybitskyi.gamedge.appConfig
+import com.paulrybitskyi.gamedge.deps
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
@@ -63,25 +66,27 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation project(":data")
-    implementation project(":igdb-api")
+    implementation project(deps.local.data)
+    implementation project(deps.local.igdbApi)
 
-    implementation deps.appCompat
-    implementation deps.navFragmentKtx
-    implementation deps.navUiKtx
-    implementation deps.constraintLayout
-    implementation deps.recyclerView
-    implementation deps.viewPager2
-    implementation deps.lifecycleCommonJava8
-    implementation deps.daggerHilt
-    implementation deps.kotlinResult
-    implementation deps.coreKtx
-    implementation deps.commonsCore
-    implementation deps.commonsKtx
-    implementation deps.commonsWidgets
+    implementation deps.androidX.appCompat
+    implementation deps.androidX.navFragmentKtx
+    implementation deps.androidX.navUiKtx
+    implementation deps.androidX.constraintLayout
+    implementation deps.androidX.recyclerView
+    implementation deps.androidX.viewPager2
+    implementation deps.androidX.lifecycleCommonJava8
+    implementation deps.androidX.coreKtx
 
-    kapt deps.daggerHiltCompiler
+    implementation deps.commons.commonsCore
+    implementation deps.commons.commonsKtx
+    implementation deps.commons.commonsWidgets
 
-    testImplementation deps.jUnit
-    androidTestImplementation deps.jUnitExt
+    implementation deps.misc.kotlinResult
+
+    implementation deps.google.daggerHilt
+    kapt deps.google.daggerHiltCompiler
+
+    testImplementation deps.testing.jUnit
+    androidTestImplementation deps.testing.jUnitExt
 }

@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-import com.paulrybitskyi.gamedge.appConfig
-
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+repositories {
+    jcenter()
 }
 
-sourceCompatibility = appConfig.javaCompatibilityVersion
-targetCompatibility = appConfig.javaCompatibilityVersion
+plugins {
+    `kotlin-dsl`
+}

@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+import com.paulrybitskyi.gamedge.appConfig
+import com.paulrybitskyi.gamedge.deps
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -58,18 +61,19 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation project(":data")
-    implementation project(":igdb-apicalypse")
+    implementation project(deps.local.data)
+    implementation project(deps.local.igdbApicalypse)
 
-    implementation deps.okHttpLoggingInterceptor
-    implementation deps.retrofit
-    implementation deps.retrofitMoshiConverter
-    implementation deps.retrofitScalarsConverter
-    implementation deps.moshi
-    implementation deps.kotlinResult
+    implementation deps.square.okHttpLoggingInterceptor
+    implementation deps.square.retrofit
+    implementation deps.square.retrofitMoshiConverter
+    implementation deps.square.retrofitScalarsConverter
 
-    kapt deps.moshiCodeGenerator
+    implementation deps.misc.kotlinResult
 
-    testImplementation deps.jUnit
-    androidTestImplementation deps.jUnitExt
+    implementation deps.square.moshi
+    kapt deps.square.moshiCodeGenerator
+
+    testImplementation deps.testing.jUnit
+    androidTestImplementation deps.testing.jUnitExt
 }

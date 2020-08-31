@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+import com.paulrybitskyi.gamedge.appConfig
+import com.paulrybitskyi.gamedge.deps
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -51,6 +54,6 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    testImplementation deps.jUnit
-    androidTestImplementation deps.jUnitExt
+    testImplementation deps.testing.jUnit
+    androidTestImplementation deps.testing.jUnitExt
 }

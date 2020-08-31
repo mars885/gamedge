@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
+import com.paulrybitskyi.gamedge.deps
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply plugin: "com.github.ben-manes.versions"
 
 buildscript {
-    apply from: "gradle/configs/app_config.gradle"
     apply from: "gradle/utils.gradle"
 
     repositories {
@@ -27,10 +28,10 @@ buildscript {
     }
 
     dependencies {
-        classpath deps.androidGradlePlugin
-        classpath deps.kotlinGradlePlugin
-        classpath deps.daggerHiltGradlePlugin
-        classpath deps.gradleVersionsPlugin
+        classpath deps.plugins.androidGradlePlugin
+        classpath deps.plugins.kotlinGradlePlugin
+        classpath deps.plugins.daggerHiltGradlePlugin
+        classpath deps.plugins.gradleVersionsPlugin
     }
 }
 
