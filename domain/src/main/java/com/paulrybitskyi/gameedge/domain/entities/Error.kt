@@ -18,12 +18,12 @@ package com.paulrybitskyi.gameedge.domain.entities
 
 sealed class Error {
 
-    object EmptyResult : Error()
+    data class ClientError(val message: String) : Error()
 
-    object NetworkUnavailable : Error()
+    data class NetworkError(val message: String) : Error()
 
     object ServiceUnavailable : Error()
 
-    object Unknown : Error()
+    data class Unknown(val message: String) : Error()
 
 }

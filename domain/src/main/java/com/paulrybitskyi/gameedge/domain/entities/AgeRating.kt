@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gameedge.domain.entities
 
 data class AgeRating(
-    val id: Int,
     val category: AgeRatingCategory,
     val type: AgeRatingType,
 )

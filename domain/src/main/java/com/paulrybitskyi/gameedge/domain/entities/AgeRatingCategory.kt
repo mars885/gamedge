@@ -18,6 +18,7 @@ package com.paulrybitskyi.gameedge.domain.entities
 
 enum class AgeRatingCategory {
 
+    UNKNOWN,
     ESRB,
     PEGI,
 

@@ -18,10 +18,12 @@ package com.paulrybitskyi.gameedge.domain.entities
 
 data class Game(
     val id: Int,
+    val hypeCount: Int,
     val releaseDate: Long,
     val criticsRating: Double,
     val usersRating: Double,
     val totalRating: Double,
+    val popularity: Double,
     val name: String,
     val summary: String,
     val storyline: String,
@@ -38,4 +40,5 @@ data class Game(
     val keywords: List<Keyword>,
     val involvedCompanies: List<InvolvedCompany>,
     val websites: List<Website>,
+    val similarGames: List<Int>,
 )

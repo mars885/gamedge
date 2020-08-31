@@ -18,6 +18,7 @@ package com.paulrybitskyi.gameedge.domain.entities
 
 enum class WebsiteCategory {
 
+    UNKNOWN,
     OFFICIAL,
     WIKIA,
     WIKIPEDIA,

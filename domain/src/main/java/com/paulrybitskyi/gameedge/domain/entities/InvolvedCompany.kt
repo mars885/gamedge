@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gameedge.domain.entities
 
 data class InvolvedCompany(
-    val id: Int,
     val company: Company,
     val isDeveloper: Boolean,
     val isPublisher: Boolean,

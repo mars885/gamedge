@@ -17,6 +17,6 @@
 package com.paulrybitskyi.gameedge.domain.entities
 
 data class Company(
-    val id: Int,
     val name: String,
+    val developedGames: List<Int>,
 )
