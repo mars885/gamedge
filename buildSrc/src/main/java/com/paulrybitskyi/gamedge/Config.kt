@@ -84,6 +84,7 @@ object deps {
         const val igdbApi = ":igdb-api"
         const val igdbApicalypse = ":igdb-apicalypse"
         const val imageLoading = ":image-loading"
+        const val commonsData = ":commons-data"
 
     }
 
@@ -103,6 +104,7 @@ object deps {
         const val viewPager2 = "androidx.viewpager2:viewpager2:${versions.viewPager2Version}"
         const val lifecycleCommonJava8 = "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycleCommonJava8Version}"
         const val room = "androidx.room:room-runtime:${versions.roomVersion}"
+        const val roomKtx = "androidx.room:room-ktx:${versions.roomVersion}"
         const val roomCompiler = "androidx.room:room-compiler:${versions.roomVersion}"
         const val coreKtx = "androidx.core:core-ktx:${versions.coreKtxVersion}"
 
@@ -123,6 +125,7 @@ object deps {
         const val retrofitScalarsConverter = "com.squareup.retrofit2:converter-scalars:${versions.retrofitVersion}"
         const val moshi = "com.squareup.moshi:moshi:${versions.moshiVersion}"
         const val moshiCodeGenerator = "com.squareup.moshi:moshi-kotlin-codegen:${versions.moshiVersion}"
+        const val moshiReflection = "com.squareup.moshi:moshi-kotlin:${versions.moshiVersion}"
 
     }
 

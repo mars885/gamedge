@@ -14,12 +14,21 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di.modules.data
+package com.paulrybitskyi.gamedge.database
 
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import com.paulrybitskyi.gamedge.database.entities.Game
+import com.paulrybitskyi.gamedge.database.tables.GamesTable
 
-@Module
-@InstallIn(ApplicationComponent::class)
-internal object RepositoriesModule
+@Database(
+    entities = [
+        Game::class
+    ],
+    version = Constants.VERSION
+)
+internal abstract class GamedgeDatabase : RoomDatabase() {
+
+    abstract val gamesTable: GamesTable
+
+}

@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di.modules.data
+package com.paulrybitskyi.gamedge.commons.data.extensions
 
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 
-@Module
-@InstallIn(ApplicationComponent::class)
-internal object RepositoriesModule
+
+fun <T> T.asSuccess(): Ok<T> = Ok(this)
+
+
+fun <T> T.asFailure(): Err<T> = Err(this)

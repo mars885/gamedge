@@ -16,13 +16,17 @@
 
 package com.paulrybitskyi.gamedge.di.modules.data
 
+import android.content.Context
 import com.paulrybitskyi.gamedge.data.datastores.GamesDataStore
+import com.paulrybitskyi.gamedge.database.datastore.GamesDatabaseDataStoreFactory
+import com.paulrybitskyi.gamedge.di.qualifiers.DataStore
 import com.paulrybitskyi.gamedge.igdb.api.IgdbApi
 import com.paulrybitskyi.gamedge.igdb.api.datastore.GamesDataStoreImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
 @Module
@@ -31,9 +35,18 @@ internal object DataStoresModule {
 
 
     @Singleton
+    @DataStore(DataStore.Type.SERVER)
     @Provides
     fun provideGamesServerDataStore(igdbApi: IgdbApi): GamesDataStore {
         return GamesDataStoreImpl(igdbApi)
+    }
+
+
+    @Singleton
+    @DataStore(DataStore.Type.DATABASE)
+    @Provides
+    fun provideGamesDatabaseDataStore(@ApplicationContext context: Context): GamesDataStore {
+        return GamesDatabaseDataStoreFactory.create(context)
     }
 
 

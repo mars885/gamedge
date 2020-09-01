@@ -14,12 +14,21 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di.modules.data
+package com.paulrybitskyi.gamedge.database.utils
 
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import com.squareup.moshi.Moshi
 
-@Module
-@InstallIn(ApplicationComponent::class)
-internal object RepositoriesModule
+internal class JsonConverter(private val moshi: Moshi) {
+
+
+    inline fun <reified T> toJson(clazz: T): String {
+        return moshi.adapter(T::class.java).toJson(clazz)
+    }
+
+
+    inline fun <reified T> fromJson(json: String): T? {
+        return moshi.adapter(T::class.java).fromJson(json)
+    }
+
+
+}

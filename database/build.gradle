@@ -20,6 +20,7 @@ import com.paulrybitskyi.gamedge.deps
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion appConfig.compileSdkVersion
@@ -32,6 +33,14 @@ android {
         versionName appConfig.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                    "room.schemaLocation": "$projectDir/schemas".toString()
+                ]
+            }
+        }
     }
 
     buildTypes {
@@ -49,10 +58,29 @@ android {
     kotlinOptions {
         jvmTarget = appConfig.kotlinCompatibilityVersion
     }
+
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation project(deps.local.data)
+    implementation project(deps.local.commonsData)
+
+    implementation deps.square.moshi
+    implementation deps.square.moshiReflection
+
+    implementation deps.misc.kotlinResult
+
+    implementation deps.google.daggerHilt
+    kapt deps.google.daggerHiltCompiler
+
+    implementation deps.androidX.room
+    implementation deps.androidX.roomKtx
+    kapt deps.androidX.roomCompiler
 
     testImplementation deps.testing.jUnit
     androidTestImplementation deps.testing.jUnitExt

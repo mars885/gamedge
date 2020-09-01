@@ -21,6 +21,9 @@ apply plugin: "com.github.ben-manes.versions"
 
 buildscript {
     apply from: "gradle/utils.gradle"
+    ext {
+        kotlin_version = '1.4.0'
+    }
 
     repositories {
         google()
@@ -32,6 +35,7 @@ buildscript {
         classpath deps.plugins.kotlinGradlePlugin
         classpath deps.plugins.daggerHiltGradlePlugin
         classpath deps.plugins.gradleVersionsPlugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 

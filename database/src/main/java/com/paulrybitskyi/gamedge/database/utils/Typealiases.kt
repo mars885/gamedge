@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di.modules.data
+package com.paulrybitskyi.gamedge.database.utils
 
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import com.paulrybitskyi.gamedge.database.entities.Game
 
-@Module
-@InstallIn(ApplicationComponent::class)
-internal object RepositoriesModule
+
+internal typealias DatabaseGame = Game

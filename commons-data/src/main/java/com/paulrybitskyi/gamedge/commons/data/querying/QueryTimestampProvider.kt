@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di.modules.data
+package com.paulrybitskyi.gamedge.commons.data.querying
 
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+interface QueryTimestampProvider {
 
-@Module
-@InstallIn(ApplicationComponent::class)
-internal object RepositoriesModule
+    fun getPopularGamesMinReleaseDate(): Long
+
+    fun getRecentlyReleasedGamesMinReleaseDate(): Long
+
+    fun getRecentlyReleasedGamesMaxReleaseDate(): Long
+
+    fun getComingSoonGamesMinReleaseDate(): Long
+
+    fun getMostAnticipatedGamesMinReleaseDate(): Long
+
+}

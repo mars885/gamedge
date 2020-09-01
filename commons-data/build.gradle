@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di.modules.data
+import com.paulrybitskyi.gamedge.appConfig
+import com.paulrybitskyi.gamedge.deps
 
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
 
-@Module
-@InstallIn(ApplicationComponent::class)
-internal object RepositoriesModule
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation deps.misc.kotlinResult
+}
+
+sourceCompatibility = appConfig.javaCompatibilityVersion
+targetCompatibility = appConfig.javaCompatibilityVersion

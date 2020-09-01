@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di.modules.data
+package com.paulrybitskyi.gamedge.database
 
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+internal object Constants {
 
-@Module
-@InstallIn(ApplicationComponent::class)
-internal object RepositoriesModule
+    const val DATABASE_NAME = "gamedge.db"
+    const val VERSION = 1
+
+}

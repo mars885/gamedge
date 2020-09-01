@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di.modules.data
+package com.paulrybitskyi.gamedge.commons.data
 
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+object Constants {
 
-@Module
-@InstallIn(ApplicationComponent::class)
-internal object RepositoriesModule
+    const val POPULAR_GAMES_MIN_POPULARITY = 1
+
+}
