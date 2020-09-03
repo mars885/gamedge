@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-import com.paulrybitskyi.gamedge.appConfig
-import com.paulrybitskyi.gamedge.deps
-
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation deps.misc.kotlinResult
+plugins {
+    kotlin()
 }
-
-sourceCompatibility = appConfig.javaCompatibilityVersion
-targetCompatibility = appConfig.javaCompatibilityVersion

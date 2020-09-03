@@ -15,19 +15,17 @@
  */
 
 plugins {
-    `kotlin-dsl`
+    kotlin()
 }
 
-repositories {
-    jcenter()
-    google()
-}
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
+tasks.compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs += listOf(
+            "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
+        )
+    }
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:4.0.1")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0")
+    implementation(deps.kotlin.kotlinStdLib)
 }

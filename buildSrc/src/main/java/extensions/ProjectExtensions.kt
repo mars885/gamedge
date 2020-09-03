@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-import com.paulrybitskyi.gamedge.appConfig
-import com.paulrybitskyi.gamedge.deps
+package extensions
 
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+import org.gradle.api.Project
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation deps.misc.kotlinResult
+@Suppress("UNCHECKED_CAST")
+fun <T> Project.property(key: String, default: T): T {
+    return ((properties[key] as? T) ?: default)
 }
-
-sourceCompatibility = appConfig.javaCompatibilityVersion
-targetCompatibility = appConfig.javaCompatibilityVersion

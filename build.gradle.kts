@@ -14,28 +14,21 @@
  * limitations under the License.
  */
 
-import com.paulrybitskyi.gamedge.deps
-
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply plugin: "com.github.ben-manes.versions"
+plugins {
+    gradleVersions()
+}
 
 buildscript {
-    apply from: "gradle/utils.gradle"
-    ext {
-        kotlin_version = '1.4.0'
-    }
-
     repositories {
         google()
         jcenter()
     }
 
     dependencies {
-        classpath deps.plugins.androidGradlePlugin
-        classpath deps.plugins.kotlinGradlePlugin
-        classpath deps.plugins.daggerHiltGradlePlugin
-        classpath deps.plugins.gradleVersionsPlugin
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath(deps.plugins.androidGradle)
+        classpath(deps.plugins.kotlinGradle)
+        classpath(deps.plugins.daggerHiltGradle)
+        classpath(deps.plugins.gradleVersions)
     }
 }
 
@@ -46,6 +39,8 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks {
+    val clean by registering(Delete::class) {
+        delete(buildDir)
+    }
 }

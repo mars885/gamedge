@@ -1,3 +1,0 @@
-ext.propertyOrDefault = { propertyName, defaultValue ->
-    return (project.properties[propertyName] ?: defaultValue)
-}

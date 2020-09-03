@@ -38,12 +38,11 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
     private fun Class<*>.fieldSerializers(parentName: String = ""): List<FieldSerializer> {
         if(!shouldBeSerialized()) return listOf()
 
-        return mutableListOf<FieldSerializer>()
-            .apply {
-                for(field in declaredFields) {
-                    add(field.serializer(parentName))
-                }
+        return buildList {
+            for(field in declaredFields) {
+                add(field.serializer(parentName))
             }
+        }
     }
 
 

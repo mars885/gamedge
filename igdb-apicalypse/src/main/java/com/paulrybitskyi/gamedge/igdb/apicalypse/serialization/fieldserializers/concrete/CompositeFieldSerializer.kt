@@ -27,17 +27,16 @@ internal class CompositeFieldSerializer(
 
 
     override fun serialize(): String {
-        return mutableListOf<String>()
-            .apply {
-                for(child in children) {
-                    buildString {
-                        appendParent(parentName)
-                        append(child.serialize())
-                    }
-                    .also(::add)
+        return buildList {
+            for(child in children) {
+                buildString {
+                    appendParent(parentName)
+                    append(child.serialize())
                 }
+                .also(::add)
             }
-            .joinToString(Constants.FIELD_SEPARATOR)
+        }
+        .joinToString(Constants.FIELD_SEPARATOR)
     }
 
 
