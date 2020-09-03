@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.igdb.api.entities
 import com.paulrybitskyi.gamedge.igdb.api.utils.HttpCodes
 
 
-sealed class Error {
+internal sealed class Error {
 
     data class HttpError(val code: Int, val message: String) : Error()
 

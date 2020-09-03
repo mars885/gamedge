@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.entities
 
-enum class WebsiteCategory(val value: Int) {
+internal enum class WebsiteCategory(val value: Int) {
 
 
     UNKNOWN(value = -1),

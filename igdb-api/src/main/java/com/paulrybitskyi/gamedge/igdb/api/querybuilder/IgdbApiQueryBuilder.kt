@@ -16,9 +16,6 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.querybuilder
 
-import com.paulrybitskyi.gamedge.igdb.api.entities.Company
-import com.paulrybitskyi.gamedge.igdb.api.entities.Game
-
 internal interface IgdbApiQueryBuilder {
 
     fun buildGamesSearchingQuery(searchQuery: String, offset: Int, limit: Int): String
@@ -31,8 +28,6 @@ internal interface IgdbApiQueryBuilder {
 
     fun buildMostAnticipatedGamesRetrievalQuery(offset: Int, limit: Int): String
 
-    fun buildCompanyGamesRetrievalQuery(company: Company, offset: Int, limit: Int): String
-
-    fun buildSimilarGamesRetrievalQuery(game: Game, offset: Int, limit: Int): String
+    fun buildGamesRetrievalQuery(gameIds: List<Int>, offset: Int, limit: Int): String
 
 }

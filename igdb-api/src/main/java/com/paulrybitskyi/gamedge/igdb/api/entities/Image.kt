@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
 
 @ApicalypseClass
 @JsonClass(generateAdapter = true)
-data class Image(
+internal data class Image(
     @Apicalypse(name = Schema.WIDTH)
     @Json(name = Schema.WIDTH)
     val width: Int = -1,

@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
 
 @ApicalypseClass
 @JsonClass(generateAdapter = true)
-data class Mode(
+internal data class Mode(
     @Apicalypse(name = Schema.NAME)
     @Json(name = Schema.NAME)
     val name: String,

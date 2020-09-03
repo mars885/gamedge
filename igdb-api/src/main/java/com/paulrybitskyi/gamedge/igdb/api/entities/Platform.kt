@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
 
 @ApicalypseClass
 @JsonClass(generateAdapter = true)
-data class Platform(
+internal data class Platform(
     @Apicalypse(name = Schema.ABBREVIATION)
     @Json(name = Schema.ABBREVIATION)
     val abbreviation: String = "",

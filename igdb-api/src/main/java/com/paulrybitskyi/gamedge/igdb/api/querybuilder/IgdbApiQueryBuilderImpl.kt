@@ -16,28 +16,20 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.querybuilder
 
-import com.paulrybitskyi.gamedge.igdb.api.entities.Company
+import com.paulrybitskyi.gamedge.commons.data.Constants.POPULAR_GAMES_MIN_POPULARITY
+import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.igdb.api.entities.Game
 import com.paulrybitskyi.gamedge.igdb.api.entities.Game.Schema.HYPE_COUNT
 import com.paulrybitskyi.gamedge.igdb.api.entities.Game.Schema.ID
 import com.paulrybitskyi.gamedge.igdb.api.entities.Game.Schema.POPULARITY
 import com.paulrybitskyi.gamedge.igdb.api.entities.Game.Schema.RELEASE_DATE
-import com.paulrybitskyi.gamedge.igdb.api.utils.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
-import java.util.concurrent.TimeUnit
-
-
-private const val POPULAR_GAMES_MIN_POPULARITY = 1
-
-private val POPULAR_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(90L)
-private val RECENTLY_RELEASED_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(7L)
-
 
 internal class IgdbApiQueryBuilderImpl(
     private val apicalypseQueryBuilderFactory: ApicalypseQueryBuilderFactory,
     private val apicalypseSerializer: ApicalypseSerializer,
-    private val timestampProvider: TimestampProvider
+    private val queryTimestampProvider: QueryTimestampProvider
 ) : IgdbApiQueryBuilder {
 
 
@@ -57,7 +49,7 @@ internal class IgdbApiQueryBuilderImpl(
 
 
     override fun buildPopularGamesRetrievalQuery(offset: Int, limit: Int): String {
-        val minReleaseDateTimestamp = calculateMinReleaseDateTimestamp()
+        val minReleaseDateTimestamp = queryTimestampProvider.getPopularGamesMinReleaseDate()
 
         return apicalypseQueryBuilderFactory.newBuilder()
             .select(gameEntityFields)
@@ -75,24 +67,16 @@ internal class IgdbApiQueryBuilderImpl(
     }
 
 
-    private fun calculateMinReleaseDateTimestamp(): Long {
-        val currentUnixTimestamp = timestampProvider.provideUnixTimestamp()
-        val minReleaseDateTimestamp = (currentUnixTimestamp - POPULAR_GAMES_MIN_RELEASE_DATE_DURATION)
-
-        return minReleaseDateTimestamp
-    }
-
-
     override fun buildRecentlyReleasedGamesRetrievalQuery(offset: Int, limit: Int): String {
-        val maxReleaseDateTimestamp = timestampProvider.provideUnixTimestamp()
-        val minReleaseDateTimestamp = (maxReleaseDateTimestamp - RECENTLY_RELEASED_GAMES_MIN_RELEASE_DATE_DURATION)
+        val minReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMinReleaseDate()
+        val maxReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMaxReleaseDate()
 
         return apicalypseQueryBuilderFactory.newBuilder()
             .select(gameEntityFields)
             .where {
                 and(
-                    { RELEASE_DATE.isSmallerThan(maxReleaseDateTimestamp.toString()) },
-                    { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) }
+                    { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) },
+                    { RELEASE_DATE.isSmallerThan(maxReleaseDateTimestamp.toString()) }
                 )
             }
             .offset(offset)
@@ -103,11 +87,11 @@ internal class IgdbApiQueryBuilderImpl(
 
 
     override fun buildComingSoonGamesRetrievalQuery(offset: Int, limit: Int): String {
-        val currentUnixTimestamp = timestampProvider.provideUnixTimestamp()
+        val minReleaseDateTimestamp = queryTimestampProvider.getComingSoonGamesMinReleaseDate()
 
         return apicalypseQueryBuilderFactory.newBuilder()
             .select(gameEntityFields)
-            .where { RELEASE_DATE.isLargerThan(currentUnixTimestamp.toString()) }
+            .where { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) }
             .offset(offset)
             .limit(limit)
             .sortAsc(RELEASE_DATE)
@@ -116,13 +100,13 @@ internal class IgdbApiQueryBuilderImpl(
 
 
     override fun buildMostAnticipatedGamesRetrievalQuery(offset: Int, limit: Int): String {
-        val currentUnixTimestamp = timestampProvider.provideUnixTimestamp()
+        val minReleaseDateTimestamp = queryTimestampProvider.getMostAnticipatedGamesMinReleaseDate()
 
         return apicalypseQueryBuilderFactory.newBuilder()
             .select(gameEntityFields)
             .where {
                 and(
-                    { RELEASE_DATE.isLargerThan(currentUnixTimestamp.toString()) },
+                    { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) },
                     { HYPE_COUNT.isNotNull }
                 )
             }
@@ -133,24 +117,12 @@ internal class IgdbApiQueryBuilderImpl(
     }
 
 
-    override fun buildCompanyGamesRetrievalQuery(company: Company, offset: Int, limit: Int): String {
-        val companyGamesIds = company.developedGames.map(Integer::toString)
+    override fun buildGamesRetrievalQuery(gameIds: List<Int>, offset: Int, limit: Int): String {
+        val stringifiedGameIds = gameIds.map(Integer::toString)
 
         return apicalypseQueryBuilderFactory.newBuilder()
             .select(gameEntityFields)
-            .where { ID.containsAnyOf(companyGamesIds) }
-            .offset(offset)
-            .limit(limit)
-            .build()
-    }
-
-
-    override fun buildSimilarGamesRetrievalQuery(game: Game, offset: Int, limit: Int): String {
-        val similarGamesIds = game.similarGames.map(Integer::toString)
-
-        return apicalypseQueryBuilderFactory.newBuilder()
-            .select(gameEntityFields)
-            .where { ID.containsAnyOf(similarGamesIds) }
+            .where { ID.containsAnyOf(stringifiedGameIds) }
             .offset(offset)
             .limit(limit)
             .build()

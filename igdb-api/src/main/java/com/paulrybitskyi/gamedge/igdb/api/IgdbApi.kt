@@ -16,11 +16,10 @@
 
 package com.paulrybitskyi.gamedge.igdb.api
 
-import com.paulrybitskyi.gamedge.igdb.api.utils.ApiCompany
 import com.paulrybitskyi.gamedge.igdb.api.utils.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.utils.ApiResult
 
-interface IgdbApi {
+internal interface IgdbApi {
 
     suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): ApiResult<List<ApiGame>>
 
@@ -32,8 +31,6 @@ interface IgdbApi {
 
     suspend fun getMostAnticipatedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>>
 
-    suspend fun getCompanyGames(company: ApiCompany, offset: Int, limit: Int): ApiResult<List<ApiGame>>
-
-    suspend fun getSimilarGames(game: ApiGame, offset: Int, limit: Int): ApiResult<List<ApiGame>>
+    suspend fun getGames(gameIds: List<Int>, offset: Int, limit: Int): ApiResult<List<ApiGame>>
 
 }

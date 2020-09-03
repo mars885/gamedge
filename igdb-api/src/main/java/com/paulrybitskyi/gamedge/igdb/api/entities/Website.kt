@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
 
 @ApicalypseClass
 @JsonClass(generateAdapter = true)
-data class Website(
+internal data class Website(
     @Apicalypse(name = Schema.URL)
     @Json(name = Schema.URL)
     val url: String,

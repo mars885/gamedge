@@ -14,25 +14,30 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di.modules
+package com.paulrybitskyi.gamedge.igdb.api.datastore
 
+import com.paulrybitskyi.gamedge.data.datastores.GamesDataStore
 import com.paulrybitskyi.gamedge.igdb.api.IgdbApi
 import com.paulrybitskyi.gamedge.igdb.api.IgdbApiFactory
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
-import javax.inject.Singleton
 
-@Module
-@InstallIn(ApplicationComponent::class)
-internal object NetworkModule {
+object GamesServerDataStoreFactory {
 
 
-    @Singleton
-    @Provides
-    fun provideIgdbApi(): IgdbApi {
+    fun create(): GamesDataStore {
+        return GamesServerDataStore(
+            igdbApi = createIgdbApi(),
+            entityMapper = createEntityMapper()
+        )
+    }
+
+
+    private fun createIgdbApi(): IgdbApi {
         return IgdbApiFactory.createIgdbApi()
+    }
+
+
+    private fun createEntityMapper(): EntityMapper {
+        return EntityMapper()
     }
 
 

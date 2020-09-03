@@ -20,8 +20,7 @@ import android.content.Context
 import com.paulrybitskyi.gamedge.data.datastores.GamesDataStore
 import com.paulrybitskyi.gamedge.database.datastore.GamesDatabaseDataStoreFactory
 import com.paulrybitskyi.gamedge.di.qualifiers.DataStore
-import com.paulrybitskyi.gamedge.igdb.api.IgdbApi
-import com.paulrybitskyi.gamedge.igdb.api.datastore.GamesDataStoreImpl
+import com.paulrybitskyi.gamedge.igdb.api.datastore.GamesServerDataStoreFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,8 +36,8 @@ internal object DataStoresModule {
     @Singleton
     @DataStore(DataStore.Type.SERVER)
     @Provides
-    fun provideGamesServerDataStore(igdbApi: IgdbApi): GamesDataStore {
-        return GamesDataStoreImpl(igdbApi)
+    fun provideGamesServerDataStore(): GamesDataStore {
+        return GamesServerDataStoreFactory.create()
     }
 
 

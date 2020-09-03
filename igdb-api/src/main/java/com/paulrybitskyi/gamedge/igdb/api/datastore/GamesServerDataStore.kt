@@ -16,14 +16,18 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.datastore
 
+import com.github.michaelbull.result.mapEither
 import com.paulrybitskyi.gamedge.data.datastores.GamesDataStore
 import com.paulrybitskyi.gamedge.data.utils.DataCompany
 import com.paulrybitskyi.gamedge.data.utils.DataGame
 import com.paulrybitskyi.gamedge.data.utils.DataStoreResult
 import com.paulrybitskyi.gamedge.igdb.api.IgdbApi
+import com.paulrybitskyi.gamedge.igdb.api.utils.ApiGame
+import com.paulrybitskyi.gamedge.igdb.api.utils.ApiResult
 
-class GamesDataStoreImpl(
-    private val igdbApi: IgdbApi
+internal class GamesServerDataStore(
+    private val igdbApi: IgdbApi,
+    private val entityMapper: EntityMapper
 ) : GamesDataStore {
 
 
@@ -64,15 +68,23 @@ class GamesDataStoreImpl(
 
     override suspend fun getCompanyGames(company: DataCompany, offset: Int, limit: Int): DataStoreResult<List<DataGame>> {
         return igdbApi
-            .getCompanyGames(company.toApiCompany(), offset, limit)
+            .getGames(company.developedGames, offset, limit)
             .toDataStoreResult()
     }
 
 
     override suspend fun getSimilarGames(game: DataGame, offset: Int, limit: Int): DataStoreResult<List<DataGame>> {
         return igdbApi
-            .getSimilarGames(game.toApiGame(), offset, limit)
+            .getGames(game.similarGames, offset, limit)
             .toDataStoreResult()
+    }
+
+
+    private fun ApiResult<List<ApiGame>>.toDataStoreResult(): DataStoreResult<List<DataGame>> {
+        return mapEither(
+            success = entityMapper::mapToDataGames,
+            failure = entityMapper::mapToDataError
+        )
     }
 
 

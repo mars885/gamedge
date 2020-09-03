@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
 
 @ApicalypseClass
 @JsonClass(generateAdapter = true)
-data class InvolvedCompany(
+internal data class InvolvedCompany(
     @Apicalypse(name = Schema.COMPANY)
     @Json(name = Schema.COMPANY)
     val company: Company,

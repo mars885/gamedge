@@ -16,6 +16,8 @@
 
 package com.paulrybitskyi.gamedge.igdb.api
 
+import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
+import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProviderFactory
 import com.paulrybitskyi.gamedge.igdb.api.adapters.AgeRatingCategoryAdapter
 import com.paulrybitskyi.gamedge.igdb.api.adapters.AgeRatingTypeAdapter
 import com.paulrybitskyi.gamedge.igdb.api.adapters.WebsiteCategoryAdapter
@@ -24,8 +26,6 @@ import com.paulrybitskyi.gamedge.igdb.api.querybuilder.IgdbApiQueryBuilderImpl
 import com.paulrybitskyi.gamedge.igdb.api.services.IgdbApiService
 import com.paulrybitskyi.gamedge.igdb.api.utils.AuthorizationInterceptor
 import com.paulrybitskyi.gamedge.igdb.api.utils.calladapter.ApiResultCallAdapterFactory
-import com.paulrybitskyi.gamedge.igdb.api.utils.providers.TimestampProvider
-import com.paulrybitskyi.gamedge.igdb.api.utils.providers.TimestampProviderImpl
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializerFactory
@@ -36,15 +36,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
-object IgdbApiFactory {
+internal object IgdbApiFactory {
 
 
     fun createIgdbApi(): IgdbApi {
-        return createIgdbApiInternal()
-    }
-
-
-    private fun createIgdbApiInternal(): IgdbApi {
         return IgdbApiImpl(
             igdbApiService = createIgdbApiService(),
             igdbApiQueryBuilder = createIgdbApiQueryBuilder()
@@ -105,7 +100,7 @@ object IgdbApiFactory {
         return IgdbApiQueryBuilderImpl(
             apicalypseQueryBuilderFactory = createApicalypseQueryBuilderFactory(),
             apicalypseSerializer = createApicalypseSerializer(),
-            timestampProvider = createTimestampProvider()
+            queryTimestampProvider = createQueryTimestampProvider()
         )
     }
 
@@ -120,8 +115,8 @@ object IgdbApiFactory {
     }
 
 
-    private fun createTimestampProvider(): TimestampProvider {
-        return TimestampProviderImpl()
+    private fun createQueryTimestampProvider(): QueryTimestampProvider {
+        return QueryTimestampProviderFactory.create()
     }
 
 

@@ -18,7 +18,6 @@ package com.paulrybitskyi.gamedge.igdb.api
 
 import com.paulrybitskyi.gamedge.igdb.api.querybuilder.IgdbApiQueryBuilder
 import com.paulrybitskyi.gamedge.igdb.api.services.IgdbApiService
-import com.paulrybitskyi.gamedge.igdb.api.utils.ApiCompany
 import com.paulrybitskyi.gamedge.igdb.api.utils.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.utils.ApiResult
 
@@ -83,29 +82,14 @@ internal class IgdbApiImpl(
     }
 
 
-    override suspend fun getCompanyGames(
-        company: ApiCompany,
+    override suspend fun getGames(
+        gameIds: List<Int>,
         offset: Int,
         limit: Int
     ): ApiResult<List<ApiGame>> {
         return igdbApiService.getGames(
-            igdbApiQueryBuilder.buildCompanyGamesRetrievalQuery(
-                company = company,
-                offset = offset,
-                limit = limit
-            )
-        )
-    }
-
-
-    override suspend fun getSimilarGames(
-        game: ApiGame,
-        offset: Int,
-        limit: Int
-    ): ApiResult<List<ApiGame>> {
-        return igdbApiService.getGames(
-            igdbApiQueryBuilder.buildSimilarGamesRetrievalQuery(
-                game = game,
+            igdbApiQueryBuilder.buildGamesRetrievalQuery(
+                gameIds = gameIds,
                 offset = offset,
                 limit = limit
             )

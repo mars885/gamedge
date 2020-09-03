@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.entities
 
-enum class AgeRatingType(val value: Int) {
+internal enum class AgeRatingType(val value: Int) {
 
 
     UNKNOWN(value = -1),

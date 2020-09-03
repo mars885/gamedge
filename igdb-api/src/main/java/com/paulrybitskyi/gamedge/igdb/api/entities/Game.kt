@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
 
 @ApicalypseClass
 @JsonClass(generateAdapter = true)
-data class Game(
+internal data class Game(
     @Apicalypse(name = Schema.ID)
     @Json(name = Schema.ID)
     val id: Int = -1,

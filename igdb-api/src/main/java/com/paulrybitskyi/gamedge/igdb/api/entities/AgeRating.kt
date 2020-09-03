@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
 
 @ApicalypseClass
 @JsonClass(generateAdapter = true)
-data class AgeRating(
+internal data class AgeRating(
     @Apicalypse(name = Schema.CATEGORY)
     @Json(name = Schema.CATEGORY)
     val category: AgeRatingCategory,
