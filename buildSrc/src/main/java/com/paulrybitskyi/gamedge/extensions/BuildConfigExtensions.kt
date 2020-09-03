@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package extensions
+package com.paulrybitskyi.gamedge.extensions
 
 import com.android.build.gradle.internal.dsl.BaseFlavor
 import com.android.build.gradle.internal.dsl.BuildType

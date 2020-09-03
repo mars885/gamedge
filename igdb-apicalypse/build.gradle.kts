@@ -18,14 +18,6 @@ plugins {
     kotlin()
 }
 
-tasks.compileKotlin {
-    kotlinOptions {
-        freeCompilerArgs += listOf(
-            "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
-        )
-    }
-}
-
 dependencies {
     implementation(deps.kotlin.kotlinStdLib)
 }

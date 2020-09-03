@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package extensions
+package com.paulrybitskyi.gamedge.extensions
 
 import org.gradle.api.Project
 

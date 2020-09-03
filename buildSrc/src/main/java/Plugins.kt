@@ -19,14 +19,19 @@ import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
 
-private const val PLUGIN_GRADLE_VERSIONS = "com.github.ben-manes.versions"
-private const val PLUGIN_ANDROID_APPLICATION = "com.android.application"
-private const val PLUGIN_ANDROID_LIBRARY = "com.android.library"
-private const val PLUGIN_KOTLIN = "kotlin"
-private const val PLUGIN_KOTLIN_ANDROID = "kotlin-android"
-private const val PLUGIN_KOTLIN_ANDROID_EXTENSIONS = "kotlin-android-extensions"
-private const val PLUGIN_KOTLIN_KAPT = "kotlin-kapt"
-private const val PLUGIN_DAGGER_HILT_ANDROID = "dagger.hilt.android.plugin"
+const val PLUGIN_GAMEDGE_ANDROID = "com.paulrybitskyi.gamedge"
+const val PLUGIN_GRADLE_VERSIONS = "com.github.ben-manes.versions"
+const val PLUGIN_ANDROID_APPLICATION = "com.android.application"
+const val PLUGIN_ANDROID_LIBRARY = "com.android.library"
+const val PLUGIN_KOTLIN = "kotlin"
+const val PLUGIN_KOTLIN_ANDROID = "kotlin-android"
+const val PLUGIN_KOTLIN_KAPT = "kotlin-kapt"
+const val PLUGIN_DAGGER_HILT_ANDROID = "dagger.hilt.android.plugin"
+
+
+fun PluginDependenciesSpec.gamedgeAndroid(): PluginDependencySpec {
+    return id(PLUGIN_GAMEDGE_ANDROID)
+}
 
 
 fun PluginDependenciesSpec.gradleVersions(): PluginDependencySpec {
@@ -51,11 +56,6 @@ fun PluginDependenciesSpec.kotlin(): PluginDependencySpec {
 
 fun PluginDependenciesSpec.kotlinAndroid(): PluginDependencySpec {
     return id(PLUGIN_KOTLIN_ANDROID)
-}
-
-
-fun PluginDependenciesSpec.kotlinAndroidExtensions(): PluginDependencySpec {
-    return id(PLUGIN_KOTLIN_ANDROID_EXTENSIONS)
 }
 
 

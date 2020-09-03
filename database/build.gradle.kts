@@ -16,48 +16,17 @@
 
 plugins {
     androidLibrary()
-    kotlinAndroid()
-    kotlinAndroidExtensions()
+    gamedgeAndroid()
     kotlinKapt()
 }
 
 android {
-    compileSdkVersion(appConfig.compileSdkVersion)
-    buildToolsVersion(appConfig.buildToolsVersion)
-
     defaultConfig {
-        minSdkVersion(appConfig.minSdkVersion)
-        targetSdkVersion(appConfig.targetSdkVersion)
-        versionCode = appConfig.versionCode
-        versionName = appConfig.versionName
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
         javaCompileOptions {
             annotationProcessorOptions {
                 argument("room.schemaLocation", "$projectDir/schemas")
             }
         }
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = appConfig.javaCompatibilityVersion
-        targetCompatibility = appConfig.javaCompatibilityVersion
-    }
-
-    kotlinOptions {
-        jvmTarget = appConfig.kotlinCompatibilityVersion
-    }
-
-    kapt {
-        correctErrorTypes = true
     }
 }
 

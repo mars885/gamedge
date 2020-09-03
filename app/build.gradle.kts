@@ -16,48 +16,14 @@
 
 plugins {
     androidApplication()
-    kotlinAndroid()
-    kotlinAndroidExtensions()
+    gamedgeAndroid()
     kotlinKapt()
     daggerHiltAndroid()
 }
 
 android {
-    compileSdkVersion(appConfig.compileSdkVersion)
-    buildToolsVersion(appConfig.buildToolsVersion)
-
-    defaultConfig {
-        applicationId = appConfig.applicationId
-        minSdkVersion(appConfig.minSdkVersion)
-        targetSdkVersion(appConfig.targetSdkVersion)
-        versionCode = appConfig.versionCode
-        versionName = appConfig.versionName
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
-
     buildFeatures {
         viewBinding = true
-    }
-
-    compileOptions {
-        sourceCompatibility = appConfig.javaCompatibilityVersion
-        targetCompatibility = appConfig.javaCompatibilityVersion
-    }
-
-    kotlinOptions {
-        jvmTarget = appConfig.kotlinCompatibilityVersion
-    }
-
-    kapt {
-        correctErrorTypes = true
     }
 }
 

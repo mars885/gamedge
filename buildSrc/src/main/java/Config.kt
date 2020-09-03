@@ -30,7 +30,7 @@ object appConfig {
     const val versionName = "1.0.0"
 
     val javaCompatibilityVersion = JavaVersion.VERSION_1_8
-    val kotlinCompatibilityVersion = javaCompatibilityVersion.toString()
+    val kotlinCompatibilityVersion = JavaVersion.VERSION_1_8
 
 }
 

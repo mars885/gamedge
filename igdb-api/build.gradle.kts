@@ -14,49 +14,18 @@
  * limitations under the License.
  */
 
-import extensions.property
-import extensions.stringField
+import com.paulrybitskyi.gamedge.extensions.property
+import com.paulrybitskyi.gamedge.extensions.stringField
 
 plugins {
     androidLibrary()
-    kotlinAndroid()
-    kotlinAndroidExtensions()
+    gamedgeAndroid()
     kotlinKapt()
 }
 
 android {
-    compileSdkVersion(appConfig.compileSdkVersion)
-    buildToolsVersion(appConfig.buildToolsVersion)
-
     defaultConfig {
-        minSdkVersion(appConfig.minSdkVersion)
-        targetSdkVersion(appConfig.targetSdkVersion)
-        versionCode = appConfig.versionCode
-        versionName = appConfig.versionName
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
         stringField("IGDB_API_KEY", property("IGDB_API_KEY", ""))
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = appConfig.javaCompatibilityVersion
-        targetCompatibility = appConfig.javaCompatibilityVersion
-    }
-
-    kotlinOptions {
-        jvmTarget = appConfig.kotlinCompatibilityVersion
-    }
-
-    kapt {
-        correctErrorTypes = true
     }
 }
 

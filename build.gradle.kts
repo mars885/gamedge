@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+import org.jetbrains.kotlin.gradle.plugin.KaptExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     gradleVersions()
 }
@@ -37,6 +40,29 @@ allprojects {
         google()
         jcenter()
     }
+}
+
+subprojects {
+
+    tasks.withType(KotlinCompile::class.java).all {
+        sourceCompatibility = appConfig.javaCompatibilityVersion.toString()
+        targetCompatibility = appConfig.javaCompatibilityVersion.toString()
+
+        kotlinOptions {
+            freeCompilerArgs += listOf(
+                "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
+            )
+
+            jvmTarget = appConfig.kotlinCompatibilityVersion.toString()
+        }
+    }
+
+    plugins.withId(PLUGIN_KOTLIN_KAPT) {
+        extensions.findByType<KaptExtension>()?.run {
+            correctErrorTypes = true
+        }
+    }
+
 }
 
 tasks {
