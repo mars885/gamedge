@@ -26,13 +26,13 @@ import com.squareup.moshi.JsonClass
 internal data class Image(
     @Apicalypse(name = Schema.WIDTH)
     @Json(name = Schema.WIDTH)
-    val width: Int = -1,
+    val width: Int,
     @Apicalypse(name = Schema.HEIGHT)
     @Json(name = Schema.HEIGHT)
-    val height: Int = -1,
+    val height: Int,
     @Apicalypse(name = Schema.URL)
     @Json(name = Schema.URL)
-    val url: String = "",
+    val url: String,
 ) {
 
 

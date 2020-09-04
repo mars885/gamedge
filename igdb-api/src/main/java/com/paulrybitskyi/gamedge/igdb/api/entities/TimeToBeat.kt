@@ -26,13 +26,13 @@ import com.squareup.moshi.JsonClass
 data class TimeToBeat(
     @Apicalypse(name = Schema.COMPLETELY)
     @Json(name = Schema.COMPLETELY)
-    val completely: Int = -1,
+    val completely: Int,
     @Apicalypse(name = Schema.HASTILY)
     @Json(name = Schema.HASTILY)
-    val hastily: Int = -1,
+    val hastily: Int,
     @Apicalypse(name = Schema.NORMALLY)
     @Json(name = Schema.NORMALLY)
-    val normally: Int = -1,
+    val normally: Int,
 ) {
 
 

@@ -20,17 +20,17 @@ internal enum class WebsiteCategory(val value: Int) {
 
 
     UNKNOWN(value = -1),
-    OFFICIAL(value = -1),
-    WIKIA(value = -1),
-    WIKIPEDIA(value = -1),
-    FACEBOOK(value = -1),
-    TWITTER(value = -1),
-    TWITCH(value = -1),
-    INSTAGRAM(value = -1),
-    YOUTUBE(value = -1),
-    STEAM(value = -1),
-    REDDIT(value = -1),
-    DISCORD(value = -1);
+    OFFICIAL(value = 1),
+    WIKIA(value = 2),
+    WIKIPEDIA(value = 3),
+    FACEBOOK(value = 4),
+    TWITTER(value = 5),
+    TWITCH(value = 6),
+    INSTAGRAM(value = 8),
+    YOUTUBE(value = 9),
+    STEAM(value = 13),
+    REDDIT(value = 14),
+    DISCORD(value = 18);
 
 
     internal companion object {
