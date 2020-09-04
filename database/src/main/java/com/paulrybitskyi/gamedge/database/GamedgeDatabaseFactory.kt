@@ -47,6 +47,7 @@ internal object GamedgeDatabaseFactory {
             GamedgeDatabase::class.java,
             Constants.DATABASE_NAME
         )
+        .fallbackToDestructiveMigration()
         .build()
     }
 
