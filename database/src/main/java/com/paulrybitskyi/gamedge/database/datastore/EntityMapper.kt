@@ -69,29 +69,34 @@ internal class EntityMapper(
             storyline = databaseGame.storyline,
             cover = databaseGame.cover.fromJson(),
             timeToBeat = databaseGame.timeToBeat.fromJson(),
-            ageRatings = databaseGame.ageRatings.fromJson(),
-            artworks = databaseGame.artworks.fromJson(),
-            screenshots = databaseGame.screenshots.fromJson(),
-            genres = databaseGame.genres.fromJson(),
-            platforms = databaseGame.platforms.fromJson(),
-            playerPerspectives = databaseGame.playerPerspectives.fromJson(),
-            themes = databaseGame.themes.fromJson(),
-            modes = databaseGame.modes.fromJson(),
-            keywords = databaseGame.keywords.fromJson(),
-            involvedCompanies = databaseGame.involvedCompanies.fromJson(),
-            websites = databaseGame.websites.fromJson(),
-            similarGames = databaseGame.similarGames.fromJson()
+            ageRatings = databaseGame.ageRatings.fromJson(emptyList()),
+            artworks = databaseGame.artworks.fromJson(emptyList()),
+            screenshots = databaseGame.screenshots.fromJson(emptyList()),
+            genres = databaseGame.genres.fromJson(emptyList()),
+            platforms = databaseGame.platforms.fromJson(emptyList()),
+            playerPerspectives = databaseGame.playerPerspectives.fromJson(emptyList()),
+            themes = databaseGame.themes.fromJson(emptyList()),
+            modes = databaseGame.modes.fromJson(emptyList()),
+            keywords = databaseGame.keywords.fromJson(emptyList()),
+            involvedCompanies = databaseGame.involvedCompanies.fromJson(emptyList()),
+            websites = databaseGame.websites.fromJson(emptyList()),
+            similarGames = databaseGame.similarGames.fromJson(emptyList())
         )
     }
 
 
-    private inline fun <reified T : Any> T.toJson(): String {
-        return jsonConverter.toJson(this::class.java)
+    private inline fun <reified T> T.toJson(): String {
+        return jsonConverter.toJson(T::class.java)
     }
 
 
-    private inline fun <reified T> String.fromJson(): T {
-        return checkNotNull(jsonConverter.fromJson(this))
+    private inline fun <reified T> String.fromJson(): T? {
+        return jsonConverter.fromJson(this)
+    }
+
+
+    private inline fun <reified T> String.fromJson(default: T): T {
+        return (fromJson() ?: default)
     }
 
 

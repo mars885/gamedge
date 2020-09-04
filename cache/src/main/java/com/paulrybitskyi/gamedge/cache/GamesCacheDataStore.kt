@@ -46,9 +46,10 @@ internal class GamesCacheDataStore(
     override suspend fun getPopularGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>> {
         return gamesCache.values
             .filter {
-                it.popularity != -1.0 &&
-                it.popularity > Constants.POPULAR_GAMES_MIN_POPULARITY &&
-                it.releaseDate > queryTimestampProvider.getPopularGamesMinReleaseDate()
+                it.popularity != null &&
+                it.popularity!! > Constants.POPULAR_GAMES_MIN_POPULARITY &&
+                it.releaseDate != null &&
+                it.releaseDate!! > queryTimestampProvider.getPopularGamesMinReleaseDate()
             }
             .sortedByDescending { it.popularity }
             .take(offset, limit)
@@ -59,8 +60,9 @@ internal class GamesCacheDataStore(
     override suspend fun getRecentlyReleasedGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>> {
         return gamesCache.values
             .filter {
-                it.releaseDate > queryTimestampProvider.getRecentlyReleasedGamesMinReleaseDate() &&
-                it.releaseDate < queryTimestampProvider.getRecentlyReleasedGamesMaxReleaseDate()
+                it.releaseDate != null &&
+                it.releaseDate!! > queryTimestampProvider.getRecentlyReleasedGamesMinReleaseDate() &&
+                it.releaseDate!! < queryTimestampProvider.getRecentlyReleasedGamesMaxReleaseDate()
             }
             .sortedByDescending { it.releaseDate }
             .take(offset, limit)
@@ -70,7 +72,10 @@ internal class GamesCacheDataStore(
 
     override suspend fun getComingSoonGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>> {
         return gamesCache.values
-            .filter { it.releaseDate > queryTimestampProvider.getComingSoonGamesMinReleaseDate() }
+            .filter {
+                it.releaseDate != null &&
+                it.releaseDate!! > queryTimestampProvider.getComingSoonGamesMinReleaseDate()
+            }
             .sortedBy { it.releaseDate }
             .take(offset, limit)
             .asSuccess()
@@ -80,8 +85,9 @@ internal class GamesCacheDataStore(
     override suspend fun getMostAnticipatedGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>> {
         return gamesCache.values
             .filter {
-                it.releaseDate > queryTimestampProvider.getMostAnticipatedGamesMinReleaseDate() &&
-                it.hypeCount != -1
+                it.releaseDate != null &&
+                it.releaseDate!! > queryTimestampProvider.getMostAnticipatedGamesMinReleaseDate() &&
+                it.hypeCount != null
             }
             .sortedByDescending { it.hypeCount }
             .take(offset, limit)

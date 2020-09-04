@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "47edb586bf31b642276d92d6a5440930",
+    "identityHash": "ebc50bf14742033ce431c4f3ca1ffcae",
     "entities": [
       {
         "tableName": "games",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `hype_count` INTEGER NOT NULL, `release_date` INTEGER NOT NULL, `critics_rating` REAL NOT NULL, `users_rating` REAL NOT NULL, `total_rating` REAL NOT NULL, `popularity` REAL NOT NULL, `name` TEXT NOT NULL, `summary` TEXT NOT NULL, `storyline` TEXT NOT NULL, `cover` TEXT NOT NULL, `time_to_beat` TEXT NOT NULL, `age_ratings` TEXT NOT NULL, `artworks` TEXT NOT NULL, `screenshots` TEXT NOT NULL, `genres` TEXT NOT NULL, `platforms` TEXT NOT NULL, `player_perspectives` TEXT NOT NULL, `themes` TEXT NOT NULL, `modes` TEXT NOT NULL, `keywords` TEXT NOT NULL, `involved_companies` TEXT NOT NULL, `websites` TEXT NOT NULL, `similar_games` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `hype_count` INTEGER, `release_date` INTEGER, `critics_rating` REAL, `users_rating` REAL, `total_rating` REAL, `popularity` REAL, `name` TEXT NOT NULL, `summary` TEXT, `storyline` TEXT, `cover` TEXT NOT NULL, `time_to_beat` TEXT NOT NULL, `age_ratings` TEXT NOT NULL, `artworks` TEXT NOT NULL, `screenshots` TEXT NOT NULL, `genres` TEXT NOT NULL, `platforms` TEXT NOT NULL, `player_perspectives` TEXT NOT NULL, `themes` TEXT NOT NULL, `modes` TEXT NOT NULL, `keywords` TEXT NOT NULL, `involved_companies` TEXT NOT NULL, `websites` TEXT NOT NULL, `similar_games` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -18,37 +18,37 @@
             "fieldPath": "hypeCount",
             "columnName": "hype_count",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "releaseDate",
             "columnName": "release_date",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "criticsRating",
             "columnName": "critics_rating",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "usersRating",
             "columnName": "users_rating",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "totalRating",
             "columnName": "total_rating",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "popularity",
             "columnName": "popularity",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "name",
@@ -60,13 +60,13 @@
             "fieldPath": "summary",
             "columnName": "summary",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "storyline",
             "columnName": "storyline",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "cover",
@@ -166,7 +166,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '47edb586bf31b642276d92d6a5440930')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ebc50bf14742033ce431c4f3ca1ffcae')"
     ]
   }
 }

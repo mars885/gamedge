@@ -38,6 +38,7 @@ internal interface GamesTable {
         SELECT * FROM ${Game.Schema.TABLE_NAME} 
         WHERE ${Game.Schema.POPULARITY} IS NOT NULL AND 
         ${Game.Schema.POPULARITY} > ${Constants.POPULAR_GAMES_MIN_POPULARITY} AND 
+        ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp 
         ORDER BY ${Game.Schema.POPULARITY} DESC 
         LIMIT :offset, :limit
@@ -48,7 +49,8 @@ internal interface GamesTable {
     @Query(
         """
         SELECT * FROM ${Game.Schema.TABLE_NAME} 
-        WHERE ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND 
+        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
+        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND 
         ${Game.Schema.RELEASE_DATE} < :maxReleaseDateTimestamp 
         ORDER BY ${Game.Schema.RELEASE_DATE} DESC 
         LIMIT :offset, :limit
@@ -64,7 +66,8 @@ internal interface GamesTable {
     @Query(
         """
         SELECT * FROM ${Game.Schema.TABLE_NAME} 
-        WHERE ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp 
+        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
+        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp 
         ORDER BY ${Game.Schema.RELEASE_DATE} ASC 
         LIMIT :offset, :limit
         """
@@ -74,7 +77,8 @@ internal interface GamesTable {
     @Query(
         """
         SELECT * FROM ${Game.Schema.TABLE_NAME} 
-        WHERE ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND 
+        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
+        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND 
         ${Game.Schema.HYPE_COUNT} IS NOT NULL 
         ORDER BY ${Game.Schema.HYPE_COUNT} DESC 
         LIMIT :offset, :limit
