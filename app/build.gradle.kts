@@ -31,6 +31,7 @@ dependencies {
     implementation(project(deps.local.data))
     implementation(project(deps.local.igdbApi))
     implementation(project(deps.local.database))
+    implementation(project(deps.local.cache))
 
     implementation(deps.androidX.appCompat)
     implementation(deps.androidX.navFragmentKtx)

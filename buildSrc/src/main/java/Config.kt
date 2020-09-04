@@ -78,6 +78,7 @@ object deps {
 
         const val domain = ":domain"
         const val data = ":data"
+        const val cache = ":cache"
         const val database = ":database"
         const val igdbApi = ":igdb-api"
         const val igdbApicalypse = ":igdb-apicalypse"

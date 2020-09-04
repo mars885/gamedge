@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.di.modules.data
 
 import android.content.Context
+import com.paulrybitskyi.gamedge.cache.GamesCacheDataStoreFactory
 import com.paulrybitskyi.gamedge.data.datastores.GamesDataStore
 import com.paulrybitskyi.gamedge.database.datastore.GamesDatabaseDataStoreFactory
 import com.paulrybitskyi.gamedge.di.qualifiers.DataStore
@@ -46,6 +47,14 @@ internal object DataStoresModule {
     @Provides
     fun provideGamesDatabaseDataStore(@ApplicationContext context: Context): GamesDataStore {
         return GamesDatabaseDataStoreFactory.create(context)
+    }
+
+
+    @Singleton
+    @DataStore(DataStore.Type.CACHE)
+    @Provides
+    fun provideGamesCacheServerDataStore(): GamesDataStore {
+        return GamesCacheDataStoreFactory.create()
     }
 
 
