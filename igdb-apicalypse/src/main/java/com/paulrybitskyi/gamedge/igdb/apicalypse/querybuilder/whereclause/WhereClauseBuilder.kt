@@ -48,9 +48,9 @@ interface WhereClauseBuilder {
 
     fun String.containsExclusivelyAllOf(values: List<String>): WhereClauseBuilder
 
-    fun and(vararg conditionBuilders: ConditionBuilder): WhereClauseBuilder
+    infix fun and(condition: Condition): WhereClauseBuilder
 
-    fun or(vararg conditionBuilders: ConditionBuilder): WhereClauseBuilder
+    infix fun or(condition: Condition): WhereClauseBuilder
 
     fun build(): String
 

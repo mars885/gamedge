@@ -16,20 +16,20 @@
 
 package com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause
 
-import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.operators.OperatorBuilderFactory
+import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.conditions.ConditionBuilderFactory
 
 internal object WhereClauseBuilderFactory {
 
 
     fun newBuilder(): WhereClauseBuilder {
         return WhereClauseBuilderImpl(
-            operatorBuilderFactory = createOperatorBuilderFactory()
+            conditionBuilderFactory = createConditionBuilderFactory()
         )
     }
 
 
-    private fun createOperatorBuilderFactory(): OperatorBuilderFactory {
-        return OperatorBuilderFactory
+    private fun createConditionBuilderFactory(): ConditionBuilderFactory {
+        return ConditionBuilderFactory
     }
 
 

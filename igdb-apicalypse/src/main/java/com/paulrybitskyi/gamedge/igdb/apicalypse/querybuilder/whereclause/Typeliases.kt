@@ -17,4 +17,4 @@
 package com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause
 
 
-internal typealias ConditionBuilder = WhereClauseBuilder.() -> Unit
+internal typealias Condition = WhereClauseBuilder.() -> Unit

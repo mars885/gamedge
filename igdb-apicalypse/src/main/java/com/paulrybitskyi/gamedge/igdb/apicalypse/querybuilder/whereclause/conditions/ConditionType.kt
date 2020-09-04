@@ -14,19 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.operators
+package com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.conditions
 
-import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.WhereClauseBuilderFactory
+internal enum class ConditionType(val separator: String) {
 
-internal object OperatorBuilderFactory {
-
-
-    fun newBuilder(operator: Operator): OperatorBuilder {
-        return OperatorBuilderImpl(
-            operator = operator,
-            whereClauseBuilderFactory = WhereClauseBuilderFactory
-        )
-    }
-
+    AND(" & "),
+    OR(" | ")
 
 }

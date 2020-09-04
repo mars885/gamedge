@@ -14,40 +14,34 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.operators
+package com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.conditions
 
-import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.ConditionBuilder
+import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.Condition
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.WhereClauseBuilderFactory
 
-internal class OperatorBuilderImpl(
-    private val operator: Operator,
+internal class ConditionBuilderImpl(
+    private val conditionType: ConditionType,
     private val whereClauseBuilderFactory: WhereClauseBuilderFactory
-) : OperatorBuilder {
+) : ConditionBuilder {
 
 
-    private val conditionsBuilder = StringBuilder()
+    private val conditionBuilder = StringBuilder()
 
 
-    override fun conditionBuilders(conditionBuilders: List<ConditionBuilder>) = apply {
-        val operatorSymbolSeparator = operator.separator
-
-        for(i in 0 until (conditionBuilders.size - 1)) {
-            conditionsBuilder
-                .append(conditionBuilders[i].buildWhereClause())
-                .append(operatorSymbolSeparator)
-        }
-
-        conditionsBuilder.append(conditionBuilders.last().buildWhereClause())
+    override fun condition(condition: Condition) = apply {
+        conditionBuilder
+            .append(conditionType.separator)
+            .append(condition.buildCondition())
     }
 
 
-    private fun ConditionBuilder.buildWhereClause(): String {
+    private fun Condition.buildCondition(): String {
         return whereClauseBuilderFactory.newBuilder().apply(this).build()
     }
 
 
     override fun build(): String {
-        return conditionsBuilder.toString()
+        return conditionBuilder.toString()
     }
 
 

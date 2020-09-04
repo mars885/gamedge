@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.operators
+package com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.conditions
 
-import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.ConditionBuilder
+import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.WhereClauseBuilderFactory
 
-internal interface OperatorBuilder {
-    
-    fun conditionBuilders(conditionBuilders: List<ConditionBuilder>): OperatorBuilder
-    
-    fun build(): String
-    
+internal object ConditionBuilderFactory {
+
+
+    fun newBuilder(conditionType: ConditionType): ConditionBuilder {
+        return ConditionBuilderImpl(
+            conditionType = conditionType,
+            whereClauseBuilderFactory = WhereClauseBuilderFactory
+        )
+    }
+
+
 }

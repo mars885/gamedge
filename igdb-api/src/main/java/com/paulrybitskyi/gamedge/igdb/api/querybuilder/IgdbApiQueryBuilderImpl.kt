@@ -54,11 +54,9 @@ internal class IgdbApiQueryBuilderImpl(
         return apicalypseQueryBuilderFactory.newBuilder()
             .select(gameEntityFields)
             .where {
-                and(
-                    { POPULARITY.isNotNull },
-                    { POPULARITY.isLargerThan(POPULAR_GAMES_MIN_POPULARITY.toString()) },
-                    { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) }
-                )
+                POPULARITY.isNotNull and
+                { POPULARITY.isLargerThan(POPULAR_GAMES_MIN_POPULARITY.toString()) } and
+                { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) }
             }
             .offset(offset)
             .limit(limit)
@@ -74,10 +72,8 @@ internal class IgdbApiQueryBuilderImpl(
         return apicalypseQueryBuilderFactory.newBuilder()
             .select(gameEntityFields)
             .where {
-                and(
-                    { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) },
-                    { RELEASE_DATE.isSmallerThan(maxReleaseDateTimestamp.toString()) }
-                )
+                RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) and
+                { RELEASE_DATE.isSmallerThan(maxReleaseDateTimestamp.toString()) }
             }
             .offset(offset)
             .limit(limit)
@@ -105,10 +101,8 @@ internal class IgdbApiQueryBuilderImpl(
         return apicalypseQueryBuilderFactory.newBuilder()
             .select(gameEntityFields)
             .where {
-                and(
-                    { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) },
-                    { HYPE_COUNT.isNotNull }
-                )
+                RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) and
+                { HYPE_COUNT.isNotNull }
             }
             .offset(offset)
             .limit(limit)
