@@ -16,14 +16,14 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.datastore
 
-import com.paulrybitskyi.gamedge.data.datastores.GamesDataStore
+import com.paulrybitskyi.gamedge.data.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.igdb.api.IgdbApi
 import com.paulrybitskyi.gamedge.igdb.api.IgdbApiFactory
 
 object GamesServerDataStoreFactory {
 
 
-    fun create(): GamesDataStore {
+    fun create(): GamesRemoteDataStore {
         return GamesServerDataStore(
             igdbApi = createIgdbApi(),
             entityMapper = createEntityMapper()

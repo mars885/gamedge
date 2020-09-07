@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-}
+package com.paulrybitskyi.gamedge.domain.usecases
 
-dependencies {
-    implementation(project(deps.local.domain))
-    implementation(project(deps.local.core))
+import com.paulrybitskyi.gamedge.domain.entities.Game
+import com.paulrybitskyi.gamedge.domain.repositories.utils.Pagination
+import com.paulrybitskyi.gamedge.domain.usecases.SearchGamesUseCase.Params
+import com.paulrybitskyi.gamedge.domain.usecases.base.UseCase
+import com.paulrybitskyi.gamedge.domain.utils.UseCaseResult
 
-    implementation(deps.kotlin.coroutinesCore)
+interface SearchGamesUseCase : UseCase<Params, UseCaseResult<List<Game>>> {
 
-    implementation(deps.commons.commonsNetwork)
 
-    implementation(deps.misc.kotlinResult)
+    data class Params(
+        val searchQuery: String,
+        val pagination: Pagination
+    )
 
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
+
 }

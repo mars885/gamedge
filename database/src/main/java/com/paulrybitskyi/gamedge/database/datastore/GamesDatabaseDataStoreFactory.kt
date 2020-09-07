@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.database.datastore
 import android.content.Context
 import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProviderFactory
-import com.paulrybitskyi.gamedge.data.datastores.GamesDataStore
+import com.paulrybitskyi.gamedge.data.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.database.GamedgeDatabaseFactory
 import com.paulrybitskyi.gamedge.database.tables.GamesTable
 import com.paulrybitskyi.gamedge.database.utils.JsonConverter
@@ -29,7 +29,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 object GamesDatabaseDataStoreFactory {
 
 
-    fun create(context: Context): GamesDataStore {
+    fun create(context: Context): GamesLocalDataStore {
         return GamesDatabaseDataStore(
             gamesTable = provideGamesTable(context),
             queryTimestampProvider = provideQueryTimestampProvider(),

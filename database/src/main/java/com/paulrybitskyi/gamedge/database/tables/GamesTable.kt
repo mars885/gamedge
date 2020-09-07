@@ -17,12 +17,18 @@
 package com.paulrybitskyi.gamedge.database.tables
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.paulrybitskyi.gamedge.commons.data.Constants
 import com.paulrybitskyi.gamedge.database.entities.Game
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface GamesTable {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveGames(games: List<Game>)
 
     @Query(
         """
@@ -44,7 +50,7 @@ internal interface GamesTable {
         LIMIT :offset, :limit
         """
     )
-    suspend fun getPopularGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): List<Game>
+    fun observePopularGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<Game>>
 
     @Query(
         """
@@ -56,12 +62,12 @@ internal interface GamesTable {
         LIMIT :offset, :limit
         """
     )
-    suspend fun getRecentlyReleasedGames(
+    fun observeRecentlyReleasedGames(
         minReleaseDateTimestamp: Long,
         maxReleaseDateTimestamp: Long,
         offset: Int,
         limit: Int
-    ): List<Game>
+    ): Flow<List<Game>>
 
     @Query(
         """
@@ -72,7 +78,7 @@ internal interface GamesTable {
         LIMIT :offset, :limit
         """
     )
-    suspend fun getComingSoonGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): List<Game>
+    fun observeComingSoonGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<Game>>
 
     @Query(
         """
@@ -84,7 +90,7 @@ internal interface GamesTable {
         LIMIT :offset, :limit
         """
     )
-    suspend fun getMostAnticipatedGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): List<Game>
+    fun observeMostAnticipatedGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<Game>>
 
     @Query(
         """
@@ -93,6 +99,6 @@ internal interface GamesTable {
         LIMIT :offset, :limit
         """
     )
-    suspend fun getGames(ids: List<Int>, offset: Int, limit: Int): List<Game>
+    fun observeGames(ids: List<Int>, offset: Int, limit: Int): Flow<List<Game>>
 
 }

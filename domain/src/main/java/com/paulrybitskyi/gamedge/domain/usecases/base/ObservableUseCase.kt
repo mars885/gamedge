@@ -14,21 +14,8 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-}
+package com.paulrybitskyi.gamedge.domain.usecases.base
 
-dependencies {
-    implementation(project(deps.local.domain))
-    implementation(project(deps.local.core))
+import kotlinx.coroutines.flow.Flow
 
-    implementation(deps.kotlin.coroutinesCore)
-
-    implementation(deps.commons.commonsNetwork)
-
-    implementation(deps.misc.kotlinResult)
-
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
-}
+interface ObservableUseCase<In, Out> : UseCase<In, Flow<Out>>

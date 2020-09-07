@@ -19,5 +19,6 @@ plugins {
 }
 
 dependencies {
+    implementation(deps.kotlin.coroutinesCore)
     implementation(deps.misc.kotlinResult)
 }

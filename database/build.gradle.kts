@@ -34,6 +34,8 @@ dependencies {
     implementation(project(deps.local.data))
     implementation(project(deps.local.commonsData))
 
+    implementation(deps.kotlin.coroutinesCore)
+
     implementation(deps.square.moshi)
     implementation(deps.square.moshiReflection)
 

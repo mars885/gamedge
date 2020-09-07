@@ -21,9 +21,11 @@ import com.paulrybitskyi.gamedge.domain.entities.*
 
 
 typealias RepositoryResult<T> = Result<T, Error>
+typealias UseCaseResult<T> = Result<T, Error>
 
 typealias DomainAgeRating = AgeRating
 typealias DomainAgeRatingCategory = AgeRatingCategory
+typealias DomainAgeRatingType = AgeRatingType
 typealias DomainCompany = Company
 typealias DomainGame = Game
 typealias DomainGenre = Genre

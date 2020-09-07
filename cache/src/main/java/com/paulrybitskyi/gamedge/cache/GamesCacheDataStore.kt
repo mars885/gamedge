@@ -18,8 +18,8 @@ package com.paulrybitskyi.gamedge.cache
 
 import com.paulrybitskyi.gamedge.cache.utils.take
 import com.paulrybitskyi.gamedge.commons.data.Constants
-import com.paulrybitskyi.gamedge.commons.data.extensions.asSuccess
 import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
+import com.paulrybitskyi.gamedge.core.extensions.asSuccess
 import com.paulrybitskyi.gamedge.data.datastores.GamesDataStore
 import com.paulrybitskyi.gamedge.data.entities.Game
 import com.paulrybitskyi.gamedge.data.utils.DataCompany

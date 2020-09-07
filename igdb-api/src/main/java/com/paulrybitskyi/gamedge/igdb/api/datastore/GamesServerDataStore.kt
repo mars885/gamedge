@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.datastore
 
 import com.github.michaelbull.result.mapEither
-import com.paulrybitskyi.gamedge.data.datastores.GamesDataStore
+import com.paulrybitskyi.gamedge.data.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.data.utils.DataCompany
 import com.paulrybitskyi.gamedge.data.utils.DataGame
 import com.paulrybitskyi.gamedge.data.utils.DataStoreResult
@@ -28,7 +28,7 @@ import com.paulrybitskyi.gamedge.igdb.api.utils.ApiResult
 internal class GamesServerDataStore(
     private val igdbApi: IgdbApi,
     private val entityMapper: EntityMapper
-) : GamesDataStore {
+) : GamesRemoteDataStore {
 
 
     override suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): DataStoreResult<List<DataGame>> {
