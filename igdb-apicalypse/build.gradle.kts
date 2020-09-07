@@ -19,5 +19,5 @@ plugins {
 }
 
 dependencies {
-    implementation(deps.kotlin.kotlinStdLib)
+    implementation(deps.kotlin.stdLib)
 }
