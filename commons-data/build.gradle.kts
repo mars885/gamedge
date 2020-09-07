@@ -15,9 +15,13 @@
  */
 
 plugins {
-    kotlin()
+    androidLibrary()
+    gamedgeAndroid()
 }
 
 dependencies {
-    implementation(deps.misc.kotlinResult)
+    implementation(project(deps.local.core))
+
+    testImplementation(deps.testing.jUnit)
+    androidTestImplementation(deps.testing.jUnitExt)
 }

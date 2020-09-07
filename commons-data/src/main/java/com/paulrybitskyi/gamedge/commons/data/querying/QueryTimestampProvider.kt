@@ -16,6 +16,15 @@
 
 package com.paulrybitskyi.gamedge.commons.data.querying
 
+import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
+import com.paulrybitskyi.gamedge.core.providers.TimestampProviderFactory
+import java.util.concurrent.TimeUnit
+
+
+private val POPULAR_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(90L)
+private val RECENTLY_RELEASED_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(7L)
+
+
 interface QueryTimestampProvider {
 
     fun getPopularGamesMinReleaseDate(): Long
@@ -27,5 +36,67 @@ interface QueryTimestampProvider {
     fun getComingSoonGamesMinReleaseDate(): Long
 
     fun getMostAnticipatedGamesMinReleaseDate(): Long
+
+}
+
+
+internal class QueryTimestampProviderImpl(
+    private val timestampProvider: TimestampProvider
+) : QueryTimestampProvider {
+
+
+    override fun getPopularGamesMinReleaseDate(): Long {
+        val currentUnixTimestamp = getUnixTimestamp()
+        val minReleaseDateTimestamp = (currentUnixTimestamp - POPULAR_GAMES_MIN_RELEASE_DATE_DURATION)
+
+        return minReleaseDateTimestamp
+    }
+
+
+    override fun getRecentlyReleasedGamesMinReleaseDate(): Long {
+        val maxReleaseDateTimestamp = getRecentlyReleasedGamesMaxReleaseDate()
+        val minReleaseDateTimestamp = (maxReleaseDateTimestamp - RECENTLY_RELEASED_GAMES_MIN_RELEASE_DATE_DURATION)
+
+        return minReleaseDateTimestamp
+    }
+
+
+    override fun getRecentlyReleasedGamesMaxReleaseDate(): Long {
+        return getUnixTimestamp()
+    }
+
+
+    override fun getComingSoonGamesMinReleaseDate(): Long {
+        return getUnixTimestamp()
+    }
+
+
+    override fun getMostAnticipatedGamesMinReleaseDate(): Long {
+        return getUnixTimestamp()
+    }
+
+
+    private fun getUnixTimestamp(): Long {
+        return timestampProvider.getUnixTimestamp(TimeUnit.SECONDS)
+    }
+
+
+}
+
+
+object QueryTimestampProviderFactory {
+
+
+    fun create(): QueryTimestampProvider {
+        return QueryTimestampProviderImpl(
+            timestampProvider = createTimestampProvider()
+        )
+    }
+
+
+    private fun createTimestampProvider(): TimestampProvider {
+        return TimestampProviderFactory.create()
+    }
+
 
 }
