@@ -24,6 +24,7 @@ import com.paulrybitskyi.gamedge.igdb.api.IgdbApiImpl
 import com.paulrybitskyi.gamedge.igdb.api.adapters.AgeRatingCategoryAdapter
 import com.paulrybitskyi.gamedge.igdb.api.adapters.AgeRatingTypeAdapter
 import com.paulrybitskyi.gamedge.igdb.api.adapters.WebsiteCategoryAdapter
+import com.paulrybitskyi.gamedge.igdb.api.di.qualifiers.Api
 import com.paulrybitskyi.gamedge.igdb.api.querybuilder.IgdbApiQueryBuilder
 import com.paulrybitskyi.gamedge.igdb.api.querybuilder.IgdbApiQueryBuilderImpl
 import com.paulrybitskyi.gamedge.igdb.api.services.IgdbApiService
@@ -31,6 +32,7 @@ import com.paulrybitskyi.gamedge.igdb.api.utils.AuthorizationInterceptor
 import com.paulrybitskyi.gamedge.igdb.api.utils.calladapter.ApiResultCallAdapterFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
+import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializerFactory
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -71,7 +73,7 @@ internal object ApiModule {
     @Provides
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
-        moshi: Moshi
+        @Api moshi: Moshi
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
@@ -113,6 +115,7 @@ internal object ApiModule {
     }
 
 
+    @Api
     @Provides
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
@@ -140,6 +143,12 @@ internal object ApiModule {
     @Provides
     fun provideApicalypseQueryBuilderFactory(): ApicalypseQueryBuilderFactory {
         return ApicalypseQueryBuilderFactory
+    }
+
+
+    @Provides
+    fun provideApicalypseSerializer(): ApicalypseSerializer {
+        return ApicalypseSerializerFactory.create()
     }
 
 

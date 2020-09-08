@@ -20,6 +20,7 @@ import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.database.datastore.EntityMapper
 import com.paulrybitskyi.gamedge.database.datastore.GamesDatabaseDataStoreImpl
+import com.paulrybitskyi.gamedge.database.di.qualifiers.Database
 import com.paulrybitskyi.gamedge.database.tables.GamesTable
 import com.paulrybitskyi.gamedge.database.utils.JsonConverter
 import com.squareup.moshi.Moshi
@@ -57,11 +58,12 @@ internal object DataStoreModule {
 
 
     @Provides
-    fun provideJsonConverter(moshi: Moshi): JsonConverter {
+    fun provideJsonConverter(@Database moshi: Moshi): JsonConverter {
         return JsonConverter(moshi)
     }
 
 
+    @Database
     @Provides
     fun provideMoshi(): Moshi {
         return Moshi.Builder()

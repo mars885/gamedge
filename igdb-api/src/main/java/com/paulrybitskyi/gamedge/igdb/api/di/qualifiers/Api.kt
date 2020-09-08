@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization
+package com.paulrybitskyi.gamedge.igdb.api.di.qualifiers
 
-object ApicalypseSerializerFactory {
+import javax.inject.Qualifier
 
-
-    fun create(): ApicalypseSerializer {
-        return ApicalypseSerializerImpl()
-    }
-
-
-}
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.FIELD, AnnotationTarget.FUNCTION, AnnotationTarget.VALUE_PARAMETER)
+internal annotation class Api
