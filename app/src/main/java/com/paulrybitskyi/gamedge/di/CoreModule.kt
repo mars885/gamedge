@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.di.modules
+package com.paulrybitskyi.gamedge.di
 
 import dagger.Module
 import dagger.hilt.InstallIn

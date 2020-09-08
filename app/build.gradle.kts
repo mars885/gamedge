@@ -28,10 +28,11 @@ android {
 }
 
 dependencies {
+    implementation(project(deps.local.domain))
     implementation(project(deps.local.data))
     implementation(project(deps.local.igdbApi))
     implementation(project(deps.local.database))
-    implementation(project(deps.local.cache))
+    implementation(project(deps.local.core))
 
     implementation(deps.androidX.appCompat)
     implementation(deps.androidX.navFragmentKtx)
@@ -50,6 +51,16 @@ dependencies {
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
+
+    // Have to added due to how Dagger Hilt (alpha) works currently.
+    // Should be removed when the Dagger Hilt is stable.
+    // Issue: https://github.com/google/dagger/issues/1991
+    // Solution: https://github.com/google/dagger/issues/1991#issuecomment-667810346
+    implementation(project(deps.local.igdbApicalypse))
+    implementation(project(deps.local.commonsData))
+    implementation(deps.square.retrofit)
+    implementation(deps.square.moshi)
+    implementation(deps.square.okHttpLoggingInterceptor)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)
