@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    kotlinKapt()
-}
+package com.paulrybitskyi.gamedge.data.di
 
-dependencies {
-    implementation(project(deps.local.domain))
-    implementation(project(deps.local.core))
+import com.paulrybitskyi.gamedge.data.usecases.mapper.EntityMapper
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 
-    implementation(deps.kotlin.coroutinesCore)
+@InstallIn(ApplicationComponent::class)
+@Module
+internal object CommonsModule {
 
-    implementation(deps.misc.kotlinResult)
 
-    implementation(deps.google.daggerHilt)
-    kapt(deps.google.daggerHiltCompiler)
+    @Provides
+    fun provideEntityMapper(): EntityMapper {
+        return EntityMapper()
+    }
 
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
+
 }

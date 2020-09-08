@@ -18,22 +18,24 @@ package com.paulrybitskyi.gamedge.data.datastores
 
 import com.paulrybitskyi.gamedge.data.utils.DataCompany
 import com.paulrybitskyi.gamedge.data.utils.DataGame
-import com.paulrybitskyi.gamedge.data.utils.DataStoreResult
+import kotlinx.coroutines.flow.Flow
 
-interface GamesRemoteDataStore {
+interface GamesDatabaseDataStore {
 
-    suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): DataStoreResult<List<DataGame>>
+    suspend fun saveGames(games: List<DataGame>)
 
-    suspend fun getPopularGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>>
+    suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): List<DataGame>
 
-    suspend fun getRecentlyReleasedGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>>
+    suspend fun observePopularGames(offset: Int, limit: Int): Flow<List<DataGame>>
 
-    suspend fun getComingSoonGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>>
+    suspend fun observeRecentlyReleasedGames(offset: Int, limit: Int): Flow<List<DataGame>>
 
-    suspend fun getMostAnticipatedGames(offset: Int, limit: Int): DataStoreResult<List<DataGame>>
+    suspend fun observeComingSoonGames(offset: Int, limit: Int): Flow<List<DataGame>>
 
-    suspend fun getCompanyGames(company: DataCompany, offset: Int, limit: Int): DataStoreResult<List<DataGame>>
+    suspend fun observeMostAnticipatedGames(offset: Int, limit: Int): Flow<List<DataGame>>
 
-    suspend fun getSimilarGames(game: DataGame, offset: Int, limit: Int): DataStoreResult<List<DataGame>>
+    suspend fun observeCompanyGames(company: DataCompany, offset: Int, limit: Int): Flow<List<DataGame>>
+
+    suspend fun observeSimilarGames(game: DataGame, offset: Int, limit: Int): Flow<List<DataGame>>
 
 }

@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.data.usecases.observers
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.data.datastores.GamesLocalDataStore
+import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.data.usecases.mapper.EntityMapper
 import com.paulrybitskyi.gamedge.data.usecases.mapper.mapToDomainGames
 import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesObserverParams
@@ -29,7 +29,7 @@ import kotlinx.coroutines.withContext
 
 internal class ObserveComingSoonGamesUseCaseImpl(
     private val refreshGamesUseCase: RefreshComingSoonGamesUseCase,
-    private val gamesLocalDataStore: GamesLocalDataStore,
+    private val gamesDatabaseDataStore: GamesDatabaseDataStore,
     private val dispatcherProvider: DispatcherProvider,
     private val entityMapper: EntityMapper
 ) : ObserveComingSoonGamesUseCase {
@@ -42,7 +42,7 @@ internal class ObserveComingSoonGamesUseCaseImpl(
             refreshGamesUseCase.execute(GamesRefresherParams(pagination))
         }
 
-        gamesLocalDataStore
+        gamesDatabaseDataStore
             .observeComingSoonGames(pagination.offset, pagination.limit)
             .map(entityMapper::mapToDomainGames)
     }

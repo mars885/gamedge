@@ -21,8 +21,8 @@ import com.paulrybitskyi.gamedge.core.extensions.asSuccess
 import com.paulrybitskyi.gamedge.core.extensions.onSuccess
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
-import com.paulrybitskyi.gamedge.data.datastores.GamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.datastores.GamesRemoteDataStore
+import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
+import com.paulrybitskyi.gamedge.data.datastores.GamesServerDataStore
 import com.paulrybitskyi.gamedge.data.usecases.mapper.EntityMapper
 import com.paulrybitskyi.gamedge.data.usecases.mapper.mapToDomainGames
 import com.paulrybitskyi.gamedge.domain.usecases.games.SearchGamesUseCase
@@ -30,8 +30,8 @@ import com.paulrybitskyi.gamedge.domain.usecases.games.SearchGamesUseCase.Params
 import kotlinx.coroutines.withContext
 
 internal class SearchGamesUseCaseImpl(
-    private val gamesLocalDataStore: GamesLocalDataStore,
-    private val gamesRemoteDataStore: GamesRemoteDataStore,
+    private val gamesDatabaseDataStore: GamesDatabaseDataStore,
+    private val gamesServerDataStore: GamesServerDataStore,
     private val dispatcherProvider: DispatcherProvider,
     private val networkStateProvider: NetworkStateProvider,
     private val entityMapper: EntityMapper
@@ -44,12 +44,12 @@ internal class SearchGamesUseCaseImpl(
         val limit = params.pagination.limit
 
         if(networkStateProvider.isNetworkAvailable) {
-            gamesRemoteDataStore
+            gamesServerDataStore
                 .searchGames(searchQuery, offset, limit)
-                .onSuccess(gamesLocalDataStore::saveGames)
+                .onSuccess(gamesDatabaseDataStore::saveGames)
                 .mapEither(entityMapper::mapToDomainGames, entityMapper::mapToDomainError)
         } else {
-            gamesLocalDataStore
+            gamesDatabaseDataStore
                 .searchGames(searchQuery, offset, limit)
                 .let(entityMapper::mapToDomainGames)
                 .asSuccess()

@@ -19,15 +19,15 @@ package com.paulrybitskyi.gamedge.data.usecases.refreshers
 import com.paulrybitskyi.gamedge.core.extensions.onSuccess
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
-import com.paulrybitskyi.gamedge.data.datastores.GamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.datastores.GamesRemoteDataStore
+import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
+import com.paulrybitskyi.gamedge.data.datastores.GamesServerDataStore
 import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesRefresherParams
 import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshRecentlyReleasedGamesUseCase
 import kotlinx.coroutines.withContext
 
 internal class RefreshRecentlyReleasedGamesUseCaseImpl(
-    private val gamesRemoteDataStore: GamesRemoteDataStore,
-    private val gamesLocalDataStore: GamesLocalDataStore,
+    private val gamesServerDataStore: GamesServerDataStore,
+    private val gamesDatabaseDataStore: GamesDatabaseDataStore,
     private val dispatcherProvider: DispatcherProvider,
     private val networkStateProvider: NetworkStateProvider
 ) : RefreshRecentlyReleasedGamesUseCase {
@@ -39,9 +39,9 @@ internal class RefreshRecentlyReleasedGamesUseCaseImpl(
         withContext(dispatcherProvider.io) {
             val pagination = params.pagination
 
-            gamesRemoteDataStore
+            gamesServerDataStore
                 .getRecentlyReleasedGames(pagination.offset, pagination.limit)
-                .onSuccess(gamesLocalDataStore::saveGames)
+                .onSuccess(gamesDatabaseDataStore::saveGames)
         }
     }
 
