@@ -53,8 +53,8 @@ dependencies {
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
 
-    implementation(deps.androidX.daggerHiltViewModel)
-    kapt(deps.androidX.daggerHiltViewModelCompiler)
+    implementation(deps.androidX.daggerHiltAssistedInjection)
+    kapt(deps.androidX.daggerHiltAssistedInjectionCompiler)
 
     // Have to added due to how Dagger Hilt (alpha) works currently.
     // Should be removed when the Dagger Hilt is stable.
