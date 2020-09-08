@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.commons.data.querying
 
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
-import com.paulrybitskyi.gamedge.core.providers.TimestampProviderFactory
 import java.util.concurrent.TimeUnit
 
 
@@ -78,24 +77,6 @@ internal class QueryTimestampProviderImpl(
 
     private fun getUnixTimestamp(): Long {
         return timestampProvider.getUnixTimestamp(TimeUnit.SECONDS)
-    }
-
-
-}
-
-
-object QueryTimestampProviderFactory {
-
-
-    fun create(): QueryTimestampProvider {
-        return QueryTimestampProviderImpl(
-            timestampProvider = createTimestampProvider()
-        )
-    }
-
-
-    private fun createTimestampProvider(): TimestampProvider {
-        return TimestampProviderFactory.create()
     }
 
 
