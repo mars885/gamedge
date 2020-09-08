@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.ui.discovery
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.databinding.FragmentGamesDiscoveryBinding
 import com.paulrybitskyi.gamedge.utils.viewBinding
@@ -29,6 +30,7 @@ internal class GamesDiscoveryFragment : Fragment(R.layout.fragment_games_discove
 
 
     private val binding by viewBinding(FragmentGamesDiscoveryBinding::bind)
+    private val viewModel by viewModels<GamesDiscoveryViewModel>()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

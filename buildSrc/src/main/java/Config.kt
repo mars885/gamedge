@@ -49,12 +49,14 @@ object versions {
     const val viewPager2 = "1.0.0"
     const val lifecycleCommonJava8 = "2.2.0"
     const val daggerHilt = "2.28.3-alpha"
+    const val daggerHiltViewModel = "1.0.0-alpha02"
     const val kotlinResult = "1.1.8"
     const val okHttp = "4.8.0"
     const val retrofit = "2.9.0"
     const val moshi = "1.9.3"
     const val room = "2.2.5"
     const val coreKtx = "1.3.1"
+    const val fragmentKtx = "1.2.5"
     const val commonsCore = "1.0.0"
     const val commonsKtx = "1.0.0"
     const val commonsWidgets = "1.0.0"
@@ -109,6 +111,9 @@ object deps {
         const val roomKtx = "androidx.room:room-ktx:${versions.room}"
         const val roomCompiler = "androidx.room:room-compiler:${versions.room}"
         const val coreKtx = "androidx.core:core-ktx:${versions.coreKtx}"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:${versions.fragmentKtx}"
+        const val daggerHiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:${versions.daggerHiltViewModel}"
+        const val daggerHiltViewModelCompiler = "androidx.hilt:hilt-compiler:${versions.daggerHiltViewModel}"
 
     }
 

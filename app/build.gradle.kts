@@ -42,6 +42,7 @@ dependencies {
     implementation(deps.androidX.viewPager2)
     implementation(deps.androidX.lifecycleCommonJava8)
     implementation(deps.androidX.coreKtx)
+    implementation(deps.androidX.fragmentKtx)
 
     implementation(deps.commons.commonsCore)
     implementation(deps.commons.commonsKtx)
@@ -52,6 +53,9 @@ dependencies {
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
 
+    implementation(deps.androidX.daggerHiltViewModel)
+    kapt(deps.androidX.daggerHiltViewModelCompiler)
+
     // Have to added due to how Dagger Hilt (alpha) works currently.
     // Should be removed when the Dagger Hilt is stable.
     // Issue: https://github.com/google/dagger/issues/1991
@@ -61,6 +65,7 @@ dependencies {
     implementation(deps.square.retrofit)
     implementation(deps.square.moshi)
     implementation(deps.square.okHttpLoggingInterceptor)
+    implementation(deps.androidX.room)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

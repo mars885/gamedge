@@ -16,6 +16,19 @@
 
 package com.paulrybitskyi.gamedge.ui.discovery
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.paulrybitskyi.gamedge.domain.usecases.games.observers.ObserveComingSoonGamesUseCase
+import com.paulrybitskyi.gamedge.domain.usecases.games.observers.ObserveMostAnticipatedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.usecases.games.observers.ObservePopularGamesUseCase
+import com.paulrybitskyi.gamedge.domain.usecases.games.observers.ObserveRecentlyReleasedGamesUseCase
 
-internal class GamesDiscoveryViewModel : ViewModel()
+internal class GamesDiscoveryViewModel @ViewModelInject constructor(
+    private val observePopularGamesUseCase: ObservePopularGamesUseCase,
+    private val observeRecentlyReleasedGamesUseCase: ObserveRecentlyReleasedGamesUseCase,
+    private val observeComingSoonGamesUseCase: ObserveComingSoonGamesUseCase,
+    private val observeMostAnticipatedGamesUseCase: ObserveMostAnticipatedGamesUseCase,
+    @Assisted private val savedStateHandle: SavedStateHandle
+) : ViewModel()
