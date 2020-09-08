@@ -35,14 +35,3 @@ internal class NetworkStateProviderImpl(
         get() = context.isConnectedToNetwork
 
 }
-
-
-object NetworkStateProviderFactory {
-
-
-    fun create(context: Context): NetworkStateProvider {
-        return NetworkStateProviderImpl(context)
-    }
-
-
-}

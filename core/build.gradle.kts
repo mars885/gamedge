@@ -17,12 +17,15 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    kotlinKapt()
 }
 
 dependencies {
-    implementation(deps.kotlin.coroutinesCore)
     implementation(deps.commons.commonsNetwork)
     implementation(deps.misc.kotlinResult)
+
+    implementation(deps.google.daggerHilt)
+    kapt(deps.google.daggerHiltCompiler)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

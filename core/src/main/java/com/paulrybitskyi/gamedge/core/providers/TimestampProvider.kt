@@ -35,14 +35,3 @@ internal class TimestampProviderImpl : TimestampProvider {
 
 
 }
-
-
-object TimestampProviderFactory {
-
-
-    fun create(): TimestampProvider {
-        return TimestampProviderImpl()
-    }
-
-
-}

@@ -40,14 +40,3 @@ internal class DispatcherProviderImpl : DispatcherProvider {
     override val computation: CoroutineDispatcher = Dispatchers.Default
 
 }
-
-
-object DispatcherProviderFactory {
-
-
-    fun create(): DispatcherProvider {
-        return DispatcherProviderImpl()
-    }
-
-
-}
