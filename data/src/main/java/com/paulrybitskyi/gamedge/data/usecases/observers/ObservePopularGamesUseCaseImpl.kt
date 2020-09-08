@@ -20,9 +20,10 @@ import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.usecases.mapper.EntityMapper
 import com.paulrybitskyi.gamedge.data.usecases.mapper.mapToDomainGames
-import com.paulrybitskyi.gamedge.domain.usecases.observers.ObservePopularGamesUseCase
-import com.paulrybitskyi.gamedge.domain.usecases.observers.ObservePopularGamesUseCase.Params
-import com.paulrybitskyi.gamedge.domain.usecases.refreshers.RefreshPopularGamesUseCase
+import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesObserverParams
+import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesRefresherParams
+import com.paulrybitskyi.gamedge.domain.usecases.games.observers.ObservePopularGamesUseCase
+import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshPopularGamesUseCase
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -34,11 +35,11 @@ internal class ObservePopularGamesUseCaseImpl(
 ) : ObservePopularGamesUseCase {
 
 
-    override suspend fun execute(params: Params) = withContext(dispatcherProvider.io) {
+    override suspend fun execute(params: GamesObserverParams) = withContext(dispatcherProvider.io) {
         val pagination = params.pagination
 
         if(params.refresh) {
-            refreshGamesUseCase.execute(RefreshPopularGamesUseCase.Params(pagination))
+            refreshGamesUseCase.execute(GamesRefresherParams(pagination))
         }
 
         gamesLocalDataStore

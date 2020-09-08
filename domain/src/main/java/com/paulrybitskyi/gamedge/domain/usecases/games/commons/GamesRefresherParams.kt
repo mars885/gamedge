@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.usecases
+package com.paulrybitskyi.gamedge.domain.usecases.games.commons
 
-import com.paulrybitskyi.gamedge.domain.entities.Game
-import com.paulrybitskyi.gamedge.domain.repositories.utils.Pagination
-import com.paulrybitskyi.gamedge.domain.usecases.SearchGamesUseCase.Params
-import com.paulrybitskyi.gamedge.domain.usecases.base.UseCase
-import com.paulrybitskyi.gamedge.domain.utils.UseCaseResult
+import com.paulrybitskyi.gamedge.domain.usecases.commons.Pagination
 
-interface SearchGamesUseCase : UseCase<Params, UseCaseResult<List<Game>>> {
-
-
-    data class Params(
-        val searchQuery: String,
-        val pagination: Pagination
-    )
-
-
-}
+data class GamesRefresherParams(
+    val pagination: Pagination
+)

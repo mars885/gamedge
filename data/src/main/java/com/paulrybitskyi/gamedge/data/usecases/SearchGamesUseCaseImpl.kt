@@ -25,8 +25,8 @@ import com.paulrybitskyi.gamedge.data.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.data.usecases.mapper.EntityMapper
 import com.paulrybitskyi.gamedge.data.usecases.mapper.mapToDomainGames
-import com.paulrybitskyi.gamedge.domain.usecases.SearchGamesUseCase
-import com.paulrybitskyi.gamedge.domain.usecases.SearchGamesUseCase.Params
+import com.paulrybitskyi.gamedge.domain.usecases.games.SearchGamesUseCase
+import com.paulrybitskyi.gamedge.domain.usecases.games.SearchGamesUseCase.Params
 import kotlinx.coroutines.withContext
 
 internal class SearchGamesUseCaseImpl(

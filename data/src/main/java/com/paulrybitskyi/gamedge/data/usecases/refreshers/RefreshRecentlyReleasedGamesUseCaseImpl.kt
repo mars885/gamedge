@@ -21,8 +21,8 @@ import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.datastores.GamesRemoteDataStore
-import com.paulrybitskyi.gamedge.domain.usecases.refreshers.RefreshRecentlyReleasedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.usecases.refreshers.RefreshRecentlyReleasedGamesUseCase.Params
+import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesRefresherParams
+import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshRecentlyReleasedGamesUseCase
 import kotlinx.coroutines.withContext
 
 internal class RefreshRecentlyReleasedGamesUseCaseImpl(
@@ -33,7 +33,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImpl(
 ) : RefreshRecentlyReleasedGamesUseCase {
 
 
-    override suspend fun execute(params: Params) {
+    override suspend fun execute(params: GamesRefresherParams) {
         if(!networkStateProvider.isNetworkAvailable) return
 
         withContext(dispatcherProvider.io) {

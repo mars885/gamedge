@@ -14,18 +14,9 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.usecases.refreshers
+package com.paulrybitskyi.gamedge.domain.usecases.games.refreshers
 
-import com.paulrybitskyi.gamedge.domain.repositories.utils.Pagination
 import com.paulrybitskyi.gamedge.domain.usecases.base.UseCase
-import com.paulrybitskyi.gamedge.domain.usecases.refreshers.RefreshMostAnticipatedGamesUseCase.Params
+import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesRefresherParams
 
-interface RefreshMostAnticipatedGamesUseCase : UseCase<Params, Unit> {
-
-
-    data class Params(
-        val pagination: Pagination
-    )
-
-
-}
+interface RefreshRecentlyReleasedGamesUseCase : UseCase<GamesRefresherParams, Unit>
