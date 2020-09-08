@@ -21,6 +21,7 @@ plugins {
 }
 
 dependencies {
+    implementation(deps.kotlin.coroutinesCore)
     implementation(deps.commons.commonsNetwork)
     implementation(deps.misc.kotlinResult)
 
