@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.database.datastore
 
 import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
-import com.paulrybitskyi.gamedge.data.datastores.GamesLocalDataStore
+import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.data.utils.DataCompany
 import com.paulrybitskyi.gamedge.data.utils.DataGame
 import com.paulrybitskyi.gamedge.database.tables.GamesTable
@@ -26,11 +26,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
-internal class GamesDatabaseDataStore(
+internal class GamesDatabaseDataStoreImpl(
     private val gamesTable: GamesTable,
     private val queryTimestampProvider: QueryTimestampProvider,
     private val entityMapper: EntityMapper
-) : GamesLocalDataStore {
+) : GamesDatabaseDataStore {
 
 
     override suspend fun saveGames(games: List<DataGame>) {

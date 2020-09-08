@@ -41,12 +41,12 @@ dependencies {
 
     implementation(deps.misc.kotlinResult)
 
-    implementation(deps.google.daggerHilt)
-    kapt(deps.google.daggerHiltCompiler)
-
     implementation(deps.androidX.room)
     implementation(deps.androidX.roomKtx)
     kapt(deps.androidX.roomCompiler)
+
+    implementation(deps.google.daggerHilt)
+    kapt(deps.google.daggerHiltCompiler)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

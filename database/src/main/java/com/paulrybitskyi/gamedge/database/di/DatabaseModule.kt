@@ -14,34 +14,28 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.database
+package com.paulrybitskyi.gamedge.database.di
 
 import android.content.Context
 import androidx.room.Room
+import com.paulrybitskyi.gamedge.database.Constants
+import com.paulrybitskyi.gamedge.database.GamedgeDatabase
 import com.paulrybitskyi.gamedge.database.tables.GamesTable
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Singleton
 
-internal object GamedgeDatabaseFactory {
-
-
-    @Volatile
-    private var database: GamedgeDatabase? = null
-
-
-    fun createGamesTable(context: Context): GamesTable {
-        return createDatabase(context).gamesTable
-    }
-
-
-    private fun createDatabase(context: Context): GamedgeDatabase {
-        return database ?: synchronized(this) {
-            database ?: createDatabaseInternal(context).also {
-                database = it
-            }
-        }
-    }
+@InstallIn(ApplicationComponent::class)
+@Module
+internal object DatabaseModule {
 
 
-    private fun createDatabaseInternal(context: Context): GamedgeDatabase {
+    @Singleton
+    @Provides
+    fun provideGamedgeDatabase(@ApplicationContext context: Context): GamedgeDatabase {
         return Room.databaseBuilder(
             context,
             GamedgeDatabase::class.java,
@@ -49,6 +43,13 @@ internal object GamedgeDatabaseFactory {
         )
         .fallbackToDestructiveMigration()
         .build()
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideGamesTable(gamedgeDatabase: GamedgeDatabase): GamesTable {
+        return gamedgeDatabase.gamesTable
     }
 
 
