@@ -14,41 +14,35 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.usecases
+package com.paulrybitskyi.gamedge.data.usecases.observers
 
-import com.paulrybitskyi.gamedge.core.extensions.onSuccess
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.data.usecases.mapper.EntityMapper
 import com.paulrybitskyi.gamedge.data.usecases.mapper.mapToDomainGames
-import com.paulrybitskyi.gamedge.domain.usecases.ObserveMostAnticipatedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.usecases.ObserveMostAnticipatedGamesUseCase.Params
+import com.paulrybitskyi.gamedge.domain.usecases.observers.ObserveMostAnticipatedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.usecases.observers.ObserveMostAnticipatedGamesUseCase.Params
+import com.paulrybitskyi.gamedge.domain.usecases.refreshers.RefreshMostAnticipatedGamesUseCase
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 internal class ObserveMostAnticipatedGamesUseCaseImpl(
+    private val refreshGamesUseCase: RefreshMostAnticipatedGamesUseCase,
     private val gamesLocalDataStore: GamesLocalDataStore,
-    private val gamesRemoteDataStore: GamesRemoteDataStore,
     private val dispatcherProvider: DispatcherProvider,
-    private val networkStateProvider: NetworkStateProvider,
     private val entityMapper: EntityMapper
 ) : ObserveMostAnticipatedGamesUseCase {
 
 
     override suspend fun execute(params: Params) = withContext(dispatcherProvider.io) {
-        val offset = params.pagination.offset
-        val limit = params.pagination.limit
+        val pagination = params.pagination
 
-        if(params.refresh && networkStateProvider.isNetworkAvailable) {
-            gamesRemoteDataStore
-                .getMostAnticipatedGames(offset, limit)
-                .onSuccess(gamesLocalDataStore::saveGames)
+        if(params.refresh) {
+            refreshGamesUseCase.execute(RefreshMostAnticipatedGamesUseCase.Params(pagination))
         }
 
         gamesLocalDataStore
-            .observeMostAnticipatedGames(offset, limit)
+            .observeMostAnticipatedGames(pagination.offset, pagination.limit)
             .map(entityMapper::mapToDomainGames)
     }
 

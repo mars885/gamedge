@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.data.usecases.mapper
 
-import com.paulrybitskyi.gamedge.data.entities.Error as DataError
 import com.paulrybitskyi.gamedge.data.utils.*
-import com.paulrybitskyi.gamedge.domain.entities.Error as DomainError
 import com.paulrybitskyi.gamedge.domain.utils.*
+import com.paulrybitskyi.gamedge.data.entities.Error as DataError
+import com.paulrybitskyi.gamedge.domain.entities.Error as DomainError
 
 internal class EntityMapper {
 

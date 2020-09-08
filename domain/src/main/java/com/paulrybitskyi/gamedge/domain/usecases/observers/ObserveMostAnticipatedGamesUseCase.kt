@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.usecases
+package com.paulrybitskyi.gamedge.domain.usecases.observers
 
 import com.paulrybitskyi.gamedge.domain.entities.Game
 import com.paulrybitskyi.gamedge.domain.repositories.utils.Pagination
-import com.paulrybitskyi.gamedge.domain.usecases.ObservePopularGamesUseCase.Params
+import com.paulrybitskyi.gamedge.domain.usecases.observers.ObserveMostAnticipatedGamesUseCase.Params
 import com.paulrybitskyi.gamedge.domain.usecases.base.ObservableUseCase
 
-interface ObservePopularGamesUseCase : ObservableUseCase<Params, List<Game>> {
+interface ObserveMostAnticipatedGamesUseCase : ObservableUseCase<Params, List<Game>> {
 
 
     data class Params(
