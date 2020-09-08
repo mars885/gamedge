@@ -17,7 +17,3 @@
 plugins {
     kotlin()
 }
-
-dependencies {
-    implementation(deps.kotlin.stdLib)
-}

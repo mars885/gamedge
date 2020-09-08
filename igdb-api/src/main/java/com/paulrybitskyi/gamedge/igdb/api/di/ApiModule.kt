@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.api
+package com.paulrybitskyi.gamedge.igdb.api.di
 
 import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
-import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProviderFactory
+import com.paulrybitskyi.gamedge.igdb.api.*
+import com.paulrybitskyi.gamedge.igdb.api.Constants
+import com.paulrybitskyi.gamedge.igdb.api.IgdbApi
+import com.paulrybitskyi.gamedge.igdb.api.IgdbApiImpl
 import com.paulrybitskyi.gamedge.igdb.api.adapters.AgeRatingCategoryAdapter
 import com.paulrybitskyi.gamedge.igdb.api.adapters.AgeRatingTypeAdapter
 import com.paulrybitskyi.gamedge.igdb.api.adapters.WebsiteCategoryAdapter
@@ -28,66 +31,90 @@ import com.paulrybitskyi.gamedge.igdb.api.utils.AuthorizationInterceptor
 import com.paulrybitskyi.gamedge.igdb.api.utils.calladapter.ApiResultCallAdapterFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
-import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializerFactory
 import com.squareup.moshi.Moshi
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import javax.inject.Provider
+import javax.inject.Singleton
 
-internal object IgdbApiFactory {
+@InstallIn(ApplicationComponent::class)
+@Module
+internal object ApiModule {
 
 
-    fun createIgdbApi(): IgdbApi {
+    @Singleton
+    @Provides
+    fun provideIgdbApi(
+        igdbApiService: IgdbApiService,
+        igdbApiQueryBuilder: IgdbApiQueryBuilder
+    ): IgdbApi {
         return IgdbApiImpl(
-            igdbApiService = createIgdbApiService(),
-            igdbApiQueryBuilder = createIgdbApiQueryBuilder()
+            igdbApiService = igdbApiService,
+            igdbApiQueryBuilder = igdbApiQueryBuilder
         )
     }
 
 
-    private fun createIgdbApiService(): IgdbApiService {
-        return createRetrofit().create(IgdbApiService::class.java)
+    @Provides
+    fun provideIgdbApiService(retrofit: Retrofit): IgdbApiService {
+        return retrofit.create(IgdbApiService::class.java)
     }
 
 
-    private fun createRetrofit(): Retrofit {
+    @Provides
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        moshi: Moshi
+    ): Retrofit {
         return Retrofit.Builder()
-            .client(createOkHttpClient())
+            .client(okHttpClient)
             .baseUrl(Constants.IGDB_API_BASE_URL + "/")
             .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(MoshiConverterFactory.create(createMoshi()))
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(ApiResultCallAdapterFactory())
             .build()
     }
 
 
-    private fun createOkHttpClient(): OkHttpClient {
+    @Provides
+    fun provideOkHttpClient(
+        authorizationInterceptor: AuthorizationInterceptor,
+        httpLoggingInterceptor: Provider<HttpLoggingInterceptor>
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .apply {
-                addInterceptor(createAuthorizationInterceptor())
+                addInterceptor(authorizationInterceptor)
 
                 if(BuildConfig.DEBUG) {
-                    addInterceptor(createHttpLoggingInterceptor())
+                    addInterceptor(httpLoggingInterceptor.get())
                 }
             }
             .build()
     }
 
 
-    private fun createAuthorizationInterceptor(): AuthorizationInterceptor {
+    @Provides
+    fun provideAuthorizationInterceptor(): AuthorizationInterceptor {
         return AuthorizationInterceptor(BuildConfig.IGDB_API_KEY)
     }
 
 
-    private fun createHttpLoggingInterceptor(): HttpLoggingInterceptor {
+    @Provides
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor()
             .apply { level = HttpLoggingInterceptor.Level.BODY }
     }
 
 
-    private fun createMoshi(): Moshi {
+    @Provides
+    fun provideMoshi(): Moshi {
         return Moshi.Builder()
             .add(AgeRatingCategoryAdapter())
             .add(AgeRatingTypeAdapter())
@@ -96,27 +123,23 @@ internal object IgdbApiFactory {
     }
 
 
-    private fun createIgdbApiQueryBuilder(): IgdbApiQueryBuilder {
+    @Provides
+    fun provideIgdbApiQueryBuilder(
+        apicalypseQueryBuilderFactory: ApicalypseQueryBuilderFactory,
+        apicalypseSerializer: ApicalypseSerializer,
+        queryTimestampProvider: QueryTimestampProvider
+    ): IgdbApiQueryBuilder {
         return IgdbApiQueryBuilderImpl(
-            apicalypseQueryBuilderFactory = createApicalypseQueryBuilderFactory(),
-            apicalypseSerializer = createApicalypseSerializer(),
-            queryTimestampProvider = createQueryTimestampProvider()
+            apicalypseQueryBuilderFactory = apicalypseQueryBuilderFactory,
+            apicalypseSerializer = apicalypseSerializer,
+            queryTimestampProvider = queryTimestampProvider
         )
     }
 
 
-    private fun createApicalypseQueryBuilderFactory(): ApicalypseQueryBuilderFactory {
-        return ApicalypseQueryBuilderFactory()
-    }
-
-
-    private fun createApicalypseSerializer(): ApicalypseSerializer {
-        return ApicalypseSerializerFactory().create()
-    }
-
-
-    private fun createQueryTimestampProvider(): QueryTimestampProvider {
-        return QueryTimestampProviderFactory.create()
+    @Provides
+    fun provideApicalypseQueryBuilderFactory(): ApicalypseQueryBuilderFactory {
+        return ApicalypseQueryBuilderFactory
     }
 
 

@@ -44,6 +44,9 @@ dependencies {
     implementation(deps.square.moshi)
     kapt(deps.square.moshiCodeGenerator)
 
+    implementation(deps.google.daggerHilt)
+    kapt(deps.google.daggerHiltCompiler)
+
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)
 }
