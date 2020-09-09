@@ -16,3 +16,60 @@
 
 package com.paulrybitskyi.gamedge.ui.base
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.CallSuper
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
+
+internal abstract class BaseFragment(
+    @LayoutRes contentLayoutId: Int
+) : Fragment(contentLayoutId) {
+
+
+    final override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+
+    final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        onPreInit()
+        onInit()
+        onPostInit()
+        onBindViewModel()
+    }
+
+
+    @CallSuper
+    protected open fun onPreInit() {
+        // Stub
+    }
+
+
+    @CallSuper
+    protected open fun onInit() {
+        // Stub
+    }
+
+
+    @CallSuper
+    protected open fun onPostInit() {
+        // Stub
+    }
+
+
+    @CallSuper
+    protected open fun onBindViewModel() {
+        // Stub
+    }
+
+
+}

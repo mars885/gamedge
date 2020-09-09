@@ -16,18 +16,16 @@
 
 package com.paulrybitskyi.gamedge.ui.dashboard
 
-import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import androidx.fragment.app.Fragment
 import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.databinding.FragmentDashboardBinding
+import com.paulrybitskyi.gamedge.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.ui.dashboard.DashboardPage.Companion.toDashboardPageFromMenuItemId
 import com.paulrybitskyi.gamedge.utils.setItemColors
 import com.paulrybitskyi.gamedge.utils.viewBinding
 
-internal class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
+internal class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
 
     private val binding by viewBinding(FragmentDashboardBinding::bind)
@@ -35,14 +33,9 @@ internal class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     private lateinit var viewPagerAdapter: DashboardViewPagerAdapter
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onInit() {
+        super.onInit()
 
-        init()
-    }
-
-
-    private fun init() {
         initToolbar()
         initBottomNavigation()
         initViewPager()
