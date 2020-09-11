@@ -88,6 +88,7 @@ object deps {
         const val imageLoading = ":image-loading"
         const val core = ":core"
         const val commonsData = ":commons-data"
+        const val commonsUiWidgets = ":commons-ui-widgets"
 
     }
 
