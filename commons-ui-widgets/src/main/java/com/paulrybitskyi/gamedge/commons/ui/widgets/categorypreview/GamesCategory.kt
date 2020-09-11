@@ -14,28 +14,13 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-}
+package com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview
 
-android {
-    buildFeatures {
-        viewBinding = true
-    }
-}
+enum class GamesCategory {
 
-dependencies {
-    implementation(project(deps.local.core))
+    POPULAR,
+    RECENTLY_RELEASED,
+    COMING_SOON,
+    MOST_ANTICIPATED
 
-    implementation(deps.kotlin.reflect)
-    implementation(deps.androidX.recyclerView)
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.google.materialComponents)
-    implementation(deps.commons.commonsCore)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsWidgets)
-
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
 }

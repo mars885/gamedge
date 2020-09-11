@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
+<resources>
+
+    <!-- GameCoverView -->
+    <color name="game_cover_view_card_background_color">#2A2E38</color>
+    <color name="game_cover_view_title_text_color">@color/colorPrimaryText</color>
+
+    <!-- GamesCategoryPreviewView -->
+    <color name="games_category_preview_view_card_background_color">@color/colorPrimaryDark</color>
+    <color name="games_category_preview_view_title_text_color">@color/colorPrimaryText</color>
+    <color name="games_category_preview_view_more_button_text_color">@color/colorAccent</color>
+
+</resources>

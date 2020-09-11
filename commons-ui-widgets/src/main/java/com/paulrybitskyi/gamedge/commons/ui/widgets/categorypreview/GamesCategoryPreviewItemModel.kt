@@ -14,28 +14,9 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-}
+package com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview
 
-android {
-    buildFeatures {
-        viewBinding = true
-    }
-}
-
-dependencies {
-    implementation(project(deps.local.core))
-
-    implementation(deps.kotlin.reflect)
-    implementation(deps.androidX.recyclerView)
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.google.materialComponents)
-    implementation(deps.commons.commonsCore)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsWidgets)
-
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
-}
+data class GamesCategoryPreviewItemModel(
+    val title: String,
+    val coverUrl: String
+)

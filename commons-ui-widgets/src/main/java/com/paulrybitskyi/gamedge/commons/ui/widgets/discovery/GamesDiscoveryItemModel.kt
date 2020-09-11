@@ -14,28 +14,13 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-}
+package com.paulrybitskyi.gamedge.commons.ui.widgets.discovery
 
-android {
-    buildFeatures {
-        viewBinding = true
-    }
-}
+import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
+import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewItemModel
 
-dependencies {
-    implementation(project(deps.local.core))
-
-    implementation(deps.kotlin.reflect)
-    implementation(deps.androidX.recyclerView)
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.google.materialComponents)
-    implementation(deps.commons.commonsCore)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsWidgets)
-
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
-}
+data class GamesDiscoveryItemModel(
+    val category: GamesCategory,
+    val categoryTitle: String,
+    val categoryItems: List<GamesCategoryPreviewItemModel>
+)

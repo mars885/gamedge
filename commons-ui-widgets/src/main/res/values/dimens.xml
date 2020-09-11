@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
+<resources>
+
+    <!-- GameCoverView -->
+    <dimen name="game_cover_card_elevation">2dp</dimen>
+    <dimen name="game_cover_card_corner_radius">4dp</dimen>
+    <dimen name="game_cover_title_horizontal_padding">16dp</dimen>
+    <dimen name="game_cover_title_text_size">14sp</dimen>
+
+    <!-- GamesCategoryPreviewView -->
+    <dimen name="games_category_preview_card_elevation">2dp</dimen>
+    <dimen name="games_category_preview_title_vertical_margin">15dp</dimen>
+    <dimen name="games_category_preview_title_margin_start">15dp</dimen>
+    <dimen name="games_category_preview_title_margin_end">7dp</dimen>
+    <dimen name="games_category_preview_title_text_size">20sp</dimen>
+    <dimen name="games_category_preview_more_button_margin">7dp</dimen>
+    <dimen name="games_category_preview_more_button_padding">8dp</dimen>
+    <dimen name="games_category_preview_more_button_text_size">14sp</dimen>
+    <dimen name="games_category_preview_recycler_view_horizontal_padding">13dp</dimen>
+    <dimen name="games_category_preview_recycler_view_bottom_padding">15dp</dimen>
+    <dimen name="games_category_preview_cover_item_width">140dp</dimen>
+    <dimen name="games_category_preview_cover_item_height">210dp</dimen>
+    <dimen name="games_category_preview_cover_item_margin">2dp</dimen>
+
+    <!-- GamesDiscoveryView -->
+    <dimen name="games_discovery_decorator_spacing">15dp</dimen>
+    <dimen name="games_discovery_info_view_horizontal_margin">30dp</dimen>
+
+</resources>

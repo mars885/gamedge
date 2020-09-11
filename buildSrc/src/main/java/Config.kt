@@ -50,6 +50,7 @@ object versions {
     const val lifecycleCommonJava8 = "2.2.0"
     const val daggerHilt = "2.28.3-alpha"
     const val daggerHiltAssistedInjection = "1.0.0-alpha02"
+    const val materialComponents = "1.3.0-alpha02"
     const val kotlinResult = "1.1.8"
     const val okHttp = "4.8.0"
     const val retrofit = "2.9.0"
@@ -123,6 +124,7 @@ object deps {
 
         const val daggerHilt = "com.google.dagger:hilt-android:${versions.daggerHilt}"
         const val daggerHiltCompiler = "com.google.dagger:hilt-android-compiler:${versions.daggerHilt}"
+        const val materialComponents = "com.google.android.material:material:${versions.materialComponents}"
 
     }
 

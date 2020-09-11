@@ -14,28 +14,12 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-}
+package com.paulrybitskyi.gamedge.commons.ui.widgets.discovery
 
-android {
-    buildFeatures {
-        viewBinding = true
-    }
-}
+import android.content.Context
+import com.paulrybitskyi.gamedge.commons.ui.widgets.base.AbstractRecyclerViewAdapter
+import com.paulrybitskyi.gamedge.commons.ui.widgets.base.NoDependencies
 
-dependencies {
-    implementation(project(deps.local.core))
-
-    implementation(deps.kotlin.reflect)
-    implementation(deps.androidX.recyclerView)
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.google.materialComponents)
-    implementation(deps.commons.commonsCore)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsWidgets)
-
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
-}
+internal class GamesDiscoveryAdapter(
+    context: Context
+): AbstractRecyclerViewAdapter<GamesDiscoveryItem, NoDependencies>(context)

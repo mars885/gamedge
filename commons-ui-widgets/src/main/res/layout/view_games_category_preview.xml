@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/games_category_preview_view_card_background_color"
+    tools:parentTag="com.google.android.material.card.MaterialCardView">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/games_category_preview_title_vertical_margin"
+            android:layout_marginBottom="@dimen/games_category_preview_title_vertical_margin"
+            android:layout_marginStart="@dimen/games_category_preview_title_margin_start"
+            android:layout_marginEnd="@dimen/games_category_preview_title_margin_end"
+            android:gravity="start"
+            android:textSize="@dimen/games_category_preview_title_text_size"
+            android:textColor="@color/games_category_preview_view_title_text_color"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/moreBtn"
+            tools:text="Most Anticipated"/>
+        
+        <TextView
+            android:id="@+id/moreBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/games_category_preview_more_button_margin"
+            android:padding="@dimen/games_category_preview_more_button_padding"
+            android:text="@string/games_category_preview_more_button_text"
+            android:textSize="@dimen/games_category_preview_more_button_text_size"
+            android:textColor="@color/games_category_preview_view_more_button_text_color"
+            android:fontFamily="sans-serif-medium"
+            android:textAllCaps="true"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintTop_toTopOf="@id/titleTv"
+            app:layout_constraintBottom_toBottomOf="@id/titleTv"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/games_category_preview_recycler_view_horizontal_padding"
+            android:paddingEnd="@dimen/games_category_preview_recycler_view_horizontal_padding"
+            android:paddingBottom="@dimen/games_category_preview_recycler_view_bottom_padding"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintTop_toBottomOf="@id/titleTv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

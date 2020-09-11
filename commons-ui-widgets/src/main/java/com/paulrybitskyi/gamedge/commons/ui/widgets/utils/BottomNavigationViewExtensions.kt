@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-}
+package com.paulrybitskyi.gamedge.commons.ui.widgets.utils
 
-android {
-    buildFeatures {
-        viewBinding = true
+import android.content.res.ColorStateList
+import androidx.annotation.ColorInt
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
+
+fun BottomNavigationView.setItemColors(
+    @ColorInt unselectedStateColor: Int,
+    @ColorInt selectedStateColor: Int
+) {
+    ColorStateList(
+        arrayOf(
+            intArrayOf(-android.R.attr.state_checked),
+            intArrayOf()
+        ),
+        intArrayOf(
+            unselectedStateColor,
+            selectedStateColor
+        )
+    ).also {
+        itemTextColor = it
+        itemIconTintList = it
     }
-}
-
-dependencies {
-    implementation(project(deps.local.core))
-
-    implementation(deps.kotlin.reflect)
-    implementation(deps.androidX.recyclerView)
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.google.materialComponents)
-    implementation(deps.commons.commonsCore)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsWidgets)
-
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
 }

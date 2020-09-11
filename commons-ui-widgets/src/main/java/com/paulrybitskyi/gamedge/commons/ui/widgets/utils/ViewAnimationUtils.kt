@@ -14,28 +14,32 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
+package com.paulrybitskyi.gamedge.commons.ui.widgets.utils
+
+import android.view.View
+import android.view.animation.DecelerateInterpolator
+
+
+private const val DATA_SET_ANIMATION_DURATION = 500L
+private val DATA_SET_ANIMATION_INTERPOLATOR = DecelerateInterpolator(1.5F)
+
+
+fun View.fadeIn() {
+    animate()
+        .alpha(1f)
+        .setDuration(DATA_SET_ANIMATION_DURATION)
+        .setInterpolator(DATA_SET_ANIMATION_INTERPOLATOR)
+        .start()
 }
 
-android {
-    buildFeatures {
-        viewBinding = true
-    }
+
+fun View.resetAnimation() {
+    cancelActiveAnimations()
+    alpha = 0f
 }
 
-dependencies {
-    implementation(project(deps.local.core))
 
-    implementation(deps.kotlin.reflect)
-    implementation(deps.androidX.recyclerView)
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.google.materialComponents)
-    implementation(deps.commons.commonsCore)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsWidgets)
-
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
+fun View.cancelActiveAnimations() {
+    clearAnimation()
+    animate().cancel()
 }
