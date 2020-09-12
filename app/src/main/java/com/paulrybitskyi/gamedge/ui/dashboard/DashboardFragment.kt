@@ -19,11 +19,11 @@ package com.paulrybitskyi.gamedge.ui.dashboard
 import android.view.MenuItem
 import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.gamedge.R
+import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.setItemColors
 import com.paulrybitskyi.gamedge.databinding.FragmentDashboardBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.ui.dashboard.DashboardPage.Companion.toDashboardPageFromMenuItemId
-import com.paulrybitskyi.gamedge.utils.setItemColors
-import com.paulrybitskyi.gamedge.utils.viewBinding
+import com.paulrybitskyi.gamedge.core.utils.viewBinding
 
 internal class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 

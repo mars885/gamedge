@@ -20,8 +20,16 @@ plugins {
     kotlinKapt()
 }
 
+android {
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
 dependencies {
     implementation(deps.kotlin.coroutinesCore)
+    implementation(deps.androidX.appCompat)
+    implementation(deps.androidX.lifecycleCommonJava8)
     implementation(deps.commons.commonsNetwork)
     implementation(deps.misc.kotlinResult)
 

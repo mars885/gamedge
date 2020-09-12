@@ -51,11 +51,11 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/colorPrimary"
-        android:theme="@style/Gamedge.BottomNavigationView"
         app:menu="@menu/dashboard_bottom_navigation_menu"
         app:layout_constraintTop_toBottomOf="@id/viewPager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Gamedge.BottomNavigationView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

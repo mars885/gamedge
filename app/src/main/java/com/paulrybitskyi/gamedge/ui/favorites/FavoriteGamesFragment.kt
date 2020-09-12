@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.ui.favorites
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.databinding.FragmentFavoriteGamesBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
-import com.paulrybitskyi.gamedge.utils.viewBinding
+import com.paulrybitskyi.gamedge.core.utils.viewBinding
 
 internal class FavoriteGamesFragment : BaseFragment(R.layout.fragment_favorite_games) {
 

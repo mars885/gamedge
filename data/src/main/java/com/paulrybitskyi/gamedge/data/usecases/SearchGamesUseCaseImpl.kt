@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.data.usecases
 
 import com.github.michaelbull.result.mapEither
-import com.paulrybitskyi.gamedge.core.extensions.asSuccess
-import com.paulrybitskyi.gamedge.core.extensions.onSuccess
+import com.paulrybitskyi.gamedge.core.utils.asSuccess
+import com.paulrybitskyi.gamedge.core.utils.onSuccess
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore

@@ -18,9 +18,9 @@ package com.paulrybitskyi.gamedge.ui.discovery
 
 import androidx.fragment.app.viewModels
 import com.paulrybitskyi.gamedge.R
+import com.paulrybitskyi.gamedge.core.utils.viewBinding
 import com.paulrybitskyi.gamedge.databinding.FragmentGamesDiscoveryBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
-import com.paulrybitskyi.gamedge.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

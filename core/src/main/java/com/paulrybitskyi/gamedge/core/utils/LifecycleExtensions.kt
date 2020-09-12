@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.utils
+package com.paulrybitskyi.gamedge.core.utils
 
 import androidx.lifecycle.*
 

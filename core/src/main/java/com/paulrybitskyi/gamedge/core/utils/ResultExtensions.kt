@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.core.extensions
+package com.paulrybitskyi.gamedge.core.utils
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok

@@ -28,10 +28,15 @@
 
     <style name="Gamedge"/>
 
-    <style name="Gamedge.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+    <style name="Gamedge.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemTextAppearanceInactive">@style/Gamedge.BottomNavigationView.TextAppearance</item>
+        <item name="itemTextAppearanceActive">@style/Gamedge.BottomNavigationView.TextAppearance</item>
+    </style>
+
+    <style name="Gamedge.BottomNavigationView.TextAppearance" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">@dimen/bottom_navigation_item_text_size</item>
         <item name="android:fontFamily">@string/font_family_medium</item>
-        <item name="labelVisibilityMode">labeled</item>
     </style>
 
     <style name="Gamedge.Toolbar">

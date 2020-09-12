@@ -18,13 +18,14 @@
 
 <resources>
 
-    <!-- Bottom Navigation -->
-    <color name="bottom_navigation_item_color_state_unselected">@color/colorSecondaryText</color>
-    <color name="bottom_navigation_item_color_state_selected">@color/colorAccent</color>
+    <color name="colorPrimary">#2B303C</color>
+    <color name="colorPrimaryDark">#222630</color>
+    <color name="colorAccent">#F55663</color>
+    <color name="colorContentContainer">#1c2028</color>
+    <color name="colorPrimaryText">#FFFFFF</color>
+    <color name="colorSecondaryText">#809aaf</color>
 
-    <!-- Toolbar -->
-    <color name="toolbar_background_color">@color/colorPrimary</color>
-    <color name="toolbar_title_text_color">@color/colorPrimaryText</color>
-    <color name="toolbar_button_icon_color">@color/colorPrimaryText</color>
+    <color name="colorProgressBar">@color/colorAccent</color>
+    <color name="colorInfoView">@color/colorSecondaryText</color>
 
 </resources>
