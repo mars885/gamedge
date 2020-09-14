@@ -16,7 +16,10 @@
 
 package com.paulrybitskyi.gamedge.domain.usecases.games.refreshers
 
+import com.paulrybitskyi.gamedge.domain.entities.Game
 import com.paulrybitskyi.gamedge.domain.usecases.base.UseCase
 import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesRefresherParams
+import com.paulrybitskyi.gamedge.domain.utils.DomainResult
+import kotlinx.coroutines.flow.Flow
 
-interface RefreshComingSoonGamesUseCase : UseCase<GamesRefresherParams, Unit>
+interface RefreshComingSoonGamesUseCase : UseCase<GamesRefresherParams, Flow<DomainResult<List<Game>>>>

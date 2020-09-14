@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.di
 
+import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesServerDataStore
 import com.paulrybitskyi.gamedge.igdb.api.IgdbApi
 import com.paulrybitskyi.gamedge.igdb.api.datastore.EntityMapper
@@ -35,11 +36,13 @@ internal object DataStoreModule {
     @Provides
     fun provideGamesServerDataStore(
         igdbApi: IgdbApi,
-        entityMapper: EntityMapper
+        entityMapper: EntityMapper,
+        dispatcherProvider: DispatcherProvider
     ): GamesServerDataStore {
         return GamesServerDataStoreImpl(
             igdbApi = igdbApi,
-            entityMapper = entityMapper
+            entityMapper = entityMapper,
+            dispatcherProvider = dispatcherProvider
         )
     }
 

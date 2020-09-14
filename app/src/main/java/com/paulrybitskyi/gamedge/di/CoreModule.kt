@@ -16,10 +16,23 @@
 
 package com.paulrybitskyi.gamedge.di
 
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
+import com.paulrybitskyi.gamedge.utils.ErrorMapper
+import com.paulrybitskyi.gamedge.utils.ErrorMapperImpl
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.components.ActivityRetainedComponent
 
 @Module
-@InstallIn(ApplicationComponent::class)
-internal object CoreModule
+@InstallIn(ActivityRetainedComponent::class)
+internal object CoreModule {
+
+
+    @Provides
+    fun provideErrorMapper(stringProvider: StringProvider): ErrorMapper {
+        return ErrorMapperImpl(stringProvider)
+    }
+
+
+}

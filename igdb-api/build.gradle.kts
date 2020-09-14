@@ -33,6 +33,9 @@ dependencies {
     implementation(project(deps.local.data))
     implementation(project(deps.local.commonsData))
     implementation(project(deps.local.igdbApicalypse))
+    implementation(project(deps.local.core))
+
+    implementation(deps.kotlin.coroutinesCore)
 
     implementation(deps.square.okHttpLoggingInterceptor)
     implementation(deps.square.retrofit)

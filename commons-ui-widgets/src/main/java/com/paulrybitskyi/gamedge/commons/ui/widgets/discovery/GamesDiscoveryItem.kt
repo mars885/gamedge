@@ -33,7 +33,7 @@ internal class GamesDiscoveryItem(model: GamesDiscoveryItemModel) : AbstractItem
 >(model), HasUniqueIdentifier<String> {
 
 
-    override val uniqueIdentifier: String = model.categoryTitle
+    override val uniqueIdentifier = model.title
 
 
     override fun createViewHolder(
@@ -43,6 +43,12 @@ internal class GamesDiscoveryItem(model: GamesDiscoveryItemModel) : AbstractItem
     ): ViewHolder {
         return ViewHolder(
             GamesCategoryPreviewView(parent.context)
+                .apply {
+                    layoutParams = RecyclerView.LayoutParams(
+                        RecyclerView.LayoutParams.MATCH_PARENT,
+                        RecyclerView.LayoutParams.WRAP_CONTENT
+                    )
+                }
         )
     }
 
@@ -57,8 +63,9 @@ internal class GamesDiscoveryItem(model: GamesDiscoveryItemModel) : AbstractItem
     ): RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: GamesDiscoveryItemModel) = with(view) {
-            title = model.categoryTitle
-            items = model.categoryItems
+            title = model.title
+            isProgressBarVisible = model.isProgressBarVisible
+            uiState = model.uiState.mapToCategoryUiState()
         }
 
         fun setOnMoreButtonClickListener(listener: () -> Unit) {

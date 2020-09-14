@@ -17,13 +17,15 @@
 package com.paulrybitskyi.gamedge.data.di
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.data.datastores.GamesServerDataStore
+import com.paulrybitskyi.gamedge.data.usecases.mappers.EntityMapper
+import com.paulrybitskyi.gamedge.data.usecases.mappers.PaginationMapper
 import com.paulrybitskyi.gamedge.data.usecases.refreshers.RefreshComingSoonGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.usecases.refreshers.RefreshMostAnticipatedGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.usecases.refreshers.RefreshPopularGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.usecases.refreshers.RefreshRecentlyReleasedGamesUseCaseImpl
+import com.paulrybitskyi.gamedge.data.utils.GamesRefreshingThrottler
 import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshComingSoonGamesUseCase
 import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshMostAnticipatedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshPopularGamesUseCase
@@ -44,14 +46,18 @@ internal object RefresherUseCasesModule {
     fun provideComingSoonGamesRefresherUseCase(
         gamesServerDataStore: GamesServerDataStore,
         gamesDatabaseDataStore: GamesDatabaseDataStore,
+        gamesRefreshingThrottler: GamesRefreshingThrottler,
         dispatcherProvider: DispatcherProvider,
-        networkStateProvider: NetworkStateProvider
+        paginationMapper: PaginationMapper,
+        entityMapper: EntityMapper
     ): RefreshComingSoonGamesUseCase {
         return RefreshComingSoonGamesUseCaseImpl(
             gamesServerDataStore = gamesServerDataStore,
             gamesDatabaseDataStore = gamesDatabaseDataStore,
+            gamesRefreshingThrottler = gamesRefreshingThrottler,
             dispatcherProvider = dispatcherProvider,
-            networkStateProvider = networkStateProvider
+            paginationMapper = paginationMapper,
+            entityMapper = entityMapper
         )
     }
 
@@ -61,14 +67,18 @@ internal object RefresherUseCasesModule {
     fun provideMostAnticipatedGamesRefresherUseCase(
         gamesServerDataStore: GamesServerDataStore,
         gamesDatabaseDataStore: GamesDatabaseDataStore,
+        gamesRefreshingThrottler: GamesRefreshingThrottler,
         dispatcherProvider: DispatcherProvider,
-        networkStateProvider: NetworkStateProvider
+        paginationMapper: PaginationMapper,
+        entityMapper: EntityMapper
     ): RefreshMostAnticipatedGamesUseCase {
         return RefreshMostAnticipatedGamesUseCaseImpl(
             gamesServerDataStore = gamesServerDataStore,
             gamesDatabaseDataStore = gamesDatabaseDataStore,
+            gamesRefreshingThrottler = gamesRefreshingThrottler,
             dispatcherProvider = dispatcherProvider,
-            networkStateProvider = networkStateProvider
+            paginationMapper = paginationMapper,
+            entityMapper = entityMapper
         )
     }
 
@@ -78,14 +88,18 @@ internal object RefresherUseCasesModule {
     fun providePopularGamesRefresherUseCase(
         gamesServerDataStore: GamesServerDataStore,
         gamesDatabaseDataStore: GamesDatabaseDataStore,
+        gamesRefreshingThrottler: GamesRefreshingThrottler,
         dispatcherProvider: DispatcherProvider,
-        networkStateProvider: NetworkStateProvider
+        paginationMapper: PaginationMapper,
+        entityMapper: EntityMapper
     ): RefreshPopularGamesUseCase {
         return RefreshPopularGamesUseCaseImpl(
             gamesServerDataStore = gamesServerDataStore,
             gamesDatabaseDataStore = gamesDatabaseDataStore,
+            gamesRefreshingThrottler = gamesRefreshingThrottler,
             dispatcherProvider = dispatcherProvider,
-            networkStateProvider = networkStateProvider
+            paginationMapper = paginationMapper,
+            entityMapper = entityMapper
         )
     }
 
@@ -95,14 +109,18 @@ internal object RefresherUseCasesModule {
     fun provideRecentlyReleasedGamesRefresherUseCase(
         gamesServerDataStore: GamesServerDataStore,
         gamesDatabaseDataStore: GamesDatabaseDataStore,
+        gamesRefreshingThrottler: GamesRefreshingThrottler,
         dispatcherProvider: DispatcherProvider,
-        networkStateProvider: NetworkStateProvider
+        paginationMapper: PaginationMapper,
+        entityMapper: EntityMapper
     ): RefreshRecentlyReleasedGamesUseCase {
         return RefreshRecentlyReleasedGamesUseCaseImpl(
             gamesServerDataStore = gamesServerDataStore,
             gamesDatabaseDataStore = gamesDatabaseDataStore,
+            gamesRefreshingThrottler = gamesRefreshingThrottler,
             dispatcherProvider = dispatcherProvider,
-            networkStateProvider = networkStateProvider
+            paginationMapper = paginationMapper,
+            entityMapper = entityMapper
         )
     }
 

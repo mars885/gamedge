@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.datastores
 
+import com.paulrybitskyi.gamedge.data.datastores.commons.Pagination
 import com.paulrybitskyi.gamedge.data.utils.DataCompany
 import com.paulrybitskyi.gamedge.data.utils.DataGame
 import kotlinx.coroutines.flow.Flow
@@ -24,18 +25,18 @@ interface GamesDatabaseDataStore {
 
     suspend fun saveGames(games: List<DataGame>)
 
-    suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): List<DataGame>
+    suspend fun searchGames(searchQuery: String, pagination: Pagination): List<DataGame>
 
-    suspend fun observePopularGames(offset: Int, limit: Int): Flow<List<DataGame>>
+    suspend fun observePopularGames(pagination: Pagination): Flow<List<DataGame>>
 
-    suspend fun observeRecentlyReleasedGames(offset: Int, limit: Int): Flow<List<DataGame>>
+    suspend fun observeRecentlyReleasedGames(pagination: Pagination): Flow<List<DataGame>>
 
-    suspend fun observeComingSoonGames(offset: Int, limit: Int): Flow<List<DataGame>>
+    suspend fun observeComingSoonGames(pagination: Pagination): Flow<List<DataGame>>
 
-    suspend fun observeMostAnticipatedGames(offset: Int, limit: Int): Flow<List<DataGame>>
+    suspend fun observeMostAnticipatedGames(pagination: Pagination): Flow<List<DataGame>>
 
-    suspend fun observeCompanyGames(company: DataCompany, offset: Int, limit: Int): Flow<List<DataGame>>
+    suspend fun observeCompanyGames(company: DataCompany, pagination: Pagination): Flow<List<DataGame>>
 
-    suspend fun observeSimilarGames(game: DataGame, offset: Int, limit: Int): Flow<List<DataGame>>
+    suspend fun observeSimilarGames(game: DataGame, pagination: Pagination): Flow<List<DataGame>>
 
 }

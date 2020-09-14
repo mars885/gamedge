@@ -57,16 +57,19 @@ dependencies {
     implementation(deps.androidX.daggerHiltAssistedInjection)
     kapt(deps.androidX.daggerHiltAssistedInjectionCompiler)
 
-    // Have to added due to how Dagger Hilt (alpha) works currently.
+    // Have to be added due to how Dagger Hilt (alpha) works currently.
     // Should be removed when the Dagger Hilt is stable.
     // Issue: https://github.com/google/dagger/issues/1991
     // Solution: https://github.com/google/dagger/issues/1991#issuecomment-667810346
     implementation(project(deps.local.igdbApicalypse))
     implementation(project(deps.local.commonsData))
+    implementation(project(deps.local.imageLoading))
     implementation(deps.square.retrofit)
     implementation(deps.square.moshi)
     implementation(deps.square.okHttpLoggingInterceptor)
+    implementation(deps.square.picasso)
     implementation(deps.androidX.room)
+    implementation(deps.androidX.prefsDataStore)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

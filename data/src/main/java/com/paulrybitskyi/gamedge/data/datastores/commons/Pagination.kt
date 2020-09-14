@@ -14,5 +14,9 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.ui.category
+package com.paulrybitskyi.gamedge.data.datastores.commons
 
+data class Pagination(
+    val offset: Int,
+    val limit: Int
+)

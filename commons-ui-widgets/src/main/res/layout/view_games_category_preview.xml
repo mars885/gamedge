@@ -33,19 +33,26 @@
             android:id="@+id/titleTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/games_category_preview_title_vertical_margin"
-            android:layout_marginBottom="@dimen/games_category_preview_title_vertical_margin"
-            android:layout_marginStart="@dimen/games_category_preview_title_margin_start"
-            android:layout_marginEnd="@dimen/games_category_preview_title_margin_end"
+            android:layout_margin="@dimen/games_category_preview_title_margin"
             android:gravity="start"
             android:textSize="@dimen/games_category_preview_title_text_size"
             android:textColor="@color/games_category_preview_view_title_text_color"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@string/font_family_medium"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/moreBtn"
+            app:layout_constraintEnd_toStartOf="@+id/progressBar"
             tools:text="Most Anticipated"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/games_category_preview_progress_bar_size"
+            android:layout_height="@dimen/games_category_preview_progress_bar_size"
+            android:layout_marginEnd="@dimen/games_category_preview_progress_bar_margin_end"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/colorProgressBar"
+            app:layout_constraintTop_toTopOf="@+id/moreBtn"
+            app:layout_constraintBottom_toBottomOf="@+id/moreBtn"
+            app:layout_constraintEnd_toStartOf="@+id/moreBtn"/>
         
         <TextView
             android:id="@+id/moreBtn"
@@ -56,16 +63,24 @@
             android:text="@string/games_category_preview_more_button_text"
             android:textSize="@dimen/games_category_preview_more_button_text_size"
             android:textColor="@color/games_category_preview_view_more_button_text_color"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@string/font_family_medium"
             android:textAllCaps="true"
             android:background="?attr/selectableItemBackground"
             app:layout_constraintTop_toTopOf="@id/titleTv"
             app:layout_constraintBottom_toBottomOf="@id/titleTv"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/topBarBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:barrierMargin="@dimen/games_category_preview_top_bar_barrier_margin"
+            app:constraint_referenced_ids="titleTv, moreBtn"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/games_category_preview_recycler_view_horizontal_padding"
             android:paddingEnd="@dimen/games_category_preview_recycler_view_horizontal_padding"
@@ -73,9 +88,29 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:scrollbars="none"
-            app:layout_constraintTop_toBottomOf="@id/titleTv"
+            app:layout_constraintTop_toBottomOf="@id/topBarBarrier"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.paulrybitskyi.commons.widgets.InfoView
+            android:id="@+id/infoView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/games_category_preview_info_view_horizontal_margin"
+            android:layout_marginEnd="@dimen/games_category_preview_info_view_horizontal_margin"
+            android:layout_marginBottom="@dimen/games_category_preview_info_view_margin_bottom"
+            app:infoView_icon="@drawable/google_controller"
+            app:infoView_iconSize="@dimen/games_category_preview_info_view_icon_size"
+            app:infoView_iconColor="@color/colorInfoView"
+            app:infoView_titleText="@string/games_category_preview_info_view_title"
+            app:infoView_titleTextColor="@color/colorInfoView"
+            app:infoView_titleTextSize="@dimen/games_category_preview_info_view_title_text_size"
+            app:infoView_descriptionTextColor="@color/colorInfoView"
+            app:infoView_descriptionText=""
+            app:layout_constraintTop_toBottomOf="@id/topBarBarrier"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,45 @@
+/*
+ * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.paulrybitskyi.gamedge.data.utils.extensions
+
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.mapEither
+import com.paulrybitskyi.gamedge.core.utils.onFailure
+import com.paulrybitskyi.gamedge.core.utils.onSuccess
+import com.paulrybitskyi.gamedge.data.entities.Error
+import com.paulrybitskyi.gamedge.data.utils.DataResult
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+
+
+internal fun <T> Flow<DataResult<T>>.onEachSuccess(action: suspend (T) -> Unit): Flow<DataResult<T>> {
+    return onEach { it.onSuccess(action) }
+}
+
+
+internal fun <T> Flow<DataResult<T>>.onEachFailure(action: suspend (Error) -> Unit): Flow<DataResult<T>> {
+    return onEach { it.onFailure(action) }
+}
+
+
+internal fun <S1, E1, S2, E2> Flow<Result<S1, E1>>.mapResult(
+    success: (S1) -> S2,
+    failure: (E1) -> E2
+): Flow<Result<S2, E2>> {
+    return map { it.mapEither(success, failure) }
+}

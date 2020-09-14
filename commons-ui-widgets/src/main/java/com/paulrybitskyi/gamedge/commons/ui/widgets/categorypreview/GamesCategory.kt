@@ -16,11 +16,15 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview
 
-enum class GamesCategory {
+import androidx.annotation.StringRes
+import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 
-    POPULAR,
-    RECENTLY_RELEASED,
-    COMING_SOON,
-    MOST_ANTICIPATED
+
+enum class GamesCategory(@StringRes val titleId: Int) {
+
+    POPULAR(R.string.games_category_popular),
+    RECENTLY_RELEASED(R.string.games_category_recently_released),
+    COMING_SOON(R.string.games_category_coming_soon),
+    MOST_ANTICIPATED(R.string.games_category_most_anticipated)
 
 }

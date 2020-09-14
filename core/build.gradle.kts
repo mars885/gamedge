@@ -27,6 +27,8 @@ android {
 }
 
 dependencies {
+    implementation(project(deps.local.domain))
+
     implementation(deps.kotlin.coroutinesCore)
     implementation(deps.androidX.appCompat)
     implementation(deps.androidX.lifecycleCommonJava8)

@@ -61,9 +61,9 @@ internal class EntityMapper {
 
     private fun ApiImage.toDataImage(): DataImage {
         return DataImage(
+            id = id,
             width = width,
-            height = height,
-            url = url
+            height = height
         )
     }
 

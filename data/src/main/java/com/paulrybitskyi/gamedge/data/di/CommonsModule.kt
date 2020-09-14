@@ -16,20 +16,56 @@
 
 package com.paulrybitskyi.gamedge.data.di
 
-import com.paulrybitskyi.gamedge.data.usecases.mapper.EntityMapper
+import android.content.Context
+import androidx.datastore.DataStore
+import androidx.datastore.preferences.Preferences
+import androidx.datastore.preferences.createDataStore
+import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
+import com.paulrybitskyi.gamedge.data.Constants
+import com.paulrybitskyi.gamedge.data.utils.GamesRefreshingThrottler
+import com.paulrybitskyi.gamedge.data.utils.GamesRefreshingThrottlerImpl
+import com.paulrybitskyi.gamedge.data.usecases.mappers.EntityMapper
+import com.paulrybitskyi.gamedge.data.usecases.mappers.PaginationMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module
 internal object CommonsModule {
 
 
+    @Singleton
+    @Provides
+    fun provideGamesRefreshingThrottler(
+        dataStore: DataStore<Preferences>,
+        timestampProvider: TimestampProvider
+    ): GamesRefreshingThrottler {
+        return GamesRefreshingThrottlerImpl(
+            dataStore = dataStore,
+            timestampProvider = timestampProvider
+        )
+    }
+
+
+    @Provides
+    fun provideGamesPreferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+        return context.createDataStore(Constants.GAMES_PREFERENCES_DATA_STORE_NAME)
+    }
+
+
     @Provides
     fun provideEntityMapper(): EntityMapper {
         return EntityMapper()
+    }
+
+
+    @Provides
+    fun providePaginationMapper(): PaginationMapper {
+        return PaginationMapper()
     }
 
 

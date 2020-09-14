@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.usecases.mapper
+package com.paulrybitskyi.gamedge.data.usecases.mappers
 
 import com.paulrybitskyi.gamedge.data.utils.*
 import com.paulrybitskyi.gamedge.domain.utils.*
@@ -56,9 +56,9 @@ internal class EntityMapper {
 
     private fun DataImage.toDomainImage(): DomainImage {
         return DomainImage(
+            id = id,
             width = width,
-            height = height,
-            url = url
+            height = height
         )
     }
 

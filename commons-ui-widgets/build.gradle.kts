@@ -17,6 +17,8 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    kotlinKapt()
+    daggerHiltAndroid()
 }
 
 android {
@@ -27,14 +29,21 @@ android {
 
 dependencies {
     implementation(project(deps.local.core))
+    implementation(project(deps.local.imageLoading))
 
     implementation(deps.kotlin.reflect)
     implementation(deps.androidX.recyclerView)
     implementation(deps.androidX.constraintLayout)
+    api(deps.androidX.swipeRefreshLayout)
+    implementation(deps.androidX.coreKtx)
     implementation(deps.google.materialComponents)
     implementation(deps.commons.commonsCore)
     implementation(deps.commons.commonsKtx)
     implementation(deps.commons.commonsWidgets)
+    implementation(deps.commons.commonsRecyclerView)
+
+    implementation(deps.google.daggerHilt)
+    kapt(deps.google.daggerHiltCompiler)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

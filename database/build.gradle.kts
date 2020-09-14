@@ -33,6 +33,7 @@ android {
 dependencies {
     implementation(project(deps.local.data))
     implementation(project(deps.local.commonsData))
+    implementation(project(deps.local.core))
 
     implementation(deps.kotlin.coroutinesCore)
 

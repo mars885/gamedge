@@ -69,24 +69,24 @@ internal class EntityMapper(
             storyline = databaseGame.storyline,
             cover = databaseGame.cover.fromJson(),
             timeToBeat = databaseGame.timeToBeat.fromJson(),
-            ageRatings = databaseGame.ageRatings.fromJson(emptyList()),
-            artworks = databaseGame.artworks.fromJson(emptyList()),
-            screenshots = databaseGame.screenshots.fromJson(emptyList()),
-            genres = databaseGame.genres.fromJson(emptyList()),
-            platforms = databaseGame.platforms.fromJson(emptyList()),
-            playerPerspectives = databaseGame.playerPerspectives.fromJson(emptyList()),
-            themes = databaseGame.themes.fromJson(emptyList()),
-            modes = databaseGame.modes.fromJson(emptyList()),
-            keywords = databaseGame.keywords.fromJson(emptyList()),
-            involvedCompanies = databaseGame.involvedCompanies.fromJson(emptyList()),
-            websites = databaseGame.websites.fromJson(emptyList()),
-            similarGames = databaseGame.similarGames.fromJson(emptyList())
+            ageRatings = databaseGame.ageRatings.fromJsonList(),
+            artworks = databaseGame.artworks.fromJsonList(),
+            screenshots = databaseGame.screenshots.fromJsonList(),
+            genres = databaseGame.genres.fromJsonList(),
+            platforms = databaseGame.platforms.fromJsonList(),
+            playerPerspectives = databaseGame.playerPerspectives.fromJsonList(),
+            themes = databaseGame.themes.fromJsonList(),
+            modes = databaseGame.modes.fromJsonList(),
+            keywords = databaseGame.keywords.fromJsonList(),
+            involvedCompanies = databaseGame.involvedCompanies.fromJsonList(),
+            websites = databaseGame.websites.fromJsonList(),
+            similarGames = databaseGame.similarGames.fromJsonList()
         )
     }
 
 
     private inline fun <reified T> T.toJson(): String {
-        return jsonConverter.toJson(T::class.java)
+        return jsonConverter.toJson(this)
     }
 
 
@@ -95,8 +95,8 @@ internal class EntityMapper(
     }
 
 
-    private inline fun <reified T> String.fromJson(default: T): T {
-        return (fromJson() ?: default)
+    private inline fun <reified T> String.fromJsonList(): List<T> {
+        return (jsonConverter.fromJsonList(this) ?: emptyList())
     }
 
 

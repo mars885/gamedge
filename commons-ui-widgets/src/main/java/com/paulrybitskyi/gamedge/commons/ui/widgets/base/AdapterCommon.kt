@@ -109,7 +109,7 @@ abstract class AbstractItem<
 
 
     final override fun equals(other: Any?): Boolean {
-        return (model == (other as Item<*, *>?)?.model)
+        return (model == (other as? Item<*, *>)?.model)
     }
 
 

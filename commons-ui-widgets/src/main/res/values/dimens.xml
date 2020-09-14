@@ -26,21 +26,25 @@
 
     <!-- GamesCategoryPreviewView -->
     <dimen name="games_category_preview_card_elevation">2dp</dimen>
-    <dimen name="games_category_preview_title_vertical_margin">15dp</dimen>
-    <dimen name="games_category_preview_title_margin_start">15dp</dimen>
-    <dimen name="games_category_preview_title_margin_end">7dp</dimen>
+    <dimen name="games_category_preview_title_margin">15dp</dimen>
     <dimen name="games_category_preview_title_text_size">20sp</dimen>
+    <dimen name="games_category_preview_progress_bar_size">20dp</dimen>
+    <dimen name="games_category_preview_progress_bar_margin_end">7dp</dimen>
     <dimen name="games_category_preview_more_button_margin">7dp</dimen>
     <dimen name="games_category_preview_more_button_padding">8dp</dimen>
     <dimen name="games_category_preview_more_button_text_size">14sp</dimen>
+    <dimen name="games_category_preview_top_bar_barrier_margin">10dp</dimen>
     <dimen name="games_category_preview_recycler_view_horizontal_padding">13dp</dimen>
     <dimen name="games_category_preview_recycler_view_bottom_padding">15dp</dimen>
-    <dimen name="games_category_preview_cover_item_width">140dp</dimen>
-    <dimen name="games_category_preview_cover_item_height">210dp</dimen>
+    <dimen name="games_category_preview_info_view_horizontal_margin">30dp</dimen>
+    <dimen name="games_category_preview_info_view_margin_bottom">25dp</dimen>
+    <dimen name="games_category_preview_info_view_icon_size">80dp</dimen>
+    <dimen name="games_category_preview_info_view_title_text_size">17sp</dimen>
+    <dimen name="games_category_preview_cover_item_width">144dp</dimen>
+    <dimen name="games_category_preview_cover_item_height">197dp</dimen>
     <dimen name="games_category_preview_cover_item_margin">2dp</dimen>
 
     <!-- GamesDiscoveryView -->
     <dimen name="games_discovery_decorator_spacing">15dp</dimen>
-    <dimen name="games_discovery_info_view_horizontal_margin">30dp</dimen>
 
 </resources>

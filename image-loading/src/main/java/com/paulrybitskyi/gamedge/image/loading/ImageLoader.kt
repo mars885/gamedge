@@ -16,8 +16,12 @@
 
 package com.paulrybitskyi.gamedge.image.loading
 
+import android.widget.ImageView
+
 interface ImageLoader {
 
     fun loadImage(config: Config)
+
+    fun cancelRequests(target: ImageView)
 
 }

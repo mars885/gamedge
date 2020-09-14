@@ -17,14 +17,15 @@
 package com.paulrybitskyi.gamedge.data.usecases
 
 import com.github.michaelbull.result.mapEither
-import com.paulrybitskyi.gamedge.core.utils.asSuccess
-import com.paulrybitskyi.gamedge.core.utils.onSuccess
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
+import com.paulrybitskyi.gamedge.core.utils.asSuccess
+import com.paulrybitskyi.gamedge.core.utils.onSuccess
 import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.data.datastores.GamesServerDataStore
-import com.paulrybitskyi.gamedge.data.usecases.mapper.EntityMapper
-import com.paulrybitskyi.gamedge.data.usecases.mapper.mapToDomainGames
+import com.paulrybitskyi.gamedge.data.usecases.mappers.EntityMapper
+import com.paulrybitskyi.gamedge.data.usecases.mappers.PaginationMapper
+import com.paulrybitskyi.gamedge.data.usecases.mappers.mapToDomainGames
 import com.paulrybitskyi.gamedge.domain.usecases.games.SearchGamesUseCase
 import com.paulrybitskyi.gamedge.domain.usecases.games.SearchGamesUseCase.Params
 import kotlinx.coroutines.withContext
@@ -34,23 +35,23 @@ internal class SearchGamesUseCaseImpl(
     private val gamesServerDataStore: GamesServerDataStore,
     private val dispatcherProvider: DispatcherProvider,
     private val networkStateProvider: NetworkStateProvider,
+    private val paginationMapper: PaginationMapper,
     private val entityMapper: EntityMapper
 ) : SearchGamesUseCase {
 
 
     override suspend fun execute(params: Params) = withContext(dispatcherProvider.io) {
         val searchQuery = params.searchQuery
-        val offset = params.pagination.offset
-        val limit = params.pagination.limit
+        val pagination = paginationMapper.mapToDataPagination(params.pagination)
 
         if(networkStateProvider.isNetworkAvailable) {
             gamesServerDataStore
-                .searchGames(searchQuery, offset, limit)
+                .searchGames(searchQuery, pagination)
                 .onSuccess(gamesDatabaseDataStore::saveGames)
                 .mapEither(entityMapper::mapToDomainGames, entityMapper::mapToDomainError)
         } else {
             gamesDatabaseDataStore
-                .searchGames(searchQuery, offset, limit)
+                .searchGames(searchQuery, pagination)
                 .let(entityMapper::mapToDomainGames)
                 .asSuccess()
         }

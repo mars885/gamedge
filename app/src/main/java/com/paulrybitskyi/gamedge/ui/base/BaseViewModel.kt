@@ -16,3 +16,38 @@
 
 package com.paulrybitskyi.gamedge.ui.base
 
+import androidx.lifecycle.ViewModel
+import com.paulrybitskyi.gamedge.core.markers.Loggable
+import com.paulrybitskyi.gamedge.ui.base.events.Command
+import com.paulrybitskyi.gamedge.ui.base.events.Route
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+
+internal abstract class BaseViewModel : ViewModel(), Loggable {
+
+
+    override val logTag: String = javaClass.simpleName
+
+    private val _commandChannel = BroadcastChannel<Command>(Channel.BUFFERED)
+    private val _routeChannel = BroadcastChannel<Route>(Channel.BUFFERED)
+
+    val commandFlow: Flow<Command>
+        get() = _commandChannel.asFlow()
+
+    val routeFlow: Flow<Route>
+        get() = _routeChannel.asFlow()
+
+
+    protected fun dispatchCommand(command: Command) {
+        _commandChannel.offer(command)
+    }
+
+
+    protected fun route(route: Route) {
+        _routeChannel.offer(route)
+    }
+
+
+}

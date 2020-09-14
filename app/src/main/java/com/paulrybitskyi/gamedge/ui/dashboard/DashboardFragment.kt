@@ -17,18 +17,23 @@
 package com.paulrybitskyi.gamedge.ui.dashboard
 
 import android.view.MenuItem
+import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.setItemColors
+import com.paulrybitskyi.gamedge.core.utils.viewBinding
 import com.paulrybitskyi.gamedge.databinding.FragmentDashboardBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.ui.dashboard.DashboardPage.Companion.toDashboardPageFromMenuItemId
-import com.paulrybitskyi.gamedge.core.utils.viewBinding
 
-internal class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
+internal class DashboardFragment : BaseFragment<
+    FragmentDashboardBinding,
+    DashboardViewModel
+>(R.layout.fragment_dashboard) {
 
 
-    private val binding by viewBinding(FragmentDashboardBinding::bind)
+    override val viewBinding by viewBinding(FragmentDashboardBinding::bind)
+    override val viewModel by viewModels<DashboardViewModel>()
 
     private lateinit var viewPagerAdapter: DashboardViewPagerAdapter
 
@@ -42,12 +47,12 @@ internal class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     }
 
 
-    private fun initToolbar() = with(binding.toolbar) {
+    private fun initToolbar() = with(viewBinding.toolbar) {
         setBackgroundColor(getColor(R.color.toolbar_background_color))
     }
 
 
-    private fun initBottomNavigation() = with(binding.bottomNav) {
+    private fun initBottomNavigation() = with(viewBinding.bottomNav) {
         setItemColors(
             unselectedStateColor = getColor(R.color.bottom_navigation_item_color_state_unselected),
             selectedStateColor = getColor(R.color.bottom_navigation_item_color_state_selected)
@@ -57,7 +62,7 @@ internal class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
 
     private fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-        binding.viewPager.setCurrentItem(menuItem.toPagePosition(), false)
+        viewBinding.viewPager.setCurrentItem(menuItem.toPagePosition(), false)
         return true
     }
 
@@ -67,7 +72,7 @@ internal class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     }
 
 
-    private fun initViewPager() = with(binding.viewPager) {
+    private fun initViewPager() = with(viewBinding.viewPager) {
         adapter = initAdapter()
         offscreenPageLimit = viewPagerAdapter.itemCount
         isUserInputEnabled = false

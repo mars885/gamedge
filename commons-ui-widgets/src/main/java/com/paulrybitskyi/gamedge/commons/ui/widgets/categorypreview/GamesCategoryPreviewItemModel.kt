@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview
 
 data class GamesCategoryPreviewItemModel(
+    val id: Int,
     val title: String,
-    val coverUrl: String
+    val coverUrl: String?
 )

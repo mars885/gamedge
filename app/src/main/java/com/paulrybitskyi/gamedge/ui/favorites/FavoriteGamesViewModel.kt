@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.favorites
 
-import androidx.lifecycle.ViewModel
+import androidx.hilt.lifecycle.ViewModelInject
+import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 
-internal class FavoriteGamesViewModel : ViewModel()
+internal class FavoriteGamesViewModel @ViewModelInject constructor() : BaseViewModel()

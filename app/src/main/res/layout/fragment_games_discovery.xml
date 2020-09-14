@@ -16,10 +16,9 @@
   ~ limitations under the License.
 -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/discoveryView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorContentContainer">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:background="@color/colorContentContainer"/>

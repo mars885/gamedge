@@ -20,9 +20,9 @@ import com.paulrybitskyi.gamedge.domain.entities.Game
 import com.paulrybitskyi.gamedge.domain.usecases.base.UseCase
 import com.paulrybitskyi.gamedge.domain.usecases.commons.Pagination
 import com.paulrybitskyi.gamedge.domain.usecases.games.SearchGamesUseCase.Params
-import com.paulrybitskyi.gamedge.domain.utils.UseCaseResult
+import com.paulrybitskyi.gamedge.domain.utils.DomainResult
 
-interface SearchGamesUseCase : UseCase<Params, UseCaseResult<List<Game>>> {
+interface SearchGamesUseCase : UseCase<Params, DomainResult<List<Game>>> {
 
 
     data class Params(

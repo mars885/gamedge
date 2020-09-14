@@ -37,6 +37,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { setUrl("https://jitpack.io") }
         google()
         jcenter()
     }
@@ -50,7 +51,9 @@ subprojects {
 
         kotlinOptions {
             freeCompilerArgs += listOf(
-                "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
+                "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
             )
 
             jvmTarget = appConfig.kotlinCompatibilityVersion.toString()

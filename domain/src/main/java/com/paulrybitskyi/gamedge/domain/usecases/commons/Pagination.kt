@@ -17,6 +17,6 @@
 package com.paulrybitskyi.gamedge.domain.usecases.commons
 
 data class Pagination(
-    val offset: Int,
-    val limit: Int
+    val offset: Int = 0,
+    val limit: Int = 20
 )

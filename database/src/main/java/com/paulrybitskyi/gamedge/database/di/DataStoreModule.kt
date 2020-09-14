@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.database.di
 
 import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
+import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.database.datastore.EntityMapper
 import com.paulrybitskyi.gamedge.database.datastore.GamesDatabaseDataStoreImpl
@@ -41,12 +42,14 @@ internal object DataStoreModule {
     fun provideGamesDatabaseDataStore(
         gamesTable: GamesTable,
         queryTimestampProvider: QueryTimestampProvider,
-        entityMapper: EntityMapper
+        entityMapper: EntityMapper,
+        dispatcherProvider: DispatcherProvider
     ): GamesDatabaseDataStore {
         return GamesDatabaseDataStoreImpl(
             gamesTable = gamesTable,
             queryTimestampProvider = queryTimestampProvider,
-            entityMapper = entityMapper
+            entityMapper = entityMapper,
+            dispatcherProvider = dispatcherProvider
         )
     }
 

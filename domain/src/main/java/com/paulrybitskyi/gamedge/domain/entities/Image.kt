@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.domain.entities
 
 data class Image(
+    val id: String,
     val width: Int,
-    val height: Int,
-    val url: String,
+    val height: Int
 )

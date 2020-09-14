@@ -24,24 +24,48 @@ import com.paulrybitskyi.gamedge.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-internal class GamesDiscoveryFragment : BaseFragment(R.layout.fragment_games_discovery) {
+internal class GamesDiscoveryFragment : BaseFragment<
+    FragmentGamesDiscoveryBinding,
+    GamesDiscoveryViewModel
+>(R.layout.fragment_games_discovery) {
 
 
-    private val binding by viewBinding(FragmentGamesDiscoveryBinding::bind)
-    private val viewModel by viewModels<GamesDiscoveryViewModel>()
+    override val viewBinding by viewBinding(FragmentGamesDiscoveryBinding::bind)
+    override val viewModel by viewModels<GamesDiscoveryViewModel>()
 
 
     override fun onInit() {
         super.onInit()
 
-
+        initDiscoveryView()
     }
 
 
-    override fun onBindViewModel() {
+    private fun initDiscoveryView() = with(viewBinding.discoveryView) {
+        onCategoryMoreButtonClickListener = { viewModel.onCategoryMoreButtonClicked(it) }
+        onCategoryGameClickListener = { viewModel.onCategoryGameClicked() }
+        onRefreshListener = { viewModel.onRefreshRequested() }
+    }
+
+
+    override fun onPostInit() {
+        super.onPostInit()
+
+        viewModel.loadData()
+    }
+
+
+    override fun onBindViewModel() = with(viewModel) {
         super.onBindViewModel()
 
+        observeDiscoveryItems()
+    }
 
+
+    private fun GamesDiscoveryViewModel.observeDiscoveryItems() {
+        discoveryItems.observe(viewLifecycleOwner) {
+            viewBinding.discoveryView.items = it
+        }
     }
 
 

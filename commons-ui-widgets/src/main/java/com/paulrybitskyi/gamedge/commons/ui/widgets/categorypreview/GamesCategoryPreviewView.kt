@@ -18,18 +18,17 @@ package com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import com.paulrybitskyi.commons.ktx.getColor
-import com.paulrybitskyi.commons.ktx.getDimension
-import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
-import com.paulrybitskyi.commons.ktx.layoutInflater
-import com.paulrybitskyi.commons.recyclerview.decorators.spacing.SpacingItemDecorator
+import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.recyclerview.utils.disableAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
-import com.paulrybitskyi.gamedge.commons.ui.widgets.base.calculateDiff
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGamesCategoryPreviewBinding
+import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.fadeIn
+import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.resetAnimation
 
 class GamesCategoryPreviewView @JvmOverloads constructor(
     context: Context,
@@ -37,6 +36,10 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
+
+    var isProgressBarVisible: Boolean
+        set(value) { binding.progressBar.isVisible = value }
+        get() = binding.progressBar.isVisible
 
     var title: CharSequence
         set(value) { binding.titleTv.text = value }
@@ -46,15 +49,12 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
 
     private lateinit var adapter: GamesCategoryPreviewAdapter
 
-    private var adapterItems by observeChanges<List<GamesCategoryPreviewItem>>(emptyList()) { oldItems, newItems ->
-        adapter.setItems(
-            items = newItems,
-            diff = calculateDiff(oldItems, newItems)
-        )
+    private var adapterItems by observeChanges<List<GamesCategoryPreviewItem>>(emptyList()) { _, newItems ->
+        adapter.submitList(newItems)
     }
 
-    var items by observeChanges<List<GamesCategoryPreviewItemModel>>(emptyList()) { _, newItems ->
-        adapterItems = newItems.toAdapterItems()
+    var uiState by observeChanges<GamesCategoryPreviewUiState>(GamesCategoryPreviewUiState.Empty) { _, newState ->
+        handleUiStateChange(newState)
     }
 
     var onMoreButtonClickListener: (() -> Unit)? = null
@@ -65,6 +65,7 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
         initCard()
         initMoreButton()
         initRecyclerView(context)
+        initInfoView()
     }
 
 
@@ -82,6 +83,8 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
 
 
     private fun initRecyclerView(context: Context) = with(binding.recyclerView) {
+        disableAnimations()
+
         layoutManager = initLayoutManager(context)
         adapter = initAdapter(context)
     }
@@ -108,8 +111,47 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
     }
 
 
+    private fun initInfoView() = with(binding.infoView) {
+        isDescriptionTextVisible = false
+    }
+
+
     private fun List<GamesCategoryPreviewItemModel>.toAdapterItems(): List<GamesCategoryPreviewItem> {
         return map(::GamesCategoryPreviewItem)
+    }
+
+
+    private fun handleUiStateChange(newState: GamesCategoryPreviewUiState) {
+        when(newState) {
+            is GamesCategoryPreviewUiState.Empty -> onEmptyUiStateSelected()
+            is GamesCategoryPreviewUiState.Result -> onResultUiStateSelected(newState)
+        }
+    }
+
+
+    private fun onEmptyUiStateSelected() {
+        showInfoView()
+    }
+
+
+    private fun onResultUiStateSelected(uiState: GamesCategoryPreviewUiState.Result) {
+        adapterItems = uiState.items.toAdapterItems()
+
+        hideInfoView()
+    }
+
+
+    private fun showInfoView() = with(binding.infoView) {
+        if(isVisible) return
+
+        makeVisible()
+        fadeIn()
+    }
+
+
+    private fun hideInfoView() = with(binding.infoView) {
+        makeGone()
+        resetAnimation()
     }
 
 

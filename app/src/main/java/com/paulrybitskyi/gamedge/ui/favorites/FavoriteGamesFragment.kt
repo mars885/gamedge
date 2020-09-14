@@ -16,15 +16,20 @@
 
 package com.paulrybitskyi.gamedge.ui.favorites
 
+import androidx.fragment.app.viewModels
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.databinding.FragmentFavoriteGamesBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.core.utils.viewBinding
 
-internal class FavoriteGamesFragment : BaseFragment(R.layout.fragment_favorite_games) {
+internal class FavoriteGamesFragment : BaseFragment<
+    FragmentFavoriteGamesBinding,
+    FavoriteGamesViewModel
+>(R.layout.fragment_favorite_games) {
 
 
-    private val binding by viewBinding(FragmentFavoriteGamesBinding::bind)
+    override val viewBinding by viewBinding(FragmentFavoriteGamesBinding::bind)
+    override val viewModel by viewModels<FavoriteGamesViewModel>()
 
 
     override fun onInit() {

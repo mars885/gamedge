@@ -23,10 +23,23 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.viewbinding.ViewBinding
+import com.paulrybitskyi.commons.ktx.showLongToast
+import com.paulrybitskyi.commons.ktx.showShortToast
+import com.paulrybitskyi.gamedge.ui.base.events.Command
+import com.paulrybitskyi.gamedge.ui.base.events.Route
+import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommands
+import kotlinx.coroutines.flow.collect
 
-internal abstract class BaseFragment(
-    @LayoutRes contentLayoutId: Int
-) : Fragment(contentLayoutId) {
+internal abstract class BaseFragment<
+    VB : ViewBinding,
+    VM : BaseViewModel
+>(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
+
+
+    protected abstract val viewBinding: VB
+    protected abstract val viewModel: VM
 
 
     final override fun onCreateView(
@@ -68,6 +81,36 @@ internal abstract class BaseFragment(
 
     @CallSuper
     protected open fun onBindViewModel() {
+        onBindViewModelCommands()
+        onBindViewModelRoutes()
+    }
+
+
+    private fun onBindViewModelCommands() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.commandFlow.collect(::onHandleCommand)
+        }
+    }
+
+
+    private fun onBindViewModelRoutes() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.routeFlow.collect(::onRoute)
+        }
+    }
+    
+
+    @CallSuper
+    protected open fun onHandleCommand(command: Command) {
+        when(command) {
+            is GeneralCommands.ShowShortToast -> showShortToast(command.message)
+            is GeneralCommands.ShowLongToast -> showLongToast(command.message)
+        }
+    }
+
+
+    @CallSuper
+    protected open fun onRoute(route: Route) {
         // Stub
     }
 

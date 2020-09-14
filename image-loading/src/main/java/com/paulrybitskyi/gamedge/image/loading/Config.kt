@@ -16,34 +16,52 @@
 
 package com.paulrybitskyi.gamedge.image.loading
 
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 
 class Config private constructor(
     val shouldCenterInside: Boolean,
     val shouldCenterCrop: Boolean,
+    val shouldFit: Boolean,
     val targetWidth: Int,
     val targetHeight: Int,
     val imageUrl: String,
-    val destination: ImageView
+    val progressDrawable: Drawable?,
+    val errorDrawable: Drawable?,
+    val target: ImageView,
+    val onStart: (() -> Unit)?,
+    val onSuccess: (() -> Unit)?,
+    val onFailure: ((Exception) -> Unit)?
 ) {
 
 
     internal val hasTargetSize: Boolean
         get() = ((targetWidth > 0) && (targetHeight > 0))
 
+    internal val hasAtLeastOneResultListener: Boolean
+        get() = ((onSuccess != null) || (onFailure != null))
+
 
     class Builder {
 
         private var shouldCenterInside: Boolean = false
         private var shouldCenterCrop: Boolean = false
+        private var shouldFit: Boolean = false
         private var targetWidth: Int = 0
         private var targetHeight: Int = 0
         private var imageUrl: String = ""
-        private var destination: ImageView? = null
+        private var progressDrawable: Drawable? = null
+        private var errorDrawable: Drawable? = null
+        private var target: ImageView? = null
+        private var onStart: (() -> Unit)? = null
+        private var onSuccess: (() -> Unit)? = null
+        private var onFailure: ((Exception) -> Unit)? = null
 
         fun centerCrop() = apply { shouldCenterCrop = true }
 
         fun centerInside() = apply { shouldCenterInside = true }
+
+        fun fit() = apply { shouldFit = true }
 
         fun resize(targetWidth: Int, targetHeight: Int) = apply {
             require(targetWidth > 0) { "The width must be larger tha 0." }
@@ -59,19 +77,35 @@ class Config private constructor(
             this.imageUrl = imageUrl
         }
 
-        fun destination(destination: ImageView) = apply { this.destination = destination }
+        fun progressDrawable(drawable: Drawable) = apply { progressDrawable = drawable }
+
+        fun errorDrawable(drawable: Drawable) = apply { errorDrawable = drawable }
+
+        fun target(target: ImageView) = apply { this.target = target }
+
+        fun onStart(action: () -> Unit) = apply { onStart = action }
+
+        fun onSuccess(action: () -> Unit) = apply { onSuccess = action }
+
+        fun onFailure(action: (Exception) -> Unit) = apply { onFailure = action }
 
         fun build(): Config {
             check(imageUrl.isNotEmpty()) { "Image url is not set." }
-            check(destination != null) { "Destination ImageView is not set." }
+            check(target != null) { "Destination ImageView is not set." }
 
             return Config(
                 shouldCenterInside = shouldCenterInside,
                 shouldCenterCrop = shouldCenterCrop,
+                shouldFit = shouldFit,
                 targetWidth = targetWidth,
                 targetHeight = targetHeight,
                 imageUrl = imageUrl,
-                destination = checkNotNull(destination)
+                progressDrawable = progressDrawable,
+                errorDrawable = errorDrawable,
+                target = checkNotNull(target),
+                onStart = onStart,
+                onSuccess = onSuccess,
+                onFailure = onFailure
             )
         }
 

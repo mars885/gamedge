@@ -18,33 +18,29 @@ package com.paulrybitskyi.gamedge.data.usecases.observers
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
-import com.paulrybitskyi.gamedge.data.usecases.mapper.EntityMapper
-import com.paulrybitskyi.gamedge.data.usecases.mapper.mapToDomainGames
+import com.paulrybitskyi.gamedge.data.usecases.mappers.EntityMapper
+import com.paulrybitskyi.gamedge.data.usecases.mappers.PaginationMapper
+import com.paulrybitskyi.gamedge.data.usecases.mappers.mapToDomainGames
+import com.paulrybitskyi.gamedge.domain.entities.Game
 import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesObserverParams
-import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesRefresherParams
 import com.paulrybitskyi.gamedge.domain.usecases.games.observers.ObserveMostAnticipatedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshMostAnticipatedGamesUseCase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 internal class ObserveMostAnticipatedGamesUseCaseImpl(
-    private val refreshGamesUseCase: RefreshMostAnticipatedGamesUseCase,
     private val gamesDatabaseDataStore: GamesDatabaseDataStore,
     private val dispatcherProvider: DispatcherProvider,
+    private val paginationMapper: PaginationMapper,
     private val entityMapper: EntityMapper
 ) : ObserveMostAnticipatedGamesUseCase {
 
 
-    override suspend fun execute(params: GamesObserverParams) = withContext(dispatcherProvider.io) {
-        val pagination = params.pagination
-
-        if(params.refresh) {
-            refreshGamesUseCase.execute(GamesRefresherParams(pagination))
-        }
-
-        gamesDatabaseDataStore
-            .observeMostAnticipatedGames(pagination.offset, pagination.limit)
+    override suspend fun execute(params: GamesObserverParams): Flow<List<Game>> {
+        return gamesDatabaseDataStore
+            .observeMostAnticipatedGames(paginationMapper.mapToDataPagination(params.pagination))
             .map(entityMapper::mapToDomainGames)
+            .flowOn(dispatcherProvider.computation)
     }
 
 

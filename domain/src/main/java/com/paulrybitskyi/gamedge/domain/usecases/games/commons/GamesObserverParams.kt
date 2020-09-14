@@ -19,6 +19,5 @@ package com.paulrybitskyi.gamedge.domain.usecases.games.commons
 import com.paulrybitskyi.gamedge.domain.usecases.commons.Pagination
 
 data class GamesObserverParams(
-    val pagination: Pagination,
-    val refresh: Boolean
+    val pagination: Pagination = Pagination()
 )

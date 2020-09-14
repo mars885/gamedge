@@ -16,54 +16,26 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.base
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
 import kotlin.reflect.full.isSubclassOf
 
-
-fun <IT : Item<*, *>> calculateDiff(
-    oldItems : List<IT>,
-    newItems : List<IT>
-) : DiffUtil.DiffResult {
-    return DiffUtil.calculateDiff(
-        ItemDiffCallback(
-            oldItems = oldItems,
-            newItems = newItems
-        )
-    )
-}
+class ItemDiffCallback<IT : Item<*, *>> : DiffUtil.ItemCallback<IT>() {
 
 
-class ItemDiffCallback<IT : Item<*, *>>(
-    private val oldItems : List<IT>,
-    private val newItems : List<IT>
-) : DiffUtil.Callback() {
-
-
-    override fun getOldListSize() : Int {
-        return oldItems.size
-    }
-
-
-    override fun getNewListSize() : Int {
-        return newItems.size
-    }
-
-
-    override fun areContentsTheSame(oldItemPosition : Int, newItemPosition : Int) : Boolean {
-        return (oldItems[oldItemPosition] == newItems[newItemPosition])
-    }
-
-
-    override fun areItemsTheSame(oldItemPosition : Int, newItemPosition : Int) : Boolean {
-        val oldItem = oldItems[oldItemPosition]
-        val newItem = newItems[newItemPosition]
-
+    override fun areItemsTheSame(oldItem: IT, newItem: IT): Boolean {
         return when {
             ((oldItem::class.isSubclassOf(newItem::class) &&
             (oldItem is HasUniqueIdentifier<*>) &&
             (newItem is HasUniqueIdentifier<*>))) -> (oldItem.uniqueIdentifier == newItem.uniqueIdentifier)
             else -> (oldItem == newItem)
         }
+    }
+
+
+    @SuppressLint("DiffUtilEquals")
+    override fun areContentsTheSame(oldItem: IT, newItem: IT): Boolean {
+        return (oldItem == newItem)
     }
 
 

@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.database.utils
 
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 
 internal class JsonConverter(private val moshi: Moshi) {
 
@@ -28,6 +29,13 @@ internal class JsonConverter(private val moshi: Moshi) {
 
     inline fun <reified T> fromJson(json: String): T? {
         return moshi.adapter(T::class.java).fromJson(json)
+    }
+
+
+    inline fun <reified T> fromJsonList(json: String): List<T>? {
+        val type = Types.newParameterizedType(List::class.java, T::class.java)
+
+        return moshi.adapter<List<T>>(type).fromJson(json)
     }
 
 

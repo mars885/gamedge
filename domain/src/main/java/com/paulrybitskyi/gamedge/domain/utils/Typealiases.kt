@@ -20,8 +20,7 @@ import com.github.michaelbull.result.Result
 import com.paulrybitskyi.gamedge.domain.entities.*
 
 
-typealias RepositoryResult<T> = Result<T, Error>
-typealias UseCaseResult<T> = Result<T, Error>
+typealias DomainResult<T> = Result<T, Error>
 
 typealias DomainAgeRating = AgeRating
 typealias DomainAgeRatingCategory = AgeRatingCategory

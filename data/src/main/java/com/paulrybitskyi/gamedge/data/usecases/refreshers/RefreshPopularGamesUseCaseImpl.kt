@@ -16,33 +16,46 @@
 
 package com.paulrybitskyi.gamedge.data.usecases.refreshers
 
-import com.paulrybitskyi.gamedge.core.utils.onSuccess
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.data.datastores.GamesServerDataStore
+import com.paulrybitskyi.gamedge.data.usecases.mappers.EntityMapper
+import com.paulrybitskyi.gamedge.data.usecases.mappers.PaginationMapper
+import com.paulrybitskyi.gamedge.data.usecases.mappers.mapToDomainGames
+import com.paulrybitskyi.gamedge.data.utils.GamesRefreshingThrottler
+import com.paulrybitskyi.gamedge.data.utils.extensions.mapResult
+import com.paulrybitskyi.gamedge.data.utils.extensions.onEachSuccess
+import com.paulrybitskyi.gamedge.domain.entities.Game
 import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesRefresherParams
 import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshPopularGamesUseCase
-import kotlinx.coroutines.withContext
+import com.paulrybitskyi.gamedge.domain.utils.DomainResult
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 internal class RefreshPopularGamesUseCaseImpl(
     private val gamesServerDataStore: GamesServerDataStore,
     private val gamesDatabaseDataStore: GamesDatabaseDataStore,
+    private val gamesRefreshingThrottler: GamesRefreshingThrottler,
     private val dispatcherProvider: DispatcherProvider,
-    private val networkStateProvider: NetworkStateProvider
+    private val paginationMapper: PaginationMapper,
+    private val entityMapper: EntityMapper
 ) : RefreshPopularGamesUseCase {
 
 
-    override suspend fun execute(params: GamesRefresherParams) {
-        if(!networkStateProvider.isNetworkAvailable) return
-
-        withContext(dispatcherProvider.io) {
-            val pagination = params.pagination
-
-            gamesServerDataStore
-                .getPopularGames(pagination.offset, pagination.limit)
-                .onSuccess(gamesDatabaseDataStore::saveGames)
+    override suspend fun execute(params: GamesRefresherParams): Flow<DomainResult<List<Game>>> {
+        return flow {
+            if(gamesRefreshingThrottler.canRefreshPopularGames()) {
+                emit(gamesServerDataStore.getPopularGames(paginationMapper.mapToDataPagination(params.pagination)))
+            }
         }
+        .onEachSuccess {
+            gamesDatabaseDataStore.saveGames(it)
+            gamesRefreshingThrottler.updatePopularGamesLastRefreshingTime()
+        }
+        .flowOn(dispatcherProvider.main)
+        .mapResult(entityMapper::mapToDomainGames, entityMapper::mapToDomainError)
+        .flowOn(dispatcherProvider.computation)
     }
 
 

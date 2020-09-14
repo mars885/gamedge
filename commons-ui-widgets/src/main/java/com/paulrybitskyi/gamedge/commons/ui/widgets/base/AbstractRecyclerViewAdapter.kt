@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.commons.ui.widgets.base
 
 import android.content.Context
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.paulrybitskyi.commons.ktx.layoutInflater
 import com.paulrybitskyi.commons.utils.observeChanges
@@ -30,9 +30,9 @@ private inline class ViewType(val type: Int)
 
 abstract class AbstractRecyclerViewAdapter<IT: Item<*, in Dependencies>, Dependencies: ItemDependencies>(
     context: Context,
-    var items: List<IT> = emptyList(),
+    items: List<IT> = emptyList(),
     dependencies: ItemDependencies = NoDependencies
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : ListAdapter<IT, RecyclerView.ViewHolder>(ItemDiffCallback()) {
 
 
     private val inflater = context.layoutInflater
@@ -44,16 +44,28 @@ abstract class AbstractRecyclerViewAdapter<IT: Item<*, in Dependencies>, Depende
 
 
     init {
-        items.extractViewHolderFactories()
+        initItems(items)
     }
 
 
-    fun setItems(items: List<IT>, diff: DiffUtil.DiffResult? = null) {
-        this.items = items
+    private fun initItems(items: List<IT>) {
+        if(items.isNotEmpty()) {
+            submitList(items)
+        }
+    }
 
-        items.extractViewHolderFactories()
 
-        diff?.dispatchUpdatesTo(this) ?: notifyDataSetChanged()
+    override fun submitList(list: List<IT>?) {
+        list?.extractViewHolderFactories()
+
+        super.submitList(list)
+    }
+
+
+    override fun submitList(list: List<IT>?, commitCallback: Runnable?) {
+        list?.extractViewHolderFactories()
+
+        super.submitList(list, commitCallback)
     }
 
 
@@ -87,18 +99,13 @@ abstract class AbstractRecyclerViewAdapter<IT: Item<*, in Dependencies>, Depende
     }
 
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
-
     override fun getItemViewType(position: Int): Int {
         return this[position]::class.toViewType().type
     }
 
 
     operator fun get(position: Int): IT {
-        return items[position]
+        return currentList[position]
     }
 
 

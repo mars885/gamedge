@@ -27,4 +27,7 @@
     <color name="games_category_preview_view_title_text_color">@color/colorPrimaryText</color>
     <color name="games_category_preview_view_more_button_text_color">@color/colorAccent</color>
 
+    <!-- GamesDiscoveryView -->
+    <color name="games_discovery_swipe_refresh_color">@color/colorAccent</color>
+
 </resources>

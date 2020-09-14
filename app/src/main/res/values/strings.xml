@@ -25,4 +25,9 @@
     <string name="dashboard_bottom_navigation_item_discover">Discover</string>
     <string name="dashboard_bottom_navigation_item_favorites">Favorites</string>
 
+    <!-- Errors -->
+    <string name="error_network_message">Please check your network connection.</string>
+    <string name="error_server_message">The server is not responding! Please try again later.</string>
+    <string name="error_unknown_message">Oops! Something went wrong.</string>
+
 </resources>

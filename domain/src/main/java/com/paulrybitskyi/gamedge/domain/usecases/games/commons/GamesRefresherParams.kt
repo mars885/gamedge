@@ -19,5 +19,5 @@ package com.paulrybitskyi.gamedge.domain.usecases.games.commons
 import com.paulrybitskyi.gamedge.domain.usecases.commons.Pagination
 
 data class GamesRefresherParams(
-    val pagination: Pagination
+    val pagination: Pagination = Pagination()
 )

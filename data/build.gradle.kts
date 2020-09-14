@@ -26,6 +26,8 @@ dependencies {
 
     implementation(deps.kotlin.coroutinesCore)
 
+    implementation(deps.androidX.prefsDataStore)
+
     implementation(deps.misc.kotlinResult)
 
     implementation(deps.google.daggerHilt)

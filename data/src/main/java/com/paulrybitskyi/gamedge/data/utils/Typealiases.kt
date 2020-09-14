@@ -20,7 +20,7 @@ import com.github.michaelbull.result.Result
 import com.paulrybitskyi.gamedge.data.entities.*
 
 
-typealias DataStoreResult<T> = Result<T, Error>
+typealias DataResult<T> = Result<T, Error>
 
 typealias DataAgeRating = AgeRating
 typealias DataAgeRatingCategory = AgeRatingCategory

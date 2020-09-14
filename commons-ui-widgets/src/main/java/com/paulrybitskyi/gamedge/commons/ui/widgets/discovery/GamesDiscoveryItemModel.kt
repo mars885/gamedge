@@ -17,10 +17,10 @@
 package com.paulrybitskyi.gamedge.commons.ui.widgets.discovery
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
-import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewItemModel
 
 data class GamesDiscoveryItemModel(
     val category: GamesCategory,
-    val categoryTitle: String,
-    val categoryItems: List<GamesCategoryPreviewItemModel>
+    val title: String,
+    val isProgressBarVisible: Boolean,
+    val uiState: GamesDiscoveryItemUiState
 )

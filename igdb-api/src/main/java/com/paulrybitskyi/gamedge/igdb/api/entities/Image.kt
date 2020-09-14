@@ -24,23 +24,23 @@ import com.squareup.moshi.JsonClass
 @ApicalypseClass
 @JsonClass(generateAdapter = true)
 internal data class Image(
+    @Apicalypse(name = Schema.ID)
+    @Json(name = Schema.ID)
+    val id: String,
     @Apicalypse(name = Schema.WIDTH)
     @Json(name = Schema.WIDTH)
     val width: Int,
     @Apicalypse(name = Schema.HEIGHT)
     @Json(name = Schema.HEIGHT)
     val height: Int,
-    @Apicalypse(name = Schema.URL)
-    @Json(name = Schema.URL)
-    val url: String,
 ) {
 
 
     object Schema {
 
+        const val ID = "image_id"
         const val WIDTH = "width"
         const val HEIGHT = "height"
-        const val URL = "url"
 
     }
 

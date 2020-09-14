@@ -34,10 +34,10 @@ internal class GamesCategoryPreviewItem(model: GamesCategoryPreviewItemModel) : 
     GamesCategoryPreviewItemModel,
     ViewHolder,
     NoDependencies
->(model), HasUniqueIdentifier<String> {
+>(model), HasUniqueIdentifier<Int> {
 
 
-    override val uniqueIdentifier: String = model.title
+    override val uniqueIdentifier = model.id
 
 
     override fun createViewHolder(

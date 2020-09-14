@@ -17,6 +17,9 @@
 package com.paulrybitskyi.gamedge.core.di
 
 import android.content.Context
+import com.paulrybitskyi.gamedge.core.*
+import com.paulrybitskyi.gamedge.core.GamedgeLogger
+import com.paulrybitskyi.gamedge.core.ImageUrlBuilderImpl
 import com.paulrybitskyi.gamedge.core.providers.*
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProviderImpl
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProviderImpl
@@ -28,7 +31,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 
 @InstallIn(ApplicationComponent::class)
 @Module
-internal object ProvidersModule {
+internal object CoreModule {
 
 
     @Provides
@@ -44,8 +47,26 @@ internal object ProvidersModule {
 
 
     @Provides
+    fun provideStringProvider(@ApplicationContext context: Context): StringProvider {
+        return StringProviderImpl(context)
+    }
+
+
+    @Provides
     fun provideTimestampProvider(): TimestampProvider {
         return TimestampProviderImpl()
+    }
+
+
+    @Provides
+    fun provideImageUrlBuilder(): ImageUrlBuilder {
+        return ImageUrlBuilderImpl()
+    }
+
+
+    @Provides
+    fun provideLogger(): Logger {
+        return GamedgeLogger()
     }
 
 

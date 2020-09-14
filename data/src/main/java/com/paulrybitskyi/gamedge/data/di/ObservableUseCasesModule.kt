@@ -18,7 +18,8 @@ package com.paulrybitskyi.gamedge.data.di
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.datastores.GamesDatabaseDataStore
-import com.paulrybitskyi.gamedge.data.usecases.mapper.EntityMapper
+import com.paulrybitskyi.gamedge.data.usecases.mappers.EntityMapper
+import com.paulrybitskyi.gamedge.data.usecases.mappers.PaginationMapper
 import com.paulrybitskyi.gamedge.data.usecases.observers.ObserveComingSoonGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.usecases.observers.ObserveMostAnticipatedGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.usecases.observers.ObservePopularGamesUseCaseImpl
@@ -27,10 +28,6 @@ import com.paulrybitskyi.gamedge.domain.usecases.games.observers.ObserveComingSo
 import com.paulrybitskyi.gamedge.domain.usecases.games.observers.ObserveMostAnticipatedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.usecases.games.observers.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.domain.usecases.games.observers.ObserveRecentlyReleasedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshComingSoonGamesUseCase
-import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshMostAnticipatedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshPopularGamesUseCase
-import com.paulrybitskyi.gamedge.domain.usecases.games.refreshers.RefreshRecentlyReleasedGamesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,15 +42,15 @@ internal object ObservableUseCasesModule {
     @Singleton
     @Provides
     fun provideComingSoonGamesObservableUserCase(
-        refreshGamesUseCase: RefreshComingSoonGamesUseCase,
         gamesDatabaseDataStore: GamesDatabaseDataStore,
         dispatcherProvider: DispatcherProvider,
+        paginationMapper: PaginationMapper,
         entityMapper: EntityMapper
     ): ObserveComingSoonGamesUseCase {
         return ObserveComingSoonGamesUseCaseImpl(
-            refreshGamesUseCase = refreshGamesUseCase,
             gamesDatabaseDataStore = gamesDatabaseDataStore,
             dispatcherProvider = dispatcherProvider,
+            paginationMapper = paginationMapper,
             entityMapper = entityMapper
         )
     }
@@ -62,15 +59,15 @@ internal object ObservableUseCasesModule {
     @Singleton
     @Provides
     fun provideMostAnticipatedGamesObservableUseCase(
-        refreshGamesUseCase: RefreshMostAnticipatedGamesUseCase,
         gamesDatabaseDataStore: GamesDatabaseDataStore,
         dispatcherProvider: DispatcherProvider,
+        paginationMapper: PaginationMapper,
         entityMapper: EntityMapper
     ): ObserveMostAnticipatedGamesUseCase {
         return ObserveMostAnticipatedGamesUseCaseImpl(
-            refreshGamesUseCase = refreshGamesUseCase,
             gamesDatabaseDataStore = gamesDatabaseDataStore,
             dispatcherProvider = dispatcherProvider,
+            paginationMapper = paginationMapper,
             entityMapper = entityMapper
         )
     }
@@ -79,15 +76,15 @@ internal object ObservableUseCasesModule {
     @Singleton
     @Provides
     fun providePopularGamesObservableUseCase(
-        refreshGamesUseCase: RefreshPopularGamesUseCase,
         gamesDatabaseDataStore: GamesDatabaseDataStore,
         dispatcherProvider: DispatcherProvider,
+        paginationMapper: PaginationMapper,
         entityMapper: EntityMapper
     ): ObservePopularGamesUseCase {
         return ObservePopularGamesUseCaseImpl(
-            refreshGamesUseCase = refreshGamesUseCase,
             gamesDatabaseDataStore = gamesDatabaseDataStore,
             dispatcherProvider = dispatcherProvider,
+            paginationMapper = paginationMapper,
             entityMapper = entityMapper
         )
     }
@@ -96,15 +93,15 @@ internal object ObservableUseCasesModule {
     @Singleton
     @Provides
     fun provideRecentlyReleasedGamesObservableUseCase(
-        refreshGamesUseCase: RefreshRecentlyReleasedGamesUseCase,
         gamesDatabaseDataStore: GamesDatabaseDataStore,
         dispatcherProvider: DispatcherProvider,
+        paginationMapper: PaginationMapper,
         entityMapper: EntityMapper
     ): ObserveRecentlyReleasedGamesUseCase {
         return ObserveRecentlyReleasedGamesUseCaseImpl(
-            refreshGamesUseCase = refreshGamesUseCase,
             gamesDatabaseDataStore = gamesDatabaseDataStore,
             dispatcherProvider = dispatcherProvider,
+            paginationMapper = paginationMapper,
             entityMapper = entityMapper
         )
     }
