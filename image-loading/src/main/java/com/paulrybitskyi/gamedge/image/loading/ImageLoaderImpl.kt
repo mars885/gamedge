@@ -14,19 +14,24 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    kotlinKapt()
-}
+package com.paulrybitskyi.gamedge.image.loading
 
-dependencies {
-    implementation(deps.square.picasso)
-    implementation(deps.commons.commonsKtx)
+import com.squareup.picasso.Picasso
 
-    implementation(deps.google.daggerHilt)
-    kapt(deps.google.daggerHiltCompiler)
+internal class ImageLoaderImpl(
+    private val picasso: Picasso
+) : ImageLoader {
 
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
+
+    override fun loadImage(config: Config) {
+        val requestCreator = picasso.load(config.imageUrl)
+
+        if(config.shouldCenterCrop) requestCreator.centerCrop()
+        if(config.shouldCenterInside) requestCreator.centerInside()
+        if(config.hasTargetSize) requestCreator.resize(config.targetWidth, config.targetHeight)
+
+        requestCreator.into(config.destination)
+    }
+
+
 }

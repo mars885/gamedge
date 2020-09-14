@@ -14,19 +14,10 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    kotlinKapt()
-}
+package com.paulrybitskyi.gamedge.image.loading
 
-dependencies {
-    implementation(deps.square.picasso)
-    implementation(deps.commons.commonsKtx)
+interface ImageLoader {
 
-    implementation(deps.google.daggerHilt)
-    kapt(deps.google.daggerHiltCompiler)
+    fun loadImage(config: Config)
 
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
 }

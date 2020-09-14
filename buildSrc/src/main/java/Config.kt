@@ -55,6 +55,7 @@ object versions {
     const val okHttp = "4.8.0"
     const val retrofit = "2.9.0"
     const val moshi = "1.9.3"
+    const val picasso = "2.71828"
     const val room = "2.2.5"
     const val coreKtx = "1.3.1"
     const val fragmentKtx = "1.2.5"
@@ -62,6 +63,7 @@ object versions {
     const val commonsKtx = "1.0.0"
     const val commonsWidgets = "1.0.0"
     const val commonsNetwork = "1.0.0"
+    const val commonsRecyclerView = "1.0.0"
     const val jUnit = "4.13"
     const val jUnitExt = "1.1.1"
 
@@ -137,6 +139,7 @@ object deps {
         const val moshi = "com.squareup.moshi:moshi:${versions.moshi}"
         const val moshiCodeGenerator = "com.squareup.moshi:moshi-kotlin-codegen:${versions.moshi}"
         const val moshiReflection = "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
+        const val picasso = "com.squareup.picasso:picasso:${versions.picasso}"
 
     }
 
@@ -146,6 +149,7 @@ object deps {
         const val commonsKtx = "com.paulrybitskyi.commons:commons-ktx:${versions.commonsKtx}"
         const val commonsWidgets = "com.paulrybitskyi.commons:commons-widgets:${versions.commonsWidgets}"
         const val commonsNetwork = "com.paulrybitskyi.commons:commons-network:${versions.commonsNetwork}"
+        const val commonsRecyclerView = "com.paulrybitskyi.commons:commons-recyclerview:${versions.commonsRecyclerView}"
 
     }
 

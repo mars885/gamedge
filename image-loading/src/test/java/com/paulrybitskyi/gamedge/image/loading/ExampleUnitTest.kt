@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    kotlinKapt()
-}
+package com.paulrybitskyi.gamedge.image.loading
 
-dependencies {
-    implementation(deps.square.picasso)
-    implementation(deps.commons.commonsKtx)
+import org.junit.Test
 
-    implementation(deps.google.daggerHilt)
-    kapt(deps.google.daggerHiltCompiler)
+import org.junit.Assert.*
 
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
 }
