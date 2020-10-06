@@ -38,8 +38,9 @@ object appConfig {
 object versions {
 
     const val kotlin = "1.4.0" // also in buildSrc build.gradle.kts file
-    const val gradlePlugin = "4.0.1" // also in buildSrc build.gradle.kts file
+    const val gradlePlugin = "4.0.2" // also in buildSrc build.gradle.kts file
     const val gradleVersionsPlugin = "0.29.0"
+    const val protobufPlugin = "0.8.13"
     const val kotlinCoroutinesCore = "1.3.9"
     const val appCompat = "1.1.0"
     const val navFragmentKtx = "2.3.0"
@@ -48,10 +49,11 @@ object versions {
     const val recyclerView = "1.1.0"
     const val viewPager2 = "1.0.0"
     const val swipeRefreshLayout = "1.1.0"
-    const val lifecycleCommonJava8 = "2.2.0"
+    const val lifecycle = "2.2.0"
     const val daggerHilt = "2.28.3-alpha"
     const val daggerHiltAssistedInjection = "1.0.0-alpha02"
     const val materialComponents = "1.3.0-alpha02"
+    const val protobuf = "3.10.0"
     const val kotlinResult = "1.1.8"
     const val okHttp = "4.8.0"
     const val retrofit = "2.9.0"
@@ -66,6 +68,7 @@ object versions {
     const val commonsWidgets = "1.0.0"
     const val commonsNetwork = "1.0.0"
     const val commonsRecyclerView = "1.0.0"
+    const val commonsWindowAnims = "1.0.0"
     const val jUnit = "4.13"
     const val jUnitExt = "1.1.1"
 
@@ -114,13 +117,15 @@ object deps {
         const val recyclerView = "androidx.recyclerview:recyclerview:${versions.recyclerView}"
         const val viewPager2 = "androidx.viewpager2:viewpager2:${versions.viewPager2}"
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swipeRefreshLayout}"
-        const val lifecycleCommonJava8 = "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycleCommonJava8}"
+        const val lifecycleCommonJava8 = "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
+        const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel:${versions.lifecycle}"
         const val room = "androidx.room:room-runtime:${versions.room}"
         const val roomKtx = "androidx.room:room-ktx:${versions.room}"
         const val roomCompiler = "androidx.room:room-compiler:${versions.room}"
         const val coreKtx = "androidx.core:core-ktx:${versions.coreKtx}"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:${versions.fragmentKtx}"
         const val prefsDataStore = "androidx.datastore:datastore-preferences:${versions.dataStore}"
+        const val protoDataStore = "androidx.datastore:datastore-core:${versions.dataStore}"
         const val daggerHiltAssistedInjection = "androidx.hilt:hilt-lifecycle-viewmodel:${versions.daggerHiltAssistedInjection}"
         const val daggerHiltAssistedInjectionCompiler = "androidx.hilt:hilt-compiler:${versions.daggerHiltAssistedInjection}"
 
@@ -131,6 +136,8 @@ object deps {
         const val daggerHilt = "com.google.dagger:hilt-android:${versions.daggerHilt}"
         const val daggerHiltCompiler = "com.google.dagger:hilt-android-compiler:${versions.daggerHilt}"
         const val materialComponents = "com.google.android.material:material:${versions.materialComponents}"
+        const val protobuf = "com.google.protobuf:protobuf-javalite:${versions.protobuf}"
+        const val protobufCompiler = "com.google.protobuf:protoc:${versions.protobuf}"
 
     }
 
@@ -154,6 +161,7 @@ object deps {
         const val commonsWidgets = "com.paulrybitskyi.commons:commons-widgets:${versions.commonsWidgets}"
         const val commonsNetwork = "com.paulrybitskyi.commons:commons-network:${versions.commonsNetwork}"
         const val commonsRecyclerView = "com.paulrybitskyi.commons:commons-recyclerview:${versions.commonsRecyclerView}"
+        const val commonsWindowAnims = "com.paulrybitskyi.commons:commons-window-anims:${versions.commonsWindowAnims}"
 
     }
 

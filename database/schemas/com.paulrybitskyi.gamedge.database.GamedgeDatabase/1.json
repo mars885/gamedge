@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ebc50bf14742033ce431c4f3ca1ffcae",
+    "identityHash": "7613442a73e8e1ec08cd41ac90df9b0d",
     "entities": [
       {
         "tableName": "games",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `hype_count` INTEGER, `release_date` INTEGER, `critics_rating` REAL, `users_rating` REAL, `total_rating` REAL, `popularity` REAL, `name` TEXT NOT NULL, `summary` TEXT, `storyline` TEXT, `cover` TEXT NOT NULL, `time_to_beat` TEXT NOT NULL, `age_ratings` TEXT NOT NULL, `artworks` TEXT NOT NULL, `screenshots` TEXT NOT NULL, `genres` TEXT NOT NULL, `platforms` TEXT NOT NULL, `player_perspectives` TEXT NOT NULL, `themes` TEXT NOT NULL, `modes` TEXT NOT NULL, `keywords` TEXT NOT NULL, `involved_companies` TEXT NOT NULL, `websites` TEXT NOT NULL, `similar_games` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `hype_count` INTEGER, `release_date` INTEGER, `critics_rating` REAL, `users_rating` REAL, `total_rating` REAL, `name` TEXT NOT NULL, `summary` TEXT, `storyline` TEXT, `cover` TEXT NOT NULL, `age_ratings` TEXT NOT NULL, `artworks` TEXT NOT NULL, `screenshots` TEXT NOT NULL, `genres` TEXT NOT NULL, `platforms` TEXT NOT NULL, `player_perspectives` TEXT NOT NULL, `themes` TEXT NOT NULL, `modes` TEXT NOT NULL, `keywords` TEXT NOT NULL, `involved_companies` TEXT NOT NULL, `websites` TEXT NOT NULL, `similar_games` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -45,12 +45,6 @@
             "notNull": false
           },
           {
-            "fieldPath": "popularity",
-            "columnName": "popularity",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
@@ -71,12 +65,6 @@
           {
             "fieldPath": "cover",
             "columnName": "cover",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "timeToBeat",
-            "columnName": "time_to_beat",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -166,7 +154,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ebc50bf14742033ce431c4f3ca1ffcae')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7613442a73e8e1ec08cd41ac90df9b0d')"
     ]
   }
 }

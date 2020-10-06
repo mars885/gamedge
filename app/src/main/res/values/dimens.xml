@@ -18,6 +18,8 @@
 
 <resources>
 
+    <dimen name="splash_progress_bar_size">30dp</dimen>
+
     <!-- Bottom Navigation -->
     <dimen name="bottom_navigation_item_text_size">14sp</dimen>
 

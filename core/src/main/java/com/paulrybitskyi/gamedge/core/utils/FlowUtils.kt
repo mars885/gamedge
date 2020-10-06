@@ -19,8 +19,9 @@ package com.paulrybitskyi.gamedge.core.utils
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.paulrybitskyi.gamedge.domain.entities.Error
-import com.paulrybitskyi.gamedge.domain.utils.DomainException
+import com.github.michaelbull.result.mapEither
+import com.paulrybitskyi.gamedge.domain.commons.DomainException
+import com.paulrybitskyi.gamedge.domain.commons.entities.Error
 import kotlinx.coroutines.flow.*
 import java.io.Serializable
 
@@ -88,6 +89,14 @@ fun <T1, T2, T3, T4, T5> combine(
 }
 
 
+fun <S1, E1, S2, E2> Flow<Result<S1, E1>>.mapResult(
+    success: (S1) -> S2,
+    failure: (E1) -> E2
+): Flow<Result<S2, E2>> {
+    return map { it.mapEither(success, failure) }
+}
+
+
 fun <T> Flow<Result<T, Error>>.resultOrError(): Flow<T> {
     return map {
         if(it is Ok) return@map it.value
@@ -99,3 +108,11 @@ fun <T> Flow<Result<T, Error>>.resultOrError(): Flow<T> {
 
 
 fun <T> Flow<T>.onError(action: suspend FlowCollector<T>.(cause: Throwable) -> Unit): Flow<T> = catch(action)
+
+
+fun <T> Flow<T>.onEachError(action: (cause: Throwable) -> Unit): Flow<T> {
+    return onError {
+        action(it)
+        throw it
+    }
+}

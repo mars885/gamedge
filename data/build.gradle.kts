@@ -1,3 +1,5 @@
+import com.google.protobuf.gradle.*
+
 /*
  * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
@@ -17,7 +19,24 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    protobuf()
     kotlinKapt()
+}
+
+protobuf {
+    protoc {
+        artifact = deps.google.protobufCompiler
+    }
+
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -27,6 +46,12 @@ dependencies {
     implementation(deps.kotlin.coroutinesCore)
 
     implementation(deps.androidX.prefsDataStore)
+    implementation(deps.androidX.protoDataStore)
+
+    // Protobuf-generated classes extend Protobuf's public
+    // class, which is needed to be present in the classpath
+    // of the dependant modules
+    api(deps.google.protobuf)
 
     implementation(deps.misc.kotlinResult)
 

@@ -18,8 +18,8 @@ package com.paulrybitskyi.gamedge.utils
 
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.domain.entities.Error
-import com.paulrybitskyi.gamedge.domain.utils.DomainException
+import com.paulrybitskyi.gamedge.domain.commons.DomainException
+import com.paulrybitskyi.gamedge.domain.commons.entities.Error
 
 
 interface ErrorMapper {

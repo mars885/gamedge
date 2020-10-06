@@ -17,12 +17,11 @@
 package com.paulrybitskyi.gamedge.core.di
 
 import android.content.Context
-import com.paulrybitskyi.gamedge.core.*
 import com.paulrybitskyi.gamedge.core.GamedgeLogger
+import com.paulrybitskyi.gamedge.core.ImageUrlBuilder
 import com.paulrybitskyi.gamedge.core.ImageUrlBuilderImpl
+import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.*
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProviderImpl
-import com.paulrybitskyi.gamedge.core.providers.NetworkStateProviderImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

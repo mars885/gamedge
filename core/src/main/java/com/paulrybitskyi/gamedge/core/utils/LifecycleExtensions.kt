@@ -16,7 +16,9 @@
 
 package com.paulrybitskyi.gamedge.core.utils
 
-import androidx.lifecycle.*
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 
 
 internal inline fun Lifecycle.addObserver(

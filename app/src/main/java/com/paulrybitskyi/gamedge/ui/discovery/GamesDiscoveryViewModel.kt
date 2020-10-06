@@ -17,7 +17,9 @@
 package com.paulrybitskyi.gamedge.ui.discovery
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemChildModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemModel
@@ -25,9 +27,9 @@ import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
-import com.paulrybitskyi.gamedge.domain.entities.Game
-import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesObserverParams
-import com.paulrybitskyi.gamedge.domain.usecases.games.commons.GamesRefresherParams
+import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
+import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
+import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommands
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemGameModelMapper
@@ -51,8 +53,8 @@ internal class GamesDiscoveryViewModel @ViewModelInject constructor(
     private var isLoadingData = false
     private var isRefreshingData = false
 
-    private var gamesObserverParams = GamesObserverParams()
-    private var gamesRefresherParams = GamesRefresherParams()
+    private var observeGamesUseCaseParams = ObserveGamesUseCaseParams()
+    private var refreshGamesUseCaseParams = RefreshGamesUseCaseParams()
 
     private val _discoveryItems = MutableLiveData<List<GamesDiscoveryItemModel>>(listOf())
 
@@ -95,7 +97,7 @@ internal class GamesDiscoveryViewModel @ViewModelInject constructor(
 
     private suspend fun loadGames(category: GamesCategory): Flow<List<GamesDiscoveryItemChildModel>> {
         return discoveryUseCasesMap.getValue(category)
-            .observeGamesUseCase.execute(gamesObserverParams)
+            .observeGamesUseCase.execute(observeGamesUseCaseParams)
             .map(discoveryItemGameModelMapper::mapToItemModels)
             .flowOn(dispatcherProvider.computation)
     }
@@ -138,12 +140,14 @@ internal class GamesDiscoveryViewModel @ViewModelInject constructor(
 
     private suspend fun refreshGames(category: GamesCategory): Flow<List<Game>> {
         return discoveryUseCasesMap.getValue(category)
-            .refreshGamesUseCase.execute(gamesRefresherParams)
+            .refreshGamesUseCase.execute(refreshGamesUseCaseParams)
             .resultOrError()
     }
 
 
     private fun onRefreshError(error: Throwable) {
+        logger.error(logTag, "Failed to refresh games.", error)
+
         dispatchCommand(GeneralCommands.ShowLongToast(errorMapper.mapToMessage(error)))
     }
 

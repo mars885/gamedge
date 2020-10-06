@@ -31,7 +31,10 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
     override fun serialize(clazz: Class<*>): String {
         return clazz
             .fieldSerializers()
-            .joinToString(Constants.FIELD_SEPARATOR) { it.serialize() }
+            .joinToString(
+                Constants.FIELD_SEPARATOR,
+                transform = FieldSerializer::serialize
+            )
     }
 
 

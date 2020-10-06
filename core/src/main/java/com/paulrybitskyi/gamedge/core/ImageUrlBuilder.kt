@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.core
 
-import com.paulrybitskyi.gamedge.domain.entities.Image
-import com.paulrybitskyi.gamedge.domain.entities.ImageSize
+import com.paulrybitskyi.gamedge.domain.games.entities.Image
+import com.paulrybitskyi.gamedge.domain.games.entities.ImageSize
 
 
 private const val IMAGE_URL_TEMPLATE = "https://images.igdb.com/igdb/image/upload/t_%s/%s.jpg"

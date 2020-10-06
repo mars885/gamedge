@@ -18,8 +18,8 @@ package com.paulrybitskyi.gamedge.ui.discovery.mapping
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemChildModel
 import com.paulrybitskyi.gamedge.core.ImageUrlBuilder
-import com.paulrybitskyi.gamedge.domain.entities.Game
-import com.paulrybitskyi.gamedge.domain.entities.ImageSize
+import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.domain.games.entities.ImageSize
 
 
 internal interface GamesDiscoveryItemGameModelMapper {

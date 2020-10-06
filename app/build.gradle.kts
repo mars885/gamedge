@@ -42,12 +42,14 @@ dependencies {
     implementation(deps.androidX.recyclerView)
     implementation(deps.androidX.viewPager2)
     implementation(deps.androidX.lifecycleCommonJava8)
+    implementation(deps.androidX.lifecycleViewModel)
     implementation(deps.androidX.coreKtx)
     implementation(deps.androidX.fragmentKtx)
 
     implementation(deps.commons.commonsCore)
     implementation(deps.commons.commonsKtx)
     implementation(deps.commons.commonsWidgets)
+    implementation(deps.commons.commonsWindowAnims)
 
     implementation(deps.misc.kotlinResult)
 

@@ -27,6 +27,7 @@ const val PLUGIN_KOTLIN = "kotlin"
 const val PLUGIN_KOTLIN_ANDROID = "kotlin-android"
 const val PLUGIN_KOTLIN_KAPT = "kotlin-kapt"
 const val PLUGIN_DAGGER_HILT_ANDROID = "dagger.hilt.android.plugin"
+const val PLUGIN_PROTOBUF = "com.google.protobuf"
 
 
 fun PluginDependenciesSpec.gamedgeAndroid(): PluginDependencySpec {
@@ -66,4 +67,9 @@ fun PluginDependenciesSpec.kotlinKapt(): PluginDependencySpec {
 
 fun PluginDependenciesSpec.daggerHiltAndroid(): PluginDependencySpec {
     return id(PLUGIN_DAGGER_HILT_ANDROID)
+}
+
+
+fun PluginDependenciesSpec.protobuf(): PluginDependencySpec {
+    return (id(PLUGIN_PROTOBUF) version versions.protobufPlugin)
 }

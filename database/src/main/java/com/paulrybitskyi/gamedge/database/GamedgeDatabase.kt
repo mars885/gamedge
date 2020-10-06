@@ -18,8 +18,8 @@ package com.paulrybitskyi.gamedge.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.paulrybitskyi.gamedge.database.entities.Game
-import com.paulrybitskyi.gamedge.database.tables.GamesTable
+import com.paulrybitskyi.gamedge.database.games.GamesTable
+import com.paulrybitskyi.gamedge.database.games.entities.Game
 
 @Database(
     entities = [

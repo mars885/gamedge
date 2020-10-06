@@ -57,7 +57,6 @@ internal abstract class BaseFragment<
         onPreInit()
         onInit()
         onPostInit()
-        onBindViewModel()
     }
 
 
@@ -69,34 +68,46 @@ internal abstract class BaseFragment<
 
     @CallSuper
     protected open fun onInit() {
-        // Stub
-    }
-
-
-    @CallSuper
-    protected open fun onPostInit() {
-        // Stub
+        onBindViewModel()
     }
 
 
     @CallSuper
     protected open fun onBindViewModel() {
-        onBindViewModelCommands()
-        onBindViewModelRoutes()
+        bindViewModelCommands()
+        bindViewModelRoutes()
     }
 
 
-    private fun onBindViewModelCommands() {
+    private fun bindViewModelCommands() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.commandFlow.collect(::onHandleCommand)
         }
     }
 
 
-    private fun onBindViewModelRoutes() {
+    private fun bindViewModelRoutes() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.routeFlow.collect(::onRoute)
         }
+    }
+
+
+    @CallSuper
+    protected open fun onPostInit() {
+        loadData()
+    }
+
+
+    private fun loadData() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            onLoadData()
+        }
+    }
+
+
+    protected open fun onLoadData() {
+        // Stub
     }
     
 

@@ -25,7 +25,8 @@ plugins {
 
 android {
     defaultConfig {
-        stringField("IGDB_API_KEY", property("IGDB_API_KEY", ""))
+        stringField("TWITCH_APP_CLIENT_ID", property("TWITCH_APP_CLIENT_ID", ""))
+        stringField("TWITCH_APP_CLIENT_SECRET", property("TWITCH_APP_CLIENT_SECRET", ""))
     }
 }
 
