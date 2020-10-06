@@ -16,20 +16,20 @@
 
 package com.paulrybitskyi.gamedge.domain.games.entities
 
-enum class AgeRatingType {
+enum class AgeRatingType(val title: String) {
 
-    UNKNOWN,
-    THREE,
-    SEVEN,
-    TWELVE,
-    SIXTEEN,
-    EIGHTEEN,
-    RP,
-    EC,
-    E,
-    E10,
-    T,
-    M,
-    AO,
+    UNKNOWN(title = ""),
+    THREE(title = "3"),
+    SEVEN(title = "7"),
+    TWELVE(title = "12"),
+    SIXTEEN(title = "16"),
+    EIGHTEEN(title = "18"),
+    RP(title = "RP"),
+    EC(title = "EC"),
+    E(title = "E"),
+    E10(title = "E10"),
+    T(title = "T"),
+    M(title = "M"),
+    AO(title = "AO"),
 
 }

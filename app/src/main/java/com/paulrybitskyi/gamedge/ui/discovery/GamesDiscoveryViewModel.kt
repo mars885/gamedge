@@ -20,7 +20,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
+import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemChildModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemModel
 import com.paulrybitskyi.gamedge.core.Logger
@@ -66,7 +66,7 @@ internal class GamesDiscoveryViewModel @ViewModelInject constructor(
 
 
     private fun initDiscoveryItemsData() {
-        _discoveryItems.value = GamesCategory.values().map(discoveryItemModelFactory::createDefault)
+        _discoveryItems.value = GamesDiscoveryCategory.values().map(discoveryItemModelFactory::createDefault)
     }
 
 
@@ -81,7 +81,7 @@ internal class GamesDiscoveryViewModel @ViewModelInject constructor(
 
         viewModelScope.launch {
             combine(
-                flows = GamesCategory.values().map { loadGames(it) },
+                flows = GamesDiscoveryCategory.values().map { loadGames(it) },
                 transform = { it.toList() }
             )
             .map { _discoveryItems.nonNullValue.withResultState(it) }
@@ -93,12 +93,11 @@ internal class GamesDiscoveryViewModel @ViewModelInject constructor(
     }
 
 
-    private suspend fun loadGames(category: GamesCategory): Flow<List<GamesDiscoveryItemChildModel>> {
+    private suspend fun loadGames(category: GamesDiscoveryCategory): Flow<List<GamesDiscoveryItemChildModel>> {
         return discoveryUseCases.observeGamesUseCasesMap.getValue(category)
             .execute(observeGamesUseCaseParams)
             .map(discoveryItemGameModelMapper::mapToItemModels)
             .flowOn(dispatcherProvider.computation)
-            .conflate()
     }
 
 
@@ -127,40 +126,30 @@ internal class GamesDiscoveryViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             discoveryUseCases.refreshAllGamesUseCase
                 .execute(refreshGamesUseCaseParams)
-                .onError { onRefreshError(it) }
-                .onStart { onRefreshStarted() }
-                .onCompletion { onRefreshEnded() }
+                .onError {
+                    logger.error(logTag, "Failed to refresh games.", it)
+                    dispatchCommand(GeneralCommands.ShowLongToast(errorMapper.mapToMessage(it)))
+                }
+                .onStart {
+                    isRefreshingData = true
+                    _discoveryItems.value = _discoveryItems.nonNullValue.withVisibleProgressBar()
+                }
+                .onCompletion {
+                    isRefreshingData = false
+                    _discoveryItems.value = _discoveryItems.nonNullValue.withHiddenProgressBar()
+                }
                 .collect()
         }
     }
 
 
-    private fun onRefreshError(error: Throwable) {
-        logger.error(logTag, "Failed to refresh games.", error)
-
-        dispatchCommand(GeneralCommands.ShowLongToast(errorMapper.mapToMessage(error)))
-    }
-
-
-    private fun onRefreshStarted() {
-        isRefreshingData = true
-        _discoveryItems.value = _discoveryItems.nonNullValue.withVisibleProgressBar()
-    }
-
-
-    private fun onRefreshEnded() {
-        isRefreshingData = false
-        _discoveryItems.value = _discoveryItems.nonNullValue.withHiddenProgressBar()
-    }
-
-
-    fun onCategoryMoreButtonClicked(category: GamesCategory) {
+    fun onCategoryMoreButtonClicked(category: GamesDiscoveryCategory) {
         //todo
     }
 
 
-    fun onCategoryGameClicked() {
-        //todo
+    fun onCategoryGameClicked(item: GamesDiscoveryItemChildModel) {
+        route(GamesDiscoveryRoutes.Info(gameId = item.id))
     }
 
 

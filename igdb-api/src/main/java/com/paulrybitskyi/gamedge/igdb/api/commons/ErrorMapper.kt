@@ -25,10 +25,10 @@ internal class ErrorMapper {
 
     fun mapToDataError(apiError: ApiError): DataError = with(apiError) {
         return when {
-            isServerError -> DataError.ServiceUnavailable
-            isHttpError -> DataError.ClientError(httpErrorMessage)
-            isNetworkError -> DataError.NetworkError(networkErrorMessage)
-            isUnknownError -> DataError.Unknown(unknownErrorMessage)
+            isServerError -> DataError.ApiError.ServiceUnavailable
+            isHttpError -> DataError.ApiError.ClientError(httpErrorMessage)
+            isNetworkError -> DataError.ApiError.NetworkError(networkErrorMessage)
+            isUnknownError -> DataError.ApiError.Unknown(unknownErrorMessage)
 
             else -> throw IllegalStateException("Could not map the api error $this to a data error.")
         }

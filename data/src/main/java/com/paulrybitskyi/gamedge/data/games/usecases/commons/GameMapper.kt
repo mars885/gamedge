@@ -25,6 +25,7 @@ internal class GameMapper {
     fun mapToDomainGame(game: DataGame): DomainGame {
         return DomainGame(
             id = game.id,
+            followerCount = game.followerCount,
             hypeCount = game.hypeCount,
             releaseDate = game.releaseDate,
             criticsRating = game.criticsRating,
@@ -33,8 +34,11 @@ internal class GameMapper {
             name = game.name,
             summary = game.summary,
             storyline = game.storyline,
+            category = game.category.toDomainCategory(),
             cover = game.cover?.toDomainImage(),
+            releaseDates = game.releaseDates.toDomainReleaseDates(),
             ageRatings = game.ageRatings.toDomainAgeRatings(),
+            videos = game.videos.toDomainVideos(),
             artworks = game.artworks.toDomainImages(),
             screenshots = game.screenshots.toDomainImages(),
             genres = game.genres.toDomainGenres(),
@@ -47,6 +51,11 @@ internal class GameMapper {
             websites = game.websites.toDomainWebsites(),
             similarGames = game.similarGames
         )
+    }
+
+
+    private fun DataCategory.toDomainCategory(): DomainCategory {
+        return DomainCategory.valueOf(name)
     }
 
 
@@ -64,11 +73,32 @@ internal class GameMapper {
     }
 
 
+    private fun List<DataReleaseDate>.toDomainReleaseDates(): List<DomainReleaseDate> {
+        return map {
+            DomainReleaseDate(
+                date = it.date,
+                year = it.year,
+                category = DomainReleaseDateCategory.valueOf(it.category.name)
+            )
+        }
+    }
+
+
     private fun List<DataAgeRating>.toDomainAgeRatings(): List<DomainAgeRating> {
         return map {
             DomainAgeRating(
                 category = DomainAgeRatingCategory.valueOf(it.category.name),
                 type = DomainAgeRatingType.valueOf(it.type.name)
+            )
+        }
+    }
+
+
+    private fun List<DataVideo>.toDomainVideos(): List<DomainVideo> {
+        return map {
+            DomainVideo(
+                id = it.id,
+                name = it.name
             )
         }
     }
@@ -86,7 +116,8 @@ internal class GameMapper {
     private fun List<DataPlatform>.toDomainPlatforms(): List<DomainPlatform> {
         return map {
             DomainPlatform(
-                abbreviation = it.abbreviation
+                abbreviation = it.abbreviation,
+                name = it.name
             )
         }
     }
@@ -134,7 +165,8 @@ internal class GameMapper {
                 company = it.company.toDomainCompany(),
                 isDeveloper = it.isDeveloper,
                 isPublisher = it.isPublisher,
-                isPorter = it.isPorter
+                isPorter = it.isPorter,
+                isSupporting = it.isSupporting
             )
         }
     }
@@ -142,7 +174,10 @@ internal class GameMapper {
 
     private fun DataCompany.toDomainCompany(): DomainCompany {
         return DomainCompany(
+            id = id,
             name = name,
+            websiteUrl = websiteUrl,
+            logo = logo?.toDomainImage(),
             developedGames = developedGames
         )
     }
@@ -151,9 +186,181 @@ internal class GameMapper {
     private fun List<DataWebsite>.toDomainWebsites(): List<DomainWebsite> {
         return map {
             DomainWebsite(
+                id = it.id,
                 url = it.url,
-                category = DomainWebsiteCategory.valueOf(it.category.name),
-                isTrusted = it.isTrusted
+                category = DomainWebsiteCategory.valueOf(it.category.name)
+            )
+        }
+    }
+
+
+    fun mapToDataGame(game: DomainGame): DataGame {
+        return DataGame(
+            id = game.id,
+            followerCount = game.followerCount,
+            hypeCount = game.hypeCount,
+            releaseDate = game.releaseDate,
+            criticsRating = game.criticsRating,
+            usersRating = game.usersRating,
+            totalRating = game.totalRating,
+            name = game.name,
+            summary = game.summary,
+            storyline = game.storyline,
+            category = game.category.toDataCategory(),
+            cover = game.cover?.toDataImage(),
+            releaseDates = game.releaseDates.toDataReleaseDates(),
+            ageRatings = game.ageRatings.toDataAgeRatings(),
+            artworks = game.artworks.toDataImages(),
+            videos = game.videos.toDataVideos(),
+            screenshots = game.screenshots.toDataImages(),
+            genres = game.genres.toDataGenres(),
+            platforms = game.platforms.toDataPlatforms(),
+            playerPerspectives = game.playerPerspectives.toDataPlayerPerspectives(),
+            themes = game.themes.toDataThemes(),
+            modes = game.modes.toDataModes(),
+            keywords = game.keywords.toDataKeywords(),
+            involvedCompanies = game.involvedCompanies.toDataInvolvedCompanies(),
+            websites = game.websites.toDataWebsites(),
+            similarGames = game.similarGames
+        )
+    }
+
+
+    private fun DomainCategory.toDataCategory(): DataCategory {
+        return DataCategory.valueOf(name)
+    }
+
+
+    private fun DomainImage.toDataImage(): DataImage {
+        return DataImage(
+            id = id,
+            width = width,
+            height = height
+        )
+    }
+
+
+    private fun List<DomainImage>.toDataImages(): List<DataImage> {
+        return map { it.toDataImage() }
+    }
+
+
+    private fun List<DomainReleaseDate>.toDataReleaseDates(): List<DataReleaseDate> {
+        return map {
+            DataReleaseDate(
+                date = it.date,
+                year = it.year,
+                category = DataReleaseDateCategory.valueOf(it.category.name)
+            )
+        }
+    }
+
+
+    private fun List<DomainAgeRating>.toDataAgeRatings(): List<DataAgeRating> {
+        return map {
+            DataAgeRating(
+                category = DataAgeRatingCategory.valueOf(it.category.name),
+                type = DataAgeRatingType.valueOf(it.type.name)
+            )
+        }
+    }
+
+
+    private fun List<DomainVideo>.toDataVideos(): List<DataVideo> {
+        return map {
+            DataVideo(
+                id = it.id,
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DomainGenre>.toDataGenres(): List<DataGenre> {
+        return map {
+            DataGenre(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DomainPlatform>.toDataPlatforms(): List<DataPlatform> {
+        return map {
+            DataPlatform(
+                abbreviation = it.abbreviation,
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DomainPlayerPerspective>.toDataPlayerPerspectives(): List<DataPlayerPerspective> {
+        return map {
+            DataPlayerPerspective(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DomainTheme>.toDataThemes(): List<DataTheme> {
+        return map {
+            DataTheme(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DomainMode>.toDataModes(): List<DataMode> {
+        return map {
+            DataMode(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DomainKeyword>.toDataKeywords(): List<DataKeyword> {
+        return map {
+            DataKeyword(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DomainInvolvedCompany>.toDataInvolvedCompanies(): List<DataInvolvedCompany> {
+        return map {
+            DataInvolvedCompany(
+                company = mapToDataCompany(it.company),
+                isDeveloper = it.isDeveloper,
+                isPublisher = it.isPublisher,
+                isPorter = it.isPorter,
+                isSupporting = it.isSupporting
+            )
+        }
+    }
+
+
+    fun mapToDataCompany(company: DomainCompany): DataCompany {
+        return DataCompany(
+            id = company.id,
+            name = company.name,
+            websiteUrl = company.websiteUrl,
+            logo = company.logo?.toDataImage(),
+            developedGames = company.developedGames
+        )
+    }
+
+
+    private fun List<DomainWebsite>.toDataWebsites(): List<DataWebsite> {
+        return map {
+            DataWebsite(
+                id = it.id,
+                url = it.url,
+                category = DataWebsiteCategory.valueOf(it.category.name)
             )
         }
     }

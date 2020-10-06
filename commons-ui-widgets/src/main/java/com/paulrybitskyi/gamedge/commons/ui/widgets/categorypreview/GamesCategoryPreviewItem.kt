@@ -37,7 +37,8 @@ internal class GamesCategoryPreviewItem(model: GamesCategoryPreviewItemModel) : 
 >(model), HasUniqueIdentifier<Int> {
 
 
-    override val uniqueIdentifier = model.id
+    override val uniqueIdentifier: Int
+        get() = model.id
 
 
     override fun createViewHolder(
@@ -70,7 +71,7 @@ internal class GamesCategoryPreviewItem(model: GamesCategoryPreviewItemModel) : 
 
         fun bind(model: GamesCategoryPreviewItemModel) = with(view) {
             title = model.title
-            loadImage(model.coverUrl)
+            imageUrl = model.coverUrl
         }
 
         fun setOnGameClickListener(listener: () -> Unit) {

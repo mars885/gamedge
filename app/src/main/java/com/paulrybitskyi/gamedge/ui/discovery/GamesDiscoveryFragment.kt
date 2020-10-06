@@ -21,6 +21,9 @@ import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.core.utils.viewBinding
 import com.paulrybitskyi.gamedge.databinding.FragmentGamesDiscoveryBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.ui.base.events.Route
+import com.paulrybitskyi.gamedge.ui.dashboard.fragment.DashboardFragmentDirections
+import com.paulrybitskyi.gamedge.utils.extensions.navController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,9 +45,16 @@ internal class GamesDiscoveryFragment : BaseFragment<
 
 
     private fun initDiscoveryView() = with(viewBinding.discoveryView) {
-        onCategoryMoreButtonClickListener = { viewModel.onCategoryMoreButtonClicked(it) }
-        onCategoryGameClickListener = { viewModel.onCategoryGameClicked() }
-        onRefreshListener = { viewModel.onRefreshRequested() }
+        onCategoryMoreButtonClickListener = viewModel::onCategoryMoreButtonClicked
+        onCategoryGameClickListener = viewModel::onCategoryGameClicked
+        onRefreshListener = viewModel::onRefreshRequested
+    }
+
+
+    override fun onLoadData() {
+        super.onLoadData()
+
+        viewModel.loadData()
     }
 
 
@@ -62,10 +72,17 @@ internal class GamesDiscoveryFragment : BaseFragment<
     }
 
 
-    override fun onLoadData() {
-        super.onLoadData()
+    override fun onRoute(route: Route) {
+        super.onRoute(route)
 
-        viewModel.loadData()
+        when(route) {
+            is GamesDiscoveryRoutes.Info -> navigateToInfoScreen(route.gameId)
+        }
+    }
+
+
+    private fun navigateToInfoScreen(gameId: Int) {
+        navController.navigate(DashboardFragmentDirections.actionInfoFragment(gameId))
     }
 
 

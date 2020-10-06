@@ -28,6 +28,7 @@ internal class GameMapper(
     fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame {
         return DatabaseGame(
             id = dataGame.id,
+            followerCount = dataGame.followerCount,
             hypeCount = dataGame.hypeCount,
             releaseDate = dataGame.releaseDate,
             criticsRating = dataGame.criticsRating,
@@ -36,8 +37,11 @@ internal class GameMapper(
             name = dataGame.name,
             summary = dataGame.summary,
             storyline = dataGame.storyline,
+            category = dataGame.category.toJson(),
             cover = dataGame.cover.toJson(),
+            releaseDates = dataGame.releaseDates.toJson(),
             ageRatings = dataGame.ageRatings.toJson(),
+            videos = dataGame.videos.toJson(),
             artworks = dataGame.artworks.toJson(),
             screenshots = dataGame.screenshots.toJson(),
             genres = dataGame.genres.toJson(),
@@ -56,6 +60,7 @@ internal class GameMapper(
     fun mapToDataGame(databaseGame: DatabaseGame): DataGame {
         return DataGame(
             id = databaseGame.id,
+            followerCount = databaseGame.followerCount,
             hypeCount = databaseGame.hypeCount,
             releaseDate = databaseGame.releaseDate,
             criticsRating = databaseGame.criticsRating,
@@ -64,8 +69,11 @@ internal class GameMapper(
             name = databaseGame.name,
             summary = databaseGame.summary,
             storyline = databaseGame.storyline,
+            category = checkNotNull(databaseGame.category.fromJson()),
             cover = databaseGame.cover.fromJson(),
+            releaseDates = databaseGame.releaseDates.fromJsonList(),
             ageRatings = databaseGame.ageRatings.fromJsonList(),
+            videos = databaseGame.videos.fromJsonList(),
             artworks = databaseGame.artworks.fromJsonList(),
             screenshots = databaseGame.screenshots.fromJsonList(),
             genres = databaseGame.genres.fromJsonList(),

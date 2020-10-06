@@ -27,12 +27,16 @@ internal data class Platform(
     @Apicalypse(name = Schema.ABBREVIATION)
     @Json(name = Schema.ABBREVIATION)
     val abbreviation: String = "",
+    @Apicalypse(name = Schema.NAME)
+    @Json(name = Schema.NAME)
+    val name: String = "",
 ) {
 
 
     object Schema {
 
         const val ABBREVIATION = "abbreviation"
+        const val NAME = "name"
     }
 
 

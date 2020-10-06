@@ -18,7 +18,37 @@
 
 <resources>
 
+    <!-- GamesCategoryPreviewView -->
     <string name="games_category_preview_more_button_text">See All</string>
     <string name="games_category_preview_info_view_title">No Games Available</string>
+
+    <!-- GameArtworksView -->
+    <string name="game_artworks_page_indicator_template">%1$d/%2$d</string>
+
+    <!-- GameVideosView -->
+    <string name="game_videos_title">Videos</string>
+
+    <!-- GameScreenshotsView -->
+    <string name="game_screenshots_title">Screenshots</string>
+
+    <!-- GameSummaryView -->
+    <string name="game_summary_title">Summary</string>
+
+    <!-- GameDetailsView -->
+    <string name="game_details_title">Details</string>
+    <string name="game_details_genres_title">Genres</string>
+    <string name="game_details_platforms_title">Platforms</string>
+    <string name="game_details_modes_title">Modes</string>
+    <string name="game_details_player_perspectives_title">Player Perspectives</string>
+    <string name="game_details_themes_title">Themes</string>
+
+    <!-- GameCompaniesView -->
+    <string name="game_companies_title">Involved Companies</string>
+
+    <!-- GameLinksView -->
+    <string name="game_links_title">Links</string>
+
+    <!-- GameInfoView -->
+    <string name="game_info_info_view_title">No Data Available</string>
 
 </resources>

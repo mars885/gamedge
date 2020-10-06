@@ -43,18 +43,20 @@ object versions {
     const val protobufPlugin = "0.8.13"
     const val kotlinCoroutinesCore = "1.3.9"
     const val appCompat = "1.1.0"
-    const val navFragmentKtx = "2.3.0"
-    const val navUiKtx = "2.3.0"
-    const val constraintLayout = "1.1.3"
+    const val navigationVersion = "2.3.1"
+    const val constraintLayout = "2.0.2"
     const val recyclerView = "1.1.0"
     const val viewPager2 = "1.0.0"
     const val swipeRefreshLayout = "1.1.0"
     const val lifecycle = "2.2.0"
+    const val browser = "1.2.0"
     const val daggerHilt = "2.28.3-alpha"
     const val daggerHiltAssistedInjection = "1.0.0-alpha02"
     const val materialComponents = "1.3.0-alpha02"
     const val protobuf = "3.10.0"
+    const val desugaredLibs = "1.0.9"
     const val kotlinResult = "1.1.8"
+    const val expandableTextView = "1.0.5"
     const val okHttp = "4.8.0"
     const val retrofit = "2.9.0"
     const val moshi = "1.9.3"
@@ -81,6 +83,7 @@ object deps {
 
         const val androidGradle = "com.android.tools.build:gradle:${versions.gradlePlugin}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigationVersion}"
         const val daggerHiltGradle = "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}"
         const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${versions.gradleVersionsPlugin}"
 
@@ -111,14 +114,15 @@ object deps {
     object androidX {
 
         const val appCompat = "androidx.appcompat:appcompat:${versions.appCompat}"
-        const val navFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${versions.navFragmentKtx}"
-        const val navUiKtx = "androidx.navigation:navigation-ui-ktx:${versions.navUiKtx}"
+        const val navFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${versions.navigationVersion}"
+        const val navUiKtx = "androidx.navigation:navigation-ui-ktx:${versions.navigationVersion}"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
         const val recyclerView = "androidx.recyclerview:recyclerview:${versions.recyclerView}"
         const val viewPager2 = "androidx.viewpager2:viewpager2:${versions.viewPager2}"
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swipeRefreshLayout}"
         const val lifecycleCommonJava8 = "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
         const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel:${versions.lifecycle}"
+        const val browser = "androidx.browser:browser:${versions.browser}"
         const val room = "androidx.room:room-runtime:${versions.room}"
         const val roomKtx = "androidx.room:room-ktx:${versions.room}"
         const val roomCompiler = "androidx.room:room-compiler:${versions.room}"
@@ -167,7 +171,9 @@ object deps {
 
     object misc {
 
+        const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${versions.desugaredLibs}"
         const val kotlinResult = "com.michael-bull.kotlin-result:kotlin-result:${versions.kotlinResult}"
+        const val expandableTextView = "at.blogc:expandabletextview:${versions.expandableTextView}"
 
     }
 

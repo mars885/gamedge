@@ -65,6 +65,9 @@ interface Item<Model: Any, Dependencies: ItemDependencies> : ViewHolderFactory, 
 
     val model: Model
 
+    val itemId: Long
+        get() = RecyclerView.NO_ID
+
 }
 
 

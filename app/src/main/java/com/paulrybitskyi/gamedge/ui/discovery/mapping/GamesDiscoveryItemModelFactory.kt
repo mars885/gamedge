@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.discovery.mapping
 
-import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
+import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemChildModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemUiState
@@ -25,7 +25,7 @@ import com.paulrybitskyi.gamedge.core.providers.StringProvider
 
 internal interface GamesDiscoveryItemModelFactory {
 
-    fun createDefault(category: GamesCategory): GamesDiscoveryItemModel
+    fun createDefault(category: GamesDiscoveryCategory): GamesDiscoveryItemModel
 
     fun createCopyWithVisibleProgressBar(item: GamesDiscoveryItemModel): GamesDiscoveryItemModel
 
@@ -46,7 +46,7 @@ internal class GamesDiscoveryItemModelFactoryImpl(
 ) : GamesDiscoveryItemModelFactory {
 
 
-    override fun createDefault(category: GamesCategory): GamesDiscoveryItemModel {
+    override fun createDefault(category: GamesDiscoveryCategory): GamesDiscoveryItemModel {
         return GamesDiscoveryItemModel(
             category = category,
             title = stringProvider.getString(category.titleId),

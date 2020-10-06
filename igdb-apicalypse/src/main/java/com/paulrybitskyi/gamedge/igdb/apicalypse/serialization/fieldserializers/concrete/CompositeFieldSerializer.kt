@@ -18,10 +18,8 @@ package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers
 
 import com.paulrybitskyi.gamedge.igdb.apicalypse.Constants
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.FieldSerializer
-import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.concrete.utils.appendParent
 
 internal class CompositeFieldSerializer(
-    private val parentName: String,
     private val children: List<FieldSerializer>
 ) : FieldSerializer {
 
@@ -29,11 +27,7 @@ internal class CompositeFieldSerializer(
     override fun serialize(): String {
         return buildList {
             for(child in children) {
-                buildString {
-                    appendParent(parentName)
-                    append(child.serialize())
-                }
-                .also(::add)
+                add(child.serialize())
             }
         }
         .joinToString(Constants.FIELD_SEPARATOR)

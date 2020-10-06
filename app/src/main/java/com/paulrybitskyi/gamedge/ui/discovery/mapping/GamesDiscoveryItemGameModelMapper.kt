@@ -17,9 +17,9 @@
 package com.paulrybitskyi.gamedge.ui.discovery.mapping
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemChildModel
-import com.paulrybitskyi.gamedge.core.ImageUrlBuilder
+import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.domain.games.entities.ImageSize
+import com.paulrybitskyi.gamedge.core.IgdbImageSize
 
 
 internal interface GamesDiscoveryItemGameModelMapper {
@@ -30,7 +30,7 @@ internal interface GamesDiscoveryItemGameModelMapper {
 
 
 internal class GamesDiscoveryItemGameModelMapperImpl(
-    private val imageUrlBuilder: ImageUrlBuilder
+    private val igdbImageUrlBuilder: IgdbImageUrlBuilder
 ) : GamesDiscoveryItemGameModelMapper {
 
 
@@ -39,7 +39,7 @@ internal class GamesDiscoveryItemGameModelMapperImpl(
             id = game.id,
             title = game.name,
             coverUrl = game.cover?.let { cover ->
-                imageUrlBuilder.buildUrl(cover, ImageUrlBuilder.Config(ImageSize.BIG_COVER))
+                igdbImageUrlBuilder.buildUrl(cover, IgdbImageUrlBuilder.Config(IgdbImageSize.BIG_COVER))
             }
         )
     }

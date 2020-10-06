@@ -33,7 +33,7 @@ interface GamesRemoteDataStore {
 
     suspend fun getMostAnticipatedGames(pagination: Pagination): DataResult<List<DataGame>>
 
-    suspend fun getCompanyGames(company: DataCompany, pagination: Pagination): DataResult<List<DataGame>>
+    suspend fun getCompanyDevelopedGames(company: DataCompany, pagination: Pagination): DataResult<List<DataGame>>
 
     suspend fun getSimilarGames(game: DataGame, pagination: Pagination): DataResult<List<DataGame>>
 

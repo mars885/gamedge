@@ -114,4 +114,9 @@ abstract class AbstractRecyclerViewAdapter<IT: Item<*, in Dependencies>, Depende
     }
 
 
+    override fun getItemId(position: Int): Long {
+        return this[position].itemId
+    }
+
+
 }

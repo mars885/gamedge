@@ -16,50 +16,50 @@
 
 package com.paulrybitskyi.gamedge.core.di
 
-import android.content.Context
+import com.paulrybitskyi.gamedge.core.*
 import com.paulrybitskyi.gamedge.core.GamedgeLogger
-import com.paulrybitskyi.gamedge.core.ImageUrlBuilder
-import com.paulrybitskyi.gamedge.core.ImageUrlBuilderImpl
-import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.core.providers.*
+import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
+import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilderImpl
+import com.paulrybitskyi.gamedge.core.YoutubeMediaUrlBuilder
+import com.paulrybitskyi.gamedge.core.YoutubeMediaUrlBuilderImpl
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object CoreModule {
 
 
     @Provides
-    fun provideDispatcherProvider(): DispatcherProvider {
-        return DispatcherProviderImpl()
+    fun provideIgdbImageUrlBuilder(): IgdbImageUrlBuilder {
+        return IgdbImageUrlBuilderImpl()
     }
 
 
     @Provides
-    fun provideNetworkStateProvider(@ApplicationContext context: Context): NetworkStateProvider {
-        return NetworkStateProviderImpl(context)
+    fun provideYoutubeMediaUrlBuilder(): YoutubeMediaUrlBuilder {
+        return YoutubeMediaUrlBuilderImpl()
     }
 
 
     @Provides
-    fun provideStringProvider(@ApplicationContext context: Context): StringProvider {
-        return StringProviderImpl(context)
+    fun provideGameLikeCountCalculator(): GameLikeCountCalculator {
+        return GameLikeCountCalculatorImpl()
     }
 
 
     @Provides
-    fun provideTimestampProvider(): TimestampProvider {
-        return TimestampProviderImpl()
+    fun provideWebsiteNameRetriever(stringProvider: StringProvider): WebsiteNameRetriever {
+        return WebsiteNameRetrieverImpl(stringProvider)
     }
 
 
     @Provides
-    fun provideImageUrlBuilder(): ImageUrlBuilder {
-        return ImageUrlBuilderImpl()
+    fun provideWebsiteIconRetriever(): WebsiteIconRetriever {
+        return WebsiteIconRetrieverImpl()
     }
 
 

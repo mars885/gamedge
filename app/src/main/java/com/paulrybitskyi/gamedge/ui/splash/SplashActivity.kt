@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.ui.splash
 
 import androidx.activity.viewModels
-import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.core.utils.viewBinding
 import com.paulrybitskyi.gamedge.databinding.ActivitySplashBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseActivity
@@ -29,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 internal class SplashActivity : BaseActivity<
     ActivitySplashBinding,
     SplashViewModel
->(R.layout.activity_splash) {
+>() {
 
 
     override val viewBinding by viewBinding(ActivitySplashBinding::inflate)

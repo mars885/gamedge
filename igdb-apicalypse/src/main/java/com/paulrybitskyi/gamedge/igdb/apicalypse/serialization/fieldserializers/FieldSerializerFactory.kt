@@ -17,20 +17,19 @@
 package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers
 
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.concrete.CompositeFieldSerializer
-import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.concrete.SingleFieldSerializer
+import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.concrete.SingleFieldSerializerImpl
 
 internal object FieldSerializerFactory {
 
 
     fun create(
-        parentName: String,
-        name: String,
+        fieldChain: List<String>,
         children: List<FieldSerializer>
     ): FieldSerializer {
         return if(children.isEmpty()) {
-            SingleFieldSerializer(parentName, name)
+            SingleFieldSerializerImpl(fieldChain)
         } else {
-            CompositeFieldSerializer(parentName, children)
+            CompositeFieldSerializer(children)
         }
     }
 

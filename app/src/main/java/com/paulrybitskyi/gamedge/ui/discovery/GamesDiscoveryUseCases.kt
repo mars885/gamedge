@@ -16,11 +16,11 @@
 
 package com.paulrybitskyi.gamedge.ui.discovery
 
-import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
+import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshAllGamesUseCase
 
 internal class GamesDiscoveryUseCases(
-    val observeGamesUseCasesMap: Map<GamesCategory, ObservableGamesUseCase>,
+    val observeGamesUseCasesMap: Map<GamesDiscoveryCategory, ObservableGamesUseCase>,
     val refreshAllGamesUseCase: RefreshAllGamesUseCase
 )

@@ -19,9 +19,9 @@ package com.paulrybitskyi.gamedge.data.games.usecases.refreshers
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.mapResult
 import com.paulrybitskyi.gamedge.data.commons.utils.onEachSuccess
-import com.paulrybitskyi.gamedge.data.games.GamesRefreshingThrottler
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
+import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.commons.GamesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.commons.RefreshGamesUseCaseMappers
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
@@ -33,21 +33,23 @@ import kotlinx.coroutines.flow.flowOn
 
 internal class RefreshMostAnticipatedGamesUseCaseImpl(
     private val gamesDataStores: GamesDataStores,
-    private val gamesRefreshingThrottler: GamesRefreshingThrottler,
     private val dispatcherProvider: DispatcherProvider,
+    private val throttlerTools: GamesRefreshingThrottlerTools,
     private val mappers: RefreshGamesUseCaseMappers
 ) : RefreshMostAnticipatedGamesUseCase {
 
 
     override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
+        val throttlerKey = throttlerTools.keyBuilder.buildMostAnticipatedGamesKey(params.pagination)
+
         return flow {
-            if(gamesRefreshingThrottler.canRefreshMostAnticipatedGames()) {
+            if(throttlerTools.throttler.canRefreshGames(throttlerKey)) {
                 emit(gamesDataStores.remote.getMostAnticipatedGames(mappers.pagination.mapToDataPagination(params.pagination)))
             }
         }
         .onEachSuccess {
             gamesDataStores.local.saveGames(it)
-            gamesRefreshingThrottler.updateMostAnticipatedGamesLastRefreshingTime()
+            throttlerTools.throttler.updateGamesLastRefreshTime(throttlerKey)
         }
         .flowOn(dispatcherProvider.main)
         .mapResult(mappers.game::mapToDomainGames, mappers.error::mapToDomainError)

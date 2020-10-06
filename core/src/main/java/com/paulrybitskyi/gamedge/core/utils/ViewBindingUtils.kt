@@ -52,12 +52,11 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
 
 
     init {
-        fragment.lifecycle.addObserver(onCreate = {
-            fragment.viewLifecycleOwnerLiveData.observe(fragment) { viewLifecycleOwner ->
-                viewLifecycleOwner.lifecycle.addObserver(onDestroy = {
-                    binding = null
-                })
-            }
+        // Keeping a view reference up until Fragment's onDestroy is called
+        // to prevent its recreation when navigation component changes the
+        // back stack
+        fragment.lifecycle.addObserver(onDestroy = {
+            binding = null
         })
     }
 

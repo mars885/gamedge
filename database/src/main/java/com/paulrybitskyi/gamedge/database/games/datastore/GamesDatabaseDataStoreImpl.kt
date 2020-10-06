@@ -47,6 +47,36 @@ internal class GamesDatabaseDataStoreImpl(
     }
 
 
+    override suspend fun getGame(id: Int): DataGame? {
+        return gamesTable.getGame(id)
+            ?.let { databaseGame ->
+                withContext(dispatcherProvider.computation) {
+                    gameMapper.mapToDataGame(databaseGame)
+                }
+            }
+    }
+
+
+    override suspend fun getCompanyDevelopedGames(company: DataCompany, pagination: Pagination): List<DataGame> {
+        return gamesTable.getGames(
+            ids = company.developedGames,
+            offset = pagination.offset,
+            limit = pagination.limit
+        )
+        .toDataGames()
+    }
+
+
+    override suspend fun getSimilarGames(game: DataGame, pagination: Pagination): List<DataGame> {
+        return gamesTable.getGames(
+            ids = game.similarGames,
+            offset = pagination.offset,
+            limit = pagination.limit
+        )
+        .toDataGames()
+    }
+
+
     override suspend fun searchGames(searchQuery: String, pagination: Pagination): List<DataGame> {
         return gamesTable.searchGames(
             searchQuery = searchQuery,
@@ -102,23 +132,10 @@ internal class GamesDatabaseDataStoreImpl(
     }
 
 
-    override suspend fun observeCompanyGames(company: DataCompany, pagination: Pagination): Flow<List<DataGame>> {
-        return gamesTable.observeGames(
-            ids = company.developedGames,
-            offset = pagination.offset,
-            limit = pagination.limit
-        )
-        .toDataGamesFlow()
-    }
-
-
-    override suspend fun observeSimilarGames(game: DataGame, pagination: Pagination): Flow<List<DataGame>> {
-        return gamesTable.observeGames(
-            ids = game.similarGames,
-            offset = pagination.offset,
-            limit = pagination.limit
-        )
-        .toDataGamesFlow()
+    private suspend fun List<DatabaseGame>.toDataGames(): List<DataGame> {
+        return withContext(dispatcherProvider.computation) {
+            gameMapper.mapToDataGames(this@toDataGames)
+        }
     }
 
 

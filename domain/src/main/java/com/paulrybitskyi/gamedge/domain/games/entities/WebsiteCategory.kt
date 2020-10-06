@@ -27,8 +27,12 @@ enum class WebsiteCategory {
     TWITCH,
     INSTAGRAM,
     YOUTUBE,
+    APP_STORE,
+    GOOGLE_PLAY,
     STEAM,
-    REDDIT,
+    SUBREDDIT,
+    EPIC_GAMES,
+    GOG,
     DISCORD,
 
 }

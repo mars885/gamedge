@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.domain.games.entities
 
 data class Game(
     val id: Int,
+    val followerCount: Int?,
     val hypeCount: Int?,
     val releaseDate: Long?,
     val criticsRating: Double?,
@@ -26,8 +27,11 @@ data class Game(
     val name: String,
     val summary: String?,
     val storyline: String?,
+    val category: Category,
     val cover: Image?,
+    val releaseDates: List<ReleaseDate>,
     val ageRatings: List<AgeRating>,
+    val videos: List<Video>,
     val artworks: List<Image>,
     val screenshots: List<Image>,
     val genres: List<Genre>,

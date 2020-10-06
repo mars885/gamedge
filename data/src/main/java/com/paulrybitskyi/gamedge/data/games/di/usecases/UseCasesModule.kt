@@ -19,11 +19,14 @@ package com.paulrybitskyi.gamedge.data.games.di.usecases
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
+import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
+import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
-import com.paulrybitskyi.gamedge.data.games.usecases.SearchGamesUseCaseImpl
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.PaginationMapper
-import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
+import com.paulrybitskyi.gamedge.data.games.usecases.*
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.*
+import com.paulrybitskyi.gamedge.domain.games.usecases.*
+import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshCompanyDevelopedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshSimilarGamesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,6 +36,59 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 @Module
 internal object UseCasesModule {
+
+
+    @Singleton
+    @Provides
+    fun provideGetGameUseCase(
+        gamesLocalDataStore: GamesLocalDataStore,
+        dispatcherProvider: DispatcherProvider,
+        gameMapper: GameMapper
+    ): GetGameUseCase {
+        return GetGameUseCaseImpl(
+            gamesLocalDataStore = gamesLocalDataStore,
+            dispatcherProvider = dispatcherProvider,
+            gameMapper = gameMapper
+        )
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideGetCompanyDevelopedGamesUseCase(
+        refreshCompanyDevelopedGamesUseCase: RefreshCompanyDevelopedGamesUseCase,
+        gamesLocalDataStore: GamesLocalDataStore,
+        dispatcherProvider: DispatcherProvider,
+        gameMapper: GameMapper,
+        paginationMapper: PaginationMapper
+    ): GetCompanyDevelopedGamesUseCase {
+        return GetCompanyDevelopedGamesUseCaseImpl(
+            refreshCompanyDevelopedGamesUseCase = refreshCompanyDevelopedGamesUseCase,
+            gamesLocalDataStore = gamesLocalDataStore,
+            dispatcherProvider = dispatcherProvider,
+            gameMapper = gameMapper,
+            paginationMapper = paginationMapper
+        )
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideGetSimilarGamesUseCase(
+        refreshSimilarGamesUseCase: RefreshSimilarGamesUseCase,
+        gamesLocalDataStore: GamesLocalDataStore,
+        dispatcherProvider: DispatcherProvider,
+        gameMapper: GameMapper,
+        paginationMapper: PaginationMapper
+    ): GetSimilarGamesUseCase {
+        return GetSimilarGamesUseCaseImpl(
+            refreshSimilarGamesUseCase = refreshSimilarGamesUseCase,
+            gamesLocalDataStore = gamesLocalDataStore,
+            dispatcherProvider = dispatcherProvider,
+            gameMapper = gameMapper,
+            paginationMapper = paginationMapper
+        )
+    }
 
 
     @Singleton
@@ -53,6 +109,15 @@ internal object UseCasesModule {
             paginationMapper = paginationMapper,
             errorMapper = errorMapper
         )
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideToggleGameLikeStateUseCase(
+        likedGamesLocalDataStore: LikedGamesLocalDataStore
+    ): ToggleGameLikeStateUseCase {
+        return ToggleGameLikeStateUseCaseImpl(likedGamesLocalDataStore)
     }
 
 

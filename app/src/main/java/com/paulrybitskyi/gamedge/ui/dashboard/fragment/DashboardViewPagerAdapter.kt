@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.paulrybitskyi.gamedge.ui.dashboard.fragment.DashboardPage.Companion.toDashboardPageFromPosition
 import com.paulrybitskyi.gamedge.ui.discovery.GamesDiscoveryFragment
-import com.paulrybitskyi.gamedge.ui.favorites.FavoriteGamesFragment
+import com.paulrybitskyi.gamedge.ui.likes.LikedGamesFragment
 
 internal class DashboardViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
@@ -28,7 +28,7 @@ internal class DashboardViewPagerAdapter(fragment: Fragment) : FragmentStateAdap
     override fun createFragment(position: Int): Fragment {
         return when(position.toDashboardPageFromPosition()) {
             DashboardPage.DISCOVER -> GamesDiscoveryFragment()
-            DashboardPage.FAVORITES -> FavoriteGamesFragment()
+            DashboardPage.LIKES -> LikedGamesFragment()
         }
     }
 

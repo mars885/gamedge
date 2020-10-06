@@ -24,10 +24,19 @@ internal class ErrorMapper {
 
     fun mapToDomainError(dataError: DataError): DomainError {
         return when(dataError) {
-            is DataError.ClientError -> DomainError.ClientError(dataError.message)
-            is DataError.NetworkError -> DomainError.NetworkError(dataError.message)
-            is DataError.ServiceUnavailable -> DomainError.ServiceUnavailable
+            is DataError.ApiError -> dataError.toDomainApiError()
+            is DataError.NotFound -> DomainError.NotFound(dataError.message)
             is DataError.Unknown -> DomainError.Unknown(dataError.message)
+        }
+    }
+
+
+    private fun DataError.ApiError.toDomainApiError(): DomainError.ApiError {
+        return when(this) {
+            is DataError.ApiError.ClientError -> DomainError.ApiError.ClientError(message)
+            is DataError.ApiError.NetworkError -> DomainError.ApiError.NetworkError(message)
+            is DataError.ApiError.ServiceUnavailable -> DomainError.ApiError.ServiceUnavailable
+            is DataError.ApiError.Unknown -> DomainError.ApiError.Unknown(message)
         }
     }
 

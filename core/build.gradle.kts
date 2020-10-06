@@ -21,6 +21,10 @@ plugins {
 }
 
 android {
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+
     buildFeatures {
         viewBinding = true
     }
@@ -32,11 +36,16 @@ dependencies {
     implementation(deps.kotlin.coroutinesCore)
     implementation(deps.androidX.appCompat)
     implementation(deps.androidX.lifecycleCommonJava8)
+    implementation(deps.androidX.browser)
+    implementation(deps.commons.commonsKtx)
     implementation(deps.commons.commonsNetwork)
+    implementation(deps.commons.commonsWindowAnims)
     implementation(deps.misc.kotlinResult)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
+
+    coreLibraryDesugaring(deps.misc.desugaredLibs)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

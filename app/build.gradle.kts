@@ -18,6 +18,7 @@ plugins {
     androidApplication()
     gamedgeAndroid()
     kotlinKapt()
+    navSafeArgsKotlin()
     daggerHiltAndroid()
 }
 

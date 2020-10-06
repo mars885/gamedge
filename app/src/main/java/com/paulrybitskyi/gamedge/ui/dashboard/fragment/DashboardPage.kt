@@ -28,9 +28,9 @@ internal enum class DashboardPage(
         position = 0,
         menuItemId = R.id.dashboard_bottom_navigation_item_discover
     ),
-    FAVORITES(
+    LIKES(
         position = 1,
-        menuItemId = R.id.dashboard_bottom_navigation_item_favorites
+        menuItemId = R.id.dashboard_bottom_navigation_item_likes
     );
 
 

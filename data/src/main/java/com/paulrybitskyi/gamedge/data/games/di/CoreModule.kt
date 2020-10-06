@@ -20,13 +20,7 @@ import android.content.Context
 import androidx.datastore.DataStore
 import androidx.datastore.preferences.Preferences
 import androidx.datastore.preferences.createDataStore
-import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.games.Constants
-import com.paulrybitskyi.gamedge.data.games.GamesRefreshingThrottler
-import com.paulrybitskyi.gamedge.data.games.GamesRefreshingThrottlerImpl
-import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
-import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,34 +33,10 @@ import javax.inject.Singleton
 internal object CoreModule {
 
 
-    @Provides
-    fun provideGamesDataStores(
-        gamesLocalDataStore: GamesLocalDataStore,
-        gamesRemoteDataStore: GamesRemoteDataStore
-    ): GamesDataStores {
-        return GamesDataStores(
-            local = gamesLocalDataStore,
-            remote = gamesRemoteDataStore
-        )
-    }
-
-
     @Singleton
     @Provides
-    fun provideGamesRefreshingThrottler(
-        dataStore: DataStore<Preferences>,
-        timestampProvider: TimestampProvider
-    ): GamesRefreshingThrottler {
-        return GamesRefreshingThrottlerImpl(
-            dataStore = dataStore,
-            timestampProvider = timestampProvider
-        )
-    }
-
-
-    @Provides
-    fun provideGamesPreferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        return context.createDataStore(Constants.GAMES_PREFERENCES_DATA_STORE_NAME)
+    fun provideGamesPreferences(@ApplicationContext context: Context): DataStore<Preferences> {
+        return context.createDataStore(Constants.GAMES_PREFERENCES_NAME)
     }
 
 

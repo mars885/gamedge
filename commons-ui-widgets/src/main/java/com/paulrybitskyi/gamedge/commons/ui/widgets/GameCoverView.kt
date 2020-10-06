@@ -19,13 +19,16 @@ package com.paulrybitskyi.gamedge.commons.ui.widgets
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
+import android.widget.FrameLayout.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
 import com.paulrybitskyi.commons.ktx.*
 import com.paulrybitskyi.commons.ktx.views.setFontFamily
 import com.paulrybitskyi.commons.ktx.views.setTextSizeInPx
+import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.image.loading.Config
 import com.paulrybitskyi.gamedge.image.loading.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,18 +42,24 @@ class GameCoverView @JvmOverloads constructor(
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
 
-    private var isTitleVisible: Boolean
-        set(value) { titleTv.isVisible = value }
-        get() = titleTv.isVisible
+    var isTitleVisible: Boolean = true
+        set(value) {
+            field = value
+            titleTv.isVisible = value
+        }
 
     var title: CharSequence
         set(value) { titleTv.text = value }
         get() = titleTv.text
 
-    private var defaultDrawable = checkNotNull(getDrawable(R.drawable.game_cover))
+    var imageUrl by observeChanges<String?>(null) { oldValue, newValue ->
+        if((coverIv.drawable == null) || (oldValue != newValue)) loadImage(newValue)
+    }
 
-    private lateinit var titleTv: TextView
-    private lateinit var coverIv: ImageView
+    private var defaultDrawable = checkNotNull(getDrawable(R.drawable.game_cover_placeholder))
+
+    private lateinit var titleTv: AppCompatTextView
+    private lateinit var coverIv: AppCompatImageView
 
     @Inject lateinit var imageLoader: ImageLoader
 
@@ -62,7 +71,7 @@ class GameCoverView @JvmOverloads constructor(
 
 
     private fun initCard() {
-        setCardBackgroundColor(getColor(R.color.game_cover_view_card_background_color))
+        setCardBackgroundColor(getColor(R.color.game_cover_card_background_color))
         cardElevation = getDimension(R.dimen.game_cover_card_elevation)
         radius = getDimension(R.dimen.game_cover_card_corner_radius)
     }
@@ -75,7 +84,7 @@ class GameCoverView @JvmOverloads constructor(
 
 
     private fun initTitleTextView(context: Context) {
-        titleTv = TextView(context)
+        titleTv = AppCompatTextView(context)
             .apply {
                 layoutParams = LayoutParams(
                     LayoutParams.WRAP_CONTENT,
@@ -84,7 +93,7 @@ class GameCoverView @JvmOverloads constructor(
                 )
                 setHorizontalPadding(getDimensionPixelSize(R.dimen.game_cover_title_horizontal_padding))
                 setTextSizeInPx(getDimension(R.dimen.game_cover_title_text_size))
-                setTextColor(getColor(R.color.game_cover_view_title_text_color))
+                setTextColor(getColor(R.color.game_cover_title_text_color))
                 setFontFamily(getString(R.string.text_font_family_medium))
                 gravity = Gravity.CENTER
             }
@@ -93,19 +102,16 @@ class GameCoverView @JvmOverloads constructor(
 
 
     private fun initCoverImageView(context: Context) {
-        coverIv = ImageView(context)
+        coverIv = AppCompatImageView(context)
             .apply {
-                layoutParams = LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT
-                )
+                layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
                 scaleType = ImageView.ScaleType.CENTER_CROP
             }
             .also(::addView)
     }
 
 
-    fun loadImage(url: String?) {
+    private fun loadImage(url: String?) {
         if(url == null) {
             showDefaultImage()
             return
@@ -127,23 +133,37 @@ class GameCoverView @JvmOverloads constructor(
 
 
     private fun showDefaultImage() {
-        isTitleVisible = true
+        showTitle()
         coverIv.setImageDrawable(defaultDrawable)
     }
 
 
     private fun onImageLoadingStarted() {
-        isTitleVisible = true
+        showTitle()
     }
 
 
     private fun onImageLoadingSucceeded() {
-        isTitleVisible = false
+        hideTitle()
     }
 
 
     private fun onImageLoadingFailed(error: Exception) {
-        isTitleVisible = true
+        showTitle()
+    }
+
+
+    private fun showTitle() {
+        if(!isTitleVisible) return
+
+        titleTv.isVisible = true
+    }
+
+
+    private fun hideTitle() {
+        if(!isTitleVisible) return
+
+        titleTv.isVisible = false
     }
 
 

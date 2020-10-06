@@ -37,9 +37,17 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
 
+    var isMoreButtonVisible: Boolean
+        set(value) { binding.moreBtn.isVisible = value }
+        get() = binding.moreBtn.isVisible
+
     var isProgressBarVisible: Boolean
         set(value) { binding.progressBar.isVisible = value }
         get() = binding.progressBar.isVisible
+
+    var topBarMargin: Int
+        set(value) { binding.topBarBarrier.margin = value }
+        get() = binding.topBarBarrier.margin
 
     var title: CharSequence
         set(value) { binding.titleTv.text = value }
@@ -58,7 +66,7 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
     }
 
     var onMoreButtonClickListener: (() -> Unit)? = null
-    var onGameClickListener: (() -> Unit)? = null
+    var onGameClickListener: ((GamesCategoryPreviewItemModel) -> Unit)? = null
 
 
     init {
@@ -70,7 +78,7 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
 
 
     private fun initCard() {
-        setBackgroundColor(getColor(R.color.games_category_preview_view_card_background_color))
+        setBackgroundColor(getColor(R.color.games_category_preview_card_background_color))
         cardElevation = getDimension(R.dimen.games_category_preview_card_elevation)
     }
 
@@ -105,7 +113,7 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
     private fun bindListener(item: GamesCategoryPreviewItem, viewHolder: RecyclerView.ViewHolder) {
         if(viewHolder is GamesCategoryPreviewItem.ViewHolder) {
             viewHolder.setOnGameClickListener {
-                onGameClickListener?.invoke()
+                onGameClickListener?.invoke(item.model)
             }
         }
     }

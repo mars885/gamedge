@@ -23,11 +23,12 @@
     <!-- Dashboard -->
     <string name="dashboard_toolbar_title">Dashboard</string>
     <string name="dashboard_bottom_navigation_item_discover">Discover</string>
-    <string name="dashboard_bottom_navigation_item_favorites">Favorites</string>
+    <string name="dashboard_bottom_navigation_item_likes">Likes</string>
 
     <!-- Errors -->
-    <string name="error_network_message">Please check your network connection.</string>
-    <string name="error_server_message">The server is not responding! Please try again later.</string>
+    <string name="error_api_network_message">Please check your network connection.</string>
+    <string name="error_api_server_message">The server is not responding! Please try again later.</string>
+    <string name="error_api_unknown_message">Could not perform the request! Please try again later.</string>
     <string name="error_unknown_message">Oops! Something went wrong.</string>
 
 </resources>

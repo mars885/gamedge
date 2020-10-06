@@ -29,6 +29,7 @@ class Config private constructor(
     val progressDrawable: Drawable?,
     val errorDrawable: Drawable?,
     val target: ImageView,
+    val transformations: List<Transformation>,
     val onStart: (() -> Unit)?,
     val onSuccess: (() -> Unit)?,
     val onFailure: ((Exception) -> Unit)?
@@ -37,6 +38,9 @@ class Config private constructor(
 
     internal val hasTargetSize: Boolean
         get() = ((targetWidth > 0) && (targetHeight > 0))
+
+    internal val hasTransformations: Boolean
+        get() = transformations.isNotEmpty()
 
     internal val hasAtLeastOneResultListener: Boolean
         get() = ((onSuccess != null) || (onFailure != null))
@@ -53,6 +57,7 @@ class Config private constructor(
         private var progressDrawable: Drawable? = null
         private var errorDrawable: Drawable? = null
         private var target: ImageView? = null
+        private var transformations: MutableList<Transformation> = mutableListOf()
         private var onStart: (() -> Unit)? = null
         private var onSuccess: (() -> Unit)? = null
         private var onFailure: ((Exception) -> Unit)? = null
@@ -83,6 +88,14 @@ class Config private constructor(
 
         fun target(target: ImageView) = apply { this.target = target }
 
+        fun transformation(transformation: Transformation) = apply {
+            transformations.add(transformation)
+        }
+
+        fun transformations(transformations: List<Transformation>) = apply {
+            this.transformations.addAll(transformations)
+        }
+
         fun onStart(action: () -> Unit) = apply { onStart = action }
 
         fun onSuccess(action: () -> Unit) = apply { onSuccess = action }
@@ -103,6 +116,7 @@ class Config private constructor(
                 progressDrawable = progressDrawable,
                 errorDrawable = errorDrawable,
                 target = checkNotNull(target),
+                transformations = transformations,
                 onStart = onStart,
                 onSuccess = onSuccess,
                 onFailure = onFailure

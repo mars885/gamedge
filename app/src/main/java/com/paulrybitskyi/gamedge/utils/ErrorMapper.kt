@@ -42,13 +42,23 @@ internal class ErrorMapperImpl(
 
 
     private fun DomainException.toMessage(): String {
-        return stringProvider.getString(
-            when(error) {
-                is Error.NetworkError -> R.string.error_network_message
-                is Error.ServiceUnavailable -> R.string.error_server_message
+        return when(error) {
+            is Error.ApiError -> (error as Error.ApiError).toMessage()
 
-                is Error.ClientError,
-                is Error.Unknown -> R.string.error_unknown_message
+            is Error.NotFound,
+            is Error.Unknown -> stringProvider.getString(R.string.error_unknown_message)
+        }
+    }
+
+
+    private fun Error.ApiError.toMessage(): String {
+        return stringProvider.getString(
+            when(this) {
+                is Error.ApiError.NetworkError -> R.string.error_api_network_message
+                is Error.ApiError.ServiceUnavailable -> R.string.error_api_server_message
+
+                is Error.ApiError.ClientError,
+                is Error.ApiError.Unknown -> R.string.error_api_unknown_message
             }
         )
     }

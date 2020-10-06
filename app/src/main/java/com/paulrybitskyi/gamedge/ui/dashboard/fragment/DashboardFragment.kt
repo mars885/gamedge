@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.ui.dashboard.fragment
 
 import android.view.MenuItem
 import androidx.fragment.app.viewModels
+import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.setItemColors
@@ -48,6 +49,7 @@ internal class DashboardFragment : BaseFragment<
 
 
     private fun initToolbar() = with(viewBinding.toolbar) {
+        applyWindowTopInsetAsPadding()
         setBackgroundColor(getColor(R.color.toolbar_background_color))
     }
 
@@ -73,6 +75,9 @@ internal class DashboardFragment : BaseFragment<
 
 
     private fun initViewPager() = with(viewBinding.viewPager) {
+        // Has to be set to stop ViewPager2 from crashing due to Fragment's
+        // view preservation until onDestroy is called
+        isSaveEnabled = false
         adapter = initAdapter()
         offscreenPageLimit = viewPagerAdapter.itemCount
         isUserInputEnabled = false

@@ -20,8 +20,6 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.Constants
 
 
 internal fun StringBuilder.appendParent(name: String) {
-    if(name.isNotEmpty()) {
-        append(name)
-        append(Constants.HIERARCHICAL_FIELD_SEPARATOR)
-    }
+    append(name)
+    append(Constants.HIERARCHICAL_FIELD_SEPARATOR)
 }

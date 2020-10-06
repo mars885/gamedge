@@ -25,6 +25,7 @@ internal class GameMapper {
     fun mapToDataGame(apiGame: ApiGame): DataGame {
         return DataGame(
             id = apiGame.id,
+            followerCount = apiGame.followerCount,
             hypeCount = apiGame.hypeCount,
             releaseDate = apiGame.releaseDate,
             criticsRating = apiGame.criticsRating,
@@ -33,8 +34,11 @@ internal class GameMapper {
             name = apiGame.name,
             summary = apiGame.summary,
             storyline = apiGame.storyline,
+            category = apiGame.category.toDataCategory(),
             cover = apiGame.cover?.toDataImage(),
+            releaseDates = apiGame.releaseDates.toDataReleaseDates(),
             ageRatings = apiGame.ageRatings.toDataAgeRatings(),
+            videos = apiGame.videos.toDataVideos(),
             artworks = apiGame.artworks.toDataImages(),
             screenshots = apiGame.screenshots.toDataImages(),
             genres = apiGame.genres.toDataGenres(),
@@ -50,6 +54,11 @@ internal class GameMapper {
     }
 
 
+    private fun ApiCategory.toDataCategory(): DataCategory {
+        return DataCategory.valueOf(name)
+    }
+
+
     private fun ApiImage.toDataImage(): DataImage {
         return DataImage(
             id = id,
@@ -61,6 +70,27 @@ internal class GameMapper {
 
     private fun List<ApiImage>.toDataImages(): List<DataImage> {
         return map { it.toDataImage() }
+    }
+
+
+    private fun List<ApiVideo>.toDataVideos(): List<DataVideo> {
+        return map {
+            DataVideo(
+                id = it.id,
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<ApiReleaseDate>.toDataReleaseDates(): List<DataReleaseDate> {
+        return map {
+            DataReleaseDate(
+                date = it.date,
+                year = it.year,
+                category = DataReleaseDateCategory.valueOf(it.category.name)
+            )
+        }
     }
 
 
@@ -86,7 +116,8 @@ internal class GameMapper {
     private fun List<ApiPlatform>.toDataPlatforms(): List<DataPlatform> {
         return map {
             DataPlatform(
-                abbreviation = it.abbreviation
+                abbreviation = it.abbreviation,
+                name = it.name
             )
         }
     }
@@ -134,7 +165,8 @@ internal class GameMapper {
                 company = it.company.toDataCompany(),
                 isDeveloper = it.isDeveloper,
                 isPublisher = it.isPublisher,
-                isPorter = it.isPorter
+                isPorter = it.isPorter,
+                isSupporting = it.isSupporting
             )
         }
     }
@@ -142,7 +174,10 @@ internal class GameMapper {
 
     private fun ApiCompany.toDataCompany(): DataCompany {
         return DataCompany(
+            id = id,
             name = name,
+            websiteUrl = websiteUrl,
+            logo = logo?.toDataImage(),
             developedGames = developedGames
         )
     }
@@ -151,9 +186,9 @@ internal class GameMapper {
     private fun List<ApiWebsite>.toDataWebsites(): List<DataWebsite> {
         return map {
             DataWebsite(
+                id = it.id,
                 url = it.url,
-                category = DataWebsiteCategory.valueOf(it.category.name),
-                isTrusted = it.isTrusted
+                category = DataWebsiteCategory.valueOf(it.category.name)
             )
         }
     }

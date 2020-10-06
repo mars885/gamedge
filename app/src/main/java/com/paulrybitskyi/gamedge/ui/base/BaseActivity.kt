@@ -18,7 +18,6 @@ package com.paulrybitskyi.gamedge.ui.base
 
 import android.os.Bundle
 import androidx.annotation.CallSuper
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
@@ -32,7 +31,7 @@ import kotlinx.coroutines.flow.collect
 internal abstract class BaseActivity<
     VB : ViewBinding,
     VM : BaseViewModel
->(@LayoutRes contentLayoutId: Int) : AppCompatActivity(contentLayoutId) {
+> : AppCompatActivity() {
 
 
     protected abstract val viewBinding: VB
@@ -44,6 +43,7 @@ internal abstract class BaseActivity<
         onPreInit()
 
         super.onCreate(savedInstanceState)
+        setContentView(viewBinding.root)
 
         onInit()
         onPostInit()

@@ -32,6 +32,23 @@ internal interface GamesTable {
     @Query(
         """
         SELECT * FROM ${Game.Schema.TABLE_NAME} 
+        WHERE ${Game.Schema.ID} = :id
+        """
+    )
+    suspend fun getGame(id: Int): Game?
+
+    @Query(
+        """
+        SELECT * FROM ${Game.Schema.TABLE_NAME} 
+        WHERE ${Game.Schema.ID} IN (:ids) 
+        LIMIT :offset, :limit
+        """
+    )
+    suspend fun getGames(ids: List<Int>, offset: Int, limit: Int): List<Game>
+
+    @Query(
+        """
+        SELECT * FROM ${Game.Schema.TABLE_NAME} 
         WHERE LOWER(${Game.Schema.NAME}) LIKE (:searchQuery || '%') 
         LIMIT :offset, :limit
         """
@@ -89,14 +106,5 @@ internal interface GamesTable {
         """
     )
     fun observeMostAnticipatedGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<Game>>
-
-    @Query(
-        """
-        SELECT * FROM ${Game.Schema.TABLE_NAME} 
-        WHERE ${Game.Schema.ID} IN (:ids) 
-        LIMIT :offset, :limit
-        """
-    )
-    fun observeGames(ids: List<Int>, offset: Int, limit: Int): Flow<List<Game>>
 
 }

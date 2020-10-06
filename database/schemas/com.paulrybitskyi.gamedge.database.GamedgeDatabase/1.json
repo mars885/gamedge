@@ -2,17 +2,23 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7613442a73e8e1ec08cd41ac90df9b0d",
+    "identityHash": "ad58bef930ca1f4dd6711f702788d639",
     "entities": [
       {
         "tableName": "games",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `hype_count` INTEGER, `release_date` INTEGER, `critics_rating` REAL, `users_rating` REAL, `total_rating` REAL, `name` TEXT NOT NULL, `summary` TEXT, `storyline` TEXT, `cover` TEXT NOT NULL, `age_ratings` TEXT NOT NULL, `artworks` TEXT NOT NULL, `screenshots` TEXT NOT NULL, `genres` TEXT NOT NULL, `platforms` TEXT NOT NULL, `player_perspectives` TEXT NOT NULL, `themes` TEXT NOT NULL, `modes` TEXT NOT NULL, `keywords` TEXT NOT NULL, `involved_companies` TEXT NOT NULL, `websites` TEXT NOT NULL, `similar_games` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `follower_count` INTEGER, `hype_count` INTEGER, `release_date` INTEGER, `critics_rating` REAL, `users_rating` REAL, `total_rating` REAL, `name` TEXT NOT NULL, `summary` TEXT, `storyline` TEXT, `category` TEXT NOT NULL, `cover` TEXT NOT NULL, `release_dates` TEXT NOT NULL, `age_ratings` TEXT NOT NULL, `videos` TEXT NOT NULL, `artworks` TEXT NOT NULL, `screenshots` TEXT NOT NULL, `genres` TEXT NOT NULL, `platforms` TEXT NOT NULL, `player_perspectives` TEXT NOT NULL, `themes` TEXT NOT NULL, `modes` TEXT NOT NULL, `keywords` TEXT NOT NULL, `involved_companies` TEXT NOT NULL, `websites` TEXT NOT NULL, `similar_games` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "followerCount",
+            "columnName": "follower_count",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "hypeCount",
@@ -63,14 +69,32 @@
             "notNull": false
           },
           {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "cover",
             "columnName": "cover",
             "affinity": "TEXT",
             "notNull": true
           },
           {
+            "fieldPath": "releaseDates",
+            "columnName": "release_dates",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "ageRatings",
             "columnName": "age_ratings",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "videos",
+            "columnName": "videos",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -154,7 +178,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7613442a73e8e1ec08cd41ac90df9b0d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ad58bef930ca1f4dd6711f702788d639')"
     ]
   }
 }

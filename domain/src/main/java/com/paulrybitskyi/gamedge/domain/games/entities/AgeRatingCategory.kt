@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.domain.games.entities
 
-enum class AgeRatingCategory {
+enum class AgeRatingCategory(val title: String) {
 
-    UNKNOWN,
-    ESRB,
-    PEGI,
+    UNKNOWN(title = ""),
+    ESRB(title = "ESRB"),
+    PEGI(title = "PEGI"),
 
 }

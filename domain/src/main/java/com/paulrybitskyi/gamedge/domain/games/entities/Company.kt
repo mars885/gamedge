@@ -17,6 +17,9 @@
 package com.paulrybitskyi.gamedge.domain.games.entities
 
 data class Company(
+    val id: Int,
     val name: String,
+    val websiteUrl: String,
+    val logo: Image?,
     val developedGames: List<Int>,
 )

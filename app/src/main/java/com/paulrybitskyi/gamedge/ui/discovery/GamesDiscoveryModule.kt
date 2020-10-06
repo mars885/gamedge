@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.ui.discovery
 
-import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
-import com.paulrybitskyi.gamedge.core.ImageUrlBuilder
+import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
+import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveComingSoonGamesUseCase
@@ -42,12 +42,12 @@ internal object GamesDiscoveryModule {
 
 
     @MapKey
-    internal annotation class GamesCategoryKey(val category: GamesCategory)
+    internal annotation class GamesDiscoveryCategoryKey(val category: GamesDiscoveryCategory)
 
 
     @Provides
     fun provideGamesDiscoveryUseCases(
-        observeGamesUseCasesMap: Map<GamesCategory, @JvmSuppressWildcards ObservableGamesUseCase>,
+        observeGamesUseCasesMap: Map<GamesDiscoveryCategory, @JvmSuppressWildcards ObservableGamesUseCase>,
         refreshAllGamesUseCase: RefreshAllGamesUseCase
     ): GamesDiscoveryUseCases {
         return GamesDiscoveryUseCases(
@@ -59,7 +59,7 @@ internal object GamesDiscoveryModule {
 
     @Provides
     @IntoMap
-    @GamesCategoryKey(GamesCategory.POPULAR)
+    @GamesDiscoveryCategoryKey(GamesDiscoveryCategory.POPULAR)
     fun providePopularGamesUseCases(
         observePopularGamesUseCase: ObservePopularGamesUseCase
     ): ObservableGamesUseCase {
@@ -69,7 +69,7 @@ internal object GamesDiscoveryModule {
 
     @Provides
     @IntoMap
-    @GamesCategoryKey(GamesCategory.RECENTLY_RELEASED)
+    @GamesDiscoveryCategoryKey(GamesDiscoveryCategory.RECENTLY_RELEASED)
     fun provideRecentlyReleasedGamesUseCases(
         observeRecentlyReleasedGamesUseCase: ObserveRecentlyReleasedGamesUseCase
     ): ObservableGamesUseCase {
@@ -79,7 +79,7 @@ internal object GamesDiscoveryModule {
 
     @Provides
     @IntoMap
-    @GamesCategoryKey(GamesCategory.COMING_SOON)
+    @GamesDiscoveryCategoryKey(GamesDiscoveryCategory.COMING_SOON)
     fun provideComingSoonGamesUseCases(
         observeComingSoonGamesUseCase: ObserveComingSoonGamesUseCase
     ): ObservableGamesUseCase {
@@ -89,7 +89,7 @@ internal object GamesDiscoveryModule {
 
     @Provides
     @IntoMap
-    @GamesCategoryKey(GamesCategory.MOST_ANTICIPATED)
+    @GamesDiscoveryCategoryKey(GamesDiscoveryCategory.MOST_ANTICIPATED)
     fun provideMostAnticipatedGamesUseCases(
         observeMostAnticipatedGamesUseCase: ObserveMostAnticipatedGamesUseCase
     ): ObservableGamesUseCase {
@@ -105,9 +105,9 @@ internal object GamesDiscoveryModule {
 
     @Provides
     fun provideDiscoveryItemGameModelMapper(
-        imageUrlBuilder: ImageUrlBuilder
+        igdbImageUrlBuilder: IgdbImageUrlBuilder
     ): GamesDiscoveryItemGameModelMapper {
-        return GamesDiscoveryItemGameModelMapperImpl(imageUrlBuilder)
+        return GamesDiscoveryItemGameModelMapperImpl(igdbImageUrlBuilder)
     }
 
 

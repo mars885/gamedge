@@ -18,6 +18,18 @@
 
 <resources>
 
+    <!-- ChipFlowView -->
+    <dimen name="chip_flow_item_background_shadow_dx">1dp</dimen>
+    <dimen name="chip_flow_item_background_shadow_dy">2dp</dimen>
+    <dimen name="chip_flow_item_icon_start_padding">4dp</dimen>
+    <dimen name="chip_flow_last_item_height_compensation">6dp</dimen>
+
+    <dimen name="chip_flow_default_item_background_corner_radius">16dp</dimen>
+    <dimen name="chip_flow_default_item_icon_size">20dp</dimen>
+    <dimen name="chip_flow_default_item_horizontal_spacing">8dp</dimen>
+    <dimen name="chip_flow_default_item_vertical_spacing">8dp</dimen>
+    <dimen name="chip_flow_default_item_text_size">14sp</dimen>
+
     <!-- GameCoverView -->
     <dimen name="game_cover_card_elevation">2dp</dimen>
     <dimen name="game_cover_card_corner_radius">4dp</dimen>
@@ -27,14 +39,14 @@
     <!-- GamesCategoryPreviewView -->
     <dimen name="games_category_preview_card_elevation">2dp</dimen>
     <dimen name="games_category_preview_title_margin">15dp</dimen>
-    <dimen name="games_category_preview_title_text_size">20sp</dimen>
+    <dimen name="games_category_preview_title_text_size">18sp</dimen>
     <dimen name="games_category_preview_progress_bar_size">20dp</dimen>
     <dimen name="games_category_preview_progress_bar_margin_end">7dp</dimen>
-    <dimen name="games_category_preview_more_button_margin">7dp</dimen>
+    <dimen name="games_category_preview_more_button_horizontal_margin">7dp</dimen>
     <dimen name="games_category_preview_more_button_padding">8dp</dimen>
     <dimen name="games_category_preview_more_button_text_size">14sp</dimen>
-    <dimen name="games_category_preview_top_bar_barrier_margin">10dp</dimen>
-    <dimen name="games_category_preview_recycler_view_horizontal_padding">13dp</dimen>
+    <dimen name="games_category_preview_top_bar_barrier_margin">8dp</dimen>
+    <dimen name="games_category_preview_recycler_view_horizontal_padding">12dp</dimen>
     <dimen name="games_category_preview_recycler_view_bottom_padding">15dp</dimen>
     <dimen name="games_category_preview_info_view_horizontal_margin">30dp</dimen>
     <dimen name="games_category_preview_info_view_margin_bottom">25dp</dimen>
@@ -42,9 +54,127 @@
     <dimen name="games_category_preview_info_view_title_text_size">17sp</dimen>
     <dimen name="games_category_preview_cover_item_width">144dp</dimen>
     <dimen name="games_category_preview_cover_item_height">197dp</dimen>
-    <dimen name="games_category_preview_cover_item_margin">2dp</dimen>
+    <dimen name="games_category_preview_cover_item_margin">3dp</dimen>
 
     <!-- GamesDiscoveryView -->
     <dimen name="games_discovery_decorator_spacing">15dp</dimen>
+
+    <!-- GameInfoView -->
+    <dimen name="game_info_info_view_horizontal_margin">30dp</dimen>
+    <dimen name="game_info_info_view_title_text_size">17sp</dimen>
+    <dimen name="game_info_decorator_spacing">15dp</dimen>
+    <dimen name="game_info_company_logo_view_width">268dp</dimen>
+    <dimen name="game_info_company_logo_view_height">150dp</dimen>
+
+    <!-- GameHeaderView -->
+    <dimen name="game_header_card_elevation">2dp</dimen>
+    <dimen name="game_header_artworks_height">240dp</dimen>
+    <dimen name="game_header_back_button_size">56dp</dimen>
+    <dimen name="game_header_back_button_drawable_background_padding">10dp</dimen>
+    <dimen name="game_header_back_button_drawable_foreground_padding">7dp</dimen>
+    <dimen name="game_header_cover_space">40dp</dimen>
+    <dimen name="game_header_cover_width">112dp</dimen>
+    <dimen name="game_header_cover_height">153dp</dimen>
+    <dimen name="game_header_cover_margin_start">15dp</dimen>
+    <dimen name="game_header_like_btn_margin_end">10dp</dimen>
+    <dimen name="game_header_first_title_margin_end">5dp</dimen>
+    <dimen name="game_header_second_title_margin_end">15dp</dimen>
+    <dimen name="game_header_title_margin_start">15dp</dimen>
+    <dimen name="game_header_title_text_size">18sp</dimen>
+    <dimen name="game_header_release_date_margin_top">10dp</dimen>
+    <dimen name="game_header_release_date_horizontal_margin">15dp</dimen>
+    <dimen name="game_header_release_date_text_size">15sp</dimen>
+    <dimen name="game_header_developer_name_horizontal_margin">15dp</dimen>
+    <dimen name="game_header_developer_name_text_size">15sp</dimen>
+    <dimen name="game_header_bottom_barrier_margin">20dp</dimen>
+    <dimen name="game_header_info_view_margin_bottom">15dp</dimen>
+    <dimen name="game_header_info_view_icon_size">35dp</dimen>
+    <dimen name="game_header_info_view_title_text_size">14sp</dimen>
+
+    <!-- GameArtworksView -->
+    <dimen name="game_artworks_page_indicator_margin">10dp</dimen>
+    <dimen name="game_artworks_page_indicator_padding_vertical">7dp</dimen>
+    <dimen name="game_artworks_page_indicator_padding_horizontal">8dp</dimen>
+    <dimen name="game_artworks_page_indicator_background_radius">20dp</dimen>
+    <dimen name="game_artworks_page_indicator_text_size">15sp</dimen>
+
+    <!-- GameVideosView -->
+    <dimen name="game_videos_card_elevation">2dp</dimen>
+    <dimen name="game_videos_title_margin">15dp</dimen>
+    <dimen name="game_videos_title_margin_bottom">10dp</dimen>
+    <dimen name="game_videos_title_text_size">18sp</dimen>
+    <dimen name="game_videos_recycler_view_horizontal_padding">12dp</dimen>
+    <dimen name="game_videos_recycler_view_bottom_padding">15dp</dimen>
+    <dimen name="game_videos_item_width">268dp</dimen>
+    <dimen name="game_videos_item_margin">3dp</dimen>
+    <dimen name="game_videos_item_thumbnail_height">150dp</dimen>
+
+    <!-- GameVideoView -->
+    <dimen name="game_video_card_elevation">2dp</dimen>
+    <dimen name="game_video_card_corner_radius">4dp</dimen>
+    <dimen name="game_video_play_btn_size">45dp</dimen>
+    <dimen name="game_video_play_btn_padding">8dp</dimen>
+    <dimen name="game_video_play_btn_background_stroke_width">2dp</dimen>
+    <dimen name="game_video_title_padding">10dp</dimen>
+    <dimen name="game_video_title_text_size">14sp</dimen>
+
+    <!-- GameScreenshotsView -->
+    <dimen name="game_screenshots_card_elevation">2dp</dimen>
+    <dimen name="game_screenshots_title_margin">15dp</dimen>
+    <dimen name="game_screenshots_title_margin_bottom">10dp</dimen>
+    <dimen name="game_screenshots_title_text_size">18sp</dimen>
+    <dimen name="game_screenshots_recycler_view_horizontal_padding">12dp</dimen>
+    <dimen name="game_screenshots_recycler_view_bottom_padding">15dp</dimen>
+    <dimen name="game_screenshots_item_width">268dp</dimen>
+    <dimen name="game_screenshots_item_height">150dp</dimen>
+    <dimen name="game_screenshots_item_margin">3dp</dimen>
+
+    <!-- GameScreenshotView -->
+    <dimen name="game_screenshot_card_elevation">2dp</dimen>
+    <dimen name="game_screenshot_card_corner_radius">4dp</dimen>
+
+    <!-- GameSummaryView -->
+    <dimen name="game_summary_card_elevation">2dp</dimen>
+    <dimen name="game_summary_title_margin">15dp</dimen>
+    <dimen name="game_summary_title_margin_bottom">10dp</dimen>
+    <dimen name="game_summary_title_text_size">18sp</dimen>
+    <dimen name="game_summary_content_margin">15dp</dimen>
+    <dimen name="game_summary_content_text_size">15sp</dimen>
+
+    <!-- GameDetailsView -->
+    <dimen name="game_details_card_elevation">2dp</dimen>
+    <dimen name="game_details_container_margin">15dp</dimen>
+    <dimen name="game_details_title_margin_bottom">5dp</dimen>
+    <dimen name="game_details_title_text_size">18sp</dimen>
+    <dimen name="game_details_category_title_margin_top">10dp</dimen>
+    <dimen name="game_details_category_title_text_size">15sp</dimen>
+    <dimen name="game_details_category_value_margin_top">5dp</dimen>
+    <dimen name="game_details_category_value_text_size">14sp</dimen>
+    <dimen name="game_details_category_value_line_spacing_extra">3dp</dimen>
+
+    <!-- GameLinksView -->
+    <dimen name="game_links_card_elevation">2dp</dimen>
+    <dimen name="game_links_container_margin">15dp</dimen>
+    <dimen name="game_links_title_margin">10dp</dimen>
+    <dimen name="game_links_title_text_size">18sp</dimen>
+    <dimen name="game_links_chip_text_size">14sp</dimen>
+
+    <!-- GameCompaniesView -->
+    <dimen name="game_companies_card_elevation">2dp</dimen>
+    <dimen name="game_companies_title_margin">15dp</dimen>
+    <dimen name="game_companies_title_margin_bottom">10dp</dimen>
+    <dimen name="game_companies_title_text_size">18sp</dimen>
+    <dimen name="game_companies_recycler_view_horizontal_padding">12dp</dimen>
+    <dimen name="game_companies_recycler_view_bottom_padding">15dp</dimen>
+    <dimen name="game_companies_item_margin">3dp</dimen>
+
+    <!-- GameCompanyView -->
+    <dimen name="game_company_card_elevation">2dp</dimen>
+    <dimen name="game_company_card_corner_radius">4dp</dimen>
+    <dimen name="game_company_label_padding">10dp</dimen>
+    <dimen name="game_company_label_text_size">14sp</dimen>
+
+    <!-- GameInfoRelatedGamesItem -->
+    <dimen name="game_info_related_games_top_bar_margin">10dp</dimen>
 
 </resources>

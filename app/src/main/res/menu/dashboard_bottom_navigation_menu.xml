@@ -25,8 +25,8 @@
         android:icon="@drawable/compass_rose"/>
 
     <item
-        android:id="@+id/dashboard_bottom_navigation_item_favorites"
-        android:title="@string/dashboard_bottom_navigation_item_favorites"
-        android:icon="@drawable/star"/>
+        android:id="@+id/dashboard_bottom_navigation_item_likes"
+        android:title="@string/dashboard_bottom_navigation_item_likes"
+        android:icon="@drawable/heart"/>
 
 </menu>

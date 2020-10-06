@@ -16,10 +16,8 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.discovery
 
-import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
-
 data class GamesDiscoveryItemModel(
-    val category: GamesCategory,
+    val category: GamesDiscoveryCategory,
     val title: String,
     val isProgressBarVisible: Boolean,
     val uiState: GamesDiscoveryItemUiState

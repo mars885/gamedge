@@ -28,8 +28,12 @@ internal enum class WebsiteCategory(val value: Int) {
     TWITCH(value = 6),
     INSTAGRAM(value = 8),
     YOUTUBE(value = 9),
+    APP_STORE(value = 10),
+    GOOGLE_PLAY(value = 12),
     STEAM(value = 13),
-    REDDIT(value = 14),
+    SUBREDDIT(value = 14),
+    EPIC_GAMES(value = 16),
+    GOG(value = 17),
     DISCORD(value = 18);
 
 

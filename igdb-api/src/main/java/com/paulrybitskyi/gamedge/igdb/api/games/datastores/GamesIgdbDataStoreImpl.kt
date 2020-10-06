@@ -72,7 +72,7 @@ internal class GamesIgdbDataStoreImpl(
     }
 
 
-    override suspend fun getCompanyGames(company: DataCompany, pagination: Pagination): DataResult<List<DataGame>> {
+    override suspend fun getCompanyDevelopedGames(company: DataCompany, pagination: Pagination): DataResult<List<DataGame>> {
         return gamesEndpoint
             .getGames(company.developedGames, pagination.offset, pagination.limit)
             .toDataStoreResult()

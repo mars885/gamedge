@@ -16,14 +16,16 @@
 
 package com.paulrybitskyi.gamedge.data.games.di.usecases
 
+import androidx.datastore.DataStore
+import androidx.datastore.preferences.Preferences
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
-import com.paulrybitskyi.gamedge.data.games.GamesRefreshingThrottler
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.PaginationMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.*
-import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.commons.RefreshGamesUseCaseMappers
+import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.commons.*
 import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.*
 import dagger.Module
 import dagger.Provides
@@ -40,14 +42,14 @@ internal object RefreshableUseCasesModule {
     @Provides
     fun provideComingSoonGamesRefresherUseCase(
         gamesDataStores: GamesDataStores,
-        gamesRefreshingThrottler: GamesRefreshingThrottler,
         dispatcherProvider: DispatcherProvider,
+        throttlerTools: GamesRefreshingThrottlerTools,
         mappers: RefreshGamesUseCaseMappers
     ): RefreshComingSoonGamesUseCase {
         return RefreshComingSoonGamesUseCaseImpl(
             gamesDataStores = gamesDataStores,
-            gamesRefreshingThrottler = gamesRefreshingThrottler,
             dispatcherProvider = dispatcherProvider,
+            throttlerTools = throttlerTools,
             mappers = mappers
         )
     }
@@ -57,14 +59,14 @@ internal object RefreshableUseCasesModule {
     @Provides
     fun provideMostAnticipatedGamesRefresherUseCase(
         gamesDataStores: GamesDataStores,
-        gamesRefreshingThrottler: GamesRefreshingThrottler,
         dispatcherProvider: DispatcherProvider,
+        throttlerTools: GamesRefreshingThrottlerTools,
         mappers: RefreshGamesUseCaseMappers
     ): RefreshMostAnticipatedGamesUseCase {
         return RefreshMostAnticipatedGamesUseCaseImpl(
             gamesDataStores = gamesDataStores,
-            gamesRefreshingThrottler = gamesRefreshingThrottler,
             dispatcherProvider = dispatcherProvider,
+            throttlerTools = throttlerTools,
             mappers = mappers
         )
     }
@@ -74,14 +76,14 @@ internal object RefreshableUseCasesModule {
     @Provides
     fun providePopularGamesRefresherUseCase(
         gamesDataStores: GamesDataStores,
-        gamesRefreshingThrottler: GamesRefreshingThrottler,
         dispatcherProvider: DispatcherProvider,
+        throttlerTools: GamesRefreshingThrottlerTools,
         mappers: RefreshGamesUseCaseMappers
     ): RefreshPopularGamesUseCase {
         return RefreshPopularGamesUseCaseImpl(
             gamesDataStores = gamesDataStores,
-            gamesRefreshingThrottler = gamesRefreshingThrottler,
             dispatcherProvider = dispatcherProvider,
+            throttlerTools = throttlerTools,
             mappers = mappers
         )
     }
@@ -91,14 +93,14 @@ internal object RefreshableUseCasesModule {
     @Provides
     fun provideRecentlyReleasedGamesRefresherUseCase(
         gamesDataStores: GamesDataStores,
-        gamesRefreshingThrottler: GamesRefreshingThrottler,
         dispatcherProvider: DispatcherProvider,
+        throttlerTools: GamesRefreshingThrottlerTools,
         mappers: RefreshGamesUseCaseMappers
     ): RefreshRecentlyReleasedGamesUseCase {
         return RefreshRecentlyReleasedGamesUseCaseImpl(
             gamesDataStores = gamesDataStores,
-            gamesRefreshingThrottler = gamesRefreshingThrottler,
             dispatcherProvider = dispatcherProvider,
+            throttlerTools = throttlerTools,
             mappers = mappers
         )
     }
@@ -108,15 +110,80 @@ internal object RefreshableUseCasesModule {
     @Provides
     fun provideAllGamesRefresherUseCase(
         gamesDataStores: GamesDataStores,
-        gamesRefreshingThrottler: GamesRefreshingThrottler,
         dispatcherProvider: DispatcherProvider,
+        throttlerTools: GamesRefreshingThrottlerTools,
         mappers: RefreshGamesUseCaseMappers
     ): RefreshAllGamesUseCase {
         return RefreshAllGamesUseCaseImpl(
             gamesDataStores = gamesDataStores,
-            gamesRefreshingThrottler = gamesRefreshingThrottler,
             dispatcherProvider = dispatcherProvider,
+            throttlerTools = throttlerTools,
             mappers = mappers
+        )
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideRefreshCompanyDevelopedGamesUseCase(
+        gamesDataStores: GamesDataStores,
+        dispatcherProvider: DispatcherProvider,
+        throttlerTools: GamesRefreshingThrottlerTools,
+        mappers: RefreshGamesUseCaseMappers
+    ): RefreshCompanyDevelopedGamesUseCase {
+        return RefreshCompanyDevelopedGamesUseCaseImpl(
+            gamesDataStores = gamesDataStores,
+            dispatcherProvider = dispatcherProvider,
+            throttlerTools = throttlerTools,
+            mappers = mappers
+        )
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideRefreshSimilarGamesUseCase(
+        gamesDataStores: GamesDataStores,
+        dispatcherProvider: DispatcherProvider,
+        throttlerTools: GamesRefreshingThrottlerTools,
+        mappers: RefreshGamesUseCaseMappers
+    ): RefreshSimilarGamesUseCase {
+        return RefreshSimilarGamesUseCaseImpl(
+            gamesDataStores = gamesDataStores,
+            dispatcherProvider = dispatcherProvider,
+            throttlerTools = throttlerTools,
+            mappers = mappers
+        )
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideGamesRefreshingThrottler(
+        gamesPreferences: DataStore<Preferences>,
+        timestampProvider: TimestampProvider
+    ): GamesRefreshingThrottler {
+        return GamesRefreshingThrottlerImpl(
+            gamesPreferences = gamesPreferences,
+            timestampProvider = timestampProvider
+        )
+    }
+
+
+    @Provides
+    fun provideGamesRefreshingThrottlerKeyBuilder(): GamesRefreshingThrottlerKeyBuilder {
+        return GamesRefreshingThrottlerKeyBuilderImpl()
+    }
+
+
+    @Provides
+    fun provideGamesRefreshingThrottlerTools(
+        gamesRefreshingThrottler: GamesRefreshingThrottler,
+        gamesRefreshingThrottlerKeyBuilder: GamesRefreshingThrottlerKeyBuilder
+    ): GamesRefreshingThrottlerTools {
+        return GamesRefreshingThrottlerTools(
+            throttler = gamesRefreshingThrottler,
+            keyBuilder = gamesRefreshingThrottlerKeyBuilder
         )
     }
 

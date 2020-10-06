@@ -27,6 +27,9 @@ internal data class Game(
     @Apicalypse(name = Schema.ID)
     @Json(name = Schema.ID)
     val id: Int = -1,
+    @Apicalypse(name = Schema.FOLLOWER_COUNT)
+    @Json(name = Schema.FOLLOWER_COUNT)
+    val followerCount: Int? = null,
     @Apicalypse(name = Schema.HYPE_COUNT)
     @Json(name = Schema.HYPE_COUNT)
     val hypeCount: Int? = null,
@@ -51,12 +54,21 @@ internal data class Game(
     @Apicalypse(name = Schema.STORYLINE)
     @Json(name = Schema.STORYLINE)
     val storyline: String? = null,
+    @Apicalypse(name = Schema.CATEGORY)
+    @Json(name = Schema.CATEGORY)
+    val category: Category,
     @Apicalypse(name = Schema.COVER)
     @Json(name = Schema.COVER)
     val cover: Image? = null,
+    @Apicalypse(name = Schema.RELEASE_DATES)
+    @Json(name = Schema.RELEASE_DATES)
+    val releaseDates: List<ReleaseDate> = listOf(),
     @Apicalypse(name = Schema.AGE_RATINGS)
     @Json(name = Schema.AGE_RATINGS)
     val ageRatings: List<AgeRating> = listOf(),
+    @Apicalypse(name = Schema.VIDEOS)
+    @Json(name = Schema.VIDEOS)
+    val videos: List<Video> = listOf(),
     @Apicalypse(name = Schema.ARTWORKS)
     @Json(name = Schema.ARTWORKS)
     val artworks: List<Image> = listOf(),
@@ -96,6 +108,7 @@ internal data class Game(
     object Schema {
 
         const val ID = "id"
+        const val FOLLOWER_COUNT = "follows"
         const val HYPE_COUNT = "hypes"
         const val RELEASE_DATE = "first_release_date"
         const val CRITICS_RATING = "aggregated_rating"
@@ -104,8 +117,11 @@ internal data class Game(
         const val NAME = "name"
         const val SUMMARY = "summary"
         const val STORYLINE = "storyline"
+        const val CATEGORY = "category"
         const val COVER = "cover"
+        const val RELEASE_DATES = "release_dates"
         const val AGE_RATINGS = "age_ratings"
+        const val VIDEOS = "videos"
         const val ARTWORKS = "artworks"
         const val SCREENSHOTS = "screenshots"
         const val GENRES = "genres"

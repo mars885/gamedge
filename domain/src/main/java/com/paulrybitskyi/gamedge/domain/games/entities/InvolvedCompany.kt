@@ -21,4 +21,5 @@ data class InvolvedCompany(
     val isDeveloper: Boolean,
     val isPublisher: Boolean,
     val isPorter: Boolean,
+    val isSupporting: Boolean,
 )

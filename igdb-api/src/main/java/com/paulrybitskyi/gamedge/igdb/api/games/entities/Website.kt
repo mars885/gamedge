@@ -24,23 +24,23 @@ import com.squareup.moshi.JsonClass
 @ApicalypseClass
 @JsonClass(generateAdapter = true)
 internal data class Website(
+    @Apicalypse(name = Schema.ID)
+    @Json(name = Schema.ID)
+    val id: Int,
     @Apicalypse(name = Schema.URL)
     @Json(name = Schema.URL)
     val url: String,
     @Apicalypse(name = Schema.CATEGORY)
     @Json(name = Schema.CATEGORY)
     val category: WebsiteCategory,
-    @Apicalypse(name = Schema.IS_TRUSTED)
-    @Json(name = Schema.IS_TRUSTED)
-    val isTrusted: Boolean,
 ) {
 
 
     object Schema {
 
+        const val ID = "id"
         const val URL = "url"
         const val CATEGORY = "category"
-        const val IS_TRUSTED = "trusted"
 
     }
 

@@ -26,8 +26,11 @@ import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpointImpl
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesService
 import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilder
 import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilderImpl
+import com.paulrybitskyi.gamedge.igdb.api.games.serialization.*
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.AgeRatingCategoryAdapter
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.AgeRatingTypeAdapter
+import com.paulrybitskyi.gamedge.igdb.api.games.serialization.CategoryAdapter
+import com.paulrybitskyi.gamedge.igdb.api.games.serialization.ReleaseDateCategoryAdapter
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.WebsiteCategoryAdapter
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
@@ -91,8 +94,10 @@ internal object GamesEndpointModule {
     @Provides
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
+            .add(CategoryAdapter())
             .add(AgeRatingCategoryAdapter())
             .add(AgeRatingTypeAdapter())
+            .add(ReleaseDateCategoryAdapter())
             .add(WebsiteCategoryAdapter())
             .build()
     }

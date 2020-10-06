@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.image.loading
 
 import android.widget.ImageView
+import com.paulrybitskyi.gamedge.image.loading.utils.PicassoTransformation
 import com.paulrybitskyi.gamedge.image.loading.utils.into
 import com.squareup.picasso.Picasso
 
@@ -37,6 +38,12 @@ internal class ImageLoaderImpl(
 
         config.progressDrawable?.let(requestCreator::placeholder)
         config.errorDrawable?.let(requestCreator::error)
+
+        if(config.hasTransformations) {
+            config.transformations
+                .map(::PicassoTransformation)
+                .let { requestCreator.transform(it) }
+        }
 
         if(config.hasAtLeastOneResultListener) {
             requestCreator.into(

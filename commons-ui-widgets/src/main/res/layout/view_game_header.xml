@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/game_header_card_background_color"
+    tools:parentTag="com.google.android.material.card.MaterialCardView">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.paulrybitskyi.gamedge.commons.ui.widgets.artworks.GameArtworksView
+            android:id="@+id/artworksView"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/game_header_artworks_height"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:background="@drawable/game_background_placeholder"/>
+
+        <ImageView
+            android:id="@+id/backBtnIv"
+            android:layout_width="@dimen/game_header_back_button_size"
+            android:layout_height="@dimen/game_header_back_button_size"
+            android:background="@drawable/game_header_back_btn_background"
+            android:scaleType="centerInside"
+            android:src="@drawable/arrow_left"
+            app:tint="@color/game_header_back_button_icon_color"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:tint="@color/game_header_back_button_icon_color"/>
+
+        <Space
+            android:id="@+id/coverViewSpace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/game_header_cover_space"
+            app:layout_constraintBottom_toBottomOf="@id/artworksView"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.paulrybitskyi.gamedge.commons.ui.widgets.GameCoverView
+            android:id="@+id/coverView"
+            android:layout_width="@dimen/game_header_cover_width"
+            android:layout_height="@dimen/game_header_cover_height"
+            android:layout_marginStart="@dimen/game_header_cover_margin_start"
+            app:layout_constraintTop_toBottomOf="@id/coverViewSpace"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:background="@drawable/game_cover_placeholder"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/likeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/game_header_like_btn_margin_end"
+            android:backgroundTint="@color/game_header_like_btn_color"
+            app:layout_constraintTop_toBottomOf="@id/artworksView"
+            app:layout_constraintBottom_toBottomOf="@id/artworksView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:fabSize="normal"
+            app:borderWidth="0dp"
+            tools:src="@drawable/heart"
+            tools:tint="@color/game_header_like_btn_icon_color"
+            tools:ignore="ContentDescription"/>
+
+        <TextView
+            android:id="@+id/firstTitleTv"
+            android:layout_marginTop="@dimen/game_header_title_margin_start"
+            android:layout_marginEnd="@dimen/game_header_first_title_margin_end"
+            android:maxLines="1"
+            style="@style/Gamedge.GameInfo.Header.Title"
+            app:layout_constraintTop_toBottomOf="@id/artworksView"
+            app:layout_constraintStart_toEndOf="@id/coverView"
+            app:layout_constraintEnd_toStartOf="@id/likeBtn"
+            tools:text="Anima: Gate of Memories"/>
+
+        <TextView
+            android:id="@+id/secondTitleTv"
+            android:layout_marginEnd="@dimen/game_header_second_title_margin_end"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:ellipsize="end"
+            style="@style/Gamedge.GameInfo.Header.Title"
+            app:layout_constraintTop_toBottomOf="@id/firstTitleTv"
+            app:layout_constraintStart_toEndOf="@id/coverView"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Memories - The Nameless Chronicles"/>
+
+        <TextView
+            android:id="@+id/releaseDateTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/game_header_release_date_margin_top"
+            android:layout_marginStart="@dimen/game_header_release_date_horizontal_margin"
+            android:layout_marginEnd="@dimen/game_header_release_date_horizontal_margin"
+            android:gravity="start"
+            android:textColor="@color/game_header_release_date_text_color"
+            android:textSize="@dimen/game_header_release_date_text_size"
+            android:fontFamily="@string/font_family_medium"
+            app:layout_constraintTop_toBottomOf="@id/secondTitleTv"
+            app:layout_constraintStart_toEndOf="@id/coverView"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Feb 06, 2018 (3 years ago)"/>
+
+        <TextView
+            android:id="@+id/developerNameTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/game_header_developer_name_horizontal_margin"
+            android:layout_marginEnd="@dimen/game_header_developer_name_horizontal_margin"
+            android:gravity="start"
+            android:textColor="@color/game_header_developer_name_text_color"
+            android:textSize="@dimen/game_header_developer_name_text_size"
+            android:fontFamily="@string/font_family_medium"
+            app:layout_constraintTop_toBottomOf="@id/releaseDateTv"
+            app:layout_constraintStart_toEndOf="@id/coverView"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Bluepoint Games"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/bottomBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:barrierMargin="@dimen/game_header_bottom_barrier_margin"
+            app:constraint_referenced_ids="coverView, developerNameTv"/>
+
+        <com.paulrybitskyi.commons.widgets.InfoView
+            android:id="@+id/ratingIv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/likeCountIv"
+            app:infoView_icon="@drawable/star_circle_outline"
+            style="@style/Gamedge.GameInfo.Header.InfoView"
+            tools:infoView_titleText="85%"/>
+
+        <com.paulrybitskyi.commons.widgets.InfoView
+            android:id="@+id/likeCountIv"
+            app:layout_constraintStart_toEndOf="@id/ratingIv"
+            app:layout_constraintEnd_toStartOf="@+id/ageRatingIv"
+            app:infoView_icon="@drawable/account_heart_outline"
+            style="@style/Gamedge.GameInfo.Header.InfoView"
+            tools:infoView_titleText="43"/>
+
+        <com.paulrybitskyi.commons.widgets.InfoView
+            android:id="@+id/ageRatingIv"
+            app:layout_constraintStart_toEndOf="@id/likeCountIv"
+            app:layout_constraintEnd_toStartOf="@+id/gameCategoryIv"
+            app:infoView_icon="@drawable/age_rating_outline"
+            style="@style/Gamedge.GameInfo.Header.InfoView"
+            tools:infoView_titleText="PEGI-18"/>
+
+        <com.paulrybitskyi.commons.widgets.InfoView
+            android:id="@+id/gameCategoryIv"
+            app:layout_constraintStart_toEndOf="@id/ageRatingIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:infoView_icon="@drawable/shape_outline"
+            style="@style/Gamedge.GameInfo.Header.InfoView"
+            tools:infoView_titleText="Main"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

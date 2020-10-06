@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.commons.ui.widgets.discovery
 import android.content.Context
 import android.util.AttributeSet
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -30,7 +31,6 @@ import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
 import com.paulrybitskyi.commons.recyclerview.utils.disableScrollbars
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
-import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
 
 class GamesDiscoveryView @JvmOverloads constructor(
     context: Context,
@@ -48,8 +48,8 @@ class GamesDiscoveryView @JvmOverloads constructor(
         adapterItems = newValue.toAdapterItems()
     }
 
-    var onCategoryMoreButtonClickListener: ((GamesCategory) -> Unit)? = null
-    var onCategoryGameClickListener: (() -> Unit)? = null
+    var onCategoryMoreButtonClickListener: ((GamesDiscoveryCategory) -> Unit)? = null
+    var onCategoryGameClickListener: ((GamesDiscoveryItemChildModel) -> Unit)? = null
     var onRefreshListener: (() -> Unit)? = null
 
 
@@ -84,7 +84,13 @@ class GamesDiscoveryView @JvmOverloads constructor(
 
 
     private fun initLayoutManager(context: Context): LinearLayoutManager {
-        return LinearLayoutManager(context)
+        return object : LinearLayoutManager(context) {
+
+            override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
+                return RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+            }
+
+        }
     }
 
 
@@ -98,12 +104,8 @@ class GamesDiscoveryView @JvmOverloads constructor(
     private fun bindListener(item: GamesDiscoveryItem, viewHolder: RecyclerView.ViewHolder) {
         if(viewHolder is GamesDiscoveryItem.ViewHolder) {
             with(viewHolder) {
-                setOnMoreButtonClickListener {
-                    onCategoryMoreButtonClickListener?.invoke(item.model.category)
-                }
-                setOnGameClickListener {
-                    onCategoryGameClickListener?.invoke()
-                }
+                setOnMoreButtonClickListener { onCategoryMoreButtonClickListener?.invoke(item.model.category) }
+                setOnGameClickListener { onCategoryGameClickListener?.invoke(it) }
             }
         }
     }

@@ -18,6 +18,6 @@ package com.paulrybitskyi.gamedge.domain.games.entities
 
 data class Image(
     val id: String,
-    val width: Int,
-    val height: Int
+    val width: Int?,
+    val height: Int?
 )

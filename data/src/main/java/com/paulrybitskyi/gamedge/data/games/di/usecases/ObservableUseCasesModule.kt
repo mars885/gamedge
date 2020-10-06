@@ -17,18 +17,17 @@
 package com.paulrybitskyi.gamedge.data.games.di.usecases
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.PaginationMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.observers.ObserveComingSoonGamesUseCaseImpl
+import com.paulrybitskyi.gamedge.data.games.usecases.observers.ObserveGameLikeStateUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.observers.ObserveMostAnticipatedGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.observers.ObservePopularGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.observers.ObserveRecentlyReleasedGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.observers.commons.ObserveGamesUseCaseMappers
-import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveComingSoonGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveMostAnticipatedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObservePopularGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveRecentlyReleasedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.observers.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,7 +41,7 @@ internal object ObservableUseCasesModule {
 
     @Singleton
     @Provides
-    fun provideComingSoonGamesObservableUserCase(
+    fun provideComingSoonGamesObservableUseCase(
         gamesLocalDataStore: GamesLocalDataStore,
         dispatcherProvider: DispatcherProvider,
         mappers: ObserveGamesUseCaseMappers
@@ -52,6 +51,15 @@ internal object ObservableUseCasesModule {
             dispatcherProvider = dispatcherProvider,
             mappers = mappers
         )
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideGameLikeStateObservableUseCase(
+        likedGamesLocalDataStore: LikedGamesLocalDataStore
+    ): ObserveGameLikeStateUseCase {
+        return ObserveGameLikeStateUseCaseImpl(likedGamesLocalDataStore)
     }
 
 

@@ -30,7 +30,7 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
 
     override fun serialize(clazz: Class<*>): String {
         return clazz
-            .fieldSerializers()
+            .fieldSerializers(fieldChain = mutableListOf())
             .joinToString(
                 Constants.FIELD_SEPARATOR,
                 transform = FieldSerializer::serialize
@@ -38,12 +38,12 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
     }
 
 
-    private fun Class<*>.fieldSerializers(parentName: String = ""): List<FieldSerializer> {
+    private fun Class<*>.fieldSerializers(fieldChain: MutableList<String>): List<FieldSerializer> {
         if(!shouldBeSerialized()) return listOf()
 
         return buildList {
             for(field in declaredFields) {
-                add(field.serializer(parentName))
+                add(field.serializer(fieldChain))
             }
         }
     }
@@ -54,14 +54,23 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
     }
 
 
-    private fun Field.serializer(parentName: String): FieldSerializer {
+    private fun Field.serializer(fieldChain: MutableList<String>): FieldSerializer {
         if(!shouldBeSerialized()) return StubFieldSerializer
 
         val apicalypseAnnotation = checkNotNull(getAnnotation(Apicalypse::class.java))
         val fieldName = apicalypseAnnotation.name
-        val childSerializers = childSerializers(parentName = fieldName)
 
-        return FieldSerializerFactory.create(parentName, fieldName, childSerializers)
+        fieldChain.add(fieldName)
+
+        val childSerializers = childSerializers(fieldChain)
+        val fieldSerializer = FieldSerializerFactory.create(
+            fieldChain = fieldChain.toList(),
+            children = childSerializers
+        )
+
+        fieldChain.remove(fieldName)
+
+        return fieldSerializer
     }
 
 
@@ -70,15 +79,15 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
     }
 
 
-    private fun Field.childSerializers(parentName: String): List<FieldSerializer> {
-        if(type.typeParameters.isEmpty()) return type.fieldSerializers(parentName)
+    private fun Field.childSerializers(fieldChain: MutableList<String>): List<FieldSerializer> {
+        if(type.typeParameters.isEmpty()) return type.fieldSerializers(fieldChain)
         if(type.typeParameters.size > 1) return listOf()
 
         val parameterizedType = (genericType as ParameterizedType)
         val typeArgument = parameterizedType.actualTypeArguments.first()
         val typeClass = (typeArgument as Class<*>)
 
-        return typeClass.fieldSerializers(parentName)
+        return typeClass.fieldSerializers(fieldChain)
     }
 
 

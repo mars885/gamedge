@@ -36,6 +36,9 @@ internal data class InvolvedCompany(
     @Apicalypse(name = Schema.IS_PORTER)
     @Json(name = Schema.IS_PORTER)
     val isPorter: Boolean,
+    @Apicalypse(name = Schema.IS_SUPPORTING)
+    @Json(name = Schema.IS_SUPPORTING)
+    val isSupporting: Boolean,
 ) {
 
 
@@ -45,6 +48,7 @@ internal data class InvolvedCompany(
         const val IS_DEVELOPER = "developer"
         const val IS_PUBLISHER = "publisher"
         const val IS_PORTER = "porting"
+        const val IS_SUPPORTING = "supporting"
 
     }
 

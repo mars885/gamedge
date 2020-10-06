@@ -24,9 +24,18 @@ import com.squareup.moshi.JsonClass
 @ApicalypseClass
 @JsonClass(generateAdapter = true)
 internal data class Company(
+    @Apicalypse(name = Schema.ID)
+    @Json(name = Schema.ID)
+    val id: Int,
     @Apicalypse(name = Schema.NAME)
     @Json(name = Schema.NAME)
     val name: String,
+    @Apicalypse(name = Schema.WEBSITE_URL)
+    @Json(name = Schema.WEBSITE_URL)
+    val websiteUrl: String,
+    @Apicalypse(name = Schema.LOGO)
+    @Json(name = Schema.LOGO)
+    val logo: Image? = null,
     @Apicalypse(name = Schema.DEVELOPED_GAMES)
     @Json(name = Schema.DEVELOPED_GAMES)
     val developedGames: List<Int> = listOf(),
@@ -35,7 +44,10 @@ internal data class Company(
 
     object Schema {
 
+        const val ID = "id"
         const val NAME = "name"
+        const val WEBSITE_URL = "url"
+        const val LOGO = "logo"
         const val DEVELOPED_GAMES = "developed"
 
     }

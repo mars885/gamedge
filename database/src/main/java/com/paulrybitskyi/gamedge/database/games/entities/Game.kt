@@ -25,6 +25,7 @@ import androidx.room.Entity
 )
 internal data class Game(
     @ColumnInfo(name = Schema.ID) val id: Int,
+    @ColumnInfo(name = Schema.FOLLOWER_COUNT) val followerCount: Int?,
     @ColumnInfo(name = Schema.HYPE_COUNT) val hypeCount: Int?,
     @ColumnInfo(name = Schema.RELEASE_DATE) val releaseDate: Long?,
     @ColumnInfo(name = Schema.CRITICS_RATING) val criticsRating: Double?,
@@ -33,8 +34,11 @@ internal data class Game(
     @ColumnInfo(name = Schema.NAME) val name: String,
     @ColumnInfo(name = Schema.SUMMARY) val summary: String?,
     @ColumnInfo(name = Schema.STORYLINE) val storyline: String?,
+    @ColumnInfo(name = Schema.CATEGORY) val category: String,
     @ColumnInfo(name = Schema.COVER) val cover: String,
+    @ColumnInfo(name = Schema.RELEASE_DATES) val releaseDates: String,
     @ColumnInfo(name = Schema.AGE_RATINGS) val ageRatings: String,
+    @ColumnInfo(name = Schema.VIDEOS) val videos: String,
     @ColumnInfo(name = Schema.ARTWORKS) val artworks: String,
     @ColumnInfo(name = Schema.SCREENSHOTS) val screenshots: String,
     @ColumnInfo(name = Schema.GENRES) val genres: String,
@@ -53,6 +57,7 @@ internal data class Game(
 
         const val TABLE_NAME = "games"
         const val ID = "id"
+        const val FOLLOWER_COUNT = "follower_count"
         const val HYPE_COUNT = "hype_count"
         const val RELEASE_DATE = "release_date"
         const val CRITICS_RATING = "critics_rating"
@@ -61,8 +66,11 @@ internal data class Game(
         const val NAME = "name"
         const val SUMMARY = "summary"
         const val STORYLINE = "storyline"
+        const val CATEGORY = "category"
         const val COVER = "cover"
+        const val RELEASE_DATES = "release_dates"
         const val AGE_RATINGS = "age_ratings"
+        const val VIDEOS = "videos"
         const val ARTWORKS = "artworks"
         const val SCREENSHOTS = "screenshots"
         const val GENRES = "genres"

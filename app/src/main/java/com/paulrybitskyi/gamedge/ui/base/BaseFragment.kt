@@ -38,6 +38,8 @@ internal abstract class BaseFragment<
 >(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
 
 
+    private var isViewCreated = false
+
     protected abstract val viewBinding: VB
     protected abstract val viewModel: VM
 
@@ -47,16 +49,28 @@ internal abstract class BaseFragment<
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        // Prevent the view from recreation until onDestroy is called
+        return if(isViewCreated) {
+            viewBinding.root
+        } else {
+            super.onCreateView(inflater, container, savedInstanceState)
+        }
     }
 
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onPreInit()
-        onInit()
-        onPostInit()
+        val wasViewCreated = isViewCreated
+        isViewCreated = true
+
+        if(!wasViewCreated) {
+            onPreInit()
+            onInit()
+            onPostInit()
+        }
+
+        onBindViewModel()
     }
 
 
@@ -68,7 +82,25 @@ internal abstract class BaseFragment<
 
     @CallSuper
     protected open fun onInit() {
-        onBindViewModel()
+        // Stub
+    }
+
+
+    @CallSuper
+    protected open fun onPostInit() {
+        loadData()
+    }
+
+
+    private fun loadData() {
+        lifecycleScope.launchWhenResumed {
+            onLoadData()
+        }
+    }
+
+
+    protected open fun onLoadData() {
+        // Stub
     }
 
 
@@ -94,24 +126,6 @@ internal abstract class BaseFragment<
 
 
     @CallSuper
-    protected open fun onPostInit() {
-        loadData()
-    }
-
-
-    private fun loadData() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            onLoadData()
-        }
-    }
-
-
-    protected open fun onLoadData() {
-        // Stub
-    }
-    
-
-    @CallSuper
     protected open fun onHandleCommand(command: Command) {
         when(command) {
             is GeneralCommands.ShowShortToast -> showShortToast(command.message)
@@ -123,6 +137,13 @@ internal abstract class BaseFragment<
     @CallSuper
     protected open fun onRoute(route: Route) {
         // Stub
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        isViewCreated = false
     }
 
 

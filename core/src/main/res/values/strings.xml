@@ -19,11 +19,57 @@
 <resources>
 
     <string name="text_font_family_medium" translatable="false">sans-serif-medium</string>
+    <string name="unknown">Unknown</string>
+    <string name="not_available_abbr">N/A</string>
+    <string name="url_opener_not_found">No app was found capable of opening the URL!</string>
+
+    <string name="year_quarter_first">Q1</string>
+    <string name="year_quarter_second">Q2</string>
+    <string name="year_quarter_third">Q3</string>
+    <string name="year_quarter_fourth">Q4</string>
+
+    <string name="year_with_quarter_template">%d (%s)</string>
+    <string name="rating_template">%d%%</string>
+    <string name='age_rating_template'>%s-%s</string>
+
+    <string name="company_role_developer">Main Developer</string>
+    <string name="company_role_publisher">Publisher</string>
+    <string name="company_role_porter">Porting Developer</string>
+    <string name="company_role_supporting">Supporting Developer</string>
+
+    <string name="website_unknown">Unknown</string>
+    <string name="website_steam" translatable="false">Steam</string>
+    <string name="website_gog" translatable="false">GOG</string>
+    <string name="website_epic_games" translatable="false">Epic Games</string>
+    <string name="website_google_play" translatable="false">Google Play</string>
+    <string name="website_app_store" translatable="false">App Store</string>
+    <string name="website_official">Official</string>
+    <string name="website_twitter" translatable="false">Twitter</string>
+    <string name="website_subreddit" translatable="false">Subreddit</string>
+    <string name="website_youtube" translatable="false">Youtube</string>
+    <string name="website_twitch" translatable="false">Twitch</string>
+    <string name="website_instagram" translatable="false">Instagram</string>
+    <string name="website_facebook" translatable="false">Facebook</string>
+    <string name="website_wikipedia" translatable="false">Wikipedia</string>
+    <string name="website_wikia" translatable="false">Wikia</string>
+    <string name="website_discord" translatable="false">Discord</string>
+
+    <string name="game_category_main">Main</string>
+    <string name="game_category_dlc">DLC</string>
+    <string name="game_category_bundle">Bundle</string>
+    <string name="game_category_mod">Mod</string>
+    <string name="game_category_episode">Episode</string>
+    <string name="game_category_season">Season</string>
 
     <!-- GamesCategoryView -->
     <string name="games_category_popular">Popular</string>
     <string name="games_category_recently_released">Recently Released</string>
     <string name="games_category_coming_soon">Coming Soon</string>
     <string name="games_category_most_anticipated">Most Anticipated</string>
+
+    <!-- GameInfoView -->
+    <string name="game_info_other_company_games_title_template">More Games by %s</string>
+    <string name="game_info_other_company_games_title_default_arg">Developer</string>
+    <string name="game_info_similar_games_title">Similar Games</string>
 
 </resources>

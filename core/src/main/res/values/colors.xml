@@ -24,6 +24,7 @@
     <color name="colorContentContainer">#1c2028</color>
     <color name="colorPrimaryText">#FFFFFF</color>
     <color name="colorSecondaryText">#809aaf</color>
+    <color name="colorNavigationBar">#282d38</color>
 
     <color name="colorProgressBar">@color/colorAccent</color>
     <color name="colorInfoView">@color/colorSecondaryText</color>

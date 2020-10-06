@@ -22,11 +22,11 @@ import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.data.commons.DataResult
 import com.paulrybitskyi.gamedge.data.commons.utils.onEachSuccess
 import com.paulrybitskyi.gamedge.data.games.DataGame
-import com.paulrybitskyi.gamedge.data.games.GamesRefreshingThrottler
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.Pagination
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
+import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.commons.GamesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.commons.RefreshGamesUseCaseMappers
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
@@ -35,8 +35,8 @@ import kotlinx.coroutines.flow.*
 
 internal class RefreshAllGamesUseCaseImpl(
     private val gamesDataStores: GamesDataStores,
-    private val gamesRefreshingThrottler: GamesRefreshingThrottler,
     private val dispatcherProvider: DispatcherProvider,
+    private val throttlerTools: GamesRefreshingThrottlerTools,
     private val mappers: RefreshGamesUseCaseMappers
 ) : RefreshAllGamesUseCase {
 
@@ -64,10 +64,9 @@ internal class RefreshAllGamesUseCaseImpl(
         params: RefreshGamesUseCaseParams
     ): Flow<List<DataGame>> {
         return refreshGames(
+            throttlerKey = throttlerTools.keyBuilder.buildPopularGamesKey(params.pagination),
             params = params,
-            canRefreshGames = { canRefreshPopularGames() },
-            getGames = { getPopularGames(it) },
-            updateLastRefreshingTime = { updatePopularGamesLastRefreshingTime() }
+            getGames = { getPopularGames(it) }
         )
     }
 
@@ -76,10 +75,9 @@ internal class RefreshAllGamesUseCaseImpl(
         params: RefreshGamesUseCaseParams
     ): Flow<List<DataGame>> {
         return refreshGames(
+            throttlerKey = throttlerTools.keyBuilder.buildRecentlyReleasedGamesKey(params.pagination),
             params = params,
-            canRefreshGames = { canRefreshRecentlyReleasedGames() },
-            getGames = { getRecentlyReleasedGames(it) },
-            updateLastRefreshingTime = { updateRecentlyReleasedGamesLastRefreshingTime() }
+            getGames = { getRecentlyReleasedGames(it) }
         )
     }
 
@@ -88,10 +86,9 @@ internal class RefreshAllGamesUseCaseImpl(
         params: RefreshGamesUseCaseParams
     ): Flow<List<DataGame>> {
         return refreshGames(
+            throttlerKey = throttlerTools.keyBuilder.buildComingSoonGamesKey(params.pagination),
             params = params,
-            canRefreshGames = { canRefreshComingSoonGames() },
-            getGames = { getComingSoonGames(it) },
-            updateLastRefreshingTime = { updateComingSoonGamesLastRefreshingTime() }
+            getGames = { getComingSoonGames(it) }
         )
     }
 
@@ -100,26 +97,24 @@ internal class RefreshAllGamesUseCaseImpl(
         params: RefreshGamesUseCaseParams
     ): Flow<List<DataGame>> {
         return refreshGames(
+            throttlerKey = throttlerTools.keyBuilder.buildMostAnticipatedGamesKey(params.pagination),
             params = params,
-            canRefreshGames = { canRefreshMostAnticipatedGames() },
-            getGames = { getMostAnticipatedGames(it) },
-            updateLastRefreshingTime = { updateMostAnticipatedGamesLastRefreshingTime() }
+            getGames = { getMostAnticipatedGames(it) }
         )
     }
 
 
     private suspend fun refreshGames(
+        throttlerKey: String,
         params: RefreshGamesUseCaseParams,
-        canRefreshGames: suspend GamesRefreshingThrottler.() -> Boolean,
-        getGames: suspend GamesRemoteDataStore.(Pagination) -> DataResult<List<DataGame>>,
-        updateLastRefreshingTime: suspend GamesRefreshingThrottler.() -> Unit
+        getGames: suspend GamesRemoteDataStore.(Pagination) -> DataResult<List<DataGame>>
     ): Flow<List<DataGame>> {
         return flow {
-            if(gamesRefreshingThrottler.canRefreshGames()) {
+            if(throttlerTools.throttler.canRefreshGames(throttlerKey)) {
                 emit(gamesDataStores.remote.getGames(mappers.pagination.mapToDataPagination(params.pagination)))
             }
         }
-        .onEachSuccess { gamesRefreshingThrottler.updateLastRefreshingTime() }
+        .onEachSuccess { throttlerTools.throttler.updateGamesLastRefreshTime(throttlerKey) }
         .flowOn(dispatcherProvider.main)
         .mapError(mappers.error::mapToDomainError)
         .resultOrError()

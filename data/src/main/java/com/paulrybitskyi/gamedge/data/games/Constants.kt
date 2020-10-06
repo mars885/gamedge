@@ -18,6 +18,6 @@ package com.paulrybitskyi.gamedge.data.games
 
 internal object Constants {
 
-    const val GAMES_PREFERENCES_DATA_STORE_NAME = "games"
+    const val GAMES_PREFERENCES_NAME = "games"
 
 }
