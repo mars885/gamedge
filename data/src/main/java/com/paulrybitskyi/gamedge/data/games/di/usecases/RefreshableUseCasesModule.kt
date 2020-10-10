@@ -22,15 +22,9 @@ import com.paulrybitskyi.gamedge.data.games.GamesRefreshingThrottler
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.PaginationMapper
-import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.RefreshComingSoonGamesUseCaseImpl
-import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.RefreshMostAnticipatedGamesUseCaseImpl
-import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.RefreshPopularGamesUseCaseImpl
-import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.RefreshRecentlyReleasedGamesUseCaseImpl
+import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.*
 import com.paulrybitskyi.gamedge.data.games.usecases.refreshers.commons.RefreshGamesUseCaseMappers
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshComingSoonGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshMostAnticipatedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshPopularGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshRecentlyReleasedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -102,6 +96,23 @@ internal object RefreshableUseCasesModule {
         mappers: RefreshGamesUseCaseMappers
     ): RefreshRecentlyReleasedGamesUseCase {
         return RefreshRecentlyReleasedGamesUseCaseImpl(
+            gamesDataStores = gamesDataStores,
+            gamesRefreshingThrottler = gamesRefreshingThrottler,
+            dispatcherProvider = dispatcherProvider,
+            mappers = mappers
+        )
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideAllGamesRefresherUseCase(
+        gamesDataStores: GamesDataStores,
+        gamesRefreshingThrottler: GamesRefreshingThrottler,
+        dispatcherProvider: DispatcherProvider,
+        mappers: RefreshGamesUseCaseMappers
+    ): RefreshAllGamesUseCase {
+        return RefreshAllGamesUseCaseImpl(
             gamesDataStores = gamesDataStores,
             gamesRefreshingThrottler = gamesRefreshingThrottler,
             dispatcherProvider = dispatcherProvider,

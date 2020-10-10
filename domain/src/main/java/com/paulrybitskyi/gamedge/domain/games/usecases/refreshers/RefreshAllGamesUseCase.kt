@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.games.usecases.observers
+package com.paulrybitskyi.gamedge.domain.games.usecases.refreshers
 
-import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
+import com.paulrybitskyi.gamedge.domain.commons.usecases.UseCase
+import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
+import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import kotlinx.coroutines.flow.Flow
 
-interface ObserveMostAnticipatedGamesUseCase : ObservableGamesUseCase
+interface RefreshAllGamesUseCase : UseCase<RefreshGamesUseCaseParams, Flow<List<Game>>>

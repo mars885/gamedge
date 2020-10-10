@@ -19,14 +19,12 @@ package com.paulrybitskyi.gamedge.ui.discovery
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
 import com.paulrybitskyi.gamedge.core.ImageUrlBuilder
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
+import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveComingSoonGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveMostAnticipatedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveRecentlyReleasedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshComingSoonGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshMostAnticipatedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshPopularGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshRecentlyReleasedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshAllGamesUseCase
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemGameModelMapper
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemGameModelMapperImpl
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemModelFactory
@@ -48,16 +46,24 @@ internal object GamesDiscoveryModule {
 
 
     @Provides
+    fun provideGamesDiscoveryUseCases(
+        observeGamesUseCasesMap: Map<GamesCategory, @JvmSuppressWildcards ObservableGamesUseCase>,
+        refreshAllGamesUseCase: RefreshAllGamesUseCase
+    ): GamesDiscoveryUseCases {
+        return GamesDiscoveryUseCases(
+            observeGamesUseCasesMap = observeGamesUseCasesMap,
+            refreshAllGamesUseCase = refreshAllGamesUseCase
+        )
+    }
+
+
+    @Provides
     @IntoMap
     @GamesCategoryKey(GamesCategory.POPULAR)
     fun providePopularGamesUseCases(
-        observePopularGamesUseCase: ObservePopularGamesUseCase,
-        refreshPopularGamesUseCase: RefreshPopularGamesUseCase,
-    ): GamesDiscoveryUseCases {
-        return GamesDiscoveryUseCases(
-            observePopularGamesUseCase,
-            refreshPopularGamesUseCase
-        )
+        observePopularGamesUseCase: ObservePopularGamesUseCase
+    ): ObservableGamesUseCase {
+        return observePopularGamesUseCase
     }
 
 
@@ -65,13 +71,9 @@ internal object GamesDiscoveryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategory.RECENTLY_RELEASED)
     fun provideRecentlyReleasedGamesUseCases(
-        observeRecentlyReleasedGamesUseCase: ObserveRecentlyReleasedGamesUseCase,
-        refreshRecentlyReleasedGamesUseCase: RefreshRecentlyReleasedGamesUseCase,
-    ): GamesDiscoveryUseCases {
-        return GamesDiscoveryUseCases(
-            observeRecentlyReleasedGamesUseCase,
-            refreshRecentlyReleasedGamesUseCase
-        )
+        observeRecentlyReleasedGamesUseCase: ObserveRecentlyReleasedGamesUseCase
+    ): ObservableGamesUseCase {
+        return observeRecentlyReleasedGamesUseCase
     }
 
 
@@ -79,13 +81,9 @@ internal object GamesDiscoveryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategory.COMING_SOON)
     fun provideComingSoonGamesUseCases(
-        observeComingSoonGamesUseCase: ObserveComingSoonGamesUseCase,
-        refreshComingSoonGamesUseCase: RefreshComingSoonGamesUseCase,
-    ): GamesDiscoveryUseCases {
-        return GamesDiscoveryUseCases(
-            observeComingSoonGamesUseCase,
-            refreshComingSoonGamesUseCase
-        )
+        observeComingSoonGamesUseCase: ObserveComingSoonGamesUseCase
+    ): ObservableGamesUseCase {
+        return observeComingSoonGamesUseCase
     }
 
 
@@ -93,13 +91,9 @@ internal object GamesDiscoveryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategory.MOST_ANTICIPATED)
     fun provideMostAnticipatedGamesUseCases(
-        observeMostAnticipatedGamesUseCase: ObserveMostAnticipatedGamesUseCase,
-        refreshMostAnticipatedGamesUseCase: RefreshMostAnticipatedGamesUseCase,
-    ): GamesDiscoveryUseCases {
-        return GamesDiscoveryUseCases(
-            observeMostAnticipatedGamesUseCase,
-            refreshMostAnticipatedGamesUseCase
-        )
+        observeMostAnticipatedGamesUseCase: ObserveMostAnticipatedGamesUseCase
+    ): ObservableGamesUseCase {
+        return observeMostAnticipatedGamesUseCase
     }
 
 

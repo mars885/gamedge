@@ -16,8 +16,6 @@
 
 package com.paulrybitskyi.gamedge.domain.games.usecases.observers
 
-import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
-import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
 
-interface ObservePopularGamesUseCase : ObservableUseCase<ObserveGamesUseCaseParams, List<Game>>
+interface ObservePopularGamesUseCase : ObservableGamesUseCase

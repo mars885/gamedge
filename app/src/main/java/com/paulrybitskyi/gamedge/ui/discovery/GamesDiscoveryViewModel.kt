@@ -26,10 +26,8 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItem
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
-import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommands
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemGameModelMapper
@@ -41,7 +39,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 internal class GamesDiscoveryViewModel @ViewModelInject constructor(
-    private val discoveryUseCasesMap: Map<GamesCategory, GamesDiscoveryUseCases>,
+    private val discoveryUseCases: GamesDiscoveryUseCases,
     private val discoveryItemModelFactory: GamesDiscoveryItemModelFactory,
     private val discoveryItemGameModelMapper: GamesDiscoveryItemGameModelMapper,
     private val errorMapper: ErrorMapper,
@@ -96,10 +94,11 @@ internal class GamesDiscoveryViewModel @ViewModelInject constructor(
 
 
     private suspend fun loadGames(category: GamesCategory): Flow<List<GamesDiscoveryItemChildModel>> {
-        return discoveryUseCasesMap.getValue(category)
-            .observeGamesUseCase.execute(observeGamesUseCaseParams)
+        return discoveryUseCases.observeGamesUseCasesMap.getValue(category)
+            .execute(observeGamesUseCaseParams)
             .map(discoveryItemGameModelMapper::mapToItemModels)
             .flowOn(dispatcherProvider.computation)
+            .conflate()
     }
 
 
@@ -126,22 +125,13 @@ internal class GamesDiscoveryViewModel @ViewModelInject constructor(
         if(isRefreshingData) return
 
         viewModelScope.launch {
-            combine(
-                flows = GamesCategory.values().map { refreshGames(it) },
-                transform = { it.toList() }
-            )
-            .onError { onRefreshError(it) }
-            .onStart { onRefreshStarted() }
-            .onCompletion { onRefreshEnded() }
-            .collect()
+            discoveryUseCases.refreshAllGamesUseCase
+                .execute(refreshGamesUseCaseParams)
+                .onError { onRefreshError(it) }
+                .onStart { onRefreshStarted() }
+                .onCompletion { onRefreshEnded() }
+                .collect()
         }
-    }
-
-
-    private suspend fun refreshGames(category: GamesCategory): Flow<List<Game>> {
-        return discoveryUseCasesMap.getValue(category)
-            .refreshGamesUseCase.execute(refreshGamesUseCaseParams)
-            .resultOrError()
     }
 
 

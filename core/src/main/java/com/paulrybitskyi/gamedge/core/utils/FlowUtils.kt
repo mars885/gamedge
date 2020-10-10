@@ -16,10 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core.utils
 
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.mapEither
+import com.github.michaelbull.result.*
 import com.paulrybitskyi.gamedge.domain.commons.DomainException
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
 import kotlinx.coroutines.flow.*
@@ -94,6 +91,20 @@ fun <S1, E1, S2, E2> Flow<Result<S1, E1>>.mapResult(
     failure: (E1) -> E2
 ): Flow<Result<S2, E2>> {
     return map { it.mapEither(success, failure) }
+}
+
+
+fun <S1, S2, E1> Flow<Result<S1, E1>>.mapSuccess(
+    success: (S1) -> S2
+): Flow<Result<S2, E1>> {
+    return map { it.map(success) }
+}
+
+
+fun <S1, E1, E2> Flow<Result<S1, E1>>.mapError(
+    failure: (E1) -> E2
+): Flow<Result<S1, E2>> {
+    return map { it.mapError(failure) }
 }
 
 

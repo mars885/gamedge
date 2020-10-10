@@ -16,15 +16,11 @@
 
 package com.paulrybitskyi.gamedge.ui.discovery
 
-import com.paulrybitskyi.gamedge.domain.commons.DomainResult
-import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
-import com.paulrybitskyi.gamedge.domain.commons.usecases.UseCase
-import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import kotlinx.coroutines.flow.Flow
+import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategory
+import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshAllGamesUseCase
 
 internal class GamesDiscoveryUseCases(
-    val observeGamesUseCase: ObservableUseCase<ObserveGamesUseCaseParams, List<Game>>,
-    val refreshGamesUseCase: UseCase<RefreshGamesUseCaseParams, Flow<DomainResult<List<Game>>>>
+    val observeGamesUseCasesMap: Map<GamesCategory, ObservableGamesUseCase>,
+    val refreshAllGamesUseCase: RefreshAllGamesUseCase
 )

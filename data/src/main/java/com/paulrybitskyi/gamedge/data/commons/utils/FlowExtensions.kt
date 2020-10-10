@@ -32,5 +32,3 @@ internal fun <T> Flow<DataResult<T>>.onEachSuccess(action: suspend (T) -> Unit):
 internal fun <T> Flow<DataResult<T>>.onEachFailure(action: suspend (Error) -> Unit): Flow<DataResult<T>> {
     return onEach { it.onFailure(action) }
 }
-
-
