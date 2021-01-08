@@ -43,6 +43,7 @@ dependencies {
     implementation(deps.commons.commonsKtx)
     implementation(deps.commons.commonsWidgets)
     implementation(deps.commons.commonsRecyclerView)
+    implementation(deps.commons.commonsMaterial)
 
     implementation(deps.misc.expandableTextView)
 

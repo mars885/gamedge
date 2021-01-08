@@ -25,7 +25,6 @@ import com.paulrybitskyi.commons.ktx.*
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGameCompanyBinding
-import com.paulrybitskyi.gamedge.core.utils.*
 import com.paulrybitskyi.gamedge.image.loading.Config
 import com.paulrybitskyi.gamedge.image.loading.ImageLoader
 import com.paulrybitskyi.gamedge.image.loading.Transformation

@@ -20,9 +20,9 @@ import android.view.MenuItem
 import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.material.utils.setItemColors
+import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.R
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.setItemColors
-import com.paulrybitskyi.gamedge.core.utils.viewBinding
 import com.paulrybitskyi.gamedge.databinding.FragmentDashboardBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.ui.dashboard.fragment.DashboardPage.Companion.toDashboardPageFromMenuItemId
@@ -48,9 +48,8 @@ internal class DashboardFragment : BaseFragment<
     }
 
 
-    private fun initToolbar() = with(viewBinding.toolbar) {
-        applyWindowTopInsetAsPadding()
-        setBackgroundColor(getColor(R.color.toolbar_background_color))
+    private fun initToolbar() {
+        viewBinding.toolbar.applyWindowTopInsetAsPadding()
     }
 
 

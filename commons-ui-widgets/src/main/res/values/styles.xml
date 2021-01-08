@@ -50,7 +50,6 @@
         <item name="infoView_iconColor">@color/game_header_info_view_icon_color</item>
         <item name="infoView_titleTextSize">@dimen/game_header_info_view_title_text_size</item>
         <item name="infoView_titleTextColor">@color/game_header_info_view_title_color</item>
-        <item name="infoView_descriptionText">""</item>
     </style>
 
     <style name="Gamedge.GameInfo.Details"/>

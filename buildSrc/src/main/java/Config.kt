@@ -37,42 +37,11 @@ object appConfig {
 
 object versions {
 
-    const val kotlin = "1.4.10" // also in buildSrc build.gradle.kts file
-    const val gradlePlugin = "4.1.0" // also in buildSrc build.gradle.kts file
-    const val gradleVersionsPlugin = "0.29.0"
-    const val protobufPlugin = "0.8.13"
-    const val kotlinCoroutinesCore = "1.3.9"
-    const val appCompat = "1.1.0"
-    const val navigationVersion = "2.3.1"
-    const val constraintLayout = "2.0.2"
-    const val recyclerView = "1.1.0"
-    const val viewPager2 = "1.0.0"
-    const val swipeRefreshLayout = "1.1.0"
-    const val lifecycle = "2.2.0"
-    const val browser = "1.2.0"
+    const val kotlin = "1.4.21" // also in buildSrc build.gradle.kts file
+    const val gradleVersionsPlugin = "0.36.0"
+    const val protobufPlugin = "0.8.14"
+    const val navigation = "2.3.2"
     const val daggerHilt = "2.28.3-alpha"
-    const val daggerHiltAssistedInjection = "1.0.0-alpha02"
-    const val materialComponents = "1.3.0-alpha02"
-    const val protobuf = "3.10.0"
-    const val desugaredLibs = "1.0.9"
-    const val kotlinResult = "1.1.8"
-    const val expandableTextView = "1.0.5"
-    const val okHttp = "4.8.0"
-    const val retrofit = "2.9.0"
-    const val moshi = "1.9.3"
-    const val picasso = "2.71828"
-    const val room = "2.2.5"
-    const val coreKtx = "1.3.1"
-    const val fragmentKtx = "1.2.5"
-    const val dataStore = "1.0.0-alpha01"
-    const val commonsCore = "1.0.0"
-    const val commonsKtx = "1.0.0"
-    const val commonsWidgets = "1.0.0"
-    const val commonsNetwork = "1.0.0"
-    const val commonsRecyclerView = "1.0.0"
-    const val commonsWindowAnims = "1.0.0"
-    const val jUnit = "4.13"
-    const val jUnitExt = "1.1.1"
 
 }
 
@@ -81,9 +50,11 @@ object deps {
 
     object plugins {
 
-        const val androidGradle = "com.android.tools.build:gradle:${versions.gradlePlugin}"
+        private const val gradlePluginVersion = "4.1.1" // also in buildSrc build.gradle.kts file
+
+        const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigationVersion}"
+        const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
         const val daggerHiltGradle = "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}"
         const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${versions.gradleVersionsPlugin}"
 
@@ -105,82 +76,122 @@ object deps {
 
     object kotlin {
 
-        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
-        const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.kotlinCoroutinesCore}"
+        private const val kotlinCoroutinesCoreVersion = "1.4.2"
+
+        const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinCoroutinesCoreVersion}"
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
 
     }
 
     object androidX {
 
-        const val appCompat = "androidx.appcompat:appcompat:${versions.appCompat}"
-        const val navFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${versions.navigationVersion}"
-        const val navUiKtx = "androidx.navigation:navigation-ui-ktx:${versions.navigationVersion}"
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
-        const val recyclerView = "androidx.recyclerview:recyclerview:${versions.recyclerView}"
-        const val viewPager2 = "androidx.viewpager2:viewpager2:${versions.viewPager2}"
-        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swipeRefreshLayout}"
-        const val lifecycleCommonJava8 = "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
-        const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel:${versions.lifecycle}"
-        const val browser = "androidx.browser:browser:${versions.browser}"
-        const val room = "androidx.room:room-runtime:${versions.room}"
-        const val roomKtx = "androidx.room:room-ktx:${versions.room}"
-        const val roomCompiler = "androidx.room:room-compiler:${versions.room}"
-        const val coreKtx = "androidx.core:core-ktx:${versions.coreKtx}"
-        const val fragmentKtx = "androidx.fragment:fragment-ktx:${versions.fragmentKtx}"
-        const val prefsDataStore = "androidx.datastore:datastore-preferences:${versions.dataStore}"
-        const val protoDataStore = "androidx.datastore:datastore-core:${versions.dataStore}"
-        const val daggerHiltAssistedInjection = "androidx.hilt:hilt-lifecycle-viewmodel:${versions.daggerHiltAssistedInjection}"
-        const val daggerHiltAssistedInjectionCompiler = "androidx.hilt:hilt-compiler:${versions.daggerHiltAssistedInjection}"
+        private const val appCompatVersion = "1.1.0"
+        private const val constraintLayoutVersion = "2.0.2"
+        private const val recyclerViewVersion = "1.1.0"
+        private const val viewPager2Version = "1.0.0"
+        private const val swipeRefreshLayoutVersion = "1.1.0"
+        private const val lifecycleVersion = "2.2.0"
+        private const val browserVersion = "1.3.0"
+        private const val roomVersion = "2.2.5"
+        private const val coreKtxVersion = "1.3.1"
+        private const val fragmentKtxVersion = "1.2.5"
+        private const val dataStoreVersion = "1.0.0-alpha01"
+        private const val daggerHiltAssistedInjectionVersion = "1.0.0-alpha02"
+
+        const val appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
+        const val navFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
+        const val navUiKtx = "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}"
+        const val recyclerView = "androidx.recyclerview:recyclerview:${recyclerViewVersion}"
+        const val viewPager2 = "androidx.viewpager2:viewpager2:${viewPager2Version}"
+        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${swipeRefreshLayoutVersion}"
+        const val lifecycleCommonJava8 = "androidx.lifecycle:lifecycle-common-java8:${lifecycleVersion}"
+        const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel:${lifecycleVersion}"
+        const val browser = "androidx.browser:browser:${browserVersion}"
+        const val room = "androidx.room:room-runtime:${roomVersion}"
+        const val roomKtx = "androidx.room:room-ktx:${roomVersion}"
+        const val roomCompiler = "androidx.room:room-compiler:${roomVersion}"
+        const val coreKtx = "androidx.core:core-ktx:${coreKtxVersion}"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:${fragmentKtxVersion}"
+        const val prefsDataStore = "androidx.datastore:datastore-preferences:${dataStoreVersion}"
+        const val protoDataStore = "androidx.datastore:datastore-core:${dataStoreVersion}"
+        const val daggerHiltAssistedInjection = "androidx.hilt:hilt-lifecycle-viewmodel:${daggerHiltAssistedInjectionVersion}"
+        const val daggerHiltAssistedInjectionCompiler = "androidx.hilt:hilt-compiler:${daggerHiltAssistedInjectionVersion}"
 
     }
 
     object google {
 
+        private const val materialComponentsVersion = "1.3.0-alpha02"
+        private const val protobufVersion = "3.10.0"
+
         const val daggerHilt = "com.google.dagger:hilt-android:${versions.daggerHilt}"
         const val daggerHiltCompiler = "com.google.dagger:hilt-android-compiler:${versions.daggerHilt}"
-        const val materialComponents = "com.google.android.material:material:${versions.materialComponents}"
-        const val protobuf = "com.google.protobuf:protobuf-javalite:${versions.protobuf}"
-        const val protobufCompiler = "com.google.protobuf:protoc:${versions.protobuf}"
+        const val materialComponents = "com.google.android.material:material:${materialComponentsVersion}"
+        const val protobuf = "com.google.protobuf:protobuf-javalite:${protobufVersion}"
+        const val protobufCompiler = "com.google.protobuf:protoc:${protobufVersion}"
 
     }
 
     object square {
 
-        const val okHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${versions.okHttp}"
-        const val retrofit = "com.squareup.retrofit2:retrofit:${versions.retrofit}"
-        const val retrofitMoshiConverter = "com.squareup.retrofit2:converter-moshi:${versions.retrofit}"
-        const val retrofitScalarsConverter = "com.squareup.retrofit2:converter-scalars:${versions.retrofit}"
-        const val moshi = "com.squareup.moshi:moshi:${versions.moshi}"
-        const val moshiCodeGenerator = "com.squareup.moshi:moshi-kotlin-codegen:${versions.moshi}"
-        const val moshiReflection = "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
-        const val picasso = "com.squareup.picasso:picasso:${versions.picasso}"
+        private const val okHttpVersion = "4.8.0"
+        private const val retrofitVersion = "2.9.0"
+        private const val moshiVersion = "1.11.0"
+        private const val picassoVersion = "2.71828"
+
+        const val okHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
+        const val retrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+        const val retrofitMoshiConverter = "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
+        const val retrofitScalarsConverter = "com.squareup.retrofit2:converter-scalars:${retrofitVersion}"
+        const val moshi = "com.squareup.moshi:moshi:${moshiVersion}"
+        const val moshiCodeGenerator = "com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}"
+        const val moshiReflection = "com.squareup.moshi:moshi-kotlin:${moshiVersion}"
+        const val picasso = "com.squareup.picasso:picasso:${picassoVersion}"
 
     }
 
     object commons {
 
-        const val commonsCore = "com.paulrybitskyi.commons:commons-core:${versions.commonsCore}"
-        const val commonsKtx = "com.paulrybitskyi.commons:commons-ktx:${versions.commonsKtx}"
-        const val commonsWidgets = "com.paulrybitskyi.commons:commons-widgets:${versions.commonsWidgets}"
-        const val commonsNetwork = "com.paulrybitskyi.commons:commons-network:${versions.commonsNetwork}"
-        const val commonsRecyclerView = "com.paulrybitskyi.commons:commons-recyclerview:${versions.commonsRecyclerView}"
-        const val commonsWindowAnims = "com.paulrybitskyi.commons:commons-window-anims:${versions.commonsWindowAnims}"
+        private const val commonsCoreVersion = "1.0.1"
+        private const val commonsKtxVersion = "1.0.1"
+        private const val commonsWidgetsVersion = "1.0.1"
+        private const val commonsNavigationVersion = "1.0.1"
+        private const val commonsMaterialVersion = "1.0.1"
+        private const val commonsNetworkVersion = "1.0.0"
+        private const val commonsRecyclerViewVersion = "1.0.0"
+        private const val commonsWindowAnimsVersion = "1.0.0"
+
+        const val commonsCore = "com.paulrybitskyi.commons:commons-core:${commonsCoreVersion}"
+        const val commonsKtx = "com.paulrybitskyi.commons:commons-ktx:${commonsKtxVersion}"
+        const val commonsWidgets = "com.paulrybitskyi.commons:commons-widgets:${commonsWidgetsVersion}"
+        const val commonsNavigation = "com.paulrybitskyi.commons:commons-navigation:${commonsNavigationVersion}"
+        const val commonsMaterial = "com.paulrybitskyi.commons:commons-material:${commonsMaterialVersion}"
+        const val commonsNetwork = "com.paulrybitskyi.commons:commons-network:${commonsNetworkVersion}"
+        const val commonsRecyclerView = "com.paulrybitskyi.commons:commons-recyclerview:${commonsRecyclerViewVersion}"
+        const val commonsWindowAnims = "com.paulrybitskyi.commons:commons-window-anims:${commonsWindowAnimsVersion}"
 
     }
 
     object misc {
 
-        const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${versions.desugaredLibs}"
-        const val kotlinResult = "com.michael-bull.kotlin-result:kotlin-result:${versions.kotlinResult}"
-        const val expandableTextView = "at.blogc:expandabletextview:${versions.expandableTextView}"
+        private const val desugaredLibsVersion = "1.0.10"
+        private const val kotlinResultVersion = "1.1.9"
+        private const val expandableTextViewVersion = "1.0.5"
+
+        const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${desugaredLibsVersion}"
+        const val kotlinResult = "com.michael-bull.kotlin-result:kotlin-result:${kotlinResultVersion}"
+        const val expandableTextView = "at.blogc:expandabletextview:${expandableTextViewVersion}"
 
     }
 
     object testing {
 
-        const val jUnit = "junit:junit:${versions.jUnit}"
-        const val jUnitExt = "androidx.test.ext:junit:${versions.jUnitExt}"
+        private const val jUnitVersion = "4.13.1"
+        private const val jUnitExtVersion = "1.1.1"
+
+        const val jUnit = "junit:junit:${jUnitVersion}"
+        const val jUnitExt = "androidx.test.ext:junit:${jUnitExtVersion}"
 
     }
 

@@ -51,6 +51,8 @@ dependencies {
     implementation(deps.commons.commonsKtx)
     implementation(deps.commons.commonsWidgets)
     implementation(deps.commons.commonsWindowAnims)
+    implementation(deps.commons.commonsNavigation)
+    implementation(deps.commons.commonsMaterial)
 
     implementation(deps.misc.kotlinResult)
 

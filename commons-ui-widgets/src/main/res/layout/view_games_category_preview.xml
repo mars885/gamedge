@@ -109,7 +109,6 @@
             app:infoView_titleText="@string/games_category_preview_info_view_title"
             app:infoView_titleTextColor="@color/colorInfoView"
             app:infoView_titleTextSize="@dimen/games_category_preview_info_view_title_text_size"
-            app:infoView_descriptionText=""
             app:layout_constraintTop_toBottomOf="@id/topBarBarrier"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -50,7 +50,6 @@
         app:infoView_iconColor="@color/colorInfoView"
         app:infoView_titleText="@string/game_info_info_view_title"
         app:infoView_titleTextColor="@color/colorInfoView"
-        app:infoView_titleTextSize="@dimen/game_info_info_view_title_text_size"
-        app:infoView_descriptionText=""/>
+        app:infoView_titleTextSize="@dimen/game_info_info_view_title_text_size"/>
 
 </merge>

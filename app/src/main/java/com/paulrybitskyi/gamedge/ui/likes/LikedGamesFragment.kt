@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.ui.likes
 
 import androidx.fragment.app.viewModels
+import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.R
-import com.paulrybitskyi.gamedge.core.utils.viewBinding
 import com.paulrybitskyi.gamedge.databinding.FragmentLikedGamesBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint

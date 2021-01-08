@@ -17,13 +17,13 @@
 package com.paulrybitskyi.gamedge.ui.discovery
 
 import androidx.fragment.app.viewModels
+import com.paulrybitskyi.commons.navigation.navController
+import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.R
-import com.paulrybitskyi.gamedge.core.utils.viewBinding
 import com.paulrybitskyi.gamedge.databinding.FragmentGamesDiscoveryBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.ui.base.events.Route
 import com.paulrybitskyi.gamedge.ui.dashboard.fragment.DashboardFragmentDirections
-import com.paulrybitskyi.gamedge.utils.extensions.navController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

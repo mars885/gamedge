@@ -24,8 +24,8 @@ import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.commons.ktx.getDimension
 import com.paulrybitskyi.commons.ktx.layoutInflater
 import com.paulrybitskyi.commons.ktx.onClick
+import com.paulrybitskyi.commons.ktx.views.isTextEllipsized
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGameSummaryBinding
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.isTextEllipsized
 
 class GameSummaryView @JvmOverloads constructor(
     context: Context,

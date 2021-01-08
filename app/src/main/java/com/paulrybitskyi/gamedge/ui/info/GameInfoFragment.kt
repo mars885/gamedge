@@ -18,15 +18,15 @@ package com.paulrybitskyi.gamedge.ui.info
 
 import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.ktx.showShortToast
+import com.paulrybitskyi.commons.navigation.navController
+import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpenerFactory
-import com.paulrybitskyi.gamedge.core.utils.viewBinding
 import com.paulrybitskyi.gamedge.databinding.FragmentGameInfoBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.ui.base.events.Command
 import com.paulrybitskyi.gamedge.ui.base.events.Route
 import com.paulrybitskyi.gamedge.utils.defaultWindowAnimationDuration
-import com.paulrybitskyi.gamedge.utils.extensions.navController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

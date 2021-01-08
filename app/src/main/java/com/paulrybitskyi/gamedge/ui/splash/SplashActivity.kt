@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.ui.splash
 
 import androidx.activity.viewModels
-import com.paulrybitskyi.gamedge.core.utils.viewBinding
+import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.databinding.ActivitySplashBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseActivity
 import com.paulrybitskyi.gamedge.ui.base.events.Route

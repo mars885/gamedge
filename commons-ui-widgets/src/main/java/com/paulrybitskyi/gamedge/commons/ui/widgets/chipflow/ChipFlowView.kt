@@ -27,12 +27,11 @@ import androidx.annotation.ColorInt
 import androidx.core.graphics.toRectF
 import com.google.android.material.chip.ChipDrawable
 import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.material.utils.setChipBackgroundColor
+import com.paulrybitskyi.commons.material.utils.setChipBackgroundCornerRadius
+import com.paulrybitskyi.commons.material.utils.setChipIconColor
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.setChipBackgroundColor
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.setChipBackgroundCornerRadius
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.setChipIconColor
-import com.paulrybitskyi.gamedge.core.utils.indexOfFirstOrNull
 
 
 private const val ITEM_BACKGROUND_SHADOW_RADIUS = 6f
