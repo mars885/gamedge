@@ -177,4 +177,20 @@
     <!-- GameInfoRelatedGamesItem -->
     <dimen name="game_info_related_games_top_bar_margin">10dp</dimen>
 
+    <!-- GameView -->
+    <dimen name="game_card_elevation">2dp</dimen>
+    <dimen name="game_padding">15dp</dimen>
+    <dimen name="game_cover_width">112dp</dimen>
+    <dimen name="game_cover_height">153dp</dimen>
+    <dimen name="game_name_margin_left">12dp</dimen>
+    <dimen name="game_name_text_size">16sp</dimen>
+    <dimen name="game_details_margin_top">10dp</dimen>
+    <dimen name="game_details_margin_start">12dp</dimen>
+    <dimen name="game_details_text_size">14sp</dimen>
+
+    <!-- GamesView -->
+    <dimen name="games_decorator_spacing">15dp</dimen>
+    <dimen name="games_info_view_horizontal_margin">30dp</dimen>
+    <dimen name="games_info_view_title_text_size">17sp</dimen>
+
 </resources>

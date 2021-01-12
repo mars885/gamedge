@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ad58bef930ca1f4dd6711f702788d639",
+    "identityHash": "ba315f0b637efc8c9b8c55ce381df5cf",
     "entities": [
       {
         "tableName": "games",
@@ -173,12 +173,53 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "liked_games",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `game_id` INTEGER NOT NULL, `like_timestamp` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gameId",
+            "columnName": "game_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "likeTimestamp",
+            "columnName": "like_timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_liked_games_game_id",
+            "unique": false,
+            "columnNames": [
+              "game_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_liked_games_game_id` ON `${TABLE_NAME}` (`game_id`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ad58bef930ca1f4dd6711f702788d639')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ba315f0b637efc8c9b8c55ce381df5cf')"
     ]
   }
 }

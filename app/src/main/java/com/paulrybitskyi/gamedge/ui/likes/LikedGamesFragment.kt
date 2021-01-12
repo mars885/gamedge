@@ -17,10 +17,13 @@
 package com.paulrybitskyi.gamedge.ui.likes
 
 import androidx.fragment.app.viewModels
+import com.paulrybitskyi.commons.navigation.navController
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.databinding.FragmentLikedGamesBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.ui.base.events.Route
+import com.paulrybitskyi.gamedge.ui.dashboard.fragment.DashboardFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +40,48 @@ internal class LikedGamesFragment : BaseFragment<
     override fun onInit() {
         super.onInit()
 
-        viewBinding.root
+        initGamesView()
+    }
+
+
+    private fun initGamesView() = with(viewBinding.gamesView) {
+        onGameClickListener = viewModel::onGameClicked
+        onBottomReachListener = viewModel::onBottomReached
+    }
+
+
+    override fun onBindViewModel() = with(viewModel) {
+        super.onBindViewModel()
+
+        observeGamesUiState()
+    }
+
+
+    private fun LikedGamesViewModel.observeGamesUiState() {
+        gamesUiState.observe(viewLifecycleOwner) {
+            viewBinding.gamesView.uiState = it
+        }
+    }
+
+
+    override fun onLoadData() {
+        super.onLoadData()
+
+        viewModel.loadData()
+    }
+
+
+    override fun onRoute(route: Route) {
+        super.onRoute(route)
+
+        when(route) {
+            is LikedGamesRoutes.Info -> navigateToInfoScreen(route.gameId)
+        }
+    }
+
+
+    private fun navigateToInfoScreen(gameId: Int) {
+        navController.navigate(DashboardFragmentDirections.actionInfoFragment(gameId))
     }
 
 

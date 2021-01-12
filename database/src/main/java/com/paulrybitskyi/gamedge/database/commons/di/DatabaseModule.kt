@@ -20,7 +20,8 @@ import android.content.Context
 import androidx.room.Room
 import com.paulrybitskyi.gamedge.database.Constants
 import com.paulrybitskyi.gamedge.database.GamedgeDatabase
-import com.paulrybitskyi.gamedge.database.games.GamesTable
+import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
+import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,6 +51,13 @@ internal object DatabaseModule {
     @Singleton
     fun provideGamesTable(gamedgeDatabase: GamedgeDatabase): GamesTable {
         return gamedgeDatabase.gamesTable
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideLikedGamesTable(gamedgeDatabase: GamedgeDatabase): LikedGamesTable {
+        return gamedgeDatabase.likedGamesTable
     }
 
 

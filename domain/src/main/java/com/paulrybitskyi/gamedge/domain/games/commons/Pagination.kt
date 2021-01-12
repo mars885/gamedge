@@ -16,7 +16,19 @@
 
 package com.paulrybitskyi.gamedge.domain.games.commons
 
+
+private const val DEFAULT_PAGE_SIZE = 20
+
+
 data class Pagination(
     val offset: Int = 0,
-    val limit: Int = 20
+    val limit: Int = DEFAULT_PAGE_SIZE
 )
+
+
+fun Pagination.nextPage(): Pagination {
+    return Pagination(
+        offset = offset,
+        limit = (limit + DEFAULT_PAGE_SIZE)
+    )
+}

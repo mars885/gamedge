@@ -16,16 +16,11 @@
 
 package com.paulrybitskyi.gamedge.data.games.datastores
 
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
-import androidx.datastore.preferences.edit
-import androidx.datastore.preferences.preferencesSetKey
+import com.paulrybitskyi.gamedge.data.games.datastores.commons.Pagination
+import com.paulrybitskyi.gamedge.data.games.entities.Game
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 
-
-internal interface LikedGamesLocalDataStore {
+interface LikedGamesLocalDataStore {
 
     suspend fun likeGame(gameId: Int)
 
@@ -35,55 +30,6 @@ internal interface LikedGamesLocalDataStore {
 
     suspend fun observeGameLikeState(gameId: Int): Flow<Boolean>
 
-}
-
-
-internal class LikedGamesLocalDataStoreImpl(
-    private val gamesPreferences: DataStore<Preferences>
-) : LikedGamesLocalDataStore {
-
-
-    private companion object {
-
-        val LIKED_GAMES_KEY = preferencesSetKey<String>("liked_games_key")
-
-    }
-
-
-    override suspend fun likeGame(gameId: Int) {
-        updateLikeGames {
-            it.add(gameId.toString())
-        }
-    }
-
-
-    override suspend fun unlikeGame(gameId: Int) {
-        updateLikeGames {
-            it.remove(gameId.toString())
-        }
-    }
-
-
-    private suspend fun updateLikeGames(block: (MutableSet<String>) -> Unit) {
-        gamesPreferences.edit { preferences ->
-            (preferences[LIKED_GAMES_KEY] ?: emptySet())
-                .toMutableSet()
-                .also(block)
-                .also { preferences[LIKED_GAMES_KEY] = it }
-        }
-    }
-
-
-    override suspend fun isGamedLiked(gameId: Int): Boolean {
-        return observeGameLikeState(gameId).first()
-    }
-
-
-    override suspend fun observeGameLikeState(gameId: Int): Flow<Boolean> {
-        return gamesPreferences.data
-            .map { it[LIKED_GAMES_KEY] ?: setOf() }
-            .map { it.contains(gameId.toString()) }
-    }
-
+    suspend fun observeLikedGames(pagination: Pagination): Flow<List<Game>>
 
 }

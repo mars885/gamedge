@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  ~ Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+  ~ Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -25,13 +25,21 @@
     tools:background="@color/colorContentContainer"
     tools:parentTag="android.widget.FrameLayout">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:overScrollMode="never"
-        android:scrollbars="none"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:scrollbars="none"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -45,12 +53,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="@dimen/game_info_info_view_horizontal_margin"
-        android:layout_marginEnd="@dimen/game_info_info_view_horizontal_margin"
-        app:infoView_icon="@drawable/gamepad_variant_outline"
+        android:layout_marginStart="@dimen/games_info_view_horizontal_margin"
+        android:layout_marginEnd="@dimen/games_info_view_horizontal_margin"
+        app:infoView_icon="@drawable/account_heart_outline"
         app:infoView_iconColor="@color/colorInfoView"
-        app:infoView_titleText="@string/game_info_info_view_title"
+        app:infoView_titleText="@string/games_info_view_title"
         app:infoView_titleTextColor="@color/colorInfoView"
-        app:infoView_titleTextSize="@dimen/game_info_info_view_title_text_size"/>
+        app:infoView_titleTextSize="@dimen/games_info_view_title_text_size"/>
 
 </merge>

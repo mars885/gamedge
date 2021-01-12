@@ -16,12 +16,9 @@
   ~ limitations under the License.
 -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gamesView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorContentContainer">
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:background="@color/colorContentContainer"/>

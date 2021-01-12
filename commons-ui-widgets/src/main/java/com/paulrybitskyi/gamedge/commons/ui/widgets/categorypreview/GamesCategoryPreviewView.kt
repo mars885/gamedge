@@ -73,7 +73,6 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
         initCard()
         initMoreButton()
         initRecyclerView(context)
-        initInfoView()
     }
 
 
@@ -116,11 +115,6 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
                 onGameClickListener?.invoke(item.model)
             }
         }
-    }
-
-
-    private fun initInfoView() = with(binding.infoView) {
-        isDescriptionTextVisible = false
     }
 
 

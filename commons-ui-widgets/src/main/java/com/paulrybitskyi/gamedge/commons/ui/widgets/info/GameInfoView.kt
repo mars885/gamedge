@@ -77,7 +77,6 @@ class GameInfoView @JvmOverloads constructor(
 
     init {
         initRecyclerView(context)
-        initInfoView()
         initDefaults()
     }
 
@@ -94,7 +93,7 @@ class GameInfoView @JvmOverloads constructor(
         return object : LinearLayoutManager(context) {
 
             override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
-                return RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+                return RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             }
 
         }
@@ -147,11 +146,6 @@ class GameInfoView @JvmOverloads constructor(
             sideFlags = SpacingItemDecorator.SIDE_BOTTOM,
             itemExclusionPolicy = LastItemExclusionPolicy()
         )
-    }
-
-
-    private fun initInfoView() = with(binding.infoView) {
-        isDescriptionTextVisible = false
     }
 
 

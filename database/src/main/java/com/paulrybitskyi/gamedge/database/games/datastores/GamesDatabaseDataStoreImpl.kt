@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.database.games.datastore
+package com.paulrybitskyi.gamedge.database.games.datastores
 
 import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
@@ -23,11 +23,8 @@ import com.paulrybitskyi.gamedge.data.games.DataGame
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.Pagination
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
-import com.paulrybitskyi.gamedge.database.games.GamesTable
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 
 internal class GamesDatabaseDataStoreImpl(

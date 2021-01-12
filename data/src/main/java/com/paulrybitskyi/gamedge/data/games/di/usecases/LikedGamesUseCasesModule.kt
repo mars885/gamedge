@@ -16,10 +16,14 @@
 
 package com.paulrybitskyi.gamedge.data.games.di.usecases
 
+import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.ObserveGamesUseCaseMappers
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ObserveGameLikeStateUseCaseImpl
+import com.paulrybitskyi.gamedge.data.games.usecases.likes.ObserveLikedGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ToggleGameLikeStateUseCaseImpl
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
 import dagger.Module
 import dagger.Provides
@@ -38,6 +42,21 @@ internal object LikedGamesUseCasesModule {
         likedGamesLocalDataStore: LikedGamesLocalDataStore
     ): ObserveGameLikeStateUseCase {
         return ObserveGameLikeStateUseCaseImpl(likedGamesLocalDataStore)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideLikedGamesObservableUseCase(
+        likedGamesLocalDataStore: LikedGamesLocalDataStore,
+        dispatcherProvider: DispatcherProvider,
+        mappers: ObserveGamesUseCaseMappers
+    ): ObserveLikedGamesUseCase {
+        return ObserveLikedGamesUseCaseImpl(
+            likedGamesLocalDataStore = likedGamesLocalDataStore,
+            dispatcherProvider = dispatcherProvider,
+            mappers = mappers
+        )
     }
 
 

@@ -16,31 +16,17 @@
 
 package com.paulrybitskyi.gamedge.data.games.di
 
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
-import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStoreImpl
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
 internal object DataStoresModule {
-
-
-    @Provides
-    @Singleton
-    fun provideLikedGamesLocalDataStore(
-        gamesPreferences: DataStore<Preferences>
-    ): LikedGamesLocalDataStore {
-        return LikedGamesLocalDataStoreImpl(gamesPreferences)
-    }
 
 
     @Provides

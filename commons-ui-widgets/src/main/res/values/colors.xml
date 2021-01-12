@@ -97,4 +97,12 @@
     <color name="game_company_info_label_background_color">#1D212B</color>
     <color name="game_company_info_label_text_color">@color/colorSecondaryText</color>
 
+    <!-- GameView -->
+    <color name="game_card_background_color">@color/colorPrimaryDark</color>
+    <color name="game_name_text_color">@color/colorPrimaryText</color>
+    <color name="game_details_text_color">@color/colorSecondaryText</color>
+
+    <!-- GamesView -->
+    <color name="games_swipe_refresh_color">@color/colorAccent</color>
+
 </resources>

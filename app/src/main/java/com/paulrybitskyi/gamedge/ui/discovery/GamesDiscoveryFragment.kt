@@ -51,13 +51,6 @@ internal class GamesDiscoveryFragment : BaseFragment<
     }
 
 
-    override fun onLoadData() {
-        super.onLoadData()
-
-        viewModel.loadData()
-    }
-
-
     override fun onBindViewModel() = with(viewModel) {
         super.onBindViewModel()
 
@@ -69,6 +62,13 @@ internal class GamesDiscoveryFragment : BaseFragment<
         discoveryItems.observe(viewLifecycleOwner) {
             viewBinding.discoveryView.items = it
         }
+    }
+
+
+    override fun onLoadData() {
+        super.onLoadData()
+
+        viewModel.loadData()
     }
 
 
