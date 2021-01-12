@@ -34,8 +34,8 @@ import javax.inject.Singleton
 internal object ProvidersModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideCustomTabsProvider(
         @ApplicationContext context: Context
     ): CustomTabsProvider {

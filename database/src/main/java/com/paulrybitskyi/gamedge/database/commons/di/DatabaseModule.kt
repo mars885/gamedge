@@ -28,13 +28,13 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object DatabaseModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGamedgeDatabase(@ApplicationContext context: Context): GamedgeDatabase {
         return Room.databaseBuilder(
             context,
@@ -46,8 +46,8 @@ internal object DatabaseModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGamesTable(gamedgeDatabase: GamedgeDatabase): GamesTable {
         return gamedgeDatabase.gamesTable
     }

@@ -36,15 +36,15 @@ import javax.inject.Singleton
 internal object ImageLoadingModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideImageLoader(picasso: Picasso): ImageLoader {
         return ImageLoaderImpl(picasso)
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun providePicasso(@ApplicationContext context: Context): Picasso {
         val activityManager = context.getSystemService<ActivityManager>()
         // ~50% of the available heap

@@ -26,7 +26,6 @@ import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpointImpl
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesService
 import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilder
 import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilderImpl
-import com.paulrybitskyi.gamedge.igdb.api.games.serialization.*
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.AgeRatingCategoryAdapter
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.AgeRatingTypeAdapter
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.CategoryAdapter
@@ -45,13 +44,13 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object GamesEndpointModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGamesEndpoint(
         gamesService: GamesService,
         igdbApiQueryBuilder: IgdbApiQueryBuilder,
@@ -75,8 +74,8 @@ internal object GamesEndpointModule {
     }
 
 
-    @Endpoint(Endpoint.Type.GAMES)
     @Provides
+    @Endpoint(Endpoint.Type.GAMES)
     fun provideRetrofit(
         retrofitBuilder: Retrofit.Builder,
         @Endpoint(Endpoint.Type.GAMES)
@@ -90,8 +89,8 @@ internal object GamesEndpointModule {
     }
 
 
-    @Endpoint(Endpoint.Type.GAMES)
     @Provides
+    @Endpoint(Endpoint.Type.GAMES)
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
             .add(CategoryAdapter())

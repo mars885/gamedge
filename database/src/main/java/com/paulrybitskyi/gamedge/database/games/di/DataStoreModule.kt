@@ -32,13 +32,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object DataStoreModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGamesLocalDataStore(
         gamesTable: GamesTable,
         dispatcherProvider: DispatcherProvider,
@@ -66,8 +66,8 @@ internal object DataStoreModule {
     }
 
 
-    @Database
     @Provides
+    @Database
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
             .add(KotlinJsonAdapterFactory())

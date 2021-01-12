@@ -33,13 +33,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object RefreshableUseCasesModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideComingSoonGamesRefresherUseCase(
         gamesDataStores: GamesDataStores,
         dispatcherProvider: DispatcherProvider,
@@ -55,8 +55,8 @@ internal object RefreshableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideMostAnticipatedGamesRefresherUseCase(
         gamesDataStores: GamesDataStores,
         dispatcherProvider: DispatcherProvider,
@@ -72,8 +72,8 @@ internal object RefreshableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun providePopularGamesRefresherUseCase(
         gamesDataStores: GamesDataStores,
         dispatcherProvider: DispatcherProvider,
@@ -89,8 +89,8 @@ internal object RefreshableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRecentlyReleasedGamesRefresherUseCase(
         gamesDataStores: GamesDataStores,
         dispatcherProvider: DispatcherProvider,
@@ -106,8 +106,8 @@ internal object RefreshableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideAllGamesRefresherUseCase(
         gamesDataStores: GamesDataStores,
         dispatcherProvider: DispatcherProvider,
@@ -123,8 +123,8 @@ internal object RefreshableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRefreshCompanyDevelopedGamesUseCase(
         gamesDataStores: GamesDataStores,
         dispatcherProvider: DispatcherProvider,
@@ -140,8 +140,8 @@ internal object RefreshableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRefreshSimilarGamesUseCase(
         gamesDataStores: GamesDataStores,
         dispatcherProvider: DispatcherProvider,
@@ -157,8 +157,8 @@ internal object RefreshableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGamesRefreshingThrottler(
         gamesPreferences: DataStore<Preferences>,
         timestampProvider: TimestampProvider

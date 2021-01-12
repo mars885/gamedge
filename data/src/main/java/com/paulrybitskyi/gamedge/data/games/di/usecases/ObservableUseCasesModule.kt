@@ -34,13 +34,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object ObservableUseCasesModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideComingSoonGamesObservableUseCase(
         gamesLocalDataStore: GamesLocalDataStore,
         dispatcherProvider: DispatcherProvider,
@@ -54,8 +54,8 @@ internal object ObservableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGameLikeStateObservableUseCase(
         likedGamesLocalDataStore: LikedGamesLocalDataStore
     ): ObserveGameLikeStateUseCase {
@@ -63,8 +63,8 @@ internal object ObservableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideMostAnticipatedGamesObservableUseCase(
         gamesLocalDataStore: GamesLocalDataStore,
         dispatcherProvider: DispatcherProvider,
@@ -78,8 +78,8 @@ internal object ObservableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun providePopularGamesObservableUseCase(
         gamesLocalDataStore: GamesLocalDataStore,
         dispatcherProvider: DispatcherProvider,
@@ -93,8 +93,8 @@ internal object ObservableUseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRecentlyReleasedGamesObservableUseCase(
         gamesLocalDataStore: GamesLocalDataStore,
         dispatcherProvider: DispatcherProvider,

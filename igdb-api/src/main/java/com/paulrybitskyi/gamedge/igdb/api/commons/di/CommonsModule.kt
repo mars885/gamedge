@@ -30,8 +30,8 @@ import retrofit2.Retrofit
 import javax.inject.Provider
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object CommonsModule {
 
 
@@ -46,8 +46,8 @@ internal object CommonsModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideOkHttpClient(
         httpLoggingInterceptor: Provider<HttpLoggingInterceptor>
     ): OkHttpClient {

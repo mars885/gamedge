@@ -28,13 +28,13 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object CoreModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGamesPreferences(@ApplicationContext context: Context): DataStore<Preferences> {
         return context.createDataStore(Constants.GAMES_PREFERENCES_NAME)
     }

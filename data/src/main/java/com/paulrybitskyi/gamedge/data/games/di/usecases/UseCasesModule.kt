@@ -33,13 +33,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object UseCasesModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGetGameUseCase(
         gamesLocalDataStore: GamesLocalDataStore,
         dispatcherProvider: DispatcherProvider,
@@ -53,8 +53,8 @@ internal object UseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGetCompanyDevelopedGamesUseCase(
         refreshCompanyDevelopedGamesUseCase: RefreshCompanyDevelopedGamesUseCase,
         gamesLocalDataStore: GamesLocalDataStore,
@@ -72,8 +72,8 @@ internal object UseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGetSimilarGamesUseCase(
         refreshSimilarGamesUseCase: RefreshSimilarGamesUseCase,
         gamesLocalDataStore: GamesLocalDataStore,
@@ -91,8 +91,8 @@ internal object UseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideSearchGamesUseCase(
         gamesDataStores: GamesDataStores,
         dispatcherProvider: DispatcherProvider,
@@ -112,8 +112,8 @@ internal object UseCasesModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideToggleGameLikeStateUseCase(
         likedGamesLocalDataStore: LikedGamesLocalDataStore
     ): ToggleGameLikeStateUseCase {

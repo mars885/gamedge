@@ -28,20 +28,20 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.migration.DisableInstallInCheck
 import dagger.multibindings.IntoSet
 
-@InstallIn(ApplicationComponent::class)
 @Module(includes = [ErrorMessageExtractorsModule.MultibindingSetModule::class])
+@InstallIn(ApplicationComponent::class)
 internal object ErrorMessageExtractorsModule {
 
 
-    @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.TWITCH)
     @Provides
+    @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.TWITCH)
     fun provideTwitchErrorMessageExtractor(): ErrorMessageExtractor {
         return TwitchErrorMessageExtractor()
     }
 
 
-    @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.IGDB)
     @Provides
+    @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.IGDB)
     fun provideIgdbErrorMessageExtractor(): ErrorMessageExtractor {
         return IgdbErrorMessageExtractor()
     }
@@ -59,8 +59,8 @@ internal object ErrorMessageExtractorsModule {
     @DisableInstallInCheck
     internal object MultibindingSetModule {
 
-        @IntoSet
         @Provides
+        @IntoSet
         fun provideTwitchErrorMessageExtractor(
             @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.TWITCH)
             errorMessageExtractor: ErrorMessageExtractor
@@ -68,8 +68,8 @@ internal object ErrorMessageExtractorsModule {
             return errorMessageExtractor
         }
 
-        @IntoSet
         @Provides
+        @IntoSet
         fun provideIgdbErrorMessageExtractor(
             @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.IGDB)
             errorMessageExtractor: ErrorMessageExtractor

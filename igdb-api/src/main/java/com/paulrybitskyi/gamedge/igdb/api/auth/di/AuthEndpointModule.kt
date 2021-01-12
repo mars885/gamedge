@@ -31,13 +31,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object AuthEndpointModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideAuthEndpoint(authService: AuthService): AuthEndpoint {
         return AuthEndpointImpl(
             authService = authService,
@@ -56,8 +56,8 @@ internal object AuthEndpointModule {
     }
 
 
-    @Endpoint(Endpoint.Type.AUTH)
     @Provides
+    @Endpoint(Endpoint.Type.AUTH)
     fun provideRetrofit(
         retrofitBuilder: Retrofit.Builder,
         @Endpoint(Endpoint.Type.AUTH)
@@ -70,8 +70,8 @@ internal object AuthEndpointModule {
     }
 
 
-    @Endpoint(Endpoint.Type.AUTH)
     @Provides
+    @Endpoint(Endpoint.Type.AUTH)
     fun provideMoshi(): Moshi {
         return Moshi.Builder().build()
     }

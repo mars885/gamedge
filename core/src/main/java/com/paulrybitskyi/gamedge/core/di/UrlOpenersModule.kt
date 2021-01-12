@@ -47,8 +47,8 @@ internal object UrlOpenersModule {
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideUrlOpenerFactory(
         @UrlOpenerKey(UrlOpenerKey.Type.NATIVE_APP) nativeAppUrlOpener: UrlOpener,
         @UrlOpenerKey(UrlOpenerKey.Type.CUSTOM_TAB) customTabUrlOpener: UrlOpener,

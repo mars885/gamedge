@@ -27,13 +27,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object DataStoreModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideAuthIgdbDataStore(
         authEndpoint: AuthEndpoint,
         authMapper: AuthMapper,

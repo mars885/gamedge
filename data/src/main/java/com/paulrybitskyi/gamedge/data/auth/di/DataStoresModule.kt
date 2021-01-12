@@ -31,13 +31,13 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 internal object DataStoresModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideAuthFileDataStore(
         protoDataStore: DataStore<ProtoOauthCredentials>,
         timestampProvider: TimestampProvider,
