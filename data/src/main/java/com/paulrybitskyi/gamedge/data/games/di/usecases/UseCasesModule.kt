@@ -19,14 +19,14 @@ package com.paulrybitskyi.gamedge.data.games.di.usecases
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
-import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.*
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.*
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.PaginationMapper
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCaseMappers
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.domain.games.usecases.*
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshCompanyDevelopedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshSimilarGamesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -74,6 +74,23 @@ internal object UseCasesModule {
 
     @Provides
     @Singleton
+    fun provideRefreshCompanyDevelopedGamesUseCase(
+        gamesDataStores: GamesDataStores,
+        dispatcherProvider: DispatcherProvider,
+        throttlerTools: GamesRefreshingThrottlerTools,
+        mappers: RefreshGamesUseCaseMappers
+    ): RefreshCompanyDevelopedGamesUseCase {
+        return RefreshCompanyDevelopedGamesUseCaseImpl(
+            gamesDataStores = gamesDataStores,
+            dispatcherProvider = dispatcherProvider,
+            throttlerTools = throttlerTools,
+            mappers = mappers
+        )
+    }
+
+
+    @Provides
+    @Singleton
     fun provideGetSimilarGamesUseCase(
         refreshSimilarGamesUseCase: RefreshSimilarGamesUseCase,
         gamesLocalDataStore: GamesLocalDataStore,
@@ -87,6 +104,23 @@ internal object UseCasesModule {
             dispatcherProvider = dispatcherProvider,
             gameMapper = gameMapper,
             paginationMapper = paginationMapper
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideRefreshSimilarGamesUseCase(
+        gamesDataStores: GamesDataStores,
+        dispatcherProvider: DispatcherProvider,
+        throttlerTools: GamesRefreshingThrottlerTools,
+        mappers: RefreshGamesUseCaseMappers
+    ): RefreshSimilarGamesUseCase {
+        return RefreshSimilarGamesUseCaseImpl(
+            gamesDataStores = gamesDataStores,
+            dispatcherProvider = dispatcherProvider,
+            throttlerTools = throttlerTools,
+            mappers = mappers
         )
     }
 
@@ -109,27 +143,6 @@ internal object UseCasesModule {
             paginationMapper = paginationMapper,
             errorMapper = errorMapper
         )
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideToggleGameLikeStateUseCase(
-        likedGamesLocalDataStore: LikedGamesLocalDataStore
-    ): ToggleGameLikeStateUseCase {
-        return ToggleGameLikeStateUseCaseImpl(likedGamesLocalDataStore)
-    }
-
-
-    @Provides
-    fun provideGameMapper(): GameMapper {
-        return GameMapper()
-    }
-
-
-    @Provides
-    fun providePaginationMapper(): PaginationMapper {
-        return PaginationMapper()
     }
 
 

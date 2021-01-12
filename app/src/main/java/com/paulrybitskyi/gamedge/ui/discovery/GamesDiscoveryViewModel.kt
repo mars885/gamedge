@@ -124,7 +124,7 @@ internal class GamesDiscoveryViewModel @ViewModelInject constructor(
         if(isRefreshingData) return
 
         viewModelScope.launch {
-            discoveryUseCases.refreshAllGamesUseCase
+            discoveryUseCases.refreshAllDiscoverableGamesUseCase
                 .execute(refreshGamesUseCaseParams)
                 .onError {
                     logger.error(logTag, "Failed to refresh games.", it)

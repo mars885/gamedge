@@ -26,7 +26,8 @@ import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.core.YoutubeMediaUrlBuilder
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.usecases.*
-import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.ui.info.mapping.*
 import dagger.Module
 import dagger.Provides

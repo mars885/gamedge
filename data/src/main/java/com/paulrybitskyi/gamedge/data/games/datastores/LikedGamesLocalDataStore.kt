@@ -17,7 +17,9 @@
 package com.paulrybitskyi.gamedge.data.games.datastores
 
 import androidx.datastore.DataStore
-import androidx.datastore.preferences.*
+import androidx.datastore.preferences.Preferences
+import androidx.datastore.preferences.edit
+import androidx.datastore.preferences.preferencesSetKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map

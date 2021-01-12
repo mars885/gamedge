@@ -14,16 +14,21 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.ui.info
+package com.paulrybitskyi.gamedge.data.games.usecases.likes
 
-import com.paulrybitskyi.gamedge.domain.games.usecases.*
-import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase.Params
+import kotlinx.coroutines.flow.Flow
 
-internal class GameInfoUseCases(
-    val getGameUseCase: GetGameUseCase,
-    val observeGameLikeStateUseCase: ObserveGameLikeStateUseCase,
-    val toggleGameLikeStateUseCase: ToggleGameLikeStateUseCase,
-    val getCompanyDevelopedGamesUseCase: GetCompanyDevelopedGamesUseCase,
-    val getSimilarGamesUseCase: GetSimilarGamesUseCase
-)
+internal class ObserveGameLikeStateUseCaseImpl(
+    private val likedGamesLocalDataStore: LikedGamesLocalDataStore
+) : ObserveGameLikeStateUseCase {
+
+
+    override suspend fun execute(params: Params): Flow<Boolean> {
+        return likedGamesLocalDataStore.observeGameLikeState(params.gameId)
+    }
+
+
+}

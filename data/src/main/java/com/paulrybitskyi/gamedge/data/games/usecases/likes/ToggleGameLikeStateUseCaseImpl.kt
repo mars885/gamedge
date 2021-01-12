@@ -14,16 +14,24 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.ui.info
+package com.paulrybitskyi.gamedge.data.games.usecases.likes
 
-import com.paulrybitskyi.gamedge.domain.games.usecases.*
+import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase.Params
 
-internal class GameInfoUseCases(
-    val getGameUseCase: GetGameUseCase,
-    val observeGameLikeStateUseCase: ObserveGameLikeStateUseCase,
-    val toggleGameLikeStateUseCase: ToggleGameLikeStateUseCase,
-    val getCompanyDevelopedGamesUseCase: GetCompanyDevelopedGamesUseCase,
-    val getSimilarGamesUseCase: GetSimilarGamesUseCase
-)
+internal class ToggleGameLikeStateUseCaseImpl(
+    private val likedGamesLocalDataStore: LikedGamesLocalDataStore
+) : ToggleGameLikeStateUseCase {
+
+
+    override suspend fun execute(params: Params) {
+        if(likedGamesLocalDataStore.isGamedLiked(params.gameId)) {
+            likedGamesLocalDataStore.unlikeGame(params.gameId)
+        } else {
+            likedGamesLocalDataStore.likeGame(params.gameId)
+        }
+    }
+
+
+}

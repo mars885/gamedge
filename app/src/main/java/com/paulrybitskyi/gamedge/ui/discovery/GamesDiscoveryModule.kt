@@ -20,11 +20,11 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCate
 import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveComingSoonGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveMostAnticipatedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObservePopularGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveRecentlyReleasedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshAllGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveComingSoonGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveMostAnticipatedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveRecentlyReleasedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshAllDiscoverableGamesUseCase
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemGameModelMapper
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemGameModelMapperImpl
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemModelFactory
@@ -48,11 +48,11 @@ internal object GamesDiscoveryModule {
     @Provides
     fun provideGamesDiscoveryUseCases(
         observeGamesUseCasesMap: Map<GamesDiscoveryCategory, @JvmSuppressWildcards ObservableGamesUseCase>,
-        refreshAllGamesUseCase: RefreshAllGamesUseCase
+        refreshAllDiscoverableGamesUseCase: RefreshAllDiscoverableGamesUseCase
     ): GamesDiscoveryUseCases {
         return GamesDiscoveryUseCases(
             observeGamesUseCasesMap = observeGamesUseCasesMap,
-            refreshAllGamesUseCase = refreshAllGamesUseCase
+            refreshAllDiscoverableGamesUseCase = refreshAllDiscoverableGamesUseCase
         )
     }
 

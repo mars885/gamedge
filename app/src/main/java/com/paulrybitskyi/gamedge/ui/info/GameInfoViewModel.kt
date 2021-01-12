@@ -39,7 +39,8 @@ import com.paulrybitskyi.gamedge.domain.games.entities.extensions.developerCompa
 import com.paulrybitskyi.gamedge.domain.games.entities.extensions.hasDevelopedGames
 import com.paulrybitskyi.gamedge.domain.games.entities.extensions.hasSimilarGames
 import com.paulrybitskyi.gamedge.domain.games.usecases.*
-import com.paulrybitskyi.gamedge.domain.games.usecases.observers.ObserveGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommands
 import com.paulrybitskyi.gamedge.ui.info.mapping.GameInfoUiStateFactory

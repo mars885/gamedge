@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.ui.discovery
+package com.paulrybitskyi.gamedge.domain.games.usecases.discovery
 
-import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshAllDiscoverableGamesUseCase
 
-internal class GamesDiscoveryUseCases(
-    val observeGamesUseCasesMap: Map<GamesDiscoveryCategory, ObservableGamesUseCase>,
-    val refreshAllDiscoverableGamesUseCase: RefreshAllDiscoverableGamesUseCase
-)
+interface ObserveRecentlyReleasedGamesUseCase : ObservableGamesUseCase

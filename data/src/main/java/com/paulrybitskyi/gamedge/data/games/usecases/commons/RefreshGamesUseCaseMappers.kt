@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.ui.discovery
+package com.paulrybitskyi.gamedge.data.games.usecases.commons
 
-import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
-import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshAllDiscoverableGamesUseCase
+import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 
-internal class GamesDiscoveryUseCases(
-    val observeGamesUseCasesMap: Map<GamesDiscoveryCategory, ObservableGamesUseCase>,
-    val refreshAllDiscoverableGamesUseCase: RefreshAllDiscoverableGamesUseCase
+internal class RefreshGamesUseCaseMappers(
+    val game: GameMapper,
+    val pagination: PaginationMapper,
+    val error: ErrorMapper
 )

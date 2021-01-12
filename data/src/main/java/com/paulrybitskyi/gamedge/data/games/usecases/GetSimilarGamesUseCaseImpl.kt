@@ -25,7 +25,7 @@ import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase.Params
-import com.paulrybitskyi.gamedge.domain.games.usecases.refreshers.RefreshSimilarGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshSimilarGamesUseCase
 import kotlinx.coroutines.flow.*
 
 internal class GetSimilarGamesUseCaseImpl(
