@@ -41,7 +41,7 @@ object versions {
     const val gradleVersionsPlugin = "0.36.0"
     const val protobufPlugin = "0.8.14"
     const val navigation = "2.3.2"
-    const val daggerHilt = "2.28.3-alpha"
+    const val daggerHilt = "2.31-alpha"
 
 }
 

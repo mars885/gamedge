@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.ui.splash
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.utils.onError
@@ -26,12 +25,15 @@ import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.ui.commons.ErrorMapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class SplashViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class SplashViewModel @Inject constructor(
     private val refreshAuthUseCase: RefreshAuthUseCase,
     private val errorMapper: ErrorMapper,
     private val logger: Logger

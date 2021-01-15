@@ -16,7 +16,9 @@
 
 package com.paulrybitskyi.gamedge.ui.dashboard.fragment
 
-import androidx.hilt.lifecycle.ViewModelInject
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-internal class DashboardViewModel @ViewModelInject constructor() : BaseViewModel()
+@HiltViewModel
+internal class DashboardViewModel @Inject constructor() : BaseViewModel()

@@ -24,12 +24,12 @@ import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.concrete.Twitc
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import dagger.hilt.migration.DisableInstallInCheck
 import dagger.multibindings.IntoSet
 
 @Module(includes = [ErrorMessageExtractorsModule.MultibindingSetModule::class])
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 internal object ErrorMessageExtractorsModule {
 
 

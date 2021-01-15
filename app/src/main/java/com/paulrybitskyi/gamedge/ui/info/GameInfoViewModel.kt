@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.ui.info
 
 import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -45,15 +44,18 @@ import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.ui.info.mapping.GameInfoUiStateFactory
 import com.paulrybitskyi.gamedge.ui.commons.ErrorMapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 private const val PARAM_GAME_ID = "game_id"
 
 
-internal class GameInfoViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class GameInfoViewModel @Inject constructor(
     private val infoUseCases: GameInfoUseCases,
     private val infoUiStateFactory: GameInfoUiStateFactory,
     private val dispatcherProvider: DispatcherProvider,

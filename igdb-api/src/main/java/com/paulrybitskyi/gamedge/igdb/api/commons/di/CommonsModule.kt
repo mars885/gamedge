@@ -23,7 +23,7 @@ import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.ErrorMessageEx
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -31,7 +31,7 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 internal object CommonsModule {
 
 

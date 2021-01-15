@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.ui.likes
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -32,12 +31,15 @@ import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.ui.commons.GamesUiStateFactory
 import com.paulrybitskyi.gamedge.ui.commons.ErrorMapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class LikedGamesViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class LikedGamesViewModel @Inject constructor(
     private val observeLikedGamesUseCase: ObserveLikedGamesUseCase,
     private val gamesUiStateFactory: GamesUiStateFactory,
     private val dispatcherProvider: DispatcherProvider,

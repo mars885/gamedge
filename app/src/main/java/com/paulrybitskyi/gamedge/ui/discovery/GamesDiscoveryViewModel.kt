@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.ui.discovery
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -35,10 +34,13 @@ import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemModelFac
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.mapToItemModels
 import com.paulrybitskyi.gamedge.ui.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.utils.extensions.nonNullValue
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class GamesDiscoveryViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class GamesDiscoveryViewModel @Inject constructor(
     private val discoveryUseCases: GamesDiscoveryUseCases,
     private val discoveryItemModelFactory: GamesDiscoveryItemModelFactory,
     private val discoveryItemGameModelMapper: GamesDiscoveryItemGameModelMapper,
