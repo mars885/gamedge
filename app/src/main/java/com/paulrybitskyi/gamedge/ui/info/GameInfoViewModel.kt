@@ -44,7 +44,7 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStat
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.ui.info.mapping.GameInfoUiStateFactory
-import com.paulrybitskyi.gamedge.utils.ErrorMapper
+import com.paulrybitskyi.gamedge.ui.commons.ErrorMapper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

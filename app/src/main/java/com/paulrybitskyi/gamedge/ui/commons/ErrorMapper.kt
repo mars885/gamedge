@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.utils
+package com.paulrybitskyi.gamedge.ui.commons
 
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
@@ -22,7 +22,7 @@ import com.paulrybitskyi.gamedge.domain.commons.DomainException
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
 
 
-interface ErrorMapper {
+internal interface ErrorMapper {
 
     fun mapToMessage(error: Throwable): String
 

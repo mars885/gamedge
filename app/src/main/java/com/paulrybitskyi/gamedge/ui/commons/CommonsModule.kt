@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.ui.commons
 
 import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +27,12 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 internal object CommonsModule {
+
+
+    @Provides
+    fun provideErrorMapper(stringProvider: StringProvider): ErrorMapper {
+        return ErrorMapperImpl(stringProvider)
+    }
 
 
     @Provides

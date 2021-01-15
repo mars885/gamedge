@@ -31,7 +31,7 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUs
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.ui.commons.GamesUiStateFactory
-import com.paulrybitskyi.gamedge.utils.ErrorMapper
+import com.paulrybitskyi.gamedge.ui.commons.ErrorMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.*

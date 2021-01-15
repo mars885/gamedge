@@ -33,7 +33,7 @@ import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemGameModelMapper
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemModelFactory
 import com.paulrybitskyi.gamedge.ui.discovery.mapping.mapToItemModels
-import com.paulrybitskyi.gamedge.utils.ErrorMapper
+import com.paulrybitskyi.gamedge.ui.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.utils.extensions.nonNullValue
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
