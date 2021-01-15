@@ -29,7 +29,7 @@ import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.nextPage
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
-import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommands
+import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.ui.commons.GamesUiStateFactory
 import com.paulrybitskyi.gamedge.utils.ErrorMapper
 import kotlinx.coroutines.Job
@@ -68,7 +68,7 @@ internal class LikedGamesViewModel @ViewModelInject constructor(
                 .flowOn(dispatcherProvider.computation)
                 .onError {
                     logger.error(logTag, "Failed to load liked games.", it)
-                    dispatchCommand(GeneralCommands.ShowLongToast(errorMapper.mapToMessage(it)))
+                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
                     emit(gamesUiStateFactory.createWithEmptyState())
                 }
                 .onStart {
@@ -95,7 +95,7 @@ internal class LikedGamesViewModel @ViewModelInject constructor(
 
 
     fun onGameClicked(game: GameModel) {
-        route(LikedGamesRoutes.Info(game.id))
+        route(LikedGamesRoute.Info(game.id))
     }
 
 

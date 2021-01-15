@@ -85,7 +85,7 @@ internal class GameInfoFragment : BaseFragment<
         super.onHandleCommand(command)
 
         when(command) {
-            is GameInfoCommands.OpenUrl -> openUrl(command.url)
+            is GameInfoCommand.OpenUrl -> openUrl(command.url)
         }
     }
 
@@ -103,8 +103,8 @@ internal class GameInfoFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
-            is GameInfoRoutes.Info -> navigateToInfoScreen(route.gameId)
-            is GameInfoRoutes.Back -> navController.popBackStack()
+            is GameInfoRoute.Info -> navigateToInfoScreen(route.gameId)
+            is GameInfoRoute.Back -> navController.popBackStack()
         }
     }
 

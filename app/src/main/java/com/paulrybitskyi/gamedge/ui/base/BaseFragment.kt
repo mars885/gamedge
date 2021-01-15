@@ -29,7 +29,7 @@ import com.paulrybitskyi.commons.ktx.showLongToast
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.ui.base.events.Command
 import com.paulrybitskyi.gamedge.ui.base.events.Route
-import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommands
+import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
 import kotlinx.coroutines.flow.collect
 
 internal abstract class BaseFragment<
@@ -128,8 +128,8 @@ internal abstract class BaseFragment<
     @CallSuper
     protected open fun onHandleCommand(command: Command) {
         when(command) {
-            is GeneralCommands.ShowShortToast -> showShortToast(command.message)
-            is GeneralCommands.ShowLongToast -> showLongToast(command.message)
+            is GeneralCommand.ShowShortToast -> showShortToast(command.message)
+            is GeneralCommand.ShowLongToast -> showLongToast(command.message)
         }
     }
 

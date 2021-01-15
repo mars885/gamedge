@@ -18,10 +18,10 @@ package com.paulrybitskyi.gamedge.ui.base.events.commons
 
 import com.paulrybitskyi.gamedge.ui.base.events.Command
 
-sealed class GeneralCommands : Command {
+internal sealed class GeneralCommand : Command {
 
-    class ShowShortToast(val message: String): GeneralCommands()
+    class ShowShortToast(val message: String): GeneralCommand()
 
-    class ShowLongToast(val message: String): GeneralCommands()
+    class ShowLongToast(val message: String): GeneralCommand()
 
 }

@@ -20,17 +20,17 @@ import com.paulrybitskyi.gamedge.ui.base.events.Command
 import com.paulrybitskyi.gamedge.ui.base.events.Route
 
 
-internal sealed class GameInfoCommands : Command {
+internal sealed class GameInfoCommand : Command {
 
-    data class OpenUrl(val url: String): GameInfoCommands()
+    data class OpenUrl(val url: String): GameInfoCommand()
 
 }
 
 
-internal sealed class GameInfoRoutes : Route {
+internal sealed class GameInfoRoute : Route {
 
-    data class Info(val gameId: Int): GameInfoRoutes()
+    data class Info(val gameId: Int): GameInfoRoute()
 
-    object Back : GameInfoRoutes()
+    object Back : GameInfoRoute()
 
 }

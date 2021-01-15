@@ -19,8 +19,8 @@ package com.paulrybitskyi.gamedge.ui.discovery
 import com.paulrybitskyi.gamedge.ui.base.events.Route
 
 
-internal sealed class GamesDiscoveryRoutes : Route {
+internal sealed class GamesDiscoveryRoute : Route {
 
-    data class Info(val gameId: Int) : GamesDiscoveryRoutes()
+    data class Info(val gameId: Int) : GamesDiscoveryRoute()
 
 }

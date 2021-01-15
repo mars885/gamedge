@@ -75,7 +75,7 @@ internal class LikedGamesFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
-            is LikedGamesRoutes.Info -> navigateToInfoScreen(route.gameId)
+            is LikedGamesRoute.Info -> navigateToInfoScreen(route.gameId)
         }
     }
 

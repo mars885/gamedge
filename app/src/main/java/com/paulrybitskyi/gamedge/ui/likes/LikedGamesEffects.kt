@@ -19,8 +19,8 @@ package com.paulrybitskyi.gamedge.ui.likes
 import com.paulrybitskyi.gamedge.ui.base.events.Route
 
 
-internal sealed class LikedGamesRoutes : Route {
+internal sealed class LikedGamesRoute : Route {
 
-    data class Info(val gameId: Int) : LikedGamesRoutes()
+    data class Info(val gameId: Int) : LikedGamesRoute()
 
 }

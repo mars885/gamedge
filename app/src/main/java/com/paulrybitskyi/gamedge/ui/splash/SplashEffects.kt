@@ -19,10 +19,10 @@ package com.paulrybitskyi.gamedge.ui.splash
 import com.paulrybitskyi.gamedge.ui.base.events.Route
 
 
-internal sealed class SplashRoutes : Route {
+internal sealed class SplashRoute : Route {
 
-    object Dashboard : SplashRoutes()
+    object Dashboard : SplashRoute()
 
-    object Exit : SplashRoutes()
+    object Exit : SplashRoute()
 
 }

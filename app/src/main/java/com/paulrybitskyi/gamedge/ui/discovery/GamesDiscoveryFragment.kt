@@ -76,7 +76,7 @@ internal class GamesDiscoveryFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
-            is GamesDiscoveryRoutes.Info -> navigateToInfoScreen(route.gameId)
+            is GamesDiscoveryRoute.Info -> navigateToInfoScreen(route.gameId)
         }
     }
 

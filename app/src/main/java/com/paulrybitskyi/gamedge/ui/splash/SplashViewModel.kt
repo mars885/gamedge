@@ -24,7 +24,7 @@ import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
 import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
-import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommands
+import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.utils.ErrorMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -61,12 +61,12 @@ internal class SplashViewModel @ViewModelInject constructor(
 
     private fun onInitializationFinished(error: Throwable?) {
         if(error != null) {
-            dispatchCommand(GeneralCommands.ShowLongToast(errorMapper.mapToMessage(error)))
-            route(SplashRoutes.Exit)
+            dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(error)))
+            route(SplashRoute.Exit)
             return
         }
 
-        route(SplashRoutes.Dashboard)
+        route(SplashRoute.Dashboard)
     }
 
 

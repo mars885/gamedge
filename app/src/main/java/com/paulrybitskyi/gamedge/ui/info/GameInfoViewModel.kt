@@ -42,7 +42,7 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.*
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
-import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommands
+import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.ui.info.mapping.GameInfoUiStateFactory
 import com.paulrybitskyi.gamedge.utils.ErrorMapper
 import kotlinx.coroutines.delay
@@ -105,7 +105,7 @@ internal class GameInfoViewModel @ViewModelInject constructor(
             .flowOn(dispatcherProvider.computation)
             .onError {
                 logger.error(logTag, "Failed to load game info data.", it)
-                dispatchCommand(GeneralCommands.ShowLongToast(errorMapper.mapToMessage(it)))
+                dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
                 emit(infoUiStateFactory.createWithEmptyState())
             }
             .onStart {
@@ -150,7 +150,7 @@ internal class GameInfoViewModel @ViewModelInject constructor(
 
 
     fun onBackButtonClicked() {
-        route(GameInfoRoutes.Back)
+        route(GameInfoRoute.Back)
     }
 
 
@@ -179,12 +179,12 @@ internal class GameInfoViewModel @ViewModelInject constructor(
 
 
     private fun openUrl(url: String) {
-        dispatchCommand(GameInfoCommands.OpenUrl(url))
+        dispatchCommand(GameInfoCommand.OpenUrl(url))
     }
 
 
     fun onRelatedGameClicked(game: GameInfoRelatedGameModel) {
-        route(GameInfoRoutes.Info(gameId = game.id))
+        route(GameInfoRoute.Info(gameId = game.id))
     }
 
 
