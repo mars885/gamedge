@@ -22,8 +22,11 @@ import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 import com.paulrybitskyi.gamedge.data.commons.DataResult
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.commons.ErrorMapper
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class AuthIgdbDataStoreImpl(
+@Singleton
+internal class AuthIgdbDataStoreImpl @Inject constructor(
     private val authEndpoint: AuthEndpoint,
     private val authMapper: AuthMapper,
     private val errorMapper: ErrorMapper

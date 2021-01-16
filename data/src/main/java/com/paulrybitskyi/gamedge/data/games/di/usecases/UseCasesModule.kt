@@ -16,134 +16,33 @@
 
 package com.paulrybitskyi.gamedge.data.games.di.usecases
 
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
-import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
-import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.*
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.PaginationMapper
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCaseMappers
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.domain.games.usecases.*
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object UseCasesModule {
+internal interface UseCasesModule {
 
+    @Binds
+    fun bindGetGameUseCaseImpl(useCase: GetGameUseCaseImpl): GetGameUseCase
 
-    @Provides
-    @Singleton
-    fun provideGetGameUseCase(
-        gamesLocalDataStore: GamesLocalDataStore,
-        dispatcherProvider: DispatcherProvider,
-        gameMapper: GameMapper
-    ): GetGameUseCase {
-        return GetGameUseCaseImpl(
-            gamesLocalDataStore = gamesLocalDataStore,
-            dispatcherProvider = dispatcherProvider,
-            gameMapper = gameMapper
-        )
-    }
+    @Binds
+    fun bindGetCompanyDevelopedGamesUseCaseImpl(useCase: GetCompanyDevelopedGamesUseCaseImpl): GetCompanyDevelopedGamesUseCase
 
+    @Binds
+    fun bindRefreshCompanyDevelopedGamesUseCaseImpl(useCase: RefreshCompanyDevelopedGamesUseCaseImpl): RefreshCompanyDevelopedGamesUseCase
 
-    @Provides
-    @Singleton
-    fun provideGetCompanyDevelopedGamesUseCase(
-        refreshCompanyDevelopedGamesUseCase: RefreshCompanyDevelopedGamesUseCase,
-        gamesLocalDataStore: GamesLocalDataStore,
-        dispatcherProvider: DispatcherProvider,
-        gameMapper: GameMapper,
-        paginationMapper: PaginationMapper
-    ): GetCompanyDevelopedGamesUseCase {
-        return GetCompanyDevelopedGamesUseCaseImpl(
-            refreshCompanyDevelopedGamesUseCase = refreshCompanyDevelopedGamesUseCase,
-            gamesLocalDataStore = gamesLocalDataStore,
-            dispatcherProvider = dispatcherProvider,
-            gameMapper = gameMapper,
-            paginationMapper = paginationMapper
-        )
-    }
+    @Binds
+    fun bindGetSimilarGamesUseCaseImpl(useCase: GetSimilarGamesUseCaseImpl): GetSimilarGamesUseCase
 
+    @Binds
+    fun bindRefreshSimilarGamesUseCaseImpl(useCase: RefreshSimilarGamesUseCaseImpl): RefreshSimilarGamesUseCase
 
-    @Provides
-    @Singleton
-    fun provideRefreshCompanyDevelopedGamesUseCase(
-        gamesDataStores: GamesDataStores,
-        dispatcherProvider: DispatcherProvider,
-        throttlerTools: GamesRefreshingThrottlerTools,
-        mappers: RefreshGamesUseCaseMappers
-    ): RefreshCompanyDevelopedGamesUseCase {
-        return RefreshCompanyDevelopedGamesUseCaseImpl(
-            gamesDataStores = gamesDataStores,
-            dispatcherProvider = dispatcherProvider,
-            throttlerTools = throttlerTools,
-            mappers = mappers
-        )
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideGetSimilarGamesUseCase(
-        refreshSimilarGamesUseCase: RefreshSimilarGamesUseCase,
-        gamesLocalDataStore: GamesLocalDataStore,
-        dispatcherProvider: DispatcherProvider,
-        gameMapper: GameMapper,
-        paginationMapper: PaginationMapper
-    ): GetSimilarGamesUseCase {
-        return GetSimilarGamesUseCaseImpl(
-            refreshSimilarGamesUseCase = refreshSimilarGamesUseCase,
-            gamesLocalDataStore = gamesLocalDataStore,
-            dispatcherProvider = dispatcherProvider,
-            gameMapper = gameMapper,
-            paginationMapper = paginationMapper
-        )
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideRefreshSimilarGamesUseCase(
-        gamesDataStores: GamesDataStores,
-        dispatcherProvider: DispatcherProvider,
-        throttlerTools: GamesRefreshingThrottlerTools,
-        mappers: RefreshGamesUseCaseMappers
-    ): RefreshSimilarGamesUseCase {
-        return RefreshSimilarGamesUseCaseImpl(
-            gamesDataStores = gamesDataStores,
-            dispatcherProvider = dispatcherProvider,
-            throttlerTools = throttlerTools,
-            mappers = mappers
-        )
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideSearchGamesUseCase(
-        gamesDataStores: GamesDataStores,
-        dispatcherProvider: DispatcherProvider,
-        networkStateProvider: NetworkStateProvider,
-        gameMapper: GameMapper,
-        paginationMapper: PaginationMapper,
-        errorMapper: ErrorMapper
-    ): SearchGamesUseCase {
-        return SearchGamesUseCaseImpl(
-            gamesDataStores = gamesDataStores,
-            dispatcherProvider = dispatcherProvider,
-            networkStateProvider = networkStateProvider,
-            gameMapper = gameMapper,
-            paginationMapper = paginationMapper,
-            errorMapper = errorMapper
-        )
-    }
-
+    @Binds
+    fun bindSearchGamesUseCaseImpl(useCase: SearchGamesUseCaseImpl): SearchGamesUseCase
 
 }

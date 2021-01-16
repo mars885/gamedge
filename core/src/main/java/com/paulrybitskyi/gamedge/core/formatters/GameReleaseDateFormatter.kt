@@ -26,6 +26,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import javax.inject.Inject
 
 
 interface GameReleaseDateFormatter {
@@ -35,7 +36,7 @@ interface GameReleaseDateFormatter {
 }
 
 
-internal class GameReleaseDateFormatterImpl(
+internal class GameReleaseDateFormatterImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GameReleaseDateFormatter {
 

@@ -19,8 +19,9 @@ package com.paulrybitskyi.gamedge.ui.discovery
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshAllDiscoverableGamesUseCase
+import javax.inject.Inject
 
-internal class GamesDiscoveryUseCases(
-    val observeGamesUseCasesMap: Map<GamesDiscoveryCategory, ObservableGamesUseCase>,
+internal class GamesDiscoveryUseCases @Inject constructor(
+    val observeGamesUseCasesMap: Map<GamesDiscoveryCategory, @JvmSuppressWildcards ObservableGamesUseCase>,
     val refreshAllDiscoverableGamesUseCase: RefreshAllDiscoverableGamesUseCase
 )

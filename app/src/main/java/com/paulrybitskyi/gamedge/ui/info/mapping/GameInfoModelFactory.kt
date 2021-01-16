@@ -21,6 +21,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.games.GameInfoRel
 import com.paulrybitskyi.gamedge.core.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import javax.inject.Inject
 
 
 internal interface GameInfoModelFactory {
@@ -35,7 +36,7 @@ internal interface GameInfoModelFactory {
 }
 
 
-internal class GameInfoModelFactoryImpl(
+internal class GameInfoModelFactoryImpl @Inject constructor(
     private val headerModelFactory: GameInfoHeaderModelFactory,
     private val videoModelFactory: GameInfoVideoModelFactory,
     private val detailsModelFactory: GameInfoDetailsModelFactory,

@@ -20,6 +20,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItem
 import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.core.IgdbImageSize
+import javax.inject.Inject
 
 
 internal interface GamesDiscoveryItemGameModelMapper {
@@ -29,7 +30,7 @@ internal interface GamesDiscoveryItemGameModelMapper {
 }
 
 
-internal class GamesDiscoveryItemGameModelMapperImpl(
+internal class GamesDiscoveryItemGameModelMapperImpl @Inject constructor(
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder
 ) : GamesDiscoveryItemGameModelMapper {
 

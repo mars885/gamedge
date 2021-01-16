@@ -26,8 +26,11 @@ import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class RefreshAuthUseCaseImpl(
+@Singleton
+internal class RefreshAuthUseCaseImpl @Inject constructor(
     private val authDataStores: AuthDataStores,
     private val authMapper: AuthMapper,
     private val errorMapper: ErrorMapper

@@ -22,8 +22,9 @@ import android.net.Uri
 import com.paulrybitskyi.commons.ktx.canUrlBeOpenedByNativeApp
 import com.paulrybitskyi.commons.ktx.getNativeAppPackageForUrl
 import com.paulrybitskyi.gamedge.core.utils.attachNewTaskFlagIfNeeded
+import javax.inject.Inject
 
-internal class NativeAppUrlOpener : UrlOpener {
+internal class NativeAppUrlOpener @Inject constructor() : UrlOpener {
 
 
     override fun openUrl(url: String, context: Context) {

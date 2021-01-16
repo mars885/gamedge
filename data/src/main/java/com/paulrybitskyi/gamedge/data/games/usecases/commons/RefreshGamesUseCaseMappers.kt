@@ -17,8 +17,9 @@
 package com.paulrybitskyi.gamedge.data.games.usecases.commons
 
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
+import javax.inject.Inject
 
-internal class RefreshGamesUseCaseMappers(
+internal class RefreshGamesUseCaseMappers @Inject constructor(
     val game: GameMapper,
     val pagination: PaginationMapper,
     val error: ErrorMapper

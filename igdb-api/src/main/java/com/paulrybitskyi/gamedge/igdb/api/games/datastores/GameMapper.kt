@@ -18,8 +18,9 @@ package com.paulrybitskyi.gamedge.igdb.api.games.datastores
 
 import com.paulrybitskyi.gamedge.data.games.*
 import com.paulrybitskyi.gamedge.igdb.api.games.*
+import javax.inject.Inject
 
-internal class GameMapper {
+internal class GameMapper @Inject constructor() {
 
 
     fun mapToDataGame(apiGame: ApiGame): DataGame {

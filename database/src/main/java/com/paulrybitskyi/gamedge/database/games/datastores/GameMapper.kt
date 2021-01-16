@@ -19,8 +19,9 @@ package com.paulrybitskyi.gamedge.database.games.datastores
 import com.paulrybitskyi.gamedge.data.games.DataGame
 import com.paulrybitskyi.gamedge.database.commons.utils.JsonConverter
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
+import javax.inject.Inject
 
-internal class GameMapper(private val jsonConverter: JsonConverter) {
+internal class GameMapper @Inject constructor(private val jsonConverter: JsonConverter) {
 
 
     fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame {

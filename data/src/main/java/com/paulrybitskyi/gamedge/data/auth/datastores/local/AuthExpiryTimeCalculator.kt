@@ -19,12 +19,15 @@ package com.paulrybitskyi.gamedge.data.auth.datastores.local
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 internal val AUTH_TOKEN_TTL_DEDUCTION = TimeUnit.DAYS.toMillis(7)
 
 
-internal class AuthExpiryTimeCalculator(private val timestampProvider: TimestampProvider) {
+internal class AuthExpiryTimeCalculator @Inject constructor(
+    private val timestampProvider: TimestampProvider
+) {
 
 
     fun calculateExpiryTime(oauthCredentials: OauthCredentials): Long {

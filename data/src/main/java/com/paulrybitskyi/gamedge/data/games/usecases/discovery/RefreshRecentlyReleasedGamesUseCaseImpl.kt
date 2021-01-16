@@ -30,8 +30,11 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshRecently
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class RefreshRecentlyReleasedGamesUseCaseImpl(
+@Singleton
+internal class RefreshRecentlyReleasedGamesUseCaseImpl @Inject constructor(
     private val gamesDataStores: GamesDataStores,
     private val dispatcherProvider: DispatcherProvider,
     private val throttlerTools: GamesRefreshingThrottlerTools,

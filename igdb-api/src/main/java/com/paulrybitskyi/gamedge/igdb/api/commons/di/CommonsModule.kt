@@ -17,9 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.commons.di
 
 import com.paulrybitskyi.gamedge.igdb.api.BuildConfig
-import com.paulrybitskyi.gamedge.igdb.api.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.igdb.api.commons.calladapter.ApiResultCallAdapterFactory
-import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.ErrorMessageExtractor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,20 +63,6 @@ internal object CommonsModule {
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor()
             .apply { level = HttpLoggingInterceptor.Level.BODY }
-    }
-
-
-    @Provides
-    fun provideApiResultCallAdapterFactory(
-        errorMessageExtractor: ErrorMessageExtractor
-    ): ApiResultCallAdapterFactory {
-        return ApiResultCallAdapterFactory(errorMessageExtractor)
-    }
-
-
-    @Provides
-    fun provideErrorMapper(): ErrorMapper {
-        return ErrorMapper()
     }
 
 

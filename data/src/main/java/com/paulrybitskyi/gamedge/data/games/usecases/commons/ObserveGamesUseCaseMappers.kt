@@ -16,7 +16,9 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.commons
 
-internal class ObserveGamesUseCaseMappers(
+import javax.inject.Inject
+
+internal class ObserveGamesUseCaseMappers @Inject constructor(
     val game: GameMapper,
     val pagination: PaginationMapper
 )

@@ -17,8 +17,11 @@
 package com.paulrybitskyi.gamedge.data.auth.datastores.local
 
 import com.paulrybitskyi.gamedge.data.auth.DataOauthCredentials
+import javax.inject.Inject
 
-internal class AuthMapper(private val authExpiryTimeCalculator: AuthExpiryTimeCalculator) {
+internal class AuthMapper @Inject constructor(
+    private val authExpiryTimeCalculator: AuthExpiryTimeCalculator
+) {
 
 
     fun mapToProtoOauthCredentials(oauthCredentials: DataOauthCredentials): ProtoOauthCredentials {

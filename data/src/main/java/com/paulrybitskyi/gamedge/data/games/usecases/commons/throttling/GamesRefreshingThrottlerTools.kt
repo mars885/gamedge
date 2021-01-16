@@ -16,7 +16,9 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling
 
-internal class GamesRefreshingThrottlerTools(
+import javax.inject.Inject
+
+internal class GamesRefreshingThrottlerTools @Inject constructor(
     val throttler: GamesRefreshingThrottler,
     val keyBuilder: GamesRefreshingThrottlerKeyBuilder,
 )

@@ -21,61 +21,49 @@ import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.ErrorMessageEx
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.concrete.CompositeErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.concrete.IgdbErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.concrete.TwitchErrorMessageExtractor
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.migration.DisableInstallInCheck
 import dagger.multibindings.IntoSet
 
-@Module(includes = [ErrorMessageExtractorsModule.MultibindingSetModule::class])
+@Module(includes = [ErrorMessageExtractorsModule.MultibindingsModule::class])
 @InstallIn(SingletonComponent::class)
-internal object ErrorMessageExtractorsModule {
+internal interface ErrorMessageExtractorsModule {
 
 
-    @Provides
+    @Binds
     @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.TWITCH)
-    fun provideTwitchErrorMessageExtractor(): ErrorMessageExtractor {
-        return TwitchErrorMessageExtractor()
-    }
+    fun bindTwitchErrorMessageExtractor(extractor: TwitchErrorMessageExtractor): ErrorMessageExtractor
 
 
-    @Provides
+    @Binds
     @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.IGDB)
-    fun provideIgdbErrorMessageExtractor(): ErrorMessageExtractor {
-        return IgdbErrorMessageExtractor()
-    }
+    fun bindIgdbErrorMessageExtractor(extractor: IgdbErrorMessageExtractor): ErrorMessageExtractor
 
 
-    @Provides
-    fun provideCompositeErrorMessageExtractor(
-        errorMessageExtractors: Set<@JvmSuppressWildcards ErrorMessageExtractor>
-    ): ErrorMessageExtractor {
-        return CompositeErrorMessageExtractor(errorMessageExtractors)
-    }
+    @Binds
+    fun bindCompositeErrorMessageExtractor(extractor: CompositeErrorMessageExtractor): ErrorMessageExtractor
 
 
     @Module
     @DisableInstallInCheck
-    internal object MultibindingSetModule {
+    interface MultibindingsModule {
 
-        @Provides
+        @Binds
         @IntoSet
-        fun provideTwitchErrorMessageExtractor(
+        fun bindTwitchErrorMessageExtractorToSet(
             @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.TWITCH)
             errorMessageExtractor: ErrorMessageExtractor
-        ): ErrorMessageExtractor {
-            return errorMessageExtractor
-        }
+        ): ErrorMessageExtractor
 
-        @Provides
+        @Binds
         @IntoSet
-        fun provideIgdbErrorMessageExtractor(
+        fun bindIgdbErrorMessageExtractorToSet(
             @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.IGDB)
             errorMessageExtractor: ErrorMessageExtractor
-        ): ErrorMessageExtractor {
-            return errorMessageExtractor
-        }
+        ): ErrorMessageExtractor
 
     }
 

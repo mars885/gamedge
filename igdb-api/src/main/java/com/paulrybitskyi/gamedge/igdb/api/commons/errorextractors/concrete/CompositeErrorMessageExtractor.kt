@@ -18,13 +18,14 @@ package com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.concrete
 
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.ErrorMessageExtractor
 import okhttp3.ResponseBody
+import javax.inject.Inject
 
 
 private const val UNKNOWN_ERROR = "Unknown Error"
 
 
-internal class CompositeErrorMessageExtractor(
-    private val errorMessageExtractors: Set<ErrorMessageExtractor>
+internal class CompositeErrorMessageExtractor @Inject constructor(
+    private val errorMessageExtractors: Set<@JvmSuppressWildcards ErrorMessageExtractor>
 ) : ErrorMessageExtractor {
 
 

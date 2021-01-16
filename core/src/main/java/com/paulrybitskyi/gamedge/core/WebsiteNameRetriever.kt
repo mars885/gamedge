@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.core
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
+import javax.inject.Inject
 
 
 interface WebsiteNameRetriever {
@@ -28,7 +29,7 @@ interface WebsiteNameRetriever {
 }
 
 
-internal class WebsiteNameRetrieverImpl(
+internal class WebsiteNameRetrieverImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : WebsiteNameRetriever {
 

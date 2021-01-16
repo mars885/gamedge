@@ -22,6 +22,7 @@ import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
+import javax.inject.Inject
 import com.github.michaelbull.result.Result as ApiResult
 import com.paulrybitskyi.gamedge.igdb.api.commons.entities.Error as ApiError
 
@@ -31,7 +32,7 @@ private const val PARAM_UPPER_BOUND_INDEX_SUCCESS = 0
 private const val PARAM_UPPER_BOUND_INDEX_ERROR = 1
 
 
-internal class ApiResultCallAdapterFactory(
+internal class ApiResultCallAdapterFactory @Inject constructor(
     private val errorMessageExtractor: ErrorMessageExtractor
 ) : CallAdapter.Factory() {
 

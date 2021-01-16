@@ -25,6 +25,7 @@ import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.entities.extensions.developerCompany
+import javax.inject.Inject
 
 
 internal interface GameInfoOtherCompanyGamesModelFactory {
@@ -37,7 +38,7 @@ internal interface GameInfoOtherCompanyGamesModelFactory {
 }
 
 
-internal class GameInfoOtherCompanyGamesModelFactoryImpl(
+internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider,
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder
 ) : GameInfoOtherCompanyGamesModelFactory {

@@ -20,6 +20,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoVideoMode
 import com.paulrybitskyi.gamedge.core.YoutubeMediaUrlBuilder
 import com.paulrybitskyi.gamedge.core.YoutubeThumbnailSize
 import com.paulrybitskyi.gamedge.domain.games.entities.Video
+import javax.inject.Inject
 
 
 internal interface GameInfoVideoModelFactory {
@@ -31,7 +32,7 @@ internal interface GameInfoVideoModelFactory {
 }
 
 
-internal class GameInfoVideoModelFactoryImpl(
+internal class GameInfoVideoModelFactoryImpl @Inject constructor(
     private val youtubeMediaUrlBuilder: YoutubeMediaUrlBuilder,
 ) : GameInfoVideoModelFactory {
 

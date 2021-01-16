@@ -26,8 +26,11 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveRecently
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class ObserveRecentlyReleasedGamesUseCaseImpl(
+@Singleton
+internal class ObserveRecentlyReleasedGamesUseCaseImpl @Inject constructor(
     private val gamesLocalDataStore: GamesLocalDataStore,
     private val dispatcherProvider: DispatcherProvider,
     private val mappers: ObserveGamesUseCaseMappers

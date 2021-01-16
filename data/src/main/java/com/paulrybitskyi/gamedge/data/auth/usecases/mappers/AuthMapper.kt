@@ -18,8 +18,9 @@ package com.paulrybitskyi.gamedge.data.auth.usecases.mappers
 
 import com.paulrybitskyi.gamedge.data.auth.DataOauthCredentials
 import com.paulrybitskyi.gamedge.domain.auth.DomainOauthCredentials
+import javax.inject.Inject
 
-internal class AuthMapper {
+internal class AuthMapper @Inject constructor() {
 
 
     fun mapToDomainOauthCredentials(oauthCredentials: DataOauthCredentials): DomainOauthCredentials {

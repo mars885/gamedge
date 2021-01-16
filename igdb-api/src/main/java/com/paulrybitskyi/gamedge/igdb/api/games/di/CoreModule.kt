@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.commons.di
+package com.paulrybitskyi.gamedge.igdb.api.games.di
 
-import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
+import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilder
+import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilderImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object CommonsModule {
+internal interface CoreModule {
 
-
-    @Provides
-    fun provideErrorMapper(): ErrorMapper {
-        return ErrorMapper()
-    }
-
+    @Binds
+    fun bindIgdbApiQueryBuilderImpl(queryBuilder: IgdbApiQueryBuilderImpl): IgdbApiQueryBuilder
 
 }

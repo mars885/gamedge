@@ -18,6 +18,8 @@ package com.paulrybitskyi.gamedge.core.providers
 
 import android.content.Context
 import com.paulrybitskyi.commons.network.isConnectedToNetwork
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 
 interface NetworkStateProvider {
@@ -27,8 +29,8 @@ interface NetworkStateProvider {
 }
 
 
-internal class NetworkStateProviderImpl(
-    private val context: Context
+internal class NetworkStateProviderImpl @Inject constructor(
+    @ApplicationContext private val context: Context
 ) : NetworkStateProvider {
 
     override val isNetworkAvailable: Boolean

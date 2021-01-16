@@ -31,8 +31,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class RefreshSimilarGamesUseCaseImpl(
+@Singleton
+internal class RefreshSimilarGamesUseCaseImpl @Inject constructor(
     private val gamesDataStores: GamesDataStores,
     private val dispatcherProvider: DispatcherProvider,
     private val throttlerTools: GamesRefreshingThrottlerTools,

@@ -29,8 +29,11 @@ import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase.Params
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class SearchGamesUseCaseImpl(
+@Singleton
+internal class SearchGamesUseCaseImpl @Inject constructor(
     private val gamesDataStores: GamesDataStores,
     private val dispatcherProvider: DispatcherProvider,
     private val networkStateProvider: NetworkStateProvider,

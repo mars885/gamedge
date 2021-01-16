@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling
 import com.paulrybitskyi.gamedge.domain.games.commons.Pagination
 import com.paulrybitskyi.gamedge.domain.games.entities.Company
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import javax.inject.Inject
 
 
 internal interface GamesRefreshingThrottlerKeyBuilder {
@@ -38,7 +39,7 @@ internal interface GamesRefreshingThrottlerKeyBuilder {
 }
 
 
-internal class GamesRefreshingThrottlerKeyBuilderImpl : GamesRefreshingThrottlerKeyBuilder {
+internal class GamesRefreshingThrottlerKeyBuilderImpl @Inject constructor() : GamesRefreshingThrottlerKeyBuilder {
 
 
     override fun buildPopularGamesKey(pagination: Pagination): String {

@@ -20,8 +20,11 @@ import android.widget.ImageView
 import com.paulrybitskyi.gamedge.image.loading.utils.PicassoTransformation
 import com.paulrybitskyi.gamedge.image.loading.utils.into
 import com.squareup.picasso.Picasso
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class ImageLoaderImpl(
+@Singleton
+internal class ImageLoaderImpl @Inject constructor(
     private val picasso: Picasso
 ) : ImageLoader {
 

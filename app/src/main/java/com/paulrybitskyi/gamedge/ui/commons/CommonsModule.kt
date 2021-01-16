@@ -16,41 +16,22 @@
 
 package com.paulrybitskyi.gamedge.ui.commons
 
-import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
-import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
-import com.paulrybitskyi.gamedge.core.providers.StringProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-internal object CommonsModule {
+internal interface CommonsModule {
 
+    @Binds
+    fun bindErrorMapperImpl(mapper: ErrorMapperImpl): ErrorMapper
 
-    @Provides
-    fun provideErrorMapper(stringProvider: StringProvider): ErrorMapper {
-        return ErrorMapperImpl(stringProvider)
-    }
+    @Binds
+    fun bindGameModelFactoryImpl(factory: GameModelFactoryImpl): GameModelFactory
 
-
-    @Provides
-    fun provideGameModelFactory(
-        igdbImageUrlBuilder: IgdbImageUrlBuilder,
-        gameReleaseDateFormatter: GameReleaseDateFormatter
-    ): GameModelFactory {
-        return GameModelFactoryImpl(
-            igdbImageUrlBuilder = igdbImageUrlBuilder,
-            gameReleaseDateFormatter = gameReleaseDateFormatter
-        )
-    }
-
-
-    @Provides
-    fun provideGamesUiStateFactory(gameModelFactory: GameModelFactory): GamesUiStateFactory {
-        return GamesUiStateFactoryImpl(gameModelFactory)
-    }
-
+    @Binds
+    fun bindGamesUiStateFactory(factory: GamesUiStateFactoryImpl): GamesUiStateFactory
 
 }

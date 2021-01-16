@@ -17,10 +17,11 @@
 package com.paulrybitskyi.gamedge.igdb.api.commons
 
 import com.paulrybitskyi.gamedge.igdb.api.commons.entities.*
+import javax.inject.Inject
 import com.paulrybitskyi.gamedge.data.commons.entities.Error as DataError
 import com.paulrybitskyi.gamedge.igdb.api.commons.entities.Error as ApiError
 
-internal class ErrorMapper {
+internal class ErrorMapper @Inject constructor() {
 
 
     fun mapToDataError(apiError: ApiError): DataError = with(apiError) {

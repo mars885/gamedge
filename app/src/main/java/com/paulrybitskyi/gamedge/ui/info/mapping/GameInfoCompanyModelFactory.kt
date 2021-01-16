@@ -28,6 +28,8 @@ import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.width
 import com.paulrybitskyi.gamedge.domain.games.entities.InvolvedCompany
 import com.paulrybitskyi.gamedge.domain.games.entities.extensions.hasLogo
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
@@ -40,8 +42,8 @@ internal interface GameInfoCompanyModelFactory {
 }
 
 
-internal class GameInfoCompanyModelFactoryImpl(
-    private val context: Context,
+internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder,
     private val stringProvider: StringProvider
 ) : GameInfoCompanyModelFactory {

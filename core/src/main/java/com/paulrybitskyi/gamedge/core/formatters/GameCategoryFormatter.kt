@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.core.formatters
 import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Category
+import javax.inject.Inject
 
 
 interface GameCategoryFormatter {
@@ -28,7 +29,7 @@ interface GameCategoryFormatter {
 }
 
 
-internal class GameCategoryFormatterImpl(
+internal class GameCategoryFormatterImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GameCategoryFormatter {
 

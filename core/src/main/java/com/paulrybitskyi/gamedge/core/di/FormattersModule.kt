@@ -21,39 +21,25 @@ import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatterImpl
 import com.paulrybitskyi.gamedge.core.formatters.GameCategoryFormatterImpl
 import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatterImpl
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatterImpl
-import com.paulrybitskyi.gamedge.core.providers.StringProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object FormattersModule {
+internal interface FormattersModule {
 
+    @Binds
+    fun bindGameReleaseDateFormatterImpl(formatter: GameReleaseDateFormatterImpl): GameReleaseDateFormatter
 
-    @Provides
-    fun provideGameReleaseDateFormatter(stringProvider: StringProvider): GameReleaseDateFormatter {
-        return GameReleaseDateFormatterImpl(stringProvider)
-    }
+    @Binds
+    fun bindGameRatingFormatterImpl(formatter: GameRatingFormatterImpl): GameRatingFormatter
 
+    @Binds
+    fun bindGameAgeRatingFormatterImpl(formatter: GameAgeRatingFormatterImpl): GameAgeRatingFormatter
 
-    @Provides
-    fun provideGameRatingFormatter(stringProvider: StringProvider): GameRatingFormatter {
-        return GameRatingFormatterImpl(stringProvider)
-    }
-
-
-    @Provides
-    fun provideGameAgeRatingFormatter(stringProvider: StringProvider): GameAgeRatingFormatter {
-        return GameAgeRatingFormatterImpl(stringProvider)
-    }
-
-
-    @Provides
-    fun provideGameCategoryFormatter(stringProvider: StringProvider): GameCategoryFormatter {
-        return GameCategoryFormatterImpl(stringProvider)
-    }
-
+    @Binds
+    fun bindGameCategoryFormatterImpl(formatter: GameCategoryFormatterImpl): GameCategoryFormatter
 
 }

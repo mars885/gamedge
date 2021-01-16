@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.di
 
-import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.igdb.api.BuildConfig
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.Endpoint
@@ -25,7 +24,6 @@ import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpointImpl
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesService
 import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilder
-import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilderImpl
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.AgeRatingCategoryAdapter
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.AgeRatingTypeAdapter
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.CategoryAdapter
@@ -99,20 +97,6 @@ internal object GamesEndpointModule {
             .add(ReleaseDateCategoryAdapter())
             .add(WebsiteCategoryAdapter())
             .build()
-    }
-
-
-    @Provides
-    fun provideIgdbApiQueryBuilder(
-        apicalypseQueryBuilderFactory: ApicalypseQueryBuilderFactory,
-        apicalypseSerializer: ApicalypseSerializer,
-        queryTimestampProvider: QueryTimestampProvider
-    ): IgdbApiQueryBuilder {
-        return IgdbApiQueryBuilderImpl(
-            apicalypseQueryBuilderFactory = apicalypseQueryBuilderFactory,
-            apicalypseSerializer = apicalypseSerializer,
-            queryTimestampProvider = queryTimestampProvider
-        )
     }
 
 

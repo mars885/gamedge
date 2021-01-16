@@ -21,6 +21,7 @@ import com.paulrybitskyi.gamedge.core.WebsiteIconRetriever
 import com.paulrybitskyi.gamedge.core.WebsiteNameRetriever
 import com.paulrybitskyi.gamedge.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
+import javax.inject.Inject
 
 
 internal interface GameInfoLinkModelFactory {
@@ -32,7 +33,7 @@ internal interface GameInfoLinkModelFactory {
 }
 
 
-internal class GameInfoLinkModelFactoryImpl(
+internal class GameInfoLinkModelFactoryImpl @Inject constructor(
     private val websiteNameRetriever: WebsiteNameRetriever,
     private val websiteIconRetriever: WebsiteIconRetriever
 ) : GameInfoLinkModelFactory {

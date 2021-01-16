@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.core
 
 import android.util.Log
+import javax.inject.Inject
 
 
 interface Logger {
@@ -32,7 +33,7 @@ interface Logger {
 }
 
 
-internal class GamedgeLogger : Logger {
+internal class GamedgeLogger @Inject constructor() : Logger {
 
 
     override fun info(tag: String, message: String, throwable: Throwable?) {

@@ -25,8 +25,9 @@ import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.core.providers.CustomTabsProvider
 import com.paulrybitskyi.gamedge.core.utils.attachNewTaskFlagIfNeeded
 import com.paulrybitskyi.gamedge.core.utils.setAnimations
+import javax.inject.Inject
 
-internal class CustomTabUrlOpener(
+internal class CustomTabUrlOpener @Inject constructor(
     private val customTabsProvider: CustomTabsProvider
 ) : UrlOpener {
 

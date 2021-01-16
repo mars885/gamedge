@@ -21,8 +21,9 @@ import android.content.Intent
 import android.net.Uri
 import com.paulrybitskyi.commons.ktx.canIntentBeHandled
 import com.paulrybitskyi.gamedge.core.utils.attachNewTaskFlagIfNeeded
+import javax.inject.Inject
 
-internal class BrowserUrlOpener : UrlOpener {
+internal class BrowserUrlOpener @Inject constructor() : UrlOpener {
 
 
     override fun openUrl(url: String, context: Context) {

@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import javax.inject.Inject
 
 
 interface GameLikeCountCalculator {
@@ -26,7 +27,7 @@ interface GameLikeCountCalculator {
 }
 
 
-internal class GameLikeCountCalculatorImpl : GameLikeCountCalculator {
+internal class GameLikeCountCalculatorImpl @Inject constructor() : GameLikeCountCalculator {
 
 
     override fun calculateLikeCount(game: Game): Int {

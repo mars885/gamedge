@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.core.formatters
 
 import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
@@ -28,7 +29,7 @@ interface GameRatingFormatter {
 }
 
 
-internal class GameRatingFormatterImpl(
+internal class GameRatingFormatterImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GameRatingFormatter {
 

@@ -18,8 +18,9 @@ package com.paulrybitskyi.gamedge.data.auth.datastores.commons
 
 import com.paulrybitskyi.gamedge.data.auth.datastores.AuthRemoteDataStore
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
+import javax.inject.Inject
 
-internal class AuthDataStores(
+internal class AuthDataStores @Inject constructor(
     val local: AuthLocalDataStore,
     val remote: AuthRemoteDataStore
 )

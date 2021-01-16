@@ -16,55 +16,33 @@
 
 package com.paulrybitskyi.gamedge.core.di
 
-import android.content.Context
 import com.paulrybitskyi.gamedge.core.providers.*
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProviderImpl
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProviderImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProviderImpl
 import com.paulrybitskyi.gamedge.core.providers.TimestampProviderImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object ProvidersModule {
+internal interface ProvidersModule {
 
+    @Binds
+    fun bindCustomTabsProviderImpl(provider: CustomTabsProviderImpl): CustomTabsProvider
 
-    @Provides
-    @Singleton
-    fun provideCustomTabsProvider(
-        @ApplicationContext context: Context
-    ): CustomTabsProvider {
-        return CustomTabsProviderImpl(context)
-    }
+    @Binds
+    fun bindDispatcherProviderImpl(provider: DispatcherProviderImpl): DispatcherProvider
 
+    @Binds
+    fun bindNetworkStateProviderImpl(provider: NetworkStateProviderImpl): NetworkStateProvider
 
-    @Provides
-    fun provideDispatcherProvider(): DispatcherProvider {
-        return DispatcherProviderImpl()
-    }
+    @Binds
+    fun bindStringProviderImpl(provider: StringProviderImpl): StringProvider
 
-
-    @Provides
-    fun provideNetworkStateProvider(@ApplicationContext context: Context): NetworkStateProvider {
-        return NetworkStateProviderImpl(context)
-    }
-
-
-    @Provides
-    fun provideStringProvider(@ApplicationContext context: Context): StringProvider {
-        return StringProviderImpl(context)
-    }
-
-
-    @Provides
-    fun provideTimestampProvider(): TimestampProvider {
-        return TimestampProviderImpl()
-    }
-
+    @Binds
+    fun bindTimestampProviderImpl(provider: TimestampProviderImpl): TimestampProvider
 
 }

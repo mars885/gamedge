@@ -27,6 +27,7 @@ import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.entities.extensions.developerCompany
+import javax.inject.Inject
 
 
 internal interface GameInfoHeaderModelFactory {
@@ -36,7 +37,7 @@ internal interface GameInfoHeaderModelFactory {
 }
 
 
-internal class GameInfoHeaderModelFactoryImpl(
+internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder,
     private val releaseDateFormatter: GameReleaseDateFormatter,
     private val ratingFormatter: GameRatingFormatter,

@@ -18,8 +18,9 @@ package com.paulrybitskyi.gamedge.data.games.datastores.commons
 
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
+import javax.inject.Inject
 
-internal class GamesDataStores(
+internal class GamesDataStores @Inject constructor(
     val local: GamesLocalDataStore,
     val remote: GamesRemoteDataStore
 )

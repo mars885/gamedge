@@ -17,40 +17,17 @@
 package com.paulrybitskyi.gamedge.igdb.api.auth.di
 
 import com.paulrybitskyi.gamedge.data.auth.datastores.AuthRemoteDataStore
-import com.paulrybitskyi.gamedge.igdb.api.auth.AuthEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthIgdbDataStoreImpl
-import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthMapper
-import com.paulrybitskyi.gamedge.igdb.api.commons.ErrorMapper
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object DataStoreModule {
+internal interface DataStoreModule {
 
-
-    @Provides
-    @Singleton
-    fun provideAuthIgdbDataStore(
-        authEndpoint: AuthEndpoint,
-        authMapper: AuthMapper,
-        errorMapper: ErrorMapper
-    ): AuthRemoteDataStore {
-        return AuthIgdbDataStoreImpl(
-            authEndpoint = authEndpoint,
-            authMapper = authMapper,
-            errorMapper = errorMapper
-        )
-    }
-
-
-    @Provides
-    fun provideAuthMapper(): AuthMapper {
-        return AuthMapper()
-    }
-
+    @Binds
+    fun bindAuthIgdbDataStoreImpl(dataStore: AuthIgdbDataStoreImpl): AuthRemoteDataStore
 
 }

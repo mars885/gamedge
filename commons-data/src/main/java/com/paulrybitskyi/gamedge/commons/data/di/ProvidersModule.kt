@@ -18,23 +18,16 @@ package com.paulrybitskyi.gamedge.commons.data.di
 
 import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProviderImpl
-import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object ProvidersModule {
+internal interface ProvidersModule {
 
-
-    @Provides
-    fun provideQueryTimestampProvider(
-        timestampProvider: TimestampProvider
-    ): QueryTimestampProvider {
-        return QueryTimestampProviderImpl(timestampProvider)
-    }
-
+    @Binds
+    fun bindQueryTimestampProviderImpl(provider: QueryTimestampProviderImpl): QueryTimestampProvider
 
 }

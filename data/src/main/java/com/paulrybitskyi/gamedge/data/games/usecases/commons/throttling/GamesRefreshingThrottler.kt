@@ -24,6 +24,8 @@ import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
 internal interface GamesRefreshingThrottler {
@@ -39,7 +41,8 @@ internal interface GamesRefreshingThrottler {
 }
 
 
-internal class GamesRefreshingThrottlerImpl(
+@Singleton
+internal class GamesRefreshingThrottlerImpl @Inject constructor(
     private val gamesPreferences: DataStore<Preferences>,
     private val timestampProvider: TimestampProvider
 ) : GamesRefreshingThrottler {

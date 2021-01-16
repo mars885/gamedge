@@ -17,6 +17,8 @@
 package com.paulrybitskyi.gamedge.core.urlopener
 
 import android.content.Context
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
 interface UrlOpenerFactory {
@@ -26,8 +28,9 @@ interface UrlOpenerFactory {
 }
 
 
-internal class UrlOpenerFactoryImpl(
-    private val urlOpeners: List<UrlOpener>
+@Singleton
+internal class UrlOpenerFactoryImpl @Inject constructor(
+    private val urlOpeners: List<@JvmSuppressWildcards UrlOpener>
 ) : UrlOpenerFactory {
 
 

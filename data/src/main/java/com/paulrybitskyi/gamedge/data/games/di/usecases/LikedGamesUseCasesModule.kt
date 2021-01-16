@@ -16,57 +16,28 @@
 
 package com.paulrybitskyi.gamedge.data.games.di.usecases
 
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.ObserveGamesUseCaseMappers
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ObserveGameLikeStateUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ObserveLikedGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ToggleGameLikeStateUseCaseImpl
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object LikedGamesUseCasesModule {
+internal interface LikedGamesUseCasesModule {
 
+    @Binds
+    fun bindObserveGameLikeStateUseCaseImpl(useCase: ObserveGameLikeStateUseCaseImpl): ObserveGameLikeStateUseCase
 
-    @Provides
-    @Singleton
-    fun provideGameLikeStateObservableUseCase(
-        likedGamesLocalDataStore: LikedGamesLocalDataStore
-    ): ObserveGameLikeStateUseCase {
-        return ObserveGameLikeStateUseCaseImpl(likedGamesLocalDataStore)
-    }
+    @Binds
+    fun bindObserveLikedGamesUseCaseImpl(useCase: ObserveLikedGamesUseCaseImpl): ObserveLikedGamesUseCase
 
-
-    @Provides
-    @Singleton
-    fun provideLikedGamesObservableUseCase(
-        likedGamesLocalDataStore: LikedGamesLocalDataStore,
-        dispatcherProvider: DispatcherProvider,
-        mappers: ObserveGamesUseCaseMappers
-    ): ObserveLikedGamesUseCase {
-        return ObserveLikedGamesUseCaseImpl(
-            likedGamesLocalDataStore = likedGamesLocalDataStore,
-            dispatcherProvider = dispatcherProvider,
-            mappers = mappers
-        )
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideToggleGameLikeStateUseCase(
-        likedGamesLocalDataStore: LikedGamesLocalDataStore
-    ): ToggleGameLikeStateUseCase {
-        return ToggleGameLikeStateUseCaseImpl(likedGamesLocalDataStore)
-    }
-
+    @Binds
+    fun bindToggleGameLikeStateUseCaseImpl(useCase: ToggleGameLikeStateUseCaseImpl): ToggleGameLikeStateUseCase
 
 }

@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.core
 
 import com.paulrybitskyi.gamedge.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
+import javax.inject.Inject
 
 
 interface WebsiteIconRetriever {
@@ -27,7 +28,7 @@ interface WebsiteIconRetriever {
 }
 
 
-internal class WebsiteIconRetrieverImpl : WebsiteIconRetriever {
+internal class WebsiteIconRetrieverImpl @Inject constructor() : WebsiteIconRetriever {
 
 
     override fun getIconIdForWebsite(website: Website): Int {

@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.ui.commons
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GamesUiState
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import javax.inject.Inject
 
 
 internal interface GamesUiStateFactory {
@@ -31,7 +32,7 @@ internal interface GamesUiStateFactory {
 }
 
 
-internal class GamesUiStateFactoryImpl(
+internal class GamesUiStateFactoryImpl @Inject constructor(
     private val gameModelFactory: GameModelFactory
 ) : GamesUiStateFactory {
 

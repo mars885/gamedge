@@ -16,10 +16,12 @@
 
 package com.paulrybitskyi.gamedge.database.commons.utils
 
+import com.paulrybitskyi.gamedge.database.commons.di.qualifiers.Database
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import javax.inject.Inject
 
-internal class JsonConverter(private val moshi: Moshi) {
+internal class JsonConverter @Inject constructor(@Database private val moshi: Moshi) {
 
 
     inline fun <reified T> toJson(clazz: T): String {

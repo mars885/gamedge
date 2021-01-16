@@ -26,8 +26,11 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUs
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class ObserveLikedGamesUseCaseImpl(
+@Singleton
+internal class ObserveLikedGamesUseCaseImpl @Inject constructor(
     private val likedGamesLocalDataStore: LikedGamesLocalDataStore,
     private val dispatcherProvider: DispatcherProvider,
     private val mappers: ObserveGamesUseCaseMappers

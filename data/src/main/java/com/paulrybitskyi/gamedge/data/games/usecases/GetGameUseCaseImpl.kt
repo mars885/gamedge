@@ -27,8 +27,11 @@ import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
 import kotlinx.coroutines.flow.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class GetGameUseCaseImpl(
+@Singleton
+internal class GetGameUseCaseImpl @Inject constructor(
     private val gamesLocalDataStore: GamesLocalDataStore,
     private val dispatcherProvider: DispatcherProvider,
     private val gameMapper: GameMapper

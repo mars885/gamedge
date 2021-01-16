@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.core.providers
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
 
 interface DispatcherProvider {
@@ -31,7 +32,7 @@ interface DispatcherProvider {
 }
 
 
-internal class DispatcherProviderImpl : DispatcherProvider {
+internal class DispatcherProviderImpl @Inject constructor() : DispatcherProvider {
 
     override val main: CoroutineDispatcher = Dispatchers.Main
 

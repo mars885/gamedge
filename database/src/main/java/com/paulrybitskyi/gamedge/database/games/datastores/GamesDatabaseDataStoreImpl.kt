@@ -26,8 +26,11 @@ import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class GamesDatabaseDataStoreImpl(
+@Singleton
+internal class GamesDatabaseDataStoreImpl @Inject constructor(
     private val gamesTable: GamesTable,
     private val dispatcherProvider: DispatcherProvider,
     private val queryTimestampProvider: QueryTimestampProvider,

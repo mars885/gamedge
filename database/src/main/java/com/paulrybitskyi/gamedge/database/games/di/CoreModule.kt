@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.games.di
+package com.paulrybitskyi.gamedge.database.games.di
 
-import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
-import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
+import com.paulrybitskyi.gamedge.database.commons.di.qualifiers.Database
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,18 +26,15 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object DataStoresModule {
+internal object CoreModule {
 
 
     @Provides
-    fun provideGamesDataStores(
-        gamesLocalDataStore: GamesLocalDataStore,
-        gamesRemoteDataStore: GamesRemoteDataStore
-    ): GamesDataStores {
-        return GamesDataStores(
-            local = gamesLocalDataStore,
-            remote = gamesRemoteDataStore
-        )
+    @Database
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
     }
 
 

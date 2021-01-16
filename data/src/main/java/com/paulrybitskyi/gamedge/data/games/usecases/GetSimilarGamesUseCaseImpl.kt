@@ -27,8 +27,11 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase.Params
 import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshSimilarGamesUseCase
 import kotlinx.coroutines.flow.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class GetSimilarGamesUseCaseImpl(
+@Singleton
+internal class GetSimilarGamesUseCaseImpl @Inject constructor(
     private val refreshSimilarGamesUseCase: RefreshSimilarGamesUseCase,
     private val gamesLocalDataStore: GamesLocalDataStore,
     private val dispatcherProvider: DispatcherProvider,

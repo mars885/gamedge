@@ -16,10 +16,11 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.commons
 
+import javax.inject.Inject
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.Pagination as DataPagination
 import com.paulrybitskyi.gamedge.domain.games.commons.Pagination as DomainPagination
 
-internal class PaginationMapper {
+internal class PaginationMapper @Inject constructor() {
 
 
     fun mapToDataPagination(pagination: DomainPagination): DataPagination {

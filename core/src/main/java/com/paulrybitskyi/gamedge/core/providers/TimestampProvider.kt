@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.core.providers
 
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 interface TimestampProvider {
@@ -26,7 +27,7 @@ interface TimestampProvider {
 }
 
 
-internal class TimestampProviderImpl : TimestampProvider {
+internal class TimestampProviderImpl @Inject constructor() : TimestampProvider {
 
 
     override fun getUnixTimestamp(timeUnit: TimeUnit): Long {

@@ -19,12 +19,13 @@ package com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.concrete
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.ErrorMessageExtractor
 import okhttp3.ResponseBody
 import org.json.JSONArray
+import javax.inject.Inject
 
 
 private const val ERROR_MESSAGE_NAME = "title"
 
 
-internal class IgdbErrorMessageExtractor : ErrorMessageExtractor {
+internal class IgdbErrorMessageExtractor @Inject constructor() : ErrorMessageExtractor {
 
 
     override fun extract(responseBody: ResponseBody): String {

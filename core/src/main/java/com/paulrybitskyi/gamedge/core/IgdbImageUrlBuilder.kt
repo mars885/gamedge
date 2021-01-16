@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.paulrybitskyi.gamedge.domain.games.entities.Image
+import javax.inject.Inject
 
 
 enum class IgdbImageSize(internal val rawSize: String) {
@@ -65,7 +66,7 @@ interface IgdbImageUrlBuilder {
 }
 
 
-internal class IgdbImageUrlBuilderImpl : IgdbImageUrlBuilder {
+internal class IgdbImageUrlBuilderImpl @Inject constructor() : IgdbImageUrlBuilder {
 
 
     private companion object {

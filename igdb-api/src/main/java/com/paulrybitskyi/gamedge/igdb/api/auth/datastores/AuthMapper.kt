@@ -18,8 +18,9 @@ package com.paulrybitskyi.gamedge.igdb.api.auth.datastores
 
 import com.paulrybitskyi.gamedge.data.auth.DataOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.auth.ApiOauthCredentials
+import javax.inject.Inject
 
-internal class AuthMapper {
+internal class AuthMapper @Inject constructor() {
 
 
     fun mapToDataOauthCredentials(apiOauthCredentials: ApiOauthCredentials): DataOauthCredentials {

@@ -22,51 +22,31 @@ import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilderImpl
 import com.paulrybitskyi.gamedge.core.YoutubeMediaUrlBuilder
 import com.paulrybitskyi.gamedge.core.YoutubeMediaUrlBuilderImpl
-import com.paulrybitskyi.gamedge.core.providers.StringProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object CoreModule {
+internal interface CoreModule {
 
+    @Binds
+    fun bindIgdbImageUrlBuilderImpl(urlBuilder: IgdbImageUrlBuilderImpl): IgdbImageUrlBuilder
 
-    @Provides
-    fun provideIgdbImageUrlBuilder(): IgdbImageUrlBuilder {
-        return IgdbImageUrlBuilderImpl()
-    }
+    @Binds
+    fun bindYoutubeMediaUrlBuilderImpl(urlBuilder: YoutubeMediaUrlBuilderImpl): YoutubeMediaUrlBuilder
 
+    @Binds
+    fun bindGameLikeCountCalculatorImpl(calculator: GameLikeCountCalculatorImpl): GameLikeCountCalculator
 
-    @Provides
-    fun provideYoutubeMediaUrlBuilder(): YoutubeMediaUrlBuilder {
-        return YoutubeMediaUrlBuilderImpl()
-    }
+    @Binds
+    fun bindWebsiteNameRetrieverImpl(retriever: WebsiteNameRetrieverImpl): WebsiteNameRetriever
 
+    @Binds
+    fun bindWebsiteIconRetrieverImpl(retriever: WebsiteIconRetrieverImpl): WebsiteIconRetriever
 
-    @Provides
-    fun provideGameLikeCountCalculator(): GameLikeCountCalculator {
-        return GameLikeCountCalculatorImpl()
-    }
-
-
-    @Provides
-    fun provideWebsiteNameRetriever(stringProvider: StringProvider): WebsiteNameRetriever {
-        return WebsiteNameRetrieverImpl(stringProvider)
-    }
-
-
-    @Provides
-    fun provideWebsiteIconRetriever(): WebsiteIconRetriever {
-        return WebsiteIconRetrieverImpl()
-    }
-
-
-    @Provides
-    fun provideLogger(): Logger {
-        return GamedgeLogger()
-    }
-
+    @Binds
+    fun bindGamedgeLogger(logger: GamedgeLogger): Logger
 
 }

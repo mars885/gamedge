@@ -32,8 +32,11 @@ import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshAllDiscoverableGamesUseCase
 import kotlinx.coroutines.flow.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class RefreshAllDiscoverableGamesUseCaseImpl(
+@Singleton
+internal class RefreshAllDiscoverableGamesUseCaseImpl @Inject constructor(
     private val gamesDataStores: GamesDataStores,
     private val dispatcherProvider: DispatcherProvider,
     private val throttlerTools: GamesRefreshingThrottlerTools,

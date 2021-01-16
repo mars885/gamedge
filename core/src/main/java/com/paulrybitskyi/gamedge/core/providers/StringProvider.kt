@@ -17,6 +17,8 @@
 package com.paulrybitskyi.gamedge.core.providers
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 
 interface StringProvider {
@@ -28,8 +30,8 @@ interface StringProvider {
 }
 
 
-internal class StringProviderImpl(
-    private val context: Context
+internal class StringProviderImpl @Inject constructor(
+    @ApplicationContext private val context: Context
 ) : StringProvider {
 
 

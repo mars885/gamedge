@@ -25,8 +25,9 @@ import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.TOTAL_RATIN
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.USERS_RATING
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
+import javax.inject.Inject
 
-internal class IgdbApiQueryBuilderImpl(
+internal class IgdbApiQueryBuilderImpl @Inject constructor(
     private val apicalypseQueryBuilderFactory: ApicalypseQueryBuilderFactory,
     private val apicalypseSerializer: ApicalypseSerializer,
     private val queryTimestampProvider: QueryTimestampProvider

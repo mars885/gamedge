@@ -16,21 +16,20 @@
 
 package com.paulrybitskyi.gamedge.core.di
 
-import com.paulrybitskyi.gamedge.core.providers.CustomTabsProvider
 import com.paulrybitskyi.gamedge.core.urlopener.*
 import com.paulrybitskyi.gamedge.core.urlopener.CustomTabUrlOpener
 import com.paulrybitskyi.gamedge.core.urlopener.NativeAppUrlOpener
-import com.paulrybitskyi.gamedge.core.urlopener.UrlOpenerFactoryImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.migration.DisableInstallInCheck
 import javax.inject.Qualifier
-import javax.inject.Singleton
 
-@Module
+@Module(includes = [UrlOpenersModule.MultibindingsModule::class])
 @InstallIn(SingletonComponent::class)
-internal object UrlOpenersModule {
+internal interface UrlOpenersModule {
 
 
     @Qualifier
@@ -47,41 +46,38 @@ internal object UrlOpenersModule {
     }
 
 
-    @Provides
-    @Singleton
-    fun provideUrlOpenerFactory(
-        @UrlOpenerKey(UrlOpenerKey.Type.NATIVE_APP) nativeAppUrlOpener: UrlOpener,
-        @UrlOpenerKey(UrlOpenerKey.Type.CUSTOM_TAB) customTabUrlOpener: UrlOpener,
-        @UrlOpenerKey(UrlOpenerKey.Type.BROWSER) browserUrlOpener: UrlOpener,
-    ): UrlOpenerFactory {
-        return UrlOpenerFactoryImpl(
-            urlOpeners = listOf(
-                nativeAppUrlOpener,
-                customTabUrlOpener,
-                browserUrlOpener
-            )
-        )
-    }
-
-
-    @Provides
+    @Binds
     @UrlOpenerKey(UrlOpenerKey.Type.NATIVE_APP)
-    fun provideNativeAppUrlOpener(): UrlOpener {
-        return NativeAppUrlOpener()
-    }
+    fun bindNativeAppUrlOpener(urlOpener: NativeAppUrlOpener): UrlOpener
 
 
-    @Provides
+    @Binds
     @UrlOpenerKey(UrlOpenerKey.Type.CUSTOM_TAB)
-    fun provideCustomTabUrlOpener(customTabsProvider: CustomTabsProvider): UrlOpener {
-        return CustomTabUrlOpener(customTabsProvider)
-    }
+    fun bindCustomTabUrlOpener(urlOpener: CustomTabUrlOpener): UrlOpener
 
 
-    @Provides
+    @Binds
     @UrlOpenerKey(UrlOpenerKey.Type.BROWSER)
-    fun provideBrowserUrlOpener(): UrlOpener {
-        return BrowserUrlOpener()
+    fun bindBrowserUrlOpener(urlOpener: BrowserUrlOpener): UrlOpener
+
+
+    @Binds
+    fun bindUrlOpenerFactoryImpl(factory: UrlOpenerFactoryImpl): UrlOpenerFactory
+
+
+    @Module
+    @DisableInstallInCheck
+    object MultibindingsModule {
+
+        @Provides
+        fun provideUrlOpeners(
+            @UrlOpenerKey(UrlOpenerKey.Type.NATIVE_APP) nativeAppUrlOpener: UrlOpener,
+            @UrlOpenerKey(UrlOpenerKey.Type.CUSTOM_TAB) customTabUrlOpener: UrlOpener,
+            @UrlOpenerKey(UrlOpenerKey.Type.BROWSER) browserUrlOpener: UrlOpener
+        ): List<UrlOpener> {
+            return listOf(nativeAppUrlOpener, customTabUrlOpener, browserUrlOpener)
+        }
+
     }
 
 

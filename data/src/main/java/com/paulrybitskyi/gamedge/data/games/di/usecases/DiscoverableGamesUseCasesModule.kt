@@ -16,168 +16,42 @@
 
 package com.paulrybitskyi.gamedge.data.games.di.usecases
 
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.ObserveGamesUseCaseMappers
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCaseMappers
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.data.games.usecases.discovery.*
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.*
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object DiscoverableGamesUseCasesModule {
+internal interface DiscoverableGamesUseCasesModule {
 
+    @Binds
+    fun bindObserveComingSoonGamesUseCaseImpl(useCase: ObserveComingSoonGamesUseCaseImpl): ObserveComingSoonGamesUseCase
 
-    @Provides
-    @Singleton
-    fun provideComingSoonGamesObservableUseCase(
-        gamesLocalDataStore: GamesLocalDataStore,
-        dispatcherProvider: DispatcherProvider,
-        mappers: ObserveGamesUseCaseMappers
-    ): ObserveComingSoonGamesUseCase {
-        return ObserveComingSoonGamesUseCaseImpl(
-            gamesLocalDataStore = gamesLocalDataStore,
-            dispatcherProvider = dispatcherProvider,
-            mappers = mappers
-        )
-    }
+    @Binds
+    fun bindRefreshComingSoonGamesUseCaseImpl(useCase: RefreshComingSoonGamesUseCaseImpl): RefreshComingSoonGamesUseCase
 
+    @Binds
+    fun bindObserveMostAnticipatedGamesUseCaseImpl(useCase: ObserveMostAnticipatedGamesUseCaseImpl): ObserveMostAnticipatedGamesUseCase
 
-    @Provides
-    @Singleton
-    fun provideComingSoonGamesRefresherUseCase(
-        gamesDataStores: GamesDataStores,
-        dispatcherProvider: DispatcherProvider,
-        throttlerTools: GamesRefreshingThrottlerTools,
-        mappers: RefreshGamesUseCaseMappers
-    ): RefreshComingSoonGamesUseCase {
-        return RefreshComingSoonGamesUseCaseImpl(
-            gamesDataStores = gamesDataStores,
-            dispatcherProvider = dispatcherProvider,
-            throttlerTools = throttlerTools,
-            mappers = mappers
-        )
-    }
+    @Binds
+    fun bindRefreshMostAnticipatedGamesUseCaseImpl(useCase: RefreshMostAnticipatedGamesUseCaseImpl): RefreshMostAnticipatedGamesUseCase
 
+    @Binds
+    fun bindObservePopularGamesUseCaseImpl(useCase: ObservePopularGamesUseCaseImpl): ObservePopularGamesUseCase
 
-    @Provides
-    @Singleton
-    fun provideMostAnticipatedGamesObservableUseCase(
-        gamesLocalDataStore: GamesLocalDataStore,
-        dispatcherProvider: DispatcherProvider,
-        mappers: ObserveGamesUseCaseMappers
-    ): ObserveMostAnticipatedGamesUseCase {
-        return ObserveMostAnticipatedGamesUseCaseImpl(
-            gamesLocalDataStore = gamesLocalDataStore,
-            dispatcherProvider = dispatcherProvider,
-            mappers = mappers
-        )
-    }
+    @Binds
+    fun bindRefreshPopularGamesUseCaseImpl(useCase: RefreshPopularGamesUseCaseImpl): RefreshPopularGamesUseCase
 
+    @Binds
+    fun bindObserveRecentlyReleasedGamesUseCaseImpl(useCase: ObserveRecentlyReleasedGamesUseCaseImpl): ObserveRecentlyReleasedGamesUseCase
 
-    @Provides
-    @Singleton
-    fun provideMostAnticipatedGamesRefresherUseCase(
-        gamesDataStores: GamesDataStores,
-        dispatcherProvider: DispatcherProvider,
-        throttlerTools: GamesRefreshingThrottlerTools,
-        mappers: RefreshGamesUseCaseMappers
-    ): RefreshMostAnticipatedGamesUseCase {
-        return RefreshMostAnticipatedGamesUseCaseImpl(
-            gamesDataStores = gamesDataStores,
-            dispatcherProvider = dispatcherProvider,
-            throttlerTools = throttlerTools,
-            mappers = mappers
-        )
-    }
+    @Binds
+    fun bindRefreshRecentlyReleasedGamesUseCaseImpl(useCase: RefreshRecentlyReleasedGamesUseCaseImpl): RefreshRecentlyReleasedGamesUseCase
 
-
-    @Provides
-    @Singleton
-    fun providePopularGamesObservableUseCase(
-        gamesLocalDataStore: GamesLocalDataStore,
-        dispatcherProvider: DispatcherProvider,
-        mappers: ObserveGamesUseCaseMappers
-    ): ObservePopularGamesUseCase {
-        return ObservePopularGamesUseCaseImpl(
-            gamesLocalDataStore = gamesLocalDataStore,
-            dispatcherProvider = dispatcherProvider,
-            mappers = mappers
-        )
-    }
-
-
-    @Provides
-    @Singleton
-    fun providePopularGamesRefresherUseCase(
-        gamesDataStores: GamesDataStores,
-        dispatcherProvider: DispatcherProvider,
-        throttlerTools: GamesRefreshingThrottlerTools,
-        mappers: RefreshGamesUseCaseMappers
-    ): RefreshPopularGamesUseCase {
-        return RefreshPopularGamesUseCaseImpl(
-            gamesDataStores = gamesDataStores,
-            dispatcherProvider = dispatcherProvider,
-            throttlerTools = throttlerTools,
-            mappers = mappers
-        )
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideRecentlyReleasedGamesObservableUseCase(
-        gamesLocalDataStore: GamesLocalDataStore,
-        dispatcherProvider: DispatcherProvider,
-        mappers: ObserveGamesUseCaseMappers
-    ): ObserveRecentlyReleasedGamesUseCase {
-        return ObserveRecentlyReleasedGamesUseCaseImpl(
-            gamesLocalDataStore = gamesLocalDataStore,
-            dispatcherProvider = dispatcherProvider,
-            mappers = mappers
-        )
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideRecentlyReleasedGamesRefresherUseCase(
-        gamesDataStores: GamesDataStores,
-        dispatcherProvider: DispatcherProvider,
-        throttlerTools: GamesRefreshingThrottlerTools,
-        mappers: RefreshGamesUseCaseMappers
-    ): RefreshRecentlyReleasedGamesUseCase {
-        return RefreshRecentlyReleasedGamesUseCaseImpl(
-            gamesDataStores = gamesDataStores,
-            dispatcherProvider = dispatcherProvider,
-            throttlerTools = throttlerTools,
-            mappers = mappers
-        )
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideAllDiscoverableGamesRefresherUseCase(
-        gamesDataStores: GamesDataStores,
-        dispatcherProvider: DispatcherProvider,
-        throttlerTools: GamesRefreshingThrottlerTools,
-        mappers: RefreshGamesUseCaseMappers
-    ): RefreshAllDiscoverableGamesUseCase {
-        return RefreshAllDiscoverableGamesUseCaseImpl(
-            gamesDataStores = gamesDataStores,
-            dispatcherProvider = dispatcherProvider,
-            throttlerTools = throttlerTools,
-            mappers = mappers
-        )
-    }
-
+    @Binds
+    fun bindRefreshAllDiscoverableGamesUseCaseImpl(useCase: RefreshAllDiscoverableGamesUseCaseImpl): RefreshAllDiscoverableGamesUseCase
 
 }

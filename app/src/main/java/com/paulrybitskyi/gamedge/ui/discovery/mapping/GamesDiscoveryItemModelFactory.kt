@@ -21,6 +21,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItem
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemUiState
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
+import javax.inject.Inject
 
 
 internal interface GamesDiscoveryItemModelFactory {
@@ -41,7 +42,7 @@ internal interface GamesDiscoveryItemModelFactory {
 }
 
 
-internal class GamesDiscoveryItemModelFactoryImpl(
+internal class GamesDiscoveryItemModelFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GamesDiscoveryItemModelFactory {
 

@@ -18,8 +18,9 @@ package com.paulrybitskyi.gamedge.igdb.api.auth
 
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
+import javax.inject.Inject
 
-internal class Authorizer(private val authLocalDataStore: AuthLocalDataStore) {
+internal class Authorizer @Inject constructor(private val authLocalDataStore: AuthLocalDataStore) {
 
 
     suspend fun buildAuthorizationHeader(type: AuthorizationType): String {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.api.auth.di
+package com.paulrybitskyi.gamedge.image.loading.di
 
-import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
-import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
+import com.paulrybitskyi.gamedge.image.loading.ImageLoader
+import com.paulrybitskyi.gamedge.image.loading.ImageLoaderImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object CoreModule {
+internal interface ImageLoadingBindingsModule {
 
-
-    @Provides
-    fun provideAuthorizer(authLocalDataStore: AuthLocalDataStore): Authorizer {
-        return Authorizer(authLocalDataStore)
-    }
-
+    @Binds
+    fun bindImageLoaderImpl(imageLoader: ImageLoaderImpl): ImageLoader
 
 }

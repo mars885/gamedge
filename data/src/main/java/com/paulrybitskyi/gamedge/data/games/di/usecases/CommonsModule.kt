@@ -16,93 +16,20 @@
 
 package com.paulrybitskyi.gamedge.data.games.di.usecases
 
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
-import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
-import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.ObserveGamesUseCaseMappers
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.PaginationMapper
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCaseMappers
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.*
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object CommonsModule {
+internal interface CommonsModule {
 
+    @Binds
+    fun bindGamesRefreshingThrottlerImpl(throttler: GamesRefreshingThrottlerImpl): GamesRefreshingThrottler
 
-    @Provides
-    fun provideGameMapper(): GameMapper {
-        return GameMapper()
-    }
-
-
-    @Provides
-    fun providePaginationMapper(): PaginationMapper {
-        return PaginationMapper()
-    }
-
-
-    @Provides
-    fun provideGamesObserverUseCaseMappers(
-        gameMapper: GameMapper,
-        paginationMapper: PaginationMapper
-    ): ObserveGamesUseCaseMappers {
-        return ObserveGamesUseCaseMappers(
-            game = gameMapper,
-            pagination = paginationMapper
-        )
-    }
-
-
-    @Provides
-    fun provideGamesRefresherUseCaseMappers(
-        gameMapper: GameMapper,
-        paginationMapper: PaginationMapper,
-        errorMapper: ErrorMapper
-    ): RefreshGamesUseCaseMappers {
-        return RefreshGamesUseCaseMappers(
-            game = gameMapper,
-            pagination = paginationMapper,
-            error = errorMapper
-        )
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideGamesRefreshingThrottler(
-        gamesPreferences: DataStore<Preferences>,
-        timestampProvider: TimestampProvider
-    ): GamesRefreshingThrottler {
-        return GamesRefreshingThrottlerImpl(
-            gamesPreferences = gamesPreferences,
-            timestampProvider = timestampProvider
-        )
-    }
-
-
-    @Provides
-    fun provideGamesRefreshingThrottlerKeyBuilder(): GamesRefreshingThrottlerKeyBuilder {
-        return GamesRefreshingThrottlerKeyBuilderImpl()
-    }
-
-
-    @Provides
-    fun provideGamesRefreshingThrottlerTools(
-        gamesRefreshingThrottler: GamesRefreshingThrottler,
-        gamesRefreshingThrottlerKeyBuilder: GamesRefreshingThrottlerKeyBuilder
-    ): GamesRefreshingThrottlerTools {
-        return GamesRefreshingThrottlerTools(
-            throttler = gamesRefreshingThrottler,
-            keyBuilder = gamesRefreshingThrottlerKeyBuilder
-        )
-    }
-
+    @Binds
+    fun bindGamesRefreshingThrottlerKeyBuilderImpl(keyBuilder: GamesRefreshingThrottlerKeyBuilderImpl): GamesRefreshingThrottlerKeyBuilder
 
 }

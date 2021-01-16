@@ -20,8 +20,11 @@ import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase.Params
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class ObserveGameLikeStateUseCaseImpl(
+@Singleton
+internal class ObserveGameLikeStateUseCaseImpl @Inject constructor(
     private val likedGamesLocalDataStore: LikedGamesLocalDataStore
 ) : ObserveGameLikeStateUseCase {
 

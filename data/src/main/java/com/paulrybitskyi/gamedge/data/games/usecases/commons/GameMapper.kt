@@ -18,8 +18,9 @@ package com.paulrybitskyi.gamedge.data.games.usecases.commons
 
 import com.paulrybitskyi.gamedge.data.games.*
 import com.paulrybitskyi.gamedge.domain.games.*
+import javax.inject.Inject
 
-internal class GameMapper {
+internal class GameMapper @Inject constructor() {
 
 
     fun mapToDomainGame(game: DataGame): DomainGame {

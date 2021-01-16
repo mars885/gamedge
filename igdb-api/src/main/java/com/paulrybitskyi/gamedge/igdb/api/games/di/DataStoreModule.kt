@@ -16,44 +16,18 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.di
 
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
-import com.paulrybitskyi.gamedge.igdb.api.commons.ErrorMapper
-import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
-import com.paulrybitskyi.gamedge.igdb.api.games.datastores.GameMapper
 import com.paulrybitskyi.gamedge.igdb.api.games.datastores.GamesIgdbDataStoreImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object DataStoreModule {
+internal interface DataStoreModule {
 
-
-    @Provides
-    @Singleton
-    fun provideGamesIgdbDataStore(
-        gamesEndpoint: GamesEndpoint,
-        dispatcherProvider: DispatcherProvider,
-        gameMapper: GameMapper,
-        errorMapper: ErrorMapper
-    ): GamesRemoteDataStore {
-        return GamesIgdbDataStoreImpl(
-            gamesEndpoint = gamesEndpoint,
-            dispatcherProvider = dispatcherProvider,
-            gameMapper = gameMapper,
-            errorMapper = errorMapper
-        )
-    }
-
-
-    @Provides
-    fun provideGameMapper(): GameMapper {
-        return GameMapper()
-    }
-
+    @Binds
+    fun bindGamesIgdbDataStoreImpl(dataStore: GamesIgdbDataStoreImpl): GamesRemoteDataStore
 
 }

@@ -16,76 +16,17 @@
 
 package com.paulrybitskyi.gamedge.data.auth.di
 
-import android.content.Context
-import androidx.datastore.DataStore
-import androidx.datastore.createDataStore
-import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
-import com.paulrybitskyi.gamedge.data.auth.Constants
-import com.paulrybitskyi.gamedge.data.auth.datastores.AuthRemoteDataStore
-import com.paulrybitskyi.gamedge.data.auth.datastores.commons.AuthDataStores
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.*
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object DataStoresModule {
+internal interface DataStoresModule {
 
-
-    @Provides
-    @Singleton
-    fun provideAuthFileDataStore(
-        protoDataStore: DataStore<ProtoOauthCredentials>,
-        timestampProvider: TimestampProvider,
-        mapper: AuthMapper
-    ): AuthLocalDataStore {
-        return AuthFileDataStore(
-            protoDataStore = protoDataStore,
-            timestampProvider = timestampProvider,
-            mapper = mapper
-        )
-    }
-
-
-    @Provides
-    fun provideAuthProtoDataStore(
-        @ApplicationContext context: Context
-    ): DataStore<ProtoOauthCredentials> {
-        return context.createDataStore(
-            fileName = Constants.AUTH_PREFERENCES_DATA_STORE_NAME,
-            serializer = ProtoOauthCredentialsSerializer
-        )
-    }
-
-
-    @Provides
-    fun provideAuthMapper(authExpiryTimeCalculator: AuthExpiryTimeCalculator): AuthMapper {
-        return AuthMapper(authExpiryTimeCalculator)
-    }
-
-
-    @Provides
-    fun provideAuthExpiryTimeCalculator(
-        timestampProvider: TimestampProvider
-    ): AuthExpiryTimeCalculator {
-        return AuthExpiryTimeCalculator(timestampProvider)
-    }
-
-
-    @Provides
-    fun provideAuthDataStores(
-        localDataStore: AuthLocalDataStore,
-        remoteDataStore: AuthRemoteDataStore
-    ): AuthDataStores {
-        return AuthDataStores(
-            local = localDataStore,
-            remote = remoteDataStore
-        )
-    }
-
+    @Binds
+    fun bindAuthFileDataStore(dataStore: AuthFileDataStore): AuthLocalDataStore
 
 }

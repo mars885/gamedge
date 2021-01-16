@@ -22,6 +22,7 @@ import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.entities.extensions.developerCompany
+import javax.inject.Inject
 
 
 internal interface GameModelFactory {
@@ -31,7 +32,7 @@ internal interface GameModelFactory {
 }
 
 
-internal class GameModelFactoryImpl(
+internal class GameModelFactoryImpl @Inject constructor(
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder,
     private val gameReleaseDateFormatter: GameReleaseDateFormatter
 ) : GameModelFactory {

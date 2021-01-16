@@ -19,8 +19,9 @@ package com.paulrybitskyi.gamedge.database.games.datastores
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.database.Constants
 import com.paulrybitskyi.gamedge.database.games.entities.LikedGame
+import javax.inject.Inject
 
-internal class LikedGameFactory(private val timestampProvider: TimestampProvider) {
+internal class LikedGameFactory @Inject constructor(private val timestampProvider: TimestampProvider) {
 
 
     fun createLikedGame(gameId: Int): LikedGame {

@@ -20,6 +20,7 @@ import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.commons.DomainException
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
+import javax.inject.Inject
 
 
 internal interface ErrorMapper {
@@ -29,7 +30,7 @@ internal interface ErrorMapper {
 }
 
 
-internal class ErrorMapperImpl(
+internal class ErrorMapperImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : ErrorMapper {
 

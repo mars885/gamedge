@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.ui.info.mapping
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoDetailsModel
 import com.paulrybitskyi.gamedge.domain.games.entities.*
+import javax.inject.Inject
 
 
 internal interface GameInfoDetailsModelFactory {
@@ -27,7 +28,7 @@ internal interface GameInfoDetailsModelFactory {
 }
 
 
-internal class GameInfoDetailsModelFactoryImpl : GameInfoDetailsModelFactory {
+internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoDetailsModelFactory {
 
 
     private companion object {

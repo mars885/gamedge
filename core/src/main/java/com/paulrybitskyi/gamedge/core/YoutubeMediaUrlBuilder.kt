@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.paulrybitskyi.gamedge.domain.games.entities.Video
+import javax.inject.Inject
 
 
 enum class YoutubeThumbnailSize(internal val rawSize: String) {
@@ -39,7 +40,7 @@ interface YoutubeMediaUrlBuilder {
 }
 
 
-internal class YoutubeMediaUrlBuilderImpl : YoutubeMediaUrlBuilder {
+internal class YoutubeMediaUrlBuilderImpl @Inject constructor() : YoutubeMediaUrlBuilder {
 
 
     private companion object {

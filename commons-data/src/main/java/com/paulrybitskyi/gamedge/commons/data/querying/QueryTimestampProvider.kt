@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.commons.data.querying
 
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 private val POPULAR_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(90L)
@@ -39,7 +40,7 @@ interface QueryTimestampProvider {
 }
 
 
-internal class QueryTimestampProviderImpl(
+internal class QueryTimestampProviderImpl @Inject constructor(
     private val timestampProvider: TimestampProvider
 ) : QueryTimestampProvider {
 

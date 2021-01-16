@@ -16,41 +16,18 @@
 
 package com.paulrybitskyi.gamedge.data.auth.di
 
-import com.paulrybitskyi.gamedge.data.auth.datastores.commons.AuthDataStores
 import com.paulrybitskyi.gamedge.data.auth.usecases.RefreshAuthUseCaseImpl
-import com.paulrybitskyi.gamedge.data.auth.usecases.mappers.AuthMapper
-import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object UseCasesModule {
+internal interface UseCasesModule {
 
-
-    @Provides
-    @Singleton
-    fun provideRefreshAuthUseCase(
-        authDataStores: AuthDataStores,
-        authMapper: AuthMapper,
-        errorMapper: ErrorMapper
-    ): RefreshAuthUseCase {
-        return RefreshAuthUseCaseImpl(
-            authDataStores = authDataStores,
-            authMapper = authMapper,
-            errorMapper = errorMapper
-        )
-    }
-
-
-    @Provides
-    fun provideAuthMapper(): AuthMapper {
-        return AuthMapper()
-    }
-
+    @Binds
+    fun bindRefreshAuthUseCaseImpl(useCase: RefreshAuthUseCaseImpl): RefreshAuthUseCase
 
 }

@@ -16,10 +16,11 @@
 
 package com.paulrybitskyi.gamedge.data.commons
 
+import javax.inject.Inject
 import com.paulrybitskyi.gamedge.data.commons.entities.Error as DataError
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error as DomainError
 
-internal class ErrorMapper {
+internal class ErrorMapper @Inject constructor() {
 
 
     fun mapToDomainError(dataError: DataError): DomainError {

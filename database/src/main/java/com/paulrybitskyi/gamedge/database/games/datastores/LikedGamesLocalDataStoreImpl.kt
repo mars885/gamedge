@@ -27,8 +27,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class LikedGamesLocalDataStoreImpl(
+@Singleton
+internal class LikedGamesLocalDataStoreImpl @Inject constructor(
     private val likedGamesTable: LikedGamesTable,
     private val likedGameFactory: LikedGameFactory,
     private val dispatcherProvider: DispatcherProvider,

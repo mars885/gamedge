@@ -28,8 +28,11 @@ import com.paulrybitskyi.gamedge.igdb.api.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class GamesIgdbDataStoreImpl(
+@Singleton
+internal class GamesIgdbDataStoreImpl @Inject constructor(
     private val gamesEndpoint: GamesEndpoint,
     private val dispatcherProvider: DispatcherProvider,
     private val gameMapper: GameMapper,

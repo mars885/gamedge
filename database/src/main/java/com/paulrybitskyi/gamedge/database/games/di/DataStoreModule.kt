@@ -16,91 +16,23 @@
 
 package com.paulrybitskyi.gamedge.database.games.di
 
-import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
-import com.paulrybitskyi.gamedge.database.commons.di.qualifiers.Database
-import com.paulrybitskyi.gamedge.database.commons.utils.JsonConverter
-import com.paulrybitskyi.gamedge.database.games.datastores.GameMapper
 import com.paulrybitskyi.gamedge.database.games.datastores.GamesDatabaseDataStoreImpl
-import com.paulrybitskyi.gamedge.database.games.datastores.LikedGameFactory
 import com.paulrybitskyi.gamedge.database.games.datastores.LikedGamesLocalDataStoreImpl
-import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
-import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object DataStoreModule {
+internal interface DataStoreModule {
 
+    @Binds
+    fun bindGamesDatabaseDataStoreImpl(dataStore: GamesDatabaseDataStoreImpl): GamesLocalDataStore
 
-    @Provides
-    @Singleton
-    fun provideGamesLocalDataStore(
-        gamesTable: GamesTable,
-        dispatcherProvider: DispatcherProvider,
-        queryTimestampProvider: QueryTimestampProvider,
-        gameMapper: GameMapper
-    ): GamesLocalDataStore {
-        return GamesDatabaseDataStoreImpl(
-            gamesTable = gamesTable,
-            dispatcherProvider = dispatcherProvider,
-            queryTimestampProvider = queryTimestampProvider,
-            gameMapper = gameMapper
-        )
-    }
-
-
-    @Provides
-    fun provideGameMapper(jsonConverter: JsonConverter): GameMapper {
-        return GameMapper(jsonConverter)
-    }
-
-
-    @Provides
-    fun provideJsonConverter(@Database moshi: Moshi): JsonConverter {
-        return JsonConverter(moshi)
-    }
-
-
-    @Provides
-    @Database
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideLikedGamesLocalDataStore(
-        likedGamesTable: LikedGamesTable,
-        likedGameFactory: LikedGameFactory,
-        dispatcherProvider: DispatcherProvider,
-        gameMapper: GameMapper
-    ): LikedGamesLocalDataStore {
-        return LikedGamesLocalDataStoreImpl(
-            likedGamesTable = likedGamesTable,
-            likedGameFactory = likedGameFactory,
-            dispatcherProvider = dispatcherProvider,
-            gameMapper = gameMapper
-        )
-    }
-
-
-    @Provides
-    fun provideLikedGameFactory(timestampProvider: TimestampProvider): LikedGameFactory {
-        return LikedGameFactory(timestampProvider)
-    }
-
+    @Binds
+    fun bindLikedGamesLocalDataStoreImpl(dataStore: LikedGamesLocalDataStoreImpl): LikedGamesLocalDataStore
 
 }
