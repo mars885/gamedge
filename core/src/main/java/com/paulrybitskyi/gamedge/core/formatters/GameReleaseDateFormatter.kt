@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core.formatters
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
@@ -36,6 +37,7 @@ interface GameReleaseDateFormatter {
 }
 
 
+@BindType
 internal class GameReleaseDateFormatterImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GameReleaseDateFormatter {

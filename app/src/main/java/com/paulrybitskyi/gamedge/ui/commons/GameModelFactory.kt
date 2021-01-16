@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.commons
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.core.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
@@ -32,6 +33,7 @@ internal interface GameModelFactory {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GameModelFactoryImpl @Inject constructor(
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder,
     private val gameReleaseDateFormatter: GameReleaseDateFormatter

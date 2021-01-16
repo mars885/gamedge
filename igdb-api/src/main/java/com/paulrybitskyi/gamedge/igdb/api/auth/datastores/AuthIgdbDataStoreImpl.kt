@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.auth.datastores
 
 import com.github.michaelbull.result.mapEither
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.data.auth.datastores.AuthRemoteDataStore
 import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 import com.paulrybitskyi.gamedge.data.commons.DataResult
@@ -26,6 +27,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@BindType
 internal class AuthIgdbDataStoreImpl @Inject constructor(
     private val authEndpoint: AuthEndpoint,
     private val authMapper: AuthMapper,

@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.domain.games.commons.Pagination
 import com.paulrybitskyi.gamedge.domain.games.entities.Company
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
@@ -39,6 +40,7 @@ internal interface GamesRefreshingThrottlerKeyBuilder {
 }
 
 
+@BindType
 internal class GamesRefreshingThrottlerKeyBuilderImpl @Inject constructor() : GamesRefreshingThrottlerKeyBuilder {
 
 

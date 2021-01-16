@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.info.mapping
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoLinkModel
 import com.paulrybitskyi.gamedge.core.WebsiteIconRetriever
 import com.paulrybitskyi.gamedge.core.WebsiteNameRetriever
@@ -33,6 +34,7 @@ internal interface GameInfoLinkModelFactory {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GameInfoLinkModelFactoryImpl @Inject constructor(
     private val websiteNameRetriever: WebsiteNameRetriever,
     private val websiteIconRetriever: WebsiteIconRetriever

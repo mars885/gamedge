@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.core.urlopener
 
 import android.content.Context
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -29,6 +30,7 @@ interface UrlOpenerFactory {
 
 
 @Singleton
+@BindType
 internal class UrlOpenerFactoryImpl @Inject constructor(
     private val urlOpeners: List<@JvmSuppressWildcards UrlOpener>
 ) : UrlOpenerFactory {

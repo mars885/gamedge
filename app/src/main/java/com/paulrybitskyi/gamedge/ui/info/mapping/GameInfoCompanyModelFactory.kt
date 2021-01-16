@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.ui.info.mapping
 
 import android.content.Context
 import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoCompanyModel
 import com.paulrybitskyi.gamedge.core.IgdbImageExtension
@@ -42,6 +43,7 @@ internal interface GameInfoCompanyModelFactory {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder,

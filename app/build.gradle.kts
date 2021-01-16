@@ -45,6 +45,9 @@ dependencies {
     implementation(project(deps.local.core))
     implementation(project(deps.local.commonsUiWidgets))
 
+    implementation(project(deps.local.hiltBinder))
+    kapt(project(deps.local.hiltBinderCompiler))
+
     implementation(deps.androidX.appCompat)
     implementation(deps.androidX.navFragmentKtx)
     implementation(deps.androidX.navUiKtx)

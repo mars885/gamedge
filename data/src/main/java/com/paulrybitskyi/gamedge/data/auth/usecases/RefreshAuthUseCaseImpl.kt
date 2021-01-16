@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.auth.usecases
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.utils.mapResult
 import com.paulrybitskyi.gamedge.data.auth.datastores.commons.AuthDataStores
 import com.paulrybitskyi.gamedge.data.auth.usecases.mappers.AuthMapper
@@ -30,6 +31,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@BindType
 internal class RefreshAuthUseCaseImpl @Inject constructor(
     private val authDataStores: AuthDataStores,
     private val authMapper: AuthMapper,

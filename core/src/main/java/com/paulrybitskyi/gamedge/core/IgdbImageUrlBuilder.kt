@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.domain.games.entities.Image
 import javax.inject.Inject
 
@@ -66,6 +67,7 @@ interface IgdbImageUrlBuilder {
 }
 
 
+@BindType
 internal class IgdbImageUrlBuilderImpl @Inject constructor() : IgdbImageUrlBuilder {
 
 

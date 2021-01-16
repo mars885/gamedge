@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.discovery.mapping
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemChildModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemModel
@@ -42,6 +43,7 @@ internal interface GamesDiscoveryItemModelFactory {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GamesDiscoveryItemModelFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GamesDiscoveryItemModelFactory {

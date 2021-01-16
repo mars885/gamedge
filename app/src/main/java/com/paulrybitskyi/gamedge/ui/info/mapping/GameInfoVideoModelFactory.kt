@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.info.mapping
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.core.YoutubeMediaUrlBuilder
 import com.paulrybitskyi.gamedge.core.YoutubeThumbnailSize
@@ -32,6 +33,7 @@ internal interface GameInfoVideoModelFactory {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GameInfoVideoModelFactoryImpl @Inject constructor(
     private val youtubeMediaUrlBuilder: YoutubeMediaUrlBuilder,
 ) : GameInfoVideoModelFactory {

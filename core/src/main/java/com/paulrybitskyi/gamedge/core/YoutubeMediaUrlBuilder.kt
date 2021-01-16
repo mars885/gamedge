@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.domain.games.entities.Video
 import javax.inject.Inject
 
@@ -40,6 +41,7 @@ interface YoutubeMediaUrlBuilder {
 }
 
 
+@BindType
 internal class YoutubeMediaUrlBuilderImpl @Inject constructor() : YoutubeMediaUrlBuilder {
 
 

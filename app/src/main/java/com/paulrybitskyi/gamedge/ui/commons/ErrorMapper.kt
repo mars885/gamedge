@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.commons
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.commons.DomainException
@@ -30,6 +31,7 @@ internal interface ErrorMapper {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class ErrorMapperImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : ErrorMapper {

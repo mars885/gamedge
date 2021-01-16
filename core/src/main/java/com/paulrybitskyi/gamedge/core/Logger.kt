@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.core
 
 import android.util.Log
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 
@@ -33,6 +34,7 @@ interface Logger {
 }
 
 
+@BindType
 internal class GamedgeLogger @Inject constructor() : Logger {
 
 

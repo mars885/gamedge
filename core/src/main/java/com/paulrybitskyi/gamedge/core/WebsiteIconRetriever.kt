@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import javax.inject.Inject
@@ -28,6 +29,7 @@ interface WebsiteIconRetriever {
 }
 
 
+@BindType
 internal class WebsiteIconRetrieverImpl @Inject constructor() : WebsiteIconRetriever {
 
 

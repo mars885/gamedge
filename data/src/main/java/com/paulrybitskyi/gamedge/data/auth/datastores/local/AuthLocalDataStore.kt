@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.data.auth.datastores.local
 
 import androidx.datastore.DataStore
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 import kotlinx.coroutines.flow.first
@@ -36,6 +37,7 @@ interface AuthLocalDataStore {
 
 
 @Singleton
+@BindType
 internal class AuthFileDataStore @Inject constructor(
     private val protoDataStore: DataStore<ProtoOauthCredentials>,
     private val timestampProvider: TimestampProvider,

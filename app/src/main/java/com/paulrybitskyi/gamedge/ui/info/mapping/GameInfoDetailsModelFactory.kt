@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.info.mapping
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoDetailsModel
 import com.paulrybitskyi.gamedge.domain.games.entities.*
 import javax.inject.Inject
@@ -28,6 +29,7 @@ internal interface GameInfoDetailsModelFactory {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoDetailsModelFactory {
 
 

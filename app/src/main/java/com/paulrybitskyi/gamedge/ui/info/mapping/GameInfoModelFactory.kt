@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.info.mapping
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.games.GameInfoRelatedGamesModel
 import com.paulrybitskyi.gamedge.core.IgdbImageSize
@@ -36,6 +37,7 @@ internal interface GameInfoModelFactory {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GameInfoModelFactoryImpl @Inject constructor(
     private val headerModelFactory: GameInfoHeaderModelFactory,
     private val videoModelFactory: GameInfoVideoModelFactory,

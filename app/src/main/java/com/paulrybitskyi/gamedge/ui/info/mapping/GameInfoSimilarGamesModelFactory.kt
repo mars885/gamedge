@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.info.mapping
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.games.GameInfoRelatedGameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.games.GameInfoRelatedGamesModel
@@ -34,6 +35,7 @@ internal interface GameInfoSimilarGamesModelFactory {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GameInfoSimilarGamesModelFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider,
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder

@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.discovery.mapping
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemChildModel
 import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
@@ -30,6 +31,7 @@ internal interface GamesDiscoveryItemGameModelMapper {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GamesDiscoveryItemGameModelMapperImpl @Inject constructor(
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder
 ) : GamesDiscoveryItemGameModelMapper {

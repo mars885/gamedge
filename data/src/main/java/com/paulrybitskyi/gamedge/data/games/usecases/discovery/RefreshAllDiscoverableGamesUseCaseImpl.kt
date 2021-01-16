@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.discovery
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.mapError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
@@ -36,6 +37,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@BindType
 internal class RefreshAllDiscoverableGamesUseCaseImpl @Inject constructor(
     private val gamesDataStores: GamesDataStores,
     private val dispatcherProvider: DispatcherProvider,

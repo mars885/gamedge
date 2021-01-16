@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.games.datastores
 
 import com.github.michaelbull.result.mapEither
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.commons.DataResult
 import com.paulrybitskyi.gamedge.data.games.DataCompany
@@ -32,6 +33,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@BindType
 internal class GamesIgdbDataStoreImpl @Inject constructor(
     private val gamesEndpoint: GamesEndpoint,
     private val dispatcherProvider: DispatcherProvider,

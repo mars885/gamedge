@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ResolveInfo
 import android.net.Uri
+import com.paulrybitskyi.hiltbinder.BindType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,6 +36,7 @@ interface CustomTabsProvider {
 
 
 @Singleton
+@BindType
 internal class CustomTabsProviderImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : CustomTabsProvider {

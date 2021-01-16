@@ -20,6 +20,7 @@ import androidx.datastore.DataStore
 import androidx.datastore.preferences.Preferences
 import androidx.datastore.preferences.edit
 import androidx.datastore.preferences.preferencesKey
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -42,6 +43,7 @@ internal interface GamesRefreshingThrottler {
 
 
 @Singleton
+@BindType
 internal class GamesRefreshingThrottlerImpl @Inject constructor(
     private val gamesPreferences: DataStore<Preferences>,
     private val timestampProvider: TimestampProvider

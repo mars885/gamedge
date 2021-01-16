@@ -36,6 +36,9 @@ dependencies {
     implementation(project(deps.local.igdbApicalypse))
     implementation(project(deps.local.core))
 
+    implementation(project(deps.local.hiltBinder))
+    kapt(project(deps.local.hiltBinderCompiler))
+
     implementation(deps.kotlin.coroutinesCore)
 
     implementation(deps.square.okHttpLoggingInterceptor)

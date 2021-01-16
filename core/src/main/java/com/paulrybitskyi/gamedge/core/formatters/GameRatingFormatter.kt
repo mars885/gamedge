@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core.formatters
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import javax.inject.Inject
@@ -29,6 +30,7 @@ interface GameRatingFormatter {
 }
 
 
+@BindType
 internal class GameRatingFormatterImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GameRatingFormatter {

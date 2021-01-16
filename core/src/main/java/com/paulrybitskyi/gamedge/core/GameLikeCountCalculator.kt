@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import javax.inject.Inject
 
@@ -27,6 +28,7 @@ interface GameLikeCountCalculator {
 }
 
 
+@BindType
 internal class GameLikeCountCalculatorImpl @Inject constructor() : GameLikeCountCalculator {
 
 

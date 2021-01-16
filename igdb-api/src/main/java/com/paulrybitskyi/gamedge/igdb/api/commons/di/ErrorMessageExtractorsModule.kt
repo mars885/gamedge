@@ -16,56 +16,32 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.commons.di
 
-import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.ErrorMessageExtractorQualifier
+import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.ErrorMessageExtractorKey
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.ErrorMessageExtractor
-import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.concrete.CompositeErrorMessageExtractor
-import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.concrete.IgdbErrorMessageExtractor
-import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.concrete.TwitchErrorMessageExtractor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dagger.hilt.migration.DisableInstallInCheck
 import dagger.multibindings.IntoSet
 
-@Module(includes = [ErrorMessageExtractorsModule.MultibindingsModule::class])
+@Module
 @InstallIn(SingletonComponent::class)
 internal interface ErrorMessageExtractorsModule {
 
 
     @Binds
-    @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.TWITCH)
-    fun bindTwitchErrorMessageExtractor(extractor: TwitchErrorMessageExtractor): ErrorMessageExtractor
-
-
-    @Binds
-    @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.IGDB)
-    fun bindIgdbErrorMessageExtractor(extractor: IgdbErrorMessageExtractor): ErrorMessageExtractor
-
+    @IntoSet
+    fun bindTwitchErrorMessageExtractorToSet(
+        @ErrorMessageExtractorKey(ErrorMessageExtractorKey.Type.TWITCH)
+        errorMessageExtractor: ErrorMessageExtractor
+    ): ErrorMessageExtractor
 
     @Binds
-    fun bindCompositeErrorMessageExtractor(extractor: CompositeErrorMessageExtractor): ErrorMessageExtractor
-
-
-    @Module
-    @DisableInstallInCheck
-    interface MultibindingsModule {
-
-        @Binds
-        @IntoSet
-        fun bindTwitchErrorMessageExtractorToSet(
-            @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.TWITCH)
-            errorMessageExtractor: ErrorMessageExtractor
-        ): ErrorMessageExtractor
-
-        @Binds
-        @IntoSet
-        fun bindIgdbErrorMessageExtractorToSet(
-            @ErrorMessageExtractorQualifier(ErrorMessageExtractorQualifier.Type.IGDB)
-            errorMessageExtractor: ErrorMessageExtractor
-        ): ErrorMessageExtractor
-
-    }
+    @IntoSet
+    fun bindIgdbErrorMessageExtractorToSet(
+        @ErrorMessageExtractorKey(ErrorMessageExtractorKey.Type.IGDB)
+        errorMessageExtractor: ErrorMessageExtractor
+    ): ErrorMessageExtractor
 
 
 }

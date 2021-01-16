@@ -71,6 +71,8 @@ object deps {
         const val core = ":core"
         const val commonsData = ":commons-data"
         const val commonsUiWidgets = ":commons-ui-widgets"
+        const val hiltBinder = ":hilt-binder"
+        const val hiltBinderCompiler = ":hilt-binder-compiler"
 
     }
 

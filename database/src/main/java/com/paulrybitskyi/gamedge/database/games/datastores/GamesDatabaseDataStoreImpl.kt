@@ -16,7 +16,8 @@
 
 package com.paulrybitskyi.gamedge.database.games.datastores
 
-import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
+import com.paulrybitskyi.hiltbinder.BindType
+import com.paulrybitskyi.gamedge.commons.data.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
@@ -30,6 +31,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@BindType
 internal class GamesDatabaseDataStoreImpl @Inject constructor(
     private val gamesTable: GamesTable,
     private val dispatcherProvider: DispatcherProvider,

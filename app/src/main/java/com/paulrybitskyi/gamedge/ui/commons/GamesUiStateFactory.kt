@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.commons
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GamesUiState
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import javax.inject.Inject
@@ -32,6 +33,7 @@ internal interface GamesUiStateFactory {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GamesUiStateFactoryImpl @Inject constructor(
     private val gameModelFactory: GameModelFactory
 ) : GamesUiStateFactory {

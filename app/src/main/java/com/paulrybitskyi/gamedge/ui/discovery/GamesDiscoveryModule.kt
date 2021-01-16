@@ -22,11 +22,6 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveComingSo
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveMostAnticipatedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveRecentlyReleasedGamesUseCase
-import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemGameModelMapper
-import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemGameModelMapperImpl
-import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemModelFactory
-import com.paulrybitskyi.gamedge.ui.discovery.mapping.GamesDiscoveryItemModelFactoryImpl
-import dagger.Binds
 import dagger.MapKey
 import dagger.Module
 import dagger.Provides
@@ -42,14 +37,6 @@ internal interface GamesDiscoveryModule {
 
     @MapKey
     annotation class GamesDiscoveryCategoryKey(val category: GamesDiscoveryCategory)
-
-
-    @Binds
-    fun bindGamesDiscoveryItemModelFactoryImpl(factory: GamesDiscoveryItemModelFactoryImpl): GamesDiscoveryItemModelFactory
-
-
-    @Binds
-    fun bindGamesDiscoveryItemGameModelMapperImpl(mapper: GamesDiscoveryItemGameModelMapperImpl): GamesDiscoveryItemGameModelMapper
 
 
     @Module

@@ -16,7 +16,8 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.querybuilder
 
-import com.paulrybitskyi.gamedge.commons.data.querying.QueryTimestampProvider
+import com.paulrybitskyi.hiltbinder.BindType
+import com.paulrybitskyi.gamedge.commons.data.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.HYPE_COUNT
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.ID
@@ -27,6 +28,7 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBui
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
 import javax.inject.Inject
 
+@BindType
 internal class IgdbApiQueryBuilderImpl @Inject constructor(
     private val apicalypseQueryBuilderFactory: ApicalypseQueryBuilderFactory,
     private val apicalypseSerializer: ApicalypseSerializer,

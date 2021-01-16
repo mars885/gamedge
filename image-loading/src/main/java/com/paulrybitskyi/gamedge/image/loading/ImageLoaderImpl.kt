@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.image.loading
 
 import android.widget.ImageView
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.image.loading.utils.PicassoTransformation
 import com.paulrybitskyi.gamedge.image.loading.utils.into
 import com.squareup.picasso.Picasso
@@ -24,9 +25,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@BindType
 internal class ImageLoaderImpl @Inject constructor(
     private val picasso: Picasso
-) : ImageLoader {
+): ImageLoader {
 
 
     override fun loadImage(config: Config) {

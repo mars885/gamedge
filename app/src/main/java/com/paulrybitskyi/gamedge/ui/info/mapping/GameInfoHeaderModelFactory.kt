@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.ui.info.mapping
 
+import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.commons.ui.widgets.header.GameHeaderImageModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoHeaderModel
 import com.paulrybitskyi.gamedge.core.GameLikeCountCalculator
@@ -37,6 +38,7 @@ internal interface GameInfoHeaderModelFactory {
 }
 
 
+@BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder,
     private val releaseDateFormatter: GameReleaseDateFormatter,

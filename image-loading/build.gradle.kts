@@ -21,6 +21,9 @@ plugins {
 }
 
 dependencies {
+    implementation(project(deps.local.hiltBinder))
+    kapt(project(deps.local.hiltBinderCompiler))
+
     implementation(deps.square.picasso)
     implementation(deps.commons.commonsKtx)
 
