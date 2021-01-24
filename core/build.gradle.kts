@@ -33,9 +33,6 @@ android {
 dependencies {
     implementation(project(deps.local.domain))
 
-    implementation(project(deps.local.hiltBinder))
-    kapt(project(deps.local.hiltBinderCompiler))
-
     implementation(deps.kotlin.coroutinesCore)
     implementation(deps.androidX.appCompat)
     implementation(deps.androidX.lifecycleCommonJava8)
@@ -47,6 +44,9 @@ dependencies {
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
+
+    implementation(deps.misc.hiltBinder)
+    kapt(deps.misc.hiltBinderCompiler)
 
     coreLibraryDesugaring(deps.misc.desugaredLibs)
 

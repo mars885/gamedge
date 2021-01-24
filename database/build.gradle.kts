@@ -35,9 +35,6 @@ dependencies {
     implementation(project(deps.local.commonsData))
     implementation(project(deps.local.core))
 
-    implementation(project(deps.local.hiltBinder))
-    kapt(project(deps.local.hiltBinderCompiler))
-
     implementation(deps.kotlin.coroutinesCore)
 
     implementation(deps.square.moshi)
@@ -51,6 +48,9 @@ dependencies {
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
+
+    implementation(deps.misc.hiltBinder)
+    kapt(deps.misc.hiltBinderCompiler)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

@@ -71,8 +71,6 @@ object deps {
         const val core = ":core"
         const val commonsData = ":commons-data"
         const val commonsUiWidgets = ":commons-ui-widgets"
-        const val hiltBinder = ":hilt-binder"
-        const val hiltBinderCompiler = ":hilt-binder-compiler"
 
     }
 
@@ -180,10 +178,13 @@ object deps {
         private const val desugaredLibsVersion = "1.0.10"
         private const val kotlinResultVersion = "1.1.9"
         private const val expandableTextViewVersion = "1.0.5"
+        private const val hiltBinderVersion = "1.0.0-alpha01"
 
         const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${desugaredLibsVersion}"
         const val kotlinResult = "com.michael-bull.kotlin-result:kotlin-result:${kotlinResultVersion}"
         const val expandableTextView = "at.blogc:expandabletextview:${expandableTextViewVersion}"
+        const val hiltBinder = "com.paulrybitskyi:hilt-binder:$hiltBinderVersion"
+        const val hiltBinderCompiler = "com.paulrybitskyi:hilt-binder-compiler:$hiltBinderVersion"
 
     }
 

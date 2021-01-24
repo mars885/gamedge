@@ -45,9 +45,6 @@ dependencies {
     implementation(project(deps.local.core))
     implementation(project(deps.local.commonsUiWidgets))
 
-    implementation(project(deps.local.hiltBinder))
-    kapt(project(deps.local.hiltBinderCompiler))
-
     implementation(deps.androidX.appCompat)
     implementation(deps.androidX.navFragmentKtx)
     implementation(deps.androidX.navUiKtx)
@@ -70,6 +67,9 @@ dependencies {
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
+
+    implementation(deps.misc.hiltBinder)
+    kapt(deps.misc.hiltBinderCompiler)
 
     implementation(deps.androidX.daggerHiltAssistedInjection)
     kapt(deps.androidX.daggerHiltAssistedInjectionCompiler)
