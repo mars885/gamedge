@@ -17,11 +17,12 @@
 package com.paulrybitskyi.gamedge.ui.discovery.mapping
 
 import com.paulrybitskyi.hiltbinder.BindType
-import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
+import com.paulrybitskyi.gamedge.ui.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemChildModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemUiState
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
+import com.paulrybitskyi.gamedge.ui.discovery.titleId
 import javax.inject.Inject
 
 
@@ -51,7 +52,7 @@ internal class GamesDiscoveryItemModelFactoryImpl @Inject constructor(
 
     override fun createDefault(category: GamesDiscoveryCategory): GamesDiscoveryItemModel {
         return GamesDiscoveryItemModel(
-            category = category,
+            category = category.name,
             title = stringProvider.getString(category.titleId),
             isProgressBarVisible = false,
             uiState = GamesDiscoveryItemUiState.Empty

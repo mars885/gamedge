@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.ui.discovery
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemChildModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemModel
 import com.paulrybitskyi.gamedge.core.Logger
@@ -145,8 +144,8 @@ internal class GamesDiscoveryViewModel @Inject constructor(
     }
 
 
-    fun onCategoryMoreButtonClicked(category: GamesDiscoveryCategory) {
-        //todo
+    fun onCategoryMoreButtonClicked(category: String) {
+        val gamesDiscoveryCategory = GamesDiscoveryCategory.valueOf(category)
     }
 
 

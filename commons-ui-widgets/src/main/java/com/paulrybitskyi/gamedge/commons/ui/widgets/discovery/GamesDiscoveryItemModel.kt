@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.commons.ui.widgets.discovery
 
 data class GamesDiscoveryItemModel(
-    val category: GamesDiscoveryCategory,
+    val category: String,
     val title: String,
     val isProgressBarVisible: Boolean,
     val uiState: GamesDiscoveryItemUiState
