@@ -16,8 +16,17 @@
 
 package com.paulrybitskyi.gamedge.ui.discovery
 
-import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
+import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import com.paulrybitskyi.gamedge.ui.discovery.di.GamesDiscoveryKey
+
+
+internal val GamesDiscoveryCategory.titleId: Int
+    get() = when(this) {
+        GamesDiscoveryCategory.POPULAR -> R.string.games_category_popular
+        GamesDiscoveryCategory.RECENTLY_RELEASED -> R.string.games_category_recently_released
+        GamesDiscoveryCategory.COMING_SOON -> R.string.games_category_coming_soon
+        GamesDiscoveryCategory.MOST_ANTICIPATED -> R.string.games_category_most_anticipated
+    }
 
 
 internal fun GamesDiscoveryCategory.toKeyType(): GamesDiscoveryKey.Type {

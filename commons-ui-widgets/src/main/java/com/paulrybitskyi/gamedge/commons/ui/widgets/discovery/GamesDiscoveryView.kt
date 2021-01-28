@@ -48,7 +48,7 @@ class GamesDiscoveryView @JvmOverloads constructor(
         adapterItems = newValue.toAdapterItems()
     }
 
-    var onCategoryMoreButtonClickListener: ((GamesDiscoveryCategory) -> Unit)? = null
+    var onCategoryMoreButtonClickListener: ((String) -> Unit)? = null
     var onCategoryGameClickListener: ((GamesDiscoveryItemChildModel) -> Unit)? = null
     var onRefreshListener: (() -> Unit)? = null
 
