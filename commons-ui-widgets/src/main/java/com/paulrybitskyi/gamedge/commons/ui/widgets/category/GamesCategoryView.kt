@@ -14,51 +14,56 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.ui.widgets.games
+package com.paulrybitskyi.gamedge.commons.ui.widgets.category
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.paulrybitskyi.commons.device.info.screenMetrics
 import com.paulrybitskyi.commons.ktx.*
-import com.paulrybitskyi.commons.recyclerview.decorators.spacing.SpacingItemDecorator
-import com.paulrybitskyi.commons.recyclerview.decorators.spacing.policies.LastItemExclusionPolicy
+import com.paulrybitskyi.commons.recyclerview.decorators.GridSpacingItemDecorator
 import com.paulrybitskyi.commons.recyclerview.utils.addOnScrollListener
 import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
-import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGamesBinding
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.disableAfterAnimationEnds
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.fadeIn
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.resetAnimation
-import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GamesUiState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGamesCategoryBinding
+import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.*
+import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.getFloat
+import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.getInteger
+import kotlin.math.roundToInt
 
-class GamesView @JvmOverloads constructor(
+class GamesCategoryView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+): FrameLayout(context, attrs, defStyleAttr) {
 
 
-    private val binding = ViewGamesBinding.inflate(context.layoutInflater, this)
+    private val gridSpanCount = getInteger(R.integer.games_category_grid_span_count)
+    private val gridItemSpacing = getDimensionPixelSize(R.dimen.games_category_grid_item_spacing)
+    private val itemHeightToWidthRatio = getFloat(R.integer.games_category_item_height_to_width_ratio)
 
-    private lateinit var adapter: GamesAdapter
+    private val binding = ViewGamesCategoryBinding.inflate(context.layoutInflater, this)
 
-    private var adapterItems by observeChanges<List<GameItem>>(emptyList()) { _, newItems ->
-        adapter.submitList(newItems) {
-            binding.recyclerView.invalidateItemDecorations()
-        }
+    private lateinit var adapter: GamesCategoryAdapter
+
+    private var adapterDeps by observeChanges(DEFAULT_ADAPTER_DEPS) { _, newValue ->
+        adapter.dependencies = newValue
     }
 
-    var uiState by observeChanges<GamesUiState>(GamesUiState.Empty) { _, newState ->
-        handleUiStateChange(newState)
+    private var adapterItems by observeChanges<List<GameCategoryItem>>(emptyList()) { _, newItems ->
+        adapter.submitList(newItems)
     }
 
-    var onGameClickListener: ((GameModel) -> Unit)? = null
+    var uiState by observeChanges<GamesCategoryUiState>(GamesCategoryUiState.Empty) { _, newState ->
+        handleUiStateChanged(newState)
+    }
+
+    var onGameClickListener: ((GameCategoryModel) -> Unit)? = null
     var onBottomReachListener: (() -> Unit)? = null
 
 
@@ -70,7 +75,7 @@ class GamesView @JvmOverloads constructor(
 
 
     private fun initSwipeRefreshLayout() = with(binding.swipeRefreshLayout) {
-        setColorSchemeColors(getColor(R.color.games_swipe_refresh_color))
+        setColorSchemeColors(getColor(R.color.games_category_swipe_refresh_color))
         hideSwipeRefresh()
     }
 
@@ -79,41 +84,50 @@ class GamesView @JvmOverloads constructor(
         disableChangeAnimations()
         layoutManager = initLayoutManager(context)
         adapter = initAdapter(context)
+        adapterDeps = initAdapterDeps()
         addItemDecoration(initItemDecorator())
         addOnScrollListener(onBottomReached = { _, _ -> onBottomReachListener?.invoke() })
+
     }
 
 
     private fun initLayoutManager(context: Context): LinearLayoutManager {
-        return object : LinearLayoutManager(context) {
-
-            override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
-                return RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-            }
-
-        }
+        return GridLayoutManager(context, gridSpanCount)
     }
 
 
-    private fun initAdapter(context: Context): GamesAdapter {
-        return GamesAdapter(context)
+    private fun initAdapter(context: Context): GamesCategoryAdapter {
+        return GamesCategoryAdapter(context)
             .apply { listenerBinder = ::bindListener }
             .also { adapter = it }
     }
 
 
-    private fun bindListener(item: GameItem, viewHolder: RecyclerView.ViewHolder) {
-        if(viewHolder is GameItem.ViewHolder) {
+    private fun bindListener(item: GameCategoryItem, viewHolder: RecyclerView.ViewHolder) {
+        if(viewHolder is GameCategoryItem.ViewHolder) {
             viewHolder.setOnGameClickListener { onGameClickListener?.invoke(item.model) }
         }
     }
 
 
-    private fun initItemDecorator(): SpacingItemDecorator {
-        return SpacingItemDecorator(
-            spacing = getDimensionPixelSize(R.dimen.games_decorator_spacing),
-            sideFlags = SpacingItemDecorator.SIDE_BOTTOM,
-            itemExclusionPolicy = LastItemExclusionPolicy()
+    private fun initAdapterDeps(): GamesCategoryAdapterDeps {
+        val horizontalTotalSpacing = (gridItemSpacing * (gridSpanCount + 1))
+        val screenWidth = (context.screenMetrics.width.sizeInPixels - horizontalTotalSpacing)
+        val itemWidth = (screenWidth / gridSpanCount.toFloat())
+        val itemHeight = (itemWidth * itemHeightToWidthRatio)
+
+        return adapterDeps.copy(
+            itemWidth = itemWidth.roundToInt(),
+            itemHeight = itemHeight.roundToInt()
+        )
+    }
+
+
+    private fun initItemDecorator(): GridSpacingItemDecorator {
+        return GridSpacingItemDecorator(
+            spacing = gridItemSpacing,
+            spanCount = gridSpanCount,
+            includeEdge = true
         )
     }
 
@@ -123,16 +137,16 @@ class GamesView @JvmOverloads constructor(
     }
 
 
-    private fun List<GameModel>.toAdapterItems(): List<GameItem> {
-        return map(::GameItem)
+    private fun List<GameCategoryModel>.toAdapterItems(): List<GameCategoryItem> {
+        return map(::GameCategoryItem)
     }
 
 
-    private fun handleUiStateChange(newState: GamesUiState) {
+    private fun handleUiStateChanged(newState: GamesCategoryUiState) {
         when(newState) {
-            is GamesUiState.Empty -> onEmptyUiStateSelected()
-            is GamesUiState.Loading -> onLoadingStateSelected()
-            is GamesUiState.Result -> onResultUiStateSelected(newState)
+            is GamesCategoryUiState.Empty -> onEmptyUiStateSelected()
+            is GamesCategoryUiState.Loading -> onLoadingStateSelected()
+            is GamesCategoryUiState.Result -> onResultUiStateSelected(newState)
         }
     }
 
@@ -155,7 +169,7 @@ class GamesView @JvmOverloads constructor(
     }
 
 
-    private fun onResultUiStateSelected(uiState: GamesUiState.Result) {
+    private fun onResultUiStateSelected(uiState: GamesCategoryUiState.Result) {
         adapterItems = uiState.items.toAdapterItems()
 
         showRecyclerView()

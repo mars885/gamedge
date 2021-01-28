@@ -53,6 +53,7 @@ dependencies {
     implementation(deps.commons.commonsWidgets)
     implementation(deps.commons.commonsRecyclerView)
     implementation(deps.commons.commonsMaterial)
+    implementation(deps.commons.commonsDeviceInfo)
 
     implementation(deps.misc.expandableTextView)
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,14 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.games.usecases.discovery
+package com.paulrybitskyi.gamedge.commons.ui.widgets.category
 
-import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
+sealed class GamesCategoryUiState {
 
-interface RefreshMostAnticipatedGamesUseCase : RefreshableGamesUseCase
+    object Empty : GamesCategoryUiState()
+
+    object Loading : GamesCategoryUiState()
+
+    data class Result(val items: List<GameCategoryModel>) : GamesCategoryUiState()
+
+}

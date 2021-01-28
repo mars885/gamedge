@@ -27,8 +27,26 @@
         android:name="com.paulrybitskyi.gamedge.ui.dashboard.fragment.DashboardFragment"/>
 
     <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.paulrybitskyi.gamedge.ui.category.GamesCategoryFragment"/>
+
+    <fragment
         android:id="@+id/infoFragment"
         android:name="com.paulrybitskyi.gamedge.ui.info.GameInfoFragment"/>
+
+    <action
+        android:id="@+id/action_categoryFragment"
+        app:destination="@+id/categoryFragment"
+        app:enterAnim="@anim/horizontal_sliding_window_b_enter_animation"
+        app:exitAnim="@anim/horizontal_sliding_window_a_exit_animation"
+        app:popEnterAnim="@anim/horizontal_sliding_window_a_enter_animation"
+        app:popExitAnim="@anim/horizontal_sliding_window_b_exit_animation">
+
+        <argument
+            android:name="games_category"
+            app:argType="com.paulrybitskyi.gamedge.ui.category.GamesCategory"/>
+
+    </action>
 
     <action
         android:id="@+id/action_infoFragment"

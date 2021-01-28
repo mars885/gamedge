@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.discovery
 
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.mapError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
@@ -32,6 +31,7 @@ import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRef
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshAllDiscoverableGamesUseCase
+import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton

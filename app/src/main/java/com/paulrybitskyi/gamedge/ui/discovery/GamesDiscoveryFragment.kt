@@ -23,6 +23,7 @@ import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.databinding.FragmentGamesDiscoveryBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.ui.base.events.Route
+import com.paulrybitskyi.gamedge.ui.category.GamesCategory
 import com.paulrybitskyi.gamedge.ui.dashboard.fragment.DashboardFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,8 +77,14 @@ internal class GamesDiscoveryFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
+            is GamesDiscoveryRoute.Category -> navigateToCategoryScreen(route.category)
             is GamesDiscoveryRoute.Info -> navigateToInfoScreen(route.gameId)
         }
+    }
+
+
+    private fun navigateToCategoryScreen(category: GamesCategory) {
+        navController.navigate(DashboardFragmentDirections.actionCategoryFragment(category))
     }
 
 

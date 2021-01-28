@@ -25,7 +25,7 @@ import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.commons.nextPage
+import com.paulrybitskyi.gamedge.domain.games.commons.nextLimitPage
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
@@ -110,7 +110,7 @@ internal class LikedGamesViewModel @Inject constructor(
         if(!hasMoreDataToLoad) return
 
         observeGamesUseCaseParams = observeGamesUseCaseParams.copy(
-            observeGamesUseCaseParams.pagination.nextPage()
+            observeGamesUseCaseParams.pagination.nextLimitPage()
         )
 
         viewModelScope.launch {

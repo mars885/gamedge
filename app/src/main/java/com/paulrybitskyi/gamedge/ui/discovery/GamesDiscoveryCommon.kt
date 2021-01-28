@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.ui.discovery
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
+import com.paulrybitskyi.gamedge.ui.category.GamesCategory
 import com.paulrybitskyi.gamedge.ui.discovery.di.GamesDiscoveryKey
 
 
@@ -35,5 +36,15 @@ internal fun GamesDiscoveryCategory.toKeyType(): GamesDiscoveryKey.Type {
         GamesDiscoveryCategory.RECENTLY_RELEASED -> GamesDiscoveryKey.Type.RECENTLY_RELEASED
         GamesDiscoveryCategory.COMING_SOON -> GamesDiscoveryKey.Type.COMING_SOON
         GamesDiscoveryCategory.MOST_ANTICIPATED -> GamesDiscoveryKey.Type.MOST_ANTICIPATED
+    }
+}
+
+
+internal fun GamesDiscoveryCategory.toGamesCategory(): GamesCategory {
+    return when(this) {
+        GamesDiscoveryCategory.POPULAR -> GamesCategory.POPULAR
+        GamesDiscoveryCategory.RECENTLY_RELEASED -> GamesCategory.RECENTLY_RELEASED
+        GamesDiscoveryCategory.COMING_SOON -> GamesCategory.COMING_SOON
+        GamesDiscoveryCategory.MOST_ANTICIPATED -> GamesCategory.MOST_ANTICIPATED
     }
 }

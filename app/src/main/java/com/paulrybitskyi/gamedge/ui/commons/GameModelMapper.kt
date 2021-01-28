@@ -26,21 +26,21 @@ import com.paulrybitskyi.gamedge.domain.games.entities.extensions.developerCompa
 import javax.inject.Inject
 
 
-internal interface GameModelFactory {
+internal interface GameModelMapper {
 
-    fun createGameModel(game: Game): GameModel
+    fun mapToGameModel(game: Game): GameModel
 
 }
 
 
 @BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
-internal class GameModelFactoryImpl @Inject constructor(
+internal class GameModelMapperImpl @Inject constructor(
     private val igdbImageUrlBuilder: IgdbImageUrlBuilder,
     private val gameReleaseDateFormatter: GameReleaseDateFormatter
-) : GameModelFactory {
+) : GameModelMapper {
 
 
-    override fun createGameModel(game: Game): GameModel {
+    override fun mapToGameModel(game: Game): GameModel {
         return GameModel(
             id = game.id,
             coverImageUrl = game.buildCoverImageUrl(),

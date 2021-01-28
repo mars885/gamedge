@@ -105,4 +105,7 @@
     <!-- GamesView -->
     <color name="games_swipe_refresh_color">@color/colorAccent</color>
 
+    <!-- GamesCategoryView -->
+    <color name="games_category_swipe_refresh_color">@color/colorAccent</color>
+
 </resources>

@@ -161,6 +161,7 @@ object deps {
         private const val commonsNetworkVersion = "1.0.0"
         private const val commonsRecyclerViewVersion = "1.0.0"
         private const val commonsWindowAnimsVersion = "1.0.0"
+        private const val commonsDeviceInfoVersion = "1.0.0"
 
         const val commonsCore = "com.paulrybitskyi.commons:commons-core:${commonsCoreVersion}"
         const val commonsKtx = "com.paulrybitskyi.commons:commons-ktx:${commonsKtxVersion}"
@@ -170,6 +171,7 @@ object deps {
         const val commonsNetwork = "com.paulrybitskyi.commons:commons-network:${commonsNetworkVersion}"
         const val commonsRecyclerView = "com.paulrybitskyi.commons:commons-recyclerview:${commonsRecyclerViewVersion}"
         const val commonsWindowAnims = "com.paulrybitskyi.commons:commons-window-anims:${commonsWindowAnimsVersion}"
+        const val commonsDeviceInfo = "com.paulrybitskyi.commons:commons-device-info:${commonsDeviceInfoVersion}"
 
     }
 
