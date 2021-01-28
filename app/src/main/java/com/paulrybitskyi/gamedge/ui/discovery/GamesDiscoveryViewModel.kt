@@ -96,7 +96,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
 
 
     private suspend fun loadGames(category: GamesDiscoveryCategory): Flow<List<GamesDiscoveryItemChildModel>> {
-        return discoveryUseCases.observeGamesUseCasesMap.getValue(category)
+        return discoveryUseCases.observeGamesUseCasesMap.getValue(category.toKeyType())
             .execute(observeGamesUseCaseParams)
             .map(discoveryItemGameModelMapper::mapToItemModels)
             .flowOn(dispatcherProvider.computation)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,15 @@
 
 package com.paulrybitskyi.gamedge.ui.discovery
 
-import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshAllDiscoverableGamesUseCase
+import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.ui.discovery.di.GamesDiscoveryKey
-import javax.inject.Inject
 
-internal class GamesDiscoveryUseCases @Inject constructor(
-    val observeGamesUseCasesMap: Map<GamesDiscoveryKey.Type, @JvmSuppressWildcards ObservableGamesUseCase>,
-    val refreshAllDiscoverableGamesUseCase: RefreshAllDiscoverableGamesUseCase
-)
+
+internal fun GamesDiscoveryCategory.toKeyType(): GamesDiscoveryKey.Type {
+    return when(this) {
+        GamesDiscoveryCategory.POPULAR -> GamesDiscoveryKey.Type.POPULAR
+        GamesDiscoveryCategory.RECENTLY_RELEASED -> GamesDiscoveryKey.Type.RECENTLY_RELEASED
+        GamesDiscoveryCategory.COMING_SOON -> GamesDiscoveryKey.Type.COMING_SOON
+        GamesDiscoveryCategory.MOST_ANTICIPATED -> GamesDiscoveryKey.Type.MOST_ANTICIPATED
+    }
+}
