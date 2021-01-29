@@ -52,8 +52,8 @@
     <dimen name="games_category_preview_info_view_margin_bottom">25dp</dimen>
     <dimen name="games_category_preview_info_view_icon_size">80dp</dimen>
     <dimen name="games_category_preview_info_view_title_text_size">17sp</dimen>
-    <dimen name="games_category_preview_cover_item_width">144dp</dimen>
-    <dimen name="games_category_preview_cover_item_height">197dp</dimen>
+    <dimen name="games_category_preview_cover_item_width">112dp</dimen>
+    <dimen name="games_category_preview_cover_item_height">153dp</dimen>
     <dimen name="games_category_preview_cover_item_margin">3dp</dimen>
 
     <!-- GamesDiscoveryView -->
