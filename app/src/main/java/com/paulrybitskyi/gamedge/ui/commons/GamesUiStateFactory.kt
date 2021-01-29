@@ -35,7 +35,7 @@ internal interface GamesUiStateFactory {
 
 @BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
 internal class GamesUiStateFactoryImpl @Inject constructor(
-    private val gameModelFactory: GameModelFactory
+    private val gameModelMapper: GameModelMapper
 ) : GamesUiStateFactory {
 
 
@@ -52,7 +52,7 @@ internal class GamesUiStateFactoryImpl @Inject constructor(
     override fun createWithResultState(games: List<Game>): GamesUiState {
         if(games.isEmpty()) return createWithEmptyState()
 
-        return GamesUiState.Result(games.map(gameModelFactory::createGameModel))
+        return GamesUiState.Result(games.map(gameModelMapper::mapToGameModel))
     }
 
 

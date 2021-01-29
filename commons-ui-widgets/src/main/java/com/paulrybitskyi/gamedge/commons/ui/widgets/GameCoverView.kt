@@ -167,6 +167,11 @@ class GameCoverView @JvmOverloads constructor(
     }
 
 
+    fun disableRoundCorners() {
+        radius = 0f
+    }
+
+
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
 

@@ -27,7 +27,12 @@ data class Pagination(
 
 
 fun Pagination.nextPage(): Pagination {
-    return Pagination(
+    return copy(offset = offset + DEFAULT_PAGE_SIZE)
+}
+
+
+fun Pagination.nextLimitPage(): Pagination {
+    return copy(
         offset = offset,
         limit = (limit + DEFAULT_PAGE_SIZE)
     )

@@ -16,12 +16,15 @@
 
 package com.paulrybitskyi.gamedge.domain.games
 
+import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
+import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.entities.*
 
 
 typealias ObservableGamesUseCase = ObservableUseCase<ObserveGamesUseCaseParams, List<Game>>
+typealias RefreshableGamesUseCase = ObservableUseCase<RefreshGamesUseCaseParams, DomainResult<List<Game>>>
 
 typealias DomainAgeRating = AgeRating
 typealias DomainAgeRatingCategory = AgeRatingCategory

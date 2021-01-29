@@ -16,10 +16,6 @@
 
 package com.paulrybitskyi.gamedge.domain.games.usecases.discovery
 
-import com.paulrybitskyi.gamedge.domain.commons.DomainResult
-import com.paulrybitskyi.gamedge.domain.commons.usecases.UseCase
-import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import kotlinx.coroutines.flow.Flow
+import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
 
-interface RefreshPopularGamesUseCase : UseCase<RefreshGamesUseCaseParams, Flow<DomainResult<List<Game>>>>
+interface RefreshPopularGamesUseCase : RefreshableGamesUseCase

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,24 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.games.usecases.discovery
+package com.paulrybitskyi.gamedge.ui.category.di
 
-import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
+import dagger.MapKey
 
-interface RefreshMostAnticipatedGamesUseCase : RefreshableGamesUseCase
+@MapKey
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.BINARY)
+internal annotation class GamesCategoryKey(val type: Type) {
+
+
+    enum class Type {
+
+        POPULAR,
+        RECENTLY_RELEASED,
+        COMING_SOON,
+        MOST_ANTICIPATED
+
+    }
+
+
+}

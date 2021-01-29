@@ -146,6 +146,9 @@ internal class GamesDiscoveryViewModel @Inject constructor(
 
     fun onCategoryMoreButtonClicked(category: String) {
         val gamesDiscoveryCategory = GamesDiscoveryCategory.valueOf(category)
+        val gamesCategory = gamesDiscoveryCategory.toGamesCategory()
+
+        route(GamesDiscoveryRoute.Category(gamesCategory))
     }
 
 

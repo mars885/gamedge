@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.games.usecases.discovery
+package com.paulrybitskyi.gamedge.commons.ui.widgets.category
 
-import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
+import android.content.Context
+import com.paulrybitskyi.gamedge.commons.ui.widgets.base.AbstractRecyclerViewAdapter
 
-interface RefreshMostAnticipatedGamesUseCase : RefreshableGamesUseCase
+internal class GamesCategoryAdapter(
+    context: Context
+): AbstractRecyclerViewAdapter<GameCategoryItem, GamesCategoryAdapterDeps>(context)

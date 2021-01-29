@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.discovery
 
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.mapResult
 import com.paulrybitskyi.gamedge.data.commons.utils.onEachSuccess
@@ -28,6 +27,7 @@ import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
+import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn

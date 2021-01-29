@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,20 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.games.usecases.discovery
+package com.paulrybitskyi.gamedge.commons.ui.widgets.utils
 
-import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
+import android.util.TypedValue
+import android.view.View
+import androidx.annotation.IntegerRes
 
-interface RefreshMostAnticipatedGamesUseCase : RefreshableGamesUseCase
+
+internal fun View.getInteger(@IntegerRes id: Int): Int {
+    return resources.getInteger(id)
+}
+
+
+internal fun View.getFloat(@IntegerRes id: Int): Float {
+    return TypedValue()
+        .also { resources.getValue(id, it, true) }
+        .let(TypedValue::getFloat)
+}
