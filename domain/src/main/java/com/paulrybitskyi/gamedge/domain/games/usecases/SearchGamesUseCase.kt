@@ -16,19 +16,17 @@
 
 package com.paulrybitskyi.gamedge.domain.games.usecases
 
-import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.commons.usecases.UseCase
 import com.paulrybitskyi.gamedge.domain.games.commons.Pagination
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase.Params
+import kotlinx.coroutines.flow.Flow
 
-interface SearchGamesUseCase : UseCase<Params, DomainResult<List<Game>>> {
-
+interface SearchGamesUseCase : UseCase<Params, Flow<List<Game>>> {
 
     data class Params(
         val searchQuery: String,
-        val pagination: Pagination
+        val pagination: Pagination = Pagination()
     )
-
 
 }

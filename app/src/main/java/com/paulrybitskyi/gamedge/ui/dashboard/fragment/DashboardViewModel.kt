@@ -21,4 +21,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-internal class DashboardViewModel @Inject constructor() : BaseViewModel()
+internal class DashboardViewModel @Inject constructor() : BaseViewModel() {
+
+
+    fun onToolbarRightButtonClicked() {
+        route(DashboardRoute.Search)
+    }
+
+
+}

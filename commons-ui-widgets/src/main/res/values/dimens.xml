@@ -198,4 +198,8 @@
     <dimen name="games_category_info_view_horizontal_margin">30dp</dimen>
     <dimen name="games_category_info_view_title_text_size">17sp</dimen>
 
+    <!-- SearchToolbar -->
+    <dimen name="search_toolbar_query_input_horizontal_margin">16dp</dimen>
+    <dimen name="search_toolbar_query_input_text_size">20sp</dimen>
+
 </resources>

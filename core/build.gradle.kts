@@ -33,7 +33,7 @@ android {
 dependencies {
     implementation(project(deps.local.domain))
 
-    implementation(deps.kotlin.coroutinesCore)
+    implementation(deps.kotlin.coroutines)
     implementation(deps.androidX.appCompat)
     implementation(deps.androidX.lifecycleCommonJava8)
     implementation(deps.androidX.browser)

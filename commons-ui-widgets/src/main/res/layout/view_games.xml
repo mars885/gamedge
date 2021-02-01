@@ -55,10 +55,10 @@
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/games_info_view_horizontal_margin"
         android:layout_marginEnd="@dimen/games_info_view_horizontal_margin"
-        app:infoView_icon="@drawable/account_heart_outline"
         app:infoView_iconColor="@color/colorInfoView"
-        app:infoView_titleText="@string/games_info_view_title"
         app:infoView_titleTextColor="@color/colorInfoView"
-        app:infoView_titleTextSize="@dimen/games_info_view_title_text_size"/>
+        app:infoView_titleTextSize="@dimen/games_info_view_title_text_size"
+        tools:infoView_icon="@drawable/account_heart_outline"
+        tools:infoView_titleText="No games to show"/>
 
 </merge>

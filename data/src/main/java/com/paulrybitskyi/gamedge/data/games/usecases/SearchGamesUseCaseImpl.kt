@@ -22,16 +22,26 @@ import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.utils.asSuccess
 import com.paulrybitskyi.gamedge.core.utils.onSuccess
+import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.PaginationMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
+import com.paulrybitskyi.gamedge.domain.commons.DomainResult
+import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase.Params
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
+
+
+private const val LOCAL_SEARCH_DELAY_TIMEOUT = 150L
+
 
 @Singleton
 @BindType
@@ -45,21 +55,30 @@ internal class SearchGamesUseCaseImpl @Inject constructor(
 ) : SearchGamesUseCase {
 
 
-    override suspend fun execute(params: Params) = withContext(dispatcherProvider.io) {
+    override suspend fun execute(params: Params): Flow<List<Game>> {
+        return flow { emit(searchGames(params)) }
+            .flowOn(dispatcherProvider.computation)
+            .resultOrError()
+    }
+
+
+    private suspend fun searchGames(params: Params): DomainResult<List<Game>> {
         val searchQuery = params.searchQuery
         val pagination = paginationMapper.mapToDataPagination(params.pagination)
 
         if(networkStateProvider.isNetworkAvailable) {
-            gamesDataStores.remote
+            return gamesDataStores.remote
                 .searchGames(searchQuery, pagination)
                 .onSuccess(gamesDataStores.local::saveGames)
                 .mapEither(gameMapper::mapToDomainGames, errorMapper::mapToDomainError)
-        } else {
-            gamesDataStores.local
-                .searchGames(searchQuery, pagination)
-                .let(gameMapper::mapToDomainGames)
-                .asSuccess()
         }
+
+        return gamesDataStores.local
+            .searchGames(searchQuery, pagination)
+            .let(gameMapper::mapToDomainGames)
+            .asSuccess()
+            // Delaying to give a sense of "loading" since it's really fast without it
+            .also { delay(LOCAL_SEARCH_DELAY_TIMEOUT) }
     }
 
 

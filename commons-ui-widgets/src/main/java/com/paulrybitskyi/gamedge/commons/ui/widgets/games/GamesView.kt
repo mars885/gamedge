@@ -54,7 +54,7 @@ class GamesView @JvmOverloads constructor(
         }
     }
 
-    var uiState by observeChanges<GamesUiState>(GamesUiState.Empty) { _, newState ->
+    var uiState by observeChanges(createDefaultUiState()) { _, newState ->
         handleUiStateChange(newState)
     }
 
@@ -123,6 +123,14 @@ class GamesView @JvmOverloads constructor(
     }
 
 
+    private fun createDefaultUiState(): GamesUiState {
+        return GamesUiState.Empty(
+            icon = getDrawable(R.drawable.gamepad_variant_outline),
+            title = getString(R.string.games_info_view_title)
+        )
+    }
+
+
     private fun List<GameModel>.toAdapterItems(): List<GameItem> {
         return map(::GameItem)
     }
@@ -130,15 +138,17 @@ class GamesView @JvmOverloads constructor(
 
     private fun handleUiStateChange(newState: GamesUiState) {
         when(newState) {
-            is GamesUiState.Empty -> onEmptyUiStateSelected()
+            is GamesUiState.Empty -> onEmptyUiStateSelected(newState)
             is GamesUiState.Loading -> onLoadingStateSelected()
             is GamesUiState.Result -> onResultUiStateSelected(newState)
         }
     }
 
 
-    private fun onEmptyUiStateSelected() {
-        showInfoView()
+    private fun onEmptyUiStateSelected(uiState: GamesUiState.Empty) {
+        adapterItems = emptyList()
+
+        showInfoView(uiState)
         hideLoadingIndicators()
         hideRecyclerView()
     }
@@ -164,7 +174,10 @@ class GamesView @JvmOverloads constructor(
     }
 
 
-    private fun showInfoView() = with(binding.infoView) {
+    private fun showInfoView(uiState: GamesUiState.Empty) = with(binding.infoView) {
+        icon = uiState.icon
+        titleText = uiState.title
+
         if(isVisible) return
 
         makeVisible()
