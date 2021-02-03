@@ -17,7 +17,9 @@
 package com.paulrybitskyi.gamedge.commons.ui.widgets.companies
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.util.AttributeSet
 import android.widget.ImageView
 import com.google.android.material.card.MaterialCardView

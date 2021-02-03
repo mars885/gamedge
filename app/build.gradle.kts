@@ -43,6 +43,7 @@ dependencies {
     implementation(project(deps.local.igdbApi))
     implementation(project(deps.local.database))
     implementation(project(deps.local.core))
+    implementation(project(deps.local.commonsUi))
     implementation(project(deps.local.commonsUiWidgets))
 
     implementation(deps.androidX.appCompat)

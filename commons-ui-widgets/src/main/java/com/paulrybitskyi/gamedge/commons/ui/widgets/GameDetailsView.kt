@@ -20,7 +20,9 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getDimension
+import com.paulrybitskyi.commons.ktx.layoutInflater
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGameDetailsBinding
 
 class GameDetailsView @JvmOverloads constructor(

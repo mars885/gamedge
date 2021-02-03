@@ -16,12 +16,11 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.videos
 
-import android.graphics.drawable.Drawable
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 
 sealed class GamesUiState {
 
-    data class Empty(val icon: Drawable?, val title: String) : GamesUiState()
+    data class Empty(val iconId: Int, val title: String) : GamesUiState()
 
     object Loading : GamesUiState()
 

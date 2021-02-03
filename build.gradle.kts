@@ -39,7 +39,6 @@ buildscript {
 allprojects {
     repositories {
         maven { setUrl("https://jitpack.io") }
-        maven { setUrl("https://dl.bintray.com/mars885/maven") }
         google()
         jcenter()
     }

@@ -25,10 +25,10 @@ import com.google.android.material.card.MaterialCardView
 import com.paulrybitskyi.commons.ktx.*
 import com.paulrybitskyi.commons.recyclerview.utils.disableAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
+import com.paulrybitskyi.gamedge.commons.ui.fadeIn
+import com.paulrybitskyi.gamedge.commons.ui.resetAnimation
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGamesCategoryPreviewBinding
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.fadeIn
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.resetAnimation
 
 class GamesCategoryPreviewView @JvmOverloads constructor(
     context: Context,

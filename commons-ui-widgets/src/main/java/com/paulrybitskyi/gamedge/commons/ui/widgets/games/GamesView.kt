@@ -30,11 +30,11 @@ import com.paulrybitskyi.commons.recyclerview.decorators.spacing.policies.LastIt
 import com.paulrybitskyi.commons.recyclerview.utils.addOnScrollListener
 import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
+import com.paulrybitskyi.gamedge.commons.ui.extensions.disableAfterAnimationEnds
+import com.paulrybitskyi.gamedge.commons.ui.fadeIn
+import com.paulrybitskyi.gamedge.commons.ui.resetAnimation
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGamesBinding
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.disableAfterAnimationEnds
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.fadeIn
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.resetAnimation
 import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GamesUiState
 
 class GamesView @JvmOverloads constructor(
@@ -125,7 +125,7 @@ class GamesView @JvmOverloads constructor(
 
     private fun createDefaultUiState(): GamesUiState {
         return GamesUiState.Empty(
-            icon = getDrawable(R.drawable.gamepad_variant_outline),
+            iconId = R.drawable.gamepad_variant_outline,
             title = getString(R.string.games_info_view_title)
         )
     }
@@ -175,7 +175,7 @@ class GamesView @JvmOverloads constructor(
 
 
     private fun showInfoView(uiState: GamesUiState.Empty) = with(binding.infoView) {
-        icon = uiState.icon
+        icon = getDrawable(uiState.iconId)
         titleText = uiState.title
 
         if(isVisible) return
