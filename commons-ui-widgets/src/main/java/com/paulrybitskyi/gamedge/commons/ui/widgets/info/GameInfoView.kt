@@ -29,24 +29,18 @@ import com.paulrybitskyi.commons.recyclerview.decorators.spacing.SpacingItemDeco
 import com.paulrybitskyi.commons.recyclerview.decorators.spacing.policies.LastItemExclusionPolicy
 import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
+import com.paulrybitskyi.gamedge.commons.ui.fadeIn
+import com.paulrybitskyi.gamedge.commons.ui.resetAnimation
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.base.Item
 import com.paulrybitskyi.gamedge.commons.ui.widgets.base.NoDependencies
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGameInfoBinding
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.items.*
-import com.paulrybitskyi.gamedge.commons.ui.widgets.info.items.GameInfoDetailsItem
-import com.paulrybitskyi.gamedge.commons.ui.widgets.info.items.GameInfoHeaderItem
-import com.paulrybitskyi.gamedge.commons.ui.widgets.info.items.GameInfoRelatedGamesItem
-import com.paulrybitskyi.gamedge.commons.ui.widgets.info.items.GameInfoScreenshotsItem
-import com.paulrybitskyi.gamedge.commons.ui.widgets.info.items.GameInfoSummaryItem
-import com.paulrybitskyi.gamedge.commons.ui.widgets.info.items.GameInfoVideosItem
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoCompanyModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoLinkModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.games.GameInfoRelatedGameModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.fadeIn
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.resetAnimation
 
 class GameInfoView @JvmOverloads constructor(
     context: Context,

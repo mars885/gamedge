@@ -19,11 +19,11 @@ package com.paulrybitskyi.gamedge.commons.ui.widgets.info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewItemModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.companies.GameCompanyModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoCompanyModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoLinkModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.info.model.games.GameInfoRelatedGameModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GameVideoModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.links.GameLinkItemModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GameVideoModel
 
 
 internal fun List<GameInfoVideoModel>.mapToVideoModels(): List<GameVideoModel> {

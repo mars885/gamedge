@@ -29,11 +29,13 @@ import com.paulrybitskyi.commons.recyclerview.decorators.GridSpacingItemDecorato
 import com.paulrybitskyi.commons.recyclerview.utils.addOnScrollListener
 import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
+import com.paulrybitskyi.gamedge.commons.ui.extensions.disableAfterAnimationEnds
+import com.paulrybitskyi.gamedge.commons.ui.extensions.getFloat
+import com.paulrybitskyi.gamedge.commons.ui.extensions.getInteger
+import com.paulrybitskyi.gamedge.commons.ui.fadeIn
+import com.paulrybitskyi.gamedge.commons.ui.resetAnimation
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGamesCategoryBinding
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.*
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.getFloat
-import com.paulrybitskyi.gamedge.commons.ui.widgets.utils.getInteger
 import kotlin.math.roundToInt
 
 class GamesCategoryView @JvmOverloads constructor(

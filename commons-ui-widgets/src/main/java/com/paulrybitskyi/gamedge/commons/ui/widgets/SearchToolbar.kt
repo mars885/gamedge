@@ -28,8 +28,8 @@ import androidx.core.view.isVisible
 import com.paulrybitskyi.commons.ktx.*
 import com.paulrybitskyi.commons.ktx.views.onTextChanged
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewSearchToolbarBinding
-import com.paulrybitskyi.gamedge.core.utils.hideKeyboard
-import com.paulrybitskyi.gamedge.core.utils.showKeyboard
+import com.paulrybitskyi.gamedge.commons.ui.hideKeyboard
+import com.paulrybitskyi.gamedge.commons.ui.showKeyboard
 
 class SearchToolbar @JvmOverloads constructor(
     context: Context,

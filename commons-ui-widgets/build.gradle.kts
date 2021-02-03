@@ -38,6 +38,7 @@ hilt {
 
 dependencies {
     implementation(project(deps.local.core))
+    implementation(project(deps.local.commonsUi))
     implementation(project(deps.local.imageLoading))
 
     implementation(deps.kotlin.reflect)
