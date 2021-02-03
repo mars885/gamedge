@@ -24,6 +24,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GamesUiState
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
+import com.paulrybitskyi.gamedge.domain.games.commons.DEFAULT_PAGE_SIZE
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.nextLimitPage
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
@@ -34,9 +35,14 @@ import com.paulrybitskyi.gamedge.ui.likes.mapping.LikedGamesUiStateFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+
+private const val PAGINATION_LOAD_DELAY = 500L
+
 
 @HiltViewModel
 internal class LikedGamesViewModel @Inject constructor(
@@ -76,6 +82,9 @@ internal class LikedGamesViewModel @Inject constructor(
                 .onStart {
                     isLoadingData = true
                     emit(likedGamesUiStateFactory.createWithLoadingState())
+
+                    // Delaying to give a sense of "loading" since it's really fast without it
+                    if(isPaginationRelatedLoad()) delay(PAGINATION_LOAD_DELAY)
                 }
                 .onCompletion { isLoadingData = false }
                 .collect {
@@ -83,6 +92,11 @@ internal class LikedGamesViewModel @Inject constructor(
                     _gamesUiState.value = it
                 }
         }
+    }
+
+
+    private fun isPaginationRelatedLoad(): Boolean {
+        return (observeGamesUseCaseParams.pagination.limit != DEFAULT_PAGE_SIZE)
     }
 
 

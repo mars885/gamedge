@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.domain.games.commons
 
 
-private const val DEFAULT_PAGE_SIZE = 20
+const val DEFAULT_PAGE_SIZE = 20
 
 
 data class Pagination(
