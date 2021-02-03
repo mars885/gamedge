@@ -31,4 +31,12 @@
     <string name="error_api_unknown_message">Could not perform the request! Please try again later.</string>
     <string name="error_unknown_message">Oops! Something went wrong.</string>
 
+    <!-- LikedGamesFragment -->
+    <string name="liked_games_fragment_info_title">You haven\'t liked any games yet</string>
+
+    <!-- GamesSearchFragment -->
+    <string name="games_search_fragment_search_hint">Search games</string>
+    <string name="games_search_fragment_info_title_default">Search for specific games</string>
+    <string name="games_search_fragment_info_title_empty">No games found for\n\"%s\"</string>
+
 </resources>

@@ -29,8 +29,8 @@ import com.paulrybitskyi.gamedge.domain.games.commons.nextLimitPage
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import com.paulrybitskyi.gamedge.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.ui.base.events.commons.GeneralCommand
-import com.paulrybitskyi.gamedge.ui.commons.GamesUiStateFactory
 import com.paulrybitskyi.gamedge.ui.commons.ErrorMapper
+import com.paulrybitskyi.gamedge.ui.likes.mapping.LikedGamesUiStateFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
@@ -41,7 +41,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class LikedGamesViewModel @Inject constructor(
     private val observeLikedGamesUseCase: ObserveLikedGamesUseCase,
-    private val gamesUiStateFactory: GamesUiStateFactory,
+    private val likedGamesUiStateFactory: LikedGamesUiStateFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
@@ -55,7 +55,7 @@ internal class LikedGamesViewModel @Inject constructor(
 
     private var dataLoadingJob: Job? = null
 
-    private val _gamesUiState = MutableLiveData<GamesUiState>(GamesUiState.Empty)
+    private val _gamesUiState = MutableLiveData(likedGamesUiStateFactory.createWithEmptyState())
 
     val gamesUiState: LiveData<GamesUiState>
         get() = _gamesUiState
@@ -66,16 +66,16 @@ internal class LikedGamesViewModel @Inject constructor(
 
         dataLoadingJob = viewModelScope.launch {
             observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
-                .map(gamesUiStateFactory::createWithResultState)
+                .map(likedGamesUiStateFactory::createWithResultState)
                 .flowOn(dispatcherProvider.computation)
                 .onError {
                     logger.error(logTag, "Failed to load liked games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(gamesUiStateFactory.createWithEmptyState())
+                    emit(likedGamesUiStateFactory.createWithEmptyState())
                 }
                 .onStart {
                     isLoadingData = true
-                    emit(gamesUiStateFactory.createWithLoadingState())
+                    emit(likedGamesUiStateFactory.createWithLoadingState())
                 }
                 .onCompletion { isLoadingData = false }
                 .collect {

@@ -50,6 +50,7 @@ internal interface GamesTable {
         """
         SELECT * FROM ${Game.Schema.TABLE_NAME} 
         WHERE LOWER(${Game.Schema.NAME}) LIKE (:searchQuery || '%') 
+        ORDER BY ${Game.Schema.TOTAL_RATING} IS NULL, ${Game.Schema.TOTAL_RATING} DESC 
         LIMIT :offset, :limit
         """
     )

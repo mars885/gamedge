@@ -14,17 +14,32 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.ui.widgets.videos
+package com.paulrybitskyi.gamedge.core.providers
 
+import android.content.Context
 import android.graphics.drawable.Drawable
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
+import com.paulrybitskyi.commons.ktx.getCompatDrawable
+import com.paulrybitskyi.hiltbinder.BindType
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-sealed class GamesUiState {
 
-    data class Empty(val icon: Drawable?, val title: String) : GamesUiState()
+interface DrawableProvider {
 
-    object Loading : GamesUiState()
+    fun getDrawable(id: Int): Drawable?
 
-    data class Result(val items: List<GameModel>) : GamesUiState()
+}
+
+
+@BindType
+internal class DrawableProviderImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : DrawableProvider {
+
+
+    override fun getDrawable(id: Int): Drawable? {
+        return context.getCompatDrawable(id)
+    }
+
 
 }

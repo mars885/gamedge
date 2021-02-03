@@ -76,9 +76,9 @@ object deps {
 
     object kotlin {
 
-        private const val kotlinCoroutinesCoreVersion = "1.4.2"
+        private const val kotlinCoroutinesVersion = "1.4.2"
 
-        const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinCoroutinesCoreVersion}"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinCoroutinesVersion}"
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
 
     }

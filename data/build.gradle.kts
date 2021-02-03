@@ -43,7 +43,7 @@ dependencies {
     implementation(project(deps.local.domain))
     implementation(project(deps.local.core))
 
-    implementation(deps.kotlin.coroutinesCore)
+    implementation(deps.kotlin.coroutines)
 
     implementation(deps.androidX.prefsDataStore)
     implementation(deps.androidX.protoDataStore)

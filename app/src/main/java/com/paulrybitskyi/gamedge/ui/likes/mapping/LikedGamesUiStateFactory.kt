@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.ui.commons
+package com.paulrybitskyi.gamedge.ui.likes.mapping
 
-import com.paulrybitskyi.hiltbinder.BindType
+import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GamesUiState
+import com.paulrybitskyi.gamedge.core.providers.DrawableProvider
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.ui.commons.GameModelMapper
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 
-internal interface GamesUiStateFactory {
+internal interface LikedGamesUiStateFactory {
 
     fun createWithEmptyState(): GamesUiState
 
@@ -34,13 +38,18 @@ internal interface GamesUiStateFactory {
 
 
 @BindType(installIn = BindType.Component.ACTIVITY_RETAINED)
-internal class GamesUiStateFactoryImpl @Inject constructor(
+internal class LikedGamesUiStateFactoryImpl @Inject constructor(
+    private val drawableProvider: DrawableProvider,
+    private val stringProvider: StringProvider,
     private val gameModelMapper: GameModelMapper
-) : GamesUiStateFactory {
+) : LikedGamesUiStateFactory {
 
 
     override fun createWithEmptyState(): GamesUiState {
-        return GamesUiState.Empty
+        return GamesUiState.Empty(
+            icon = drawableProvider.getDrawable(R.drawable.account_heart_outline),
+            title = stringProvider.getString(R.string.liked_games_fragment_info_title)
+        )
     }
 
 

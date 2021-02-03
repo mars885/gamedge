@@ -21,10 +21,12 @@ import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.commons.material.utils.setItemColors
+import com.paulrybitskyi.commons.navigation.navController
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.databinding.FragmentDashboardBinding
 import com.paulrybitskyi.gamedge.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.ui.base.events.Route
 import com.paulrybitskyi.gamedge.ui.dashboard.fragment.DashboardPage.Companion.toDashboardPageFromMenuItemId
 
 internal class DashboardFragment : BaseFragment<
@@ -48,8 +50,9 @@ internal class DashboardFragment : BaseFragment<
     }
 
 
-    private fun initToolbar() {
-        viewBinding.toolbar.applyWindowTopInsetAsPadding()
+    private fun initToolbar() = with(viewBinding.toolbar) {
+        onRightButtonClickListener = { viewModel.onToolbarRightButtonClicked() }
+        applyWindowTopInsetAsPadding()
     }
 
 
@@ -86,6 +89,20 @@ internal class DashboardFragment : BaseFragment<
     private fun initAdapter(): DashboardViewPagerAdapter {
         return DashboardViewPagerAdapter(this@DashboardFragment)
             .also { viewPagerAdapter = it }
+    }
+
+
+    override fun onRoute(route: Route) {
+        super.onRoute(route)
+
+        when(route) {
+            is DashboardRoute.Search -> navigateToSearchScreen()
+        }
+    }
+
+
+    private fun navigateToSearchScreen() {
+        navController.navigate(DashboardFragmentDirections.actionSearchFragment())
     }
 
 

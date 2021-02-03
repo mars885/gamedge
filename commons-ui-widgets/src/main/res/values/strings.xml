@@ -51,10 +51,10 @@
     <!-- GameInfoView -->
     <string name="game_info_info_view_title">No Data Available</string>
 
-    <!-- GamesView -->
-    <string name="games_info_view_title">You haven\'t liked any games yet</string>
-
     <!-- GamesCategoryView -->
     <string name="games_category_info_view_title">No Games Available</string>
+
+    <!-- GamesView -->
+    <string name="games_info_view_title">No Games Available</string>
 
 </resources>

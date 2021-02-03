@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-plugins {
-    kotlin()
-}
+package com.paulrybitskyi.gamedge.ui.search
 
-dependencies {
-    implementation(deps.kotlin.coroutines)
-    implementation(deps.misc.kotlinResult)
+import com.paulrybitskyi.gamedge.ui.base.events.Route
+
+
+internal sealed class GamesSearchRoute : Route {
+
+    data class Info(val gameId: Int): GamesSearchRoute()
+
+    object Back: GamesSearchRoute()
+
 }

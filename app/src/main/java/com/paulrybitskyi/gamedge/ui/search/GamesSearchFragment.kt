@@ -16,3 +16,96 @@
 
 package com.paulrybitskyi.gamedge.ui.search
 
+import android.text.InputType
+import androidx.fragment.app.viewModels
+import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
+import com.paulrybitskyi.commons.navigation.navController
+import com.paulrybitskyi.commons.utils.viewBinding
+import com.paulrybitskyi.gamedge.R
+import com.paulrybitskyi.gamedge.databinding.FragmentGamesSearchBinding
+import com.paulrybitskyi.gamedge.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.ui.base.events.Route
+import com.paulrybitskyi.gamedge.ui.dashboard.fragment.DashboardFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+internal class GamesSearchFragment : BaseFragment<
+    FragmentGamesSearchBinding,
+    GamesSearchViewModel
+>(R.layout.fragment_games_search) {
+
+
+    override val viewBinding by viewBinding(FragmentGamesSearchBinding::bind)
+    override val viewModel by viewModels<GamesSearchViewModel>()
+
+
+    override fun onInit() {
+        super.onInit()
+
+        initSearchToolbar()
+        initGamesView()
+    }
+
+
+    private fun initSearchToolbar() = with(viewBinding.searchToolbar) {
+        applyWindowTopInsetAsPadding()
+
+        inputType = (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+        hintText = getString(R.string.games_search_fragment_search_hint)
+        onQueryChangeListener = viewModel::onQueryChanged
+        onBackButtonClickListener = { viewModel.onToolbarBackButtonClicked() }
+    }
+
+
+    private fun initGamesView() = with(viewBinding.gamesView) {
+        onGameClickListener = viewModel::onGameClicked
+        onBottomReachListener = viewModel::onBottomReached
+    }
+
+
+    override fun onBindViewModel() = with(viewModel) {
+        super.onBindViewModel()
+
+        observeGamesUiState()
+    }
+
+
+    private fun GamesSearchViewModel.observeGamesUiState() {
+        gamesUiState.observe(viewLifecycleOwner) {
+            viewBinding.gamesView.uiState = it
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        if(viewBinding.searchToolbar.isSearchQueryEmpty) {
+            viewBinding.searchToolbar.showKeyboard(true)
+        }
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+
+        viewBinding.searchToolbar.hideKeyboard()
+    }
+
+
+    override fun onRoute(route: Route) {
+        super.onRoute(route)
+
+        when(route) {
+            is GamesSearchRoute.Info -> navigateToInfoScreen(route.gameId)
+            is GamesSearchRoute.Back -> navController.popBackStack()
+        }
+    }
+
+
+    private fun navigateToInfoScreen(gameId: Int) {
+        navController.navigate(DashboardFragmentDirections.actionInfoFragment(gameId))
+    }
+
+
+}

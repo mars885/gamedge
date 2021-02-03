@@ -36,7 +36,7 @@ dependencies {
     implementation(project(deps.local.igdbApicalypse))
     implementation(project(deps.local.core))
 
-    implementation(deps.kotlin.coroutinesCore)
+    implementation(deps.kotlin.coroutines)
 
     implementation(deps.square.okHttpLoggingInterceptor)
     implementation(deps.square.retrofit)
