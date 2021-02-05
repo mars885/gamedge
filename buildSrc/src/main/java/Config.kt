@@ -37,11 +37,11 @@ object appConfig {
 
 object versions {
 
-    const val kotlin = "1.4.21" // also in buildSrc build.gradle.kts file
+    const val kotlin = "1.4.30" // also in buildSrc build.gradle.kts file
     const val gradleVersionsPlugin = "0.36.0"
     const val protobufPlugin = "0.8.14"
-    const val navigation = "2.3.2"
-    const val daggerHilt = "2.31-alpha"
+    const val navigation = "2.3.3"
+    const val daggerHilt = "2.31.2-alpha"
 
 }
 
@@ -123,7 +123,7 @@ object deps {
 
     object google {
 
-        private const val materialComponentsVersion = "1.3.0-alpha02"
+        private const val materialComponentsVersion = "1.3.0"
         private const val protobufVersion = "3.10.0"
 
         const val daggerHilt = "com.google.dagger:hilt-android:${versions.daggerHilt}"
@@ -179,7 +179,7 @@ object deps {
     object misc {
 
         private const val desugaredLibsVersion = "1.0.10"
-        private const val kotlinResultVersion = "1.1.9"
+        private const val kotlinResultVersion = "1.1.10"
         private const val expandableTextViewVersion = "1.0.5"
         private const val hiltBinderVersion = "1.0.0-alpha01"
 
