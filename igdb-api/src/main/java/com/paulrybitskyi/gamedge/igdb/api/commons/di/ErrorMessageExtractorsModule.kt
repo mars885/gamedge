@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.commons.di
 
+import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.ErrorMessageExtractorKey
-import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.ErrorMessageExtractor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,6 +35,7 @@ internal interface ErrorMessageExtractorsModule {
         @ErrorMessageExtractorKey(ErrorMessageExtractorKey.Type.TWITCH)
         errorMessageExtractor: ErrorMessageExtractor
     ): ErrorMessageExtractor
+
 
     @Binds
     @IntoSet

@@ -32,6 +32,7 @@ android {
 
 dependencies {
     implementation(project(deps.local.data))
+    implementation(project(deps.local.commonsApi))
     implementation(project(deps.local.commonsData))
     implementation(project(deps.local.igdbApicalypse))
     implementation(project(deps.local.core))

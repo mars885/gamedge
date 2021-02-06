@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.auth
 
+import com.paulrybitskyi.gamedge.commons.api.ApiResult
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
-import com.paulrybitskyi.gamedge.igdb.api.commons.ApiResult
 import retrofit2.http.POST
 import retrofit2.http.Query
 

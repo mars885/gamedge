@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.auth
 
+import com.paulrybitskyi.gamedge.commons.api.ApiResult
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.GrantType
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
-import com.paulrybitskyi.gamedge.igdb.api.commons.ApiResult
 
 
 internal interface AuthEndpoint {

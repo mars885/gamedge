@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.querybuilder
 
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.commons.data.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.HYPE_COUNT
@@ -26,6 +25,7 @@ import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.TOTAL_RATIN
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.USERS_RATING
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 @BindType

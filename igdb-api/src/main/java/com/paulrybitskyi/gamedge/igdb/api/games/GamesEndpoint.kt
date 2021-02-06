@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games
 
+import com.paulrybitskyi.gamedge.commons.api.ApiResult
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
-import com.paulrybitskyi.gamedge.igdb.api.commons.ApiResult
 import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilder
 
 
