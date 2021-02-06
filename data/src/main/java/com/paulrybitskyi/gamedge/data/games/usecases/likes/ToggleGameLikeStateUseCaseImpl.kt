@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.likes
 
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase.Params
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton
 

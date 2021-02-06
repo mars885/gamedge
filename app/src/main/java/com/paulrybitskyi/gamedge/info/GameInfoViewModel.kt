@@ -37,9 +37,6 @@ import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.domain.games.commons.Pagination
 import com.paulrybitskyi.gamedge.domain.games.entities.Company
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.domain.games.entities.extensions.developerCompany
-import com.paulrybitskyi.gamedge.domain.games.entities.extensions.hasDevelopedGames
-import com.paulrybitskyi.gamedge.domain.games.entities.extensions.hasSimilarGames
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetCompanyDevelopedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase

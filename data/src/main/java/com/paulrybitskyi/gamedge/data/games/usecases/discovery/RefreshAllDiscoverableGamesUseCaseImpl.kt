@@ -20,11 +20,11 @@ import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.mapError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.data.commons.DataResult
+import com.paulrybitskyi.gamedge.data.commons.Pagination
 import com.paulrybitskyi.gamedge.data.commons.utils.onEachSuccess
 import com.paulrybitskyi.gamedge.data.games.DataGame
+import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
-import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
-import com.paulrybitskyi.gamedge.data.games.datastores.commons.Pagination
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCaseMappers
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottlerTools

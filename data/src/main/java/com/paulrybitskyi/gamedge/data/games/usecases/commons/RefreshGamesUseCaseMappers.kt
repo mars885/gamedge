@@ -16,7 +16,8 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.commons
 
-import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
+import com.paulrybitskyi.gamedge.data.commons.mappers.ErrorMapper
+import com.paulrybitskyi.gamedge.data.commons.mappers.PaginationMapper
 import javax.inject.Inject
 
 internal class RefreshGamesUseCaseMappers @Inject constructor(

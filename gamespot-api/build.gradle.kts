@@ -24,6 +24,10 @@ plugins {
 }
 
 android {
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+
     defaultConfig {
         stringField("GAMESPOT_API_KEY", property("GAMESPOT_API_KEY", ""))
     }
@@ -32,8 +36,6 @@ android {
 dependencies {
     implementation(project(deps.local.data))
     implementation(project(deps.local.commonsApi))
-    implementation(project(deps.local.commonsData))
-    implementation(project(deps.local.igdbApicalypse))
     implementation(project(deps.local.core))
 
     implementation(deps.kotlin.coroutines)
@@ -41,7 +43,6 @@ dependencies {
     implementation(deps.square.okHttpLoggingInterceptor)
     implementation(deps.square.retrofit)
     implementation(deps.square.retrofitMoshiConverter)
-    implementation(deps.square.retrofitScalarsConverter)
 
     implementation(deps.misc.kotlinResult)
 
@@ -53,6 +54,8 @@ dependencies {
 
     implementation(deps.misc.hiltBinder)
     kapt(deps.misc.hiltBinderCompiler)
+
+    coreLibraryDesugaring(deps.misc.desugaredLibs)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

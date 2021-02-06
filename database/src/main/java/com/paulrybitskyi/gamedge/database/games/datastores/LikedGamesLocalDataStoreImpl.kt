@@ -16,14 +16,14 @@
 
 package com.paulrybitskyi.gamedge.database.games.datastores
 
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.data.commons.Pagination
 import com.paulrybitskyi.gamedge.data.games.DataGame
 import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.games.datastores.commons.Pagination
 import com.paulrybitskyi.gamedge.data.games.entities.Game
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
+import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn

@@ -18,6 +18,8 @@ package com.paulrybitskyi.gamedge.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.paulrybitskyi.gamedge.database.articles.entities.Article
+import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
 import com.paulrybitskyi.gamedge.database.games.entities.Game
 import com.paulrybitskyi.gamedge.database.games.entities.LikedGame
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
@@ -26,7 +28,8 @@ import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 @Database(
     entities = [
         Game::class,
-        LikedGame::class
+        LikedGame::class,
+        Article::class
     ],
     version = Constants.VERSION
 )
@@ -34,5 +37,6 @@ internal abstract class GamedgeDatabase : RoomDatabase() {
 
     abstract val gamesTable: GamesTable
     abstract val likedGamesTable: LikedGamesTable
+    abstract val articlesTable: ArticlesTable
 
 }

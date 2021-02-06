@@ -17,9 +17,9 @@
 package com.paulrybitskyi.gamedge.data.games.datastores
 
 import com.paulrybitskyi.gamedge.data.commons.DataResult
+import com.paulrybitskyi.gamedge.data.commons.Pagination
 import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
-import com.paulrybitskyi.gamedge.data.games.datastores.commons.Pagination
 
 interface GamesRemoteDataStore {
 

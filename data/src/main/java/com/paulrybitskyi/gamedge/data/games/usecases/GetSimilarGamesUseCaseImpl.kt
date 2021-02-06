@@ -16,17 +16,17 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases
 
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
+import com.paulrybitskyi.gamedge.data.commons.mappers.PaginationMapper
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.PaginationMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase.Params
 import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshSimilarGamesUseCase
+import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton

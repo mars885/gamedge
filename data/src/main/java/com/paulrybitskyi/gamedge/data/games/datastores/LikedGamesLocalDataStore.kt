@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.games.datastores
 
-import com.paulrybitskyi.gamedge.data.games.datastores.commons.Pagination
+import com.paulrybitskyi.gamedge.data.commons.Pagination
 import com.paulrybitskyi.gamedge.data.games.entities.Game
 import kotlinx.coroutines.flow.Flow
 

@@ -18,7 +18,6 @@ package com.paulrybitskyi.gamedge.data.games.usecases
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
@@ -27,6 +26,7 @@ import com.paulrybitskyi.gamedge.domain.commons.entities.Error
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
+import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton

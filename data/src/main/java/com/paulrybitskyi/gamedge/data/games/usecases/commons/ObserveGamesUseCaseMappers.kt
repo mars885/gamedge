@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.commons
 
+import com.paulrybitskyi.gamedge.data.commons.mappers.PaginationMapper
 import javax.inject.Inject
 
 internal class ObserveGamesUseCaseMappers @Inject constructor(
