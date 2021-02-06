@@ -17,17 +17,17 @@
 package com.paulrybitskyi.gamedge.igdb.api.games.datastores
 
 import com.github.michaelbull.result.mapEither
-import com.paulrybitskyi.hiltbinder.BindType
+import com.paulrybitskyi.gamedge.commons.api.ApiResult
+import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.commons.DataResult
 import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.commons.Pagination
-import com.paulrybitskyi.gamedge.igdb.api.commons.ApiResult
-import com.paulrybitskyi.gamedge.igdb.api.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
+import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton

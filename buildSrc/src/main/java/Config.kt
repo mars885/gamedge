@@ -72,6 +72,8 @@ object deps {
         const val commonsData = ":commons-data"
         const val commonsUi = ":commons-ui"
         const val commonsUiWidgets = ":commons-ui-widgets"
+        const val commonsApi = ":commons-api"
+        const val gamespotApi = ":gamespot-api"
 
     }
 
@@ -79,6 +81,7 @@ object deps {
 
         private const val kotlinCoroutinesVersion = "1.4.2"
 
+        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinCoroutinesVersion}"
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
 

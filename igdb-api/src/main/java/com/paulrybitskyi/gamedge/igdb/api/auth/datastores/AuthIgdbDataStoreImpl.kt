@@ -17,12 +17,12 @@
 package com.paulrybitskyi.gamedge.igdb.api.auth.datastores
 
 import com.github.michaelbull.result.mapEither
-import com.paulrybitskyi.hiltbinder.BindType
+import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
 import com.paulrybitskyi.gamedge.data.auth.datastores.AuthRemoteDataStore
 import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 import com.paulrybitskyi.gamedge.data.commons.DataResult
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthEndpoint
-import com.paulrybitskyi.gamedge.igdb.api.commons.ErrorMapper
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton
 
