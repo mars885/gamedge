@@ -22,6 +22,7 @@ import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.data.commons.DataResult
 import com.paulrybitskyi.gamedge.data.commons.Pagination
 import com.paulrybitskyi.gamedge.data.commons.utils.onEachSuccess
+import com.paulrybitskyi.gamedge.data.commons.utils.toDataPagination
 import com.paulrybitskyi.gamedge.data.games.DataGame
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
@@ -116,7 +117,7 @@ internal class RefreshAllDiscoverableGamesUseCaseImpl @Inject constructor(
     ): Flow<List<DataGame>> {
         return flow {
             if(throttlerTools.throttler.canRefreshGames(throttlerKey)) {
-                emit(gamesDataStores.remote.getGames(mappers.pagination.mapToDataPagination(params.pagination)))
+                emit(gamesDataStores.remote.getGames(params.pagination.toDataPagination()))
             }
         }
         .onEachSuccess { throttlerTools.throttler.updateGamesLastRefreshTime(throttlerKey) }

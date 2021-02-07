@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.data.games.usecases
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
-import com.paulrybitskyi.gamedge.data.commons.mappers.PaginationMapper
+import com.paulrybitskyi.gamedge.data.commons.utils.toDataPagination
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
@@ -37,8 +37,7 @@ internal class GetSimilarGamesUseCaseImpl @Inject constructor(
     private val refreshSimilarGamesUseCase: RefreshSimilarGamesUseCase,
     private val gamesLocalDataStore: GamesLocalDataStore,
     private val dispatcherProvider: DispatcherProvider,
-    private val gameMapper: GameMapper,
-    private val paginationMapper: PaginationMapper
+    private val gameMapper: GameMapper
 ) : GetSimilarGamesUseCase {
 
 
@@ -49,7 +48,7 @@ internal class GetSimilarGamesUseCaseImpl @Inject constructor(
             .onEmpty {
                 val localSimilarGamesFlow = flow {
                     val dataGame = gameMapper.mapToDataGame(params.game)
-                    val dataPagination = paginationMapper.mapToDataPagination(params.pagination)
+                    val dataPagination = params.pagination.toDataPagination()
 
                     emit(gamesLocalDataStore.getSimilarGames(dataGame, dataPagination))
                 }

@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.data.games.usecases
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.mapResult
 import com.paulrybitskyi.gamedge.data.commons.utils.onEachSuccess
+import com.paulrybitskyi.gamedge.data.commons.utils.toDataPagination
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCaseMappers
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
@@ -56,7 +57,7 @@ internal class RefreshSimilarGamesUseCaseImpl @Inject constructor(
         return flow {
             if(throttlerTools.throttler.canRefreshSimilarGames(throttlerKey)) {
                 val dataGame = mappers.game.mapToDataGame(params.game)
-                val dataPagination = mappers.pagination.mapToDataPagination(params.pagination)
+                val dataPagination = params.pagination.toDataPagination()
 
                 emit(gamesDataStores.remote.getSimilarGames(dataGame, dataPagination))
             }

@@ -17,8 +17,9 @@
 package com.paulrybitskyi.gamedge.data.games.usecases.discovery
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.data.commons.utils.toDataPagination
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.ObserveGamesUseCaseMappers
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
@@ -35,14 +36,14 @@ import javax.inject.Singleton
 internal class ObserveMostAnticipatedGamesUseCaseImpl @Inject constructor(
     private val gamesLocalDataStore: GamesLocalDataStore,
     private val dispatcherProvider: DispatcherProvider,
-    private val mappers: ObserveGamesUseCaseMappers
+    private val gameMapper: GameMapper
 ) : ObserveMostAnticipatedGamesUseCase {
 
 
     override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
         return gamesLocalDataStore
-            .observeMostAnticipatedGames(mappers.pagination.mapToDataPagination(params.pagination))
-            .map(mappers.game::mapToDomainGames)
+            .observeMostAnticipatedGames(params.pagination.toDataPagination())
+            .map(gameMapper::mapToDomainGames)
             .flowOn(dispatcherProvider.computation)
     }
 

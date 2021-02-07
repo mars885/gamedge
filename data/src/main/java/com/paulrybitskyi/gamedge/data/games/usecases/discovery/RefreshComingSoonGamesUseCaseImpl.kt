@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.data.games.usecases.discovery
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.mapResult
 import com.paulrybitskyi.gamedge.data.commons.utils.onEachSuccess
+import com.paulrybitskyi.gamedge.data.commons.utils.toDataPagination
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCaseMappers
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
@@ -49,7 +50,7 @@ internal class RefreshComingSoonGamesUseCaseImpl @Inject constructor(
 
         return flow {
             if(throttlerTools.throttler.canRefreshGames(throttlerKey)) {
-                emit(gamesDataStores.remote.getComingSoonGames(mappers.pagination.mapToDataPagination(params.pagination)))
+                emit(gamesDataStores.remote.getComingSoonGames(params.pagination.toDataPagination()))
             }
         }
         .onEachSuccess {

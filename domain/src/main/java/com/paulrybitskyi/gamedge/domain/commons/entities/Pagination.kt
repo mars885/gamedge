@@ -14,12 +14,26 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.games.usecases.commons
+package com.paulrybitskyi.gamedge.domain.commons.entities
 
-import com.paulrybitskyi.gamedge.data.commons.mappers.PaginationMapper
-import javax.inject.Inject
 
-internal class ObserveGamesUseCaseMappers @Inject constructor(
-    val game: GameMapper,
-    val pagination: PaginationMapper
+const val DEFAULT_PAGE_SIZE = 20
+
+
+data class Pagination(
+    val offset: Int = 0,
+    val limit: Int = DEFAULT_PAGE_SIZE
 )
+
+
+fun Pagination.nextPage(): Pagination {
+    return copy(offset = offset + DEFAULT_PAGE_SIZE)
+}
+
+
+fun Pagination.nextLimitPage(): Pagination {
+    return copy(
+        offset = offset,
+        limit = (limit + DEFAULT_PAGE_SIZE)
+    )
+}

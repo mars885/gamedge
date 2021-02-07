@@ -22,8 +22,8 @@ import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.utils.asSuccess
 import com.paulrybitskyi.gamedge.core.utils.onSuccess
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
-import com.paulrybitskyi.gamedge.data.commons.mappers.ErrorMapper
-import com.paulrybitskyi.gamedge.data.commons.mappers.PaginationMapper
+import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
+import com.paulrybitskyi.gamedge.data.commons.utils.toDataPagination
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
@@ -50,7 +50,6 @@ internal class SearchGamesUseCaseImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val networkStateProvider: NetworkStateProvider,
     private val gameMapper: GameMapper,
-    private val paginationMapper: PaginationMapper,
     private val errorMapper: ErrorMapper
 ) : SearchGamesUseCase {
 
@@ -64,7 +63,7 @@ internal class SearchGamesUseCaseImpl @Inject constructor(
 
     private suspend fun searchGames(params: Params): DomainResult<List<Game>> {
         val searchQuery = params.searchQuery
-        val pagination = paginationMapper.mapToDataPagination(params.pagination)
+        val pagination = params.pagination.toDataPagination()
 
         if(networkStateProvider.isNetworkAvailable) {
             return gamesDataStores.remote

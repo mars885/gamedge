@@ -27,9 +27,9 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GamesUiState
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
-import com.paulrybitskyi.gamedge.domain.games.commons.DEFAULT_PAGE_SIZE
+import com.paulrybitskyi.gamedge.domain.commons.entities.DEFAULT_PAGE_SIZE
+import com.paulrybitskyi.gamedge.domain.commons.entities.nextLimitPage
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.commons.nextLimitPage
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import com.paulrybitskyi.gamedge.likes.mapping.LikedGamesUiStateFactory
 import dagger.hilt.android.lifecycle.HiltViewModel

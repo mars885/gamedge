@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.data.auth.usecases
 import com.paulrybitskyi.gamedge.core.utils.mapResult
 import com.paulrybitskyi.gamedge.data.auth.datastores.commons.AuthDataStores
 import com.paulrybitskyi.gamedge.data.auth.usecases.mappers.AuthMapper
-import com.paulrybitskyi.gamedge.data.commons.mappers.ErrorMapper
+import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.data.commons.utils.onEachSuccess
 import com.paulrybitskyi.gamedge.domain.auth.entities.OauthCredentials
 import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
