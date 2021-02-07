@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.ui.extensions
+package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
-import androidx.lifecycle.LiveData
+sealed class GamesUiState {
 
+    data class Empty(val iconId: Int, val title: String) : GamesUiState()
 
-val <T> LiveData<T>.nonNullValue: T
-    get() = checkNotNull(value)
+    object Loading : GamesUiState()
+
+    data class Result(val items: List<GameModel>) : GamesUiState()
+
+}

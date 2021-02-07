@@ -21,7 +21,6 @@ data class Article(
     val title: String,
     val lede: String,
     val imageUrls: Map<ImageType, String>,
-    val associations: List<Association>,
-    val publishDate: Long,
+    val publicationDate: Long,
     val siteDetailUrl: String
 )

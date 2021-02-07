@@ -17,19 +17,13 @@
 package com.paulrybitskyi.gamedge.igdb.api.games
 
 import com.paulrybitskyi.gamedge.commons.api.ApiResult
-import com.paulrybitskyi.gamedge.igdb.api.commons.Headers
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game
 import retrofit2.http.Body
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 internal interface GamesService {
 
     @POST("games")
-    suspend fun getGames(
-        @Header(Headers.CLIENT_ID) clientId: String,
-        @Header(Headers.AUTHORIZATION) authorization: String,
-        @Body body: String
-    ): ApiResult<List<Game>>
+    suspend fun getGames(@Body body: String): ApiResult<List<Game>>
 
 }

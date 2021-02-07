@@ -23,7 +23,7 @@ import com.paulrybitskyi.gamedge.base.BaseViewModel
 import com.paulrybitskyi.gamedge.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GamesUiState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError

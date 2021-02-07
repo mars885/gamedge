@@ -57,4 +57,7 @@
     <!-- GamesView -->
     <string name="games_info_view_title">No Games Available</string>
 
+    <!-- GamingNewsView -->
+    <string name="gaming_news_info_view_title">No News Available</string>
+
 </resources>

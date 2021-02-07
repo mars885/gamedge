@@ -21,19 +21,17 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class Article(
-    @Json(name = Schema.ID)
+    @field:Json(name = Schema.ID)
     val id: Int = -1,
-    @Json(name = Schema.TITLE)
+    @field:Json(name = Schema.TITLE)
     val title: String = "",
-    @Json(name = Schema.LEDE)
+    @field:Json(name = Schema.LEDE)
     val lede: String = "",
-    @Json(name = Schema.IMAGE_URLS)
+    @field:Json(name = Schema.IMAGE_URLS)
     val imageUrls: Map<ImageType, String> = mapOf(),
-    @Json(name = Schema.ASSOCIATIONS)
-    val associations: List<Association> = emptyList(),
-    @Json(name = Schema.PUBLISH_DATE)
-    val publishDate: String = "",
-    @Json(name = Schema.SITE_DETAIL_URL)
+    @field:Json(name = Schema.PUBLICATION_DATE)
+    val publicationDate: String = "",
+    @field:Json(name = Schema.SITE_DETAIL_URL)
     val siteDetailUrl: String = ""
 ) {
 
@@ -44,8 +42,7 @@ internal data class Article(
         const val TITLE = "title"
         const val LEDE = "lede"
         const val IMAGE_URLS = "image"
-        const val ASSOCIATIONS = "associations"
-        const val PUBLISH_DATE = "publish_date"
+        const val PUBLICATION_DATE = "publish_date"
         const val SITE_DETAIL_URL = "site_detail_url"
 
     }

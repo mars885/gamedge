@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.articles.entities
+package com.paulrybitskyi.gamedge.news
 
-data class Association(
-    val id: Int,
-    val name: String
-)
+import com.paulrybitskyi.gamedge.base.events.Command
+
+
+internal sealed class GamingNewsCommand : Command {
+
+    data class OpenUrl(val url: String): GamingNewsCommand()
+
+}

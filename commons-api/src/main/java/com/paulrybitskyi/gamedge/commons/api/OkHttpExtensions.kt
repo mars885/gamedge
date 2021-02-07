@@ -14,29 +14,14 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.gamespot.api.articles.datastores
+package com.paulrybitskyi.gamedge.commons.api
 
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter.ofPattern
-import javax.inject.Inject
-
-internal class ArticlePublishDateMapper @Inject constructor() {
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 
 
-    private companion object {
-
-        private const val PUBLISH_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
-
-    }
-
-
-    fun mapToTimestamp(publishDate: String): Long {
-        return LocalDateTime.parse(publishDate, ofPattern(PUBLISH_DATE_FORMAT))
-            .atZone(ZoneId.systemDefault())
-            .toInstant()
-            .toEpochMilli()
-    }
-
-
+fun OkHttpClient.Builder.addInterceptorAsFirstInChain(
+    interceptor: Interceptor
+): OkHttpClient.Builder = apply {
+    interceptors().add(0, interceptor)
 }

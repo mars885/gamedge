@@ -17,11 +17,8 @@
 package com.paulrybitskyi.gamedge.igdb.api.games
 
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
-import com.paulrybitskyi.gamedge.igdb.api.BuildConfig
-import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.Endpoint
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
-import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilder
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.*
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
@@ -35,27 +32,10 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object GamesEndpointModule {
-
-
-    @Provides
-    @Singleton
-    fun provideGamesEndpoint(
-        gamesService: GamesService,
-        igdbApiQueryBuilder: IgdbApiQueryBuilder,
-        authorizer: Authorizer
-    ): GamesEndpoint {
-        return GamesEndpointImpl(
-            gamesService = gamesService,
-            igdbApiQueryBuilder = igdbApiQueryBuilder,
-            authorizer = authorizer,
-            clientId = BuildConfig.TWITCH_APP_CLIENT_ID
-        )
-    }
 
 
     @Provides
@@ -67,7 +47,7 @@ internal object GamesEndpointModule {
     @Provides
     @Endpoint(Endpoint.Type.GAMES)
     fun provideRetrofit(
-        okHttpClient: OkHttpClient,
+        @IgdbApi okHttpClient: OkHttpClient,
         @IgdbApi callAdapterFactory: ApiResultCallAdapterFactory,
         @Endpoint(Endpoint.Type.GAMES) moshi: Moshi
     ): Retrofit {

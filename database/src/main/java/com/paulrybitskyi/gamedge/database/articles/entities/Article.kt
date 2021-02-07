@@ -28,8 +28,7 @@ internal data class Article(
     @ColumnInfo(name = Schema.TITLE) val title: String,
     @ColumnInfo(name = Schema.LEDE) val lede: String,
     @ColumnInfo(name = Schema.IMAGE_URLS) val imageUrls: String,
-    @ColumnInfo(name = Schema.ASSOCIATIONS) val associations: String,
-    @ColumnInfo(name = Schema.PUBLISH_DATE) val publishDate: Long,
+    @ColumnInfo(name = Schema.PUBLICATION_DATE) val publicationDate: Long,
     @ColumnInfo(name = Schema.SITE_DETAIL_URL) val siteDetailUrl: String
 ) {
 
@@ -41,8 +40,7 @@ internal data class Article(
         const val TITLE = "title"
         const val LEDE = "lede"
         const val IMAGE_URLS = "image_urls"
-        const val ASSOCIATIONS = "associations"
-        const val PUBLISH_DATE = "publish_date"
+        const val PUBLICATION_DATE = "publication_date"
         const val SITE_DETAIL_URL = "site_detail_url"
 
     }

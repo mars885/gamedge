@@ -17,16 +17,35 @@
 package com.paulrybitskyi.gamedge.igdb.api.commons.di
 
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
+import com.paulrybitskyi.gamedge.commons.api.addInterceptorAsFirstInChain
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
+import com.paulrybitskyi.gamedge.igdb.api.BuildConfig
+import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
+import com.paulrybitskyi.gamedge.igdb.api.commons.AuthorizationInterceptor
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object CommonsModule {
+
+
+    @Provides
+    @Singleton
+    @IgdbApi
+    fun provideOkHttpClient(
+        okHttpClient: OkHttpClient,
+        authorizationInterceptor: AuthorizationInterceptor
+    ): OkHttpClient {
+        return okHttpClient.newBuilder()
+            .addInterceptorAsFirstInChain(authorizationInterceptor)
+            .build()
+    }
 
 
     @Provides
@@ -35,6 +54,15 @@ internal object CommonsModule {
         @IgdbApi errorMessageExtractor: ErrorMessageExtractor
     ): ApiResultCallAdapterFactory {
         return ApiResultCallAdapterFactory(errorMessageExtractor)
+    }
+
+
+    @Provides
+    fun provideAuthorizationInterceptor(authorizer: Authorizer): AuthorizationInterceptor {
+        return AuthorizationInterceptor(
+            authorizer = authorizer,
+            clientId = BuildConfig.TWITCH_APP_CLIENT_ID
+        )
     }
 
 

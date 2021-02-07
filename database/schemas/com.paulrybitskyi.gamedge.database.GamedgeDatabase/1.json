@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b910db5fcb409a74795f0a30ac9593a6",
+    "identityHash": "a61a68c41b67cb36a7a93816e0ec826b",
     "entities": [
       {
         "tableName": "games",
@@ -217,7 +217,7 @@
       },
       {
         "tableName": "articles",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `lede` TEXT NOT NULL, `image_urls` TEXT NOT NULL, `associations` TEXT NOT NULL, `publish_date` INTEGER NOT NULL, `site_detail_url` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `lede` TEXT NOT NULL, `image_urls` TEXT NOT NULL, `publication_date` INTEGER NOT NULL, `site_detail_url` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -244,14 +244,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "associations",
-            "columnName": "associations",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "publishDate",
-            "columnName": "publish_date",
+            "fieldPath": "publicationDate",
+            "columnName": "publication_date",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -275,7 +269,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b910db5fcb409a74795f0a30ac9593a6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a61a68c41b67cb36a7a93816e0ec826b')"
     ]
   }
 }

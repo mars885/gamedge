@@ -18,6 +18,8 @@
 
 <resources>
 
+    <string name="app_name" translatable="false">Gamedge</string>
+
     <string name="text_font_family_medium" translatable="false">sans-serif-medium</string>
     <string name="unknown">Unknown</string>
     <string name="not_available_abbr">N/A</string>

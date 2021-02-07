@@ -24,12 +24,16 @@ internal enum class DashboardPage(
 ) {
 
 
-    DISCOVER(
+    NEWS(
         position = 0,
+        menuItemId = R.id.dashboard_bottom_navigation_item_news
+    ),
+    DISCOVER(
+        position = 1,
         menuItemId = R.id.dashboard_bottom_navigation_item_discover
     ),
     LIKES(
-        position = 1,
+        position = 2,
         menuItemId = R.id.dashboard_bottom_navigation_item_likes
     );
 

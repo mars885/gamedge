@@ -20,6 +20,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/dashboard_bottom_navigation_item_news"
+        android:title="@string/dashboard_bottom_navigation_item_news"
+        android:icon="@drawable/newspaper"/>
+
+    <item
         android:id="@+id/dashboard_bottom_navigation_item_discover"
         android:title="@string/dashboard_bottom_navigation_item_discover"
         android:icon="@drawable/compass_rose"/>

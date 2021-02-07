@@ -17,19 +17,36 @@
 package com.paulrybitskyi.gamedge.gamespot.api.commons.di
 
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
+import com.paulrybitskyi.gamedge.commons.api.addInterceptorAsFirstInChain
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
 import com.paulrybitskyi.gamedge.gamespot.api.BuildConfig
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotFieldsSerializer
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsBuilder
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsBuilderImpl
+import com.paulrybitskyi.gamedge.gamespot.api.commons.UserAgentInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object CommonsModule {
+
+
+    @Provides
+    @Singleton
+    @GamespotApi
+    fun provideOkHttpClient(
+        okHttpClient: OkHttpClient,
+        userAgentInterceptor: UserAgentInterceptor
+    ): OkHttpClient {
+        return okHttpClient.newBuilder()
+            .addInterceptorAsFirstInChain(userAgentInterceptor)
+            .build()
+    }
 
 
     @Provides

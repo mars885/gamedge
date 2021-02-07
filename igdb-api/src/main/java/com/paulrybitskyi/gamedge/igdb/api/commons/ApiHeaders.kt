@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,10 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.gamespot.api.articles.entities
+package com.paulrybitskyi.gamedge.igdb.api.commons
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+internal object ApiHeaders {
 
-@JsonClass(generateAdapter = true)
-internal data class Association(
-    @Json(name = Schema.ID)
-    val id: Int = -1,
-    @Json(name = Schema.NAME)
-    val name: String = ""
-) {
-
-
-    object Schema {
-
-        const val ID = "id"
-        const val NAME = "name"
-
-    }
-
+    const val CLIENT_ID = "Client-ID"
 
 }

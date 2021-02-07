@@ -44,7 +44,7 @@ internal object ArticlesEndpointModule {
     @Provides
     @Endpoint(Endpoint.Type.ARTICLES)
     fun provideRetrofit(
-        okHttpClient: OkHttpClient,
+        @GamespotApi okHttpClient: OkHttpClient,
         @GamespotApi callAdapterFactory: ApiResultCallAdapterFactory,
         @Endpoint(Endpoint.Type.ARTICLES) moshi: Moshi
     ): Retrofit {
