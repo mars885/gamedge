@@ -18,8 +18,9 @@ package com.paulrybitskyi.gamedge.data.articles.usecases
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesLocalDataStore
-import com.paulrybitskyi.gamedge.data.articles.usecases.commons.ObserveArticlesUseCaseMappers
+import com.paulrybitskyi.gamedge.data.articles.usecases.commons.ArticleMapper
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.mapToDomainArticles
+import com.paulrybitskyi.gamedge.data.commons.utils.toDataPagination
 import com.paulrybitskyi.gamedge.domain.articles.entities.Article
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase.Params
@@ -35,14 +36,14 @@ import javax.inject.Singleton
 internal class ObserveArticlesUseCaseImpl @Inject constructor(
     private val articlesLocalDataStore: ArticlesLocalDataStore,
     private val dispatcherProvider: DispatcherProvider,
-    private val mappers: ObserveArticlesUseCaseMappers
+    private val articleMapper: ArticleMapper
 ) : ObserveArticlesUseCase {
 
 
     override suspend fun execute(params: Params): Flow<List<Article>> {
         return articlesLocalDataStore
-            .observeArticles(mappers.pagination.mapToDataPagination(params.pagination))
-            .map(mappers.article::mapToDomainArticles)
+            .observeArticles(params.pagination.toDataPagination())
+            .map(articleMapper::mapToDomainArticles)
             .flowOn(dispatcherProvider.computation)
     }
 

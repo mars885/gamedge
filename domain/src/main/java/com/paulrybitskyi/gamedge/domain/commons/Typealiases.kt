@@ -18,6 +18,8 @@ package com.paulrybitskyi.gamedge.domain.commons
 
 import com.github.michaelbull.result.Result
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
+import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
 
 
+typealias DomainPagination = Pagination
 typealias DomainResult<T> = Result<T, Error>

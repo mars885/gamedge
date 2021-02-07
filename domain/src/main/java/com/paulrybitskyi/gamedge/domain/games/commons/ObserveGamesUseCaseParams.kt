@@ -16,6 +16,8 @@
 
 package com.paulrybitskyi.gamedge.domain.games.commons
 
+import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
+
 data class ObserveGamesUseCaseParams(
     val pagination: Pagination = Pagination()
 )

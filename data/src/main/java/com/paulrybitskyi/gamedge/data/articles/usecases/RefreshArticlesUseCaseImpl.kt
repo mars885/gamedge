@@ -23,6 +23,7 @@ import com.paulrybitskyi.gamedge.data.articles.usecases.commons.RefreshArticlesU
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.mapToDomainArticles
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling.ArticlesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.data.commons.utils.onEachSuccess
+import com.paulrybitskyi.gamedge.data.commons.utils.toDataPagination
 import com.paulrybitskyi.gamedge.domain.articles.entities.Article
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase.Params
@@ -49,7 +50,7 @@ internal class RefreshArticlesUseCaseImpl @Inject constructor(
 
         return flow {
             if(throttlerTools.throttler.canRefreshArticles(throttlerKey)) {
-                emit(articlesDataStores.remote.getArticles(mappers.pagination.mapToDataPagination(params.pagination)))
+                emit(articlesDataStores.remote.getArticles(params.pagination.toDataPagination()))
             }
         }
         .onEachSuccess {

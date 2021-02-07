@@ -16,12 +16,10 @@
 
 package com.paulrybitskyi.gamedge.data.articles.usecases.commons
 
-import com.paulrybitskyi.gamedge.data.commons.mappers.ErrorMapper
-import com.paulrybitskyi.gamedge.data.commons.mappers.PaginationMapper
+import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import javax.inject.Inject
 
 internal class RefreshArticlesUseCaseMappers @Inject constructor(
     val article: ArticleMapper,
-    val pagination: PaginationMapper,
     val error: ErrorMapper
 )

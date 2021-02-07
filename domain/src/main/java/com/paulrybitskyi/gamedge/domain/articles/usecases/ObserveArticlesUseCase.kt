@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.domain.articles.usecases
 
 import com.paulrybitskyi.gamedge.domain.articles.entities.Article
+import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
 import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
-import com.paulrybitskyi.gamedge.domain.games.commons.Pagination
 
 interface ObserveArticlesUseCase : ObservableUseCase<ObserveArticlesUseCase.Params, List<Article>> {
 

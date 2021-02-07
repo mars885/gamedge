@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.domain.games.usecases
 
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
+import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
 import com.paulrybitskyi.gamedge.domain.commons.usecases.UseCase
-import com.paulrybitskyi.gamedge.domain.games.commons.Pagination
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import kotlinx.coroutines.flow.Flow
 

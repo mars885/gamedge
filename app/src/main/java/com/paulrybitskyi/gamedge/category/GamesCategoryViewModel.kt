@@ -32,10 +32,10 @@ import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
+import com.paulrybitskyi.gamedge.domain.commons.entities.nextLimitPage
+import com.paulrybitskyi.gamedge.domain.commons.entities.nextPage
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.commons.nextLimitPage
-import com.paulrybitskyi.gamedge.domain.games.commons.nextPage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin

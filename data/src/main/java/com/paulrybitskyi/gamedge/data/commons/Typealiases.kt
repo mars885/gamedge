@@ -20,4 +20,5 @@ import com.github.michaelbull.result.Result
 import com.paulrybitskyi.gamedge.data.commons.entities.Error
 
 
+typealias DataPagination = Pagination
 typealias DataResult<T> = Result<T, Error>

@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.articles.usecases.commons
+package com.paulrybitskyi.gamedge.data.commons.utils
 
-import com.paulrybitskyi.gamedge.data.commons.mappers.PaginationMapper
-import javax.inject.Inject
+import com.paulrybitskyi.gamedge.data.commons.DataPagination
+import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
 
-internal class ObserveArticlesUseCaseMappers @Inject constructor(
-    val article: ArticleMapper,
-    val pagination: PaginationMapper
-)
+
+internal fun DomainPagination.toDataPagination(): DataPagination {
+    return DataPagination(
+        offset = offset,
+        limit = limit
+    )
+}

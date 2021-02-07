@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.commons.mappers
+package com.paulrybitskyi.gamedge.data.commons
 
 import javax.inject.Inject
 import com.paulrybitskyi.gamedge.data.commons.entities.Error as DataError

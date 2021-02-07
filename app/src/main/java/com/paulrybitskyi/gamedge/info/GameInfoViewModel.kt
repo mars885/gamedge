@@ -34,7 +34,7 @@ import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.combine
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
-import com.paulrybitskyi.gamedge.domain.games.commons.Pagination
+import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
 import com.paulrybitskyi.gamedge.domain.games.entities.Company
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetCompanyDevelopedGamesUseCase

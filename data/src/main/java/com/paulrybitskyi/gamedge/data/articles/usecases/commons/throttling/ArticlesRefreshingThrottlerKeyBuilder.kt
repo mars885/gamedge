@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling
 
-import com.paulrybitskyi.gamedge.domain.games.commons.Pagination
+import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
