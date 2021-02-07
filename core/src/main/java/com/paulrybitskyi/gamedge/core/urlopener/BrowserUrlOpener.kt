@@ -25,8 +25,8 @@ import com.paulrybitskyi.gamedge.core.di.UrlOpenerKey
 import com.paulrybitskyi.gamedge.core.utils.attachNewTaskFlagIfNeeded
 import javax.inject.Inject
 
-@UrlOpenerKey(UrlOpenerKey.Type.BROWSER)
 @BindType(withQualifier = true)
+@UrlOpenerKey(UrlOpenerKey.Type.BROWSER)
 internal class BrowserUrlOpener @Inject constructor() : UrlOpener {
 
 

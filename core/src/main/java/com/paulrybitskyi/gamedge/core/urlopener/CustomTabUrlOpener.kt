@@ -29,8 +29,8 @@ import com.paulrybitskyi.gamedge.core.utils.attachNewTaskFlagIfNeeded
 import com.paulrybitskyi.gamedge.core.utils.setAnimations
 import javax.inject.Inject
 
-@UrlOpenerKey(UrlOpenerKey.Type.CUSTOM_TAB)
 @BindType(withQualifier = true)
+@UrlOpenerKey(UrlOpenerKey.Type.CUSTOM_TAB)
 internal class CustomTabUrlOpener @Inject constructor(
     private val customTabsProvider: CustomTabsProvider
 ) : UrlOpener {

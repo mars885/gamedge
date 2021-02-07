@@ -26,8 +26,8 @@ import com.paulrybitskyi.gamedge.core.di.UrlOpenerKey
 import com.paulrybitskyi.gamedge.core.utils.attachNewTaskFlagIfNeeded
 import javax.inject.Inject
 
-@UrlOpenerKey(UrlOpenerKey.Type.NATIVE_APP)
 @BindType(withQualifier = true)
+@UrlOpenerKey(UrlOpenerKey.Type.NATIVE_APP)
 internal class NativeAppUrlOpener @Inject constructor() : UrlOpener {
 
 
