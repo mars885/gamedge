@@ -35,8 +35,8 @@ internal interface ArticlesEndpoint {
 }
 
 
-@BindType
 @Singleton
+@BindType
 internal class ArticlesEndpointImpl @Inject constructor(
     private val articlesService: ArticlesService,
     private val queryParamsBuilder: GamespotQueryParamsBuilder
