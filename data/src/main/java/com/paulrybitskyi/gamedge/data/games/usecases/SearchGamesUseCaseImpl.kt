@@ -17,21 +17,21 @@
 package com.paulrybitskyi.gamedge.data.games.usecases
 
 import com.github.michaelbull.result.mapEither
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.utils.asSuccess
 import com.paulrybitskyi.gamedge.core.utils.onSuccess
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
-import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
-import com.paulrybitskyi.gamedge.data.games.datastores.commons.GamesDataStores
+import com.paulrybitskyi.gamedge.data.commons.mappers.ErrorMapper
+import com.paulrybitskyi.gamedge.data.commons.mappers.PaginationMapper
+import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.PaginationMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase.Params
+import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

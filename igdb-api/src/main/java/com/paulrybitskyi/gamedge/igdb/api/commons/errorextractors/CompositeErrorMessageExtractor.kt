@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors
 
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
+import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
 import com.paulrybitskyi.hiltbinder.BindType
 import okhttp3.ResponseBody
 import javax.inject.Inject
@@ -25,7 +26,8 @@ import javax.inject.Inject
 private const val UNKNOWN_ERROR = "Unknown Error"
 
 
-@BindType
+@BindType(withQualifier = true)
+@IgdbApi
 internal class CompositeErrorMessageExtractor @Inject constructor(
     private val errorMessageExtractors: Set<@JvmSuppressWildcards ErrorMessageExtractor>
 ) : ErrorMessageExtractor {

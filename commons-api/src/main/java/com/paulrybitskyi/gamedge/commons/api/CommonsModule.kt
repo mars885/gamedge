@@ -16,31 +16,18 @@
 
 package com.paulrybitskyi.gamedge.commons.api
 
-import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
 import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object CommonsModule {
-
-
-    @Provides
-    fun provideRetrofitBuilder(
-        okHttpClient: OkHttpClient,
-        apiResultCallAdapterFactory: ApiResultCallAdapterFactory
-    ): Retrofit.Builder {
-        return Retrofit.Builder()
-            .client(okHttpClient)
-            .addCallAdapterFactory(apiResultCallAdapterFactory)
-    }
 
 
     @Provides

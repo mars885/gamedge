@@ -41,6 +41,7 @@ dependencies {
     implementation(project(deps.local.domain))
     implementation(project(deps.local.data))
     implementation(project(deps.local.igdbApi))
+    implementation(project(deps.local.gamespotApi))
     implementation(project(deps.local.database))
     implementation(project(deps.local.core))
     implementation(project(deps.local.commonsUi))

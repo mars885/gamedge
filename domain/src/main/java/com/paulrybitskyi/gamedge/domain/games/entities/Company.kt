@@ -22,4 +22,12 @@ data class Company(
     val websiteUrl: String,
     val logo: Image?,
     val developedGames: List<Int>,
-)
+) {
+
+    val hasLogo: Boolean
+        get() = (logo != null)
+
+    val hasDevelopedGames: Boolean
+        get() = developedGames.isNotEmpty()
+
+}

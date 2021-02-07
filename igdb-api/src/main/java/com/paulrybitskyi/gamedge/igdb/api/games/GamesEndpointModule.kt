@@ -16,9 +16,11 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games
 
+import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
 import com.paulrybitskyi.gamedge.igdb.api.BuildConfig
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.Endpoint
+import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
 import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilder
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.*
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
@@ -29,6 +31,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -64,14 +67,16 @@ internal object GamesEndpointModule {
     @Provides
     @Endpoint(Endpoint.Type.GAMES)
     fun provideRetrofit(
-        retrofitBuilder: Retrofit.Builder,
-        @Endpoint(Endpoint.Type.GAMES)
-        moshi: Moshi
+        okHttpClient: OkHttpClient,
+        @IgdbApi callAdapterFactory: ApiResultCallAdapterFactory,
+        @Endpoint(Endpoint.Type.GAMES) moshi: Moshi
     ): Retrofit {
-        return retrofitBuilder
-            .baseUrl(Constants.IGDB_API_BASE_URL)
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .baseUrl(Constants.IGDB_API_BASE_URL)
             .build()
     }
 

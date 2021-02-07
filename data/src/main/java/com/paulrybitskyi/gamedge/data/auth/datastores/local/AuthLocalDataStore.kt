@@ -17,9 +17,9 @@
 package com.paulrybitskyi.gamedge.data.auth.datastores.local
 
 import androidx.datastore.DataStore
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
+import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton

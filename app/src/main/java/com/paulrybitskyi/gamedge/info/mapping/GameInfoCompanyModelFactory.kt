@@ -27,7 +27,6 @@ import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder.Config
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.width
 import com.paulrybitskyi.gamedge.domain.games.entities.InvolvedCompany
-import com.paulrybitskyi.gamedge.domain.games.entities.extensions.hasLogo
 import com.paulrybitskyi.hiltbinder.BindType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

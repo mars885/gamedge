@@ -16,13 +16,16 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.auth
 
+import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
 import com.paulrybitskyi.gamedge.igdb.api.BuildConfig
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.Endpoint
+import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -52,13 +55,15 @@ internal object AuthEndpointModule {
     @Provides
     @Endpoint(Endpoint.Type.AUTH)
     fun provideRetrofit(
-        retrofitBuilder: Retrofit.Builder,
-        @Endpoint(Endpoint.Type.AUTH)
-        moshi: Moshi
+        okHttpClient: OkHttpClient,
+        @IgdbApi callAdapterFactory: ApiResultCallAdapterFactory,
+        @Endpoint(Endpoint.Type.AUTH) moshi: Moshi
     ): Retrofit {
-        return retrofitBuilder
-            .baseUrl(Constants.TWITCH_API_BASE_URL)
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .baseUrl(Constants.TWITCH_API_BASE_URL)
             .build()
     }
 

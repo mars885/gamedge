@@ -43,4 +43,12 @@ data class Game(
     val involvedCompanies: List<InvolvedCompany>,
     val websites: List<Website>,
     val similarGames: List<Int>,
-)
+) {
+
+    val hasSimilarGames: Boolean
+        get() = similarGames.isNotEmpty()
+
+    val developerCompany: Company?
+        get() = involvedCompanies.firstOrNull(InvolvedCompany::isDeveloper)?.company
+
+}

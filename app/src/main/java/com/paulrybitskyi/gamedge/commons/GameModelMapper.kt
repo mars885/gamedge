@@ -21,7 +21,6 @@ import com.paulrybitskyi.gamedge.core.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.domain.games.entities.extensions.developerCompany
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
