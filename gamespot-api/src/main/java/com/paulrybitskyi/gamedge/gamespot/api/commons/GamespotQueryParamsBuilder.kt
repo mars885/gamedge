@@ -60,7 +60,7 @@ internal class GamespotQueryParamsBuilderImpl(
             )
             put(
                 QUERY_PARAM_SORT,
-                buildSortQueryParamValue(Article.Schema.PUBLISH_DATE, SortOrder.DESC)
+                buildSortQueryParamValue(Article.Schema.PUBLICATION_DATE, SortOrder.DESC)
             )
 
             action()

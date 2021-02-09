@@ -18,10 +18,9 @@
 
 <resources>
 
-    <string name="app_name">Gamedge</string>
-
     <!-- Dashboard -->
     <string name="dashboard_toolbar_title">Dashboard</string>
+    <string name="dashboard_bottom_navigation_item_news">News</string>
     <string name="dashboard_bottom_navigation_item_discover">Discover</string>
     <string name="dashboard_bottom_navigation_item_likes">Likes</string>
 

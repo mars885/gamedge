@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.articles.entities
+package com.paulrybitskyi.gamedge.commons.ui.widgets.news
 
-data class Association(
+data class GamingNewsItemModel(
     val id: Int,
-    val name: String
+    val imageUrl: String?,
+    val title: String,
+    val lede: String,
+    val publicationDate: String,
+    val siteDetailUrl: String
 )

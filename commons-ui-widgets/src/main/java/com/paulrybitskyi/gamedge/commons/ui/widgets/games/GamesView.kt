@@ -35,7 +35,6 @@ import com.paulrybitskyi.gamedge.commons.ui.fadeIn
 import com.paulrybitskyi.gamedge.commons.ui.resetAnimation
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewGamesBinding
-import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GamesUiState
 
 class GamesView @JvmOverloads constructor(
     context: Context,

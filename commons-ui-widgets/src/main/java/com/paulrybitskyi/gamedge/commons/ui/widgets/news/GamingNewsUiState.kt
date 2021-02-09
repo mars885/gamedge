@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.ui.widgets.videos
+package com.paulrybitskyi.gamedge.commons.ui.widgets.news
 
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
+sealed class GamingNewsUiState {
 
-sealed class GamesUiState {
+    object Empty : GamingNewsUiState()
 
-    data class Empty(val iconId: Int, val title: String) : GamesUiState()
+    object Loading : GamingNewsUiState()
 
-    object Loading : GamesUiState()
-
-    data class Result(val items: List<GameModel>) : GamesUiState()
+    data class Result(val items: List<GamingNewsItemModel>) : GamingNewsUiState()
 
 }

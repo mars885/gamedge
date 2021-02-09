@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.api.commons
+package com.paulrybitskyi.gamedge.commons.ui.widgets.news
 
-internal object Headers {
+import android.content.Context
+import com.paulrybitskyi.gamedge.commons.ui.widgets.base.AbstractRecyclerViewAdapter
+import com.paulrybitskyi.gamedge.commons.ui.widgets.base.NoDependencies
 
-    const val CLIENT_ID = "Client-ID"
-    const val AUTHORIZATION = "Authorization"
-
-}
+internal class GamingNewsAdapter(
+    context: Context
+): AbstractRecyclerViewAdapter<GamingNewsItem, NoDependencies>(context)

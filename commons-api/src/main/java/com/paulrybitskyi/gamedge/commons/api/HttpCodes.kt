@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.commons.api
 
-internal object HttpCodes {
+object HttpCodes {
 
     const val SERVER_ERROR = 500
 

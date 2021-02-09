@@ -32,7 +32,7 @@ internal interface ArticlesTable {
     @Query(
         """
         SELECT * FROM ${Article.Schema.TABLE_NAME} 
-        ORDER BY ${Article.Schema.PUBLISH_DATE} DESC 
+        ORDER BY ${Article.Schema.PUBLICATION_DATE} DESC 
         LIMIT :offset, :limit
         """
     )

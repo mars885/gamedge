@@ -16,10 +16,12 @@
 
 package com.paulrybitskyi.gamedge.dashboard.fragment
 
+import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getSerializable
 import com.paulrybitskyi.commons.material.utils.setItemColors
 import com.paulrybitskyi.commons.navigation.navController
 import com.paulrybitskyi.commons.utils.viewBinding
@@ -33,6 +35,15 @@ internal class DashboardFragment : BaseFragment<
     FragmentDashboardBinding,
     DashboardViewModel
 >(R.layout.fragment_dashboard) {
+
+
+    private companion object {
+
+        private const val KEY_SELECTED_PAGE = "selected_page"
+
+        private val DEFAULT_SELECTED_PAGE = DashboardPage.DISCOVER
+
+    }
 
 
     override val viewBinding by viewBinding(FragmentDashboardBinding::bind)
@@ -92,6 +103,19 @@ internal class DashboardFragment : BaseFragment<
     }
 
 
+    override fun onPostInit() {
+        super.onPostInit()
+
+        selectPage(DEFAULT_SELECTED_PAGE)
+    }
+
+
+    private fun selectPage(page: DashboardPage) = with(viewBinding) {
+        bottomNav.selectedItemId = page.menuItemId
+        viewPager.setCurrentItem(page.position, false)
+    }
+
+
     override fun onRoute(route: Route) {
         super.onRoute(route)
 
@@ -103,6 +127,23 @@ internal class DashboardFragment : BaseFragment<
 
     private fun navigateToSearchScreen() {
         navController.navigate(DashboardFragmentDirections.actionSearchFragment())
+    }
+
+
+    override fun onRestoreState(state: Bundle) {
+        super.onRestoreState(state)
+
+        selectPage(state.getSerializable(KEY_SELECTED_PAGE, DEFAULT_SELECTED_PAGE))
+    }
+
+
+    override fun onSaveState(state: Bundle) {
+        state.putSerializable(
+            KEY_SELECTED_PAGE,
+            viewBinding.bottomNav.selectedItemId.toDashboardPageFromMenuItemId()
+        )
+
+        super.onSaveState(state)
     }
 
 

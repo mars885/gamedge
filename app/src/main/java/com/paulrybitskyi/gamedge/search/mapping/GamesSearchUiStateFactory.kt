@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.search.mapping
 
 import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.commons.GameModelMapper
-import com.paulrybitskyi.gamedge.commons.ui.widgets.videos.GamesUiState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.hiltbinder.BindType

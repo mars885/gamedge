@@ -19,10 +19,10 @@ package com.paulrybitskyi.gamedge.discovery
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.paulrybitskyi.commons.ktx.nonNullValue
 import com.paulrybitskyi.gamedge.base.BaseViewModel
 import com.paulrybitskyi.gamedge.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ErrorMapper
-import com.paulrybitskyi.gamedge.commons.ui.extensions.nonNullValue
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemChildModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.discovery.GamesDiscoveryItemModel
 import com.paulrybitskyi.gamedge.core.Logger

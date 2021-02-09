@@ -1,16 +1,14 @@
 package com.paulrybitskyi.gamedge.gamespot.api.articles.datastores
 
 import com.paulrybitskyi.gamedge.data.articles.DataArticle
-import com.paulrybitskyi.gamedge.data.articles.DataAssociation
 import com.paulrybitskyi.gamedge.data.articles.DataImageType
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
-import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiAssociation
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiImageType
 import javax.inject.Inject
 
 
 internal class ArticleMapper @Inject constructor(
-    private val publishDateMapper: ArticlePublishDateMapper
+    private val publicationDateMapper: ArticlePublicationDateMapper
 ) {
 
 
@@ -20,8 +18,7 @@ internal class ArticleMapper @Inject constructor(
             title = apiArticle.title,
             lede = apiArticle.lede,
             imageUrls = apiArticle.imageUrls.toDataImageUrls(),
-            associations = apiArticle.associations.toDataAssociations(),
-            publishDate = publishDateMapper.mapToTimestamp(apiArticle.publishDate),
+            publicationDate = publicationDateMapper.mapToTimestamp(apiArticle.publicationDate),
             siteDetailUrl = apiArticle.siteDetailUrl
         )
     }
@@ -30,16 +27,6 @@ internal class ArticleMapper @Inject constructor(
     private fun Map<ApiImageType, String>.toDataImageUrls(): Map<DataImageType, String> {
         return mapKeys {
             DataImageType.valueOf(it.key.name)
-        }
-    }
-
-
-    private fun List<ApiAssociation>.toDataAssociations(): List<DataAssociation> {
-        return map {
-            DataAssociation(
-                id = it.id,
-                name = it.name
-            )
         }
     }
 

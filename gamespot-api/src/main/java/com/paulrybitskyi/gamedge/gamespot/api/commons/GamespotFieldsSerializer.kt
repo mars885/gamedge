@@ -22,7 +22,7 @@ import java.lang.reflect.Field
 import javax.inject.Inject
 
 
-private const val FIELD_SEPARATOR = ", "
+private const val FIELD_SEPARATOR = ","
 
 
 

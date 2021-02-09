@@ -26,7 +26,6 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
 
@@ -39,7 +38,8 @@ interface GameReleaseDateFormatter {
 
 @BindType
 internal class GameReleaseDateFormatterImpl @Inject constructor(
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
+    private val relativeDateFormatter: RelativeDateFormatter
 ) : GameReleaseDateFormatter {
 
 
@@ -84,27 +84,15 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
 
     private fun ReleaseDate.formatCompleteDate(): String {
         val releaseLocalDateTime = toLocalDateTime()
-        val currentDateTime = LocalDateTime.now()
-        val isReleaseDateInPast = currentDateTime.isAfter(releaseLocalDateTime)
-        val isReleaseDateInFuture = currentDateTime.isBefore(releaseLocalDateTime)
         val formattedReleaseDate = DateTimeFormatter
             .ofPattern(COMPLETE_DATE_FORMATTING_PATTERN)
             .format(releaseLocalDateTime)
 
         return buildString {
             append(formattedReleaseDate)
-
-            val relativeTimestamp = when {
-                isReleaseDateInPast -> getPastRelativeTimestamp(releaseLocalDateTime, currentDateTime)
-                isReleaseDateInFuture -> getFutureRelativeTimestamp(releaseLocalDateTime, currentDateTime)
-                else -> null
-            }
-
-            if(relativeTimestamp != null) {
-                append(" (")
-                append(relativeTimestamp)
-                append(")")
-            }
+            append(" (")
+            append(relativeDateFormatter.formatRelativeDate(releaseLocalDateTime))
+            append(")")
         }
     }
 
@@ -113,6 +101,14 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
         return DateTimeFormatter
             .ofPattern(DAYLESS_DATE_FORMATTING_PATTERN)
             .format(toLocalDateTime())
+    }
+
+
+    private fun ReleaseDate.toLocalDateTime(): LocalDateTime {
+        return LocalDateTime.ofInstant(
+            Instant.ofEpochSecond(checkNotNull(date)),
+            ZoneId.systemDefault()
+        )
     }
 
 
@@ -141,75 +137,6 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
                 else -> throw IllegalStateException("Unknown category $this.")
             }
         )
-    }
-
-
-    private fun ReleaseDate.toLocalDateTime(): LocalDateTime {
-        return LocalDateTime.ofInstant(
-            Instant.ofEpochSecond(checkNotNull(date)),
-            ZoneId.systemDefault()
-        )
-    }
-
-
-    private fun getPastRelativeTimestamp(
-        pastReleaseDateTime: LocalDateTime,
-        currentDateTime: LocalDateTime
-    ): String {
-        val yearCount = ChronoUnit.YEARS.between(pastReleaseDateTime, currentDateTime).toInt()
-        if(yearCount > 0L) return getQuantityString(R.plurals.past_relative_timestamp_year, yearCount)
-
-        val monthCount = ChronoUnit.MONTHS.between(pastReleaseDateTime, currentDateTime).toInt()
-        if(monthCount > 0L) return getQuantityString(R.plurals.past_relative_timestamp_month, monthCount)
-
-        val dayCount = ChronoUnit.DAYS.between(pastReleaseDateTime, currentDateTime).toInt()
-        if(dayCount > 0L) return getQuantityString(R.plurals.past_relative_timestamp_day, dayCount)
-
-        val hourCount = ChronoUnit.HOURS.between(pastReleaseDateTime, currentDateTime).toInt()
-        if(hourCount > 0L) return getQuantityString(R.plurals.past_relative_timestamp_hour, hourCount)
-
-        val minuteCount = ChronoUnit.MINUTES.between(pastReleaseDateTime, currentDateTime).toInt()
-        if(minuteCount > 0L) return getQuantityString(R.plurals.past_relative_timestamp_minute, minuteCount)
-
-        val secondCount = ChronoUnit.SECONDS.between(pastReleaseDateTime, currentDateTime).toInt()
-        if(secondCount > 0L) return getQuantityString(R.plurals.past_relative_timestamp_second, secondCount)
-
-        throw IllegalStateException(
-            "Could not calculate the past relative timestamp between $pastReleaseDateTime and $currentDateTime."
-        )
-    }
-
-
-    private fun getFutureRelativeTimestamp(
-        futureReleaseDateTime: LocalDateTime,
-        currentDateTime: LocalDateTime
-    ): String {
-        val yearCount = ChronoUnit.YEARS.between(currentDateTime, futureReleaseDateTime).toInt()
-        if(yearCount > 0L) return getQuantityString(R.plurals.future_relative_timestamp_year, yearCount)
-
-        val monthCount = ChronoUnit.MONTHS.between(currentDateTime, futureReleaseDateTime).toInt()
-        if(monthCount > 0L) return getQuantityString(R.plurals.future_relative_timestamp_month, monthCount)
-
-        val dayCount = ChronoUnit.DAYS.between(currentDateTime, futureReleaseDateTime).toInt()
-        if(dayCount > 0L) return getQuantityString(R.plurals.future_relative_timestamp_day, dayCount)
-
-        val hourCount = ChronoUnit.HOURS.between(currentDateTime, futureReleaseDateTime).toInt()
-        if(hourCount > 0L) return getQuantityString(R.plurals.future_relative_timestamp_hour, hourCount)
-
-        val minuteCount = ChronoUnit.MINUTES.between(currentDateTime, futureReleaseDateTime).toInt()
-        if(minuteCount > 0L) return getQuantityString(R.plurals.future_relative_timestamp_minute, minuteCount)
-
-        val secondCount = ChronoUnit.SECONDS.between(currentDateTime, futureReleaseDateTime).toInt()
-        if(secondCount > 0L) return getQuantityString(R.plurals.future_relative_timestamp_second, secondCount)
-
-        throw IllegalStateException(
-            "Could not calculate the future relative timestamp between $currentDateTime and $futureReleaseDateTime."
-        )
-    }
-
-
-    private fun getQuantityString(id: Int, quantity: Int): String {
-        return stringProvider.getQuantityString(id, quantity, quantity)
     }
 
 

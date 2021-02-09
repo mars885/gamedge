@@ -17,10 +17,8 @@
 package com.paulrybitskyi.gamedge.data.articles.usecases.commons
 
 import com.paulrybitskyi.gamedge.data.articles.DataArticle
-import com.paulrybitskyi.gamedge.data.articles.DataAssociation
 import com.paulrybitskyi.gamedge.data.articles.DataImageType
 import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
-import com.paulrybitskyi.gamedge.domain.articles.DomainAssociation
 import com.paulrybitskyi.gamedge.domain.articles.DomainImageType
 import javax.inject.Inject
 
@@ -34,8 +32,7 @@ internal class ArticleMapper @Inject constructor() {
             title = dataArticle.title,
             lede = dataArticle.lede,
             imageUrls = dataArticle.imageUrls.toDomainImageUrls(),
-            associations = dataArticle.associations.toDomainAssociations(),
-            publishDate = dataArticle.publishDate,
+            publicationDate = dataArticle.publicationDate,
             siteDetailUrl = dataArticle.siteDetailUrl
         )
     }
@@ -44,39 +41,6 @@ internal class ArticleMapper @Inject constructor() {
     private fun Map<DataImageType, String>.toDomainImageUrls(): Map<DomainImageType, String> {
         return mapKeys {
             DomainImageType.valueOf(it.key.name)
-        }
-    }
-
-
-    private fun List<DataAssociation>.toDomainAssociations(): List<DomainAssociation> {
-        return map {
-            DomainAssociation(
-                id = it.id,
-                name = it.name
-            )
-        }
-    }
-
-
-    fun mapToDataArticle(domainArticle: DomainArticle): DataArticle {
-        return DataArticle(
-            id = domainArticle.id,
-            title = domainArticle.title,
-            lede = domainArticle.lede,
-            imageUrls = emptyMap(),
-            associations = domainArticle.associations.toDataAssociations(),
-            publishDate = domainArticle.publishDate,
-            siteDetailUrl = domainArticle.siteDetailUrl
-        )
-    }
-
-
-    private fun List<DomainAssociation>.toDataAssociations(): List<DataAssociation> {
-        return map {
-            DataAssociation(
-                id = it.id,
-                name = it.name
-            )
         }
     }
 

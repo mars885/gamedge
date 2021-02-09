@@ -22,6 +22,7 @@ plugins {
 
 dependencies {
     implementation(project(deps.local.data))
+    implementation(project(deps.local.core))
 
     implementation(deps.square.okHttpLoggingInterceptor)
     implementation(deps.square.retrofit)
@@ -30,6 +31,9 @@ dependencies {
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
+
+    implementation(deps.misc.hiltBinder)
+    kapt(deps.misc.hiltBinderCompiler)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

@@ -116,4 +116,30 @@ internal abstract class BaseActivity<
     }
 
 
+    final override fun onRestoreInstanceState(state: Bundle) {
+        super.onRestoreInstanceState(state)
+
+        onRestoreState(state)
+    }
+
+
+    @CallSuper
+    protected open fun onRestoreState(state: Bundle) {
+        // Stub
+    }
+
+
+    final override fun onSaveInstanceState(state: Bundle) {
+        onSaveState(state)
+
+        super.onSaveInstanceState(state)
+    }
+
+
+    @CallSuper
+    protected open fun onSaveState(state: Bundle) {
+        // Stub
+    }
+
+
 }

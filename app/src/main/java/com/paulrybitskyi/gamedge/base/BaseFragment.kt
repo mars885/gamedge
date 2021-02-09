@@ -71,6 +71,10 @@ internal abstract class BaseFragment<
         }
 
         onBindViewModel()
+
+        if(!wasViewCreated) {
+            savedInstanceState?.let(::onRestoreState)
+        }
     }
 
 
@@ -136,6 +140,25 @@ internal abstract class BaseFragment<
 
     @CallSuper
     protected open fun onRoute(route: Route) {
+        // Stub
+    }
+
+
+    @CallSuper
+    protected open fun onRestoreState(state: Bundle) {
+        // Stub
+    }
+
+
+    final override fun onSaveInstanceState(state: Bundle) {
+        onSaveState(state)
+
+        super.onSaveInstanceState(state)
+    }
+
+
+    @CallSuper
+    protected open fun onSaveState(state: Bundle) {
         // Stub
     }
 

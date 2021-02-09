@@ -33,10 +33,14 @@ internal class GamespotErrorMessageExtractor @Inject constructor() : ErrorMessag
 
 
     override fun extract(responseBody: ResponseBody): String {
-        val jsonObject = JSONObject(responseBody.string())
-        val message = jsonObject.getString(ERROR_MESSAGE_NAME)
+        return try {
+            val jsonObject = JSONObject(responseBody.string())
+            val message = jsonObject.getString(ERROR_MESSAGE_NAME)
 
-        return message
+            message
+        } catch(error: Throwable) {
+            (error.message ?: error.javaClass.simpleName)
+        }
     }
 
 

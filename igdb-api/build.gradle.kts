@@ -39,7 +39,6 @@ dependencies {
 
     implementation(deps.kotlin.coroutines)
 
-    implementation(deps.square.okHttpLoggingInterceptor)
     implementation(deps.square.retrofit)
     implementation(deps.square.retrofitMoshiConverter)
     implementation(deps.square.retrofitScalarsConverter)
