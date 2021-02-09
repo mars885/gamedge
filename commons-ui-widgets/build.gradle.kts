@@ -37,6 +37,7 @@ hilt {
 }
 
 dependencies {
+    implementation(project(deps.local.domain))
     implementation(project(deps.local.core))
     implementation(project(deps.local.commonsUi))
     implementation(project(deps.local.imageLoading))
@@ -60,6 +61,9 @@ dependencies {
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
+
+    implementation(deps.misc.hiltBinder)
+    kapt(deps.misc.hiltBinderCompiler)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

@@ -38,43 +38,26 @@ hilt {
 }
 
 dependencies {
-    implementation(project(deps.local.domain))
-    implementation(project(deps.local.data))
+    implementation(project(deps.local.commonsUi))
     implementation(project(deps.local.igdbApi))
     implementation(project(deps.local.gamespotApi))
     implementation(project(deps.local.database))
-    implementation(project(deps.local.core))
-    implementation(project(deps.local.commonsUi))
-    implementation(project(deps.local.commonsUiWidgets))
+    implementation(project(deps.local.featureCategory))
+    implementation(project(deps.local.featureDashboard))
+    implementation(project(deps.local.featureDiscovery))
+    implementation(project(deps.local.featureInfo))
+    implementation(project(deps.local.featureLikes))
+    implementation(project(deps.local.featureNews))
+    implementation(project(deps.local.featureSearch))
+    implementation(project(deps.local.featureSplash))
 
-    implementation(deps.androidX.appCompat)
     implementation(deps.androidX.navFragmentKtx)
-    implementation(deps.androidX.navUiKtx)
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.androidX.recyclerView)
-    implementation(deps.androidX.viewPager2)
-    implementation(deps.androidX.lifecycleCommonJava8)
-    implementation(deps.androidX.lifecycleViewModel)
-    implementation(deps.androidX.coreKtx)
-    implementation(deps.androidX.fragmentKtx)
-
-    implementation(deps.commons.commonsCore)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsWidgets)
-    implementation(deps.commons.commonsWindowAnims)
-    implementation(deps.commons.commonsNavigation)
-    implementation(deps.commons.commonsMaterial)
-
-    implementation(deps.misc.kotlinResult)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
 
     implementation(deps.misc.hiltBinder)
     kapt(deps.misc.hiltBinderCompiler)
-
-    implementation(deps.androidX.daggerHiltAssistedInjection)
-    kapt(deps.androidX.daggerHiltAssistedInjectionCompiler)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

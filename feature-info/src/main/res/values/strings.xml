@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
+<resources>
+
+    <!-- GameArtworksView -->
+    <string name="game_artworks_page_indicator_template">%1$d/%2$d</string>
+
+    <!-- GameVideosView -->
+    <string name="game_videos_title">Videos</string>
+
+    <!-- GameScreenshotsView -->
+    <string name="game_screenshots_title">Screenshots</string>
+
+    <!-- GameSummaryView -->
+    <string name="game_summary_title">Summary</string>
+
+    <!-- GameDetailsView -->
+    <string name="game_details_title">Details</string>
+    <string name="game_details_genres_title">Genres</string>
+    <string name="game_details_platforms_title">Platforms</string>
+    <string name="game_details_modes_title">Modes</string>
+    <string name="game_details_player_perspectives_title">Player Perspectives</string>
+    <string name="game_details_themes_title">Themes</string>
+
+    <!-- GameLinksView -->
+    <string name="game_links_title">Links</string>
+
+    <!-- GameCompaniesView -->
+    <string name="game_companies_title">Involved Companies</string>
+
+    <!-- GameInfoView -->
+    <string name="game_info_info_view_title">No Data Available</string>
+
+</resources>

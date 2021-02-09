@@ -24,19 +24,19 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.paulrybitskyi.gamedge.dashboard.fragment.DashboardFragment"/>
+        android:name="com.paulrybitskyi.gamedge.feature.dashboard.DashboardFragment"/>
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.paulrybitskyi.gamedge.search.GamesSearchFragment"/>
+        android:name="com.paulrybitskyi.gamedge.feature.search.GamesSearchFragment"/>
 
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="com.paulrybitskyi.gamedge.category.GamesCategoryFragment"/>
+        android:name="com.paulrybitskyi.gamedge.feature.category.GamesCategoryFragment"/>
 
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.paulrybitskyi.gamedge.info.GameInfoFragment"/>
+        android:name="com.paulrybitskyi.gamedge.feature.info.GameInfoFragment"/>
 
     <action
         android:id="@+id/action_searchFragment"
@@ -56,7 +56,7 @@
 
         <argument
             android:name="games_category"
-            app:argType="com.paulrybitskyi.gamedge.category.GamesCategory"/>
+            app:argType="string"/>
 
     </action>
 

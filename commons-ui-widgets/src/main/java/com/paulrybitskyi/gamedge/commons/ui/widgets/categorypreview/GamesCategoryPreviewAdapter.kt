@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview
 
 import android.content.Context
-import com.paulrybitskyi.gamedge.commons.ui.widgets.base.AbstractRecyclerViewAdapter
-import com.paulrybitskyi.gamedge.commons.ui.widgets.base.NoDependencies
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractRecyclerViewAdapter
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
 internal class GamesCategoryPreviewAdapter(
     context: Context

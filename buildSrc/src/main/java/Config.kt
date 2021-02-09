@@ -75,6 +75,15 @@ object deps {
         const val commonsApi = ":commons-api"
         const val gamespotApi = ":gamespot-api"
 
+        const val featureCategory = ":feature-category"
+        const val featureDashboard = ":feature-dashboard"
+        const val featureDiscovery = ":feature-discovery"
+        const val featureInfo = ":feature-info"
+        const val featureLikes = ":feature-likes"
+        const val featureNews = ":feature-news"
+        const val featureSearch = ":feature-search"
+        const val featureSplash = ":feature-splash"
+
     }
 
     object kotlin {
