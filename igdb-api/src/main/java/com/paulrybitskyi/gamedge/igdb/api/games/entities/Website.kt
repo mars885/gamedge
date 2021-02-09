@@ -25,13 +25,13 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class Website(
     @Apicalypse(name = Schema.ID)
-    @Json(name = Schema.ID)
+    @field:Json(name = Schema.ID)
     val id: Int,
     @Apicalypse(name = Schema.URL)
-    @Json(name = Schema.URL)
+    @field:Json(name = Schema.URL)
     val url: String,
     @Apicalypse(name = Schema.CATEGORY)
-    @Json(name = Schema.CATEGORY)
+    @field:Json(name = Schema.CATEGORY)
     val category: WebsiteCategory,
 ) {
 

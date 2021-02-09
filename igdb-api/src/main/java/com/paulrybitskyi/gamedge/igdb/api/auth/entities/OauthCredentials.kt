@@ -21,11 +21,11 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class OauthCredentials(
-    @Json(name = Schema.ACCESS_TOKEN)
+    @field:Json(name = Schema.ACCESS_TOKEN)
     val accessToken: String,
-    @Json(name = Schema.TOKEN_TYPE)
+    @field:Json(name = Schema.TOKEN_TYPE)
     val tokenType: String,
-    @Json(name = Schema.TOKEN_TTL)
+    @field:Json(name = Schema.TOKEN_TTL)
     val tokenTtl: Long
 ) {
 

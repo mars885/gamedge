@@ -25,10 +25,10 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class Platform(
     @Apicalypse(name = Schema.ABBREVIATION)
-    @Json(name = Schema.ABBREVIATION)
+    @field:Json(name = Schema.ABBREVIATION)
     val abbreviation: String = "",
     @Apicalypse(name = Schema.NAME)
-    @Json(name = Schema.NAME)
+    @field:Json(name = Schema.NAME)
     val name: String = "",
 ) {
 

@@ -25,7 +25,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class Genre(
     @Apicalypse(name = Schema.NAME)
-    @Json(name = Schema.NAME)
+    @field:Json(name = Schema.NAME)
     val name: String,
 ) {
 

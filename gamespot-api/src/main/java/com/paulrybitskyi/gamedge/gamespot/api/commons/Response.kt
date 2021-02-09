@@ -21,7 +21,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class Response<T : Any>(
-    @Json(name = Schema.RESULTS)
+    @field:Json(name = Schema.RESULTS)
     val results: List<T> = emptyList()
 ) {
 

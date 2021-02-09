@@ -25,13 +25,13 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class ReleaseDate(
     @Apicalypse(name = Schema.DATE)
-    @Json(name = Schema.DATE)
+    @field:Json(name = Schema.DATE)
     val date: Long? = null,
     @Apicalypse(name = Schema.YEAR)
-    @Json(name = Schema.YEAR)
+    @field:Json(name = Schema.YEAR)
     val year: Int? = null,
     @Apicalypse(name = Schema.CATEGORY)
-    @Json(name = Schema.CATEGORY)
+    @field:Json(name = Schema.CATEGORY)
     val category: ReleaseDateCategory,
 ) {
 
