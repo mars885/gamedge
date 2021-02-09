@@ -25,10 +25,10 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class Video(
     @Apicalypse(name = Schema.ID)
-    @Json(name = Schema.ID)
+    @field:Json(name = Schema.ID)
     val id: String,
     @Apicalypse(name = Schema.NAME)
-    @Json(name = Schema.NAME)
+    @field:Json(name = Schema.NAME)
     val name: String
 ) {
 

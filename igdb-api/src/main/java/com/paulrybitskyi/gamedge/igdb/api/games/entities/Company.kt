@@ -25,19 +25,19 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class Company(
     @Apicalypse(name = Schema.ID)
-    @Json(name = Schema.ID)
+    @field:Json(name = Schema.ID)
     val id: Int,
     @Apicalypse(name = Schema.NAME)
-    @Json(name = Schema.NAME)
+    @field:Json(name = Schema.NAME)
     val name: String,
     @Apicalypse(name = Schema.WEBSITE_URL)
-    @Json(name = Schema.WEBSITE_URL)
+    @field:Json(name = Schema.WEBSITE_URL)
     val websiteUrl: String,
     @Apicalypse(name = Schema.LOGO)
-    @Json(name = Schema.LOGO)
+    @field:Json(name = Schema.LOGO)
     val logo: Image? = null,
     @Apicalypse(name = Schema.DEVELOPED_GAMES)
-    @Json(name = Schema.DEVELOPED_GAMES)
+    @field:Json(name = Schema.DEVELOPED_GAMES)
     val developedGames: List<Int> = listOf(),
 ) {
 

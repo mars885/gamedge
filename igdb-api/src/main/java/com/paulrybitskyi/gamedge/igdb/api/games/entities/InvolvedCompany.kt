@@ -25,19 +25,19 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class InvolvedCompany(
     @Apicalypse(name = Schema.COMPANY)
-    @Json(name = Schema.COMPANY)
+    @field:Json(name = Schema.COMPANY)
     val company: Company,
     @Apicalypse(name = Schema.IS_DEVELOPER)
-    @Json(name = Schema.IS_DEVELOPER)
+    @field:Json(name = Schema.IS_DEVELOPER)
     val isDeveloper: Boolean,
     @Apicalypse(name = Schema.IS_PUBLISHER)
-    @Json(name = Schema.IS_PUBLISHER)
+    @field:Json(name = Schema.IS_PUBLISHER)
     val isPublisher: Boolean,
     @Apicalypse(name = Schema.IS_PORTER)
-    @Json(name = Schema.IS_PORTER)
+    @field:Json(name = Schema.IS_PORTER)
     val isPorter: Boolean,
     @Apicalypse(name = Schema.IS_SUPPORTING)
-    @Json(name = Schema.IS_SUPPORTING)
+    @field:Json(name = Schema.IS_SUPPORTING)
     val isSupporting: Boolean,
 ) {
 

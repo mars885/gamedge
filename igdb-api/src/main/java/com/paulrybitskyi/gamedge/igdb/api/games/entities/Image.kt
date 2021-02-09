@@ -25,13 +25,13 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class Image(
     @Apicalypse(name = Schema.ID)
-    @Json(name = Schema.ID)
+    @field:Json(name = Schema.ID)
     val id: String,
     @Apicalypse(name = Schema.WIDTH)
-    @Json(name = Schema.WIDTH)
+    @field:Json(name = Schema.WIDTH)
     val width: Int?,
     @Apicalypse(name = Schema.HEIGHT)
-    @Json(name = Schema.HEIGHT)
+    @field:Json(name = Schema.HEIGHT)
     val height: Int?,
 ) {
 
