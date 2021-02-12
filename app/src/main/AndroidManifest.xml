@@ -31,7 +31,7 @@
         android:theme="@style/GamedgeTheme">
 
         <activity
-            android:name="com.paulrybitskyi.gamedge.splash.SplashActivity"
+            android:name=".feature.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/GamedgeTheme.SplashScreen">
 
@@ -43,7 +43,7 @@
         </activity>
 
         <activity
-            android:name="com.paulrybitskyi.gamedge.dashboard.DashboardActivity">
+            android:name=".feature.dashboard.DashboardActivity">
 
             <intent-filter>
                 <action android:name="com.paulrybitskyi.gamedge.DASHBOARD_ACTIVITY"/>

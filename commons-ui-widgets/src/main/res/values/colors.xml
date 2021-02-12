@@ -39,69 +39,6 @@
     <color name="games_category_preview_title_text_color">@color/colorPrimaryText</color>
     <color name="games_category_preview_more_button_text_color">@color/colorAccent</color>
 
-    <!-- GamesDiscoveryView -->
-    <color name="games_discovery_swipe_refresh_color">@color/colorAccent</color>
-
-    <!-- GameHeaderView -->
-    <color name="game_header_card_background_color">@color/colorPrimaryDark</color>
-    <color name="game_header_back_button_icon_color">@color/colorPrimaryText</color>
-    <color name="game_header_back_button_drawable_middleground_color">#35000000</color>
-    <color name="game_header_like_btn_color">@color/colorAccent</color>
-    <color name="game_header_like_btn_icon_color">#611d12</color>
-    <color name="game_header_title_text_color">@color/colorPrimaryText</color>
-    <color name="game_header_release_date_text_color">@color/colorSecondaryText</color>
-    <color name="game_header_developer_name_text_color">@color/colorSecondaryText</color>
-    <color name="game_header_info_view_icon_color">#8e9fad</color>
-    <color name="game_header_info_view_title_color">#8e9fad</color>
-
-    <!-- GameArtworksView -->
-    <color name="game_artworks_page_indicator_background_color">#35000000</color>
-    <color name="game_artworks_page_indicator_text_color">@color/colorPrimaryText</color>
-
-    <!-- GameVideosView -->
-    <color name="game_videos_card_background_color">@color/colorPrimaryDark</color>
-    <color name="game_videos_title_text_color">@color/colorPrimaryText</color>
-
-    <!-- GameVideoView -->
-    <color name="game_video_card_background_color">@android:color/transparent</color>
-    <color name="game_video_play_btn_background_stroke_color">@color/colorPrimaryText</color>
-    <color name="game_video_play_btn_background_solid_color">#55000000</color>
-    <color name="game_video_play_btn_color">@color/colorPrimaryText</color>
-    <color name="game_video_title_background_color">#1D212B</color>
-    <color name="game_video_title_text_color">@color/colorSecondaryText</color>
-
-    <!-- GameScreenshotsView -->
-    <color name="game_screenshots_card_background_color">@color/colorPrimaryDark</color>
-    <color name="game_screenshots_title_text_color">@color/colorPrimaryText</color>
-
-    <!-- GameScreenshotView -->
-    <color name="game_screenshot_card_background_color">@android:color/transparent</color>
-
-    <!-- GameSummaryView -->
-    <color name="game_summary_card_background_color">@color/colorPrimaryDark</color>
-    <color name="game_summary_title_text_color">@color/colorPrimaryText</color>
-    <color name="game_summary_content_text_color">@color/colorSecondaryText</color>
-
-    <!-- GameDetailsView -->
-    <color name="game_details_card_background_color">@color/colorPrimaryDark</color>
-    <color name="game_details_title_text_color">@color/colorPrimaryText</color>
-    <color name="game_details_category_title_text_color">@color/colorSecondaryText</color>
-
-    <!-- GameLinksView -->
-    <color name="game_links_card_background_color">@color/colorPrimaryDark</color>
-    <color name="game_links_title_text_color">@color/colorPrimaryText</color>
-    <color name="game_links_chip_background_color">#1D212B</color>
-    <color name="game_links_chip_content_color">@color/colorSecondaryText</color>
-
-    <!-- GameCompaniesView -->
-    <color name="game_companies_card_background_color">@color/colorPrimaryDark</color>
-    <color name="game_companies_title_text_color">@color/colorPrimaryText</color>
-
-    <!-- GameCompanyView -->
-    <color name="game_company_card_background_color">@android:color/transparent</color>
-    <color name="game_company_info_label_background_color">#1D212B</color>
-    <color name="game_company_info_label_text_color">@color/colorSecondaryText</color>
-
     <!-- GameView -->
     <color name="game_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_name_text_color">@color/colorPrimaryText</color>
@@ -109,21 +46,5 @@
 
     <!-- GamesView -->
     <color name="games_swipe_refresh_color">@color/colorAccent</color>
-
-    <!-- GamesCategoryView -->
-    <color name="games_category_swipe_refresh_color">@color/colorAccent</color>
-
-    <!-- GamingNewsItemImageView -->
-    <color name="gaming_news_item_image_card_background_color">@android:color/transparent</color>
-
-    <!-- GamingNewsItemView -->
-    <color name="gaming_news_item_card_background_color">@color/colorPrimaryDark</color>
-    <color name="gaming_news_item_title_text_color">@color/colorPrimaryText</color>
-    <color name="gaming_news_item_lede_text_color">@color/colorSecondaryText</color>
-    <color name="gaming_news_item_publication_date_text_color">@color/colorSecondaryText</color>
-
-    <!-- GamingNewsView -->
-    <color name="gaming_news_swipe_refresh_color">@color/colorAccent</color>
-
 
 </resources>

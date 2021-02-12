@@ -19,10 +19,10 @@ package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.paulrybitskyi.gamedge.commons.ui.widgets.base.AbstractItem
-import com.paulrybitskyi.gamedge.commons.ui.widgets.base.HasListeners
-import com.paulrybitskyi.gamedge.commons.ui.widgets.base.HasUniqueIdentifier
-import com.paulrybitskyi.gamedge.commons.ui.widgets.base.NoDependencies
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractItem
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.HasListeners
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.HasUniqueIdentifier
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
 internal class GameItem(model: GameModel) : AbstractItem<
     GameModel,

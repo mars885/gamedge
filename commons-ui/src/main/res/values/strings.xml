@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
+<resources>
+
+    <!-- GamesCategoryView -->
+    <string name="games_category_popular">Popular</string>
+    <string name="games_category_recently_released">Recently Released</string>
+    <string name="games_category_coming_soon">Coming Soon</string>
+    <string name="games_category_most_anticipated">Most Anticipated</string>
+
+    <!-- GameInfoView -->
+    <string name="game_info_other_company_games_title_template">More Games by %s</string>
+    <string name="game_info_other_company_games_title_default_arg">Developer</string>
+    <string name="game_info_similar_games_title">Similar Games</string>
+
+</resources>

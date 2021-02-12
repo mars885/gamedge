@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
+<resources>
+
+    <!-- GameArtworksView -->
+    <color name="game_artworks_page_indicator_background_color">#35000000</color>
+    <color name="game_artworks_page_indicator_text_color">@color/colorPrimaryText</color>
+
+    <!-- GameHeaderView -->
+    <color name="game_header_card_background_color">@color/colorPrimaryDark</color>
+    <color name="game_header_back_button_icon_color">@color/colorPrimaryText</color>
+    <color name="game_header_back_button_drawable_middleground_color">#35000000</color>
+    <color name="game_header_like_btn_color">@color/colorAccent</color>
+    <color name="game_header_like_btn_icon_color">#611d12</color>
+    <color name="game_header_title_text_color">@color/colorPrimaryText</color>
+    <color name="game_header_release_date_text_color">@color/colorSecondaryText</color>
+    <color name="game_header_developer_name_text_color">@color/colorSecondaryText</color>
+    <color name="game_header_info_view_icon_color">#8e9fad</color>
+    <color name="game_header_info_view_title_color">#8e9fad</color>
+
+    <!-- GameVideosView -->
+    <color name="game_videos_card_background_color">@color/colorPrimaryDark</color>
+    <color name="game_videos_title_text_color">@color/colorPrimaryText</color>
+
+    <!-- GameVideoView -->
+    <color name="game_video_card_background_color">@android:color/transparent</color>
+    <color name="game_video_play_btn_background_stroke_color">@color/colorPrimaryText</color>
+    <color name="game_video_play_btn_background_solid_color">#55000000</color>
+    <color name="game_video_play_btn_color">@color/colorPrimaryText</color>
+    <color name="game_video_title_background_color">#1D212B</color>
+    <color name="game_video_title_text_color">@color/colorSecondaryText</color>
+
+    <!-- GameScreenshotView -->
+    <color name="game_screenshot_card_background_color">@android:color/transparent</color>
+
+    <!-- GameScreenshotsView -->
+    <color name="game_screenshots_card_background_color">@color/colorPrimaryDark</color>
+    <color name="game_screenshots_title_text_color">@color/colorPrimaryText</color>
+
+    <!-- GameSummaryView -->
+    <color name="game_summary_card_background_color">@color/colorPrimaryDark</color>
+    <color name="game_summary_title_text_color">@color/colorPrimaryText</color>
+    <color name="game_summary_content_text_color">@color/colorSecondaryText</color>
+
+    <!-- GameDetailsView -->
+    <color name="game_details_card_background_color">@color/colorPrimaryDark</color>
+    <color name="game_details_title_text_color">@color/colorPrimaryText</color>
+    <color name="game_details_category_title_text_color">@color/colorSecondaryText</color>
+
+    <!-- GameLinksView -->
+    <color name="game_links_card_background_color">@color/colorPrimaryDark</color>
+    <color name="game_links_title_text_color">@color/colorPrimaryText</color>
+    <color name="game_links_chip_background_color">#1D212B</color>
+    <color name="game_links_chip_content_color">@color/colorSecondaryText</color>
+
+    <!-- GameCompanyView -->
+    <color name="game_company_card_background_color">@android:color/transparent</color>
+    <color name="game_company_info_label_background_color">#1D212B</color>
+    <color name="game_company_info_label_text_color">@color/colorSecondaryText</color>
+
+    <!-- GameCompaniesView -->
+    <color name="game_companies_card_background_color">@color/colorPrimaryDark</color>
+    <color name="game_companies_title_text_color">@color/colorPrimaryText</color>
+
+</resources>

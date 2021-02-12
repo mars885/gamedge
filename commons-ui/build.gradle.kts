@@ -17,17 +17,38 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    kotlinKapt()
+}
+
+android {
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
+    implementation(project(deps.local.core))
+
+    implementation(deps.kotlin.reflect)
+
     implementation(deps.androidX.appCompat)
+    implementation(deps.androidX.navFragmentKtx)
     implementation(deps.androidX.recyclerView)
     implementation(deps.androidX.viewPager2)
     implementation(deps.androidX.swipeRefreshLayout)
     implementation(deps.androidX.coreKtx)
+    implementation(deps.androidX.fragmentKtx)
 
+    implementation(deps.google.materialComponents)
+
+    implementation(deps.commons.commonsCore)
     implementation(deps.commons.commonsKtx)
+    implementation(deps.commons.commonsWidgets)
     implementation(deps.commons.commonsWindowAnims)
+    implementation(deps.commons.commonsNavigation)
+
+    implementation(deps.google.daggerHilt)
+    kapt(deps.google.daggerHiltCompiler)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)
