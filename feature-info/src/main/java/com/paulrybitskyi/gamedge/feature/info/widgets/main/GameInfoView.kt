@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.paulrybitskyi.commons.ktx.*
 import com.paulrybitskyi.commons.recyclerview.decorators.spacing.SpacingItemDecorator
-import com.paulrybitskyi.commons.recyclerview.decorators.spacing.policies.LastItemExclusionPolicy
 import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.Item
@@ -35,7 +34,16 @@ import com.paulrybitskyi.gamedge.commons.ui.fadeIn
 import com.paulrybitskyi.gamedge.commons.ui.resetAnimation
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.databinding.ViewGameInfoBinding
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.header.GameHeaderController
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.*
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoCompaniesItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoDetailsItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoLinksItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoRelatedGamesItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoScreenshotsItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoSummaryItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoVideosItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.*
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoCompanyModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoModel
@@ -51,6 +59,7 @@ internal class GameInfoView @JvmOverloads constructor(
 
     private val binding = ViewGameInfoBinding.inflate(context.layoutInflater, this)
 
+    private lateinit var headerController: GameHeaderController
     private lateinit var infoAdapter: GameInfoAdapter
 
     private var adapterItems by observeChanges<List<Item<*, NoDependencies>>>(emptyList()) { _, newItems ->
@@ -70,8 +79,26 @@ internal class GameInfoView @JvmOverloads constructor(
 
 
     init {
+        initGameHeaderController(context)
         initRecyclerView(context)
         initDefaults()
+    }
+
+
+    private fun initGameHeaderController(context: Context) {
+        GameHeaderController(context, binding)
+            .apply {
+                onBackButtonClickListener = {
+                    this@GameInfoView.onBackButtonClickListener?.invoke()
+                }
+
+                onLikeButtonClickListener = {
+                    val id = (uiState as? GameInfoUiState.Result)?.model?.id
+
+                    id?.let { this@GameInfoView.onLikeButtonClickListener?.invoke(it) }
+                }
+            }
+            .also { headerController = it }
     }
 
 
@@ -104,16 +131,6 @@ internal class GameInfoView @JvmOverloads constructor(
     private fun bindListener(item: Item<*, NoDependencies>, viewHolder: RecyclerView.ViewHolder) {
         when(viewHolder) {
 
-            is GameInfoHeaderItem.ViewHolder -> with(viewHolder) {
-                setOnBackButtonClickListener { onBackButtonClickListener?.invoke() }
-                setOnLikeButtonClickListener {
-                    val gameId = (uiState as? GameInfoUiState.Result)?.model?.id
-                        ?: return@setOnLikeButtonClickListener
-
-                    onLikeButtonClickListener?.invoke(gameId)
-                }
-            }
-
             is GameInfoVideosItem.ViewHolder -> with(viewHolder) {
                 setOnVideoClickListener { onVideoClickListener?.invoke(it) }
             }
@@ -137,8 +154,7 @@ internal class GameInfoView @JvmOverloads constructor(
     private fun initItemDecorator(): SpacingItemDecorator {
         return SpacingItemDecorator(
             spacing = getDimensionPixelSize(R.dimen.game_info_decorator_spacing),
-            sideFlags = SpacingItemDecorator.SIDE_BOTTOM,
-            itemExclusionPolicy = LastItemExclusionPolicy()
+            sideFlags = SpacingItemDecorator.SIDE_TOP
         )
     }
 
@@ -160,23 +176,29 @@ internal class GameInfoView @JvmOverloads constructor(
     private fun onEmptyStateSelected() {
         showInfoView()
         hideProgressBar()
-        hideRecyclerView()
+        hideMainView()
     }
 
 
     private fun onLoadingStateSelected() {
         showProgressBar()
         hideInfoView()
-        hideRecyclerView()
+        hideMainView()
     }
 
 
     private fun onResultStateSelected(uiState: GameInfoUiState.Result) {
-        adapterItems = uiState.model.toAdapterItems()
+        bindModel(uiState.model)
 
-        showRecyclerView()
+        showMainView()
         hideInfoView()
         hideProgressBar()
+    }
+
+
+    private fun bindModel(model: GameInfoModel) {
+        headerController.bindModel(model.headerModel)
+        adapterItems = model.toAdapterItems()
     }
 
 
@@ -204,7 +226,7 @@ internal class GameInfoView @JvmOverloads constructor(
     }
 
 
-    private fun showRecyclerView() = with(binding.recyclerView) {
+    private fun showMainView() = with(binding.mainView) {
         if(isVisible) return
 
         makeVisible()
@@ -212,7 +234,7 @@ internal class GameInfoView @JvmOverloads constructor(
     }
 
 
-    private fun hideRecyclerView() = with(binding.recyclerView) {
+    private fun hideMainView() = with(binding.mainView) {
         makeInvisible()
         resetAnimation()
     }
@@ -220,8 +242,6 @@ internal class GameInfoView @JvmOverloads constructor(
 
     private fun GameInfoModel.toAdapterItems(): List<Item<*, NoDependencies>> {
         return buildList {
-            add(GameInfoHeaderItem(headerModel))
-
             if(hasVideoModels) add(GameInfoVideosItem(videoModels))
             if(hasScreenshotUrls) add(GameInfoScreenshotsItem(screenshotUrls))
             if(hasSummary) add(GameInfoSummaryItem(checkNotNull(summary)))

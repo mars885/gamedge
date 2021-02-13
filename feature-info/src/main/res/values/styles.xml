@@ -25,24 +25,26 @@
     <style name="Gamedge.GameInfo.Header.Title">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/game_header_title_margin_start</item>
-        <item name="android:gravity">start</item>
-        <item name="android:textColor">@color/game_header_title_text_color</item>
-        <item name="android:textSize">@dimen/game_header_title_text_size</item>
+        <item name="android:layout_marginStart">@dimen/game_info_header_title_margin_start</item>
+        <item name="android:elevation">@dimen/game_info_header_backdrop_elevation</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textColor">@color/game_info_header_title_text_color</item>
+        <item name="android:textSize">@dimen/game_info_header_title_text_size</item>
         <item name="android:fontFamily">@string/font_family_medium</item>
     </style>
 
     <style name="Gamedge.GameInfo.Header.InfoView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/game_header_info_view_margin_bottom</item>
+        <item name="android:layout_marginBottom">@dimen/game_info_header_info_view_vertical_margin</item>
+        <item name="android:elevation">@dimen/game_info_header_backdrop_elevation</item>
         <item name="layout_constraintTop_toBottomOf">@id/bottomBarrier</item>
         <item name="layout_constraintBottom_toBottomOf">parent</item>
         <item name="layout_constraintHorizontal_bias">0.25</item>
-        <item name="infoView_iconSize">@dimen/game_header_info_view_icon_size</item>
-        <item name="infoView_iconColor">@color/game_header_info_view_icon_color</item>
-        <item name="infoView_titleTextSize">@dimen/game_header_info_view_title_text_size</item>
-        <item name="infoView_titleTextColor">@color/game_header_info_view_title_color</item>
+        <item name="infoView_iconSize">@dimen/game_info_header_info_view_icon_size</item>
+        <item name="infoView_iconColor">@color/game_info_header_info_view_icon_color</item>
+        <item name="infoView_titleTextSize">@dimen/game_info_header_info_view_title_text_size</item>
+        <item name="infoView_titleTextColor">@color/game_info_header_info_view_title_color</item>
     </style>
 
     <style name="Gamedge.GameInfo.Details"/>

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.header
+package com.paulrybitskyi.gamedge.feature.info.widgets.main.header.artworks
 
-internal sealed class GameHeaderImageModel {
+import android.content.Context
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractRecyclerViewAdapter
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
-    object DefaultImage : GameHeaderImageModel()
-
-    data class UrlImage(val url: String): GameHeaderImageModel()
-
-}
+internal class GameArtworksAdapter(
+    context: Context
+): AbstractRecyclerViewAdapter<GameArtworkItem, NoDependencies>(context)

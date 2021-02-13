@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
+<MotionScene
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet
+        android:id="@+id/expanded">
+
+        <Constraint
+            android:id="@id/artworksScrimView">
+
+            <CustomAttribute
+                app:attributeName="backgroundColor"
+                app:customColorValue="@color/game_info_header_artworks_scrim_bg_color_expanded"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/backdropCv">
+
+            <CustomAttribute
+                app:attributeName="cardElevation"
+                app:customDimension="@dimen/game_info_header_backdrop_elevation_expanded"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/firstTitleTv">
+
+            <Transform
+                android:scaleX="1.0"
+                android:scaleY="1.0"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/secondTitleTv">
+
+            <PropertySet
+                app:visibilityMode="ignore"/>
+
+        </Constraint>
+
+    </ConstraintSet>
+
+    <ConstraintSet
+        android:id="@+id/collapsed">
+
+        <Constraint
+            android:id="@id/artworksView">
+
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/game_info_header_artworks_height_collapsed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/backdropCv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/artworksScrimView">
+
+            <CustomAttribute
+                app:attributeName="backgroundColor"
+                app:customColorValue="@color/game_info_header_artworks_scrim_bg_color_collapsed"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/backdropCv">
+
+            <CustomAttribute
+                app:attributeName="cardElevation"
+                app:customDimension="@dimen/game_info_header_backdrop_elevation_collapsed"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/coverView">
+
+            <PropertySet
+                android:visibility="invisible"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/likeBtn">
+
+            <PropertySet
+                android:visibility="invisible"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/firstTitleTv">
+
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/game_info_header_first_title_margin_start_collapsed"
+                android:layout_marginEnd="@dimen/game_info_header_first_title_margin_end_collapsed"
+                app:layout_constraintTop_toTopOf="@id/artworksView"
+                app:layout_constraintBottom_toBottomOf="@id/artworksView"
+                app:layout_constraintStart_toEndOf="@id/backBtnIv"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <Transform
+                android:scaleX="1.1"
+                android:scaleY="1.1"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/secondTitleTv">
+
+            <PropertySet
+                android:alpha="0"
+                app:visibilityMode="ignore"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/releaseDateTv">
+
+            <PropertySet
+                android:visibility="invisible"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/developerNameTv">
+
+            <PropertySet
+                android:visibility="invisible"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/ratingIv">
+
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/game_info_header_info_view_vertical_margin"
+                android:layout_marginBottom="@dimen/game_info_header_info_view_vertical_margin"
+                app:layout_constraintTop_toBottomOf="@id/artworksView"
+                app:layout_constraintBottom_toTopOf="@id/recyclerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/likeCountIv"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/likeCountIv">
+
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/game_info_header_info_view_vertical_margin"
+                android:layout_marginBottom="@dimen/game_info_header_info_view_vertical_margin"
+                app:layout_constraintTop_toBottomOf="@id/artworksView"
+                app:layout_constraintBottom_toTopOf="@id/recyclerView"
+                app:layout_constraintStart_toEndOf="@id/ratingIv"
+                app:layout_constraintEnd_toStartOf="@id/ageRatingIv"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/ageRatingIv">
+
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/game_info_header_info_view_vertical_margin"
+                android:layout_marginBottom="@dimen/game_info_header_info_view_vertical_margin"
+                app:layout_constraintTop_toBottomOf="@id/artworksView"
+                app:layout_constraintBottom_toTopOf="@id/recyclerView"
+                app:layout_constraintStart_toEndOf="@id/likeCountIv"
+                app:layout_constraintEnd_toStartOf="@id/gameCategoryIv"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/gameCategoryIv">
+
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/game_info_header_info_view_vertical_margin"
+                android:layout_marginBottom="@dimen/game_info_header_info_view_vertical_margin"
+                app:layout_constraintTop_toBottomOf="@id/artworksView"
+                app:layout_constraintBottom_toTopOf="@id/recyclerView"
+                app:layout_constraintStart_toEndOf="@id/ageRatingIv"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </Constraint>
+
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetStart="@id/expanded"
+        app:constraintSetEnd="@id/collapsed"
+        app:duration="400"
+        app:motionInterpolator="easeInOut">
+
+        <KeyFrameSet>
+
+            <KeyAttribute
+                android:alpha="0"
+                android:translationX="@dimen/game_info_header_cover_transition_delta_x"
+                android:translationY="@dimen/game_info_header_cover_transition_delta_y"
+                app:framePosition="60"
+                app:motionTarget="@id/coverView"/>
+
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="60"
+                app:motionTarget="@id/likeBtn"/>
+
+            <KeyAttribute
+                android:alpha="0"
+                android:translationX="@dimen/game_info_header_secondary_text_transition_delta_x"
+                app:framePosition="15"
+                app:motionTarget="@id/secondTitleTv"/>
+
+            <KeyAttribute
+                android:alpha="0"
+                android:translationX="@dimen/game_info_header_secondary_text_transition_delta_x"
+                app:framePosition="15"
+                app:motionTarget="@id/releaseDateTv"/>
+
+            <KeyAttribute
+                android:alpha="0"
+                android:translationX="@dimen/game_info_header_secondary_text_transition_delta_x"
+                app:framePosition="15"
+                app:motionTarget="@id/developerNameTv"/>
+
+        </KeyFrameSet>
+
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:moveWhenScrollAtTop="true"
+            app:onTouchUp="decelerateAndComplete"
+            app:touchAnchorId="@id/recyclerView"
+            app:touchAnchorSide="top"
+            app:touchRegionId="@id/recyclerView"/>
+
+    </Transition>
+
+</MotionScene>

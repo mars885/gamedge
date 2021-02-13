@@ -18,12 +18,24 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewItemModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameCompanyModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.header.GameHeaderImageModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameLinkItemModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.header.artworks.GameArtworkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoCompanyModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGameModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameVideoModel
+
+
+internal fun List<GameHeaderImageModel>.mapToGameArtworkModels(): List<GameArtworkModel> {
+    return map { imageModel ->
+        when(imageModel) {
+            is GameHeaderImageModel.DefaultImage -> GameArtworkModel.DefaultImage
+            is GameHeaderImageModel.UrlImage -> GameArtworkModel.UrlImage(imageModel.url)
+        }
+    }
+}
 
 
 internal fun List<GameInfoVideoModel>.mapToVideoModels(): List<GameVideoModel> {
