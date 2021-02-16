@@ -20,8 +20,10 @@ import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.feature.discovery.databinding.FragmentGamesDiscoveryBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class GamesDiscoveryFragment : BaseFragment<
@@ -49,17 +51,17 @@ class GamesDiscoveryFragment : BaseFragment<
     }
 
 
-    override fun onBindViewModel() = with(viewModel) {
+    override fun onBindViewModel() {
         super.onBindViewModel()
 
         observeDiscoveryItems()
     }
 
 
-    private fun GamesDiscoveryViewModel.observeDiscoveryItems() {
-        discoveryItems.observe(viewLifecycleOwner) {
-            viewBinding.discoveryView.items = it
-        }
+    private fun observeDiscoveryItems() {
+        viewModel.discoveryItems
+            .onEach { viewBinding.discoveryView.items = it }
+            .observeIn(this)
     }
 
 

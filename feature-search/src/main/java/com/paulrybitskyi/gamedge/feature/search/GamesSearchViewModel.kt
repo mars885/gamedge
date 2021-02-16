@@ -16,8 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
@@ -66,9 +64,9 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private var combinedPageResults: GamesUiState.Result? = null
 
-    private val _gamesUiState = MutableLiveData(createEmptyGamesUiState())
+    private val _gamesUiState = MutableStateFlow(createEmptyGamesUiState())
 
-    val gamesUiState: LiveData<GamesUiState>
+    val gamesUiState: StateFlow<GamesUiState>
         get() = _gamesUiState
 
 

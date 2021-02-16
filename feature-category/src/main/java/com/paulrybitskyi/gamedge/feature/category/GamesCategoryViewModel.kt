@@ -17,8 +17,6 @@
 package com.paulrybitskyi.gamedge.feature.category
 
 import androidx.hilt.Assisted
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
@@ -74,13 +72,13 @@ internal class GamesCategoryViewModel @Inject constructor(
     private var dataLoadingJob: Job? = null
     private var dataRefreshingJob: Job? = null
 
-    private val _toolbarTitle = MutableLiveData("")
-    private val _uiState = MutableLiveData<GamesCategoryUiState>(GamesCategoryUiState.Empty)
+    private val _toolbarTitle = MutableStateFlow("")
+    private val _uiState = MutableStateFlow<GamesCategoryUiState>(GamesCategoryUiState.Empty)
 
-    val toolbarTitle: LiveData<String>
+    val toolbarTitle: StateFlow<String>
         get() = _toolbarTitle
 
-    val uiState: LiveData<GamesCategoryUiState>
+    val uiState: StateFlow<GamesCategoryUiState>
         get() = _uiState
 
 

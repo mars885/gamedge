@@ -23,8 +23,10 @@ import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.feature.search.databinding.FragmentGamesSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 internal class GamesSearchFragment : BaseFragment<
@@ -62,17 +64,17 @@ internal class GamesSearchFragment : BaseFragment<
     }
 
 
-    override fun onBindViewModel() = with(viewModel) {
+    override fun onBindViewModel() {
         super.onBindViewModel()
 
         observeGamesUiState()
     }
 
 
-    private fun GamesSearchViewModel.observeGamesUiState() {
-        gamesUiState.observe(viewLifecycleOwner) {
-            viewBinding.gamesView.uiState = it
-        }
+    private fun observeGamesUiState() {
+        viewModel.gamesUiState
+            .onEach { viewBinding.gamesView.uiState = it }
+            .observeIn(this)
     }
 
 

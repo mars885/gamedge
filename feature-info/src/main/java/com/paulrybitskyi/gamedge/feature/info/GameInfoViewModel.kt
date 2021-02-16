@@ -17,8 +17,6 @@
 package com.paulrybitskyi.gamedge.feature.info
 
 import androidx.hilt.Assisted
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
@@ -70,9 +68,9 @@ internal class GameInfoViewModel @Inject constructor(
 
     private val relatedGamesUseCasePagination = Pagination()
 
-    private val _infoUiState = MutableLiveData<GameInfoUiState>(GameInfoUiState.Empty)
+    private val _infoUiState = MutableStateFlow<GameInfoUiState>(GameInfoUiState.Empty)
 
-    val infoUiState: LiveData<GameInfoUiState>
+    val infoUiState: StateFlow<GameInfoUiState>
         get() = _infoUiState
 
 
@@ -115,7 +113,7 @@ internal class GameInfoViewModel @Inject constructor(
                 delay(resultEmissionDelay)
             }
             .onCompletion { isLoadingData = false }
-            .collect(_infoUiState::setValue)
+            .collect { _infoUiState.value = it }
     }
 
 
