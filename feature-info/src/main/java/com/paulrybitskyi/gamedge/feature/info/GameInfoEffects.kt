@@ -31,6 +31,12 @@ internal sealed class GameInfoRoute : Route {
 
     data class Info(val gameId: Int): GameInfoRoute()
 
+    data class ImageViewer(
+        val title: String?,
+        val initialPosition: Int,
+        val imageUrls: List<String>
+    ): GameInfoRoute()
+
     object Back : GameInfoRoute()
 
 }

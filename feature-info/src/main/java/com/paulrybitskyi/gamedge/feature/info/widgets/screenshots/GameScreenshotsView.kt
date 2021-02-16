@@ -19,9 +19,11 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.screenshots
 import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.commons.ktx.getDimension
+import com.paulrybitskyi.commons.ktx.indexOfFirstOrNull
 import com.paulrybitskyi.commons.ktx.layoutInflater
 import com.paulrybitskyi.commons.recyclerview.utils.disableAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
@@ -46,6 +48,8 @@ internal class GameScreenshotsView @JvmOverloads constructor(
     var items by observeChanges<List<String>>(emptyList()) { _, newItems ->
         adapterItems = newItems.toAdapterItems()
     }
+
+    var onScreenshotClickListener: ((Int) -> Unit)? = null
 
 
     init {
@@ -75,7 +79,21 @@ internal class GameScreenshotsView @JvmOverloads constructor(
 
     private fun initAdapter(context: Context): GameScreenshotsAdapter {
         return GameScreenshotsAdapter(context)
+            .apply { listenerBinder = ::bindListener }
             .also { adapter = it }
+    }
+
+
+    private fun bindListener(item: GameScreenshotItem, viewHolder: RecyclerView.ViewHolder) {
+        if(viewHolder is GameScreenshotItem.ViewHolder) {
+            viewHolder.setOnScreenshotClickListener {
+                val position = items
+                    .indexOfFirstOrNull { it == item.model }
+                    ?: return@setOnScreenshotClickListener
+
+                onScreenshotClickListener?.invoke(position)
+            }
+        }
     }
 
 

@@ -103,7 +103,9 @@ internal class GameHeaderController(
         binding.artworksView.artworkModels = newItems.mapToGameArtworkModels()
     }
 
+    var onArtworkClicked: ((Int) -> Unit)? = null
     var onBackButtonClickListener: (() -> Unit)? = null
+    var onCoverClickListener: (() -> Unit)? = null
     var onLikeButtonClickListener: (() -> Unit)? = null
 
 
@@ -172,8 +174,9 @@ internal class GameHeaderController(
     }
 
 
-    private fun initArtworksView() {
-        binding.artworksView.applyWindowTopInset()
+    private fun initArtworksView() = with(binding.artworksView) {
+        applyWindowTopInset()
+        onArtworkClicked = { this@GameHeaderController.onArtworkClicked?.invoke(it) }
     }
 
 
@@ -185,6 +188,7 @@ internal class GameHeaderController(
     private fun initCoverView() = with(binding.coverView) {
         cardElevation = getDimension(R.dimen.game_info_header_backdrop_elevation)
         isTitleVisible = false
+        onClick { onCoverClickListener?.invoke() }
     }
 
 

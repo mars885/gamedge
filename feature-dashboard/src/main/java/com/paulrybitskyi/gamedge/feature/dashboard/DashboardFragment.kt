@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.feature.dashboard
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.viewModels
+import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.commons.ktx.getSerializable
@@ -71,6 +72,7 @@ internal class DashboardFragment : BaseFragment<
 
 
     private fun initBottomNavigation() = with(viewBinding.bottomNav) {
+        applyWindowBottomInsetAsMargin()
         setItemColors(
             unselectedStateColor = getColor(R.color.bottom_navigation_item_color_state_unselected),
             selectedStateColor = getColor(R.color.bottom_navigation_item_color_state_selected)

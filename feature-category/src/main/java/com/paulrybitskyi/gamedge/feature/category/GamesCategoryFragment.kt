@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.category
 
 import androidx.fragment.app.viewModels
+import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
@@ -54,6 +55,7 @@ internal class GamesCategoryFragment : BaseFragment<
 
 
     private fun initGamesCategoryView() = with(viewBinding.gamesCategoryView) {
+        applyWindowBottomInsetAsMargin()
         onGameClickListener = viewModel::onGameClicked
         onBottomReachListener = viewModel::onBottomReached
     }

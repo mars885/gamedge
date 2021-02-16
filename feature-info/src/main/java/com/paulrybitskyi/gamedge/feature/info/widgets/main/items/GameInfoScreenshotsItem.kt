@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractItem
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.HasListeners
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoAdapterItem
 import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameScreenshotsView
@@ -50,10 +51,14 @@ internal class GameInfoScreenshotsItem(model: List<String>): AbstractItem<
 
     internal class ViewHolder(
         private val view: GameScreenshotsView
-    ): RecyclerView.ViewHolder(view) {
+    ): RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(items: List<String>) {
             view.items = items
+        }
+
+        fun setOnScreenshotClickListener(listener: (Int) -> Unit) {
+            view.onScreenshotClickListener = { listener(it) }
         }
 
     }

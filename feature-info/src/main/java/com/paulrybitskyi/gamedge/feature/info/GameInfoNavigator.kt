@@ -20,6 +20,8 @@ import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface GameInfoNavigator : Navigator {
 
+    fun navigateToImageViewer(title: String?, initialPosition: Int, imageUrls: List<String>)
+
     fun navigateToInfo(gameId: Int)
 
     fun navigateBack()

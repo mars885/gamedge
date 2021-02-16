@@ -20,8 +20,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.commons.ktx.onClick
 import com.paulrybitskyi.commons.ktx.setHorizontalMargin
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractItem
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.HasListeners
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameScreenshotItem.ViewHolder
@@ -59,10 +61,14 @@ internal class GameScreenshotItem(model: String): AbstractItem<
 
     internal class ViewHolder(
         private val view: GameScreenshotView
-    ): RecyclerView.ViewHolder(view) {
+    ): RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: String) {
             view.loadImage(model)
+        }
+
+        fun setOnScreenshotClickListener(listener: () -> Unit) {
+            view.onClick { listener() }
         }
 
     }

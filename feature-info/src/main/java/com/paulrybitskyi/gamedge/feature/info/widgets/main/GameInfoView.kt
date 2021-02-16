@@ -70,9 +70,12 @@ internal class GameInfoView @JvmOverloads constructor(
         handleUiStateChange(newState)
     }
 
+    var onArtworkClicked: ((Int) -> Unit)? = null
     var onBackButtonClickListener: (() -> Unit)? = null
-    var onLikeButtonClickListener: ((Int) -> Unit)? = null
+    var onCoverClickListener: (() -> Unit)? = null
+    var onLikeButtonClickListener: (() -> Unit)? = null
     var onVideoClickListener: ((GameInfoVideoModel) -> Unit)? = null
+    var onScreenshotClickListener: ((Int) -> Unit)? = null
     var onLinkClickListener: ((GameInfoLinkModel) -> Unit)? = null
     var onCompanyClickListener: ((GameInfoCompanyModel) -> Unit)? = null
     var onRelatedGameClickListener: ((GameInfoRelatedGameModel) -> Unit)? = null
@@ -88,14 +91,20 @@ internal class GameInfoView @JvmOverloads constructor(
     private fun initGameHeaderController(context: Context) {
         GameHeaderController(context, binding)
             .apply {
+                onArtworkClicked = {
+                    this@GameInfoView.onArtworkClicked?.invoke(it)
+                }
+
                 onBackButtonClickListener = {
                     this@GameInfoView.onBackButtonClickListener?.invoke()
                 }
 
-                onLikeButtonClickListener = {
-                    val id = (uiState as? GameInfoUiState.Result)?.model?.id
+                onCoverClickListener = {
+                    this@GameInfoView.onCoverClickListener?.invoke()
+                }
 
-                    id?.let { this@GameInfoView.onLikeButtonClickListener?.invoke(it) }
+                onLikeButtonClickListener = {
+                    this@GameInfoView.onLikeButtonClickListener?.invoke()
                 }
             }
             .also { headerController = it }
@@ -133,6 +142,10 @@ internal class GameInfoView @JvmOverloads constructor(
 
             is GameInfoVideosItem.ViewHolder -> with(viewHolder) {
                 setOnVideoClickListener { onVideoClickListener?.invoke(it) }
+            }
+
+            is GameInfoScreenshotsItem.ViewHolder -> with(viewHolder) {
+                setOnScreenshotClickListener { onScreenshotClickListener?.invoke(it) }
             }
 
             is GameInfoLinksItem.ViewHolder -> with(viewHolder) {

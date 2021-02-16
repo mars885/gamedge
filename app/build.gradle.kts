@@ -46,6 +46,7 @@ dependencies {
     implementation(project(deps.local.featureDashboard))
     implementation(project(deps.local.featureDiscovery))
     implementation(project(deps.local.featureInfo))
+    implementation(project(deps.local.featureImageViewer))
     implementation(project(deps.local.featureLikes))
     implementation(project(deps.local.featureNews))
     implementation(project(deps.local.featureSearch))

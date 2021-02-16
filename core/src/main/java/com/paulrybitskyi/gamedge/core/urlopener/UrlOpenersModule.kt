@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.core.di
+package com.paulrybitskyi.gamedge.core.urlopener
 
-import com.paulrybitskyi.gamedge.core.urlopener.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
