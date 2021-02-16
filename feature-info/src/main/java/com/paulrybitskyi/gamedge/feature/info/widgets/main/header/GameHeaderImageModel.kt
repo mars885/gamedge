@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.header
+package com.paulrybitskyi.gamedge.feature.info.widgets.main.header
 
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameArtworkModel
+internal sealed class GameHeaderImageModel {
 
+    object DefaultImage : GameHeaderImageModel()
 
-internal fun List<GameHeaderImageModel>.mapToGameArtworkModels(): List<GameArtworkModel> {
-    return map { imageModel ->
-        when(imageModel) {
-            is GameHeaderImageModel.DefaultImage -> GameArtworkModel.DefaultImage
-            is GameHeaderImageModel.UrlImage -> GameArtworkModel.UrlImage(imageModel.url)
-        }
-    }
+    data class UrlImage(val url: String): GameHeaderImageModel()
+
 }

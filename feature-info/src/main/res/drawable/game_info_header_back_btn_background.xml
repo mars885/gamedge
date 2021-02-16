@@ -25,10 +25,10 @@
         <shape android:shape="rectangle">
 
             <padding
-                android:top="@dimen/game_header_back_button_drawable_background_padding"
-                android:bottom="@dimen/game_header_back_button_drawable_background_padding"
-                android:left="@dimen/game_header_back_button_drawable_background_padding"
-                android:right="@dimen/game_header_back_button_drawable_background_padding"/>
+                android:top="@dimen/game_info_header_back_button_drawable_bg_padding"
+                android:bottom="@dimen/game_info_header_back_button_drawable_bg_padding"
+                android:left="@dimen/game_info_header_back_button_drawable_bg_padding"
+                android:right="@dimen/game_info_header_back_button_drawable_bg_padding"/>
 
             <solid android:color="@android:color/transparent"/>
 
@@ -42,7 +42,7 @@
 
         <shape android:shape="oval">
 
-            <solid android:color="@color/game_header_back_button_drawable_middleground_color"/>
+            <solid android:color="@color/game_info_header_back_button_drawable_middleground_color"/>
 
         </shape>
 
@@ -59,10 +59,10 @@
                 <shape android:shape="oval">
 
                     <padding
-                        android:top="@dimen/game_header_back_button_drawable_foreground_padding"
-                        android:bottom="@dimen/game_header_back_button_drawable_foreground_padding"
-                        android:left="@dimen/game_header_back_button_drawable_foreground_padding"
-                        android:right="@dimen/game_header_back_button_drawable_foreground_padding"/>
+                        android:top="@dimen/game_info_header_back_button_drawable_fog_padding"
+                        android:bottom="@dimen/game_info_header_back_button_drawable_fog_padding"
+                        android:left="@dimen/game_info_header_back_button_drawable_fog_padding"
+                        android:right="@dimen/game_info_header_back_button_drawable_fog_padding"/>
 
                     <solid android:color="@android:color/white"/>
 

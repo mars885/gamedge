@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks
+package com.paulrybitskyi.gamedge.feature.info.widgets.main.header.artworks
 
 import android.content.Context
 import android.util.AttributeSet

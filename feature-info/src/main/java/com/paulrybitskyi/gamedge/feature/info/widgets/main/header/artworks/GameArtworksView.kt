@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks
+package com.paulrybitskyi.gamedge.feature.info.widgets.main.header.artworks
 
 import android.content.Context
 import android.os.Handler
@@ -52,6 +52,10 @@ internal class GameArtworksView @JvmOverloads constructor(
 
     private val isPageIndicatorEnabled: Boolean
         get() = (adapterItems.size > 1)
+
+    var isScrollingEnabled: Boolean
+        set(value) { binding.viewPager.isUserInputEnabled = value }
+        get() = binding.viewPager.isUserInputEnabled
 
     private val binding = ViewGameArtworksBinding.inflate(context.layoutInflater, this)
 
@@ -115,8 +119,15 @@ internal class GameArtworksView @JvmOverloads constructor(
     }
 
 
-    fun applyWindowTopOffset() {
+    fun applyWindowTopInset() {
         binding.pageIndicatorTv.applyWindowTopInsetAsMargin()
+    }
+
+
+    fun hidePageIndicator() {
+        if(!binding.pageIndicatorTv.isVisible) return
+
+        cancelPageIndicatorAnimations()
     }
 
 
@@ -151,13 +162,13 @@ internal class GameArtworksView @JvmOverloads constructor(
 
 
     override fun onDetachedFromWindow() {
-        if(isPageIndicatorEnabled) cleanUpPageIndicatorAnimations()
+        if(isPageIndicatorEnabled) cancelPageIndicatorAnimations()
 
         super.onDetachedFromWindow()
     }
 
 
-    private fun cleanUpPageIndicatorAnimations() {
+    private fun cancelPageIndicatorAnimations() {
         animationHandler.removeCallbacks(fadeOutPageIndicatorAction)
 
         with(binding.pageIndicatorTv) {

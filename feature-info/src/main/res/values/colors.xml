@@ -22,18 +22,6 @@
     <color name="game_artworks_page_indicator_background_color">#35000000</color>
     <color name="game_artworks_page_indicator_text_color">@color/colorPrimaryText</color>
 
-    <!-- GameHeaderView -->
-    <color name="game_header_card_background_color">@color/colorPrimaryDark</color>
-    <color name="game_header_back_button_icon_color">@color/colorPrimaryText</color>
-    <color name="game_header_back_button_drawable_middleground_color">#35000000</color>
-    <color name="game_header_like_btn_color">@color/colorAccent</color>
-    <color name="game_header_like_btn_icon_color">#611d12</color>
-    <color name="game_header_title_text_color">@color/colorPrimaryText</color>
-    <color name="game_header_release_date_text_color">@color/colorSecondaryText</color>
-    <color name="game_header_developer_name_text_color">@color/colorSecondaryText</color>
-    <color name="game_header_info_view_icon_color">#8e9fad</color>
-    <color name="game_header_info_view_title_color">#8e9fad</color>
-
     <!-- GameVideosView -->
     <color name="game_videos_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_videos_title_text_color">@color/colorPrimaryText</color>
@@ -77,5 +65,19 @@
     <!-- GameCompaniesView -->
     <color name="game_companies_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_companies_title_text_color">@color/colorPrimaryText</color>
+
+    <!-- GameInfoView -->
+    <color name="game_info_header_artworks_scrim_bg_color_expanded">@android:color/transparent</color>
+    <color name="game_info_header_artworks_scrim_bg_color_collapsed">#66000000</color>
+    <color name="game_info_header_back_button_icon_color">@color/colorPrimaryText</color>
+    <color name="game_info_header_back_button_drawable_middleground_color">#35000000</color>
+    <color name="game_info_header_backdrop_background_color">@color/colorPrimaryDark</color>
+    <color name="game_info_header_like_btn_color">@color/colorAccent</color>
+    <color name="game_info_header_like_btn_icon_color">#611d12</color>
+    <color name="game_info_header_title_text_color">@color/colorPrimaryText</color>
+    <color name="game_info_header_release_date_text_color">@color/colorSecondaryText</color>
+    <color name="game_info_header_developer_name_text_color">@color/colorSecondaryText</color>
+    <color name="game_info_header_info_view_icon_color">#8e9fad</color>
+    <color name="game_info_header_info_view_title_color">#8e9fad</color>
 
 </resources>

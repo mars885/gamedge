@@ -43,7 +43,8 @@
         </activity>
 
         <activity
-            android:name=".feature.dashboard.DashboardActivity">
+            android:name=".feature.dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="com.paulrybitskyi.gamedge.DASHBOARD_ACTIVITY"/>
