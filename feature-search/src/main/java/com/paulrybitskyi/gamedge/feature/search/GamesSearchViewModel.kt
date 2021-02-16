@@ -201,4 +201,16 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
 
+    fun onResume() {
+        if(searchQuery.isEmpty()) {
+            dispatchCommand(GamesSearchCommand.ShowKeyboard)
+        }
+    }
+
+
+    fun onPause() {
+        dispatchCommand(GamesSearchCommand.HideKeyboard)
+    }
+
+
 }
