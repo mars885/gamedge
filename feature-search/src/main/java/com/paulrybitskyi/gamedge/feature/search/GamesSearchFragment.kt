@@ -21,6 +21,7 @@ import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.feature.search.databinding.FragmentGamesSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,16 +79,24 @@ internal class GamesSearchFragment : BaseFragment<
     override fun onResume() {
         super.onResume()
 
-        if(viewBinding.searchToolbar.isSearchQueryEmpty) {
-            viewBinding.searchToolbar.showKeyboard(true)
-        }
+        viewModel.onResume()
     }
 
 
     override fun onPause() {
         super.onPause()
 
-        viewBinding.searchToolbar.hideKeyboard()
+        viewModel.onPause()
+    }
+
+
+    override fun onHandleCommand(command: Command) {
+        super.onHandleCommand(command)
+
+        when(command) {
+            is GamesSearchCommand.ShowKeyboard -> viewBinding.searchToolbar.showKeyboard(true)
+            is GamesSearchCommand.HideKeyboard -> viewBinding.searchToolbar.hideKeyboard()
+        }
     }
 
 

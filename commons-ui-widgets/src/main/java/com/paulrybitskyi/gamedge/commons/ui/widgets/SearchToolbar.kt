@@ -46,7 +46,7 @@ class SearchToolbar @JvmOverloads constructor(
         set(value) { binding.clearBtnContainer.isVisible = value }
         get() = binding.clearBtnContainer.isVisible
 
-    var isSearchQueryEmpty = true
+    private var isSearchQueryEmpty = true
 
     var inputType: Int
         set(value) { binding.queryInputEt.inputType = value }
