@@ -23,9 +23,11 @@ import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.defaultWindowAnimationDuration
+import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpenerFactory
 import com.paulrybitskyi.gamedge.feature.info.databinding.FragmentGameInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -59,17 +61,17 @@ internal class GameInfoFragment : BaseFragment<
     }
 
 
-    override fun onBindViewModel() = with(viewModel) {
+    override fun onBindViewModel() {
         super.onBindViewModel()
 
         observeInfoUiState()
     }
 
 
-    private fun GameInfoViewModel.observeInfoUiState() {
-        infoUiState.observe(viewLifecycleOwner) {
-            viewBinding.gameInfoView.uiState = it
-        }
+    private fun observeInfoUiState() {
+        viewModel.infoUiState
+            .onEach { viewBinding.gameInfoView.uiState = it }
+            .observeIn(this)
     }
 
 

@@ -16,10 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.paulrybitskyi.commons.ktx.nonNullValue
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
@@ -55,9 +52,9 @@ class GamesDiscoveryViewModel @Inject constructor(
     private var observeGamesUseCaseParams = ObserveGamesUseCaseParams()
     private var refreshGamesUseCaseParams = RefreshGamesUseCaseParams()
 
-    private val _discoveryItems = MutableLiveData<List<GamesDiscoveryItemModel>>(listOf())
+    private val _discoveryItems = MutableStateFlow<List<GamesDiscoveryItemModel>>(listOf())
 
-    val discoveryItems: LiveData<List<GamesDiscoveryItemModel>>
+    val discoveryItems: StateFlow<List<GamesDiscoveryItemModel>>
         get() = _discoveryItems
 
 
@@ -85,11 +82,11 @@ class GamesDiscoveryViewModel @Inject constructor(
                 flows = GamesDiscoveryCategory.values().map { loadGames(it) },
                 transform = { it.toList() }
             )
-            .map { _discoveryItems.nonNullValue.withResultState(it) }
+            .map { _discoveryItems.value.withResultState(it) }
             .onError { logger.error(logTag, "Failed to load games.", it) }
             .onStart { isLoadingData = true }
             .onCompletion { isLoadingData = false }
-            .collect(_discoveryItems::setValue)
+            .collect { _discoveryItems.value = it }
         }
     }
 
@@ -133,11 +130,11 @@ class GamesDiscoveryViewModel @Inject constructor(
                 }
                 .onStart {
                     isRefreshingData = true
-                    _discoveryItems.value = _discoveryItems.nonNullValue.withVisibleProgressBar()
+                    _discoveryItems.value = _discoveryItems.value.withVisibleProgressBar()
                 }
                 .onCompletion {
                     isRefreshingData = false
-                    _discoveryItems.value = _discoveryItems.nonNullValue.withHiddenProgressBar()
+                    _discoveryItems.value = _discoveryItems.value.withHiddenProgressBar()
                 }
                 .collect()
         }

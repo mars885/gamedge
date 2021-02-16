@@ -20,8 +20,10 @@ import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.feature.likes.databinding.FragmentLikedGamesBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class LikedGamesFragment : BaseFragment<
@@ -48,17 +50,17 @@ class LikedGamesFragment : BaseFragment<
     }
 
 
-    override fun onBindViewModel() = with(viewModel) {
+    override fun onBindViewModel() {
         super.onBindViewModel()
 
         observeGamesUiState()
     }
 
 
-    private fun LikedGamesViewModel.observeGamesUiState() {
-        gamesUiState.observe(viewLifecycleOwner) {
-            viewBinding.gamesView.uiState = it
-        }
+    private fun observeGamesUiState() {
+        viewModel.gamesUiState
+            .onEach { viewBinding.gamesView.uiState = it }
+            .observeIn(this)
     }
 
 

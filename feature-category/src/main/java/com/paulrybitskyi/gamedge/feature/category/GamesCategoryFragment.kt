@@ -22,8 +22,10 @@ import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.defaultWindowAnimationDuration
+import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.feature.category.databinding.FragmentGamesCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 internal class GamesCategoryFragment : BaseFragment<
@@ -57,7 +59,7 @@ internal class GamesCategoryFragment : BaseFragment<
     }
 
 
-    override fun onBindViewModel() = with(viewModel) {
+    override fun onBindViewModel() {
         super.onBindViewModel()
 
         observeToolbarTitle()
@@ -65,17 +67,17 @@ internal class GamesCategoryFragment : BaseFragment<
     }
 
 
-    private fun GamesCategoryViewModel.observeToolbarTitle() {
-        toolbarTitle.observe(viewLifecycleOwner) {
-            viewBinding.toolbar.titleText = it
-        }
+    private fun observeToolbarTitle() {
+        viewModel.toolbarTitle
+            .onEach { viewBinding.toolbar.titleText = it }
+            .observeIn(this)
     }
 
 
-    private fun GamesCategoryViewModel.observeGamesCategoryUiState() {
-        uiState.observe(viewLifecycleOwner) {
-            viewBinding.gamesCategoryView.uiState = it
-        }
+    private fun observeGamesCategoryUiState() {
+        viewModel.uiState
+            .onEach { viewBinding.gamesCategoryView.uiState = it }
+            .observeIn(this)
     }
 
 

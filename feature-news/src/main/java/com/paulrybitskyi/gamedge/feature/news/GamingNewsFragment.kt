@@ -22,9 +22,11 @@ import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.StubNavigator
+import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpenerFactory
 import com.paulrybitskyi.gamedge.feature.news.databinding.FragmentGamingNewsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -54,17 +56,17 @@ class GamingNewsFragment : BaseFragment<
     }
 
 
-    override fun onBindViewModel() = with(viewModel) {
+    override fun onBindViewModel() {
         super.onBindViewModel()
 
         observeNewsUiState()
     }
 
 
-    private fun GamingNewsViewModel.observeNewsUiState() {
-        newsUiState.observe(viewLifecycleOwner) {
-            viewBinding.gamingNewsView.uiState = it
-        }
+    private fun observeNewsUiState() {
+        viewModel.newsUiState
+            .onEach { viewBinding.gamingNewsView.uiState = it }
+            .observeIn(this)
     }
 
 

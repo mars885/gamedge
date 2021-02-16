@@ -16,8 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.news
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
@@ -60,9 +58,9 @@ class GamingNewsViewModel @Inject constructor(
 
     private var dataLoadingJob: Job? = null
 
-    private val _newsUiState = MutableLiveData<GamingNewsUiState>(GamingNewsUiState.Empty)
+    private val _newsUiState = MutableStateFlow<GamingNewsUiState>(GamingNewsUiState.Empty)
 
-    val newsUiState: LiveData<GamingNewsUiState>
+    val newsUiState: StateFlow<GamingNewsUiState>
         get() = _newsUiState
 
 
@@ -90,7 +88,7 @@ class GamingNewsViewModel @Inject constructor(
                     emit(gamingNewsUiStateFactory.createWithLoadingState())
                 }
                 .onCompletion { isLoadingData = false }
-                .collect(_newsUiState::setValue)
+                .collect { _newsUiState.value = it }
         }
     }
 

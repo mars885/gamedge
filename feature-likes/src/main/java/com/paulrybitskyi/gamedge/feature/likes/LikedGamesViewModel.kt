@@ -16,8 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.likes
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
@@ -60,9 +58,9 @@ class LikedGamesViewModel @Inject constructor(
 
     private var dataLoadingJob: Job? = null
 
-    private val _gamesUiState = MutableLiveData(likedGamesUiStateFactory.createWithEmptyState())
+    private val _gamesUiState = MutableStateFlow(likedGamesUiStateFactory.createWithEmptyState())
 
-    val gamesUiState: LiveData<GamesUiState>
+    val gamesUiState: StateFlow<GamesUiState>
         get() = _gamesUiState
 
 
