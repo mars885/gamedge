@@ -27,7 +27,8 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
-import kotlinx.coroutines.flow.collect
+import com.paulrybitskyi.gamedge.commons.ui.observeIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 abstract class BaseActivity<
@@ -75,16 +76,16 @@ abstract class BaseActivity<
 
 
     private fun bindViewModelCommands() {
-        lifecycleScope.launchWhenResumed {
-            viewModel.commandFlow.collect(::onHandleCommand)
-        }
+        viewModel.commandFlow
+            .onEach(::onHandleCommand)
+            .observeIn(this)
     }
 
 
     private fun bindViewModelRoutes() {
-        lifecycleScope.launchWhenResumed {
-            viewModel.routeFlow.collect(::onRoute)
-        }
+        viewModel.routeFlow
+            .onEach(::onRoute)
+            .observeIn(this)
     }
 
 

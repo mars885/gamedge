@@ -20,21 +20,20 @@ import androidx.lifecycle.ViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.core.markers.Loggable
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 
 abstract class BaseViewModel : ViewModel(), Loggable {
 
 
     override val logTag: String = javaClass.simpleName
 
-    private val _commandChannel = BroadcastChannel<Command>(Channel.BUFFERED)
-    private val _routeChannel = BroadcastChannel<Route>(Channel.BUFFERED)
+    private val _commandChannel = Channel<Command>(Channel.BUFFERED)
+    private val _routeChannel = Channel<Route>(Channel.BUFFERED)
 
-    val commandFlow: Flow<Command> =_commandChannel.asFlow()
-    val routeFlow: Flow<Route> = _routeChannel.asFlow()
+    val commandFlow: Flow<Command> =_commandChannel.receiveAsFlow()
+    val routeFlow: Flow<Route> = _routeChannel.receiveAsFlow()
 
 
     protected fun dispatchCommand(command: Command) {
