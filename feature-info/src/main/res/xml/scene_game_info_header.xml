@@ -26,6 +26,9 @@
         <Constraint
             android:id="@id/artworksScrimView">
 
+            <PropertySet
+                android:visibility="invisible"/>
+
             <CustomAttribute
                 app:attributeName="backgroundColor"
                 app:customColorValue="@color/game_info_header_artworks_scrim_bg_color_expanded"/>
@@ -78,6 +81,9 @@
 
         <Constraint
             android:id="@id/artworksScrimView">
+
+            <PropertySet
+                android:visibility="visible"/>
 
             <CustomAttribute
                 app:attributeName="backgroundColor"
