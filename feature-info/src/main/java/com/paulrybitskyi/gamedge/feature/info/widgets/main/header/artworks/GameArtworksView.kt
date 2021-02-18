@@ -22,6 +22,7 @@ import android.util.AttributeSet
 import android.view.animation.LinearInterpolator
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.RecyclerView
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsMargin
 import com.paulrybitskyi.commons.ktx.layoutInflater
 import com.paulrybitskyi.commons.ktx.setListener
@@ -74,6 +75,8 @@ internal class GameArtworksView @JvmOverloads constructor(
 
     @Inject lateinit var stringProvider: StringProvider
 
+    var onArtworkClicked: ((Int) -> Unit)? = null
+
 
     init {
         initViewPager(context)
@@ -115,7 +118,17 @@ internal class GameArtworksView @JvmOverloads constructor(
 
     private fun initAdapter(context: Context): GameArtworksAdapter {
         return GameArtworksAdapter(context)
+            .apply { listenerBinder = ::bindListener }
             .also { adapter = it }
+    }
+
+
+    private fun bindListener(item: GameArtworkItem, viewHolder: RecyclerView.ViewHolder) {
+        if(viewHolder is GameArtworkItem.ViewHolder) {
+            viewHolder.setOnArtworkClickListener {
+                onArtworkClicked?.invoke(binding.viewPager.currentItem)
+            }
+        }
     }
 
 

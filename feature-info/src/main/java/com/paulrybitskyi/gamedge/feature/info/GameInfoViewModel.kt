@@ -22,8 +22,10 @@ import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
+import com.paulrybitskyi.gamedge.core.providers.ImageViewerGameUrlProvider
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.combine
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
@@ -55,7 +57,9 @@ private const val PARAM_GAME_ID = "game_id"
 internal class GameInfoViewModel @Inject constructor(
     private val infoUseCases: GameInfoUseCases,
     private val infoUiStateFactory: GameInfoUiStateFactory,
+    private val imageViewerGameUrlProvider: ImageViewerGameUrlProvider,
     private val dispatcherProvider: DispatcherProvider,
+    private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger,
     @Assisted private val savedStateHandle: SavedStateHandle
@@ -148,12 +152,55 @@ internal class GameInfoViewModel @Inject constructor(
     }
 
 
+    fun onArtworkClicked(position: Int) {
+        navigateToImageViewer(
+            title = stringProvider.getString(R.string.artwork),
+            initialPosition = position,
+            fetchImageUrls = imageViewerGameUrlProvider::getArtworkImageUrls
+        )
+    }
+
+
+    private fun navigateToImageViewer(
+        title: String,
+        initialPosition: Int = 0,
+        fetchImageUrls: (Game) -> List<String>
+    ) {
+        viewModelScope.launch {
+            val game = loadGame()
+                .onError {
+                    logger.error(logTag, "Failed to load the game.", it)
+                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+                }
+                .single()
+
+            val imageUrls = fetchImageUrls(game)
+                .takeIf(List<String>::isNotEmpty)
+                ?: return@launch
+
+            route(GameInfoRoute.ImageViewer(title, initialPosition, imageUrls))
+        }
+    }
+
+
     fun onBackButtonClicked() {
         route(GameInfoRoute.Back)
     }
 
 
-    fun onLikeButtonClicked(gameId: Int) {
+    fun onCoverClicked() {
+        navigateToImageViewer(
+            title = stringProvider.getString(R.string.cover),
+            fetchImageUrls = { game ->
+                imageViewerGameUrlProvider.getCoverImageUrl(game)
+                    ?.let(::listOf)
+                    ?: emptyList()
+            }
+        )
+    }
+
+
+    fun onLikeButtonClicked() {
         viewModelScope.launch {
             infoUseCases
                 .toggleGameLikeStateUseCase
@@ -164,6 +211,15 @@ internal class GameInfoViewModel @Inject constructor(
 
     fun onVideoClicked(video: GameInfoVideoModel) {
         openUrl(video.videoUrl)
+    }
+
+
+    fun onScreenshotClicked(position: Int) {
+        navigateToImageViewer(
+            title = stringProvider.getString(R.string.screenshot),
+            initialPosition = position,
+            fetchImageUrls = imageViewerGameUrlProvider::getScreenshotImageUrls
+        )
     }
 
 

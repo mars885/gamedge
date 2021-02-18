@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.info
 
 import androidx.fragment.app.viewModels
+import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
@@ -52,9 +53,14 @@ internal class GameInfoFragment : BaseFragment<
 
 
     private fun initGameInfoView() = with(viewBinding.gameInfoView) {
+        applyWindowBottomInsetAsMargin()
+
+        onArtworkClicked = viewModel::onArtworkClicked
         onBackButtonClickListener = viewModel::onBackButtonClicked
+        onCoverClickListener = viewModel::onCoverClicked
         onLikeButtonClickListener = viewModel::onLikeButtonClicked
         onVideoClickListener = viewModel::onVideoClicked
+        onScreenshotClickListener = viewModel::onScreenshotClicked
         onLinkClickListener = viewModel::onLinkClicked
         onCompanyClickListener = viewModel::onCompanyClicked
         onRelatedGameClickListener = viewModel::onRelatedGameClicked
@@ -104,9 +110,19 @@ internal class GameInfoFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
+            is GameInfoRoute.ImageViewer -> navigateToImageViewer(route)
             is GameInfoRoute.Info -> navigator.navigateToInfo(route.gameId)
             is GameInfoRoute.Back -> navigator.navigateBack()
         }
+    }
+
+
+    private fun navigateToImageViewer(route: GameInfoRoute.ImageViewer) {
+        navigator.navigateToImageViewer(
+            route.title,
+            route.initialPosition,
+            route.imageUrls
+        )
     }
 
 

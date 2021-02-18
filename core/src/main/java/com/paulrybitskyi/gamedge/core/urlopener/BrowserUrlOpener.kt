@@ -21,7 +21,6 @@ import android.content.Intent
 import android.net.Uri
 import com.paulrybitskyi.commons.ktx.canIntentBeHandled
 import com.paulrybitskyi.hiltbinder.BindType
-import com.paulrybitskyi.gamedge.core.di.UrlOpenerKey
 import com.paulrybitskyi.gamedge.core.utils.attachNewTaskFlagIfNeeded
 import javax.inject.Inject
 

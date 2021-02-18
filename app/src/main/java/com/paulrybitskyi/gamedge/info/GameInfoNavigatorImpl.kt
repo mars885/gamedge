@@ -28,6 +28,21 @@ internal class GameInfoNavigatorImpl @Inject constructor(
 ) : GameInfoNavigator {
 
 
+    override fun navigateToImageViewer(
+        title: String?,
+        initialPosition: Int,
+        imageUrls: List<String>
+    ) {
+        navController.navigate(
+            GameInfoFragmentDirections.actionImageViewerFragment(
+                title,
+                initialPosition,
+                imageUrls.toTypedArray()
+            )
+        )
+    }
+
+
     override fun navigateToInfo(gameId: Int) {
         navController.navigate(GameInfoFragmentDirections.actionInfoFragment(gameId))
     }

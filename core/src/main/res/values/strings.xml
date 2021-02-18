@@ -24,6 +24,12 @@
     <string name="unknown">Unknown</string>
     <string name="not_available_abbr">N/A</string>
     <string name="url_opener_not_found">No app was found capable of opening the URL!</string>
+    <string name="image">image</string>
+    <string name="artwork">Artwork</string>
+    <string name="cover">Cover</string>
+    <string name="screenshot">Screenshot</string>
+
+    <string name="action_share_via">Share via…</string>
 
     <string name="year_quarter_first">Q1</string>
     <string name="year_quarter_second">Q2</string>
@@ -33,6 +39,7 @@
     <string name="year_with_quarter_template">%d (%s)</string>
     <string name="rating_template">%d%%</string>
     <string name='age_rating_template'>%s-%s</string>
+    <string name="text_sharing_message_template">Hey, check out this %1$s - %2$s</string>
 
     <string name="company_role_developer">Main Developer</string>
     <string name="company_role_publisher">Publisher</string>
@@ -64,9 +71,11 @@
     <string name="game_category_season">Season</string>
 
     <!-- Errors -->
-    <string name="error_api_network_message">Please check your network connection.</string>
+    <string name="error_no_network_message">Please check your network connection.</string>
+    <string name="error_unknown_message">Oops! Something went wrong.</string>
+
+    <string name="error_api_network_message">@string/error_no_network_message</string>
     <string name="error_api_server_message">The server is not responding! Please try again later.</string>
     <string name="error_api_unknown_message">Could not perform the request! Please try again later.</string>
-    <string name="error_unknown_message">Oops! Something went wrong.</string>
 
 </resources>

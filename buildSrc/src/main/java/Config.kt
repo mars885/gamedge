@@ -79,6 +79,7 @@ object deps {
         const val featureDashboard = ":feature-dashboard"
         const val featureDiscovery = ":feature-discovery"
         const val featureInfo = ":feature-info"
+        const val featureImageViewer = ":feature-image-viewer"
         const val featureLikes = ":feature-likes"
         const val featureNews = ":feature-news"
         const val featureSearch = ":feature-search"
@@ -194,12 +195,14 @@ object deps {
         private const val kotlinResultVersion = "1.1.10"
         private const val expandableTextViewVersion = "1.0.5"
         private const val hiltBinderVersion = "1.0.0-alpha01"
+        private const val photoViewVersion = "2.3.0"
 
         const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${desugaredLibsVersion}"
         const val kotlinResult = "com.michael-bull.kotlin-result:kotlin-result:${kotlinResultVersion}"
         const val expandableTextView = "at.blogc:expandabletextview:${expandableTextViewVersion}"
         const val hiltBinder = "com.paulrybitskyi:hilt-binder:$hiltBinderVersion"
         const val hiltBinderCompiler = "com.paulrybitskyi:hilt-binder-compiler:$hiltBinderVersion"
+        const val photoView = "com.github.chrisbanes:PhotoView:$photoViewVersion"
 
     }
 

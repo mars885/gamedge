@@ -20,7 +20,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutParams.MATCH_PARENT
+import com.paulrybitskyi.commons.ktx.onClick
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractItem
+import com.paulrybitskyi.gamedge.commons.ui.base.rv.HasListeners
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
 internal class GameArtworkItem(model: GameArtworkModel): AbstractItem<
@@ -50,10 +52,14 @@ internal class GameArtworkItem(model: GameArtworkModel): AbstractItem<
 
     internal class ViewHolder(
         private val view: GameArtworkView
-    ): RecyclerView.ViewHolder(view) {
+    ): RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: GameArtworkModel) {
             view.model = model
+        }
+
+        fun setOnArtworkClickListener(listener: () -> Unit) {
+            view.onClick { listener() }
         }
 
     }

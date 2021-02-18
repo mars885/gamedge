@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.feature.search
 
 import android.text.InputType
 import androidx.fragment.app.viewModels
+import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
@@ -59,6 +60,8 @@ internal class GamesSearchFragment : BaseFragment<
 
 
     private fun initGamesView() = with(viewBinding.gamesView) {
+        applyWindowBottomInsetAsMargin()
+
         onGameClickListener = viewModel::onGameClicked
         onBottomReachListener = viewModel::onBottomReached
     }

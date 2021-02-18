@@ -23,7 +23,6 @@ import com.paulrybitskyi.commons.ktx.getCompatColor
 import com.paulrybitskyi.commons.window.anims.WindowAnimations
 import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.R
-import com.paulrybitskyi.gamedge.core.di.UrlOpenerKey
 import com.paulrybitskyi.gamedge.core.providers.CustomTabsProvider
 import com.paulrybitskyi.gamedge.core.utils.attachNewTaskFlagIfNeeded
 import com.paulrybitskyi.gamedge.core.utils.setAnimations

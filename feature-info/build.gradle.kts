@@ -38,6 +38,7 @@ dependencies {
 
     implementation(deps.androidX.recyclerView)
     implementation(deps.androidX.constraintLayout)
+    implementation(deps.androidX.viewPager2)
     implementation(deps.androidX.fragmentKtx)
 
     implementation(deps.google.materialComponents)

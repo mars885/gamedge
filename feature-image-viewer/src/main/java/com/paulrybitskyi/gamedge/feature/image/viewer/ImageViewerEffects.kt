@@ -14,26 +14,23 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.core.di
+package com.paulrybitskyi.gamedge.feature.image.viewer
 
-import javax.inject.Qualifier
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-@Target(
-    AnnotationTarget.CLASS,
-    AnnotationTarget.FIELD,
-    AnnotationTarget.FUNCTION,
-    AnnotationTarget.VALUE_PARAMETER
-)
-internal annotation class UrlOpenerKey(val type: Type) {
 
-    enum class Type {
+internal sealed class ImageViewerCommand : Command {
 
-        NATIVE_APP,
-        CUSTOM_TAB,
-        BROWSER
+    data class ShareText(val text: String): ImageViewerCommand()
 
-    }
+    object ResetSystemWindows : ImageViewerCommand()
+
+}
+
+
+internal sealed class ImageViewerRoute : Route {
+
+    object Back : ImageViewerRoute()
 
 }
