@@ -50,7 +50,10 @@ internal interface GamesTable {
         """
         SELECT * FROM ${Game.Schema.TABLE_NAME} 
         WHERE LOWER(${Game.Schema.NAME}) LIKE (:searchQuery || '%') 
-        ORDER BY ${Game.Schema.TOTAL_RATING} IS NULL, ${Game.Schema.TOTAL_RATING} DESC 
+        ORDER BY 
+            ${Game.Schema.TOTAL_RATING} IS NULL,
+            ${Game.Schema.TOTAL_RATING} DESC,
+            ${Game.Schema.ID} ASC 
         LIMIT :offset, :limit
         """
     )
@@ -62,7 +65,7 @@ internal interface GamesTable {
         WHERE ${Game.Schema.USERS_RATING} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp 
-        ORDER BY ${Game.Schema.TOTAL_RATING} DESC 
+        ORDER BY ${Game.Schema.TOTAL_RATING} DESC, ${Game.Schema.ID} ASC 
         LIMIT :offset, :limit
         """
     )
@@ -74,7 +77,7 @@ internal interface GamesTable {
         WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND 
         ${Game.Schema.RELEASE_DATE} < :maxReleaseDateTimestamp 
-        ORDER BY ${Game.Schema.RELEASE_DATE} DESC 
+        ORDER BY ${Game.Schema.RELEASE_DATE} DESC, ${Game.Schema.ID} ASC 
         LIMIT :offset, :limit
         """
     )
@@ -90,7 +93,7 @@ internal interface GamesTable {
         SELECT * FROM ${Game.Schema.TABLE_NAME} 
         WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp 
-        ORDER BY ${Game.Schema.RELEASE_DATE} ASC 
+        ORDER BY ${Game.Schema.RELEASE_DATE} ASC, ${Game.Schema.ID} ASC 
         LIMIT :offset, :limit
         """
     )
@@ -102,7 +105,7 @@ internal interface GamesTable {
         WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND 
         ${Game.Schema.HYPE_COUNT} IS NOT NULL 
-        ORDER BY ${Game.Schema.HYPE_COUNT} DESC 
+        ORDER BY ${Game.Schema.HYPE_COUNT} DESC, ${Game.Schema.ID} ASC 
         LIMIT :offset, :limit
         """
     )
