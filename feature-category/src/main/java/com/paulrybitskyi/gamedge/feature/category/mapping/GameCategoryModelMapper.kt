@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.category.mapping
 
-import com.paulrybitskyi.gamedge.core.IgdbImageSize
-import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
 import com.paulrybitskyi.hiltbinder.BindType
@@ -33,7 +33,7 @@ internal interface GameCategoryModelMapper {
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameCategoryModelMapperImpl @Inject constructor(
-    private val igdbImageUrlBuilder: IgdbImageUrlBuilder,
+    private val igdbImageUrlFactory: IgdbImageUrlFactory,
 ) : GameCategoryModelMapper {
 
 
@@ -42,7 +42,7 @@ internal class GameCategoryModelMapperImpl @Inject constructor(
             id = game.id,
             title = game.name,
             coverUrl = game.cover?.let { cover ->
-                igdbImageUrlBuilder.buildUrl(cover, IgdbImageUrlBuilder.Config(IgdbImageSize.BIG_COVER))
+                igdbImageUrlFactory.createUrl(cover, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_COVER))
             }
         )
     }

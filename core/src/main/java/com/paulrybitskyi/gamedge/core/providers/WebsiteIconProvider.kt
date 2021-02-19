@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.core
+package com.paulrybitskyi.gamedge.core.providers
 
+import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import javax.inject.Inject
 
 
-interface WebsiteIconRetriever {
+interface WebsiteIconProvider {
 
-    fun getIconIdForWebsite(website: Website): Int
+    fun provideIconIdForWebsite(website: Website): Int
 
 }
 
 
 @BindType
-internal class WebsiteIconRetrieverImpl @Inject constructor() : WebsiteIconRetriever {
+internal class WebsiteIconProviderImpl @Inject constructor() : WebsiteIconProvider {
 
 
-    override fun getIconIdForWebsite(website: Website): Int {
+    override fun provideIconIdForWebsite(website: Website): Int {
         return when(website.category) {
             WebsiteCategory.WIKIPEDIA -> R.drawable.wikipedia
             WebsiteCategory.FACEBOOK -> R.drawable.facebook

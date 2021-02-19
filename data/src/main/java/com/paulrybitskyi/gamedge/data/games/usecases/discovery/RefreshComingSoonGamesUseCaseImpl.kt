@@ -46,7 +46,7 @@ internal class RefreshComingSoonGamesUseCaseImpl @Inject constructor(
 
 
     override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
-        val throttlerKey = throttlerTools.keyBuilder.buildComingSoonGamesKey(params.pagination)
+        val throttlerKey = throttlerTools.keyProvider.provideComingSoonGamesKey(params.pagination)
 
         return flow {
             if(throttlerTools.throttler.canRefreshGames(throttlerKey)) {

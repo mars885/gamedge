@@ -20,5 +20,5 @@ import javax.inject.Inject
 
 internal class ArticlesRefreshingThrottlerTools @Inject constructor(
     val throttler: ArticlesRefreshingThrottler,
-    val keyBuilder: ArticlesRefreshingThrottlerKeyBuilder,
+    val keyProvider: ArticlesRefreshingThrottlerKeyProvider,
 )

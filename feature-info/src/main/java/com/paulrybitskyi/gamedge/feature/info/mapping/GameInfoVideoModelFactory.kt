@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.info.mapping
 
-import com.paulrybitskyi.gamedge.core.YoutubeMediaUrlBuilder
-import com.paulrybitskyi.gamedge.core.YoutubeThumbnailSize
+import com.paulrybitskyi.gamedge.core.factories.YoutubeMediaUrlFactory
+import com.paulrybitskyi.gamedge.core.factories.YoutubeThumbnailSize
 import com.paulrybitskyi.gamedge.domain.games.entities.Video
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoVideoModel
 import com.paulrybitskyi.hiltbinder.BindType
@@ -35,7 +35,7 @@ internal interface GameInfoVideoModelFactory {
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoVideoModelFactoryImpl @Inject constructor(
-    private val youtubeMediaUrlBuilder: YoutubeMediaUrlBuilder,
+    private val youtubeMediaUrlFactory: YoutubeMediaUrlFactory,
 ) : GameInfoVideoModelFactory {
 
 
@@ -47,11 +47,11 @@ internal class GameInfoVideoModelFactoryImpl @Inject constructor(
 
 
     override fun createVideoModel(video: Video): GameInfoVideoModel? {
-        val thumbnailUrl = youtubeMediaUrlBuilder.buildThumbnailUrl(
+        val thumbnailUrl = youtubeMediaUrlFactory.createThumbnailUrl(
             video,
             YoutubeThumbnailSize.MEDIUM
         )
-        val videoUrl = youtubeMediaUrlBuilder.buildVideoUrl(video)
+        val videoUrl = youtubeMediaUrlFactory.createVideoUrl(video)
 
         if((thumbnailUrl == null) && (videoUrl == null)) return null
 

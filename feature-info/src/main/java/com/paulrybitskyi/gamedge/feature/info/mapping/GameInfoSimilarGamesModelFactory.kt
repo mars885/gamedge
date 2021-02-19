@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.info.mapping
 
-import com.paulrybitskyi.gamedge.core.IgdbImageSize
-import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.R
@@ -38,7 +38,7 @@ internal interface GameInfoSimilarGamesModelFactory {
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoSimilarGamesModelFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider,
-    private val igdbImageUrlBuilder: IgdbImageUrlBuilder
+    private val igdbImageUrlFactory: IgdbImageUrlFactory
 ) : GameInfoSimilarGamesModelFactory {
 
 
@@ -59,7 +59,7 @@ internal class GameInfoSimilarGamesModelFactoryImpl @Inject constructor(
                 id = it.id,
                 title = it.name,
                 coverUrl = it.cover?.let { cover ->
-                    igdbImageUrlBuilder.buildUrl(cover, IgdbImageUrlBuilder.Config(IgdbImageSize.BIG_COVER))
+                    igdbImageUrlFactory.createUrl(cover, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_COVER))
                 }
             )
         }

@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.info.mapping
 
-import com.paulrybitskyi.gamedge.core.IgdbImageSize
-import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGamesModel
@@ -46,7 +46,7 @@ internal class GameInfoModelFactoryImpl @Inject constructor(
     private val companyModelFactory: GameInfoCompanyModelFactory,
     private val otherCompanyGamesModelFactory: GameInfoOtherCompanyGamesModelFactory,
     private val similarGamesModelFactory: GameInfoSimilarGamesModelFactory,
-    private val igdbImageUrlBuilder: IgdbImageUrlBuilder
+    private val igdbImageUrlFactory: IgdbImageUrlFactory
 ) : GameInfoModelFactory {
 
 
@@ -60,26 +60,26 @@ internal class GameInfoModelFactoryImpl @Inject constructor(
             id = game.id,
             headerModel = headerModelFactory.createHeaderModel(game, isLiked),
             videoModels = videoModelFactory.createVideoModels(game.videos),
-            screenshotUrls = game.buildScreenshotUrls(),
+            screenshotUrls = game.createScreenshotUrls(),
             summary = game.summary,
             detailsModel = detailsModelFactory.createDetailsModel(game),
             linkModels = linkModelFactory.createLinkModels(game.websites),
             companyModels = companyModelFactory.createCompanyModels(game.involvedCompanies),
-            otherCompanyGames = game.buildOtherCompanyGamesModel(companyGames),
+            otherCompanyGames = game.createOtherCompanyGamesModel(companyGames),
             similarGames = similarGamesModelFactory.createSimilarGamesModel(similarGames)
         )
     }
 
 
-    private fun Game.buildScreenshotUrls(): List<String> {
-        return igdbImageUrlBuilder.buildUrls(
+    private fun Game.createScreenshotUrls(): List<String> {
+        return igdbImageUrlFactory.createUrls(
             screenshots,
-            IgdbImageUrlBuilder.Config(IgdbImageSize.MEDIUM_SCREENSHOT)
+            IgdbImageUrlFactory.Config(IgdbImageSize.MEDIUM_SCREENSHOT)
         )
     }
 
 
-    private fun Game.buildOtherCompanyGamesModel(otherCompanyGames: List<Game>): GameInfoRelatedGamesModel? {
+    private fun Game.createOtherCompanyGamesModel(otherCompanyGames: List<Game>): GameInfoRelatedGamesModel? {
         return otherCompanyGamesModelFactory.createOtherCompanyGamesModel(otherCompanyGames, this)
     }
 

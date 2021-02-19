@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.igdb.api.games
 
 import com.paulrybitskyi.gamedge.commons.api.ApiResult
-import com.paulrybitskyi.gamedge.igdb.api.games.querybuilder.IgdbApiQueryBuilder
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -44,7 +43,7 @@ internal interface GamesEndpoint {
 @BindType
 internal class GamesEndpointImpl @Inject constructor(
     private val gamesService: GamesService,
-    private val igdbApiQueryBuilder: IgdbApiQueryBuilder
+    private val igdbApiQueryFactory: IgdbApiQueryFactory
 ) : GamesEndpoint {
 
 
@@ -54,7 +53,7 @@ internal class GamesEndpointImpl @Inject constructor(
         limit: Int
     ): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
-            igdbApiQueryBuilder.buildGamesSearchingQuery(
+            igdbApiQueryFactory.createGamesSearchingQuery(
                 searchQuery = searchQuery,
                 offset = offset,
                 limit = limit
@@ -65,7 +64,7 @@ internal class GamesEndpointImpl @Inject constructor(
 
     override suspend fun getPopularGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
-            igdbApiQueryBuilder.buildPopularGamesRetrievalQuery(
+            igdbApiQueryFactory.createPopularGamesRetrievalQuery(
                 offset = offset,
                 limit = limit
             )
@@ -75,7 +74,7 @@ internal class GamesEndpointImpl @Inject constructor(
 
     override suspend fun getRecentlyReleasedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
-            igdbApiQueryBuilder.buildRecentlyReleasedGamesRetrievalQuery(
+            igdbApiQueryFactory.createRecentlyReleasedGamesRetrievalQuery(
                 offset = offset,
                 limit = limit
             )
@@ -85,7 +84,7 @@ internal class GamesEndpointImpl @Inject constructor(
 
     override suspend fun getComingSoonGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
-            igdbApiQueryBuilder.buildComingSoonGamesRetrievalQuery(
+            igdbApiQueryFactory.createComingSoonGamesRetrievalQuery(
                 offset = offset,
                 limit = limit
             )
@@ -95,7 +94,7 @@ internal class GamesEndpointImpl @Inject constructor(
 
     override suspend fun getMostAnticipatedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
-            igdbApiQueryBuilder.buildMostAnticipatedGamesRetrievalQuery(
+            igdbApiQueryFactory.createMostAnticipatedGamesRetrievalQuery(
                 offset = offset,
                 limit = limit
             )
@@ -109,7 +108,7 @@ internal class GamesEndpointImpl @Inject constructor(
         limit: Int
     ): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
-            igdbApiQueryBuilder.buildGamesRetrievalQuery(
+            igdbApiQueryFactory.createGamesRetrievalQuery(
                 gameIds = gameIds,
                 offset = offset,
                 limit = limit

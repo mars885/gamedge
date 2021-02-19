@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.info.mapping
 
-import com.paulrybitskyi.gamedge.core.WebsiteIconRetriever
-import com.paulrybitskyi.gamedge.core.WebsiteNameRetriever
+import com.paulrybitskyi.gamedge.core.providers.WebsiteIconProvider
+import com.paulrybitskyi.gamedge.core.providers.WebsiteNameProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkModel
@@ -36,8 +36,8 @@ internal interface GameInfoLinkModelFactory {
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoLinkModelFactoryImpl @Inject constructor(
-    private val websiteNameRetriever: WebsiteNameRetriever,
-    private val websiteIconRetriever: WebsiteIconRetriever
+    private val websiteNameProvider: WebsiteNameProvider,
+    private val websiteIconProvider: WebsiteIconProvider
 ) : GameInfoLinkModelFactory {
 
 
@@ -55,8 +55,8 @@ internal class GameInfoLinkModelFactoryImpl @Inject constructor(
 
         return GameInfoLinkModel(
             id = website.id,
-            text = websiteNameRetriever.getWebsiteName(website),
-            iconId = websiteIconRetriever.getIconIdForWebsite(website),
+            text = websiteNameProvider.provideWebsiteName(website),
+            iconId = websiteIconProvider.provideIconIdForWebsite(website),
             payload = website.url
         )
     }

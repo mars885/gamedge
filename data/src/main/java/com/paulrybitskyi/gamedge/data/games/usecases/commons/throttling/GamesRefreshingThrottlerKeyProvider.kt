@@ -23,48 +23,48 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 
-internal interface GamesRefreshingThrottlerKeyBuilder {
+internal interface GamesRefreshingThrottlerKeyProvider {
 
-    fun buildPopularGamesKey(pagination: Pagination): String
+    fun providePopularGamesKey(pagination: Pagination): String
 
-    fun buildRecentlyReleasedGamesKey(pagination: Pagination): String
+    fun provideRecentlyReleasedGamesKey(pagination: Pagination): String
 
-    fun buildComingSoonGamesKey(pagination: Pagination): String
+    fun provideComingSoonGamesKey(pagination: Pagination): String
 
-    fun buildMostAnticipatedGamesKey(pagination: Pagination): String
+    fun provideMostAnticipatedGamesKey(pagination: Pagination): String
 
-    fun buildCompanyDevelopedGamesKey(company: Company, pagination: Pagination): String
+    fun provideCompanyDevelopedGamesKey(company: Company, pagination: Pagination): String
 
-    fun buildSimilarGamesKey(game: Game, pagination: Pagination): String
+    fun provideSimilarGamesKey(game: Game, pagination: Pagination): String
 
 }
 
 
 @BindType
-internal class GamesRefreshingThrottlerKeyBuilderImpl @Inject constructor() : GamesRefreshingThrottlerKeyBuilder {
+internal class GamesRefreshingThrottlerKeyProviderImpl @Inject constructor() : GamesRefreshingThrottlerKeyProvider {
 
 
-    override fun buildPopularGamesKey(pagination: Pagination): String {
+    override fun providePopularGamesKey(pagination: Pagination): String {
         return "popular_games | offset: ${pagination.offset} | limit: ${pagination.limit}"
     }
 
 
-    override fun buildRecentlyReleasedGamesKey(pagination: Pagination): String {
+    override fun provideRecentlyReleasedGamesKey(pagination: Pagination): String {
         return "recently_released_games | offset: ${pagination.offset} | limit: ${pagination.limit}"
     }
 
 
-    override fun buildComingSoonGamesKey(pagination: Pagination): String {
+    override fun provideComingSoonGamesKey(pagination: Pagination): String {
         return "coming_soon_games | offset: ${pagination.offset} | limit: ${pagination.limit}"
     }
 
 
-    override fun buildMostAnticipatedGamesKey(pagination: Pagination): String {
+    override fun provideMostAnticipatedGamesKey(pagination: Pagination): String {
         return "most_anticipated_games | offset: ${pagination.offset} | limit: ${pagination.limit}"
     }
 
 
-    override fun buildCompanyDevelopedGamesKey(company: Company, pagination: Pagination): String {
+    override fun provideCompanyDevelopedGamesKey(company: Company, pagination: Pagination): String {
         return """
             company_developed_games | 
             company_id: ${company.id} | 
@@ -75,7 +75,7 @@ internal class GamesRefreshingThrottlerKeyBuilderImpl @Inject constructor() : Ga
     }
 
 
-    override fun buildSimilarGamesKey(game: Game, pagination: Pagination): String {
+    override fun provideSimilarGamesKey(game: Game, pagination: Pagination): String {
         return """
             similar_games | 
             game_id: ${game.id} | 

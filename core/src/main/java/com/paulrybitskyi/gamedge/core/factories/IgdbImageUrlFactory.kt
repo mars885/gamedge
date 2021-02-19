@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.core
+package com.paulrybitskyi.gamedge.core.factories
 
 import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.domain.games.entities.Image
@@ -49,7 +49,7 @@ enum class IgdbImageExtension(internal val rawExtension: String) {
 }
 
 
-interface IgdbImageUrlBuilder {
+interface IgdbImageUrlFactory {
 
 
     data class Config(
@@ -59,16 +59,16 @@ interface IgdbImageUrlBuilder {
     )
 
 
-    fun buildUrls(images: List<Image>, config: Config): List<String>
+    fun createUrl(image: Image, config: Config): String?
 
-    fun buildUrl(image: Image, config: Config): String?
+    fun createUrls(images: List<Image>, config: Config): List<String>
 
 
 }
 
 
 @BindType
-internal class IgdbImageUrlBuilderImpl @Inject constructor() : IgdbImageUrlBuilder {
+internal class IgdbImageUrlFactoryImpl @Inject constructor() : IgdbImageUrlFactory {
 
 
     private companion object {
@@ -79,16 +79,16 @@ internal class IgdbImageUrlBuilderImpl @Inject constructor() : IgdbImageUrlBuild
     }
 
 
-    override fun buildUrls(images: List<Image>, config: IgdbImageUrlBuilder.Config): List<String> {
+    override fun createUrls(images: List<Image>, config: IgdbImageUrlFactory.Config): List<String> {
         if(images.isEmpty()) return emptyList()
 
         return images.mapNotNull { image ->
-            buildUrl(image, config)
+            createUrl(image, config)
         }
     }
 
 
-    override fun buildUrl(image: Image, config: IgdbImageUrlBuilder.Config): String? {
+    override fun createUrl(image: Image, config: IgdbImageUrlFactory.Config): String? {
         if(image.id.isBlank()) return null
 
         return String.format(
@@ -100,7 +100,7 @@ internal class IgdbImageUrlBuilderImpl @Inject constructor() : IgdbImageUrlBuild
     }
 
 
-    private fun constructType(config: IgdbImageUrlBuilder.Config): String {
+    private fun constructType(config: IgdbImageUrlFactory.Config): String {
         return buildString {
             append(config.size.rawSize)
 

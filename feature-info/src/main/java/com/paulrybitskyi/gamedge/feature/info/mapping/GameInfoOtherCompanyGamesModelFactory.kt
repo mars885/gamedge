@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.info.mapping
 
-import com.paulrybitskyi.gamedge.core.IgdbImageSize
-import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.R
@@ -41,7 +41,7 @@ internal interface GameInfoOtherCompanyGamesModelFactory {
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider,
-    private val igdbImageUrlBuilder: IgdbImageUrlBuilder
+    private val igdbImageUrlFactory: IgdbImageUrlFactory
 ) : GameInfoOtherCompanyGamesModelFactory {
 
 
@@ -55,14 +55,14 @@ internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
             ?.let { games ->
                 GameInfoRelatedGamesModel(
                     type = GameInfoRelatedGamesType.OTHER_COMPANY_GAMES,
-                    title = currentGame.buildOtherCompanyGamesModelTitle(),
+                    title = currentGame.createOtherCompanyGamesModelTitle(),
                     items = games.toRelatedGameModels()
                 )
             }
     }
 
 
-    private fun Game.buildOtherCompanyGamesModelTitle(): String {
+    private fun Game.createOtherCompanyGamesModelTitle(): String {
         val developerName = developerCompany?.name
             ?: stringProvider.getString(R.string.game_info_other_company_games_title_default_arg)
 
@@ -81,7 +81,7 @@ internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
                 id = it.id,
                 title = it.name,
                 coverUrl = it.cover?.let { cover ->
-                    igdbImageUrlBuilder.buildUrl(cover, IgdbImageUrlBuilder.Config(IgdbImageSize.BIG_COVER))
+                    igdbImageUrlFactory.createUrl(cover, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_COVER))
                 }
             )
         }

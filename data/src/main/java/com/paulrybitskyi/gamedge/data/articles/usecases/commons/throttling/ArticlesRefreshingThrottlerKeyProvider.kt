@@ -21,18 +21,18 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 
-internal interface ArticlesRefreshingThrottlerKeyBuilder {
+internal interface ArticlesRefreshingThrottlerKeyProvider {
 
-    fun buildArticlesKey(pagination: Pagination): String
+    fun provideArticlesKey(pagination: Pagination): String
 
 }
 
 
 @BindType
-internal class ArticlesRefreshingThrottlerKeyBuilderImpl @Inject constructor() : ArticlesRefreshingThrottlerKeyBuilder {
+internal class ArticlesRefreshingThrottlerKeyProviderImpl @Inject constructor() : ArticlesRefreshingThrottlerKeyProvider {
 
 
-    override fun buildArticlesKey(pagination: Pagination): String {
+    override fun provideArticlesKey(pagination: Pagination): String {
         return "articles | offset: ${pagination.offset} | limit: ${pagination.limit}"
     }
 

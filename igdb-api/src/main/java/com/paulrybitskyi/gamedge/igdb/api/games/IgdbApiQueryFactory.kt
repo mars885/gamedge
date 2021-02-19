@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.api.games.querybuilder
+package com.paulrybitskyi.gamedge.igdb.api.games
 
 import com.paulrybitskyi.gamedge.commons.data.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game
@@ -28,12 +28,30 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSeriali
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
+
+internal interface IgdbApiQueryFactory {
+
+    fun createGamesSearchingQuery(searchQuery: String, offset: Int, limit: Int): String
+
+    fun createPopularGamesRetrievalQuery(offset: Int, limit: Int): String
+
+    fun createRecentlyReleasedGamesRetrievalQuery(offset: Int, limit: Int): String
+
+    fun createComingSoonGamesRetrievalQuery(offset: Int, limit: Int): String
+
+    fun createMostAnticipatedGamesRetrievalQuery(offset: Int, limit: Int): String
+
+    fun createGamesRetrievalQuery(gameIds: List<Int>, offset: Int, limit: Int): String
+
+}
+
+
 @BindType
-internal class IgdbApiQueryBuilderImpl @Inject constructor(
+internal class IgdbApiQueryFactoryImpl @Inject constructor(
     private val apicalypseQueryBuilderFactory: ApicalypseQueryBuilderFactory,
     private val apicalypseSerializer: ApicalypseSerializer,
     private val queryTimestampProvider: QueryTimestampProvider
-) : IgdbApiQueryBuilder {
+) : IgdbApiQueryFactory {
 
 
     private val gameEntityFields by lazy {
@@ -41,7 +59,7 @@ internal class IgdbApiQueryBuilderImpl @Inject constructor(
     }
 
 
-    override fun buildGamesSearchingQuery(searchQuery: String, offset: Int, limit: Int): String {
+    override fun createGamesSearchingQuery(searchQuery: String, offset: Int, limit: Int): String {
         return apicalypseQueryBuilderFactory.newBuilder()
             .search(searchQuery)
             .select(gameEntityFields)
@@ -51,7 +69,7 @@ internal class IgdbApiQueryBuilderImpl @Inject constructor(
     }
 
 
-    override fun buildPopularGamesRetrievalQuery(offset: Int, limit: Int): String {
+    override fun createPopularGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getPopularGamesMinReleaseDate()
 
         return apicalypseQueryBuilderFactory.newBuilder()
@@ -67,7 +85,7 @@ internal class IgdbApiQueryBuilderImpl @Inject constructor(
     }
 
 
-    override fun buildRecentlyReleasedGamesRetrievalQuery(offset: Int, limit: Int): String {
+    override fun createRecentlyReleasedGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMinReleaseDate()
         val maxReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMaxReleaseDate()
 
@@ -84,7 +102,7 @@ internal class IgdbApiQueryBuilderImpl @Inject constructor(
     }
 
 
-    override fun buildComingSoonGamesRetrievalQuery(offset: Int, limit: Int): String {
+    override fun createComingSoonGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getComingSoonGamesMinReleaseDate()
 
         return apicalypseQueryBuilderFactory.newBuilder()
@@ -97,7 +115,7 @@ internal class IgdbApiQueryBuilderImpl @Inject constructor(
     }
 
 
-    override fun buildMostAnticipatedGamesRetrievalQuery(offset: Int, limit: Int): String {
+    override fun createMostAnticipatedGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getMostAnticipatedGamesMinReleaseDate()
 
         return apicalypseQueryBuilderFactory.newBuilder()
@@ -113,7 +131,7 @@ internal class IgdbApiQueryBuilderImpl @Inject constructor(
     }
 
 
-    override fun buildGamesRetrievalQuery(gameIds: List<Int>, offset: Int, limit: Int): String {
+    override fun createGamesRetrievalQuery(gameIds: List<Int>, offset: Int, limit: Int): String {
         val stringifiedGameIds = gameIds.map(Integer::toString)
 
         return apicalypseQueryBuilderFactory.newBuilder()
