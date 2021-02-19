@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a61a68c41b67cb36a7a93816e0ec826b",
+    "identityHash": "f9140a22d0491beb3f202c7edb0b6f12",
     "entities": [
       {
         "tableName": "games",
@@ -171,7 +171,48 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_games_hype_count",
+            "unique": false,
+            "columnNames": [
+              "hype_count"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_hype_count` ON `${TABLE_NAME}` (`hype_count`)"
+          },
+          {
+            "name": "index_games_release_date",
+            "unique": false,
+            "columnNames": [
+              "release_date"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_release_date` ON `${TABLE_NAME}` (`release_date`)"
+          },
+          {
+            "name": "index_games_users_rating",
+            "unique": false,
+            "columnNames": [
+              "users_rating"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_users_rating` ON `${TABLE_NAME}` (`users_rating`)"
+          },
+          {
+            "name": "index_games_total_rating",
+            "unique": false,
+            "columnNames": [
+              "total_rating"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_total_rating` ON `${TABLE_NAME}` (`total_rating`)"
+          },
+          {
+            "name": "index_games_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -211,6 +252,14 @@
               "game_id"
             ],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_liked_games_game_id` ON `${TABLE_NAME}` (`game_id`)"
+          },
+          {
+            "name": "index_liked_games_like_timestamp",
+            "unique": false,
+            "columnNames": [
+              "like_timestamp"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_liked_games_like_timestamp` ON `${TABLE_NAME}` (`like_timestamp`)"
           }
         ],
         "foreignKeys": []
@@ -269,7 +318,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a61a68c41b67cb36a7a93816e0ec826b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f9140a22d0491beb3f202c7edb0b6f12')"
     ]
   }
 }
