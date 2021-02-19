@@ -46,7 +46,7 @@ internal class RefreshArticlesUseCaseImpl @Inject constructor(
 
 
     override suspend fun execute(params: Params): Flow<DomainResult<List<Article>>> {
-        val throttlerKey = throttlerTools.keyBuilder.buildArticlesKey(params.pagination)
+        val throttlerKey = throttlerTools.keyProvider.provideArticlesKey(params.pagination)
 
         return flow {
             if(throttlerTools.throttler.canRefreshArticles(throttlerKey)) {

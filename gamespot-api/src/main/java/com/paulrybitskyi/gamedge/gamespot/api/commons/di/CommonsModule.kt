@@ -21,8 +21,8 @@ import com.paulrybitskyi.gamedge.commons.api.addInterceptorAsFirstInChain
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
 import com.paulrybitskyi.gamedge.gamespot.api.BuildConfig
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotFieldsSerializer
-import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsBuilder
-import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsBuilderImpl
+import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsFactory
+import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsFactoryImpl
 import com.paulrybitskyi.gamedge.gamespot.api.commons.UserAgentInterceptor
 import dagger.Module
 import dagger.Provides
@@ -61,8 +61,8 @@ internal object CommonsModule {
     @Provides
     fun provideGamespotQueryParamsBuilder(
         gamespotFieldsSerializer: GamespotFieldsSerializer
-    ): GamespotQueryParamsBuilder {
-        return GamespotQueryParamsBuilderImpl(
+    ): GamespotQueryParamsFactory {
+        return GamespotQueryParamsFactoryImpl(
             gamespotFieldsSerializer = gamespotFieldsSerializer,
             apiKey = BuildConfig.GAMESPOT_API_KEY
         )

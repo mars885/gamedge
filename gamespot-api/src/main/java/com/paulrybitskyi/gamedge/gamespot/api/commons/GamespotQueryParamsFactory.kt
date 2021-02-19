@@ -19,19 +19,19 @@ package com.paulrybitskyi.gamedge.gamespot.api.commons
 import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.Article
 
 
-internal interface GamespotQueryParamsBuilder {
+internal interface GamespotQueryParamsFactory {
 
-    fun buildArticlesQueryParams(
+    fun createArticlesQueryParams(
         action: MutableMap<String, String>.() -> Unit
     ): Map<String, String>
 
 }
 
 
-internal class GamespotQueryParamsBuilderImpl(
+internal class GamespotQueryParamsFactoryImpl(
     private val gamespotFieldsSerializer: GamespotFieldsSerializer,
     private val apiKey: String
-) : GamespotQueryParamsBuilder {
+) : GamespotQueryParamsFactory {
 
 
     private companion object {
@@ -49,18 +49,18 @@ internal class GamespotQueryParamsBuilderImpl(
     }
 
 
-    override fun buildArticlesQueryParams(
+    override fun createArticlesQueryParams(
         action: MutableMap<String, String>.() -> Unit
     ): Map<String, String> {
-        return buildGeneralQueryParams {
+        return createGeneralQueryParams {
             put(QUERY_PARAM_FIELDS, articleEntityFields)
             put(
                 QUERY_PARAM_FILTER,
-                buildFilterQueryParamValue(ARTICLE_FIELD_CATEGORIES, ARTICLE_CATEGORY_ID_GAMES)
+                createFilterQueryParamValue(ARTICLE_FIELD_CATEGORIES, ARTICLE_CATEGORY_ID_GAMES)
             )
             put(
                 QUERY_PARAM_SORT,
-                buildSortQueryParamValue(Article.Schema.PUBLICATION_DATE, SortOrder.DESC)
+                createSortQueryParamValue(Article.Schema.PUBLICATION_DATE, SortOrder.DESC)
             )
 
             action()
@@ -68,17 +68,17 @@ internal class GamespotQueryParamsBuilderImpl(
     }
 
 
-    private fun buildFilterQueryParamValue(field: String, value: Any): String {
+    private fun createFilterQueryParamValue(field: String, value: Any): String {
         return String.format(COMPLEX_QUERY_VALUE_TEMPLATE, field, value)
     }
 
 
-    private fun buildSortQueryParamValue(field: String, order: SortOrder): String {
+    private fun createSortQueryParamValue(field: String, order: SortOrder): String {
         return String.format(COMPLEX_QUERY_VALUE_TEMPLATE, field, order.rawOrder)
     }
 
 
-    private fun buildGeneralQueryParams(
+    private fun createGeneralQueryParams(
         action: MutableMap<String, String>.() -> Unit
     ): Map<String, String> {
         return buildMap {

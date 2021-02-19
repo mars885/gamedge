@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.core
+package com.paulrybitskyi.gamedge.core.factories
 
 import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.domain.games.entities.Video
@@ -32,17 +32,17 @@ enum class YoutubeThumbnailSize(internal val rawSize: String) {
 }
 
 
-interface YoutubeMediaUrlBuilder {
+interface YoutubeMediaUrlFactory {
 
-    fun buildThumbnailUrl(video: Video, size: YoutubeThumbnailSize): String?
+    fun createThumbnailUrl(video: Video, size: YoutubeThumbnailSize): String?
 
-    fun buildVideoUrl(video: Video): String?
+    fun createVideoUrl(video: Video): String?
 
 }
 
 
 @BindType
-internal class YoutubeMediaUrlBuilderImpl @Inject constructor() : YoutubeMediaUrlBuilder {
+internal class YoutubeMediaUrlFactoryImpl @Inject constructor() : YoutubeMediaUrlFactory {
 
 
     private companion object {
@@ -53,14 +53,14 @@ internal class YoutubeMediaUrlBuilderImpl @Inject constructor() : YoutubeMediaUr
     }
 
 
-    override fun buildThumbnailUrl(video: Video, size: YoutubeThumbnailSize): String? {
+    override fun createThumbnailUrl(video: Video, size: YoutubeThumbnailSize): String? {
         if(video.id.isBlank()) return null
 
         return String.format(THUMBNAIL_URL_TEMPLATE, video.id, size.rawSize)
     }
 
 
-    override fun buildVideoUrl(video: Video): String? {
+    override fun createVideoUrl(video: Video): String? {
         if(video.id.isEmpty()) return null
 
         return String.format(VIDEO_URL_TEMPLATE, video.id)

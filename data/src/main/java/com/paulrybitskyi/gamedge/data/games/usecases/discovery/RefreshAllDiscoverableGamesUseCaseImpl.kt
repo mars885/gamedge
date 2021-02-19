@@ -70,7 +70,7 @@ internal class RefreshAllDiscoverableGamesUseCaseImpl @Inject constructor(
         params: RefreshGamesUseCaseParams
     ): Flow<List<DataGame>> {
         return refreshGames(
-            throttlerKey = throttlerTools.keyBuilder.buildPopularGamesKey(params.pagination),
+            throttlerKey = throttlerTools.keyProvider.providePopularGamesKey(params.pagination),
             params = params,
             getGames = { getPopularGames(it) }
         )
@@ -81,7 +81,7 @@ internal class RefreshAllDiscoverableGamesUseCaseImpl @Inject constructor(
         params: RefreshGamesUseCaseParams
     ): Flow<List<DataGame>> {
         return refreshGames(
-            throttlerKey = throttlerTools.keyBuilder.buildRecentlyReleasedGamesKey(params.pagination),
+            throttlerKey = throttlerTools.keyProvider.provideRecentlyReleasedGamesKey(params.pagination),
             params = params,
             getGames = { getRecentlyReleasedGames(it) }
         )
@@ -92,7 +92,7 @@ internal class RefreshAllDiscoverableGamesUseCaseImpl @Inject constructor(
         params: RefreshGamesUseCaseParams
     ): Flow<List<DataGame>> {
         return refreshGames(
-            throttlerKey = throttlerTools.keyBuilder.buildComingSoonGamesKey(params.pagination),
+            throttlerKey = throttlerTools.keyProvider.provideComingSoonGamesKey(params.pagination),
             params = params,
             getGames = { getComingSoonGames(it) }
         )
@@ -103,7 +103,7 @@ internal class RefreshAllDiscoverableGamesUseCaseImpl @Inject constructor(
         params: RefreshGamesUseCaseParams
     ): Flow<List<DataGame>> {
         return refreshGames(
-            throttlerKey = throttlerTools.keyBuilder.buildMostAnticipatedGamesKey(params.pagination),
+            throttlerKey = throttlerTools.keyProvider.provideMostAnticipatedGamesKey(params.pagination),
             params = params,
             getGames = { getMostAnticipatedGames(it) }
         )

@@ -48,7 +48,7 @@ internal class RefreshSimilarGamesUseCaseImpl @Inject constructor(
 
     override suspend fun execute(params: Params): Flow<DomainResult<List<Game>>> {
         val throttlerKey = withContext(dispatcherProvider.computation) {
-            throttlerTools.keyBuilder.buildSimilarGamesKey(
+            throttlerTools.keyProvider.provideSimilarGamesKey(
                 params.game,
                 params.pagination
             )

@@ -22,7 +22,7 @@ import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
-import com.paulrybitskyi.gamedge.core.providers.ImageViewerGameUrlProvider
+import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
@@ -57,7 +57,7 @@ private const val PARAM_GAME_ID = "game_id"
 internal class GameInfoViewModel @Inject constructor(
     private val infoUseCases: GameInfoUseCases,
     private val infoUiStateFactory: GameInfoUiStateFactory,
-    private val imageViewerGameUrlProvider: ImageViewerGameUrlProvider,
+    private val imageViewerGameUrlFactory: ImageViewerGameUrlFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
@@ -156,7 +156,7 @@ internal class GameInfoViewModel @Inject constructor(
         navigateToImageViewer(
             title = stringProvider.getString(R.string.artwork),
             initialPosition = position,
-            fetchImageUrls = imageViewerGameUrlProvider::getArtworkImageUrls
+            fetchImageUrls = imageViewerGameUrlFactory::createArtworkImageUrls
         )
     }
 
@@ -192,7 +192,7 @@ internal class GameInfoViewModel @Inject constructor(
         navigateToImageViewer(
             title = stringProvider.getString(R.string.cover),
             fetchImageUrls = { game ->
-                imageViewerGameUrlProvider.getCoverImageUrl(game)
+                imageViewerGameUrlFactory.createCoverImageUrl(game)
                     ?.let(::listOf)
                     ?: emptyList()
             }
@@ -218,7 +218,7 @@ internal class GameInfoViewModel @Inject constructor(
         navigateToImageViewer(
             title = stringProvider.getString(R.string.screenshot),
             initialPosition = position,
-            fetchImageUrls = imageViewerGameUrlProvider::getScreenshotImageUrls
+            fetchImageUrls = imageViewerGameUrlFactory::createScreenshotImageUrls
         )
     }
 

@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.gamespot.api.articles
 import com.github.michaelbull.result.map
 import com.paulrybitskyi.gamedge.commons.api.ApiResult
 import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.Article
-import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsBuilder
+import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsFactory
 import com.paulrybitskyi.gamedge.gamespot.api.commons.QUERY_PARAM_LIMIT
 import com.paulrybitskyi.gamedge.gamespot.api.commons.QUERY_PARAM_OFFSET
 import com.paulrybitskyi.gamedge.gamespot.api.commons.Response
@@ -39,12 +39,12 @@ internal interface ArticlesEndpoint {
 @BindType
 internal class ArticlesEndpointImpl @Inject constructor(
     private val articlesService: ArticlesService,
-    private val queryParamsBuilder: GamespotQueryParamsBuilder
+    private val queryParamsFactory: GamespotQueryParamsFactory
 ) : ArticlesEndpoint {
 
 
     override suspend fun getArticles(offset: Int, limit: Int): ApiResult<List<Article>> {
-        val queryParams = queryParamsBuilder.buildArticlesQueryParams {
+        val queryParams = queryParamsFactory.createArticlesQueryParams {
             put(QUERY_PARAM_OFFSET, offset.toString())
             put(QUERY_PARAM_LIMIT, limit.toString())
         }

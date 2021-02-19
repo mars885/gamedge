@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.feature.info.mapping
 
 import com.paulrybitskyi.gamedge.core.GameLikeCountCalculator
-import com.paulrybitskyi.gamedge.core.IgdbImageSize
-import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameCategoryFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatter
@@ -39,7 +39,7 @@ internal interface GameInfoHeaderModelFactory {
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
-    private val igdbImageUrlBuilder: IgdbImageUrlBuilder,
+    private val igdbImageUrlFactory: IgdbImageUrlFactory,
     private val releaseDateFormatter: GameReleaseDateFormatter,
     private val ratingFormatter: GameRatingFormatter,
     private val likeCountCalculator: GameLikeCountCalculator,
@@ -50,9 +50,9 @@ internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
 
     override fun createHeaderModel(game: Game, isLiked: Boolean): GameInfoHeaderModel {
         return GameInfoHeaderModel(
-            backgroundImageModels = game.buildBackgroundImageModels(),
+            backgroundImageModels = game.createBackgroundImageModels(),
             isLiked = isLiked,
-            coverImageUrl = game.buildCoverImageUrl(),
+            coverImageUrl = game.createCoverImageUrl(),
             title = game.name,
             releaseDate = game.formatReleaseDate(),
             developerName = game.developerCompany?.name,
@@ -64,18 +64,18 @@ internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
     }
 
 
-    private fun Game.buildBackgroundImageModels(): List<GameHeaderImageModel> {
+    private fun Game.createBackgroundImageModels(): List<GameHeaderImageModel> {
         if(artworks.isEmpty()) return listOf(GameHeaderImageModel.DefaultImage)
 
-        return igdbImageUrlBuilder
-            .buildUrls(artworks, IgdbImageUrlBuilder.Config(IgdbImageSize.BIG_SCREENSHOT))
+        return igdbImageUrlFactory
+            .createUrls(artworks, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_SCREENSHOT))
             .map(GameHeaderImageModel::UrlImage)
     }
 
 
-    private fun Game.buildCoverImageUrl(): String? {
+    private fun Game.createCoverImageUrl(): String? {
         return cover?.let { cover ->
-            igdbImageUrlBuilder.buildUrl(cover, IgdbImageUrlBuilder.Config(IgdbImageSize.BIG_COVER))
+            igdbImageUrlFactory.createUrl(cover, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_COVER))
         }
     }
 

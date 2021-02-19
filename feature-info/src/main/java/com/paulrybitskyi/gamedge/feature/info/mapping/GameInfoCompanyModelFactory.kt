@@ -18,10 +18,10 @@ package com.paulrybitskyi.gamedge.feature.info.mapping
 
 import android.content.Context
 import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
-import com.paulrybitskyi.gamedge.core.IgdbImageExtension
-import com.paulrybitskyi.gamedge.core.IgdbImageSize
-import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder
-import com.paulrybitskyi.gamedge.core.IgdbImageUrlBuilder.Config
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageExtension
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
+import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory.Config
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.width
 import com.paulrybitskyi.gamedge.domain.games.entities.InvolvedCompany
@@ -45,7 +45,7 @@ internal interface GameInfoCompanyModelFactory {
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val igdbImageUrlBuilder: IgdbImageUrlBuilder,
+    private val igdbImageUrlFactory: IgdbImageUrlFactory,
     private val stringProvider: StringProvider
 ) : GameInfoCompanyModelFactory {
 
@@ -79,10 +79,10 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
         return GameInfoCompanyModel(
             logoViewSize = logoViewSize,
             logoImageSize = logoImageSize,
-            logoUrl = company.buildLogoUrl(),
+            logoUrl = company.createLogoUrl(),
             websiteUrl = company.company.websiteUrl,
             name = company.company.name,
-            roles = company.buildRolesString()
+            roles = company.createRolesString()
         )
     }
 
@@ -112,14 +112,14 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
     }
 
 
-    private fun InvolvedCompany.buildLogoUrl(): String? {
+    private fun InvolvedCompany.createLogoUrl(): String? {
         return company.logo?.let { image ->
-            igdbImageUrlBuilder.buildUrl(image, Config(IgdbImageSize.HD, IgdbImageExtension.PNG))
+            igdbImageUrlFactory.createUrl(image, Config(IgdbImageSize.HD, IgdbImageExtension.PNG))
         }
     }
 
 
-    private fun InvolvedCompany.buildRolesString(): String {
+    private fun InvolvedCompany.createRolesString(): String {
         return buildList {
             if (isDeveloper) add(R.string.company_role_developer)
             if (isPublisher) add(R.string.company_role_publisher)

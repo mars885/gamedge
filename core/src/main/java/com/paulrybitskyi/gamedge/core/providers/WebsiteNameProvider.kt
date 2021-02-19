@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.core
+package com.paulrybitskyi.gamedge.core.providers
 
+import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.hiltbinder.BindType
-import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import javax.inject.Inject
 
 
-interface WebsiteNameRetriever {
+interface WebsiteNameProvider {
 
-    fun getWebsiteName(website: Website): String
+    fun provideWebsiteName(website: Website): String
 
 }
 
 
 @BindType
-internal class WebsiteNameRetrieverImpl @Inject constructor(
+internal class WebsiteNameProviderImpl @Inject constructor(
     private val stringProvider: StringProvider
-) : WebsiteNameRetriever {
+) : WebsiteNameProvider {
 
 
-    override fun getWebsiteName(website: Website): String {
+    override fun provideWebsiteName(website: Website): String {
         return stringProvider.getString(
             when(website.category) {
                 WebsiteCategory.UNKNOWN -> R.string.website_unknown
