@@ -18,10 +18,18 @@ package com.paulrybitskyi.gamedge.database.games.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 
 @Entity(
     tableName = Game.Schema.TABLE_NAME,
-    primaryKeys = [Game.Schema.ID]
+    primaryKeys = [Game.Schema.ID],
+    indices = [
+        Index(Game.Schema.HYPE_COUNT),
+        Index(Game.Schema.RELEASE_DATE),
+        Index(Game.Schema.USERS_RATING),
+        Index(Game.Schema.TOTAL_RATING),
+        Index(Game.Schema.NAME)
+    ]
 )
 internal data class Game(
     @ColumnInfo(name = Schema.ID) val id: Int,
