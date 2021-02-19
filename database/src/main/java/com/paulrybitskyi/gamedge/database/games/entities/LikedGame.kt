@@ -24,7 +24,8 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = LikedGame.Schema.TABLE_NAME,
     indices = [
-        Index(LikedGame.Schema.GAME_ID)
+        Index(LikedGame.Schema.GAME_ID),
+        Index(LikedGame.Schema.LIKE_TIMESTAMP)
     ]
 )
 internal data class LikedGame(
