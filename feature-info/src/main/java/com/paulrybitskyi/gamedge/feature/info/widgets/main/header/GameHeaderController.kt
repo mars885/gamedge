@@ -128,17 +128,13 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
                     binding.artworksView.hidePageIndicator()
                 }
             },
-            onTransitionChange = { _, _, progress ->
-                if((binding.firstTitleTv.ellipsize != TextUtils.TruncateAt.END) && (progress > 0.95f)) {
-                    binding.firstTitleTv.ellipsize = TextUtils.TruncateAt.END
-                }
-
-                if((binding.firstTitleTv.ellipsize != null) && (progress < 0.95f)) {
-                    binding.firstTitleTv.ellipsize = null
-                }
-            },
             onTransitionCompleted = {
                 binding.artworksView.isScrollingEnabled = (binding.mainView.progress == 0f)
+            },
+            onTransitionTrigger = { triggerId, positive, _ ->
+                if(triggerId == R.id.firstTitleTrim) {
+                    binding.firstTitleTv.ellipsize = (if(positive) TextUtils.TruncateAt.END else null)
+                }
             }
         )
     }
