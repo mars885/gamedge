@@ -18,6 +18,8 @@
 
 <resources>
 
+    <integer name="game_info_header_animation_duration">400</integer>
+
     <integer name="game_summary_content_max_lines">4</integer>
     <integer name="game_summary_content_animation_duration">300</integer>
 

@@ -122,6 +122,7 @@
     <dimen name="game_info_header_cover_transition_delta_y">-60dp</dimen>
     <dimen name="game_info_header_like_btn_margin_end">10dp</dimen>
     <dimen name="game_info_header_like_btn_elevation">8dp</dimen>
+    <dimen name="game_info_header_like_btn_max_image_size">52dp</dimen>
     <dimen name="game_info_header_first_title_margin_end_expanded">5dp</dimen>
     <dimen name="game_info_header_first_title_margin_start_collapsed">30dp</dimen>
     <dimen name="game_info_header_first_title_margin_end_collapsed">25dp</dimen>

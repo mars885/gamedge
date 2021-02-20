@@ -225,7 +225,7 @@
     <Transition
         app:constraintSetStart="@id/expanded"
         app:constraintSetEnd="@id/collapsed"
-        app:duration="400"
+        app:duration="@integer/game_info_header_animation_duration"
         app:motionInterpolator="easeInOut">
 
         <KeyFrameSet>

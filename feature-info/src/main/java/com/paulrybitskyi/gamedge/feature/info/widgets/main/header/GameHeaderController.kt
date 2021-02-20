@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.main.header
 
-import android.content.Context
 import android.text.TextUtils
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.doOnPreDraw
@@ -24,21 +23,15 @@ import androidx.core.view.isVisible
 import com.paulrybitskyi.commons.ktx.*
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.extensions.addTransitionListener
+import com.paulrybitskyi.gamedge.commons.ui.extensions.isChecked
 import com.paulrybitskyi.gamedge.commons.ui.extensions.updateConstraintSets
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.databinding.ViewGameInfoBinding
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.mapToGameArtworkModels
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoHeaderModel
 
-internal class GameHeaderController(
-    context: Context,
-    private val binding: ViewGameInfoBinding
-) {
+internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
 
-
-    private val iconColor =  context.getCompatColor(R.color.game_info_header_like_btn_icon_color)
-    private val unlikedIcon = context.getColoredDrawable(R.drawable.heart_outline, iconColor)
-    private val likedIcon = context.getColoredDrawable(R.drawable.heart, iconColor)
 
     private val hasDefaultBackgroundImage: Boolean
         get() = (
@@ -46,11 +39,9 @@ internal class GameHeaderController(
             (backgroundImageModels.single() is GameHeaderImageModel.DefaultImage)
         )
 
-    private var isLiked: Boolean = false
-        set(value) {
-            field = value
-            binding.likeBtn.setImageDrawable(if(value) likedIcon else unlikedIcon)
-        }
+    private var isLiked by observeChanges(false) { _, newValue ->
+        binding.likeBtn.isChecked = newValue
+    }
 
     private var isSecondTitleVisible: Boolean
         set(value) { binding.secondTitleTv.isVisible = value }
@@ -132,7 +123,7 @@ internal class GameHeaderController(
 
     private fun initMotionLayoutListener() {
         binding.mainView.addTransitionListener(
-            onTransitionStarted =  { startId, _ ->
+            onTransitionStarted = { startId, _ ->
                 if(startId == R.id.expanded) {
                     binding.artworksView.hidePageIndicator()
                 }

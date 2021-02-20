@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <objectAnimator
+      android:duration="400"
+      android:interpolator="@android:interpolator/linear_out_slow_in"
+      android:propertyName="rotation"
+      android:valueFrom="0"
+      android:valueTo="20"/>
+
+</set>
