@@ -262,6 +262,11 @@
                 app:framePosition="15"
                 app:motionTarget="@id/developerNameTv"/>
 
+            <KeyTrigger
+                app:triggerId="@+id/firstTitleTrim"
+                app:framePosition="95"
+                app:motionTarget="@id/firstTitleTv"/>
+
         </KeyFrameSet>
 
         <OnSwipe
