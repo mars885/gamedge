@@ -14,23 +14,15 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.concrete
+package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers
 
-import com.paulrybitskyi.gamedge.igdb.apicalypse.Constants
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.FieldSerializer
 
-internal class CompositeFieldSerializer(
-    private val children: List<FieldSerializer>
-) : FieldSerializer {
+internal object StubFieldSerializer : FieldSerializer {
 
 
     override fun serialize(): String {
-        return buildList {
-            for(child in children) {
-                add(child.serialize())
-            }
-        }
-        .joinToString(Constants.FIELD_SEPARATOR)
+        return ""
     }
 
 

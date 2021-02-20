@@ -21,7 +21,7 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apica
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.FieldSerializer
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.FieldSerializerFactory
-import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.concrete.StubFieldSerializer
+import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.StubFieldSerializer
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
 
