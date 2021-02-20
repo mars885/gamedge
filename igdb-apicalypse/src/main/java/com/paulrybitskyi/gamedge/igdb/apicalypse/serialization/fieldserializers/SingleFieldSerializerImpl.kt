@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.concrete
+package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers
 
 import com.paulrybitskyi.gamedge.igdb.apicalypse.Constants
-import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.FieldSerializer
 
 internal class SingleFieldSerializerImpl(
     private val fieldChain: List<String>

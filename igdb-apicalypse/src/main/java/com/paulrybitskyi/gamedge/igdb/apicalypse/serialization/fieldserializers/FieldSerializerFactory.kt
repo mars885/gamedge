@@ -16,9 +16,6 @@
 
 package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers
 
-import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.concrete.CompositeFieldSerializer
-import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.concrete.SingleFieldSerializerImpl
-
 internal object FieldSerializerFactory {
 
 
