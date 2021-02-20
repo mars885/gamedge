@@ -82,14 +82,14 @@ internal class GameInfoView @JvmOverloads constructor(
 
 
     init {
-        initGameHeaderController(context)
+        initGameHeaderController()
         initRecyclerView(context)
         initDefaults()
     }
 
 
-    private fun initGameHeaderController(context: Context) {
-        GameHeaderController(context, binding)
+    private fun initGameHeaderController() {
+        GameHeaderController(binding)
             .apply {
                 onArtworkClicked = {
                     this@GameInfoView.onArtworkClicked?.invoke(it)

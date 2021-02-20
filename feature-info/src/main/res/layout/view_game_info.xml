@@ -104,9 +104,10 @@
             app:layout_constraintBottom_toBottomOf="@id/artworksView"
             app:layout_constraintEnd_toEndOf="parent"
             app:fabSize="normal"
+            app:maxImageSize="@dimen/game_info_header_like_btn_max_image_size"
             app:borderWidth="0dp"
-            tools:src="@drawable/heart"
-            tools:tint="@color/game_info_header_like_btn_icon_color"
+            app:srcCompat="@drawable/heart_animated_selector"
+            app:tint="@color/game_info_header_like_btn_icon_color"
             tools:ignore="ContentDescription"/>
 
         <TextView
