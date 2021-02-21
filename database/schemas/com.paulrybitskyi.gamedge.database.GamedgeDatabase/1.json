@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f9140a22d0491beb3f202c7edb0b6f12",
+    "identityHash": "1194794f830692319349558c71139baa",
     "entities": [
       {
         "tableName": "games",
@@ -311,14 +311,23 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_articles_publication_date",
+            "unique": false,
+            "columnNames": [
+              "publication_date"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_articles_publication_date` ON `${TABLE_NAME}` (`publication_date`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f9140a22d0491beb3f202c7edb0b6f12')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1194794f830692319349558c71139baa')"
     ]
   }
 }
