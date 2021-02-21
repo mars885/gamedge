@@ -25,7 +25,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.defaultWindowAnimationDuration
 import com.paulrybitskyi.gamedge.commons.ui.observeIn
-import com.paulrybitskyi.gamedge.core.urlopener.UrlOpenerFactory
+import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
 import com.paulrybitskyi.gamedge.feature.info.databinding.FragmentGameInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
@@ -42,7 +42,7 @@ internal class GameInfoFragment : BaseFragment<
     override val viewBinding by viewBinding(FragmentGameInfoBinding::bind)
     override val viewModel by viewModels<GameInfoViewModel>()
 
-    @Inject lateinit var urlOpenerFactory: UrlOpenerFactory
+    @Inject lateinit var urlOpener: UrlOpener
 
 
     override fun onInit() {
@@ -98,11 +98,9 @@ internal class GameInfoFragment : BaseFragment<
 
 
     private fun openUrl(url: String) {
-        val activityContext = requireActivity()
-
-        urlOpenerFactory.getUrlOpener(url, activityContext)
-            ?.openUrl(url, activityContext)
-            ?: showShortToast(getString(R.string.url_opener_not_found))
+        if(!urlOpener.openUrl(url, requireActivity())) {
+            showShortToast(getString(R.string.url_opener_not_found))
+        }
     }
 
 

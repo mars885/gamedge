@@ -35,11 +35,21 @@ internal class CustomTabUrlOpener @Inject constructor(
 ) : UrlOpener {
 
 
-    override fun openUrl(url: String, context: Context) {
+    override fun openUrl(url: String, context: Context): Boolean {
         // If the context is not activity based, then exit animations
         // won't work.
 
-        CustomTabsIntent.Builder()
+        return if(customTabsProvider.areCustomTabsSupported()) {
+            createCustomTabsIntent(context).launchUrl(context, Uri.parse(url))
+            true
+        } else {
+            false
+        }
+    }
+
+
+    private fun createCustomTabsIntent(context: Context): CustomTabsIntent {
+        return CustomTabsIntent.Builder()
             .setShowTitle(true)
             .setToolbarColor(context.getCompatColor(R.color.colorPrimary))
             .setSecondaryToolbarColor(context.getCompatColor(R.color.colorPrimaryDark))
@@ -49,14 +59,7 @@ internal class CustomTabUrlOpener @Inject constructor(
             .apply {
                 intent.`package` = customTabsProvider.getCustomTabsPackageName()
                 intent.attachNewTaskFlagIfNeeded(context)
-
-                launchUrl(context, Uri.parse(url))
             }
-    }
-
-
-    override fun canOpenUrl(url: String, context: Context): Boolean {
-        return customTabsProvider.areCustomTabsSupported()
     }
 
 

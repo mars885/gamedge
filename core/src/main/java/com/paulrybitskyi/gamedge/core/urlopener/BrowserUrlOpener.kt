@@ -29,13 +29,15 @@ import javax.inject.Inject
 internal class BrowserUrlOpener @Inject constructor() : UrlOpener {
 
 
-    override fun openUrl(url: String, context: Context) {
-        context.startActivity(createIntent(url, context))
-    }
+    override fun openUrl(url: String, context: Context): Boolean {
+        val intent = createIntent(url, context)
 
-
-    override fun canOpenUrl(url: String, context: Context): Boolean {
-        return context.canIntentBeHandled(createIntent(url, context))
+        return if(context.canIntentBeHandled(intent)) {
+            context.startActivity(intent)
+            true
+        } else {
+            false
+        }
     }
 
 

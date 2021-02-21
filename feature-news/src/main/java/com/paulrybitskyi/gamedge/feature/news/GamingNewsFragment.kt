@@ -23,7 +23,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.StubNavigator
 import com.paulrybitskyi.gamedge.commons.ui.observeIn
-import com.paulrybitskyi.gamedge.core.urlopener.UrlOpenerFactory
+import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
 import com.paulrybitskyi.gamedge.feature.news.databinding.FragmentGamingNewsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
@@ -40,7 +40,7 @@ class GamingNewsFragment : BaseFragment<
     override val viewBinding by viewBinding(FragmentGamingNewsBinding::bind)
     override val viewModel by viewModels<GamingNewsViewModel>()
 
-    @Inject lateinit var urlOpenerFactory: UrlOpenerFactory
+    @Inject lateinit var urlOpener: UrlOpener
 
 
     override fun onInit() {
@@ -87,11 +87,9 @@ class GamingNewsFragment : BaseFragment<
 
 
     private fun openUrl(url: String) {
-        val activityContext = requireActivity()
-
-        urlOpenerFactory.getUrlOpener(url, activityContext)
-            ?.openUrl(url, activityContext)
-            ?: showShortToast(getString(R.string.url_opener_not_found))
+        if(!urlOpener.openUrl(url, requireActivity())) {
+            showShortToast(getString(R.string.url_opener_not_found))
+        }
     }
 
 

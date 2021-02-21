@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,26 +19,16 @@ package com.paulrybitskyi.gamedge.core.urlopener
 import android.content.Context
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
-import javax.inject.Singleton
 
-
-interface UrlOpenerFactory {
-
-    fun getUrlOpener(url: String, context: Context): UrlOpener?
-
-}
-
-
-@Singleton
 @BindType
-internal class UrlOpenerFactoryImpl @Inject constructor(
+internal class CompositeUrlOpener @Inject constructor(
     private val urlOpeners: List<@JvmSuppressWildcards UrlOpener>
-) : UrlOpenerFactory {
+) : UrlOpener {
 
 
-    override fun getUrlOpener(url: String, context: Context): UrlOpener? {
-        return urlOpeners.firstOrNull {
-            it.canOpenUrl(url, context)
+    override fun openUrl(url: String, context: Context): Boolean {
+        return urlOpeners.any {
+            it.openUrl(url, context)
         }
     }
 

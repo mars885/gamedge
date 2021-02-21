@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.core.urlopener
+package com.paulrybitskyi.gamedge.core.utils
 
-import android.content.Context
+import android.os.Build
 
-interface UrlOpener {
+object SdkInfo {
 
-    /**
-     * Tries to open a url.
-     *
-     * @param url the url to open
-     * @param context the activity context
-     *
-     * @return true if the url was opened; false otherwise
-     */
-    fun openUrl(url: String, context: Context): Boolean
+    @JvmField val IS_AT_LEAST_11 = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
 
 }
