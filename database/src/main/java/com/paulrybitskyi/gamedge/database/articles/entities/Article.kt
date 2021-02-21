@@ -18,10 +18,14 @@ package com.paulrybitskyi.gamedge.database.articles.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 
 @Entity(
     tableName = Article.Schema.TABLE_NAME,
-    primaryKeys = [Article.Schema.ID]
+    primaryKeys = [Article.Schema.ID],
+    indices = [
+        Index(Article.Schema.PUBLICATION_DATE)
+    ]
 )
 internal data class Article(
     @ColumnInfo(name = Schema.ID) val id: Int,
