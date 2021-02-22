@@ -125,6 +125,10 @@
             <PropertySet
                 android:visibility="invisible"/>
 
+            <Transform
+                android:translationX="@dimen/game_info_header_cover_transition_delta_x"
+                android:translationY="@dimen/game_info_header_cover_transition_delta_y"/>
+
         </Constraint>
 
         <Constraint
@@ -132,6 +136,10 @@
 
             <PropertySet
                 android:alpha="0"/>
+
+            <Transform
+                android:scaleX="0"
+                android:scaleY="0"/>
 
         </Constraint>
 
@@ -161,6 +169,9 @@
                 android:alpha="0"
                 app:visibilityMode="ignore"/>
 
+            <Transform
+                android:translationX="@dimen/game_info_header_secondary_text_transition_delta_x"/>
+
         </Constraint>
 
         <Constraint
@@ -169,6 +180,9 @@
             <PropertySet
                 android:visibility="invisible"/>
 
+            <Transform
+                android:translationX="@dimen/game_info_header_secondary_text_transition_delta_x"/>
+
         </Constraint>
 
         <Constraint
@@ -176,6 +190,9 @@
 
             <PropertySet
                 android:visibility="invisible"/>
+
+            <Transform
+                android:translationX="@dimen/game_info_header_secondary_text_transition_delta_x"/>
 
         </Constraint>
 
