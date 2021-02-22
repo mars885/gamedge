@@ -123,21 +123,36 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
 
     private fun initMotionLayoutListener() {
         binding.mainView.addTransitionListener(
-            onTransitionStarted = { startId, _ ->
-                if(startId == R.id.expanded) {
-                    binding.artworksView.hidePageIndicator()
-                }
-            },
-            onTransitionCompleted = {
-                binding.artworksView.isScrollingEnabled = (binding.mainView.progress == 0f)
-            },
-            onTransitionTrigger = { triggerId, positive, _ ->
-                if(triggerId == R.id.firstTitleTrim) {
-                    binding.firstTitleTv.ellipsize = (if(positive) TextUtils.TruncateAt.END else null)
-                }
-            }
+            onTransitionStarted = { startId, _ -> onTransitionStarted(startId) },
+            onTransitionCompleted = { onTransitionCompleted() },
+            onTransitionTrigger = { triggerId, positive, _ -> onTransitionTrigger(triggerId, positive) }
         )
     }
+
+
+    private fun onTransitionStarted(startId: Int) {
+        if(startId == R.id.expanded) {
+            binding.artworksView.hidePageIndicator()
+        }
+    }
+
+
+    private fun onTransitionCompleted() {
+        if(binding.mainView.progress == 0f) {
+            binding.artworksView.isScrollingEnabled = true
+            return
+        }
+
+        binding.artworksView.isScrollingEnabled = false
+    }
+
+
+    private fun onTransitionTrigger(triggerId: Int, positive: Boolean) {
+        if(triggerId == R.id.firstTitleTrim) {
+            binding.firstTitleTv.ellipsize = (if(positive) TextUtils.TruncateAt.END else null)
+        }
+    }
+
 
 
     private fun initMotionLayoutInsets() = with(binding.mainView) {
@@ -202,7 +217,6 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
         val secondTitleTv = binding.secondTitleTv
 
         firstTitleTv.text = newTitle
-
         firstTitleTv.doOnPreDraw {
             if(firstTitleTv.lineCount == 1) {
                 isSecondTitleVisible = false
@@ -232,6 +246,21 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
         if(likeCount != model.likeCount) likeCount = model.likeCount
         if(ageRating != model.ageRating) ageRating = model.ageRating
         if(gameCategory != model.gameCategory) gameCategory = model.gameCategory
+    }
+
+
+    fun onAttachedToWindow() {
+        // This is a crutch solution to fix a very strange bug, where a user likes a game,
+        // goes to a another screen (e.g., a related game) and comes back, then the like
+        // button resets its icon from a filled heart to an empty heart. To fix it, when
+        // the user comes back and this view gets reattached to the window, we are asking
+        // the button to reset its state and then go to the liked state again.
+        if(isLiked) {
+            binding.likeBtn.postAction {
+                isLiked = false
+                isLiked = true
+            }
+        }
     }
 
 
