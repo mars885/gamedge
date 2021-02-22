@@ -267,4 +267,11 @@ internal class GameInfoView @JvmOverloads constructor(
     }
 
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+        headerController.onAttachedToWindow()
+    }
+
+
 }

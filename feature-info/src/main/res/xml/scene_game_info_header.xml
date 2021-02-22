@@ -112,7 +112,7 @@
             android:id="@id/likeBtn">
 
             <PropertySet
-                android:visibility="invisible"/>
+                android:alpha="0"/>
 
         </Constraint>
 
