@@ -32,6 +32,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.rv.Item
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 import com.paulrybitskyi.gamedge.commons.ui.fadeIn
 import com.paulrybitskyi.gamedge.commons.ui.resetAnimation
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.databinding.ViewGameInfoBinding
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.header.GameHeaderController
@@ -49,7 +50,10 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkMod
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGameModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 internal class GameInfoView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -70,6 +74,8 @@ internal class GameInfoView @JvmOverloads constructor(
         handleUiStateChange(newState)
     }
 
+    @Inject lateinit var stringProvider: StringProvider
+
     var onArtworkClicked: ((Int) -> Unit)? = null
     var onBackButtonClickListener: (() -> Unit)? = null
     var onCoverClickListener: (() -> Unit)? = null
@@ -82,14 +88,14 @@ internal class GameInfoView @JvmOverloads constructor(
 
 
     init {
-        initGameHeaderController()
+        initGameHeaderController(context)
         initRecyclerView(context)
         initDefaults()
     }
 
 
-    private fun initGameHeaderController() {
-        GameHeaderController(binding)
+    private fun initGameHeaderController(context: Context) {
+        GameHeaderController(context, binding, stringProvider)
             .apply {
                 onArtworkClicked = {
                     this@GameInfoView.onArtworkClicked?.invoke(it)

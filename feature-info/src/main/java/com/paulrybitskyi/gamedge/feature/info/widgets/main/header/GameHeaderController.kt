@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.main.header
 
+import android.content.Context
 import android.text.TextUtils
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.doOnPreDraw
@@ -25,19 +26,29 @@ import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.extensions.addTransitionListener
 import com.paulrybitskyi.gamedge.commons.ui.extensions.isChecked
 import com.paulrybitskyi.gamedge.commons.ui.extensions.updateConstraintSets
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.databinding.ViewGameInfoBinding
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.mapToGameArtworkModels
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoHeaderModel
 
-internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
+internal class GameHeaderController(
+    context: Context,
+    private val binding: ViewGameInfoBinding,
+    private val stringProvider: StringProvider
+) {
 
+
+    private val pageIndicatorTopMargin = context.getDimensionPixelSize(R.dimen.game_info_header_page_indicator_margin)
 
     private val hasDefaultBackgroundImage: Boolean
         get() = (
             (backgroundImageModels.size == 1) &&
             (backgroundImageModels.single() is GameHeaderImageModel.DefaultImage)
         )
+
+    private val isPageIndicatorEnabled: Boolean
+        get() = (binding.artworksView.artworkModels.size > 1)
 
     private var isLiked by observeChanges(false) { _, newValue ->
         binding.likeBtn.isChecked = newValue
@@ -92,6 +103,7 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
         disableScrimConstraintIfNeeded()
 
         binding.artworksView.artworkModels = newItems.mapToGameArtworkModels()
+        binding.pageIndicatorTv.isVisible = (newItems.size > 1)
     }
 
     var onArtworkClicked: ((Int) -> Unit)? = null
@@ -123,16 +135,8 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
 
     private fun initMotionLayoutListener() {
         binding.mainView.addTransitionListener(
-            onTransitionStarted = { startId, _ -> onTransitionStarted(startId) },
             onTransitionTrigger = { triggerId, positive, _ -> onTransitionTrigger(triggerId, positive) }
         )
-    }
-
-
-    private fun onTransitionStarted(startId: Int) {
-        if(startId == R.id.expanded) {
-            binding.artworksView.hidePageIndicator()
-        }
     }
 
 
@@ -159,6 +163,11 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
         doOnApplyWindowInsets(DimensionSnapshotType.MARGINS) { _, insets, _ ->
             updateConstraintSets { id, set ->
                 set.setMargin(R.id.backBtnIv, ConstraintSet.TOP, insets.systemWindowInsetTop)
+                set.setMargin(
+                    R.id.pageIndicatorTv,
+                    ConstraintSet.TOP,
+                    (pageIndicatorTopMargin + insets.systemWindowInsetTop)
+                )
 
                 if(id == R.id.collapsed) {
                     val toolbarHeight = getDimensionPixelSize(R.dimen.toolbar_height)
@@ -174,8 +183,26 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
 
 
     private fun initArtworksView() = with(binding.artworksView) {
-        applyWindowTopInset()
+        onArtworkChanged = ::updateArtworkPageIndicator
         onArtworkClicked = { this@GameHeaderController.onArtworkClicked?.invoke(it) }
+    }
+
+
+    private fun updateArtworkPageIndicator(newPosition: Int) {
+        if(!isPageIndicatorEnabled) return
+
+        val oneIndexedPosition = (newPosition + 1)
+        val totalCount = binding.artworksView.artworkModels.size
+        val text = stringProvider.getString(
+            R.string.game_info_header_page_indicator_template,
+            oneIndexedPosition,
+            totalCount
+        )
+
+        // Simple text setting does not work here for some reason
+        binding.pageIndicatorTv.postAction {
+            binding.pageIndicatorTv.text = text
+        }
     }
 
 

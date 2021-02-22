@@ -64,6 +64,26 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:tint="@color/game_info_header_back_button_icon_color"/>
 
+        <TextView
+            android:id="@+id/pageIndicatorTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/game_info_header_page_indicator_margin"
+            android:background="@drawable/game_info_header_page_indicator_background"
+            android:elevation="@dimen/game_info_header_backdrop_elevation"
+            android:paddingTop="@dimen/game_info_header_page_indicator_vertical_padding"
+            android:paddingBottom="@dimen/game_info_header_page_indicator_vertical_padding"
+            android:paddingStart="@dimen/game_info_header_page_indicator_horizontal_padding"
+            android:paddingEnd="@dimen/game_info_header_page_indicator_horizontal_padding"
+            android:textSize="@dimen/game_info_header_page_indicator_text_size"
+            android:textColor="@color/game_info_header_page_indicator_text_color"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_marginTop="@dimen/game_info_header_page_indicator_margin"
+            tools:text="1/12"
+            tools:visibility="visible"/>
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/backdropCv"
             android:layout_width="0dp"

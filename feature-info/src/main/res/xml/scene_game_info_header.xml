@@ -36,6 +36,14 @@
         </Constraint>
 
         <Constraint
+            android:id="@id/pageIndicatorTv">
+
+            <PropertySet
+                app:visibilityMode="ignore"/>
+
+        </Constraint>
+
+        <Constraint
             android:id="@+id/backdropCv">
 
             <CustomAttribute
@@ -88,6 +96,17 @@
             <CustomAttribute
                 app:attributeName="backgroundColor"
                 app:customColorValue="@color/game_info_header_artworks_scrim_bg_color_collapsed"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/pageIndicatorTv">
+
+            <PropertySet
+                app:visibilityMode="ignore"/>
+
+            <Transform
+                android:translationX="@dimen/game_info_header_page_indicator_transition_delta_x"/>
 
         </Constraint>
 
@@ -252,6 +271,11 @@
                 android:translationX="@dimen/game_info_header_secondary_text_transition_delta_x"
                 app:framePosition="15"
                 app:motionTarget="@id/developerNameTv"/>
+
+            <KeyAttribute
+                android:translationX="@dimen/game_info_header_page_indicator_transition_delta_x"
+                app:framePosition="60"
+                app:motionTarget="@id/pageIndicatorTv"/>
 
             <KeyAttribute
                 android:alpha="0"

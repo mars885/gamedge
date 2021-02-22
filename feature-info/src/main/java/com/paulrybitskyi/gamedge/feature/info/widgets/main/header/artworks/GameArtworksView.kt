@@ -17,50 +17,27 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.main.header.artworks
 
 import android.content.Context
-import android.os.Handler
 import android.util.AttributeSet
-import android.view.animation.LinearInterpolator
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
+import android.widget.FrameLayout
+import android.widget.FrameLayout.LayoutParams.MATCH_PARENT
 import androidx.recyclerview.widget.RecyclerView
-import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsMargin
-import com.paulrybitskyi.commons.ktx.layoutInflater
-import com.paulrybitskyi.commons.ktx.setListener
+import androidx.viewpager2.widget.ViewPager2
 import com.paulrybitskyi.commons.utils.observeChanges
-import com.paulrybitskyi.gamedge.commons.ui.cancelActiveAnimations
 import com.paulrybitskyi.gamedge.commons.ui.extensions.recyclerView
 import com.paulrybitskyi.gamedge.commons.ui.extensions.registerOnPageChangeCallback
-import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.feature.info.R
-import com.paulrybitskyi.gamedge.feature.info.databinding.ViewGameArtworksBinding
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-
-private const val PAGE_INDICATOR_FADING_DURATION = 500L
-private const val PAGE_INDICATOR_FADING_OUT_TRANSITION_TIME = 3000L
-
-private val PAGE_INDICATOR_FADING_INTERPOLATOR = LinearInterpolator()
-
-
-@AndroidEntryPoint
 internal class GameArtworksView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
-
-    private val isPageIndicatorEnabled: Boolean
-        get() = (adapterItems.size > 1)
 
     var isScrollingEnabled: Boolean
-        set(value) { binding.viewPager.isUserInputEnabled = value }
-        get() = binding.viewPager.isUserInputEnabled
+        set(value) { viewPager.isUserInputEnabled = value }
+        get() = viewPager.isUserInputEnabled
 
     var isArtworkClickEnabled = true
-
-    private val binding = ViewGameArtworksBinding.inflate(context.layoutInflater, this)
 
     private lateinit var adapter: GameArtworksAdapter
 
@@ -72,11 +49,9 @@ internal class GameArtworksView @JvmOverloads constructor(
         adapterItems = newItems.map(::GameArtworkItem)
     }
 
-    private val animationHandler = Handler()
-    private val fadeOutPageIndicatorAction = Runnable(::fadeOutPageIndicator)
+    private lateinit var viewPager: ViewPager2
 
-    @Inject lateinit var stringProvider: StringProvider
-
+    var onArtworkChanged: ((Int) -> Unit)? = null
     var onArtworkClicked: ((Int) -> Unit)? = null
 
 
@@ -85,36 +60,16 @@ internal class GameArtworksView @JvmOverloads constructor(
     }
 
 
-    private fun initViewPager(context: Context) = with(binding.viewPager) {
-        recyclerView?.overScrollMode = OVER_SCROLL_NEVER
-        registerOnPageChangeCallback(onPageSelected = ::onArtworkPageChanged)
-        adapter = initAdapter(context)
-    }
-
-
-    private fun onArtworkPageChanged(position: Int) {
-        if(!isPageIndicatorEnabled) return
-
-        updatePageIndicatorPosition(position)
-        updatePageIndicatorAnimation()
-    }
-
-
-    private fun updatePageIndicatorPosition(newPosition: Int) {
-        val oneIndexedPosition = (newPosition + 1)
-
-        binding.pageIndicatorTv.text = stringProvider.getString(
-            R.string.game_artworks_page_indicator_template,
-            oneIndexedPosition,
-            adapterItems.size
-        )
-    }
-
-
-    private fun updatePageIndicatorAnimation() {
-        animationHandler.removeCallbacks(fadeOutPageIndicatorAction)
-
-        fadeInPageIndicator()
+    private fun initViewPager(context: Context) {
+        viewPager = ViewPager2(context)
+            .apply {
+                layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
+                orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                recyclerView?.overScrollMode = OVER_SCROLL_NEVER
+                registerOnPageChangeCallback(onPageSelected = { onArtworkChanged?.invoke(it) })
+                adapter = initAdapter(context)
+            }
+            .also(::addView)
     }
 
 
@@ -129,69 +84,9 @@ internal class GameArtworksView @JvmOverloads constructor(
         if(viewHolder is GameArtworkItem.ViewHolder) {
             viewHolder.setOnArtworkClickListener {
                 if(isArtworkClickEnabled) {
-                    onArtworkClicked?.invoke(binding.viewPager.currentItem)
+                    onArtworkClicked?.invoke(viewPager.currentItem)
                 }
             }
-        }
-    }
-
-
-    fun applyWindowTopInset() {
-        binding.pageIndicatorTv.applyWindowTopInsetAsMargin()
-    }
-
-
-    fun hidePageIndicator() {
-        if(!binding.pageIndicatorTv.isVisible) return
-
-        cancelPageIndicatorAnimations()
-    }
-
-
-    private fun fadeInPageIndicator() = with(binding.pageIndicatorTv) {
-        cancelActiveAnimations()
-        isVisible = true
-
-        animate().alpha(1f)
-            .setDuration(PAGE_INDICATOR_FADING_DURATION)
-            .setInterpolator(PAGE_INDICATOR_FADING_INTERPOLATOR)
-            .setListener(onEnd = { onPageIndicatorFadedIn() })
-            .start()
-    }
-
-
-    private fun onPageIndicatorFadedIn() = with(animationHandler) {
-        removeCallbacks(fadeOutPageIndicatorAction)
-        postDelayed(
-            fadeOutPageIndicatorAction,
-            PAGE_INDICATOR_FADING_OUT_TRANSITION_TIME
-        )
-    }
-
-
-    private fun fadeOutPageIndicator() = with(binding.pageIndicatorTv) {
-        animate().alpha(0f)
-            .setDuration(PAGE_INDICATOR_FADING_DURATION)
-            .setInterpolator(PAGE_INDICATOR_FADING_INTERPOLATOR)
-            .setListener(onEnd = { isVisible = false })
-            .start()
-    }
-
-
-    override fun onDetachedFromWindow() {
-        if(isPageIndicatorEnabled) cancelPageIndicatorAnimations()
-
-        super.onDetachedFromWindow()
-    }
-
-
-    private fun cancelPageIndicatorAnimations() {
-        animationHandler.removeCallbacks(fadeOutPageIndicatorAction)
-
-        with(binding.pageIndicatorTv) {
-            cancelActiveAnimations()
-            alpha = 0f
-            isVisible = false
         }
     }
 
