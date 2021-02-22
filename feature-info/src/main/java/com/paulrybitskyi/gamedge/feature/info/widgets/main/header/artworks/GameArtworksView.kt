@@ -58,6 +58,8 @@ internal class GameArtworksView @JvmOverloads constructor(
         set(value) { binding.viewPager.isUserInputEnabled = value }
         get() = binding.viewPager.isUserInputEnabled
 
+    var isArtworkClickEnabled = true
+
     private val binding = ViewGameArtworksBinding.inflate(context.layoutInflater, this)
 
     private lateinit var adapter: GameArtworksAdapter
@@ -126,7 +128,9 @@ internal class GameArtworksView @JvmOverloads constructor(
     private fun bindListener(item: GameArtworkItem, viewHolder: RecyclerView.ViewHolder) {
         if(viewHolder is GameArtworkItem.ViewHolder) {
             viewHolder.setOnArtworkClickListener {
-                onArtworkClicked?.invoke(binding.viewPager.currentItem)
+                if(isArtworkClickEnabled) {
+                    onArtworkClicked?.invoke(binding.viewPager.currentItem)
+                }
             }
         }
     }

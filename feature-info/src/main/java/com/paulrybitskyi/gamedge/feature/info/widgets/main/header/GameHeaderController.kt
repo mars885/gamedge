@@ -124,7 +124,6 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
     private fun initMotionLayoutListener() {
         binding.mainView.addTransitionListener(
             onTransitionStarted = { startId, _ -> onTransitionStarted(startId) },
-            onTransitionCompleted = { onTransitionCompleted() },
             onTransitionTrigger = { triggerId, positive, _ -> onTransitionTrigger(triggerId, positive) }
         )
     }
@@ -137,22 +136,20 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
     }
 
 
-    private fun onTransitionCompleted() {
-        if(binding.mainView.progress == 0f) {
-            binding.artworksView.isScrollingEnabled = true
-            return
-        }
-
-        binding.artworksView.isScrollingEnabled = false
-    }
-
-
     private fun onTransitionTrigger(triggerId: Int, positive: Boolean) {
-        if(triggerId == R.id.firstTitleTrim) {
-            binding.firstTitleTv.ellipsize = (if(positive) TextUtils.TruncateAt.END else null)
+        when(triggerId) {
+
+            R.id.configureArtworks -> {
+                binding.artworksView.isScrollingEnabled = !positive
+                binding.artworksView.isArtworkClickEnabled = !positive
+            }
+
+            R.id.trimFirstTitle -> {
+                binding.firstTitleTv.ellipsize = (if(positive) TextUtils.TruncateAt.END else null)
+            }
+
         }
     }
-
 
 
     private fun initMotionLayoutInsets() = with(binding.mainView) {
@@ -232,12 +229,8 @@ internal class GameHeaderController(private val binding: ViewGameInfoBinding) {
 
 
     fun bindModel(model: GameInfoHeaderModel) {
-        isLiked = model.isLiked
-
-        if(backgroundImageModels != model.backgroundImageModels) {
-            backgroundImageModels = model.backgroundImageModels
-        }
-
+        if(isLiked != model.isLiked) isLiked = model.isLiked
+        if(backgroundImageModels != model.backgroundImageModels) backgroundImageModels = model.backgroundImageModels
         if(coverImageUrl != model.coverImageUrl) coverImageUrl = model.coverImageUrl
         if(title != model.title) title = model.title
         if(releaseDate != model.releaseDate) releaseDate = model.releaseDate
