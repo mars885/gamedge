@@ -18,13 +18,6 @@
 
 <resources>
 
-    <!-- GameArtworksView -->
-    <dimen name="game_artworks_page_indicator_margin">10dp</dimen>
-    <dimen name="game_artworks_page_indicator_padding_vertical">7dp</dimen>
-    <dimen name="game_artworks_page_indicator_padding_horizontal">8dp</dimen>
-    <dimen name="game_artworks_page_indicator_background_radius">20dp</dimen>
-    <dimen name="game_artworks_page_indicator_text_size">15sp</dimen>
-
     <!-- GameVideoView -->
     <dimen name="game_video_card_elevation">2dp</dimen>
     <dimen name="game_video_card_corner_radius">4dp</dimen>
@@ -110,6 +103,12 @@
     <dimen name="game_info_header_back_button_size">56dp</dimen>
     <dimen name="game_info_header_back_button_drawable_bg_padding">10dp</dimen>
     <dimen name="game_info_header_back_button_drawable_fog_padding">7dp</dimen>
+    <dimen name="game_info_header_page_indicator_margin">10dp</dimen>
+    <dimen name="game_info_header_page_indicator_vertical_padding">7dp</dimen>
+    <dimen name="game_info_header_page_indicator_horizontal_padding">8dp</dimen>
+    <dimen name="game_info_header_page_indicator_background_radius">20dp</dimen>
+    <dimen name="game_info_header_page_indicator_text_size">15sp</dimen>
+    <dimen name="game_info_header_page_indicator_transition_delta_x">50dp</dimen>
     <dimen name="game_info_header_backdrop_elevation_expanded">2dp</dimen>
     <dimen name="game_info_header_backdrop_elevation_collapsed">4dp</dimen>
     <dimen name="game_info_header_backdrop_elevation">@dimen/game_info_header_backdrop_elevation_collapsed</dimen>

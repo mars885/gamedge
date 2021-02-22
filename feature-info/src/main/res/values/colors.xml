@@ -18,10 +18,6 @@
 
 <resources>
 
-    <!-- GameArtworksView -->
-    <color name="game_artworks_page_indicator_background_color">#35000000</color>
-    <color name="game_artworks_page_indicator_text_color">@color/colorPrimaryText</color>
-
     <!-- GameVideosView -->
     <color name="game_videos_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_videos_title_text_color">@color/colorPrimaryText</color>
@@ -71,6 +67,8 @@
     <color name="game_info_header_artworks_scrim_bg_color_collapsed">#66000000</color>
     <color name="game_info_header_back_button_icon_color">@color/colorPrimaryText</color>
     <color name="game_info_header_back_button_drawable_middleground_color">#35000000</color>
+    <color name="game_info_header_page_indicator_background_color">#35000000</color>
+    <color name="game_info_header_page_indicator_text_color">@color/colorPrimaryText</color>
     <color name="game_info_header_backdrop_background_color">@color/colorPrimaryDark</color>
     <color name="game_info_header_like_btn_color">@color/colorAccent</color>
     <color name="game_info_header_like_btn_icon_color">#611d12</color>
