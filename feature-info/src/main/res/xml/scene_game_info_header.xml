@@ -230,19 +230,10 @@
 
         <KeyFrameSet>
 
-            <KeyAttribute
-                android:alpha="0"
-                android:translationX="@dimen/game_info_header_cover_transition_delta_x"
-                android:translationY="@dimen/game_info_header_cover_transition_delta_y"
-                app:framePosition="60"
-                app:motionTarget="@id/coverView"/>
-
-            <KeyAttribute
-                android:alpha="0"
-                android:scaleX="0"
-                android:scaleY="0"
-                app:framePosition="60"
-                app:motionTarget="@id/likeBtn"/>
+            <KeyTrigger
+                app:triggerId="@+id/configureArtworks"
+                app:framePosition="1"
+                app:motionTarget="@id/artworksView"/>
 
             <KeyAttribute
                 android:alpha="0"
@@ -262,8 +253,22 @@
                 app:framePosition="15"
                 app:motionTarget="@id/developerNameTv"/>
 
+            <KeyAttribute
+                android:alpha="0"
+                android:translationX="@dimen/game_info_header_cover_transition_delta_x"
+                android:translationY="@dimen/game_info_header_cover_transition_delta_y"
+                app:framePosition="60"
+                app:motionTarget="@id/coverView"/>
+
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="60"
+                app:motionTarget="@id/likeBtn"/>
+
             <KeyTrigger
-                app:triggerId="@+id/firstTitleTrim"
+                app:triggerId="@+id/trimFirstTitle"
                 app:framePosition="95"
                 app:motionTarget="@id/firstTitleTv"/>
 
