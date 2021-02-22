@@ -23,6 +23,10 @@ plugins {
 }
 
 android {
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+
     buildFeatures {
         viewBinding = true
     }
@@ -59,6 +63,8 @@ dependencies {
 
     implementation(deps.misc.hiltBinder)
     kapt(deps.misc.hiltBinderCompiler)
+
+    coreLibraryDesugaring(deps.misc.desugaredLibs)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)
