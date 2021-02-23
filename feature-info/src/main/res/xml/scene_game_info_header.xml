@@ -290,11 +290,6 @@
                 app:motionTarget="@id/developerNameTv"/>
 
             <KeyAttribute
-                android:translationX="@dimen/game_info_header_page_indicator_transition_delta_x"
-                app:framePosition="60"
-                app:motionTarget="@id/pageIndicatorTv"/>
-
-            <KeyAttribute
                 android:alpha="0"
                 android:translationX="@dimen/game_info_header_cover_transition_delta_x"
                 android:translationY="@dimen/game_info_header_cover_transition_delta_y"
@@ -307,6 +302,11 @@
                 android:scaleY="0"
                 app:framePosition="60"
                 app:motionTarget="@id/likeBtn"/>
+
+            <KeyAttribute
+                android:translationX="@dimen/game_info_header_page_indicator_transition_delta_x"
+                app:framePosition="80"
+                app:motionTarget="@id/pageIndicatorTv"/>
 
             <KeyTrigger
                 app:triggerId="@+id/trimFirstTitle"

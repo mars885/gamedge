@@ -108,7 +108,7 @@
     <dimen name="game_info_header_page_indicator_horizontal_padding">8dp</dimen>
     <dimen name="game_info_header_page_indicator_background_radius">20dp</dimen>
     <dimen name="game_info_header_page_indicator_text_size">15sp</dimen>
-    <dimen name="game_info_header_page_indicator_transition_delta_x">50dp</dimen>
+    <dimen name="game_info_header_page_indicator_transition_delta_x">60dp</dimen>
     <dimen name="game_info_header_backdrop_elevation_expanded">2dp</dimen>
     <dimen name="game_info_header_backdrop_elevation_collapsed">4dp</dimen>
     <dimen name="game_info_header_backdrop_elevation">@dimen/game_info_header_backdrop_elevation_collapsed</dimen>
