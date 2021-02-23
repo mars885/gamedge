@@ -256,9 +256,10 @@ internal class GameHeaderController(
 
 
     fun bindModel(model: GameInfoHeaderModel) {
+        coverImageUrl = model.coverImageUrl
+
         if(isLiked != model.isLiked) isLiked = model.isLiked
         if(backgroundImageModels != model.backgroundImageModels) backgroundImageModels = model.backgroundImageModels
-        if(coverImageUrl != model.coverImageUrl) coverImageUrl = model.coverImageUrl
         if(title != model.title) title = model.title
         if(releaseDate != model.releaseDate) releaseDate = model.releaseDate
         if(developerName != model.developerName) developerName = model.developerName
