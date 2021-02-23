@@ -20,6 +20,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.FrameLayout.LayoutParams.MATCH_PARENT
+import android.widget.FrameLayout.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -86,11 +87,7 @@ class GameCoverView @JvmOverloads constructor(
     private fun initTitleTextView(context: Context) {
         titleTv = AppCompatTextView(context)
             .apply {
-                layoutParams = LayoutParams(
-                    LayoutParams.WRAP_CONTENT,
-                    LayoutParams.WRAP_CONTENT,
-                    Gravity.CENTER
-                )
+                layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT, Gravity.CENTER)
                 setHorizontalPadding(getDimensionPixelSize(R.dimen.game_cover_title_horizontal_padding))
                 setTextSizeInPx(getDimension(R.dimen.game_cover_title_text_size))
                 setTextColor(getColor(R.color.game_cover_title_text_color))
@@ -120,6 +117,7 @@ class GameCoverView @JvmOverloads constructor(
         imageLoader.loadImage(
             Config.Builder()
                 .fit()
+                .centerCrop()
                 .imageUrl(url)
                 .target(coverIv)
                 .progressDrawable(defaultDrawable)
