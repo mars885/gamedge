@@ -26,7 +26,7 @@ import javax.inject.Singleton
 
 @Singleton
 @BindType
-internal class ImageLoaderImpl @Inject constructor(
+internal class PicassoImageLoader @Inject constructor(
     private val picasso: Picasso
 ): ImageLoader {
 
