@@ -152,7 +152,7 @@ object deps {
         private const val okHttpVersion = "4.8.0"
         private const val retrofitVersion = "2.9.0"
         private const val moshiVersion = "1.11.0"
-        private const val picassoVersion = "2.71828"
+        private const val picassoVersion = "2.8"
 
         const val okHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
         const val retrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
