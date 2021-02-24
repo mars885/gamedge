@@ -65,7 +65,7 @@ internal interface GamesTable {
         WHERE ${Game.Schema.USERS_RATING} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp 
-        ORDER BY ${Game.Schema.TOTAL_RATING} DESC, ${Game.Schema.ID} ASC 
+        ORDER BY ${Game.Schema.TOTAL_RATING} DESC 
         LIMIT :offset, :limit
         """
     )
@@ -77,7 +77,7 @@ internal interface GamesTable {
         WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND 
         ${Game.Schema.RELEASE_DATE} < :maxReleaseDateTimestamp 
-        ORDER BY ${Game.Schema.RELEASE_DATE} DESC, ${Game.Schema.ID} ASC 
+        ORDER BY ${Game.Schema.RELEASE_DATE} DESC 
         LIMIT :offset, :limit
         """
     )
@@ -93,7 +93,7 @@ internal interface GamesTable {
         SELECT * FROM ${Game.Schema.TABLE_NAME} 
         WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp 
-        ORDER BY ${Game.Schema.RELEASE_DATE} ASC, ${Game.Schema.ID} ASC 
+        ORDER BY ${Game.Schema.RELEASE_DATE} ASC 
         LIMIT :offset, :limit
         """
     )
@@ -105,7 +105,7 @@ internal interface GamesTable {
         WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
         ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND 
         ${Game.Schema.HYPE_COUNT} IS NOT NULL 
-        ORDER BY ${Game.Schema.HYPE_COUNT} DESC, ${Game.Schema.ID} ASC 
+        ORDER BY ${Game.Schema.HYPE_COUNT} DESC 
         LIMIT :offset, :limit
         """
     )
