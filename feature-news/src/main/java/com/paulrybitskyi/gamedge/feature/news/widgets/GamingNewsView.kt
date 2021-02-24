@@ -45,6 +45,10 @@ internal class GamingNewsView @JvmOverloads constructor(
 
     private lateinit var adapter: GamingNewsAdapter
 
+    private var isSwipeRefreshVisible: Boolean
+        set(value) { binding.swipeRefreshLayout.isRefreshing = value }
+        get() = binding.swipeRefreshLayout.isRefreshing
+
     private var adapterItems by observeChanges<List<GamingNewsItem>>(emptyList()) { _, newItems ->
         adapter.submitList(newItems) {
             binding.recyclerView.invalidateItemDecorations()
@@ -141,6 +145,8 @@ internal class GamingNewsView @JvmOverloads constructor(
 
 
     private fun onLoadingStateSelected() {
+        if(isSwipeRefreshVisible) return
+
         if(adapterItems.isNotEmpty()) {
             showSwipeRefresh()
         } else {
@@ -186,13 +192,13 @@ internal class GamingNewsView @JvmOverloads constructor(
     }
 
 
-    private fun showSwipeRefresh() = with(binding.swipeRefreshLayout) {
-        isRefreshing = true
+    private fun showSwipeRefresh() {
+        isSwipeRefreshVisible = true
     }
 
 
-    private fun hideSwipeRefresh() = with(binding.swipeRefreshLayout) {
-        isRefreshing = false
+    private fun hideSwipeRefresh() {
+        isSwipeRefreshVisible = false
     }
 
 
