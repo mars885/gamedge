@@ -17,11 +17,24 @@
 package com.paulrybitskyi.gamedge.feature.discovery
 
 import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshAllDiscoverableGamesUseCase
-import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey
+import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
+import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey.Type
 import javax.inject.Inject
 
 class GamesDiscoveryUseCases @Inject constructor(
-    val observeGamesUseCasesMap: Map<GamesDiscoveryKey.Type, @JvmSuppressWildcards ObservableGamesUseCase>,
-    val refreshAllDiscoverableGamesUseCase: RefreshAllDiscoverableGamesUseCase
-)
+    private val observeGamesUseCasesMap: Map<Type, @JvmSuppressWildcards ObservableGamesUseCase>,
+    private val refreshGamesUseCasesMap: Map<Type, @JvmSuppressWildcards RefreshableGamesUseCase>
+) {
+
+
+    fun getObservableUseCase(keyType: Type): ObservableGamesUseCase {
+        return observeGamesUseCasesMap.getValue(keyType)
+    }
+
+
+    fun getRefreshableUseCase(keyType: Type): RefreshableGamesUseCase {
+        return refreshGamesUseCasesMap.getValue(keyType)
+    }
+
+
+}
