@@ -65,9 +65,10 @@ class GamingNewsViewModel @Inject constructor(
 
 
     init {
-        Pagination(limit = PAGINATION_LIMIT)
-            .let(ObserveArticlesUseCase::Params)
-            .also { useCaseParams = it }
+        useCaseParams = ObserveArticlesUseCase.Params(
+            refreshArticles = true,
+            pagination = Pagination(limit = PAGINATION_LIMIT)
+        )
     }
 
 

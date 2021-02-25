@@ -22,6 +22,9 @@ import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
 
 interface ObserveArticlesUseCase : ObservableUseCase<ObserveArticlesUseCase.Params, List<Article>> {
 
-    data class Params(val pagination: Pagination = Pagination())
+    data class Params(
+        val refreshArticles: Boolean,
+        val pagination: Pagination = Pagination()
+    )
 
 }

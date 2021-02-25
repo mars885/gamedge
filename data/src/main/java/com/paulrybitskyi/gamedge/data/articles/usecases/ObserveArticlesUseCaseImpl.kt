@@ -42,9 +42,13 @@ internal class ObserveArticlesUseCaseImpl @Inject constructor(
 
 
     override suspend fun execute(params: Params): Flow<List<Article>> {
-        return refreshArticles(params)
-            .flatMapConcat { observeArticles(params) }
-            .onEmpty { emitAll(observeArticles(params)) }
+        return if(params.refreshArticles) {
+            refreshArticles(params)
+                .flatMapConcat { observeArticles(params) }
+                .onEmpty { emitAll(observeArticles(params)) }
+        } else {
+            observeArticles(params)
+        }
     }
 
 
