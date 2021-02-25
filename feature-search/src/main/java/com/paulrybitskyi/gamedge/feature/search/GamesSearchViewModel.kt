@@ -30,13 +30,10 @@ import com.paulrybitskyi.gamedge.domain.commons.entities.nextPage
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-
-private const val QUERY_DEBOUNCE_TIMEOUT = 500L
-
 
 @HiltViewModel
 internal class GamesSearchViewModel @Inject constructor(
@@ -60,8 +57,6 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private var useCaseParams = SearchGamesUseCase.Params("")
 
-    private val searchQueryFlow = MutableStateFlow("")
-
     private var combinedPageResults: GamesUiState.Result? = null
 
     private val _gamesUiState = MutableStateFlow(createEmptyGamesUiState())
@@ -70,53 +65,39 @@ internal class GamesSearchViewModel @Inject constructor(
         get() = _gamesUiState
 
 
-    init {
-        observeSearchQueryChanges()
-    }
-
-
     private fun createEmptyGamesUiState(): GamesUiState {
         return gamesSearchUiStateFactory.createWithEmptyState(searchQuery)
     }
 
 
-    private fun observeSearchQueryChanges() {
-        searchQueryFlow.debounce(QUERY_DEBOUNCE_TIMEOUT)
-            .onEach {
-                searchQuery = it
-                resetPagination()
-            }
-            .flatMapLatest { searchGames() }
-            .collectState()
-            .launchIn(viewModelScope)
-    }
-
-
-    private fun resetPagination() {
-        pagination = Pagination()
-        combinedPageResults = null
-    }
-
-
-    private suspend fun searchGames(): Flow<GamesUiState> {
+    private fun searchGames() = viewModelScope.launch {
         if(searchQuery.isBlank()) {
-            return flowOf(createEmptyGamesUiState())
+            flowOf(createEmptyGamesUiState())
+        } else {
+            searchGamesUseCase.execute(useCaseParams)
+                .map(::mapToGamesUiState)
+                .flowOn(dispatcherProvider.computation)
+                .onError {
+                    logger.error(logTag, "Failed to load searched games.", it)
+                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+                    emit(createEmptyGamesUiState())
+                }
+                .onStart {
+                    if(!isPaginationRelatedLoad()) {
+                        emit(createEmptyGamesUiState())
+                        // Intentional delay since the fragment does not seem
+                        // to pick the empty state up
+                        delay(10L)
+                    }
+
+                    emit(gamesSearchUiStateFactory.createWithLoadingState())
+                }
+                .map(::combinePageResults)
         }
-
-        return searchGamesUseCase.execute(useCaseParams)
-            .map(::mapToGamesUiState)
-            .flowOn(dispatcherProvider.computation)
-            .onError {
-                logger.error(logTag, "Failed to load searched games.", it)
-                dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                emit(createEmptyGamesUiState())
-            }
-            .onStart {
-                if(!isPaginationRelatedLoad()) emit(createEmptyGamesUiState())
-
-                emit(gamesSearchUiStateFactory.createWithLoadingState())
-            }
-            .map(::combinePageResults)
+        .collect {
+            configureNextLoad(it)
+            _gamesUiState.value = it
+        }
     }
 
 
@@ -146,14 +127,6 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
 
-    private fun Flow<GamesUiState>.collectState(): Flow<GamesUiState> {
-        return onEach {
-            configureNextLoad(it)
-            _gamesUiState.value = it
-        }
-    }
-
-
     private fun configureNextLoad(uiState: GamesUiState) {
         if(uiState !is GamesUiState.Result) return
 
@@ -171,8 +144,19 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
 
-    fun onQueryChanged(query: String) {
-        searchQueryFlow.value = query
+    fun onSearchActionRequested(query: String) {
+        if(query.isEmpty() || (searchQuery == query)) return
+
+        searchQuery = query
+
+        resetPagination()
+        searchGames()
+    }
+
+
+    private fun resetPagination() {
+        pagination = Pagination()
+        combinedPageResults = null
     }
 
 
@@ -190,24 +174,7 @@ internal class GamesSearchViewModel @Inject constructor(
         if(!hasMoreDataToLoad) return
 
         pagination = pagination.nextPage()
-
-        viewModelScope.launch {
-            searchGames()
-                .collectState()
-                .collect()
-        }
-    }
-
-
-    fun onResume() {
-        if(searchQuery.isEmpty()) {
-            dispatchCommand(GamesSearchCommand.ShowKeyboard)
-        }
-    }
-
-
-    fun onPause() {
-        dispatchCommand(GamesSearchCommand.HideKeyboard)
+        searchGames()
     }
 
 
