@@ -23,8 +23,10 @@ import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
+import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
+import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameModelMapper
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemModelFactory
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.mapToItemModels
@@ -92,7 +94,7 @@ class GamesDiscoveryViewModel @Inject constructor(
 
 
     private suspend fun loadGames(category: GamesDiscoveryCategory): Flow<List<GamesDiscoveryItemChildModel>> {
-        return discoveryUseCases.observeGamesUseCasesMap.getValue(category.toKeyType())
+        return discoveryUseCases.getObservableUseCase(category.toKeyType())
             .execute(observeGamesUseCaseParams)
             .map(discoveryItemGameModelMapper::mapToItemModels)
             .flowOn(dispatcherProvider.computation)
@@ -122,22 +124,31 @@ class GamesDiscoveryViewModel @Inject constructor(
         if(isRefreshingData) return
 
         viewModelScope.launch {
-            discoveryUseCases.refreshAllDiscoverableGamesUseCase
-                .execute(refreshGamesUseCaseParams)
-                .onError {
-                    logger.error(logTag, "Failed to refresh games.", it)
-                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                }
-                .onStart {
-                    isRefreshingData = true
-                    _discoveryItems.value = _discoveryItems.value.withVisibleProgressBar()
-                }
-                .onCompletion {
-                    isRefreshingData = false
-                    _discoveryItems.value = _discoveryItems.value.withHiddenProgressBar()
-                }
-                .collect()
+            combine(
+                flows = GamesDiscoveryCategory.values().map { refreshGames(it) },
+                transform = { it.toList() }
+            )
+            .onError {
+                logger.error(logTag, "Failed to refresh games.", it)
+                dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+            }
+            .onStart {
+                isRefreshingData = true
+                _discoveryItems.value = _discoveryItems.value.withVisibleProgressBar()
+            }
+            .onCompletion {
+                isRefreshingData = false
+                _discoveryItems.value = _discoveryItems.value.withHiddenProgressBar()
+            }
+            .collect()
         }
+    }
+
+
+    private suspend fun refreshGames(category: GamesDiscoveryCategory): Flow<List<Game>> {
+        return discoveryUseCases.getRefreshableUseCase(category.toKeyType())
+            .execute(refreshGamesUseCaseParams)
+            .resultOrError()
     }
 
 

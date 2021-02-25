@@ -17,10 +17,8 @@
 package com.paulrybitskyi.gamedge.feature.discovery.di
 
 import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveComingSoonGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveMostAnticipatedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveRecentlyReleasedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,11 +42,31 @@ internal object GamesDiscoveryModule {
 
     @Provides
     @IntoMap
+    @GamesDiscoveryKey(GamesDiscoveryKey.Type.POPULAR)
+    fun providePopularGamesRefresherUseCase(
+        refreshPopularGamesUseCase: RefreshPopularGamesUseCase
+    ): RefreshableGamesUseCase {
+        return refreshPopularGamesUseCase
+    }
+
+
+    @Provides
+    @IntoMap
     @GamesDiscoveryKey(GamesDiscoveryKey.Type.RECENTLY_RELEASED)
     fun provideRecentlyReleasedGamesObserverUseCase(
         observeRecentlyReleasedGamesUseCase: ObserveRecentlyReleasedGamesUseCase
     ): ObservableGamesUseCase {
         return observeRecentlyReleasedGamesUseCase
+    }
+
+
+    @Provides
+    @IntoMap
+    @GamesDiscoveryKey(GamesDiscoveryKey.Type.RECENTLY_RELEASED)
+    fun provideRecentlyReleasedGamesRefresherUseCase(
+        refreshRecentlyReleasedGamesUseCase: RefreshRecentlyReleasedGamesUseCase
+    ): RefreshableGamesUseCase {
+        return refreshRecentlyReleasedGamesUseCase
     }
 
 
@@ -64,11 +82,31 @@ internal object GamesDiscoveryModule {
 
     @Provides
     @IntoMap
+    @GamesDiscoveryKey(GamesDiscoveryKey.Type.COMING_SOON)
+    fun provideComingSoonGamesRefresherUseCase(
+        refreshComingSoonGamesUseCase: RefreshComingSoonGamesUseCase
+    ): RefreshableGamesUseCase {
+        return refreshComingSoonGamesUseCase
+    }
+
+
+    @Provides
+    @IntoMap
     @GamesDiscoveryKey(GamesDiscoveryKey.Type.MOST_ANTICIPATED)
     fun provideMostAnticipatedGamesObserverUseCase(
         observeMostAnticipatedGamesUseCase: ObserveMostAnticipatedGamesUseCase
     ): ObservableGamesUseCase {
         return observeMostAnticipatedGamesUseCase
+    }
+
+
+    @Provides
+    @IntoMap
+    @GamesDiscoveryKey(GamesDiscoveryKey.Type.MOST_ANTICIPATED)
+    fun provideMostAnticipatedGamesRefresherUseCase(
+        refreshMostAnticipatedGamesUseCase: RefreshMostAnticipatedGamesUseCase
+    ): RefreshableGamesUseCase {
+        return refreshMostAnticipatedGamesUseCase
     }
 
 
