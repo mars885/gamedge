@@ -56,15 +56,20 @@ class SearchToolbar @JvmOverloads constructor(
         set(value) { binding.queryInputEt.hint = value }
         get() = binding.queryInputEt.hint
 
-    var onQueryChangeListener: ((String) -> Unit)? = null
+    var searchQuery: CharSequence
+        set(value) { binding.queryInputEt.setText(value) }
+        get() = binding.queryInputEt.text
 
-    var onBackButtonClickListener: ((View) -> Unit)? = null
+    var onQueryChanged: ((String) -> Unit)? = null
+    var onSearchActionRequested: ((String) -> Unit)? = null
+
+    var onBackButtonClicked: ((View) -> Unit)? = null
         set(value) {
             field = value
             binding.backBtnContainer.onClick { field?.invoke(it) }
         }
 
-    var onClearButtonClickListener: ((View) -> Unit)? = null
+    var onClearButtonClicked: ((View) -> Unit)? = null
 
 
     init {
@@ -111,15 +116,16 @@ class SearchToolbar @JvmOverloads constructor(
                 }
             }
 
-            onQueryChangeListener?.invoke(query)
+            onQueryChanged?.invoke(query)
         }
     }
 
 
     private fun initQueryInputActionListener() {
         binding.queryInputEt.setOnEditorActionListener { _, actionId, _ ->
-            if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+            if((actionId == EditorInfo.IME_ACTION_SEARCH) && searchQuery.isNotBlank()) {
                 hideKeyboard()
+                onSearchActionRequested?.invoke(searchQuery.toString())
             }
 
             true
@@ -129,7 +135,7 @@ class SearchToolbar @JvmOverloads constructor(
 
     private fun initClearButton() {
         binding.clearBtnContainer.onClick {
-            onClearButtonClickListener?.invoke(it)
+            onClearButtonClicked?.invoke(it)
             clearQueryText()
             showKeyboard()
         }

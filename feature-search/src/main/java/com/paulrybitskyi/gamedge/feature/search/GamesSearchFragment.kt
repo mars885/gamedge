@@ -22,7 +22,6 @@ import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
-import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.feature.search.databinding.FragmentGamesSearchBinding
@@ -54,8 +53,8 @@ internal class GamesSearchFragment : BaseFragment<
 
         inputType = (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS)
         hintText = getString(R.string.games_search_fragment_search_hint)
-        onQueryChangeListener = viewModel::onQueryChanged
-        onBackButtonClickListener = { viewModel.onToolbarBackButtonClicked() }
+        onSearchActionRequested = viewModel::onSearchActionRequested
+        onBackButtonClicked = { viewModel.onToolbarBackButtonClicked() }
     }
 
 
@@ -84,24 +83,16 @@ internal class GamesSearchFragment : BaseFragment<
     override fun onResume() {
         super.onResume()
 
-        viewModel.onResume()
+        if(viewBinding.searchToolbar.searchQuery.isEmpty()) {
+            viewBinding.searchToolbar.showKeyboard(true)
+        }
     }
 
 
     override fun onPause() {
         super.onPause()
 
-        viewModel.onPause()
-    }
-
-
-    override fun onHandleCommand(command: Command) {
-        super.onHandleCommand(command)
-
-        when(command) {
-            is GamesSearchCommand.ShowKeyboard -> viewBinding.searchToolbar.showKeyboard(true)
-            is GamesSearchCommand.HideKeyboard -> viewBinding.searchToolbar.hideKeyboard()
-        }
+        viewBinding.searchToolbar.hideKeyboard()
     }
 
 

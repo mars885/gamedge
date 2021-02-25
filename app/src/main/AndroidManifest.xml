@@ -44,7 +44,8 @@
 
         <activity
             android:name=".feature.dashboard.DashboardActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
                 <action android:name="com.paulrybitskyi.gamedge.DASHBOARD_ACTIVITY"/>
