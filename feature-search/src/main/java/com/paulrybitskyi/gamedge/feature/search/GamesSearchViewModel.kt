@@ -30,7 +30,6 @@ import com.paulrybitskyi.gamedge.domain.commons.entities.nextPage
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -84,10 +83,7 @@ internal class GamesSearchViewModel @Inject constructor(
                 }
                 .onStart {
                     if(!isPaginationRelatedLoad()) {
-                        emit(createEmptyGamesUiState())
-                        // Intentional delay since the fragment does not seem
-                        // to pick the empty state up
-                        delay(10L)
+                        dispatchCommand(GamesSearchCommand.ClearItems)
                     }
 
                     emit(gamesSearchUiStateFactory.createWithLoadingState())
