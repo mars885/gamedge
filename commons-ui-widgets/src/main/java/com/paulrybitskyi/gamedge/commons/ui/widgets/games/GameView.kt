@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 import android.content.Context
 import android.text.TextUtils
 import android.util.AttributeSet
-import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
 import com.paulrybitskyi.commons.ktx.getColor
@@ -72,7 +71,7 @@ class GameView @JvmOverloads constructor(
             binding.descriptionTv.text = value
             isDescriptionVisible = (value != null)
         }
-        get() = binding.nameTv.text
+        get() = binding.descriptionTv.text
 
     var onGameClickListener: (() -> Unit)? = null
 
@@ -96,10 +95,14 @@ class GameView @JvmOverloads constructor(
     }
 
 
-    private fun initDescription() = with(binding) {
-        descriptionTv.doOnLayout {
-            descriptionTv.maxLines = (descriptionTv.height / descriptionTv.lineHeight)
-            descriptionTv.ellipsize = TextUtils.TruncateAt.END
+    private fun initDescription() = with(binding.descriptionTv) {
+        addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            maxLines = (height / lineHeight)
+            ellipsize = TextUtils.TruncateAt.END
+
+            // Resetting the text because maxLines and ellipsize properties
+            // does not seem to apply the changes.
+            description = description
         }
     }
 
