@@ -130,6 +130,11 @@ class GamesView @JvmOverloads constructor(
     }
 
 
+    fun clearItems() {
+        adapterItems = emptyList()
+    }
+
+
     private fun List<GameModel>.toAdapterItems(): List<GameItem> {
         return map(::GameItem)
     }
@@ -145,8 +150,6 @@ class GamesView @JvmOverloads constructor(
 
 
     private fun onEmptyUiStateSelected(uiState: GamesUiState.Empty) {
-        adapterItems = emptyList()
-
         showInfoView(uiState)
         hideLoadingIndicators()
         hideRecyclerView()

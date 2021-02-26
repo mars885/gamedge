@@ -22,6 +22,7 @@ import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.feature.search.databinding.FragmentGamesSearchBinding
@@ -93,6 +94,15 @@ internal class GamesSearchFragment : BaseFragment<
         super.onPause()
 
         viewBinding.searchToolbar.hideKeyboard()
+    }
+
+
+    override fun onHandleCommand(command: Command) {
+        super.onHandleCommand(command)
+
+        when(command) {
+            is GamesSearchCommand.ClearItems -> viewBinding.gamesView.clearItems()
+        }
     }
 
 
