@@ -70,12 +70,12 @@ internal class GamesSearchFragment : BaseFragment<
     override fun onBindViewModel() {
         super.onBindViewModel()
 
-        observeGamesUiState()
+        observeUiState()
     }
 
 
-    private fun observeGamesUiState() {
-        viewModel.gamesUiState
+    private fun observeUiState() {
+        viewModel.uiState
             .onEach { viewBinding.gamesView.uiState = it }
             .observeIn(this)
     }

@@ -59,12 +59,12 @@ class GamingNewsFragment : BaseFragment<
     override fun onBindViewModel() {
         super.onBindViewModel()
 
-        observeNewsUiState()
+        observeUiState()
     }
 
 
-    private fun observeNewsUiState() {
-        viewModel.newsUiState
+    private fun observeUiState() {
+        viewModel.uiState
             .onEach { viewBinding.gamingNewsView.uiState = it }
             .observeIn(this)
     }

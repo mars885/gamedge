@@ -65,7 +65,7 @@ internal class GamesCategoryFragment : BaseFragment<
         super.onBindViewModel()
 
         observeToolbarTitle()
-        observeGamesCategoryUiState()
+        observeUiState()
     }
 
 
@@ -76,7 +76,7 @@ internal class GamesCategoryFragment : BaseFragment<
     }
 
 
-    private fun observeGamesCategoryUiState() {
+    private fun observeUiState() {
         viewModel.uiState
             .onEach { viewBinding.gamesCategoryView.uiState = it }
             .observeIn(this)

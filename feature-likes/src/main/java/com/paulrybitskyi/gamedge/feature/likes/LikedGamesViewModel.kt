@@ -44,7 +44,7 @@ private const val PAGINATION_LOAD_DELAY = 500L
 @HiltViewModel
 class LikedGamesViewModel @Inject constructor(
     private val observeLikedGamesUseCase: ObserveLikedGamesUseCase,
-    private val likedGamesUiStateFactory: LikedGamesUiStateFactory,
+    private val uiStateFactory: LikedGamesUiStateFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
@@ -58,10 +58,10 @@ class LikedGamesViewModel @Inject constructor(
 
     private var dataLoadingJob: Job? = null
 
-    private val _gamesUiState = MutableStateFlow(likedGamesUiStateFactory.createWithEmptyState())
+    private val _uiState = MutableStateFlow(uiStateFactory.createWithEmptyState())
 
-    val gamesUiState: StateFlow<GamesUiState>
-        get() = _gamesUiState
+    val uiState: StateFlow<GamesUiState>
+        get() = _uiState
 
 
     fun loadData() {
@@ -69,16 +69,16 @@ class LikedGamesViewModel @Inject constructor(
 
         dataLoadingJob = viewModelScope.launch {
             observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
-                .map(likedGamesUiStateFactory::createWithResultState)
+                .map(uiStateFactory::createWithResultState)
                 .flowOn(dispatcherProvider.computation)
                 .onError {
                     logger.error(logTag, "Failed to load liked games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(likedGamesUiStateFactory.createWithEmptyState())
+                    emit(uiStateFactory.createWithEmptyState())
                 }
                 .onStart {
                     isLoadingData = true
-                    emit(likedGamesUiStateFactory.createWithLoadingState())
+                    emit(uiStateFactory.createWithLoadingState())
 
                     // Delaying to give a sense of "loading" since it's really fast without it
                     if(isPaginationRelatedLoad()) delay(PAGINATION_LOAD_DELAY)
@@ -86,7 +86,7 @@ class LikedGamesViewModel @Inject constructor(
                 .onCompletion { isLoadingData = false }
                 .collect {
                     configureNextLoad(it)
-                    _gamesUiState.value = it
+                    _uiState.value = it
                 }
         }
     }

@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery.widgets
 
-data class GamesDiscoveryItemChildModel(
+data class GamesDiscoveryItemGameModel(
     val id: Int,
     val title: String,
     val coverUrl: String?
