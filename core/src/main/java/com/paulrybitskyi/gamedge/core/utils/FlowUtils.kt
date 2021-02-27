@@ -118,6 +118,13 @@ fun <T> Flow<Result<T, Error>>.resultOrError(): Flow<T> {
 }
 
 
+fun <T> Flow<T>.onSuccess(action: suspend FlowCollector<T>.() -> Unit): Flow<T> {
+    return onCompletion { error ->
+        if(error == null) action()
+    }
+}
+
+
 fun <T> Flow<T>.onError(action: suspend FlowCollector<T>.(cause: Throwable) -> Unit): Flow<T> = catch(action)
 
 
