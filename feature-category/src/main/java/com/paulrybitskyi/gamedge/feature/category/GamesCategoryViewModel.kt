@@ -28,7 +28,7 @@ import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.domain.commons.entities.nextLimitPage
-import com.paulrybitskyi.gamedge.domain.commons.entities.nextPage
+import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffsetPage
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
@@ -59,9 +59,9 @@ internal class GamesCategoryViewModel @Inject constructor(
 ): BaseViewModel() {
 
 
-    private var isLoadingData = false
-    private var isRefreshingData = false
-    private var hasMoreDataToLoad = false
+    private var isObservingGames = false
+    private var isRefreshingGames = false
+    private var hasMoreGamesToLoad = false
 
     private var observeGamesUseCaseParams = ObserveGamesUseCaseParams()
     private var refreshGamesUseCaseParams = RefreshGamesUseCaseParams()
@@ -69,8 +69,8 @@ internal class GamesCategoryViewModel @Inject constructor(
     private val gamesCategory: GamesCategory
     private val gamesCategoryKeyType: GamesCategoryKey.Type
 
-    private var dataLoadingJob: Job? = null
-    private var dataRefreshingJob: Job? = null
+    private var gamesObservingJob: Job? = null
+    private var gamesRefreshingJob: Job? = null
 
     private val _toolbarTitle = MutableStateFlow("")
     private val _uiState = MutableStateFlow<GamesCategoryUiState>(GamesCategoryUiState.Empty)
@@ -91,30 +91,30 @@ internal class GamesCategoryViewModel @Inject constructor(
 
 
     fun loadData(resultEmissionDelay: Long) {
-        loadGames(resultEmissionDelay)
+        observeGames(resultEmissionDelay)
         refreshGames()
     }
 
 
-    private fun loadGames(resultEmissionDelay: Long = 0L) {
-        if(isLoadingData) return
+    private fun observeGames(resultEmissionDelay: Long = 0L) {
+        if(isObservingGames) return
 
-        dataLoadingJob = viewModelScope.launch {
+        gamesObservingJob = viewModelScope.launch {
             useCases.getObservableUseCase(gamesCategoryKeyType)
                 .execute(observeGamesUseCaseParams)
                 .map(uiStateFactory::createWithResultState)
                 .flowOn(dispatcherProvider.computation)
                 .onError {
-                    logger.error(logTag, "Failed to load ${gamesCategory.name} games.", it)
+                    logger.error(logTag, "Failed to observe ${gamesCategory.name} games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
                     emit(uiStateFactory.createWithEmptyState())
                 }
                 .onStart {
-                    isLoadingData = true
+                    isObservingGames = true
                     emit(uiStateFactory.createWithLoadingState())
                     delay(resultEmissionDelay)
                 }
-                .onCompletion { isLoadingData = false }
+                .onCompletion { isObservingGames = false }
                 .collect {
                     configureNextLoad(it)
                     _uiState.value = it
@@ -129,14 +129,14 @@ internal class GamesCategoryViewModel @Inject constructor(
         val paginationLimit = observeGamesUseCaseParams.pagination.limit
         val itemCount = uiState.items.size
 
-        hasMoreDataToLoad = (paginationLimit == itemCount)
+        hasMoreGamesToLoad = (paginationLimit == itemCount)
     }
 
 
     private fun refreshGames() {
-        if(isRefreshingData) return
+        if(isRefreshingGames) return
 
-        dataRefreshingJob = viewModelScope.launch {
+        gamesRefreshingJob = viewModelScope.launch {
             useCases.getRefreshableUseCase(gamesCategoryKeyType)
                 .execute(refreshGamesUseCaseParams)
                 .resultOrError()
@@ -144,8 +144,11 @@ internal class GamesCategoryViewModel @Inject constructor(
                     logger.error(logTag, "Failed to refresh ${gamesCategory.name} games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
                 }
-                .onStart { isRefreshingData = true }
-                .onCompletion { isRefreshingData = false }
+                .onStart {
+                    isRefreshingGames = true
+                    _uiState.value = uiStateFactory.createWithLoadingState()
+                }
+                .onCompletion { isRefreshingGames = false }
                 .collect()
         }
     }
@@ -162,38 +165,38 @@ internal class GamesCategoryViewModel @Inject constructor(
 
 
     fun onBottomReached() {
-        displayNextGamesPage()
+        loadMoreGames()
     }
 
 
-    private fun displayNextGamesPage() {
-        if(!hasMoreDataToLoad) return
+    private fun loadMoreGames() {
+        if(!hasMoreGamesToLoad) return
 
         viewModelScope.launch {
-            downloadNextGamesPage()
-            loadNextGamesPage()
+            fetchNextGamesBatch()
+            observeNewGamesBatch()
         }
     }
 
 
-    private suspend fun downloadNextGamesPage() {
+    private suspend fun fetchNextGamesBatch() {
         refreshGamesUseCaseParams = refreshGamesUseCaseParams.copy(
-            refreshGamesUseCaseParams.pagination.nextPage()
+            refreshGamesUseCaseParams.pagination.nextOffsetPage()
         )
 
-        dataLoadingJob?.cancelAndJoin()
-        _uiState.value = uiStateFactory.createWithLoadingState()
+        gamesRefreshingJob?.cancelAndJoin()
         refreshGames()
-        dataRefreshingJob?.join()
+        gamesRefreshingJob?.join()
     }
 
 
-    private fun loadNextGamesPage() {
+    private suspend fun observeNewGamesBatch() {
         observeGamesUseCaseParams = observeGamesUseCaseParams.copy(
             observeGamesUseCaseParams.pagination.nextLimitPage()
         )
 
-        loadGames()
+        gamesObservingJob?.cancelAndJoin()
+        observeGames()
     }
 
 
