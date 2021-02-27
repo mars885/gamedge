@@ -50,8 +50,8 @@ private const val PARAM_GAMES_CATEGORY = "games_category"
 @HiltViewModel
 internal class GamesCategoryViewModel @Inject constructor(
     stringProvider: StringProvider,
-    private val categoryUseCases: GamesCategoryUseCases,
-    private val gamesCategoryUiStateFactory: GamesCategoryUiStateFactory,
+    private val useCases: GamesCategoryUseCases,
+    private val uiStateFactory: GamesCategoryUiStateFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger,
@@ -100,18 +100,18 @@ internal class GamesCategoryViewModel @Inject constructor(
         if(isLoadingData) return
 
         dataLoadingJob = viewModelScope.launch {
-            categoryUseCases.getObservableUseCase(gamesCategoryKeyType)
+            useCases.getObservableUseCase(gamesCategoryKeyType)
                 .execute(observeGamesUseCaseParams)
-                .map(gamesCategoryUiStateFactory::createWithResultState)
+                .map(uiStateFactory::createWithResultState)
                 .flowOn(dispatcherProvider.computation)
                 .onError {
                     logger.error(logTag, "Failed to load ${gamesCategory.name} games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(gamesCategoryUiStateFactory.createWithEmptyState())
+                    emit(uiStateFactory.createWithEmptyState())
                 }
                 .onStart {
                     isLoadingData = true
-                    emit(gamesCategoryUiStateFactory.createWithLoadingState())
+                    emit(uiStateFactory.createWithLoadingState())
                     delay(resultEmissionDelay)
                 }
                 .onCompletion { isLoadingData = false }
@@ -137,7 +137,7 @@ internal class GamesCategoryViewModel @Inject constructor(
         if(isRefreshingData) return
 
         dataRefreshingJob = viewModelScope.launch {
-            categoryUseCases.getRefreshableUseCase(gamesCategoryKeyType)
+            useCases.getRefreshableUseCase(gamesCategoryKeyType)
                 .execute(refreshGamesUseCaseParams)
                 .resultOrError()
                 .onError {
@@ -182,7 +182,7 @@ internal class GamesCategoryViewModel @Inject constructor(
         )
 
         dataLoadingJob?.cancelAndJoin()
-        _uiState.value = gamesCategoryUiStateFactory.createWithLoadingState()
+        _uiState.value = uiStateFactory.createWithLoadingState()
         refreshGames()
         dataRefreshingJob?.join()
     }

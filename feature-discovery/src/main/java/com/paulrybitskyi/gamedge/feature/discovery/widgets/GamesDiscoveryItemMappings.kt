@@ -28,7 +28,7 @@ internal fun GamesDiscoveryItemUiState.mapToCategoryUiState(): GamesCategoryPrev
 }
 
 
-internal fun List<GamesDiscoveryItemChildModel>.mapToCategoryItems(): List<GamesCategoryPreviewItemModel> {
+internal fun List<GamesDiscoveryItemGameModel>.mapToCategoryItems(): List<GamesCategoryPreviewItemModel> {
     return map {
         GamesCategoryPreviewItemModel(
             id = it.id,
@@ -39,8 +39,8 @@ internal fun List<GamesDiscoveryItemChildModel>.mapToCategoryItems(): List<Games
 }
 
 
-internal fun GamesCategoryPreviewItemModel.mapToDiscoveryItemChildModel(): GamesDiscoveryItemChildModel {
-    return GamesDiscoveryItemChildModel(
+internal fun GamesCategoryPreviewItemModel.mapToDiscoveryItemGameModel(): GamesDiscoveryItemGameModel {
+    return GamesDiscoveryItemGameModel(
         id = id,
         title = title,
         coverUrl = coverUrl

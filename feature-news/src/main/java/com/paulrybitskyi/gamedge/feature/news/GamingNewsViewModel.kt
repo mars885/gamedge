@@ -38,7 +38,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GamingNewsViewModel @Inject constructor(
     private val observeArticlesUseCase: ObserveArticlesUseCase,
-    private val gamingNewsUiStateFactory: GamingNewsUiStateFactory,
+    private val uiStateFactory: GamingNewsUiStateFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
@@ -58,10 +58,10 @@ class GamingNewsViewModel @Inject constructor(
 
     private var dataLoadingJob: Job? = null
 
-    private val _newsUiState = MutableStateFlow<GamingNewsUiState>(GamingNewsUiState.Empty)
+    private val _uiState = MutableStateFlow<GamingNewsUiState>(GamingNewsUiState.Empty)
 
-    val newsUiState: StateFlow<GamingNewsUiState>
-        get() = _newsUiState
+    val uiState: StateFlow<GamingNewsUiState>
+        get() = _uiState
 
 
     init {
@@ -77,19 +77,19 @@ class GamingNewsViewModel @Inject constructor(
 
         dataLoadingJob = viewModelScope.launch {
             observeArticlesUseCase.execute(useCaseParams)
-                .map(gamingNewsUiStateFactory::createWithResultState)
+                .map(uiStateFactory::createWithResultState)
                 .flowOn(dispatcherProvider.computation)
                 .onError {
                     logger.error(logTag, "Failed to load articles.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(gamingNewsUiStateFactory.createWithEmptyState())
+                    emit(uiStateFactory.createWithEmptyState())
                 }
                 .onStart {
                     isLoadingData = true
-                    emit(gamingNewsUiStateFactory.createWithLoadingState())
+                    emit(uiStateFactory.createWithLoadingState())
                 }
                 .onCompletion { isLoadingData = false }
-                .collect { _newsUiState.value = it }
+                .collect { _uiState.value = it }
         }
     }
 

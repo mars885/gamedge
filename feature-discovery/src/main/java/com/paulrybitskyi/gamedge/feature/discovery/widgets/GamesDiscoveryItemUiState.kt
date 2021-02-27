@@ -20,6 +20,6 @@ sealed class GamesDiscoveryItemUiState {
 
     object Empty : GamesDiscoveryItemUiState()
 
-    data class Result(val items: List<GamesDiscoveryItemChildModel>) : GamesDiscoveryItemUiState()
+    data class Result(val items: List<GamesDiscoveryItemGameModel>) : GamesDiscoveryItemUiState()
 
 }

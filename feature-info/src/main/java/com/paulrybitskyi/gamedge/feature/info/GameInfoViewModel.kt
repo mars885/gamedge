@@ -55,9 +55,9 @@ private const val PARAM_GAME_ID = "game_id"
 
 @HiltViewModel
 internal class GameInfoViewModel @Inject constructor(
-    private val infoUseCases: GameInfoUseCases,
-    private val infoUiStateFactory: GameInfoUiStateFactory,
-    private val imageViewerGameUrlFactory: ImageViewerGameUrlFactory,
+    private val useCases: GameInfoUseCases,
+    private val uiStateFactory: GameInfoUiStateFactory,
+    private val gameUrlFactory: ImageViewerGameUrlFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
@@ -72,10 +72,10 @@ internal class GameInfoViewModel @Inject constructor(
 
     private val relatedGamesUseCasePagination = Pagination()
 
-    private val _infoUiState = MutableStateFlow<GameInfoUiState>(GameInfoUiState.Empty)
+    private val _uiState = MutableStateFlow<GameInfoUiState>(GameInfoUiState.Empty)
 
-    val infoUiState: StateFlow<GameInfoUiState>
-        get() = _infoUiState
+    val uiState: StateFlow<GameInfoUiState>
+        get() = _uiState
 
 
     fun loadData(resultEmissionDelay: Long) {
@@ -98,7 +98,7 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .map { (game, isGameLiked, companyGames, similarGames) ->
-                infoUiStateFactory.createWithResultState(
+                uiStateFactory.createWithResultState(
                     game,
                     isGameLiked,
                     companyGames,
@@ -109,27 +109,27 @@ internal class GameInfoViewModel @Inject constructor(
             .onError {
                 logger.error(logTag, "Failed to load game info data.", it)
                 dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                emit(infoUiStateFactory.createWithEmptyState())
+                emit(uiStateFactory.createWithEmptyState())
             }
             .onStart {
                 isLoadingData = true
-                emit(infoUiStateFactory.createWithLoadingState())
+                emit(uiStateFactory.createWithLoadingState())
                 delay(resultEmissionDelay)
             }
             .onCompletion { isLoadingData = false }
-            .collect { _infoUiState.value = it }
+            .collect { _uiState.value = it }
     }
 
 
     private suspend fun loadGame(): Flow<Game> {
-        return infoUseCases.getGameUseCase
+        return useCases.getGameUseCase
             .execute(GetGameUseCase.Params(gameId))
             .resultOrError()
     }
 
 
     private suspend fun isGameLiked(game: Game): Flow<Boolean> {
-        return infoUseCases.observeGameLikeStateUseCase
+        return useCases.observeGameLikeStateUseCase
             .execute(ObserveGameLikeStateUseCase.Params(game.id))
     }
 
@@ -139,7 +139,7 @@ internal class GameInfoViewModel @Inject constructor(
             ?.takeIf(Company::hasDevelopedGames)
             ?: return flowOf(emptyList())
 
-        return infoUseCases.getCompanyDevelopedGamesUseCase
+        return useCases.getCompanyDevelopedGamesUseCase
             .execute(GetCompanyDevelopedGamesUseCase.Params(company, relatedGamesUseCasePagination))
     }
 
@@ -147,7 +147,7 @@ internal class GameInfoViewModel @Inject constructor(
     private suspend fun loadSimilarGames(game: Game): Flow<List<Game>> {
         if(!game.hasSimilarGames) return flowOf(emptyList())
 
-        return infoUseCases.getSimilarGamesUseCase
+        return useCases.getSimilarGamesUseCase
             .execute(GetSimilarGamesUseCase.Params(game, relatedGamesUseCasePagination))
     }
 
@@ -156,7 +156,7 @@ internal class GameInfoViewModel @Inject constructor(
         navigateToImageViewer(
             title = stringProvider.getString(R.string.artwork),
             initialPosition = position,
-            fetchImageUrls = imageViewerGameUrlFactory::createArtworkImageUrls
+            fetchImageUrls = gameUrlFactory::createArtworkImageUrls
         )
     }
 
@@ -192,7 +192,7 @@ internal class GameInfoViewModel @Inject constructor(
         navigateToImageViewer(
             title = stringProvider.getString(R.string.cover),
             fetchImageUrls = { game ->
-                imageViewerGameUrlFactory.createCoverImageUrl(game)
+                gameUrlFactory.createCoverImageUrl(game)
                     ?.let(::listOf)
                     ?: emptyList()
             }
@@ -202,7 +202,7 @@ internal class GameInfoViewModel @Inject constructor(
 
     fun onLikeButtonClicked() {
         viewModelScope.launch {
-            infoUseCases
+            useCases
                 .toggleGameLikeStateUseCase
                 .execute(ToggleGameLikeStateUseCase.Params(gameId))
         }
@@ -218,7 +218,7 @@ internal class GameInfoViewModel @Inject constructor(
         navigateToImageViewer(
             title = stringProvider.getString(R.string.screenshot),
             initialPosition = position,
-            fetchImageUrls = imageViewerGameUrlFactory::createScreenshotImageUrls
+            fetchImageUrls = gameUrlFactory::createScreenshotImageUrls
         )
     }
 

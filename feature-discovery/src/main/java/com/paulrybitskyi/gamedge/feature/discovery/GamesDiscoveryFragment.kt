@@ -54,12 +54,12 @@ class GamesDiscoveryFragment : BaseFragment<
     override fun onBindViewModel() {
         super.onBindViewModel()
 
-        observeDiscoveryItems()
+        observeItems()
     }
 
 
-    private fun observeDiscoveryItems() {
-        viewModel.discoveryItems
+    private fun observeItems() {
+        viewModel.items
             .onEach { viewBinding.discoveryView.items = it }
             .observeIn(this)
     }

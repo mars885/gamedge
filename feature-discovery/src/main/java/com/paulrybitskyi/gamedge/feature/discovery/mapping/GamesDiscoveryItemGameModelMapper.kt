@@ -19,14 +19,14 @@ package com.paulrybitskyi.gamedge.feature.discovery.mapping
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemChildModel
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 
 interface GamesDiscoveryItemGameModelMapper {
 
-    fun mapToItemModel(game: Game): GamesDiscoveryItemChildModel
+    fun mapToGameModel(game: Game): GamesDiscoveryItemGameModel
 
 }
 
@@ -37,8 +37,8 @@ internal class GamesDiscoveryItemGameModelMapperImpl @Inject constructor(
 ) : GamesDiscoveryItemGameModelMapper {
 
 
-    override fun mapToItemModel(game: Game): GamesDiscoveryItemChildModel {
-        return GamesDiscoveryItemChildModel(
+    override fun mapToGameModel(game: Game): GamesDiscoveryItemGameModel {
+        return GamesDiscoveryItemGameModel(
             id = game.id,
             title = game.name,
             coverUrl = game.cover?.let { cover ->
@@ -51,8 +51,8 @@ internal class GamesDiscoveryItemGameModelMapperImpl @Inject constructor(
 }
 
 
-internal fun GamesDiscoveryItemGameModelMapper.mapToItemModels(
+internal fun GamesDiscoveryItemGameModelMapper.mapToGameModels(
     games: List<Game>
-): List<GamesDiscoveryItemChildModel> {
-    return games.map(::mapToItemModel)
+): List<GamesDiscoveryItemGameModel> {
+    return games.map(::mapToGameModel)
 }

@@ -37,7 +37,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class GamesSearchViewModel @Inject constructor(
     private val searchGamesUseCase: SearchGamesUseCase,
-    private val gamesSearchUiStateFactory: GamesSearchUiStateFactory,
+    private val uiStateFactory: GamesSearchUiStateFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
@@ -58,14 +58,14 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private var combinedPageResults: GamesUiState.Result? = null
 
-    private val _gamesUiState = MutableStateFlow(createEmptyGamesUiState())
+    private val _uiState = MutableStateFlow(createEmptyGamesUiState())
 
-    val gamesUiState: StateFlow<GamesUiState>
-        get() = _gamesUiState
+    val uiState: StateFlow<GamesUiState>
+        get() = _uiState
 
 
     private fun createEmptyGamesUiState(): GamesUiState {
-        return gamesSearchUiStateFactory.createWithEmptyState(searchQuery)
+        return uiStateFactory.createWithEmptyState(searchQuery)
     }
 
 
@@ -86,13 +86,13 @@ internal class GamesSearchViewModel @Inject constructor(
                         dispatchCommand(GamesSearchCommand.ClearItems)
                     }
 
-                    emit(gamesSearchUiStateFactory.createWithLoadingState())
+                    emit(uiStateFactory.createWithLoadingState())
                 }
                 .map(::combinePageResults)
         }
         .collect {
             configureNextLoad(it)
-            _gamesUiState.value = it
+            _uiState.value = it
         }
     }
 
@@ -101,7 +101,7 @@ internal class GamesSearchViewModel @Inject constructor(
         return if(games.isEmpty()) {
             createEmptyGamesUiState()
         } else {
-            gamesSearchUiStateFactory.createWithResultState(games)
+            uiStateFactory.createWithResultState(games)
         }
     }
 

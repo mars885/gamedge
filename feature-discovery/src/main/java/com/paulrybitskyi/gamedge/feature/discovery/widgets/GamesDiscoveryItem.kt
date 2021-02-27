@@ -64,9 +64,9 @@ internal class GamesDiscoveryItem(model: GamesDiscoveryItemModel) : AbstractItem
             view.onMoreButtonClickListener = listener
         }
 
-        fun setOnGameClickListener(listener: (GamesDiscoveryItemChildModel) -> Unit) {
+        fun setOnGameClickListener(listener: (GamesDiscoveryItemGameModel) -> Unit) {
             view.onGameClickListener = {
-                listener(it.mapToDiscoveryItemChildModel())
+                listener(it.mapToDiscoveryItemGameModel())
             }
         }
 

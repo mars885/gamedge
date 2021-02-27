@@ -49,7 +49,7 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
     }
 
     var onCategoryMoreButtonClickListener: ((String) -> Unit)? = null
-    var onCategoryGameClickListener: ((GamesDiscoveryItemChildModel) -> Unit)? = null
+    var onCategoryGameClickListener: ((GamesDiscoveryItemGameModel) -> Unit)? = null
     var onRefreshListener: (() -> Unit)? = null
 
 

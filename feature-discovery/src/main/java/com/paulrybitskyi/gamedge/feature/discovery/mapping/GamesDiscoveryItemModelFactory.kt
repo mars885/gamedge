@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.feature.discovery.mapping
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.feature.discovery.titleId
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemChildModel
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameModel
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemModel
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemUiState
 import com.paulrybitskyi.hiltbinder.BindType
@@ -38,7 +38,7 @@ interface GamesDiscoveryItemModelFactory {
 
     fun createCopyWithResultState(
         item: GamesDiscoveryItemModel,
-        children: List<GamesDiscoveryItemChildModel>
+        games: List<GamesDiscoveryItemGameModel>
     ): GamesDiscoveryItemModel
 
 }
@@ -77,11 +77,11 @@ internal class GamesDiscoveryItemModelFactoryImpl @Inject constructor(
 
     override fun createCopyWithResultState(
         item: GamesDiscoveryItemModel,
-        children: List<GamesDiscoveryItemChildModel>
+        games: List<GamesDiscoveryItemGameModel>
     ): GamesDiscoveryItemModel {
-        if(children.isEmpty()) return createCopyWithEmptyState(item)
+        if(games.isEmpty()) return createCopyWithEmptyState(item)
 
-        return item.copy(uiState = GamesDiscoveryItemUiState.Result(children))
+        return item.copy(uiState = GamesDiscoveryItemUiState.Result(games))
     }
 
 
