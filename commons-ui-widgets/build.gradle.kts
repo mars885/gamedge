@@ -42,8 +42,6 @@ dependencies {
     implementation(project(deps.local.commonsUi))
     implementation(project(deps.local.imageLoading))
 
-    implementation(deps.kotlin.reflect)
-    
     implementation(deps.androidX.recyclerView)
     implementation(deps.androidX.constraintLayout)
     api(deps.androidX.swipeRefreshLayout)

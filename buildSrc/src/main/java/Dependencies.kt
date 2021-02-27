@@ -93,7 +93,6 @@ object deps {
 
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinCoroutinesVersion}"
-        const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
 
     }
 
