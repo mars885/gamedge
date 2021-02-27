@@ -30,7 +30,7 @@ internal class ArticleMapper @Inject constructor(private val jsonConverter: Json
             id = dataArticle.id,
             title = dataArticle.title,
             lede = dataArticle.lede,
-            imageUrls = dataArticle.imageUrls.toJson(),
+            imageUrls = jsonConverter.toJson(dataArticle.imageUrls),
             publicationDate = dataArticle.publicationDate,
             siteDetailUrl = dataArticle.siteDetailUrl
         )
@@ -42,20 +42,10 @@ internal class ArticleMapper @Inject constructor(private val jsonConverter: Json
             id = databaseArticle.id,
             title = databaseArticle.title,
             lede = databaseArticle.lede,
-            imageUrls = databaseArticle.imageUrls.fromJsonMap(),
+            imageUrls = (jsonConverter.fromJson(databaseArticle.imageUrls) ?: emptyMap()),
             publicationDate = databaseArticle.publicationDate,
             siteDetailUrl = databaseArticle.siteDetailUrl
         )
-    }
-
-
-    private inline fun <reified T> T.toJson(): String {
-        return jsonConverter.toJson(this)
-    }
-
-
-    private inline fun <reified K, reified V> String.fromJsonMap(): Map<K, V> {
-        return (jsonConverter.fromJsonMap(this) ?: emptyMap())
     }
 
 

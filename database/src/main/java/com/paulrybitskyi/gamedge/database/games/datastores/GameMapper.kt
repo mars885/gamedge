@@ -37,22 +37,22 @@ internal class GameMapper @Inject constructor(private val jsonConverter: JsonCon
             name = dataGame.name,
             summary = dataGame.summary,
             storyline = dataGame.storyline,
-            category = dataGame.category.toJson(),
-            cover = dataGame.cover.toJson(),
-            releaseDates = dataGame.releaseDates.toJson(),
-            ageRatings = dataGame.ageRatings.toJson(),
-            videos = dataGame.videos.toJson(),
-            artworks = dataGame.artworks.toJson(),
-            screenshots = dataGame.screenshots.toJson(),
-            genres = dataGame.genres.toJson(),
-            platforms = dataGame.platforms.toJson(),
-            playerPerspectives = dataGame.playerPerspectives.toJson(),
-            themes = dataGame.themes.toJson(),
-            modes = dataGame.modes.toJson(),
-            keywords = dataGame.keywords.toJson(),
-            involvedCompanies = dataGame.involvedCompanies.toJson(),
-            websites = dataGame.websites.toJson(),
-            similarGames = dataGame.similarGames.toJson()
+            category = jsonConverter.toJson(dataGame.category),
+            cover = jsonConverter.toJson(dataGame.cover),
+            releaseDates = jsonConverter.toJson(dataGame.releaseDates),
+            ageRatings = jsonConverter.toJson(dataGame.ageRatings),
+            videos = jsonConverter.toJson(dataGame.videos),
+            artworks = jsonConverter.toJson(dataGame.artworks),
+            screenshots = jsonConverter.toJson(dataGame.screenshots),
+            genres = jsonConverter.toJson(dataGame.genres),
+            platforms = jsonConverter.toJson(dataGame.platforms),
+            playerPerspectives = jsonConverter.toJson(dataGame.playerPerspectives),
+            themes = jsonConverter.toJson(dataGame.themes),
+            modes = jsonConverter.toJson(dataGame.modes),
+            keywords = jsonConverter.toJson(dataGame.keywords),
+            involvedCompanies = jsonConverter.toJson(dataGame.involvedCompanies),
+            websites = jsonConverter.toJson(dataGame.websites),
+            similarGames = jsonConverter.toJson(dataGame.similarGames)
         )
     }
 
@@ -69,38 +69,23 @@ internal class GameMapper @Inject constructor(private val jsonConverter: JsonCon
             name = databaseGame.name,
             summary = databaseGame.summary,
             storyline = databaseGame.storyline,
-            category = checkNotNull(databaseGame.category.fromJson()),
-            cover = databaseGame.cover.fromJson(),
-            releaseDates = databaseGame.releaseDates.fromJsonList(),
-            ageRatings = databaseGame.ageRatings.fromJsonList(),
-            videos = databaseGame.videos.fromJsonList(),
-            artworks = databaseGame.artworks.fromJsonList(),
-            screenshots = databaseGame.screenshots.fromJsonList(),
-            genres = databaseGame.genres.fromJsonList(),
-            platforms = databaseGame.platforms.fromJsonList(),
-            playerPerspectives = databaseGame.playerPerspectives.fromJsonList(),
-            themes = databaseGame.themes.fromJsonList(),
-            modes = databaseGame.modes.fromJsonList(),
-            keywords = databaseGame.keywords.fromJsonList(),
-            involvedCompanies = databaseGame.involvedCompanies.fromJsonList(),
-            websites = databaseGame.websites.fromJsonList(),
-            similarGames = databaseGame.similarGames.fromJsonList()
+            category = checkNotNull(jsonConverter.fromJson(databaseGame.category)),
+            cover = jsonConverter.fromJson(databaseGame.cover),
+            releaseDates = (jsonConverter.fromJson(databaseGame.releaseDates) ?: emptyList()),
+            ageRatings = (jsonConverter.fromJson(databaseGame.ageRatings) ?: emptyList()),
+            videos = (jsonConverter.fromJson(databaseGame.videos) ?: emptyList()),
+            artworks = (jsonConverter.fromJson(databaseGame.artworks) ?: emptyList()),
+            screenshots = (jsonConverter.fromJson(databaseGame.screenshots) ?: emptyList()),
+            genres = (jsonConverter.fromJson(databaseGame.genres) ?: emptyList()),
+            platforms = (jsonConverter.fromJson(databaseGame.platforms) ?: emptyList()),
+            playerPerspectives = (jsonConverter.fromJson(databaseGame.playerPerspectives) ?: emptyList()),
+            themes = (jsonConverter.fromJson(databaseGame.themes) ?: emptyList()),
+            modes = (jsonConverter.fromJson(databaseGame.modes) ?: emptyList()),
+            keywords = (jsonConverter.fromJson(databaseGame.keywords) ?: emptyList()),
+            involvedCompanies = (jsonConverter.fromJson(databaseGame.involvedCompanies) ?: emptyList()),
+            websites = (jsonConverter.fromJson(databaseGame.websites) ?: emptyList()),
+            similarGames = (jsonConverter.fromJson(databaseGame.similarGames) ?: emptyList())
         )
-    }
-
-
-    private inline fun <reified T> T.toJson(): String {
-        return jsonConverter.toJson(this)
-    }
-
-
-    private inline fun <reified T> String.fromJson(): T? {
-        return jsonConverter.fromJson(this)
-    }
-
-
-    private inline fun <reified T> String.fromJsonList(): List<T> {
-        return (jsonConverter.fromJsonList(this) ?: emptyList())
     }
 
 
