@@ -25,7 +25,7 @@ import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
-import com.paulrybitskyi.gamedge.domain.commons.entities.DEFAULT_PAGE_SIZE
+import com.paulrybitskyi.gamedge.domain.commons.entities.hasDefaultLimit
 import com.paulrybitskyi.gamedge.domain.commons.entities.nextLimitPage
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-private const val PAGINATION_LOAD_DELAY = 500L
+private const val SUBSEQUENT_EMISSION_DELAY = 500L
 
 
 @HiltViewModel
@@ -51,12 +51,12 @@ class LikedGamesViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 
-    private var isLoadingData = false
-    private var hasMoreDataToLoad = false
+    private var isObservingGames = false
+    private var hasMoreGamesToLoad = false
 
     private var observeGamesUseCaseParams = ObserveGamesUseCaseParams()
 
-    private var dataLoadingJob: Job? = null
+    private var gamesObservingJob: Job? = null
 
     private val _uiState = MutableStateFlow(uiStateFactory.createWithEmptyState())
 
@@ -65,9 +65,14 @@ class LikedGamesViewModel @Inject constructor(
 
 
     fun loadData() {
-        if(isLoadingData) return
+        observeGames()
+    }
 
-        dataLoadingJob = viewModelScope.launch {
+
+    private fun observeGames() {
+        if(isObservingGames) return
+
+        gamesObservingJob = viewModelScope.launch {
             observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
                 .map(uiStateFactory::createWithResultState)
                 .flowOn(dispatcherProvider.computation)
@@ -77,13 +82,14 @@ class LikedGamesViewModel @Inject constructor(
                     emit(uiStateFactory.createWithEmptyState())
                 }
                 .onStart {
-                    isLoadingData = true
+                    isObservingGames = true
                     emit(uiStateFactory.createWithLoadingState())
 
-                    // Delaying to give a sense of "loading" since it's really fast without it
-                    if(isPaginationRelatedLoad()) delay(PAGINATION_LOAD_DELAY)
+                    // Delaying to give a sense of "loading" since progress indicators
+                    // do not have the time to fully show themselves
+                    if(isSubsequentEmission()) delay(SUBSEQUENT_EMISSION_DELAY)
                 }
-                .onCompletion { isLoadingData = false }
+                .onCompletion { isObservingGames = false }
                 .collect {
                     configureNextLoad(it)
                     _uiState.value = it
@@ -92,8 +98,8 @@ class LikedGamesViewModel @Inject constructor(
     }
 
 
-    private fun isPaginationRelatedLoad(): Boolean {
-        return (observeGamesUseCaseParams.pagination.limit != DEFAULT_PAGE_SIZE)
+    private fun isSubsequentEmission(): Boolean {
+        return !observeGamesUseCaseParams.pagination.hasDefaultLimit()
     }
 
 
@@ -103,7 +109,7 @@ class LikedGamesViewModel @Inject constructor(
         val paginationLimit = observeGamesUseCaseParams.pagination.limit
         val itemCount = uiState.items.size
 
-        hasMoreDataToLoad = (paginationLimit == itemCount)
+        hasMoreGamesToLoad = (paginationLimit == itemCount)
     }
 
 
@@ -113,20 +119,20 @@ class LikedGamesViewModel @Inject constructor(
 
 
     fun onBottomReached() {
-        loadNextPageOfData()
+        observeNewGamesBatch()
     }
 
 
-    private fun loadNextPageOfData() {
-        if(!hasMoreDataToLoad) return
+    private fun observeNewGamesBatch() {
+        if(!hasMoreGamesToLoad) return
 
         observeGamesUseCaseParams = observeGamesUseCaseParams.copy(
             observeGamesUseCaseParams.pagination.nextLimitPage()
         )
 
         viewModelScope.launch {
-            dataLoadingJob?.cancelAndJoin()
-            loadData()
+            gamesObservingJob?.cancelAndJoin()
+            observeGames()
         }
     }
 

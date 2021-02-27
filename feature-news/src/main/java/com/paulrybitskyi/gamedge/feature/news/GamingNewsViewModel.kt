@@ -35,6 +35,10 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
+private const val MAX_ARTICLE_COUNT = 100
+
+
 @HiltViewModel
 class GamingNewsViewModel @Inject constructor(
     private val observeArticlesUseCase: ObserveArticlesUseCase,
@@ -45,18 +49,11 @@ class GamingNewsViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 
-    private companion object {
-
-        private const val PAGINATION_LIMIT = 100
-
-    }
-
-
-    private var isLoadingData = false
+    private var isObservingArticles = false
 
     private var useCaseParams: ObserveArticlesUseCase.Params
 
-    private var dataLoadingJob: Job? = null
+    private var articlesObservingJob: Job? = null
 
     private val _uiState = MutableStateFlow<GamingNewsUiState>(GamingNewsUiState.Empty)
 
@@ -67,15 +64,20 @@ class GamingNewsViewModel @Inject constructor(
     init {
         useCaseParams = ObserveArticlesUseCase.Params(
             refreshArticles = true,
-            pagination = Pagination(limit = PAGINATION_LIMIT)
+            pagination = Pagination(limit = MAX_ARTICLE_COUNT)
         )
     }
 
 
     fun loadData() {
-        if(isLoadingData) return
+        observeArticles()
+    }
 
-        dataLoadingJob = viewModelScope.launch {
+
+    private fun observeArticles() {
+        if(isObservingArticles) return
+
+        articlesObservingJob = viewModelScope.launch {
             observeArticlesUseCase.execute(useCaseParams)
                 .map(uiStateFactory::createWithResultState)
                 .flowOn(dispatcherProvider.computation)
@@ -85,10 +87,10 @@ class GamingNewsViewModel @Inject constructor(
                     emit(uiStateFactory.createWithEmptyState())
                 }
                 .onStart {
-                    isLoadingData = true
+                    isObservingArticles = true
                     emit(uiStateFactory.createWithLoadingState())
                 }
-                .onCompletion { isLoadingData = false }
+                .onCompletion { isObservingArticles = false }
                 .collect { _uiState.value = it }
         }
     }
@@ -100,9 +102,14 @@ class GamingNewsViewModel @Inject constructor(
 
 
     fun onRefreshRequested() {
+        refreshArticles()
+    }
+
+
+    private fun refreshArticles() {
         viewModelScope.launch {
-            dataLoadingJob?.cancelAndJoin()
-            loadData()
+            articlesObservingJob?.cancelAndJoin()
+            observeArticles()
         }
     }
 

@@ -26,7 +26,7 @@ import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
-import com.paulrybitskyi.gamedge.domain.commons.entities.nextPage
+import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffsetPage
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,7 +44,7 @@ internal class GamesSearchViewModel @Inject constructor(
 ): BaseViewModel() {
 
 
-    private var hasMoreDataToLoad = false
+    private var hasMoreGamesToLoad = false
 
     private var searchQuery: String
         set(value) { useCaseParams = useCaseParams.copy(searchQuery = value) }
@@ -54,9 +54,9 @@ internal class GamesSearchViewModel @Inject constructor(
         set(value) { useCaseParams = useCaseParams.copy(pagination = value) }
         get() = useCaseParams.pagination
 
-    private var useCaseParams = SearchGamesUseCase.Params("")
+    private var useCaseParams = SearchGamesUseCase.Params(searchQuery = "")
 
-    private var combinedPageResults: GamesUiState.Result? = null
+    private var totalGamesResult: GamesUiState.Result? = null
 
     private val _uiState = MutableStateFlow(createEmptyGamesUiState())
 
@@ -66,72 +66,6 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private fun createEmptyGamesUiState(): GamesUiState {
         return uiStateFactory.createWithEmptyState(searchQuery)
-    }
-
-
-    private fun searchGames() = viewModelScope.launch {
-        if(searchQuery.isBlank()) {
-            flowOf(createEmptyGamesUiState())
-        } else {
-            searchGamesUseCase.execute(useCaseParams)
-                .map(::mapToGamesUiState)
-                .flowOn(dispatcherProvider.computation)
-                .onError {
-                    logger.error(logTag, "Failed to load searched games.", it)
-                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(createEmptyGamesUiState())
-                }
-                .onStart {
-                    if(!isPaginationRelatedLoad()) {
-                        dispatchCommand(GamesSearchCommand.ClearItems)
-                    }
-
-                    emit(uiStateFactory.createWithLoadingState())
-                }
-                .map(::combinePageResults)
-        }
-        .collect {
-            configureNextLoad(it)
-            _uiState.value = it
-        }
-    }
-
-
-    private fun mapToGamesUiState(games: List<Game>): GamesUiState {
-        return if(games.isEmpty()) {
-            createEmptyGamesUiState()
-        } else {
-            uiStateFactory.createWithResultState(games)
-        }
-    }
-
-
-    private fun isPaginationRelatedLoad(): Boolean {
-        return (combinedPageResults != null)
-    }
-
-
-    private fun combinePageResults(uiState: GamesUiState): GamesUiState {
-        if((uiState !is GamesUiState.Result) || (combinedPageResults == null)) {
-            return uiState
-        }
-
-        val oldItems = checkNotNull(combinedPageResults).items
-        val newItems = uiState.items
-
-        return GamesUiState.Result(oldItems + newItems)
-    }
-
-
-    private fun configureNextLoad(uiState: GamesUiState) {
-        if(uiState !is GamesUiState.Result) return
-
-        combinedPageResults = uiState
-
-        val paginationLimit = useCaseParams.pagination.limit
-        val itemCount = uiState.items.size
-
-        hasMoreDataToLoad = ((itemCount % paginationLimit) == 0)
     }
 
 
@@ -152,7 +86,79 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private fun resetPagination() {
         pagination = Pagination()
-        combinedPageResults = null
+        totalGamesResult = null
+    }
+
+
+    private fun searchGames() = viewModelScope.launch {
+        if(searchQuery.isBlank()) {
+            flowOf(createEmptyGamesUiState())
+        } else {
+            searchGamesUseCase.execute(useCaseParams)
+                .map(::mapToUiState)
+                .flowOn(dispatcherProvider.computation)
+                .onError {
+                    logger.error(logTag, "Failed to search games.", it)
+                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+                    emit(createEmptyGamesUiState())
+                }
+                .onStart {
+                    if(isSearchingWithNewQuery()) {
+                        dispatchCommand(GamesSearchCommand.ClearItems)
+                    }
+
+                    emit(uiStateFactory.createWithLoadingState())
+                }
+                .map(::aggregateResults)
+        }
+        .collect {
+            configureNextLoad(it)
+            updateTotalGamesResult(it)
+            _uiState.value = it
+        }
+    }
+
+
+    private fun mapToUiState(games: List<Game>): GamesUiState {
+        return if(games.isEmpty()) {
+            createEmptyGamesUiState()
+        } else {
+            uiStateFactory.createWithResultState(games)
+        }
+    }
+
+
+    private fun isSearchingWithNewQuery(): Boolean {
+        return (totalGamesResult == null)
+    }
+
+
+    private fun aggregateResults(uiState: GamesUiState): GamesUiState {
+        if((uiState !is GamesUiState.Result) || (totalGamesResult == null)) {
+            return uiState
+        }
+
+        val oldItems = checkNotNull(totalGamesResult).items
+        val newItems = uiState.items
+
+        return GamesUiState.Result(oldItems + newItems)
+    }
+
+
+    private fun configureNextLoad(uiState: GamesUiState) {
+        if(uiState !is GamesUiState.Result) return
+
+        val paginationLimit = useCaseParams.pagination.limit
+        val itemCount = uiState.items.size
+
+        hasMoreGamesToLoad = ((itemCount % paginationLimit) == 0)
+    }
+
+
+    private fun updateTotalGamesResult(uiState: GamesUiState) {
+        if(uiState !is GamesUiState.Result) return
+
+        totalGamesResult = uiState
     }
 
 
@@ -162,14 +168,14 @@ internal class GamesSearchViewModel @Inject constructor(
 
 
     fun onBottomReached() {
-        loadNextPageOfData()
+        loadMoreGames()
     }
 
 
-    private fun loadNextPageOfData() {
-        if(!hasMoreDataToLoad) return
+    private fun loadMoreGames() {
+        if(!hasMoreGamesToLoad) return
 
-        pagination = pagination.nextPage()
+        pagination = pagination.nextOffsetPage()
         searchGames()
     }
 

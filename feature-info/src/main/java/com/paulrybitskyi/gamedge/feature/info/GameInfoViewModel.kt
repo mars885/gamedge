@@ -66,7 +66,7 @@ internal class GameInfoViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 
-    private var isLoadingData = false
+    private var isObservingGameData = false
 
     private val gameId = checkNotNull(savedStateHandle.get<Int>(PARAM_GAME_ID))
 
@@ -79,22 +79,27 @@ internal class GameInfoViewModel @Inject constructor(
 
 
     fun loadData(resultEmissionDelay: Long) {
-        if(isLoadingData) return
+        observeGameData(resultEmissionDelay)
+    }
+
+
+    private fun observeGameData(resultEmissionDelay: Long) {
+        if(isObservingGameData) return
 
         viewModelScope.launch {
-            loadDataInternal(resultEmissionDelay)
+            observeGameDataInternal(resultEmissionDelay)
         }
     }
 
 
-    private suspend fun loadDataInternal(resultEmissionDelay: Long) {
-        loadGame()
+    private suspend fun observeGameDataInternal(resultEmissionDelay: Long) {
+        getGame()
             .flatMapConcat { game ->
                 combine(
                     flowOf(game),
-                    isGameLiked(game),
-                    loadCompanyGames(game),
-                    loadSimilarGames(game)
+                    observeGameLikeState(game),
+                    getCompanyGames(game),
+                    getSimilarGames(game)
                 )
             }
             .map { (game, isGameLiked, companyGames, similarGames) ->
@@ -112,29 +117,29 @@ internal class GameInfoViewModel @Inject constructor(
                 emit(uiStateFactory.createWithEmptyState())
             }
             .onStart {
-                isLoadingData = true
+                isObservingGameData = true
                 emit(uiStateFactory.createWithLoadingState())
                 delay(resultEmissionDelay)
             }
-            .onCompletion { isLoadingData = false }
+            .onCompletion { isObservingGameData = false }
             .collect { _uiState.value = it }
     }
 
 
-    private suspend fun loadGame(): Flow<Game> {
+    private suspend fun getGame(): Flow<Game> {
         return useCases.getGameUseCase
             .execute(GetGameUseCase.Params(gameId))
             .resultOrError()
     }
 
 
-    private suspend fun isGameLiked(game: Game): Flow<Boolean> {
+    private suspend fun observeGameLikeState(game: Game): Flow<Boolean> {
         return useCases.observeGameLikeStateUseCase
             .execute(ObserveGameLikeStateUseCase.Params(game.id))
     }
 
 
-    private suspend fun loadCompanyGames(game: Game): Flow<List<Game>> {
+    private suspend fun getCompanyGames(game: Game): Flow<List<Game>> {
         val company = game.developerCompany
             ?.takeIf(Company::hasDevelopedGames)
             ?: return flowOf(emptyList())
@@ -144,7 +149,7 @@ internal class GameInfoViewModel @Inject constructor(
     }
 
 
-    private suspend fun loadSimilarGames(game: Game): Flow<List<Game>> {
+    private suspend fun getSimilarGames(game: Game): Flow<List<Game>> {
         if(!game.hasSimilarGames) return flowOf(emptyList())
 
         return useCases.getSimilarGamesUseCase
@@ -156,7 +161,7 @@ internal class GameInfoViewModel @Inject constructor(
         navigateToImageViewer(
             title = stringProvider.getString(R.string.artwork),
             initialPosition = position,
-            fetchImageUrls = gameUrlFactory::createArtworkImageUrls
+            gameImageUrlsProvider = gameUrlFactory::createArtworkImageUrls
         )
     }
 
@@ -164,17 +169,17 @@ internal class GameInfoViewModel @Inject constructor(
     private fun navigateToImageViewer(
         title: String,
         initialPosition: Int = 0,
-        fetchImageUrls: (Game) -> List<String>
+        gameImageUrlsProvider: (Game) -> List<String>
     ) {
         viewModelScope.launch {
-            val game = loadGame()
+            val game = getGame()
                 .onError {
-                    logger.error(logTag, "Failed to load the game.", it)
+                    logger.error(logTag, "Failed to get the game.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
                 }
                 .single()
 
-            val imageUrls = fetchImageUrls(game)
+            val imageUrls = gameImageUrlsProvider(game)
                 .takeIf(List<String>::isNotEmpty)
                 ?: return@launch
 
@@ -191,7 +196,7 @@ internal class GameInfoViewModel @Inject constructor(
     fun onCoverClicked() {
         navigateToImageViewer(
             title = stringProvider.getString(R.string.cover),
-            fetchImageUrls = { game ->
+            gameImageUrlsProvider = { game ->
                 gameUrlFactory.createCoverImageUrl(game)
                     ?.let(::listOf)
                     ?: emptyList()
@@ -202,8 +207,7 @@ internal class GameInfoViewModel @Inject constructor(
 
     fun onLikeButtonClicked() {
         viewModelScope.launch {
-            useCases
-                .toggleGameLikeStateUseCase
+            useCases.toggleGameLikeStateUseCase
                 .execute(ToggleGameLikeStateUseCase.Params(gameId))
         }
     }
@@ -218,7 +222,7 @@ internal class GameInfoViewModel @Inject constructor(
         navigateToImageViewer(
             title = stringProvider.getString(R.string.screenshot),
             initialPosition = position,
-            fetchImageUrls = gameUrlFactory::createScreenshotImageUrls
+            gameImageUrlsProvider = gameUrlFactory::createScreenshotImageUrls
         )
     }
 

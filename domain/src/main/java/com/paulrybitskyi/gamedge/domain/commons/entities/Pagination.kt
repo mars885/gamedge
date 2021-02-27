@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.domain.commons.entities
 
 
-const val DEFAULT_PAGE_SIZE = 20
+private const val DEFAULT_PAGE_SIZE = 20
 
 
 data class Pagination(
@@ -26,14 +26,16 @@ data class Pagination(
 )
 
 
-fun Pagination.nextPage(): Pagination {
-    return copy(offset = offset + DEFAULT_PAGE_SIZE)
+fun Pagination.hasDefaultLimit(): Boolean {
+    return (limit == DEFAULT_PAGE_SIZE)
+}
+
+
+fun Pagination.nextOffsetPage(): Pagination {
+    return copy(offset = (offset + DEFAULT_PAGE_SIZE))
 }
 
 
 fun Pagination.nextLimitPage(): Pagination {
-    return copy(
-        offset = offset,
-        limit = (limit + DEFAULT_PAGE_SIZE)
-    )
+    return copy(limit = (limit + DEFAULT_PAGE_SIZE))
 }

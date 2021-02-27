@@ -48,8 +48,8 @@ class GamesDiscoveryViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 
-    private var isLoadingData = false
-    private var isRefreshingData = false
+    private var isObservingGames = false
+    private var isRefreshingGames = false
 
     private var observeGamesUseCaseParams = ObserveGamesUseCaseParams()
     private var refreshGamesUseCaseParams = RefreshGamesUseCaseParams()
@@ -71,29 +71,29 @@ class GamesDiscoveryViewModel @Inject constructor(
 
 
     fun loadData() {
-        loadGames()
+        observeGames()
         refreshGames()
     }
 
 
-    private fun loadGames() {
-        if(isLoadingData) return
+    private fun observeGames() {
+        if(isObservingGames) return
 
         viewModelScope.launch {
             combine(
-                flows = GamesDiscoveryCategory.values().map { loadGames(it) },
+                flows = GamesDiscoveryCategory.values().map { observeGames(it) },
                 transform = { it.toList() }
             )
             .map { _items.value.withResultState(it) }
-            .onError { logger.error(logTag, "Failed to load games.", it) }
-            .onStart { isLoadingData = true }
-            .onCompletion { isLoadingData = false }
+            .onError { logger.error(logTag, "Failed to observe games.", it) }
+            .onStart { isObservingGames = true }
+            .onCompletion { isObservingGames = false }
             .collect { _items.value = it }
         }
     }
 
 
-    private suspend fun loadGames(category: GamesDiscoveryCategory): Flow<List<GamesDiscoveryItemGameModel>> {
+    private suspend fun observeGames(category: GamesDiscoveryCategory): Flow<List<GamesDiscoveryItemGameModel>> {
         return useCases.getObservableUseCase(category.toKeyType())
             .execute(observeGamesUseCaseParams)
             .map(itemGameModelMapper::mapToGameModels)
@@ -110,18 +110,8 @@ class GamesDiscoveryViewModel @Inject constructor(
     }
 
 
-    private fun List<GamesDiscoveryItemModel>.withVisibleProgressBar(): List<GamesDiscoveryItemModel> {
-        return map(itemModelFactory::createCopyWithVisibleProgressBar)
-    }
-
-
-    private fun List<GamesDiscoveryItemModel>.withHiddenProgressBar(): List<GamesDiscoveryItemModel> {
-        return map(itemModelFactory::createCopyWithHiddenProgressBar)
-    }
-
-
     private fun refreshGames() {
-        if(isRefreshingData) return
+        if(isRefreshingGames) return
 
         viewModelScope.launch {
             combine(
@@ -133,11 +123,11 @@ class GamesDiscoveryViewModel @Inject constructor(
                 dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
             }
             .onStart {
-                isRefreshingData = true
+                isRefreshingGames = true
                 _items.value = _items.value.withVisibleProgressBar()
             }
             .onCompletion {
-                isRefreshingData = false
+                isRefreshingGames = false
                 _items.value = _items.value.withHiddenProgressBar()
             }
             .collect()
@@ -149,6 +139,16 @@ class GamesDiscoveryViewModel @Inject constructor(
         return useCases.getRefreshableUseCase(category.toKeyType())
             .execute(refreshGamesUseCaseParams)
             .resultOrError()
+    }
+
+
+    private fun List<GamesDiscoveryItemModel>.withVisibleProgressBar(): List<GamesDiscoveryItemModel> {
+        return map(itemModelFactory::createCopyWithVisibleProgressBar)
+    }
+
+
+    private fun List<GamesDiscoveryItemModel>.withHiddenProgressBar(): List<GamesDiscoveryItemModel> {
+        return map(itemModelFactory::createCopyWithHiddenProgressBar)
     }
 
 
