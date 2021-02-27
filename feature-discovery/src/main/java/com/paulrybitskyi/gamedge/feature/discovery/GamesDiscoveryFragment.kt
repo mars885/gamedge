@@ -45,9 +45,9 @@ class GamesDiscoveryFragment : BaseFragment<
 
 
     private fun initDiscoveryView() = with(viewBinding.discoveryView) {
-        onCategoryMoreButtonClickListener = viewModel::onCategoryMoreButtonClicked
-        onCategoryGameClickListener = viewModel::onCategoryGameClicked
-        onRefreshListener = viewModel::onRefreshRequested
+        onCategoryMoreButtonClicked = viewModel::onCategoryMoreButtonClicked
+        onCategoryGameClicked = viewModel::onCategoryGameClicked
+        onRefreshRequested = viewModel::onRefreshRequested
     }
 
 

@@ -58,7 +58,7 @@ internal class GameVideoView @JvmOverloads constructor(
 
     @Inject lateinit var imageLoader: ImageLoader
 
-    var onVideoClickListener: (() -> Unit)? = null
+    var onVideoClicked: (() -> Unit)? = null
 
 
     init {
@@ -70,7 +70,7 @@ internal class GameVideoView @JvmOverloads constructor(
         setCardBackgroundColor(getColor(R.color.game_video_card_background_color))
         cardElevation = getDimension(R.dimen.game_video_card_elevation)
         radius = getDimension(R.dimen.game_video_card_corner_radius)
-        onClick { onVideoClickListener?.invoke() }
+        onClick { onVideoClicked?.invoke() }
     }
 
 

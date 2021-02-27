@@ -57,8 +57,8 @@ class GamesView @JvmOverloads constructor(
         handleUiStateChange(newState)
     }
 
-    var onGameClickListener: ((GameModel) -> Unit)? = null
-    var onBottomReachListener: (() -> Unit)? = null
+    var onGameClicked: ((GameModel) -> Unit)? = null
+    var onBottomReached: (() -> Unit)? = null
 
 
     init {
@@ -79,7 +79,7 @@ class GamesView @JvmOverloads constructor(
         layoutManager = initLayoutManager(context)
         adapter = initAdapter(context)
         addItemDecoration(initItemDecorator())
-        addOnScrollListener(onBottomReached = { _, _ -> onBottomReachListener?.invoke() })
+        addOnScrollListener(onBottomReached = { _, _ -> onBottomReached?.invoke() })
     }
 
 
@@ -103,7 +103,7 @@ class GamesView @JvmOverloads constructor(
 
     private fun bindListener(item: GameItem, viewHolder: RecyclerView.ViewHolder) {
         if(viewHolder is GameItem.ViewHolder) {
-            viewHolder.setOnGameClickListener { onGameClickListener?.invoke(item.model) }
+            viewHolder.setOnGameClickListener { onGameClicked?.invoke(item.model) }
         }
     }
 

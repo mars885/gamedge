@@ -67,8 +67,8 @@ internal class GameCategoryItem(model: GameCategoryModel) : AbstractItem<
             imageUrl = model.coverUrl
         }
 
-        fun setOnGameClickListener(listener: () -> Unit) {
-            view.onClick { listener() }
+        fun setOnGameClickListener(onClick: () -> Unit) {
+            view.onClick { onClick() }
         }
 
     }

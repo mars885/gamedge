@@ -120,7 +120,7 @@ class ChipFlowView @JvmOverloads constructor(
 
     private val chips = mutableListOf<ChipDrawable>()
 
-    var onItemClickListener: ((ChipFlowItem) -> Unit)? = null
+    var onItemClicked: ((ChipFlowItem) -> Unit)? = null
 
 
     private fun initChips(items: List<ChipFlowItem>) {
@@ -320,7 +320,7 @@ class ChipFlowView @JvmOverloads constructor(
 
 
     private fun onClickDetected(item: ChipFlowItem) {
-        onItemClickListener?.invoke(item)
+        onItemClicked?.invoke(item)
     }
 
 

@@ -48,7 +48,7 @@ internal class GameVideosView @JvmOverloads constructor(
         adapterItems = newItems.toAdapterItems()
     }
 
-    var onVideoClickListener: ((GameVideoModel) -> Unit)? = null
+    var onVideoClicked: ((GameVideoModel) -> Unit)? = null
 
 
     init {
@@ -85,7 +85,7 @@ internal class GameVideosView @JvmOverloads constructor(
 
     private fun bindListener(item: GameVideoItem, viewHolder: RecyclerView.ViewHolder) {
         if(viewHolder is GameVideoItem.ViewHolder) {
-            viewHolder.setOnVideoClickListener { onVideoClickListener?.invoke(item.model) }
+            viewHolder.setOnVideoClickListener { onVideoClicked?.invoke(item.model) }
         }
     }
 

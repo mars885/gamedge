@@ -57,8 +57,8 @@ internal class GameInfoScreenshotsItem(model: List<String>): AbstractItem<
             view.items = items
         }
 
-        fun setOnScreenshotClickListener(listener: (Int) -> Unit) {
-            view.onScreenshotClickListener = { listener(it) }
+        fun setOnScreenshotClickListener(onClick: (Int) -> Unit) {
+            view.onScreenshotClicked = { onClick(it) }
         }
 
     }

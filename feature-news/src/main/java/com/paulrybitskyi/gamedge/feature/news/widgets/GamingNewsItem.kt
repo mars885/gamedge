@@ -60,8 +60,8 @@ internal class GamingNewsItem(model: GamingNewsItemModel) : AbstractItem<
             publicationDate = model.publicationDate
         }
 
-        fun setOnNewsItemClickListener(listener: () -> Unit) {
-            view.onNewsItemClickListener = listener
+        fun setOnNewsItemClickListener(onClick: () -> Unit) {
+            view.onNewsItemClicked = onClick
         }
 
     }

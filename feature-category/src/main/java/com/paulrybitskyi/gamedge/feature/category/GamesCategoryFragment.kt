@@ -56,8 +56,8 @@ internal class GamesCategoryFragment : BaseFragment<
 
     private fun initGamesCategoryView() = with(viewBinding.gamesCategoryView) {
         applyWindowBottomInsetAsMargin()
-        onGameClickListener = viewModel::onGameClicked
-        onBottomReachListener = viewModel::onBottomReached
+        onGameClicked = viewModel::onGameClicked
+        onBottomReached = viewModel::onBottomReached
     }
 
 

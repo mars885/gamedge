@@ -73,7 +73,7 @@ class GameView @JvmOverloads constructor(
         }
         get() = binding.descriptionTv.text
 
-    var onGameClickListener: (() -> Unit)? = null
+    var onGameClicked: (() -> Unit)? = null
 
 
     init {
@@ -86,7 +86,7 @@ class GameView @JvmOverloads constructor(
     private fun initCard() {
         setCardBackgroundColor(getColor(R.color.game_card_background_color))
         cardElevation = getDimension(R.dimen.game_card_elevation)
-        onClick { onGameClickListener?.invoke() }
+        onClick { onGameClicked?.invoke() }
     }
 
 

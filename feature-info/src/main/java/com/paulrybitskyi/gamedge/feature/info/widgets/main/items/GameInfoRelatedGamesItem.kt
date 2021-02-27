@@ -77,10 +77,8 @@ internal class GameInfoRelatedGamesItem(model: GameInfoRelatedGamesModel) : Abst
             uiState = GamesCategoryPreviewUiState.Result(model.items.mapToCategoryModels())
         }
 
-        fun setOnGameClickListener(listener: (GameInfoRelatedGameModel) -> Unit) {
-            view.onGameClickListener = {
-                listener(it.mapToInfoRelatedGameModel())
-            }
+        fun setOnGameClickListener(onClick: (GameInfoRelatedGameModel) -> Unit) {
+            view.onGameClicked = { onClick(it.mapToInfoRelatedGameModel()) }
         }
 
     }

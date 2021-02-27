@@ -59,8 +59,8 @@ internal class GamingNewsView @JvmOverloads constructor(
         handleUiStateChange(newState)
     }
 
-    var onNewsItemClickListener: ((GamingNewsItemModel) -> Unit)? = null
-    var onRefreshListener: (() -> Unit)? = null
+    var onNewsItemClicked: ((GamingNewsItemModel) -> Unit)? = null
+    var onRefreshRequested: (() -> Unit)? = null
 
 
     init {
@@ -72,7 +72,7 @@ internal class GamingNewsView @JvmOverloads constructor(
 
     private fun initSwipeRefreshLayout() = with(binding.swipeRefreshLayout) {
         setColorSchemeColors(getColor(R.color.gaming_news_swipe_refresh_color))
-        setOnRefreshListener { onRefreshListener?.invoke() }
+        setOnRefreshListener { onRefreshRequested?.invoke() }
     }
 
 
@@ -104,7 +104,7 @@ internal class GamingNewsView @JvmOverloads constructor(
 
     private fun bindListener(item: GamingNewsItem, viewHolder: RecyclerView.ViewHolder) {
         if(viewHolder is GamingNewsItem.ViewHolder) {
-            viewHolder.setOnNewsItemClickListener { onNewsItemClickListener?.invoke(item.model) }
+            viewHolder.setOnNewsItemClickListener { onNewsItemClicked?.invoke(item.model) }
         }
     }
 

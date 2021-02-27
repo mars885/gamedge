@@ -65,8 +65,8 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
         handleUiStateChange(newState)
     }
 
-    var onMoreButtonClickListener: (() -> Unit)? = null
-    var onGameClickListener: ((GamesCategoryPreviewItemModel) -> Unit)? = null
+    var onMoreButtonClicked: (() -> Unit)? = null
+    var onGameClicked: ((GamesCategoryPreviewItemModel) -> Unit)? = null
 
 
     init {
@@ -84,7 +84,7 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
 
     private fun initMoreButton() {
         binding.moreBtn.setOnClickListener {
-            onMoreButtonClickListener?.invoke()
+            onMoreButtonClicked?.invoke()
         }
     }
 
@@ -112,7 +112,7 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
     private fun bindListener(item: GamesCategoryPreviewItem, viewHolder: RecyclerView.ViewHolder) {
         if(viewHolder is GamesCategoryPreviewItem.ViewHolder) {
             viewHolder.setOnGameClickListener {
-                onGameClickListener?.invoke(item.model)
+                onGameClicked?.invoke(item.model)
             }
         }
     }

@@ -48,7 +48,7 @@ internal class GameCompaniesView @JvmOverloads constructor(
         adapterItems = newItems.toAdapterItems()
     }
 
-    var onCompanyClickListener: ((GameCompanyModel) -> Unit)? = null
+    var onCompanyClicked: ((GameCompanyModel) -> Unit)? = null
 
 
     init {
@@ -85,7 +85,7 @@ internal class GameCompaniesView @JvmOverloads constructor(
 
     private fun bindListener(item: GameCompanyItem, viewHolder: RecyclerView.ViewHolder) {
         if(viewHolder is GameCompanyItem.ViewHolder) {
-            viewHolder.setOnCompanyClickListener { onCompanyClickListener?.invoke(item.model) }
+            viewHolder.setOnCompanyClickListener { onCompanyClicked?.invoke(item.model) }
         }
     }
 

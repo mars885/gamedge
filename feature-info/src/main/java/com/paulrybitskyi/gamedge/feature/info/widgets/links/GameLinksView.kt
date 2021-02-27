@@ -39,7 +39,7 @@ internal class GameLinksView @JvmOverloads constructor(
         binding.linksCfv.items = newItems.mapToChipFlowItems()
     }
 
-    var onLinkClickListener: ((GameLinkItemModel) -> Unit)? = null
+    var onLinkClicked: ((GameLinkItemModel) -> Unit)? = null
 
 
     init {
@@ -58,9 +58,7 @@ internal class GameLinksView @JvmOverloads constructor(
         itemBackgroundColor = getColor(R.color.game_links_chip_background_color)
         itemIconColor = getColor(R.color.game_links_chip_content_color)
         itemTextAppearanceResource = R.style.Gamedge_GameInfo_Links_ChipFlow_TextAppearance
-        onItemClickListener = { item ->
-            onLinkClickListener?.invoke(item.mapToLinkItemModel())
-        }
+        onItemClicked = { onLinkClicked?.invoke(it.mapToLinkItemModel()) }
     }
 
 
