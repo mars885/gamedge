@@ -159,7 +159,6 @@ object deps {
         const val retrofitScalarsConverter = "com.squareup.retrofit2:converter-scalars:${retrofitVersion}"
         const val moshi = "com.squareup.moshi:moshi:${moshiVersion}"
         const val moshiCodeGenerator = "com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}"
-        const val moshiReflection = "com.squareup.moshi:moshi-kotlin:${moshiVersion}"
         const val picasso = "com.squareup.picasso:picasso:${picassoVersion}"
 
     }
@@ -195,6 +194,7 @@ object deps {
         private const val expandableTextViewVersion = "1.0.5"
         private const val hiltBinderVersion = "1.0.0-alpha01"
         private const val photoViewVersion = "2.3.0"
+        private const val moshiMetadataReflectVersion = "0.9.1"
 
         const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${desugaredLibsVersion}"
         const val kotlinResult = "com.michael-bull.kotlin-result:kotlin-result:${kotlinResultVersion}"
@@ -202,6 +202,7 @@ object deps {
         const val hiltBinder = "com.paulrybitskyi:hilt-binder:$hiltBinderVersion"
         const val hiltBinderCompiler = "com.paulrybitskyi:hilt-binder-compiler:$hiltBinderVersion"
         const val photoView = "com.github.chrisbanes:PhotoView:$photoViewVersion"
+        const val moshiMetadataReflect = "dev.zacsweers.moshix:moshi-metadata-reflect:$moshiMetadataReflectVersion"
 
     }
 

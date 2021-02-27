@@ -18,11 +18,11 @@ package com.paulrybitskyi.gamedge.database.commons.di
 
 import com.paulrybitskyi.gamedge.database.commons.di.qualifiers.Database
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.zacsweers.moshix.reflect.MetadataKotlinJsonAdapterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -33,7 +33,7 @@ internal object CoreModule {
     @Database
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
+            .add(MetadataKotlinJsonAdapterFactory())
             .build()
     }
 

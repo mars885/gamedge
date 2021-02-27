@@ -38,9 +38,9 @@ dependencies {
     implementation(deps.kotlin.coroutines)
 
     implementation(deps.square.moshi)
-    implementation(deps.square.moshiReflection)
 
     implementation(deps.misc.kotlinResult)
+    implementation(deps.misc.moshiMetadataReflect)
 
     implementation(deps.androidX.room)
     implementation(deps.androidX.roomKtx)
