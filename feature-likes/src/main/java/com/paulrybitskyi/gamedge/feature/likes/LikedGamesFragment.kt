@@ -45,8 +45,8 @@ class LikedGamesFragment : BaseFragment<
 
 
     private fun initGamesView() = with(viewBinding.gamesView) {
-        onGameClickListener = viewModel::onGameClicked
-        onBottomReachListener = viewModel::onBottomReached
+        onGameClicked = viewModel::onGameClicked
+        onBottomReached = viewModel::onBottomReached
     }
 
 

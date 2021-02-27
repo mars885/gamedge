@@ -49,7 +49,7 @@ internal class GameScreenshotsView @JvmOverloads constructor(
         adapterItems = newItems.toAdapterItems()
     }
 
-    var onScreenshotClickListener: ((Int) -> Unit)? = null
+    var onScreenshotClicked: ((Int) -> Unit)? = null
 
 
     init {
@@ -91,7 +91,7 @@ internal class GameScreenshotsView @JvmOverloads constructor(
                     .indexOfFirstOrNull { it == item.model }
                     ?: return@setOnScreenshotClickListener
 
-                onScreenshotClickListener?.invoke(position)
+                onScreenshotClicked?.invoke(position)
             }
         }
     }

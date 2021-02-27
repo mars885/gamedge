@@ -60,14 +60,12 @@ internal class GamesDiscoveryItem(model: GamesDiscoveryItemModel) : AbstractItem
             uiState = model.uiState.mapToCategoryUiState()
         }
 
-        fun setOnMoreButtonClickListener(listener: () -> Unit) {
-            view.onMoreButtonClickListener = listener
+        fun setOnMoreButtonClickListener(onClick: () -> Unit) {
+            view.onMoreButtonClicked = onClick
         }
 
-        fun setOnGameClickListener(listener: (GamesDiscoveryItemGameModel) -> Unit) {
-            view.onGameClickListener = {
-                listener(it.mapToDiscoveryItemGameModel())
-            }
+        fun setOnGameClickListener(onClick: (GamesDiscoveryItemGameModel) -> Unit) {
+            view.onGameClicked = { onClick(it.mapToDiscoveryItemGameModel()) }
         }
 
     }

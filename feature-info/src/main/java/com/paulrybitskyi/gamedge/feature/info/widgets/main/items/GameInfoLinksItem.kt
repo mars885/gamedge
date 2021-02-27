@@ -60,10 +60,8 @@ internal class GameInfoLinksItem(model: List<GameInfoLinkModel>): AbstractItem<
             view.links = model.mapToLinkModels()
         }
 
-        fun setOnLinkClickListener(listener: (GameInfoLinkModel) -> Unit) {
-            view.onLinkClickListener = { link ->
-                listener(link.mapToInfoLinkModel())
-            }
+        fun setOnLinkClickListener(onClick: (GameInfoLinkModel) -> Unit) {
+            view.onLinkClicked = { onClick(it.mapToInfoLinkModel()) }
         }
 
     }

@@ -56,14 +56,14 @@ internal class GameInfoFragment : BaseFragment<
         applyWindowBottomInsetAsMargin()
 
         onArtworkClicked = viewModel::onArtworkClicked
-        onBackButtonClickListener = viewModel::onBackButtonClicked
-        onCoverClickListener = viewModel::onCoverClicked
-        onLikeButtonClickListener = viewModel::onLikeButtonClicked
-        onVideoClickListener = viewModel::onVideoClicked
-        onScreenshotClickListener = viewModel::onScreenshotClicked
-        onLinkClickListener = viewModel::onLinkClicked
-        onCompanyClickListener = viewModel::onCompanyClicked
-        onRelatedGameClickListener = viewModel::onRelatedGameClicked
+        onBackButtonClicked = viewModel::onBackButtonClicked
+        onCoverClicked = viewModel::onCoverClicked
+        onLikeButtonClicked = viewModel::onLikeButtonClicked
+        onVideoClicked = viewModel::onVideoClicked
+        onScreenshotClicked = viewModel::onScreenshotClicked
+        onLinkClicked = viewModel::onLinkClicked
+        onCompanyClicked = viewModel::onCompanyClicked
+        onRelatedGameClicked = viewModel::onRelatedGameClicked
     }
 
 

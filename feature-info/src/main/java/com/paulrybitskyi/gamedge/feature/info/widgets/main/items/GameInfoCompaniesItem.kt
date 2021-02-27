@@ -60,10 +60,8 @@ internal class GameInfoCompaniesItem(model: List<GameInfoCompanyModel>): Abstrac
             view.items = model.mapToCompanyModels()
         }
 
-        fun setOnCompanyClickListener(listener: (GameInfoCompanyModel) -> Unit) {
-            view.onCompanyClickListener = {
-                listener(it.mapToInfoCompanyModel())
-            }
+        fun setOnCompanyClickListener(onClick: (GameInfoCompanyModel) -> Unit) {
+            view.onCompanyClicked = { onClick(it.mapToInfoCompanyModel()) }
         }
 
     }

@@ -58,7 +58,7 @@ internal class GamingNewsItemView @JvmOverloads constructor(
         set(value) { binding.publicationDateTv.text = value }
         get() = binding.publicationDateTv.text
 
-    var onNewsItemClickListener: (() -> Unit)? = null
+    var onNewsItemClicked: (() -> Unit)? = null
 
 
     init {
@@ -69,7 +69,7 @@ internal class GamingNewsItemView @JvmOverloads constructor(
     private fun initCard() {
         setCardBackgroundColor(getColor(R.color.gaming_news_item_card_background_color))
         cardElevation = getDimension(R.dimen.gaming_news_item_card_elevation)
-        onClick { onNewsItemClickListener?.invoke() }
+        onClick { onNewsItemClicked?.invoke() }
     }
 
 

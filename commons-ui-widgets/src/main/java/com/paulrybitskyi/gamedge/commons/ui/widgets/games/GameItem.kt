@@ -61,8 +61,8 @@ internal class GameItem(model: GameModel) : AbstractItem<
             description = model.description
         }
 
-        fun setOnGameClickListener(listener: () -> Unit) {
-            view.onGameClickListener = listener
+        fun setOnGameClickListener(onClick: () -> Unit) {
+            view.onGameClicked = onClick
         }
 
     }

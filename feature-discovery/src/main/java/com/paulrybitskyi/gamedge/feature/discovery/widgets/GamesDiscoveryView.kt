@@ -48,9 +48,9 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
         adapterItems = newValue.toAdapterItems()
     }
 
-    var onCategoryMoreButtonClickListener: ((String) -> Unit)? = null
-    var onCategoryGameClickListener: ((GamesDiscoveryItemGameModel) -> Unit)? = null
-    var onRefreshListener: (() -> Unit)? = null
+    var onCategoryMoreButtonClicked: ((String) -> Unit)? = null
+    var onCategoryGameClicked: ((GamesDiscoveryItemGameModel) -> Unit)? = null
+    var onRefreshRequested: (() -> Unit)? = null
 
 
     init {
@@ -63,7 +63,7 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
         setColorSchemeColors(getColor(R.color.games_discovery_swipe_refresh_color))
         setOnRefreshListener {
             isRefreshing = false
-            onRefreshListener?.invoke()
+            onRefreshRequested?.invoke()
         }
     }
 
@@ -104,8 +104,8 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
     private fun bindListener(item: GamesDiscoveryItem, viewHolder: RecyclerView.ViewHolder) {
         if(viewHolder is GamesDiscoveryItem.ViewHolder) {
             with(viewHolder) {
-                setOnMoreButtonClickListener { onCategoryMoreButtonClickListener?.invoke(item.model.category) }
-                setOnGameClickListener { onCategoryGameClickListener?.invoke(it) }
+                setOnMoreButtonClickListener { onCategoryMoreButtonClicked?.invoke(item.model.category) }
+                setOnGameClickListener { onCategoryGameClicked?.invoke(it) }
             }
         }
     }

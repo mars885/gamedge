@@ -68,8 +68,8 @@ internal class GameVideoItem(model: GameVideoModel) : AbstractItem<
             title = model.title
         }
 
-        fun setOnVideoClickListener(listener: () -> Unit) {
-            view.onVideoClickListener = listener
+        fun setOnVideoClickListener(onClick: () -> Unit) {
+            view.onVideoClicked = onClick
         }
 
     }

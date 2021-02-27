@@ -58,8 +58,8 @@ internal class GameArtworkItem(model: GameArtworkModel): AbstractItem<
             view.model = model
         }
 
-        fun setOnArtworkClickListener(listener: () -> Unit) {
-            view.onClick { listener() }
+        fun setOnArtworkClickListener(onClick: () -> Unit) {
+            view.onClick { onClick() }
         }
 
     }

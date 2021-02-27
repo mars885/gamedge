@@ -60,10 +60,8 @@ internal class GameInfoVideosItem(model: List<GameInfoVideoModel>) : AbstractIte
             view.items = model.mapToVideoModels()
         }
 
-        fun setOnVideoClickListener(listener: (GameInfoVideoModel) -> Unit) {
-            view.onVideoClickListener = {
-                listener(it.mapToInfoVideoModel())
-            }
+        fun setOnVideoClickListener(onClick: (GameInfoVideoModel) -> Unit) {
+            view.onVideoClicked = { onClick(it.mapToInfoVideoModel()) }
         }
 
     }

@@ -107,9 +107,9 @@ internal class GameHeaderController(
     }
 
     var onArtworkClicked: ((Int) -> Unit)? = null
-    var onBackButtonClickListener: (() -> Unit)? = null
-    var onCoverClickListener: (() -> Unit)? = null
-    var onLikeButtonClickListener: (() -> Unit)? = null
+    var onBackButtonClicked: (() -> Unit)? = null
+    var onCoverClicked: (() -> Unit)? = null
+    var onLikeButtonClicked: (() -> Unit)? = null
 
 
     init {
@@ -207,19 +207,19 @@ internal class GameHeaderController(
 
 
     private fun initBackButton() = with(binding.backBtnIv) {
-        onClick { onBackButtonClickListener?.invoke() }
+        onClick { onBackButtonClicked?.invoke() }
     }
 
 
     private fun initCoverView() = with(binding.coverView) {
         cardElevation = getDimension(R.dimen.game_info_header_backdrop_elevation)
         isTitleVisible = false
-        onClick { onCoverClickListener?.invoke() }
+        onClick { onCoverClicked?.invoke() }
     }
 
 
     private fun initLikeButton() {
-        binding.likeBtn.onClick { onLikeButtonClickListener?.invoke() }
+        binding.likeBtn.onClick { onLikeButtonClicked?.invoke() }
     }
 
 

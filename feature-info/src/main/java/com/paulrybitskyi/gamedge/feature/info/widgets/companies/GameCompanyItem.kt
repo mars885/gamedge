@@ -72,8 +72,8 @@ internal class GameCompanyItem(model: GameCompanyModel): AbstractItem<
             roles = model.roles
         }
 
-        fun setOnCompanyClickListener(listener: () -> Unit) {
-            view.onCompanyClickListener = listener
+        fun setOnCompanyClickListener(onClick: () -> Unit) {
+            view.onCompanyClicked = onClick
         }
 
     }

@@ -74,7 +74,7 @@ internal class GameCompanyView @JvmOverloads constructor(
 
     @Inject lateinit var imageLoader: ImageLoader
 
-    var onCompanyClickListener: (() -> Unit)? = null
+    var onCompanyClicked: (() -> Unit)? = null
 
 
     init {
@@ -86,7 +86,7 @@ internal class GameCompanyView @JvmOverloads constructor(
         setCardBackgroundColor(getColor(R.color.game_company_card_background_color))
         cardElevation = getDimension(R.dimen.game_company_card_elevation)
         radius = getDimension(R.dimen.game_company_card_corner_radius)
-        onClick { onCompanyClickListener?.invoke() }
+        onClick { onCompanyClicked?.invoke() }
     }
 
 

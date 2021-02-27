@@ -77,14 +77,14 @@ internal class GameInfoView @JvmOverloads constructor(
     @Inject lateinit var stringProvider: StringProvider
 
     var onArtworkClicked: ((Int) -> Unit)? = null
-    var onBackButtonClickListener: (() -> Unit)? = null
-    var onCoverClickListener: (() -> Unit)? = null
-    var onLikeButtonClickListener: (() -> Unit)? = null
-    var onVideoClickListener: ((GameInfoVideoModel) -> Unit)? = null
-    var onScreenshotClickListener: ((Int) -> Unit)? = null
-    var onLinkClickListener: ((GameInfoLinkModel) -> Unit)? = null
-    var onCompanyClickListener: ((GameInfoCompanyModel) -> Unit)? = null
-    var onRelatedGameClickListener: ((GameInfoRelatedGameModel) -> Unit)? = null
+    var onBackButtonClicked: (() -> Unit)? = null
+    var onCoverClicked: (() -> Unit)? = null
+    var onLikeButtonClicked: (() -> Unit)? = null
+    var onVideoClicked: ((GameInfoVideoModel) -> Unit)? = null
+    var onScreenshotClicked: ((Int) -> Unit)? = null
+    var onLinkClicked: ((GameInfoLinkModel) -> Unit)? = null
+    var onCompanyClicked: ((GameInfoCompanyModel) -> Unit)? = null
+    var onRelatedGameClicked: ((GameInfoRelatedGameModel) -> Unit)? = null
 
 
     init {
@@ -101,16 +101,16 @@ internal class GameInfoView @JvmOverloads constructor(
                     this@GameInfoView.onArtworkClicked?.invoke(it)
                 }
 
-                onBackButtonClickListener = {
-                    this@GameInfoView.onBackButtonClickListener?.invoke()
+                onBackButtonClicked = {
+                    this@GameInfoView.onBackButtonClicked?.invoke()
                 }
 
-                onCoverClickListener = {
-                    this@GameInfoView.onCoverClickListener?.invoke()
+                onCoverClicked = {
+                    this@GameInfoView.onCoverClicked?.invoke()
                 }
 
-                onLikeButtonClickListener = {
-                    this@GameInfoView.onLikeButtonClickListener?.invoke()
+                onLikeButtonClicked = {
+                    this@GameInfoView.onLikeButtonClicked?.invoke()
                 }
             }
             .also { headerController = it }
@@ -147,23 +147,23 @@ internal class GameInfoView @JvmOverloads constructor(
         when(viewHolder) {
 
             is GameInfoVideosItem.ViewHolder -> with(viewHolder) {
-                setOnVideoClickListener { onVideoClickListener?.invoke(it) }
+                setOnVideoClickListener { onVideoClicked?.invoke(it) }
             }
 
             is GameInfoScreenshotsItem.ViewHolder -> with(viewHolder) {
-                setOnScreenshotClickListener { onScreenshotClickListener?.invoke(it) }
+                setOnScreenshotClickListener { onScreenshotClicked?.invoke(it) }
             }
 
             is GameInfoLinksItem.ViewHolder -> with(viewHolder) {
-                setOnLinkClickListener { onLinkClickListener?.invoke(it) }
+                setOnLinkClickListener { onLinkClicked?.invoke(it) }
             }
 
             is GameInfoCompaniesItem.ViewHolder -> with(viewHolder) {
-                setOnCompanyClickListener { onCompanyClickListener?.invoke(it) }
+                setOnCompanyClickListener { onCompanyClicked?.invoke(it) }
             }
 
             is GameInfoRelatedGamesItem.ViewHolder -> with(viewHolder) {
-                setOnGameClickListener { onRelatedGameClickListener?.invoke(it) }
+                setOnGameClickListener { onRelatedGameClicked?.invoke(it) }
             }
 
         }

@@ -51,8 +51,8 @@ class GamingNewsFragment : BaseFragment<
 
 
     private fun initGamingNewsView() = with(viewBinding.gamingNewsView) {
-        onNewsItemClickListener = viewModel::onNewsItemClicked
-        onRefreshListener = viewModel::onRefreshRequested
+        onNewsItemClicked = viewModel::onNewsItemClicked
+        onRefreshRequested = viewModel::onRefreshRequested
     }
 
 
