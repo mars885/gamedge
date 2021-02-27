@@ -29,8 +29,6 @@ android {
 dependencies {
     implementation(project(deps.local.core))
 
-    implementation(deps.kotlin.reflect)
-
     implementation(deps.androidX.appCompat)
     implementation(deps.androidX.navFragmentKtx)
     implementation(deps.androidX.recyclerView)

@@ -18,14 +18,13 @@ package com.paulrybitskyi.gamedge.commons.ui.base.rv
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
-import kotlin.reflect.full.isSubclassOf
 
 class ItemDiffCallback<IT : Item<*, *>> : DiffUtil.ItemCallback<IT>() {
 
 
     override fun areItemsTheSame(oldItem: IT, newItem: IT): Boolean {
         return when {
-            ((oldItem::class.isSubclassOf(newItem::class) &&
+            ((oldItem::class.java.isAssignableFrom(newItem::class.java) &&
             (oldItem is HasUniqueIdentifier<*>) &&
             (newItem is HasUniqueIdentifier<*>))) -> (oldItem.uniqueIdentifier == newItem.uniqueIdentifier)
             else -> (oldItem == newItem)
