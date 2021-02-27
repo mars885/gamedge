@@ -22,13 +22,13 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.utils.onError
+import com.paulrybitskyi.gamedge.core.utils.onSuccess
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
 import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,16 +41,14 @@ internal class SplashViewModel @Inject constructor(
 
 
     fun init() {
-        viewModelScope.launch {
-            initInternal()
-        }
+        runInitializationFlow()
     }
 
 
-    private suspend fun initInternal() {
-        return refreshAuth()
-            .onCompletion { onInitializationFinished(it) }
-            .onError { logger.error(logTag, "Failed to initialize.", it) }
+    private fun runInitializationFlow() = viewModelScope.launch {
+        refreshAuth()
+            .onSuccess { onInitializationFlowSucceeded() }
+            .onError { onInitializationFlowFailed(it) }
             .collect()
     }
 
@@ -61,14 +59,15 @@ internal class SplashViewModel @Inject constructor(
     }
 
 
-    private fun onInitializationFinished(error: Throwable?) {
-        if(error != null) {
-            dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(error)))
-            route(SplashRoute.Exit)
-            return
-        }
-
+    private fun onInitializationFlowSucceeded() {
         route(SplashRoute.Dashboard)
+    }
+
+
+    private fun onInitializationFlowFailed(error: Throwable) {
+        logger.error(logTag, "Failed to initialize.", error)
+        dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(error)))
+        route(SplashRoute.Exit)
     }
 
 
