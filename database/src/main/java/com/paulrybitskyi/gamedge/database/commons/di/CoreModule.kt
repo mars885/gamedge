@@ -33,7 +33,7 @@ internal object CoreModule {
     @Database
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
-            .add(MetadataKotlinJsonAdapterFactory())
+            .addLast(MetadataKotlinJsonAdapterFactory())
             .build()
     }
 

@@ -18,33 +18,19 @@ package com.paulrybitskyi.gamedge.database.commons
 
 import com.paulrybitskyi.gamedge.database.commons.di.qualifiers.Database
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
+import com.squareup.moshi.adapter
 import javax.inject.Inject
 
 internal class JsonConverter @Inject constructor(@Database private val moshi: Moshi) {
 
 
     inline fun <reified T> toJson(clazz: T): String {
-        return moshi.adapter(T::class.java).toJson(clazz)
+        return moshi.adapter<T>().toJson(clazz)
     }
 
 
     inline fun <reified T> fromJson(json: String): T? {
-        return moshi.adapter(T::class.java).fromJson(json)
-    }
-
-
-    inline fun <reified T> fromJsonList(json: String): List<T>? {
-        val type = Types.newParameterizedType(List::class.java, T::class.java)
-
-        return moshi.adapter<List<T>>(type).fromJson(json)
-    }
-
-
-    inline fun <reified K, reified V> fromJsonMap(json: String): Map<K, V>? {
-        val type = Types.newParameterizedType(Map::class.java, K::class.java, V::class.java)
-
-        return moshi.adapter<Map<K, V>>(type).fromJson(json)
+        return moshi.adapter<T>().fromJson(json)
     }
 
 
