@@ -37,9 +37,9 @@ dependencies {
     implementation(deps.androidX.appCompat)
     implementation(deps.androidX.lifecycleCommonJava8)
     implementation(deps.androidX.browser)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsNetwork)
-    implementation(deps.commons.commonsWindowAnims)
+    implementation(deps.commons.ktx)
+    implementation(deps.commons.network)
+    implementation(deps.commons.windowAnims)
     implementation(deps.misc.kotlinResult)
 
     implementation(deps.google.daggerHilt)

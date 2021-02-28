@@ -38,7 +38,7 @@ dependencies {
     implementation(deps.androidX.constraintLayout)
     implementation(deps.androidX.fragmentKtx)
 
-    implementation(deps.commons.commonsCore)
+    implementation(deps.commons.core)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)

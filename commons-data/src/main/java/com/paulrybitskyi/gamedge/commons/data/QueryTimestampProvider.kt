@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.commons.data
 
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
+import com.paulrybitskyi.hiltbinder.BindType
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

@@ -22,7 +22,7 @@ plugins {
 
 dependencies {
     implementation(deps.square.picasso)
-    implementation(deps.commons.commonsKtx)
+    implementation(deps.commons.ktx)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)

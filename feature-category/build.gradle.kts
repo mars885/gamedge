@@ -41,11 +41,11 @@ dependencies {
 
     implementation(deps.google.materialComponents)
 
-    implementation(deps.commons.commonsCore)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsWidgets)
-    implementation(deps.commons.commonsRecyclerView)
-    implementation(deps.commons.commonsDeviceInfo)
+    implementation(deps.commons.core)
+    implementation(deps.commons.ktx)
+    implementation(deps.commons.widgets)
+    implementation(deps.commons.recyclerView)
+    implementation(deps.commons.deviceInfo)
 
     implementation(deps.misc.kotlinResult)
 

@@ -39,11 +39,11 @@ dependencies {
 
     implementation(deps.google.materialComponents)
 
-    implementation(deps.commons.commonsCore)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsWidgets)
-    implementation(deps.commons.commonsWindowAnims)
-    implementation(deps.commons.commonsNavigation)
+    implementation(deps.commons.core)
+    implementation(deps.commons.ktx)
+    implementation(deps.commons.widgets)
+    implementation(deps.commons.windowAnims)
+    implementation(deps.commons.navigation)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)

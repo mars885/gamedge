@@ -22,8 +22,8 @@ import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
-import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
 import com.paulrybitskyi.gamedge.core.Logger
+import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.combine

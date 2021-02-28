@@ -170,11 +170,4 @@ class GameCoverView @JvmOverloads constructor(
     }
 
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-
-        //imageLoader.cancelRequests(coverIv)
-    }
-
-
 }
