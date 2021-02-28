@@ -18,8 +18,8 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewItemModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameCompanyModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.header.GameHeaderImageModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameLinkItemModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.header.GameHeaderImageModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.header.artworks.GameArtworkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoCompanyModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkModel

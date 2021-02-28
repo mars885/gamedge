@@ -87,7 +87,7 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
         return object : LinearLayoutManager(context) {
 
             override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
-                return RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+                return RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             }
 
         }

@@ -21,7 +21,10 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager2.widget.MarginPageTransformer
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsMargin
+import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.commons.ktx.layoutInflater
+import com.paulrybitskyi.commons.ktx.removeElevation
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.extensions.recyclerView
 import com.paulrybitskyi.gamedge.commons.ui.extensions.registerOnPageChangeCallback

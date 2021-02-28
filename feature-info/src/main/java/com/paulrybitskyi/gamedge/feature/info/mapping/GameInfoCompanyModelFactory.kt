@@ -67,11 +67,11 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
 
         return companies
             .sortedWith(comparator)
-            .mapNotNull(::createCompanyModel)
+            .map(::createCompanyModel)
     }
 
 
-    override fun createCompanyModel(company: InvolvedCompany): GameInfoCompanyModel? {
+    override fun createCompanyModel(company: InvolvedCompany): GameInfoCompanyModel {
         val logoImageSize = company.calculateLogoImageSize()
         val logoViewHeight = context.getDimensionPixelSize(R.dimen.game_info_company_logo_view_height)
         val logoViewSize = (logoImageSize.width to logoViewHeight)

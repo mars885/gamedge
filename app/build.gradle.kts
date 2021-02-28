@@ -58,6 +58,8 @@ dependencies {
 
     implementation(deps.androidX.navFragmentKtx)
 
+    implementation(deps.commons.windowAnims)
+
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
 

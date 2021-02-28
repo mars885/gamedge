@@ -40,9 +40,9 @@ dependencies {
     implementation(deps.androidX.viewPager2)
     implementation(deps.androidX.fragmentKtx)
 
-    implementation(deps.commons.commonsCore)
-    implementation(deps.commons.commonsKtx)
-    implementation(deps.commons.commonsWidgets)
+    implementation(deps.commons.core)
+    implementation(deps.commons.ktx)
+    implementation(deps.commons.widgets)
 
     implementation(deps.misc.photoView)
 

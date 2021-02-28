@@ -165,25 +165,25 @@ object deps {
 
     object commons {
 
-        private const val commonsCoreVersion = "1.0.1"
-        private const val commonsKtxVersion = "1.0.1"
-        private const val commonsWidgetsVersion = "1.0.1"
-        private const val commonsNavigationVersion = "1.0.1"
-        private const val commonsMaterialVersion = "1.0.1"
-        private const val commonsNetworkVersion = "1.0.0"
-        private const val commonsRecyclerViewVersion = "1.0.0"
-        private const val commonsWindowAnimsVersion = "1.0.0"
-        private const val commonsDeviceInfoVersion = "1.0.0"
+        private const val coreVersion = "1.0.1"
+        private const val ktxVersion = "1.0.1"
+        private const val widgetsVersion = "1.0.1"
+        private const val navigationVersion = "1.0.1"
+        private const val materialVersion = "1.0.1"
+        private const val networkVersion = "1.0.0"
+        private const val recyclerViewVersion = "1.0.0"
+        private const val windowAnimsVersion = "1.0.0"
+        private const val deviceInfoVersion = "1.0.0"
 
-        const val commonsCore = "com.paulrybitskyi.commons:commons-core:${commonsCoreVersion}"
-        const val commonsKtx = "com.paulrybitskyi.commons:commons-ktx:${commonsKtxVersion}"
-        const val commonsWidgets = "com.paulrybitskyi.commons:commons-widgets:${commonsWidgetsVersion}"
-        const val commonsNavigation = "com.paulrybitskyi.commons:commons-navigation:${commonsNavigationVersion}"
-        const val commonsMaterial = "com.paulrybitskyi.commons:commons-material:${commonsMaterialVersion}"
-        const val commonsNetwork = "com.paulrybitskyi.commons:commons-network:${commonsNetworkVersion}"
-        const val commonsRecyclerView = "com.paulrybitskyi.commons:commons-recyclerview:${commonsRecyclerViewVersion}"
-        const val commonsWindowAnims = "com.paulrybitskyi.commons:commons-window-anims:${commonsWindowAnimsVersion}"
-        const val commonsDeviceInfo = "com.paulrybitskyi.commons:commons-device-info:${commonsDeviceInfoVersion}"
+        const val core = "com.paulrybitskyi.commons:commons-core:${coreVersion}"
+        const val ktx = "com.paulrybitskyi.commons:commons-ktx:${ktxVersion}"
+        const val widgets = "com.paulrybitskyi.commons:commons-widgets:${widgetsVersion}"
+        const val navigation = "com.paulrybitskyi.commons:commons-navigation:${navigationVersion}"
+        const val material = "com.paulrybitskyi.commons:commons-material:${materialVersion}"
+        const val network = "com.paulrybitskyi.commons:commons-network:${networkVersion}"
+        const val recyclerView = "com.paulrybitskyi.commons:commons-recyclerview:${recyclerViewVersion}"
+        const val windowAnims = "com.paulrybitskyi.commons:commons-window-anims:${windowAnimsVersion}"
+        const val deviceInfo = "com.paulrybitskyi.commons:commons-device-info:${deviceInfoVersion}"
 
     }
 

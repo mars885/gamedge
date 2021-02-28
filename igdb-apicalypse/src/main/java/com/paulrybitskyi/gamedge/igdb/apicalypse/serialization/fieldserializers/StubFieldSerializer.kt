@@ -16,8 +16,6 @@
 
 package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers
 
-import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.FieldSerializer
-
 internal object StubFieldSerializer : FieldSerializer {
 
 
