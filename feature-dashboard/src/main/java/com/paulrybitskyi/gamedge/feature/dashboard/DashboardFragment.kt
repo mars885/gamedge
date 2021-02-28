@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.dashboard
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.MenuItem
 import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
@@ -29,6 +30,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.feature.dashboard.DashboardPage.Companion.toDashboardPageFromMenuItemId
 import com.paulrybitskyi.gamedge.feature.dashboard.adapter.DashboardViewPagerAdapter
+import com.paulrybitskyi.gamedge.feature.dashboard.adapter.DashboardViewPagerAdapterFactory
 import com.paulrybitskyi.gamedge.feature.dashboard.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -43,6 +45,7 @@ internal class DashboardFragment : BaseFragment<
 
     private companion object {
 
+        private const val KEY_ADAPTER_STATE = "adapter_state"
         private const val KEY_SELECTED_PAGE = "selected_page"
 
         private val DEFAULT_SELECTED_PAGE = DashboardPage.DISCOVER
@@ -53,7 +56,9 @@ internal class DashboardFragment : BaseFragment<
     override val viewBinding by viewBinding(FragmentDashboardBinding::bind)
     override val viewModel by viewModels<DashboardViewModel>()
 
-    @Inject lateinit var viewPagerAdapter: DashboardViewPagerAdapter
+    private lateinit var viewPagerAdapter: DashboardViewPagerAdapter
+
+    @Inject lateinit var viewPagerAdapterFactory: DashboardViewPagerAdapterFactory
 
 
     override fun onInit() {
@@ -66,8 +71,8 @@ internal class DashboardFragment : BaseFragment<
 
 
     private fun initToolbar() = with(viewBinding.toolbar) {
-        onRightButtonClickListener = { viewModel.onToolbarRightButtonClicked() }
         applyWindowTopInsetAsPadding()
+        onRightButtonClickListener = { viewModel.onToolbarRightButtonClicked() }
     }
 
 
@@ -82,7 +87,11 @@ internal class DashboardFragment : BaseFragment<
 
 
     private fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-        viewBinding.viewPager.setCurrentItem(menuItem.toPagePosition(), false)
+        viewBinding.viewPagerContainer.viewPager.setCurrentItem(
+            menuItem.toPagePosition(),
+            false
+        )
+
         return true
     }
 
@@ -92,13 +101,16 @@ internal class DashboardFragment : BaseFragment<
     }
 
 
-    private fun initViewPager() = with(viewBinding.viewPager) {
-        // Has to be set to stop ViewPager2 from crashing due to Fragment's
-        // view preservation until onDestroy is called
-        isSaveEnabled = false
-        adapter = viewPagerAdapter
+    private fun initViewPager() = with(viewBinding.viewPagerContainer.viewPager) {
+        adapter = initViewPagerAdapter()
         offscreenPageLimit = viewPagerAdapter.itemCount
         isUserInputEnabled = false
+    }
+
+
+    private fun initViewPagerAdapter(): DashboardViewPagerAdapter {
+        return viewPagerAdapterFactory.createAdapter(this)
+            .also { viewPagerAdapter = it }
     }
 
 
@@ -111,7 +123,7 @@ internal class DashboardFragment : BaseFragment<
 
     private fun selectPage(page: DashboardPage) = with(viewBinding) {
         bottomNav.selectedItemId = page.menuItemId
-        viewPager.setCurrentItem(page.position, false)
+        viewPagerContainer.viewPager.setCurrentItem(page.position, false)
     }
 
 
@@ -127,17 +139,21 @@ internal class DashboardFragment : BaseFragment<
     override fun onRestoreState(state: Bundle) {
         super.onRestoreState(state)
 
+        // Restoring the adapter's state since for some reason it does not do this by itself
+        state.getParcelable<Parcelable>(KEY_ADAPTER_STATE)?.let(viewPagerAdapter::restoreState)
         selectPage(state.getSerializable(KEY_SELECTED_PAGE, DEFAULT_SELECTED_PAGE))
     }
 
 
     override fun onSaveState(state: Bundle) {
+        super.onSaveState(state)
+
+        // Saving the adapter's state since for some reason it does not do this by itself
+        state.putParcelable(KEY_ADAPTER_STATE, viewPagerAdapter.saveState())
         state.putSerializable(
             KEY_SELECTED_PAGE,
             viewBinding.bottomNav.selectedItemId.toDashboardPageFromMenuItemId()
         )
-
-        super.onSaveState(state)
     }
 
 
