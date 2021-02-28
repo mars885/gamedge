@@ -41,6 +41,8 @@ internal class GameHeaderController(
 
     private val pageIndicatorTopMargin = context.getDimensionPixelSize(R.dimen.game_info_header_page_indicator_margin)
 
+    private var areWindowInsetsApplied = false
+
     private val hasDefaultBackgroundImage: Boolean
         get() = (
             (backgroundImageModels.size == 1) &&
@@ -155,12 +157,23 @@ internal class GameHeaderController(
         }
     }
 
-
     private fun initMotionLayoutInsets() = with(binding.mainView) {
         // Traditional inset applying does not work with views that
         // are direct children of MotionLayout. Have to manually update
         // the constraint sets within it.
         doOnApplyWindowInsets(DimensionSnapshotType.MARGINS) { _, insets, _ ->
+            // This is solely an optimization technique. updateConstraintSets method
+            // is not very cheap to invoke, since it updates all constraint sets.
+            // Apart from that, window insets listener may be invoked multiple times
+            // for some reason. Combining this all creates a sluggish user experience
+            // and cripples any animations that may be running. To mitigate this,
+            // we apply insets only one time and exit in all other cases.
+            if(areWindowInsetsApplied) {
+                return@doOnApplyWindowInsets
+            } else {
+                areWindowInsetsApplied = true
+            }
+
             updateConstraintSets { id, set ->
                 set.setMargin(R.id.backBtnIv, ConstraintSet.TOP, insets.systemWindowInsetTop)
                 set.setMargin(
