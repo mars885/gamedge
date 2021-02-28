@@ -33,6 +33,8 @@ private const val PARAM_TITLE = "title"
 private const val PARAM_INITIAL_POSITION = "initial_position"
 private const val PARAM_IMAGE_URLS = "image_urls"
 
+private const val KEY_SELECTED_POSITION = "selected_position"
+
 
 @HiltViewModel
 internal class ImageViewerViewModel @Inject constructor(
@@ -61,10 +63,10 @@ internal class ImageViewerViewModel @Inject constructor(
         title = savedStateHandle.get<String>(PARAM_TITLE)
             ?: stringProvider.getString(R.string.image_viewer_default_toolbar_title)
 
-        val initialPosition = checkNotNull(savedStateHandle.get<Int>(PARAM_INITIAL_POSITION))
+        val selectedPosition = getSelectedPosition()
         val imageUrls = checkNotNull(savedStateHandle.get<Array<String>>(PARAM_IMAGE_URLS))
 
-        _selectedPosition = MutableStateFlow(initialPosition)
+        _selectedPosition = MutableStateFlow(selectedPosition)
         _imageUrls = MutableStateFlow(imageUrls.toList())
         _toolbarTitle = MutableStateFlow("")
 
@@ -72,9 +74,18 @@ internal class ImageViewerViewModel @Inject constructor(
     }
 
 
+    private fun getSelectedPosition(): Int {
+        return savedStateHandle.get(KEY_SELECTED_POSITION) ?:
+            checkNotNull(savedStateHandle.get<Int>(PARAM_INITIAL_POSITION))
+    }
+
+
     private fun observeSelectedPositionChanges() {
         selectedPosition
-            .onEach { _toolbarTitle.value = updateToolbarTitle() }
+            .onEach {
+                _toolbarTitle.value = updateToolbarTitle()
+                savedStateHandle.set(KEY_SELECTED_POSITION, it)
+            }
             .launchIn(viewModelScope)
     }
 

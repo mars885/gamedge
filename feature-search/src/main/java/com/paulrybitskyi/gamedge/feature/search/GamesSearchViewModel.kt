@@ -16,6 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.search
 
+import androidx.hilt.Assisted
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
@@ -34,20 +36,28 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
+private const val KEY_SEARCH_QUERY = "search_query"
+
+
 @HiltViewModel
 internal class GamesSearchViewModel @Inject constructor(
     private val searchGamesUseCase: SearchGamesUseCase,
     private val uiStateFactory: GamesSearchUiStateFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
-    private val logger: Logger
+    private val logger: Logger,
+    @Assisted private val savedStateHandle: SavedStateHandle
 ): BaseViewModel() {
 
 
     private var hasMoreGamesToLoad = false
 
     private var searchQuery: String
-        set(value) { useCaseParams = useCaseParams.copy(searchQuery = value) }
+        set(value) {
+            useCaseParams = useCaseParams.copy(searchQuery = value)
+            savedStateHandle.set(KEY_SEARCH_QUERY, value)
+        }
         get() = useCaseParams.searchQuery
 
     private var pagination: Pagination
@@ -62,6 +72,11 @@ internal class GamesSearchViewModel @Inject constructor(
 
     val uiState: StateFlow<GamesUiState>
         get() = _uiState
+
+
+    init {
+        onSearchActionRequested(savedStateHandle.get(KEY_SEARCH_QUERY) ?: "")
+    }
 
 
     private fun createEmptyGamesUiState(): GamesUiState {
