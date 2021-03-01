@@ -29,12 +29,25 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
 
 
     override fun serialize(clazz: Class<*>): String {
-        return clazz
-            .fieldSerializers(fieldChain = mutableListOf())
-            .joinToString(
-                Constants.FIELD_SEPARATOR,
-                transform = FieldSerializer::serialize
+        checkIfMarkerAnnotationIsPresent(clazz)
+
+        val fieldSerializers = clazz.fieldSerializers(fieldChain = mutableListOf())
+        val validFieldSerializers = fieldSerializers.filter { it !is StubFieldSerializer }
+
+        return validFieldSerializers.joinToString(
+            separator = Constants.FIELD_SEPARATOR,
+            transform = FieldSerializer::serialize
+        )
+    }
+
+
+    private fun checkIfMarkerAnnotationIsPresent(clazz: Class<*>) {
+        if(!clazz.isAnnotationPresent(ApicalypseClass::class.java)) {
+            throw IllegalArgumentException(
+                "The provided class, \"${clazz.simpleName}\', does not have the " +
+                "\"${ApicalypseClass::class.simpleName}\" annotation present."
             )
+        }
     }
 
 
@@ -60,6 +73,8 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
         val apicalypseAnnotation = checkNotNull(getAnnotation(Apicalypse::class.java))
         val fieldName = apicalypseAnnotation.name
 
+        checkIfFieldNameIsValid(this, fieldName)
+
         fieldChain.add(fieldName)
 
         val childSerializers = childSerializers(fieldChain)
@@ -79,15 +94,42 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
     }
 
 
+    private fun checkIfFieldNameIsValid(field: Field, name: String) {
+        if(name.isBlank()) {
+            throw IllegalArgumentException(
+                "The field \"${field.name}\" of the class \"${field.declaringClass.simpleName}\" " +
+                "is annotated with an invalid name \"$name\"."
+            )
+        }
+    }
+
+
     private fun Field.childSerializers(fieldChain: MutableList<String>): List<FieldSerializer> {
-        if(type.typeParameters.isEmpty()) return type.fieldSerializers(fieldChain)
-        if(type.typeParameters.size > 1) return listOf()
+        return when {
+            !type.isGeneric() -> type.fieldSerializers(fieldChain)
+            type.isCollectionGenericType() -> {
+                val parameterizedType = (genericType as ParameterizedType)
+                val typeArgument = parameterizedType.actualTypeArguments.first()
+                val typeClass = (typeArgument as Class<*>)
 
-        val parameterizedType = (genericType as ParameterizedType)
-        val typeArgument = parameterizedType.actualTypeArguments.first()
-        val typeClass = (typeArgument as Class<*>)
+                typeClass.fieldSerializers(fieldChain)
+            }
 
-        return typeClass.fieldSerializers(fieldChain)
+            // All other types are unsupported for now
+            else -> throw IllegalStateException(
+                "Serialization for a class \"${type.simpleName}\" is unsupported at the moment."
+            )
+        }
+    }
+
+
+    private fun Class<*>.isGeneric(): Boolean {
+        return typeParameters.isNotEmpty()
+    }
+
+
+    private fun Class<*>.isCollectionGenericType(): Boolean {
+        return Collection::class.java.isAssignableFrom(this)
     }
 
 
