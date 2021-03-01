@@ -37,6 +37,11 @@ internal class ApicalypseQueryBuilderImpl(
     }
 
 
+    override fun selectAll() = apply {
+        queryBuilder.append("fields *;")
+    }
+
+
     override fun exclude(fields: String) = apply {
         queryBuilder.append("exclude $fields;")
     }

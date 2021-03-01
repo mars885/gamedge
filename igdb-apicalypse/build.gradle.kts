@@ -17,3 +17,7 @@
 plugins {
     kotlin()
 }
+
+dependencies {
+    testImplementation(deps.testing.jUnit)
+}

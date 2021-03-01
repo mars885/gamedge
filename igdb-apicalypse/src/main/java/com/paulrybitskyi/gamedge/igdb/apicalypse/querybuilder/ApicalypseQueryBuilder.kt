@@ -24,6 +24,8 @@ interface ApicalypseQueryBuilder {
 
     fun select(fields: String): ApicalypseQueryBuilder
 
+    fun selectAll(): ApicalypseQueryBuilder
+
     fun exclude(fields: String): ApicalypseQueryBuilder
 
     fun where(builder: WhereClauseBuilder.() -> Unit): ApicalypseQueryBuilder
