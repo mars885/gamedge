@@ -56,7 +56,7 @@ internal data class Game(
     val storyline: String? = null,
     @Apicalypse(name = Schema.CATEGORY)
     @field:Json(name = Schema.CATEGORY)
-    val category: Category,
+    val category: Category = Category.UNKNOWN,
     @Apicalypse(name = Schema.COVER)
     @field:Json(name = Schema.COVER)
     val cover: Image? = null,

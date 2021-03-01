@@ -16,10 +16,8 @@
 
 package com.paulrybitskyi.gamedge.commons.api
 
-import okhttp3.ResponseBody
-
 interface ErrorMessageExtractor {
 
-    fun extract(responseBody: ResponseBody): String
+    fun extract(responseBody: String): String
 
 }

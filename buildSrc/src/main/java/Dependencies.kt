@@ -42,6 +42,7 @@ object versions {
     const val protobufPlugin = "0.8.14"
     const val navigation = "2.3.3"
     const val daggerHilt = "2.31.2-alpha"
+    const val coroutines = "1.4.2"
 
 }
 
@@ -89,10 +90,8 @@ object deps {
 
     object kotlin {
 
-        private const val kotlinCoroutinesVersion = "1.4.2"
-
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
-        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinCoroutinesVersion}"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
 
     }
 
@@ -209,10 +208,15 @@ object deps {
     object testing {
 
         private const val jUnitVersion = "4.13.1"
-        private const val jUnitExtVersion = "1.1.1"
+        private const val jUnitExtVersion = "1.1.2"
+        private const val testRunnerVersion = "1.3.0"
+        private const val orgJsonVersion = "20201115"
 
-        const val jUnit = "junit:junit:${jUnitVersion}"
-        const val jUnitExt = "androidx.test.ext:junit:${jUnitExtVersion}"
+        const val jUnit = "junit:junit:$jUnitVersion"
+        const val jUnitExt = "androidx.test.ext:junit:$jUnitExtVersion"
+        const val testRunner = "androidx.test:runner:$testRunnerVersion"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
+        const val orgJson = "org.json:json:$orgJsonVersion"
 
     }
 

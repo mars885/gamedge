@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.gamespot.api.commons
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.gamespot.api.commons.di.GamespotApi
 import com.paulrybitskyi.hiltbinder.BindType
-import okhttp3.ResponseBody
 import org.json.JSONObject
 import javax.inject.Inject
 
@@ -32,15 +31,13 @@ private const val ERROR_MESSAGE_NAME = "error"
 internal class GamespotErrorMessageExtractor @Inject constructor() : ErrorMessageExtractor {
 
 
-    override fun extract(responseBody: ResponseBody): String {
-        return try {
-            val jsonObject = JSONObject(responseBody.string())
-            val message = jsonObject.getString(ERROR_MESSAGE_NAME)
+    override fun extract(responseBody: String): String = try {
+        val jsonObject = JSONObject(responseBody)
+        val message = jsonObject.getString(ERROR_MESSAGE_NAME)
 
-            message
-        } catch(error: Throwable) {
-            (error.message ?: error.javaClass.simpleName)
-        }
+        message
+    } catch(error: Throwable) {
+        (error.message ?: error.javaClass.simpleName)
     }
 
 

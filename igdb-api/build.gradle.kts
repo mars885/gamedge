@@ -55,5 +55,12 @@ dependencies {
     kapt(deps.misc.hiltBinderCompiler)
 
     testImplementation(deps.testing.jUnit)
+    testImplementation(deps.testing.coroutines)
+
+    // Needed to test a simple json parsing functionality
+    // because by default org.json classes need to mocked
+    testImplementation(deps.testing.orgJson)
+
+    androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
 }
