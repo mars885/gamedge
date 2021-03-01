@@ -16,16 +16,24 @@
 
 package com.paulrybitskyi.gamedge.igdb.apicalypse
 
+import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializerFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 
 internal class ApicalypseSerializerTest {
 
 
-    private val serializer = ApicalypseSerializerFactory.create()
+    private lateinit var serializer: ApicalypseSerializer
+
+
+    @Before
+    fun setup() {
+        serializer = ApicalypseSerializerFactory.create()
+    }
 
 
     @Test
