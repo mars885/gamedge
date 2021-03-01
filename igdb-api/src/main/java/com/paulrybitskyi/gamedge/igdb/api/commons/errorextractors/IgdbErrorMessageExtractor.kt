@@ -19,12 +19,11 @@ package com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.ErrorMessageExtractorKey
 import com.paulrybitskyi.hiltbinder.BindType
-import okhttp3.ResponseBody
 import org.json.JSONArray
 import javax.inject.Inject
 
 
-private const val ERROR_MESSAGE_NAME = "title"
+private const val ERROR_MESSAGE_NAME = "cause"
 
 
 @BindType(withQualifier = true)
@@ -32,12 +31,17 @@ private const val ERROR_MESSAGE_NAME = "title"
 internal class IgdbErrorMessageExtractor @Inject constructor() : ErrorMessageExtractor {
 
 
-    override fun extract(responseBody: ResponseBody): String {
-        val jsonArray = JSONArray(responseBody.string())
+    override fun extract(responseBody: String): String = try {
+        val jsonArray = JSONArray(responseBody)
         val jsonObject = jsonArray.getJSONObject(0)
         val message = jsonObject.getString(ERROR_MESSAGE_NAME)
 
-        return message
+        message
+    } catch(error: Throwable) {
+        throw IllegalStateException(
+            "Cannot extract a message from the response body: $responseBody",
+            error
+        )
     }
 
 

@@ -19,12 +19,11 @@ package com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.ErrorMessageExtractorKey
 import com.paulrybitskyi.hiltbinder.BindType
-import okhttp3.ResponseBody
 import org.json.JSONObject
 import javax.inject.Inject
 
 
-private const val ERROR_MESSAGE_NAME = "Message"
+private const val ERROR_MESSAGE_NAME = "message"
 
 
 @BindType(withQualifier = true)
@@ -32,11 +31,16 @@ private const val ERROR_MESSAGE_NAME = "Message"
 internal class TwitchErrorMessageExtractor @Inject constructor() : ErrorMessageExtractor {
 
 
-    override fun extract(responseBody: ResponseBody): String {
-        val jsonObject = JSONObject(responseBody.string())
+    override fun extract(responseBody: String): String = try {
+        val jsonObject = JSONObject(responseBody)
         val message = jsonObject.getString(ERROR_MESSAGE_NAME)
 
-        return message
+        message
+    } catch(error: Throwable) {
+        throw IllegalStateException(
+            "Cannot extract a message from the response body: $responseBody",
+            error
+        )
     }
 
 

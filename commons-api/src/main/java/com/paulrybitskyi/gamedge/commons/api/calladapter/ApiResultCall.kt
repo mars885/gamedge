@@ -66,7 +66,7 @@ class ApiResultCall<T>(
 
 
     private fun ResponseBody.extractErrorMessage(): String {
-        return errorMessageExtractor.extract(this)
+        return errorMessageExtractor.extract(string())
     }
 
 

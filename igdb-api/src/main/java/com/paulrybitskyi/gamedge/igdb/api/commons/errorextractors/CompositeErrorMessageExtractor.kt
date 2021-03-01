@@ -19,11 +19,10 @@ package com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
 import com.paulrybitskyi.hiltbinder.BindType
-import okhttp3.ResponseBody
 import javax.inject.Inject
 
 
-private const val UNKNOWN_ERROR = "Unknown Error"
+private const val UNKNOWN_ERROR_TEMPLATE = "Unknown Error: %s"
 
 
 @BindType(withQualifier = true)
@@ -33,18 +32,21 @@ internal class CompositeErrorMessageExtractor @Inject constructor(
 ) : ErrorMessageExtractor {
 
 
-    override fun extract(responseBody: ResponseBody): String {
-        return try {
-            for(errorMessageExtractor in errorMessageExtractors) {
+    override fun extract(responseBody: String): String {
+        for(errorMessageExtractor in errorMessageExtractors) {
+            try {
                 val message = errorMessageExtractor.extract(responseBody)
 
                 if(message.isNotBlank()) return message
+            } catch(error: Throwable) {
+                continue
             }
-
-            UNKNOWN_ERROR
-        } catch(error: Throwable) {
-            (error.message ?: error.javaClass.simpleName)
         }
+
+        return String.format(
+            UNKNOWN_ERROR_TEMPLATE,
+            responseBody
+        )
     }
 
 
