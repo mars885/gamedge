@@ -44,8 +44,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "search \"Shadow of the Colossus\";fields id, title;offset 10;limit 20;sort id desc;"
+            "search \"Shadow of the Colossus\";fields id, title;offset 10;limit 20;sort id desc;",
+            query
         )
     }
 
@@ -59,8 +59,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title;offset 100;limit 500;sort title asc;"
+            "fields id, title;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -74,8 +74,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields *;offset 100;limit 500;sort title asc;"
+            "fields *;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -90,8 +90,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields *;exclude date, likes;offset 100;limit 500;sort title asc;"
+            "fields *;exclude date, likes;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -106,8 +106,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, isLiked;where isLiked = true;offset 100;limit 500;sort title asc;"
+            "fields id, title, isLiked;where isLiked = true;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -122,8 +122,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, isLiked;where isLiked = false;offset 100;limit 500;sort title asc;"
+            "fields id, title, isLiked;where isLiked = false;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -138,8 +138,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, date;where date = null;offset 100;limit 500;sort title asc;"
+            "fields id, title, date;where date = null;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -154,8 +154,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, date;where date != null;offset 100;limit 500;sort title asc;"
+            "fields id, title, date;where date != null;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -170,8 +170,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, date;where date = 2020-03-01;offset 100;limit 500;sort title asc;"
+            "fields id, title, date;where date = 2020-03-01;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -186,8 +186,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, date;where date != 2020-03-01;offset 100;limit 500;sort title asc;"
+            "fields id, title, date;where date != 2020-03-01;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -202,8 +202,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, likes;where likes > 20;offset 100;limit 500;sort title asc;"
+            "fields id, title, likes;where likes > 20;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -218,8 +218,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, likes;where likes >= 20;offset 100;limit 500;sort title asc;"
+            "fields id, title, likes;where likes >= 20;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -234,8 +234,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, likes;where likes < 20;offset 100;limit 500;sort title asc;"
+            "fields id, title, likes;where likes < 20;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -250,8 +250,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, likes;where likes <= 20;offset 100;limit 500;sort title asc;"
+            "fields id, title, likes;where likes <= 20;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -266,8 +266,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, genres;where genres = [20, 30, 40];offset 100;limit 500;sort title asc;"
+            "fields id, title, genres;where genres = [20, 30, 40];offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -282,8 +282,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, genres;where genres = ![20, 30, 40];offset 100;limit 500;sort title asc;"
+            "fields id, title, genres;where genres = ![20, 30, 40];offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -298,8 +298,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, genres;where genres = (20, 30, 40);offset 100;limit 500;sort title asc;"
+            "fields id, title, genres;where genres = (20, 30, 40);offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -314,8 +314,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, genres;where genres = !(20, 30, 40);offset 100;limit 500;sort title asc;"
+            "fields id, title, genres;where genres = !(20, 30, 40);offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -330,8 +330,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, genres;where genres = {20, 30, 40};offset 100;limit 500;sort title asc;"
+            "fields id, title, genres;where genres = {20, 30, 40};offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -349,8 +349,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, genres, likes;where genres = (20, 30, 40) & likes > 20;offset 100;limit 500;sort title asc;"
+            "fields id, title, genres, likes;where genres = (20, 30, 40) & likes > 20;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -368,8 +368,8 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
-            "fields id, title, genres, likes;where genres = (20, 30, 40) | likes > 20;offset 100;limit 500;sort title asc;"
+            "fields id, title, genres, likes;where genres = (20, 30, 40) | likes > 20;offset 100;limit 500;sort title asc;",
+            query
         )
     }
 
@@ -392,10 +392,10 @@ internal class ApicalypseQueryBuilderTest {
             .build()
 
         assertEquals(
-            query,
             "fields id, title, genres, likes, rating, release_date;where id = (1, 2, 3) & title != null & " +
             "genres = (20, 30, 40) & likes > 20 | rating >= 80 | release_date = 2020-03-01;offset 100;limit 500;" +
-            "sort id asc;"
+            "sort id asc;",
+            query
         )
     }
 
