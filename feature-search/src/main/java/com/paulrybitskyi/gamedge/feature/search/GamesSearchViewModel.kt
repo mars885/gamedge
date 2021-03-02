@@ -118,7 +118,7 @@ internal class GamesSearchViewModel @Inject constructor(
                     emit(createEmptyGamesUiState())
                 }
                 .onStart {
-                    if(isSearchingWithNewQuery()) {
+                    if(isPerformingNewSearch()) {
                         dispatchCommand(GamesSearchCommand.ClearItems)
                     }
 
@@ -143,7 +143,7 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
 
-    private fun isSearchingWithNewQuery(): Boolean {
+    private fun isPerformingNewSearch(): Boolean {
         return (totalGamesResult == null)
     }
 
