@@ -42,8 +42,8 @@ class GamesDiscoveryViewModel @Inject constructor(
     private val useCases: GamesDiscoveryUseCases,
     private val itemModelFactory: GamesDiscoveryItemModelFactory,
     private val itemGameModelMapper: GamesDiscoveryItemGameModelMapper,
-    private val errorMapper: ErrorMapper,
     private val dispatcherProvider: DispatcherProvider,
+    private val errorMapper: ErrorMapper,
     private val logger: Logger
 ) : BaseViewModel() {
 
