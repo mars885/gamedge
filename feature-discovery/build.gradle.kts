@@ -54,5 +54,8 @@ dependencies {
     kapt(deps.misc.hiltBinderCompiler)
 
     testImplementation(deps.testing.jUnit)
+    testImplementation(deps.testing.coroutines)
+
+    androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
 }
