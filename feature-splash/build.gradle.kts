@@ -40,6 +40,8 @@ dependencies {
 
     implementation(deps.commons.core)
 
+    implementation(deps.misc.kotlinResult)
+
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
 
@@ -47,5 +49,8 @@ dependencies {
     kapt(deps.misc.hiltBinderCompiler)
 
     testImplementation(deps.testing.jUnit)
+    testImplementation(deps.testing.coroutines)
+
+    androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
 }
