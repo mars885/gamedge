@@ -29,11 +29,11 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 
-private const val PARAM_TITLE = "title"
-private const val PARAM_INITIAL_POSITION = "initial_position"
-private const val PARAM_IMAGE_URLS = "image_urls"
+internal const val PARAM_TITLE = "title"
+internal const val PARAM_INITIAL_POSITION = "initial_position"
+internal const val PARAM_IMAGE_URLS = "image_urls"
 
-private const val KEY_SELECTED_POSITION = "selected_position"
+internal const val KEY_SELECTED_POSITION = "selected_position"
 
 
 @HiltViewModel
