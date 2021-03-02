@@ -177,7 +177,8 @@ internal class GameInfoViewModel @Inject constructor(
                     logger.error(logTag, "Failed to get the game.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
                 }
-                .single()
+                .firstOrNull()
+                ?: return@launch
 
             val imageUrls = gameImageUrlsProvider(game)
                 .takeIf(List<String>::isNotEmpty)
