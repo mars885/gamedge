@@ -74,8 +74,8 @@ internal class AuthIgdbDataStoreTest {
         val result = authRemoteDataStore.getOauthCredentials()
 
         assertEquals(
-            result.get(),
-            authMapper.mapToDataOauthCredentials(API_OAUTH_CREDENTIALS)
+            authMapper.mapToDataOauthCredentials(API_OAUTH_CREDENTIALS),
+            result.get()
         )
     }
 
@@ -87,8 +87,8 @@ internal class AuthIgdbDataStoreTest {
         val result = authRemoteDataStore.getOauthCredentials()
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(HTTP_ERROR)
+            errorMapper.mapToDataError(HTTP_ERROR),
+            result.getError()
         )
     }
 
@@ -100,8 +100,8 @@ internal class AuthIgdbDataStoreTest {
         val result = authRemoteDataStore.getOauthCredentials()
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(NETWORK_ERROR)
+            errorMapper.mapToDataError(NETWORK_ERROR),
+            result.getError()
         )
     }
 
@@ -113,8 +113,8 @@ internal class AuthIgdbDataStoreTest {
         val result = authRemoteDataStore.getOauthCredentials()
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(UNKNOWN_ERROR)
+            errorMapper.mapToDataError(UNKNOWN_ERROR),
+            result.getError()
         )
     }
 
