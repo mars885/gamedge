@@ -94,7 +94,6 @@ internal class GamesIgdbDataStoreTest {
 
 
     private lateinit var gamesEndpoint: FakeGamesEndpoint
-    private lateinit var dispatcherProvider: FakeDispatcherProvider
     private lateinit var gameMapper: GameMapper
     private lateinit var errorMapper: ErrorMapper
     private lateinit var gamesRemoteDataStore: GamesRemoteDataStore
@@ -103,12 +102,11 @@ internal class GamesIgdbDataStoreTest {
     @Before
     fun setup() {
         gamesEndpoint = FakeGamesEndpoint()
-        dispatcherProvider = FakeDispatcherProvider()
         gameMapper = GameMapper()
         errorMapper = ErrorMapper()
         gamesRemoteDataStore = GamesIgdbDataStoreImpl(
             gamesEndpoint = gamesEndpoint,
-            dispatcherProvider = dispatcherProvider,
+            dispatcherProvider = FakeDispatcherProvider(),
             gameMapper = gameMapper,
             errorMapper = errorMapper
         )
@@ -122,8 +120,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.searchGames("query", PAGINATION)
 
         assertEquals(
-            result.get(),
-            gameMapper.mapToDataGames(API_GAMES)
+            gameMapper.mapToDataGames(API_GAMES),
+            result.get()
         )
     }
 
@@ -135,8 +133,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.searchGames("query", PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(HTTP_ERROR)
+            errorMapper.mapToDataError(HTTP_ERROR),
+            result.getError()
         )
     }
 
@@ -148,8 +146,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.searchGames("query", PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(NETWORK_ERROR)
+            errorMapper.mapToDataError(NETWORK_ERROR),
+            result.getError()
         )
     }
 
@@ -161,8 +159,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.searchGames("query", PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(UNKNOWN_ERROR)
+            errorMapper.mapToDataError(UNKNOWN_ERROR),
+            result.getError()
         )
     }
 
@@ -174,8 +172,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getPopularGames(PAGINATION)
 
         assertEquals(
-            result.get(),
-            gameMapper.mapToDataGames(API_GAMES)
+            gameMapper.mapToDataGames(API_GAMES),
+            result.get()
         )
     }
 
@@ -187,8 +185,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getPopularGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(HTTP_ERROR)
+            errorMapper.mapToDataError(HTTP_ERROR),
+            result.getError()
         )
     }
 
@@ -200,8 +198,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getPopularGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(NETWORK_ERROR)
+            errorMapper.mapToDataError(NETWORK_ERROR),
+            result.getError()
         )
     }
 
@@ -213,8 +211,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getPopularGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(UNKNOWN_ERROR)
+            errorMapper.mapToDataError(UNKNOWN_ERROR),
+            result.getError()
         )
     }
 
@@ -226,8 +224,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getRecentlyReleasedGames(PAGINATION)
 
         assertEquals(
-            result.get(),
-            gameMapper.mapToDataGames(API_GAMES)
+            gameMapper.mapToDataGames(API_GAMES),
+            result.get()
         )
     }
 
@@ -239,8 +237,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getRecentlyReleasedGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(HTTP_ERROR)
+            errorMapper.mapToDataError(HTTP_ERROR),
+            result.getError()
         )
     }
 
@@ -252,8 +250,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getRecentlyReleasedGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(NETWORK_ERROR)
+            errorMapper.mapToDataError(NETWORK_ERROR),
+            result.getError()
         )
     }
 
@@ -265,8 +263,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getRecentlyReleasedGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(UNKNOWN_ERROR)
+            errorMapper.mapToDataError(UNKNOWN_ERROR),
+            result.getError()
         )
     }
 
@@ -278,8 +276,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getComingSoonGames(PAGINATION)
 
         assertEquals(
-            result.get(),
-            gameMapper.mapToDataGames(API_GAMES)
+            gameMapper.mapToDataGames(API_GAMES),
+            result.get()
         )
     }
 
@@ -291,8 +289,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getComingSoonGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(HTTP_ERROR)
+            errorMapper.mapToDataError(HTTP_ERROR),
+            result.getError()
         )
     }
 
@@ -304,8 +302,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getComingSoonGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(NETWORK_ERROR)
+            errorMapper.mapToDataError(NETWORK_ERROR),
+            result.getError()
         )
     }
 
@@ -317,8 +315,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getComingSoonGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(UNKNOWN_ERROR)
+            errorMapper.mapToDataError(UNKNOWN_ERROR),
+            result.getError()
         )
     }
 
@@ -330,8 +328,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getMostAnticipatedGames(PAGINATION)
 
         assertEquals(
-            result.get(),
-            gameMapper.mapToDataGames(API_GAMES)
+            gameMapper.mapToDataGames(API_GAMES),
+            result.get()
         )
     }
 
@@ -343,8 +341,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getMostAnticipatedGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(HTTP_ERROR)
+            errorMapper.mapToDataError(HTTP_ERROR),
+            result.getError()
         )
     }
 
@@ -356,8 +354,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getMostAnticipatedGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(NETWORK_ERROR)
+            errorMapper.mapToDataError(NETWORK_ERROR),
+            result.getError()
         )
     }
 
@@ -369,8 +367,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getMostAnticipatedGames(PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(UNKNOWN_ERROR)
+            errorMapper.mapToDataError(UNKNOWN_ERROR),
+            result.getError()
         )
     }
 
@@ -382,8 +380,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getCompanyDevelopedGames(COMPANY, PAGINATION)
 
         assertEquals(
-            result.get(),
-            gameMapper.mapToDataGames(API_GAMES)
+            gameMapper.mapToDataGames(API_GAMES),
+            result.get()
         )
     }
 
@@ -395,8 +393,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getCompanyDevelopedGames(COMPANY, PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(HTTP_ERROR)
+            errorMapper.mapToDataError(HTTP_ERROR),
+            result.getError()
         )
     }
 
@@ -408,8 +406,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getCompanyDevelopedGames(COMPANY, PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(NETWORK_ERROR)
+            errorMapper.mapToDataError(NETWORK_ERROR),
+            result.getError()
         )
     }
 
@@ -421,8 +419,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getCompanyDevelopedGames(COMPANY, PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(UNKNOWN_ERROR)
+            errorMapper.mapToDataError(UNKNOWN_ERROR),
+            result.getError()
         )
     }
 
@@ -434,8 +432,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getSimilarGames(GAME, PAGINATION)
 
         assertEquals(
-            result.get(),
-            gameMapper.mapToDataGames(API_GAMES)
+            gameMapper.mapToDataGames(API_GAMES),
+            result.get()
         )
     }
 
@@ -447,8 +445,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getSimilarGames(GAME, PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(HTTP_ERROR)
+            errorMapper.mapToDataError(HTTP_ERROR),
+            result.getError()
         )
     }
 
@@ -460,8 +458,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getSimilarGames(GAME, PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(NETWORK_ERROR)
+            errorMapper.mapToDataError(NETWORK_ERROR),
+            result.getError()
         )
     }
 
@@ -473,8 +471,8 @@ internal class GamesIgdbDataStoreTest {
         val result = gamesRemoteDataStore.getSimilarGames(GAME, PAGINATION)
 
         assertEquals(
-            result.getError(),
-            errorMapper.mapToDataError(UNKNOWN_ERROR)
+            errorMapper.mapToDataError(UNKNOWN_ERROR),
+            result.getError()
         )
     }
 
