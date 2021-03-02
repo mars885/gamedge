@@ -43,13 +43,9 @@ internal class GamespotFieldsSerializerImpl @Inject constructor() : GamespotFiel
 
 
     private fun Class<*>.getJsonFieldNames(): List<String> {
-        return buildList {
-            for(declaredField in declaredFields) {
-                if(!declaredField.hasJsonAnnotation()) continue
-
-                add(declaredField.getJsonName())
-            }
-        }
+        return declaredFields
+            .filter { it.hasJsonAnnotation() }
+            .map { it.getJsonName() }
     }
 
 
@@ -61,6 +57,13 @@ internal class GamespotFieldsSerializerImpl @Inject constructor() : GamespotFiel
     private fun Field.getJsonName(): String {
         val jsonAnnotation = checkNotNull(getAnnotation(Json::class.java))
         val fieldName = jsonAnnotation.name
+
+        if(fieldName.isBlank()) {
+            throw IllegalArgumentException(
+                "The field \"${name}\" of the class \"${declaringClass.simpleName}\" " +
+                "is annotated with an invalid name \"$fieldName\""
+            )
+        }
 
         return fieldName
     }
