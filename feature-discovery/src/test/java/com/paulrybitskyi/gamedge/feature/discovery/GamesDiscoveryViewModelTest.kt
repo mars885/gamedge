@@ -32,10 +32,8 @@ import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameModelMapper
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemModelFactoryImpl
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameModel
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*

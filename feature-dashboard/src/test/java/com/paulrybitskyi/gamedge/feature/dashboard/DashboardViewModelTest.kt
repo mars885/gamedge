@@ -16,18 +16,38 @@
 
 package com.paulrybitskyi.gamedge.feature.dashboard
 
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
-import org.junit.Assert.*
+internal class DashboardViewModelTest {
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
+
+    private lateinit var viewModel: DashboardViewModel
+
+
+    @Before
+    fun setup() {
+        viewModel = DashboardViewModel()
     }
+
+
+    @Test
+    fun `Routes to search screen when toolbar right button is clicked`() {
+        mainCoroutineRule.runBlockingTest {
+            viewModel.onToolbarRightButtonClicked()
+
+            val route = viewModel.routeFlow.first()
+
+            assertTrue(route is DashboardRoute.Search)
+        }
+    }
+
+
 }
