@@ -210,12 +210,14 @@ object deps {
         private const val jUnitVersion = "4.13.1"
         private const val jUnitExtVersion = "1.1.2"
         private const val testRunnerVersion = "1.3.0"
+        private const val mockkVersion = "1.10.6"
         private const val orgJsonVersion = "20201115"
 
         const val jUnit = "junit:junit:$jUnitVersion"
         const val jUnitExt = "androidx.test.ext:junit:$jUnitExtVersion"
         const val testRunner = "androidx.test:runner:$testRunnerVersion"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
+        const val mockk = "io.mockk:mockk:$mockkVersion"
         const val orgJson = "org.json:json:$orgJsonVersion"
 
     }
