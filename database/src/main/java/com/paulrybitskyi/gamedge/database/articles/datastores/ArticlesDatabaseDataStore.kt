@@ -33,7 +33,7 @@ import javax.inject.Singleton
 
 @Singleton
 @BindType
-internal class ArticlesDatabaseDataStoreImpl @Inject constructor(
+internal class ArticlesDatabaseDataStore @Inject constructor(
     private val articlesTable: ArticlesTable,
     private val dispatcherProvider: DispatcherProvider,
     private val articleMapper: ArticleMapper

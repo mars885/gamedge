@@ -19,13 +19,26 @@ package com.paulrybitskyi.gamedge.database.games.datastores
 import com.paulrybitskyi.gamedge.data.games.DataGame
 import com.paulrybitskyi.gamedge.database.commons.JsonConverter
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 
-internal class GameMapper @Inject constructor(private val jsonConverter: JsonConverter) {
+internal interface GameMapper {
+
+    fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame
+
+    fun mapToDataGame(databaseGame: DatabaseGame): DataGame
+
+}
 
 
-    fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame {
+@BindType
+internal class GameMapperImpl @Inject constructor(
+    private val jsonConverter: JsonConverter
+) : GameMapper {
+
+
+    override fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame {
         return DatabaseGame(
             id = dataGame.id,
             followerCount = dataGame.followerCount,
@@ -57,7 +70,7 @@ internal class GameMapper @Inject constructor(private val jsonConverter: JsonCon
     }
 
 
-    fun mapToDataGame(databaseGame: DatabaseGame): DataGame {
+    override fun mapToDataGame(databaseGame: DatabaseGame): DataGame {
         return DataGame(
             id = databaseGame.id,
             followerCount = databaseGame.followerCount,
