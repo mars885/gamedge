@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.feature.info.mapping
 
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
+import com.paulrybitskyi.gamedge.core.factories.createUrls
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGamesModel
