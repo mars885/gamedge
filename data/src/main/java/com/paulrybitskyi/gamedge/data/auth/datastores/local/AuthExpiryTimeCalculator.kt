@@ -33,7 +33,7 @@ internal class AuthExpiryTimeCalculator @Inject constructor(
     fun calculateExpiryTime(oauthCredentials: OauthCredentials): Long {
         val currentTimestamp = timestampProvider.getUnixTimestamp()
         val tokenTtlInMillis = TimeUnit.SECONDS.toMillis(oauthCredentials.tokenTtl)
-        val expiryTime = (currentTimestamp + (tokenTtlInMillis - AUTH_TOKEN_TTL_DEDUCTION))
+        val expiryTime = (currentTimestamp + tokenTtlInMillis - AUTH_TOKEN_TTL_DEDUCTION)
 
         return expiryTime
     }

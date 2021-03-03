@@ -20,7 +20,7 @@ import androidx.datastore.DataStore
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 import com.paulrybitskyi.hiltbinder.BindType
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -60,8 +60,8 @@ internal class AuthFileDataStore @Inject constructor(
         // since they currently run on the main thread.
 
         return protoDataStore.data
-            .first()
-            .takeIf(ProtoOauthCredentials::isNotEmpty)
+            .firstOrNull()
+            ?.takeIf(ProtoOauthCredentials::isNotEmpty)
             ?.let(mapper::mapToDataOauthCredentials)
     }
 
@@ -70,8 +70,8 @@ internal class AuthFileDataStore @Inject constructor(
         // Same with Kotlin's takeIf and let.
 
         return protoDataStore.data
-            .first()
-            .takeIf(ProtoOauthCredentials::isNotEmpty)
+            .firstOrNull()
+            ?.takeIf(ProtoOauthCredentials::isNotEmpty)
             ?.let { timestampProvider.getUnixTimestamp() >= it.expirationTime }
             ?: true
     }
