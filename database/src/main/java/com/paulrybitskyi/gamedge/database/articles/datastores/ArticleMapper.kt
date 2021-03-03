@@ -19,13 +19,26 @@ package com.paulrybitskyi.gamedge.database.articles.datastores
 import com.paulrybitskyi.gamedge.data.articles.DataArticle
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
 import com.paulrybitskyi.gamedge.database.commons.JsonConverter
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 
-internal class ArticleMapper @Inject constructor(private val jsonConverter: JsonConverter) {
+internal interface ArticleMapper {
+
+    fun mapToDatabaseArticle(dataArticle: DataArticle): DatabaseArticle
+
+    fun mapToDataArticle(databaseArticle: DatabaseArticle): DataArticle
+
+}
 
 
-    fun mapToDatabaseArticle(dataArticle: DataArticle): DatabaseArticle {
+@BindType
+internal class ArticleMapperImpl @Inject constructor(
+    private val jsonConverter: JsonConverter
+) : ArticleMapper {
+
+
+    override fun mapToDatabaseArticle(dataArticle: DataArticle): DatabaseArticle {
         return DatabaseArticle(
             id = dataArticle.id,
             title = dataArticle.title,
@@ -37,7 +50,7 @@ internal class ArticleMapper @Inject constructor(private val jsonConverter: Json
     }
 
 
-    fun mapToDataArticle(databaseArticle: DatabaseArticle): DataArticle {
+    override fun mapToDataArticle(databaseArticle: DatabaseArticle): DataArticle {
         return DataArticle(
             id = databaseArticle.id,
             title = databaseArticle.title,

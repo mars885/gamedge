@@ -33,7 +33,7 @@ import javax.inject.Singleton
 
 @Singleton
 @BindType
-internal class LikedGamesLocalDataStoreImpl @Inject constructor(
+internal class LikedGamesDatabaseDataStore @Inject constructor(
     private val likedGamesTable: LikedGamesTable,
     private val likedGameFactory: LikedGameFactory,
     private val dispatcherProvider: DispatcherProvider,

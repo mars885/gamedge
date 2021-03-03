@@ -32,7 +32,7 @@ import javax.inject.Singleton
 
 @Singleton
 @BindType
-internal class GamesDatabaseDataStoreImpl @Inject constructor(
+internal class GamesDatabaseDataStore @Inject constructor(
     private val gamesTable: GamesTable,
     private val dispatcherProvider: DispatcherProvider,
     private val queryTimestampProvider: QueryTimestampProvider,
