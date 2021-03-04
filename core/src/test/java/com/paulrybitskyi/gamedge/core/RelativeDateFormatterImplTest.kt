@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.core
 import com.paulrybitskyi.gamedge.core.formatters.RelativeDateFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 import java.time.Instant
@@ -54,10 +54,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "in $yearDiff years",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("in $yearDiff years")
     }
 
 
@@ -69,10 +67,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "in $monthDiff months",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("in $monthDiff months")
     }
 
 
@@ -84,10 +80,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "in $dayDiff days",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("in $dayDiff days")
     }
 
 
@@ -99,10 +93,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "in $hourDiff hours",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("in $hourDiff hours")
     }
 
 
@@ -114,10 +106,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "in $minuteDiff minutes",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("in $minuteDiff minutes")
     }
 
 
@@ -129,10 +119,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "in $secondDiff seconds",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("in $secondDiff seconds")
     }
 
 
@@ -144,10 +132,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "$yearDiff years ago",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("$yearDiff years ago")
     }
 
 
@@ -159,10 +145,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "$monthDiff months ago",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("$monthDiff months ago")
     }
 
 
@@ -174,10 +158,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "$dayDiff days ago",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("$dayDiff days ago")
     }
 
 
@@ -189,10 +171,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "$hourDiff hours ago",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("$hourDiff hours ago")
     }
 
 
@@ -204,10 +184,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "$minuteDiff minutes ago",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("$minuteDiff minutes ago")
     }
 
 
@@ -219,10 +197,8 @@ internal class RelativeDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            "$secondDiff seconds ago",
-            SUT.formatRelativeDate(futureTimestamp.toLocalDateTime())
-        )
+        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
+            .isEqualTo("$secondDiff seconds ago")
     }
 
 

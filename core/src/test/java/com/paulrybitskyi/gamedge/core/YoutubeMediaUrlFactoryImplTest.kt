@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.core
 import com.paulrybitskyi.gamedge.core.factories.YoutubeMediaUrlFactoryImpl
 import com.paulrybitskyi.gamedge.core.factories.YoutubeThumbnailSize
 import com.paulrybitskyi.gamedge.domain.games.DomainVideo
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -45,34 +45,30 @@ internal class YoutubeMediaUrlFactoryImplTest {
     @Test
     fun `Creates thumbnail image urls correctly`() {
         for(ytThumbnailSize in YoutubeThumbnailSize.values()) {
-            assertEquals(
-                "https://img.youtube.com/vi/${DOMAIN_VIDEO.id}/${ytThumbnailSize.rawSize}.jpg",
-                SUT.createThumbnailUrl(DOMAIN_VIDEO, ytThumbnailSize)
-            )
+            assertThat(SUT.createThumbnailUrl(DOMAIN_VIDEO, ytThumbnailSize))
+                .isEqualTo("https://img.youtube.com/vi/${DOMAIN_VIDEO.id}/${ytThumbnailSize.rawSize}.jpg")
         }
     }
 
 
     @Test
     fun `Returns null when video id is blank while creating thumbnail image url`() {
-        assertNull(SUT.createThumbnailUrl(DOMAIN_VIDEO.copy(id = "   "), YoutubeThumbnailSize.MEDIUM))
+        assertThat(SUT.createThumbnailUrl(DOMAIN_VIDEO.copy(id = "   "), YoutubeThumbnailSize.MEDIUM)).isNull()
     }
 
 
     @Test
     fun `Creates video urls correctly`() {
         for(ytThumbnailSize in YoutubeThumbnailSize.values()) {
-            assertEquals(
-                "https://youtu.be/${DOMAIN_VIDEO.id}",
-                SUT.createVideoUrl(DOMAIN_VIDEO)
-            )
+            assertThat(SUT.createVideoUrl(DOMAIN_VIDEO))
+                .isEqualTo("https://youtu.be/${DOMAIN_VIDEO.id}")
         }
     }
 
 
     @Test
     fun `Returns null when video id is blank while creating video url`() {
-        assertNull(SUT.createVideoUrl(DOMAIN_VIDEO.copy(id = "   ")))
+        assertThat(SUT.createVideoUrl(DOMAIN_VIDEO.copy(id = "   "))).isNull()
     }
 
 

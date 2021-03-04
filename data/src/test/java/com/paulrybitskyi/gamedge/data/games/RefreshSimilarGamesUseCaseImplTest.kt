@@ -38,7 +38,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -115,10 +115,8 @@ internal class RefreshSimilarGamesUseCaseImplTest {
             throttler.canRefreshSimilarGames = true
             gamesRemoteDataStore.shouldReturnGames = true
 
-            assertEquals(
-                gameMapper.mapToDomainGames(DATA_GAMES),
-                SUT.execute(USE_CASE_PARAMS).first().get()
-            )
+            assertThat(SUT.execute(USE_CASE_PARAMS).first().get())
+                .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
         }
     }
 
@@ -134,7 +132,7 @@ internal class RefreshSimilarGamesUseCaseImplTest {
                 .onEmpty { isEmptyFlow = true }
                 .firstOrNull()
 
-            assertTrue(isEmptyFlow)
+            assertThat(isEmptyFlow).isTrue
         }
     }
 
@@ -147,7 +145,8 @@ internal class RefreshSimilarGamesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertEquals(DATA_GAMES, gamesLocalDataStore.games)
+            assertThat(gamesLocalDataStore.games)
+                .isEqualTo(DATA_GAMES)
         }
     }
 
@@ -159,7 +158,7 @@ internal class RefreshSimilarGamesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(gamesLocalDataStore.games.isEmpty())
+            assertThat(gamesLocalDataStore.games.isEmpty()).isTrue
         }
     }
 
@@ -172,7 +171,7 @@ internal class RefreshSimilarGamesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(gamesLocalDataStore.games.isEmpty())
+            assertThat(gamesLocalDataStore.games.isEmpty()).isTrue
         }
     }
 
@@ -185,7 +184,7 @@ internal class RefreshSimilarGamesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(throttler.areGamesLastRefreshTimeUpdated)
+            assertThat(throttler.areGamesLastRefreshTimeUpdated).isTrue
         }
     }
 
@@ -197,7 +196,7 @@ internal class RefreshSimilarGamesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertFalse(throttler.areGamesLastRefreshTimeUpdated)
+            assertThat(throttler.areGamesLastRefreshTimeUpdated).isFalse
         }
     }
 
@@ -210,7 +209,7 @@ internal class RefreshSimilarGamesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertFalse(throttler.areGamesLastRefreshTimeUpdated)
+            assertThat(throttler.areGamesLastRefreshTimeUpdated).isFalse
         }
     }
     

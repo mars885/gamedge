@@ -45,7 +45,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -130,9 +130,9 @@ internal class GameInfoViewModelTest {
 
             SUT.loadData(resultEmissionDelay = 0L)
 
-            assertTrue(uiStates[0] is GameInfoUiState.Empty)
-            assertTrue(uiStates[1] is GameInfoUiState.Loading)
-            assertTrue(uiStates[2] is GameInfoUiState.Result)
+            assertThat(uiStates[0] is GameInfoUiState.Empty).isTrue
+            assertThat(uiStates[1] is GameInfoUiState.Loading).isTrue
+            assertThat(uiStates[2] is GameInfoUiState.Result).isTrue
 
             uiStateJob.cancel()
         }
@@ -146,7 +146,7 @@ internal class GameInfoViewModelTest {
 
             SUT.loadData(resultEmissionDelay = 0L)
 
-            assertNotEquals("", logger.errorMessage)
+            assertThat(logger.errorMessage).isNotEmpty
         }
     }
 
@@ -160,7 +160,7 @@ internal class GameInfoViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GeneralCommand.ShowLongToast)
+            assertThat(command is GeneralCommand.ShowLongToast).isTrue
         }
     }
 
@@ -174,7 +174,7 @@ internal class GameInfoViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GameInfoRoute.ImageViewer)
+            assertThat(route is GameInfoRoute.ImageViewer).isTrue
         }
     }
 
@@ -186,7 +186,7 @@ internal class GameInfoViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GameInfoRoute.Back)
+            assertThat(route is GameInfoRoute.Back).isTrue
         }
     }
 
@@ -200,7 +200,7 @@ internal class GameInfoViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GameInfoRoute.ImageViewer)
+            assertThat(route is GameInfoRoute.ImageViewer).isTrue
         }
     }
 
@@ -218,11 +218,9 @@ internal class GameInfoViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GameInfoCommand.OpenUrl)
-            assertEquals(
-                video.videoUrl,
-                (command as GameInfoCommand.OpenUrl).url
-            )
+            assertThat(command is GameInfoCommand.OpenUrl).isTrue
+            assertThat((command as GameInfoCommand.OpenUrl).url)
+                .isEqualTo(video.videoUrl)
         }
     }
 
@@ -236,7 +234,7 @@ internal class GameInfoViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GameInfoRoute.ImageViewer)
+            assertThat(route is GameInfoRoute.ImageViewer).isTrue
         }
     }
 
@@ -255,11 +253,9 @@ internal class GameInfoViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GameInfoCommand.OpenUrl)
-            assertEquals(
-                link.payload,
-                (command as GameInfoCommand.OpenUrl).url
-            )
+            assertThat(command is GameInfoCommand.OpenUrl).isTrue
+            assertThat((command as GameInfoCommand.OpenUrl).url)
+                .isEqualTo(link.payload)
         }
     }
 
@@ -280,11 +276,9 @@ internal class GameInfoViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GameInfoCommand.OpenUrl)
-            assertEquals(
-                company.websiteUrl,
-                (command as GameInfoCommand.OpenUrl).url
-            )
+            assertThat(command is GameInfoCommand.OpenUrl).isTrue
+            assertThat((command as GameInfoCommand.OpenUrl).url)
+                .isEqualTo(company.websiteUrl)
         }
     }
 
@@ -302,11 +296,9 @@ internal class GameInfoViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GameInfoRoute.Info)
-            assertEquals(
-                relatedGame.id,
-                (route as GameInfoRoute.Info).gameId
-            )
+            assertThat(route is GameInfoRoute.Info).isTrue
+            assertThat((route as GameInfoRoute.Info).gameId)
+                .isEqualTo(relatedGame.id)
         }
     }
 

@@ -21,7 +21,7 @@ import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -52,10 +52,8 @@ internal class AuthorizerTest {
         runBlockingTest {
             authLocalDataStore.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
 
-            assertEquals(
-                "Basic access_token",
-                SUT.buildAuthorizationHeader(AuthorizationType.BASIC)
-            )
+            assertThat(SUT.buildAuthorizationHeader(AuthorizationType.BASIC))
+                .isEqualTo("Basic access_token")
         }
     }
 
@@ -65,19 +63,20 @@ internal class AuthorizerTest {
         runBlockingTest {
             authLocalDataStore.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
 
-            assertEquals(
-                "Bearer access_token",
-                SUT.buildAuthorizationHeader(AuthorizationType.BEARER)
-            )
+            assertThat(SUT.buildAuthorizationHeader(AuthorizationType.BEARER))
+                .isEqualTo("Bearer access_token")
         }
     }
 
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `Throws exception if no oauth credentials are present`() {
-        runBlockingTest {
-            SUT.buildAuthorizationHeader(AuthorizationType.BEARER)
-        }
+        assertThatExceptionOfType(IllegalStateException::class.java)
+            .isThrownBy {
+                runBlockingTest {
+                    SUT.buildAuthorizationHeader(AuthorizationType.BEARER)
+                }
+            }
     }
 
 

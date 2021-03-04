@@ -20,4 +20,5 @@ plugins {
 
 dependencies {
     testImplementation(deps.testing.jUnit)
+    testImplementation(deps.testing.assertJ)
 }

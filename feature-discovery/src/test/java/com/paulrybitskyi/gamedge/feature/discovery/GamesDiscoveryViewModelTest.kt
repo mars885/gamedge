@@ -36,7 +36,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -135,7 +135,7 @@ internal class GamesDiscoveryViewModelTest {
 
             SUT.loadData()
 
-            assertNotEquals("", logger.errorMessage)
+            assertThat(logger.errorMessage).isNotEmpty
         }
     }
 
@@ -148,7 +148,7 @@ internal class GamesDiscoveryViewModelTest {
 
             SUT.loadData()
 
-            assertNotEquals("", logger.errorMessage)
+            assertThat(logger.errorMessage).isNotEmpty
         }
     }
 
@@ -163,7 +163,7 @@ internal class GamesDiscoveryViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GeneralCommand.ShowLongToast)
+            assertThat(command is GeneralCommand.ShowLongToast).isTrue
         }
     }
 
@@ -175,11 +175,9 @@ internal class GamesDiscoveryViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GamesDiscoveryRoute.Category)
-            assertEquals(
-                "popular",
-                (route as GamesDiscoveryRoute.Category).category
-            )
+            assertThat(route is GamesDiscoveryRoute.Category).isTrue
+            assertThat((route as GamesDiscoveryRoute.Category).category)
+                .isEqualTo("popular")
         }
     }
 
@@ -197,11 +195,9 @@ internal class GamesDiscoveryViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GamesDiscoveryRoute.Info)
-            assertEquals(
-                item.id,
-                (route as GamesDiscoveryRoute.Info).gameId
-            )
+            assertThat(route is GamesDiscoveryRoute.Info).isTrue
+            assertThat((route as GamesDiscoveryRoute.Info).gameId)
+                .isEqualTo(item.id)
         }
     }
 

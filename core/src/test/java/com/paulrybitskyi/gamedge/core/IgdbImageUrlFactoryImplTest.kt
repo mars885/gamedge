@@ -21,7 +21,7 @@ import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactoryImpl
 import com.paulrybitskyi.gamedge.domain.games.DomainImage
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -61,7 +61,8 @@ internal class IgdbImageUrlFactoryImplTest {
                     config.extension.rawExtension
                 )
 
-                assertEquals(expectedUrl, SUT.createUrl(DOMAIN_IMAGE, config))
+                assertThat(SUT.createUrl(DOMAIN_IMAGE, config))
+                    .isEqualTo(expectedUrl)
             }
         }
     }
@@ -84,7 +85,8 @@ internal class IgdbImageUrlFactoryImplTest {
                     config.extension.rawExtension
                 )
 
-                assertEquals(expectedUrl, SUT.createUrl(DOMAIN_IMAGE, config))
+                assertThat(SUT.createUrl(DOMAIN_IMAGE, config))
+                    .isEqualTo(expectedUrl)
             }
         }
     }
@@ -96,7 +98,7 @@ internal class IgdbImageUrlFactoryImplTest {
             size = IgdbImageSize.BIG_COVER
         )
 
-        assertNull(SUT.createUrl(DOMAIN_IMAGE.copy(id = "   "), config))
+        assertThat(SUT.createUrl(DOMAIN_IMAGE.copy(id = "   "), config)).isNull()
     }
 
 

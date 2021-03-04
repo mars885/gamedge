@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -51,10 +51,10 @@ internal class ObserveGameLikeStateUseCaseImplTest {
     fun `Emits game like state successfully`() {
         runBlockingTest {
             likedGamesLocalDataStore.gameLikeState = true
-            assertTrue(SUT.execute(USE_CASE_PARAMS).first())
+            assertThat(SUT.execute(USE_CASE_PARAMS).first()).isTrue
 
             likedGamesLocalDataStore.gameLikeState = false
-            assertFalse(SUT.execute(USE_CASE_PARAMS).first())
+            assertThat(SUT.execute(USE_CASE_PARAMS).first()).isFalse
         }
     }
 

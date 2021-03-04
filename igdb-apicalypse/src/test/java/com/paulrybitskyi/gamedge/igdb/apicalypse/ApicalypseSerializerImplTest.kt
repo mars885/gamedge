@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.igdb.apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializerImpl
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -53,25 +53,24 @@ internal class ApicalypseSerializerImplTest {
             val field6: Float
         )
 
-        assertEquals(
-            "field1, field2, field3, field4, field5, field6",
-            SUT.serialize(Entity::class.java)
-        )
+        assertThat(SUT.serialize(Entity::class.java))
+            .isEqualTo("field1, field2, field3, field4, field5, field6")
     }
 
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `Throws exception if entity does not have @ApicalypseClass annotation`() {
         data class Entity(
             val field1: Int,
             val field2: Float
         )
 
-        SUT.serialize(Entity::class.java)
+        assertThatExceptionOfType(IllegalArgumentException::class.java)
+            .isThrownBy { SUT.serialize(Entity::class.java) }
     }
 
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `Throws exception if name of field is empty`() {
         @ApicalypseClass
         data class Entity(
@@ -79,11 +78,12 @@ internal class ApicalypseSerializerImplTest {
             val field1: Int
         )
 
-        SUT.serialize(Entity::class.java)
+        assertThatExceptionOfType(IllegalArgumentException::class.java)
+            .isThrownBy { SUT.serialize(Entity::class.java) }
     }
 
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `Throws exception if name of field is blank`() {
         @ApicalypseClass
         data class Entity(
@@ -91,7 +91,8 @@ internal class ApicalypseSerializerImplTest {
             val field1: Int
         )
 
-        SUT.serialize(Entity::class.java)
+        assertThatExceptionOfType(IllegalArgumentException::class.java)
+            .isThrownBy { SUT.serialize(Entity::class.java) }
     }
 
 
@@ -104,10 +105,8 @@ internal class ApicalypseSerializerImplTest {
             val field2: Float
         )
 
-        assertEquals(
-            "field1",
-            SUT.serialize(Entity::class.java)
-        )
+        assertThat(SUT.serialize(Entity::class.java))
+            .isEqualTo("field1")
     }
 
 
@@ -149,10 +148,8 @@ internal class ApicalypseSerializerImplTest {
             val child3: Child3
         )
 
-        assertEquals(
-            "parent, child1.field1, child2.field1, child2.field2, child3.field1, child3.field2, child3.field3",
-            SUT.serialize(Parent::class.java)
-        )
+        assertThat(SUT.serialize(Parent::class.java))
+            .isEqualTo("parent, child1.field1, child2.field1, child2.field2, child3.field1, child3.field2, child3.field3")
     }
 
 
@@ -218,12 +215,12 @@ internal class ApicalypseSerializerImplTest {
             val child3: Child3
         )
 
-        assertEquals(
-            "parent, child1.kid1.field1, child2.kid1.field1, child2.kid2.field1, child2.kid2.field2, " +
-            "child3.kid1.field1, child3.kid2.field1, child3.kid2.field2, child3.kid3.field1, " +
-            "child3.kid3.field2, child3.kid3.field3",
-            SUT.serialize(Parent::class.java)
-        )
+        assertThat(SUT.serialize(Parent::class.java))
+            .isEqualTo(
+                "parent, child1.kid1.field1, child2.kid1.field1, child2.kid2.field1, child2.kid2.field2, " +
+                "child3.kid1.field1, child3.kid2.field1, child3.kid2.field2, child3.kid3.field1, " +
+                "child3.kid3.field2, child3.kid3.field3"
+            )
     }
 
 
@@ -237,10 +234,8 @@ internal class ApicalypseSerializerImplTest {
             val field2: List<String>
         )
 
-        assertEquals(
-            "field1, field2",
-            SUT.serialize(Entity::class.java)
-        )
+        assertThat(SUT.serialize(Entity::class.java))
+            .isEqualTo("field1, field2")
     }
 
 
@@ -254,14 +249,12 @@ internal class ApicalypseSerializerImplTest {
             val field2: Set<String>
         )
 
-        assertEquals(
-            "field1, field2",
-            SUT.serialize(Entity::class.java)
-        )
+        assertThat(SUT.serialize(Entity::class.java))
+            .isEqualTo("field1, field2")
     }
 
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `Throws exception when serializing non collection generic type`() {
         @ApicalypseClass
         data class Entity(
@@ -271,7 +264,8 @@ internal class ApicalypseSerializerImplTest {
             val field2: Map<String, String>
         )
 
-        SUT.serialize(Entity::class.java)
+        assertThatExceptionOfType(IllegalStateException::class.java)
+            .isThrownBy { SUT.serialize(Entity::class.java) }
     }
 
 

@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.core
 import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.*
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -78,7 +78,7 @@ internal class GameAgeRatingFormatterImplTest {
 
         SUT.formatAgeRating(game)
 
-        assertTrue(stringProvider.isRatingAvailable)
+        assertThat(stringProvider.isRatingAvailable).isTrue
     }
 
 
@@ -86,7 +86,7 @@ internal class GameAgeRatingFormatterImplTest {
     fun `Returns not available string when game does not contain any ratings`() {
         SUT.formatAgeRating(DOMAIN_GAME)
 
-        assertTrue(stringProvider.isRatingNotAvailable)
+        assertThat(stringProvider.isRatingNotAvailable).isTrue
     }
 
 
@@ -101,7 +101,7 @@ internal class GameAgeRatingFormatterImplTest {
 
         SUT.formatAgeRating(game)
 
-        assertTrue(stringProvider.isRatingNotAvailable)
+        assertThat(stringProvider.isRatingNotAvailable).isTrue
     }
 
 

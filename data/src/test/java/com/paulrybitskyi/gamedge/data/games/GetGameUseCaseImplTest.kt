@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -63,10 +63,8 @@ internal class GetGameUseCaseImplTest {
         runBlockingTest {
             gamesLocalDataStore.shouldReturnGame = true
 
-            assertEquals(
-                gameMapper.mapToDomainGame(DATA_GAME),
-                SUT.execute(USE_CASE_PARAMS).first().get()
-            )
+            assertThat(SUT.execute(USE_CASE_PARAMS).first().get())
+                .isEqualTo(gameMapper.mapToDomainGame(DATA_GAME))
         }
     }
 
@@ -78,7 +76,7 @@ internal class GetGameUseCaseImplTest {
 
             val error = SUT.execute(USE_CASE_PARAMS).first().getError()
 
-            assertTrue(error is Error.NotFound)
+            assertThat(error is Error.NotFound).isTrue
         }
     }
 

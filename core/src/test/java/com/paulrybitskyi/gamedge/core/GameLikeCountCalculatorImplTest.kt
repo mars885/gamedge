@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.core
 
 import com.paulrybitskyi.gamedge.domain.games.DomainCategory
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -69,7 +69,8 @@ internal class GameLikeCountCalculatorImplTest {
     fun `Calculates like count properly when both follower count and hype count fields are not null`() {
         val game = DOMAIN_GAME.copy(followerCount = 20, hypeCount = 10)
 
-        assertEquals(30, SUT.calculateLikeCount(game))
+        assertThat(SUT.calculateLikeCount(game))
+            .isEqualTo(30)
     }
 
 
@@ -77,7 +78,8 @@ internal class GameLikeCountCalculatorImplTest {
     fun `Calculates like count properly when follower count field is null`() {
         val game = DOMAIN_GAME.copy(followerCount = null, hypeCount = 50)
 
-        assertEquals(50, SUT.calculateLikeCount(game))
+        assertThat(SUT.calculateLikeCount(game))
+            .isEqualTo(50)
     }
 
 
@@ -85,7 +87,8 @@ internal class GameLikeCountCalculatorImplTest {
     fun `Calculates like count properly when hype count field is null`() {
         val game = DOMAIN_GAME.copy(followerCount = 70, hypeCount = null)
 
-        assertEquals(70, SUT.calculateLikeCount(game))
+        assertThat(SUT.calculateLikeCount(game))
+            .isEqualTo(70)
     }
 
 
@@ -93,7 +96,8 @@ internal class GameLikeCountCalculatorImplTest {
     fun `Calculates like count properly when both follower count and hype count fields are null`() {
         val game = DOMAIN_GAME.copy(followerCount = null, hypeCount = null)
 
-        assertEquals(0, SUT.calculateLikeCount(game))
+        assertThat(SUT.calculateLikeCount(game))
+            .isEqualTo(0)
     }
 
 

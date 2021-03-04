@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -107,13 +107,11 @@ internal class LikedGamesViewModelTest {
 
             SUT.loadData()
 
-            assertTrue(uiStates[0] is GamesUiState.Empty)
-            assertTrue(uiStates[1] is GamesUiState.Loading)
-            assertTrue(uiStates[2] is GamesUiState.Result)
-            assertEquals(
-                DOMAIN_GAMES.size,
-                (uiStates[2] as GamesUiState.Result).items.size
-            )
+            assertThat(uiStates[0] is GamesUiState.Empty).isTrue
+            assertThat(uiStates[1] is GamesUiState.Loading).isTrue
+            assertThat(uiStates[2] is GamesUiState.Result).isTrue
+            assertThat((uiStates[2] as GamesUiState.Result).items)
+                .hasSize(DOMAIN_GAMES.size)
 
             uiStateJob.cancel()
         }
@@ -127,7 +125,7 @@ internal class LikedGamesViewModelTest {
 
             SUT.loadData()
 
-            assertNotEquals("", logger.errorMessage)
+            assertThat(logger.errorMessage).isNotEmpty
         }
     }
 
@@ -141,7 +139,7 @@ internal class LikedGamesViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GeneralCommand.ShowLongToast)
+            assertThat(command is GeneralCommand.ShowLongToast).isTrue
         }
     }
 
@@ -162,8 +160,9 @@ internal class LikedGamesViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is LikedGamesRoute.Info)
-            assertEquals(gameModel.id, (route as LikedGamesRoute.Info).gameId)
+            assertThat(route is LikedGamesRoute.Info).isTrue
+            assertThat((route as LikedGamesRoute.Info).gameId)
+                .isEqualTo(gameModel.id)
         }
     }
 

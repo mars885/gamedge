@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -114,7 +114,7 @@ internal class GamesSearchViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GamesSearchRoute.Back)
+            assertThat(route is GamesSearchRoute.Back).isTrue
         }
     }
 
@@ -129,13 +129,11 @@ internal class GamesSearchViewModelTest {
 
             SUT.onSearchActionRequested("god of war")
 
-            assertTrue(uiStates[0] is GamesUiState.Empty)
-            assertTrue(uiStates[1] is GamesUiState.Loading)
-            assertTrue(uiStates[2] is GamesUiState.Result)
-            assertEquals(
-                DOMAIN_GAMES.size,
-                (uiStates[2] as GamesUiState.Result).items.size
-            )
+            assertThat(uiStates[0] is GamesUiState.Empty).isTrue
+            assertThat(uiStates[1] is GamesUiState.Loading).isTrue
+            assertThat(uiStates[2] is GamesUiState.Result).isTrue
+            assertThat((uiStates[2] as GamesUiState.Result).items)
+                .hasSize(DOMAIN_GAMES.size)
 
             uiStateJob.cancel()
         }
@@ -150,8 +148,8 @@ internal class GamesSearchViewModelTest {
 
             SUT.onSearchActionRequested("")
 
-            assertEquals(1, uiStates.size)
-            assertTrue(uiStates[0] is GamesUiState.Empty)
+            assertThat(uiStates).hasSize(1)
+            assertThat(uiStates[0] is GamesUiState.Empty).isTrue
 
             uiStateJob.cancel()
         }
@@ -170,7 +168,7 @@ internal class GamesSearchViewModelTest {
 
             SUT.onSearchActionRequested("god of war")
 
-            assertEquals(1, uiStates.size)
+            assertThat(uiStates).hasSize(1)
 
             uiStateJob.cancel()
         }
@@ -185,8 +183,8 @@ internal class GamesSearchViewModelTest {
 
             SUT.onSearchActionRequested("   ")
 
-            assertEquals(1, uiStates.size)
-            assertTrue(uiStates[0] is GamesUiState.Empty)
+            assertThat(uiStates).hasSize(1)
+            assertThat(uiStates[0] is GamesUiState.Empty).isTrue
 
             uiStateJob.cancel()
         }
@@ -202,7 +200,7 @@ internal class GamesSearchViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GamesSearchCommand.ClearItems)
+            assertThat(command is GamesSearchCommand.ClearItems).isTrue
         }
     }
 
@@ -214,7 +212,7 @@ internal class GamesSearchViewModelTest {
 
             SUT.onSearchActionRequested("god of war")
 
-            assertNotEquals("", logger.errorMessage)
+            assertThat(logger.errorMessage).isNotEmpty
         }
     }
 
@@ -228,7 +226,7 @@ internal class GamesSearchViewModelTest {
 
             val command = SUT.commandFlow.drop(1).first()
 
-            assertTrue(command is GeneralCommand.ShowLongToast)
+            assertThat(command is GeneralCommand.ShowLongToast).isTrue
         }
     }
 
@@ -249,8 +247,9 @@ internal class GamesSearchViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GamesSearchRoute.Info)
-            assertEquals(gameModel.id, (route as GamesSearchRoute.Info).gameId)
+            assertThat(route is GamesSearchRoute.Info).isTrue
+            assertThat((route as GamesSearchRoute.Info).gameId)
+                .isEqualTo(gameModel.id)
         }
     }
 
