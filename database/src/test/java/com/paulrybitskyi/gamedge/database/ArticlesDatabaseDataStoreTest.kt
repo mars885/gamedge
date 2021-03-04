@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -75,10 +75,8 @@ internal class ArticlesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.saveArticles(DATA_ARTICLES)
 
-            assertEquals(
-                articleMapper.mapToDatabaseArticles(DATA_ARTICLES),
-                articlesTable.articles
-            )
+            assertThat(articlesTable.articles)
+                .isEqualTo(articleMapper.mapToDatabaseArticles(DATA_ARTICLES))
         }
     }
 
@@ -90,7 +88,8 @@ internal class ArticlesDatabaseDataStoreTest {
 
             val articles = SUT.observeArticles(DataPagination(offset = 0, limit = 20)).first()
 
-            assertEquals(DATA_ARTICLES, articles)
+            assertThat(articles)
+                .isEqualTo(DATA_ARTICLES)
         }
     }
 

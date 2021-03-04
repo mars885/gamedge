@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -101,10 +101,8 @@ internal class GamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.saveGames(DATA_GAMES)
 
-            assertEquals(
-                gameMapper.mapToDatabaseGames(DATA_GAMES),
-                gamesTable.games
-            )
+            assertThat(gamesTable.games)
+                .isEqualTo(gameMapper.mapToDatabaseGames(DATA_GAMES))
         }
     }
 
@@ -118,7 +116,8 @@ internal class GamesDatabaseDataStoreTest {
 
             val game = DATA_GAMES.first()
 
-            assertEquals(game, SUT.getGame(game.id))
+            assertThat(SUT.getGame(game.id))
+                .isEqualTo(game)
         }
     }
 
@@ -128,7 +127,7 @@ internal class GamesDatabaseDataStoreTest {
         runBlockingTest {
             gamesTable.shouldNotReturnGame = true
 
-            assertNull(SUT.getGame(1))
+            assertThat(SUT.getGame(1)).isNull()
         }
     }
 
@@ -146,7 +145,8 @@ internal class GamesDatabaseDataStoreTest {
                 developedGames = listOf()
             )
 
-            assertEquals(DATA_GAMES, SUT.getCompanyDevelopedGames(company, DATA_PAGINATION))
+            assertThat(SUT.getCompanyDevelopedGames(company, DATA_PAGINATION))
+                .isEqualTo(DATA_GAMES)
         }
     }
 
@@ -156,10 +156,8 @@ internal class GamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.saveGames(DATA_GAMES)
 
-            assertEquals(
-                DATA_GAMES,
-                SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
-            )
+            assertThat(SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION))
+                .isEqualTo(DATA_GAMES)
         }
     }
 
@@ -169,10 +167,8 @@ internal class GamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.saveGames(DATA_GAMES)
 
-            assertEquals(
-                DATA_GAMES,
-                SUT.searchGames("", DATA_PAGINATION)
-            )
+            assertThat(SUT.searchGames("", DATA_PAGINATION))
+                .isEqualTo(DATA_GAMES)
         }
     }
 
@@ -182,10 +178,8 @@ internal class GamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.saveGames(DATA_GAMES)
 
-            assertEquals(
-                DATA_GAMES,
-                SUT.observePopularGames(DATA_PAGINATION).first()
-            )
+            assertThat(SUT.observePopularGames(DATA_PAGINATION).first())
+                .isEqualTo(DATA_GAMES)
         }
     }
 
@@ -195,10 +189,8 @@ internal class GamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.saveGames(DATA_GAMES)
 
-            assertEquals(
-                DATA_GAMES,
-                SUT.observeRecentlyReleasedGames(DATA_PAGINATION).first()
-            )
+            assertThat(SUT.observeRecentlyReleasedGames(DATA_PAGINATION).first())
+                .isEqualTo(DATA_GAMES)
         }
     }
 
@@ -208,10 +200,8 @@ internal class GamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.saveGames(DATA_GAMES)
 
-            assertEquals(
-                DATA_GAMES,
-                SUT.observeComingSoonGames(DATA_PAGINATION).first()
-            )
+            assertThat(SUT.observeComingSoonGames(DATA_PAGINATION).first())
+                .isEqualTo(DATA_GAMES)
         }
     }
 
@@ -221,10 +211,8 @@ internal class GamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.saveGames(DATA_GAMES)
 
-            assertEquals(
-                DATA_GAMES,
-                SUT.observeMostAnticipatedGames(DATA_PAGINATION).first()
-            )
+            assertThat(SUT.observeMostAnticipatedGames(DATA_PAGINATION).first())
+                .isEqualTo(DATA_GAMES)
         }
     }
 

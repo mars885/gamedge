@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.gamespot.api
 
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotErrorMessageExtractor
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -47,16 +47,14 @@ internal class GamespotErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertEquals(
-            "Invalid API Key",
-            SUT.extract(responseBody)
-        )
+        assertThat(SUT.extract(responseBody))
+            .isEqualTo("Invalid API Key")
     }
 
 
     @Test
     fun `Returns unknown error's message when response body is not json`() {
-        assertNotEquals("", SUT.extract("hello there"))
+        assertThat(SUT.extract("hello there")).isNotEmpty
     }
 
 
@@ -73,7 +71,7 @@ internal class GamespotErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertNotEquals("", SUT.extract(responseBody))
+        assertThat(SUT.extract(responseBody)).isNotEmpty
     }
 
 

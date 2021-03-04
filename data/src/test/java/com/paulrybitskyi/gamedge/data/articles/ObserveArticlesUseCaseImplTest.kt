@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -102,7 +102,7 @@ internal class ObserveArticlesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS)
 
-            assertTrue(refreshArticlesUseCase.isExecuted)
+            assertThat(refreshArticlesUseCase.isExecuted).isTrue
         }
     }
 
@@ -113,10 +113,8 @@ internal class ObserveArticlesUseCaseImplTest {
             refreshArticlesUseCase.shouldReturnArticles = true
             articlesLocalDataStore.saveArticles(DATA_ARTICLES)
 
-            assertEquals(
-                articleMapper.mapToDomainArticles(DATA_ARTICLES),
-                SUT.execute(USE_CASE_PARAMS).first()
-            )
+            assertThat(SUT.execute(USE_CASE_PARAMS).first())
+                .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
         }
     }
 
@@ -127,10 +125,8 @@ internal class ObserveArticlesUseCaseImplTest {
             refreshArticlesUseCase.shouldEmitEmptyFlow = true
             articlesLocalDataStore.saveArticles(DATA_ARTICLES)
 
-            assertEquals(
-                articleMapper.mapToDomainArticles(DATA_ARTICLES),
-                SUT.execute(USE_CASE_PARAMS).first()
-            )
+            assertThat(SUT.execute(USE_CASE_PARAMS).first())
+                .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
         }
     }
 
@@ -140,10 +136,8 @@ internal class ObserveArticlesUseCaseImplTest {
         runBlockingTest {
             articlesLocalDataStore.saveArticles(DATA_ARTICLES)
 
-            assertEquals(
-                articleMapper.mapToDomainArticles(DATA_ARTICLES),
-                SUT.execute(USE_CASE_PARAMS.copy(refreshArticles = false)).first()
-            )
+            assertThat(SUT.execute(USE_CASE_PARAMS.copy(refreshArticles = false)).first())
+                .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
         }
     }
 

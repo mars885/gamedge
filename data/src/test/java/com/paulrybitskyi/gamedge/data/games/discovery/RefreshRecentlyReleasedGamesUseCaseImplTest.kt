@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -79,10 +79,8 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
             throttler.canRefreshGames = true
             gamesRemoteDataStore.shouldReturnGames = true
 
-            assertEquals(
-                gameMapper.mapToDomainGames(DATA_GAMES),
-                SUT.execute(REFRESH_USE_CASE_PARAMS).first().get()
-            )
+            assertThat(SUT.execute(REFRESH_USE_CASE_PARAMS).first().get())
+                .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
         }
     }
 
@@ -98,7 +96,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
                 .onEmpty { isEmptyFlow = true }
                 .firstOrNull()
 
-            assertTrue(isEmptyFlow)
+            assertThat(isEmptyFlow).isTrue
         }
     }
 
@@ -111,7 +109,8 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertEquals(DATA_GAMES, gamesLocalDataStore.games)
+            assertThat(gamesLocalDataStore.games)
+                .isEqualTo(DATA_GAMES)
         }
     }
 
@@ -123,7 +122,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(gamesLocalDataStore.games.isEmpty())
+            assertThat(gamesLocalDataStore.games.isEmpty()).isTrue
         }
     }
 
@@ -136,7 +135,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(gamesLocalDataStore.games.isEmpty())
+            assertThat(gamesLocalDataStore.games.isEmpty()).isTrue
         }
     }
 
@@ -149,7 +148,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(throttler.areGamesLastRefreshTimeUpdated)
+            assertThat(throttler.areGamesLastRefreshTimeUpdated).isTrue
         }
     }
 
@@ -161,7 +160,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertFalse(throttler.areGamesLastRefreshTimeUpdated)
+            assertThat(throttler.areGamesLastRefreshTimeUpdated).isFalse
         }
     }
 
@@ -174,7 +173,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertFalse(throttler.areGamesLastRefreshTimeUpdated)
+            assertThat(throttler.areGamesLastRefreshTimeUpdated).isFalse
         }
     }
 

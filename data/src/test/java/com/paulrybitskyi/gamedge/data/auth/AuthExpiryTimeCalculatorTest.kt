@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.data.auth
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AUTH_TOKEN_TTL_DEDUCTION
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthExpiryTimeCalculator
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.TimeUnit
@@ -53,7 +53,8 @@ internal class AuthExpiryTimeCalculatorTest {
         val expiryTime = SUT.calculateExpiryTime(credentials)
         val expected = (CURRENT_TIMESTAMP + TimeUnit.SECONDS.toMillis(credentials.tokenTtl) - AUTH_TOKEN_TTL_DEDUCTION)
 
-        assertEquals(expected, expiryTime)
+        assertThat(expiryTime)
+            .isEqualTo(expected)
     }
 
 

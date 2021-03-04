@@ -25,7 +25,7 @@ import com.paulrybitskyi.gamedge.data.auth.datastores.local.ProtoOauthCredential
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.TimeUnit
@@ -70,7 +70,7 @@ internal class AuthFileDataStoreTest {
         runBlockingTest {
             SUT.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
 
-            assertTrue(protoDataStore.isDataUpdated)
+            assertThat(protoDataStore.isDataUpdated).isTrue
         }
     }
 
@@ -80,10 +80,8 @@ internal class AuthFileDataStoreTest {
         runBlockingTest {
             protoDataStore.shouldReturnCredentials = true
 
-            assertEquals(
-                DATA_OAUTH_CREDENTIALS,
-                SUT.getOauthCredentials()
-            )
+            assertThat(SUT.getOauthCredentials())
+                .isEqualTo(DATA_OAUTH_CREDENTIALS)
         }
     }
 
@@ -93,7 +91,7 @@ internal class AuthFileDataStoreTest {
         runBlockingTest {
             protoDataStore.shouldReturnEmptyFlow = true
 
-            assertNull(SUT.getOauthCredentials())
+            assertThat(SUT.getOauthCredentials()).isNull()
         }
     }
 
@@ -104,7 +102,7 @@ internal class AuthFileDataStoreTest {
             protoDataStore.shouldReturnCredentials = true
             timestampProvider.timestamp = 0L
 
-            assertFalse(SUT.isExpired())
+            assertThat(SUT.isExpired()).isFalse
         }
     }
 
@@ -115,7 +113,7 @@ internal class AuthFileDataStoreTest {
             protoDataStore.shouldReturnCredentials = true
             timestampProvider.timestamp = (PROTO_OAUTH_CREDENTIALS.expirationTime + 10_000L)
 
-            assertTrue(SUT.isExpired())
+            assertThat(SUT.isExpired()).isTrue
         }
     }
 
@@ -125,7 +123,7 @@ internal class AuthFileDataStoreTest {
         runBlockingTest {
             protoDataStore.shouldReturnEmptyFlow = true
 
-            assertTrue(SUT.isExpired())
+            assertThat(SUT.isExpired()).isTrue
         }
     }
 

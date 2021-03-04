@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -75,10 +75,8 @@ internal class RefreshAuthUseCaseImplTest {
             authLocalDataStore.isExpired = true
             authRemoteDataStore.shouldReturnCredentials = true
 
-            assertEquals(
-                authMapper.mapToDomainOauthCredentials(DATA_OAUTH_CREDENTIALS),
-                SUT.execute().first().get()
-            )
+            assertThat(SUT.execute().first().get())
+                .isEqualTo(authMapper.mapToDomainOauthCredentials(DATA_OAUTH_CREDENTIALS))
         }
     }
 
@@ -94,7 +92,7 @@ internal class RefreshAuthUseCaseImplTest {
                 .onEmpty { isEmptyFlow = true }
                 .firstOrNull()
 
-            assertTrue(isEmptyFlow)
+            assertThat(isEmptyFlow).isTrue
         }
     }
 
@@ -107,7 +105,8 @@ internal class RefreshAuthUseCaseImplTest {
 
             SUT.execute().firstOrNull()
 
-            assertEquals(DATA_OAUTH_CREDENTIALS, authLocalDataStore.credentials)
+            assertThat(authLocalDataStore.credentials)
+                .isEqualTo(DATA_OAUTH_CREDENTIALS)
         }
     }
 
@@ -119,7 +118,7 @@ internal class RefreshAuthUseCaseImplTest {
 
             SUT.execute().firstOrNull()
 
-            assertNull(authLocalDataStore.credentials)
+            assertThat(authLocalDataStore.credentials).isNull()
         }
     }
 
@@ -132,7 +131,7 @@ internal class RefreshAuthUseCaseImplTest {
 
             SUT.execute().firstOrNull()
 
-            assertNull(authLocalDataStore.credentials)
+            assertThat(authLocalDataStore.credentials).isNull()
         }
     }
 

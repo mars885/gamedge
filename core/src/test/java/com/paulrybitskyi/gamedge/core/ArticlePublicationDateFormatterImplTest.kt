@@ -21,7 +21,7 @@ import com.paulrybitskyi.gamedge.core.formatters.RelativeDateFormatter
 import com.paulrybitskyi.gamedge.core.providers.TimeFormat
 import com.paulrybitskyi.gamedge.core.providers.TimeFormatProvider
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
@@ -57,10 +57,8 @@ internal class ArticlePublicationDateFormatterImplTest {
 
         timestampProvider.stubTimestamp = timestamp
 
-        assertEquals(
-            RELATIVE_DATE,
-            SUT.formatPublicationDate(timestamp)
-        )
+        assertThat(SUT.formatPublicationDate(timestamp))
+            .isEqualTo(RELATIVE_DATE)
     }
 
 
@@ -72,7 +70,8 @@ internal class ArticlePublicationDateFormatterImplTest {
         timestampProvider.stubTimestamp = originalTimestamp
         timeFormatProvider.stubTimeFormat = TimeFormat.TWENTY_FOUR_HOURS
 
-        assertEquals("Mar 2, 1:15", SUT.formatPublicationDate(timestamp))
+        assertThat(SUT.formatPublicationDate(timestamp))
+            .isEqualTo("Mar 2, 1:15")
     }
 
 
@@ -84,7 +83,8 @@ internal class ArticlePublicationDateFormatterImplTest {
         timestampProvider.stubTimestamp = originalTimestamp
         timeFormatProvider.stubTimeFormat = TimeFormat.TWENTY_FOUR_HOURS
 
-        assertEquals("Mar 4, 2020, 1:15", SUT.formatPublicationDate(timestamp))
+        assertThat(SUT.formatPublicationDate(timestamp))
+            .isEqualTo("Mar 4, 2020, 1:15")
     }
 
 
@@ -96,7 +96,8 @@ internal class ArticlePublicationDateFormatterImplTest {
         timestampProvider.stubTimestamp = originalTimestamp
         timeFormatProvider.stubTimeFormat = TimeFormat.TWELVE_HOURS
 
-        assertEquals("Mar 2, 1:15 AM", SUT.formatPublicationDate(timestamp))
+        assertThat(SUT.formatPublicationDate(timestamp))
+            .isEqualTo("Mar 2, 1:15 AM")
     }
 
 
@@ -108,7 +109,8 @@ internal class ArticlePublicationDateFormatterImplTest {
         timestampProvider.stubTimestamp = originalTimestamp
         timeFormatProvider.stubTimeFormat = TimeFormat.TWELVE_HOURS
 
-        assertEquals("Mar 4, 2020, 1:15 AM", SUT.formatPublicationDate(timestamp))
+        assertThat(SUT.formatPublicationDate(timestamp))
+            .isEqualTo("Mar 4, 2020, 1:15 AM")
     }
 
 

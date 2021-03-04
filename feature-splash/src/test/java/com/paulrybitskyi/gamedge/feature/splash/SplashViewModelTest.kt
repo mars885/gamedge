@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -75,7 +75,7 @@ internal class SplashViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is SplashRoute.Dashboard)
+            assertThat(route is SplashRoute.Dashboard).isTrue
         }
     }
 
@@ -86,7 +86,7 @@ internal class SplashViewModelTest {
 
         SUT.init()
 
-        assertNotEquals("", logger.errorMessage)
+        assertThat(logger.errorMessage).isNotEmpty
     }
 
 
@@ -96,7 +96,7 @@ internal class SplashViewModelTest {
 
         SUT.init()
 
-        assertNotEquals("", logger.errorMessage)
+        assertThat(logger.errorMessage).isNotEmpty
     }
 
 
@@ -109,7 +109,7 @@ internal class SplashViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GeneralCommand.ShowLongToast)
+            assertThat(command is GeneralCommand.ShowLongToast).isTrue
         }
     }
 
@@ -123,7 +123,7 @@ internal class SplashViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GeneralCommand.ShowLongToast)
+            assertThat(command is GeneralCommand.ShowLongToast).isTrue
         }
     }
 
@@ -137,7 +137,7 @@ internal class SplashViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is SplashRoute.Exit)
+            assertThat(route is SplashRoute.Exit).isTrue
         }
     }
 
@@ -151,7 +151,7 @@ internal class SplashViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is SplashRoute.Exit)
+            assertThat(route is SplashRoute.Exit).isTrue
         }
     }
 

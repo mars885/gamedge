@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.feature.dashboard
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -45,7 +45,7 @@ internal class DashboardViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is DashboardRoute.Search)
+            assertThat(route is DashboardRoute.Search).isTrue
         }
     }
 

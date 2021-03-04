@@ -33,7 +33,7 @@ import com.paulrybitskyi.gamedge.data.games.utils.FakeGamesRemoteDataStore
 import com.paulrybitskyi.gamedge.data.games.utils.REFRESH_USE_CASE_PARAMS
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -77,10 +77,8 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
             throttler.canRefreshGames = true
             gamesRemoteDataStore.shouldReturnGames = true
 
-            assertEquals(
-                gameMapper.mapToDomainGames(DATA_GAMES),
-                SUT.execute(REFRESH_USE_CASE_PARAMS).first().get()
-            )
+            assertThat(SUT.execute(REFRESH_USE_CASE_PARAMS).first().get())
+                .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
         }
     }
 
@@ -96,7 +94,7 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
                 .onEmpty { isEmptyFlow = true }
                 .firstOrNull()
 
-            assertTrue(isEmptyFlow)
+            assertThat(isEmptyFlow).isTrue
         }
     }
 
@@ -109,7 +107,8 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertEquals(DATA_GAMES, gamesLocalDataStore.games)
+            assertThat(gamesLocalDataStore.games)
+                .isEqualTo(DATA_GAMES)
         }
     }
 
@@ -121,7 +120,7 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(gamesLocalDataStore.games.isEmpty())
+            assertThat(gamesLocalDataStore.games.isEmpty()).isTrue
         }
     }
 
@@ -134,7 +133,7 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(gamesLocalDataStore.games.isEmpty())
+            assertThat(gamesLocalDataStore.games.isEmpty()).isTrue
         }
     }
 
@@ -147,7 +146,7 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(throttler.areGamesLastRefreshTimeUpdated)
+            assertThat(throttler.areGamesLastRefreshTimeUpdated).isTrue
         }
     }
 
@@ -159,7 +158,7 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertFalse(throttler.areGamesLastRefreshTimeUpdated)
+            assertThat(throttler.areGamesLastRefreshTimeUpdated).isFalse
         }
     }
 
@@ -172,7 +171,7 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
 
             SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
 
-            assertFalse(throttler.areGamesLastRefreshTimeUpdated)
+            assertThat(throttler.areGamesLastRefreshTimeUpdated).isFalse
         }
     }
 

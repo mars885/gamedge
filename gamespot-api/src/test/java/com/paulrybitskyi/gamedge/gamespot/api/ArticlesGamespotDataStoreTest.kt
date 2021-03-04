@@ -34,7 +34,7 @@ import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.mapToDataArtic
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -82,10 +82,8 @@ internal class ArticlesGamespotDataStoreTest {
 
             val result = SUT.getArticles(DATA_PAGINATION)
 
-            assertEquals(
-                articleMapper.mapToDataArticles(API_ARTICLES),
-                result.get()
-            )
+            assertThat(result.get())
+                .isEqualTo(articleMapper.mapToDataArticles(API_ARTICLES))
         }
     }
 
@@ -97,10 +95,8 @@ internal class ArticlesGamespotDataStoreTest {
 
             val result = SUT.getArticles(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_HTTP_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_HTTP_ERROR))
         }
     }
 
@@ -112,10 +108,8 @@ internal class ArticlesGamespotDataStoreTest {
 
             val result = SUT.getArticles(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_NETWORK_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_NETWORK_ERROR))
         }
     }
 
@@ -127,10 +121,8 @@ internal class ArticlesGamespotDataStoreTest {
 
             val result = SUT.getArticles(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_UNKNOWN_ERROR))
         }
     }
 

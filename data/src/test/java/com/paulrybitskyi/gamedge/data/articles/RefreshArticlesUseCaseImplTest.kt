@@ -40,7 +40,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -102,10 +102,8 @@ internal class RefreshArticlesUseCaseImplTest {
             throttler.canRefreshArticles = true
             articlesRemoteDataStore.shouldReturnArticles = true
 
-            assertEquals(
-                articleMapper.mapToDomainArticles(DATA_ARTICLES),
-                SUT.execute(USE_CASE_PARAMS).first().get()
-            )
+            assertThat(SUT.execute(USE_CASE_PARAMS).first().get())
+                .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
         }
     }
 
@@ -121,7 +119,7 @@ internal class RefreshArticlesUseCaseImplTest {
                 .onEmpty { isEmptyFlow = true }
                 .firstOrNull()
 
-            assertTrue(isEmptyFlow)
+            assertThat(isEmptyFlow).isTrue
         }
     }
 
@@ -134,7 +132,8 @@ internal class RefreshArticlesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertEquals(DATA_ARTICLES, articlesLocalDataStore.articles)
+            assertThat(articlesLocalDataStore.articles)
+                .isEqualTo(DATA_ARTICLES)
         }
     }
 
@@ -146,7 +145,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(articlesLocalDataStore.articles.isEmpty())
+            assertThat(articlesLocalDataStore.articles.isEmpty()).isTrue
         }
     }
 
@@ -159,7 +158,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(articlesLocalDataStore.articles.isEmpty())
+            assertThat(articlesLocalDataStore.articles.isEmpty()).isTrue
         }
     }
 
@@ -172,7 +171,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertTrue(throttler.areArticlesLastRefreshTimeUpdated)
+            assertThat(throttler.areArticlesLastRefreshTimeUpdated).isTrue
         }
     }
 
@@ -184,7 +183,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertFalse(throttler.areArticlesLastRefreshTimeUpdated)
+            assertThat(throttler.areArticlesLastRefreshTimeUpdated).isFalse
         }
     }
 
@@ -197,7 +196,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
             SUT.execute(USE_CASE_PARAMS).firstOrNull()
 
-            assertFalse(throttler.areArticlesLastRefreshTimeUpdated)
+            assertThat(throttler.areArticlesLastRefreshTimeUpdated).isFalse
         }
     }
 

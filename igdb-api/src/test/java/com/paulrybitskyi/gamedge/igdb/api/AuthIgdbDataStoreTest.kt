@@ -28,7 +28,7 @@ import com.paulrybitskyi.gamedge.igdb.api.auth.AuthEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthIgdbDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthMapper
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -73,10 +73,8 @@ internal class AuthIgdbDataStoreTest {
 
             val result = SUT.getOauthCredentials()
 
-            assertEquals(
-                authMapper.mapToDataOauthCredentials(API_OAUTH_CREDENTIALS),
-                result.get()
-            )
+            assertThat(result.get())
+                .isEqualTo(authMapper.mapToDataOauthCredentials(API_OAUTH_CREDENTIALS))
         }
     }
 
@@ -88,10 +86,8 @@ internal class AuthIgdbDataStoreTest {
 
             val result = SUT.getOauthCredentials()
 
-            assertEquals(
-                errorMapper.mapToDataError(API_HTTP_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_HTTP_ERROR))
         }
     }
 
@@ -103,10 +99,8 @@ internal class AuthIgdbDataStoreTest {
 
             val result = SUT.getOauthCredentials()
 
-            assertEquals(
-                errorMapper.mapToDataError(API_NETWORK_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_NETWORK_ERROR))
         }
     }
 
@@ -118,10 +112,8 @@ internal class AuthIgdbDataStoreTest {
 
             val result = SUT.getOauthCredentials()
 
-            assertEquals(
-                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_UNKNOWN_ERROR))
         }
     }
 

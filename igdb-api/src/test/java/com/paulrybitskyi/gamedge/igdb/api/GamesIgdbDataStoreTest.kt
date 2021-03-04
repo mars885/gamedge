@@ -36,7 +36,7 @@ import com.paulrybitskyi.gamedge.igdb.api.games.datastores.mapToDataGames
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -119,10 +119,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.searchGames("query", DATA_PAGINATION)
 
-            assertEquals(
-                gameMapper.mapToDataGames(API_GAMES),
-                result.get()
-            )
+            assertThat(result.get())
+                .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
 
@@ -134,10 +132,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.searchGames("query", DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_HTTP_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_HTTP_ERROR))
         }
     }
 
@@ -149,10 +145,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.searchGames("query", DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_NETWORK_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_NETWORK_ERROR))
         }
     }
 
@@ -164,10 +158,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.searchGames("query", DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_UNKNOWN_ERROR))
         }
     }
 
@@ -179,10 +171,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getPopularGames(DATA_PAGINATION)
 
-            assertEquals(
-                gameMapper.mapToDataGames(API_GAMES),
-                result.get()
-            )
+            assertThat(result.get())
+                .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
 
@@ -194,10 +184,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getPopularGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_HTTP_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_HTTP_ERROR))
         }
     }
 
@@ -209,10 +197,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getPopularGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_NETWORK_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_NETWORK_ERROR))
         }
     }
 
@@ -224,10 +210,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getPopularGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_UNKNOWN_ERROR))
         }
     }
 
@@ -239,10 +223,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
 
-            assertEquals(
-                gameMapper.mapToDataGames(API_GAMES),
-                result.get()
-            )
+            assertThat(result.get())
+                .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
 
@@ -254,10 +236,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_HTTP_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_HTTP_ERROR))
         }
     }
 
@@ -269,10 +249,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_NETWORK_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_NETWORK_ERROR))
         }
     }
 
@@ -284,10 +262,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_UNKNOWN_ERROR))
         }
     }
 
@@ -299,10 +275,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getComingSoonGames(DATA_PAGINATION)
 
-            assertEquals(
-                gameMapper.mapToDataGames(API_GAMES),
-                result.get()
-            )
+            assertThat(result.get())
+                .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
 
@@ -314,10 +288,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getComingSoonGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_HTTP_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_HTTP_ERROR))
         }
     }
 
@@ -329,10 +301,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getComingSoonGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_NETWORK_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_NETWORK_ERROR))
         }
     }
 
@@ -344,10 +314,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getComingSoonGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_UNKNOWN_ERROR))
         }
     }
 
@@ -359,10 +327,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
 
-            assertEquals(
-                gameMapper.mapToDataGames(API_GAMES),
-                result.get()
-            )
+            assertThat(result.get())
+                .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
 
@@ -374,10 +340,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_HTTP_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_HTTP_ERROR))
         }
     }
 
@@ -389,10 +353,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_NETWORK_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_NETWORK_ERROR))
         }
     }
 
@@ -404,10 +366,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_UNKNOWN_ERROR))
         }
     }
 
@@ -419,10 +379,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
 
-            assertEquals(
-                gameMapper.mapToDataGames(API_GAMES),
-                result.get()
-            )
+            assertThat(result.get())
+                .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
 
@@ -434,10 +392,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_HTTP_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_HTTP_ERROR))
         }
     }
 
@@ -449,10 +405,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_NETWORK_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_NETWORK_ERROR))
         }
     }
 
@@ -464,10 +418,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_UNKNOWN_ERROR))
         }
     }
 
@@ -479,10 +431,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
 
-            assertEquals(
-                gameMapper.mapToDataGames(API_GAMES),
-                result.get()
-            )
+            assertThat(result.get())
+                .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
 
@@ -494,10 +444,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_HTTP_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_HTTP_ERROR))
         }
     }
 
@@ -509,10 +457,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_NETWORK_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_NETWORK_ERROR))
         }
     }
 
@@ -524,10 +470,8 @@ internal class GamesIgdbDataStoreTest {
 
             val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
 
-            assertEquals(
-                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
-                result.getError()
-            )
+            assertThat(result.getError())
+                .isEqualTo(errorMapper.mapToDataError(API_UNKNOWN_ERROR))
         }
     }
 

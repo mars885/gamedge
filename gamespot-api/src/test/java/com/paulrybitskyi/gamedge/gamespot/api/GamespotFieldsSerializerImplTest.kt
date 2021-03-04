@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.gamespot.api
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotFieldsSerializer
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotFieldsSerializerImpl
 import com.squareup.moshi.Json
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -52,10 +52,8 @@ internal class GamespotFieldsSerializerImplTest {
             val field6: Float
         )
 
-        assertEquals(
-            "field1,field2,field3,field4,field5,field6",
-            SUT.serializeFields(Entity::class.java)
-        )
+        assertThat(SUT.serializeFields(Entity::class.java))
+            .isEqualTo("field1,field2,field3,field4,field5,field6")
     }
 
 
@@ -67,29 +65,31 @@ internal class GamespotFieldsSerializerImplTest {
             val field3: Double
         )
 
-        assertEquals("", SUT.serializeFields(Entity::class.java))
+        assertThat(SUT.serializeFields(Entity::class.java)).isEmpty()
     }
 
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `Throws exception if name of field is empty`() {
         data class Entity(
             @field:Json(name = "")
             val field1: Int
         )
 
-        SUT.serializeFields(Entity::class.java)
+        assertThatExceptionOfType(IllegalArgumentException::class.java)
+            .isThrownBy { SUT.serializeFields(Entity::class.java) }
     }
 
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `Throws exception if name of field is blank`() {
         data class Entity(
             @field:Json(name = "   ")
             val field1: Int
         )
 
-        SUT.serializeFields(Entity::class.java)
+        assertThatExceptionOfType(IllegalArgumentException::class.java)
+            .isThrownBy { SUT.serializeFields(Entity::class.java) }
     }
 
 

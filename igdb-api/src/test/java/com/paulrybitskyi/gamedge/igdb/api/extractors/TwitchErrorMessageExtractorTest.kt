@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.extractors
 
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.TwitchErrorMessageExtractor
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -42,20 +42,19 @@ internal class TwitchErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertEquals(
-            "invalid client secret",
-            SUT.extract(responseBody)
-        )
+        assertThat(SUT.extract(responseBody))
+            .isEqualTo("invalid client secret")
     }
 
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `Throws exception when twitch response body is not json`() {
-        SUT.extract("hello there")
+        assertThatExceptionOfType(IllegalStateException::class.java)
+            .isThrownBy { SUT.extract("hello there") }
     }
 
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `Throws exception when twitch response body does not have message field`() {
         val responseBody = """
             {
@@ -64,7 +63,8 @@ internal class TwitchErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        SUT.extract(responseBody)
+        assertThatExceptionOfType(IllegalStateException::class.java)
+            .isThrownBy { SUT.extract(responseBody) }
     }
 
 

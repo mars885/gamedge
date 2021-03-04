@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -86,13 +86,11 @@ internal class GamingNewsViewModelTest {
 
             SUT.loadData()
 
-            assertTrue(uiStates[0] is GamingNewsUiState.Empty)
-            assertTrue(uiStates[1] is GamingNewsUiState.Loading)
-            assertTrue(uiStates[2] is GamingNewsUiState.Result)
-            assertEquals(
-                DOMAIN_ARTICLES.size,
-                (uiStates[2] as GamingNewsUiState.Result).items.size
-            )
+            assertThat(uiStates[0] is GamingNewsUiState.Empty).isTrue
+            assertThat(uiStates[1] is GamingNewsUiState.Loading).isTrue
+            assertThat(uiStates[2] is GamingNewsUiState.Result).isTrue
+            assertThat((uiStates[2] as GamingNewsUiState.Result).items)
+                .hasSize(DOMAIN_ARTICLES.size)
 
             uiStateJob.cancel()
         }
@@ -106,7 +104,7 @@ internal class GamingNewsViewModelTest {
 
             SUT.loadData()
 
-            assertNotEquals("", logger.errorMessage)
+            assertThat(logger.errorMessage).isNotEmpty
         }
     }
 
@@ -120,7 +118,7 @@ internal class GamingNewsViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GeneralCommand.ShowLongToast)
+            assertThat(command is GeneralCommand.ShowLongToast).isTrue
         }
     }
 
@@ -141,11 +139,9 @@ internal class GamingNewsViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GamingNewsCommand.OpenUrl)
-            assertEquals(
-                itemModel.siteDetailUrl,
-                (command as GamingNewsCommand.OpenUrl).url
-            )
+            assertThat(command is GamingNewsCommand.OpenUrl).isTrue
+            assertThat((command as GamingNewsCommand.OpenUrl).url)
+                .isEqualTo(itemModel.siteDetailUrl)
         }
     }
 
@@ -160,13 +156,11 @@ internal class GamingNewsViewModelTest {
 
             SUT.onRefreshRequested()
 
-            assertTrue(uiStates[0] is GamingNewsUiState.Empty)
-            assertTrue(uiStates[1] is GamingNewsUiState.Loading)
-            assertTrue(uiStates[2] is GamingNewsUiState.Result)
-            assertEquals(
-                DOMAIN_ARTICLES.size,
-                (uiStates[2] as GamingNewsUiState.Result).items.size
-            )
+            assertThat(uiStates[0] is GamingNewsUiState.Empty).isTrue
+            assertThat(uiStates[1] is GamingNewsUiState.Loading).isTrue
+            assertThat(uiStates[2] is GamingNewsUiState.Result).isTrue
+            assertThat((uiStates[2] as GamingNewsUiState.Result).items)
+                .hasSize(DOMAIN_ARTICLES.size)
 
             uiStateJob.cancel()
         }

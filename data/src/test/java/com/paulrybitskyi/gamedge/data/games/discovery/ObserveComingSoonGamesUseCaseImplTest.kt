@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -91,10 +91,8 @@ internal class ObserveComingSoonGamesUseCaseImplTest {
     @Test
     fun `Emits games successfully`() {
         runBlockingTest {
-            assertEquals(
-                gameMapper.mapToDomainGames(DATA_GAMES),
-                SUT.execute(ObserveGamesUseCaseParams()).first()
-            )
+            assertThat(SUT.execute(ObserveGamesUseCaseParams()).first())
+                .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
         }
     }
 

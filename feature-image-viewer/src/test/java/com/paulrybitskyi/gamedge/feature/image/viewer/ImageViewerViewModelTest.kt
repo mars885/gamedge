@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -68,7 +68,7 @@ internal class ImageViewerViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is ImageViewerCommand.ShareText)
+            assertThat(command is ImageViewerCommand.ShareText).isTrue
         }
     }
 
@@ -81,8 +81,8 @@ internal class ImageViewerViewModelTest {
 
             SUT.onPageChanged(10)
 
-            assertTrue(selectedPositions[0] == INITIAL_POSITION)
-            assertTrue(selectedPositions[1] == 10)
+            assertThat(selectedPositions[0] == INITIAL_POSITION).isTrue
+            assertThat(selectedPositions[1] == 10).isTrue
 
             selectedPositionsJob.cancel()
         }
@@ -97,7 +97,7 @@ internal class ImageViewerViewModelTest {
 
             SUT.onPageChanged(10)
 
-            assertNotEquals("", toolbarTitles[0])
+            assertThat(toolbarTitles[0]).isNotEmpty
 
             toolbarTitlesJob.cancel()
         }
@@ -111,7 +111,7 @@ internal class ImageViewerViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is ImageViewerCommand.ResetSystemWindows)
+            assertThat(command is ImageViewerCommand.ResetSystemWindows).isTrue
         }
     }
 
@@ -123,7 +123,7 @@ internal class ImageViewerViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is ImageViewerRoute.Back)
+            assertThat(route is ImageViewerRoute.Back).isTrue
         }
     }
 

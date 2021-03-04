@@ -57,6 +57,7 @@ dependencies {
     coreLibraryDesugaring(deps.misc.desugaredLibs)
 
     testImplementation(deps.testing.jUnit)
+    testImplementation(deps.testing.assertJ)
     testImplementation(deps.testing.coroutines)
 
     // Needed to test a simple json parsing functionality

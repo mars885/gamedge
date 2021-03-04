@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.igdb.api.extractors
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.CompositeErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.IgdbErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.TwitchErrorMessageExtractor
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -49,10 +49,8 @@ internal class CompositeErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertEquals(
-            "invalid client secret",
-            SUT.extract(responseBody)
-        )
+        assertThat(SUT.extract(responseBody))
+            .isEqualTo("invalid client secret")
     }
 
 
@@ -68,10 +66,8 @@ internal class CompositeErrorMessageExtractorTest {
             ]
         """.trimIndent()
 
-        assertEquals(
-            "Missing `;` at end of query",
-            SUT.extract(responseBody)
-        )
+        assertThat(SUT.extract(responseBody))
+            .isEqualTo("Missing `;` at end of query")
     }
 
 
@@ -84,10 +80,8 @@ internal class CompositeErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertEquals(
-            "Unknown Error: $responseBody",
-            SUT.extract(responseBody)
-        )
+        assertThat(SUT.extract(responseBody))
+            .isEqualTo("Unknown Error: $responseBody")
     }
 
 

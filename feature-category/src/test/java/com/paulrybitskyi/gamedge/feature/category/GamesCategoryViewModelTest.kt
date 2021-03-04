@@ -40,7 +40,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -146,7 +146,7 @@ internal class GamesCategoryViewModelTest {
             val toolbarTitles = mutableListOf<String>()
             val toolbarTitlesJob = launch { SUT.toolbarTitle.toList(toolbarTitles) }
 
-            assertNotEquals("", toolbarTitles[0])
+            assertThat(toolbarTitles[0]).isNotEmpty
 
             toolbarTitlesJob.cancel()
         }
@@ -164,9 +164,9 @@ internal class GamesCategoryViewModelTest {
 
             SUT.loadData(resultEmissionDelay = 0L)
 
-            assertTrue(uiStates[0] is GamesCategoryUiState.Empty)
-            assertTrue(uiStates[1] is GamesCategoryUiState.Loading)
-            assertTrue(uiStates[2] is GamesCategoryUiState.Result)
+            assertThat(uiStates[0] is GamesCategoryUiState.Empty)
+            assertThat(uiStates[1] is GamesCategoryUiState.Loading)
+            assertThat(uiStates[2] is GamesCategoryUiState.Result)
 
             uiStatesJob.cancel()
         }
@@ -181,7 +181,7 @@ internal class GamesCategoryViewModelTest {
 
             SUT.loadData(resultEmissionDelay = 0L)
 
-            assertNotEquals("", logger.errorMessage)
+            assertThat(logger.errorMessage).isNotEmpty
         }
     }
 
@@ -196,7 +196,7 @@ internal class GamesCategoryViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GeneralCommand.ShowLongToast)
+            assertThat(command is GeneralCommand.ShowLongToast).isTrue
         }
     }
 
@@ -212,7 +212,7 @@ internal class GamesCategoryViewModelTest {
 
             SUT.loadData(resultEmissionDelay = 0L)
 
-            assertTrue(uiStates[3] is GamesCategoryUiState.Loading)
+            assertThat(uiStates[3] is GamesCategoryUiState.Loading).isTrue
 
             uiStatesJob.cancel()
         }
@@ -227,7 +227,7 @@ internal class GamesCategoryViewModelTest {
 
             SUT.loadData(resultEmissionDelay = 0L)
 
-            assertNotEquals("", logger.errorMessage)
+            assertThat(logger.errorMessage).isNotEmpty
         }
     }
 
@@ -242,7 +242,7 @@ internal class GamesCategoryViewModelTest {
 
             val command = SUT.commandFlow.first()
 
-            assertTrue(command is GeneralCommand.ShowLongToast)
+            assertThat(command is GeneralCommand.ShowLongToast).isTrue
         }
     }
 
@@ -254,7 +254,7 @@ internal class GamesCategoryViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GamesCategoryRoute.Back)
+            assertThat(route is GamesCategoryRoute.Back).isTrue
         }
     }
 
@@ -272,11 +272,9 @@ internal class GamesCategoryViewModelTest {
 
             val route = SUT.routeFlow.first()
 
-            assertTrue(route is GamesCategoryRoute.Info)
-            assertEquals(
-                game.id,
-                (route as GamesCategoryRoute.Info).gameId
-            )
+            assertThat(route is GamesCategoryRoute.Info).isTrue
+            assertThat((route as GamesCategoryRoute.Info).gameId)
+                .isEqualTo(game.id)
         }
     }
 

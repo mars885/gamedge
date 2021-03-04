@@ -24,7 +24,7 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -51,11 +51,11 @@ internal class ToggleGameLikeStateUseCaseImplTest {
     @Test
     fun `Toggles game from unliked to liked state`() {
         runBlockingTest {
-            assertFalse(likedGamesLocalDataStore.isGamedLiked(GAME_ID))
+            assertThat(likedGamesLocalDataStore.isGamedLiked(GAME_ID)).isFalse
 
             SUT.execute(USE_CASE_PARAMS)
 
-            assertTrue(likedGamesLocalDataStore.isGamedLiked(GAME_ID))
+            assertThat(likedGamesLocalDataStore.isGamedLiked(GAME_ID)).isTrue
         }
     }
 
@@ -65,11 +65,11 @@ internal class ToggleGameLikeStateUseCaseImplTest {
         runBlockingTest {
             likedGamesLocalDataStore.likeGame(GAME_ID)
 
-            assertTrue(likedGamesLocalDataStore.isGamedLiked(GAME_ID))
+            assertThat(likedGamesLocalDataStore.isGamedLiked(GAME_ID)).isTrue
 
             SUT.execute(USE_CASE_PARAMS)
 
-            assertFalse(likedGamesLocalDataStore.isGamedLiked(GAME_ID))
+            assertThat(likedGamesLocalDataStore.isGamedLiked(GAME_ID)).isFalse
         }
     }
 

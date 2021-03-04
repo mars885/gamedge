@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.extractors
 
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.IgdbErrorMessageExtractor
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -45,20 +45,19 @@ internal class IgdbErrorMessageExtractorTest {
             ]
         """.trimIndent()
 
-        assertEquals(
-            "Missing `;` at end of query",
-            SUT.extract(responseBody)
-        )
+        assertThat(SUT.extract(responseBody))
+            .isEqualTo("Missing `;` at end of query")
     }
 
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `Throws exception when igdb response body is not json`() {
-        SUT.extract("hello there")
+        assertThatExceptionOfType(IllegalStateException::class.java)
+            .isThrownBy { SUT.extract("hello there") }
     }
 
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `Throws exception when igdb response body does not have message field`() {
         val responseBody = """
             [
@@ -69,7 +68,8 @@ internal class IgdbErrorMessageExtractorTest {
             ]
         """.trimIndent()
 
-        SUT.extract(responseBody)
+        assertThatExceptionOfType(IllegalStateException::class.java)
+            .isThrownBy { SUT.extract(responseBody) }
     }
 
 

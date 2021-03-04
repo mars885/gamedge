@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.gamespot.api
 
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlePublicationDateMapper
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 import java.time.format.DateTimeParseException
@@ -36,22 +36,22 @@ internal class ArticlePublicationDateMapperTest {
 
     @Test
     fun `Maps date successfully`() {
-        assertEquals(
-            1583188216000L,
-            SUT.mapToTimestamp("2020-03-02 14:30:16")
-        )
+        assertThat(SUT.mapToTimestamp("2020-03-02 14:30:16"))
+            .isEqualTo(1583188216000L)
     }
 
 
-    @Test(expected = DateTimeParseException::class)
+    @Test
     fun `Throws exception when providing empty date`() {
-        SUT.mapToTimestamp("")
+        assertThatExceptionOfType(DateTimeParseException::class.java)
+            .isThrownBy { SUT.mapToTimestamp("") }
     }
 
 
-    @Test(expected = DateTimeParseException::class)
+    @Test
     fun `Throws exception when providing blank date`() {
-        SUT.mapToTimestamp("   ")
+        assertThatExceptionOfType(DateTimeParseException::class.java)
+            .isThrownBy { SUT.mapToTimestamp("   ") }
     }
 
 

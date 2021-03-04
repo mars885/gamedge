@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
@@ -98,7 +98,7 @@ internal class LikedGamesDatabaseDataStoreTest {
 
             SUT.likeGame(gameId)
 
-            assertTrue(likedGamesTable.isGameLiked(gameId))
+            assertThat(likedGamesTable.isGameLiked(gameId)).isTrue
         }
     }
 
@@ -111,7 +111,7 @@ internal class LikedGamesDatabaseDataStoreTest {
             SUT.likeGame(gameId)
             SUT.unlikeGame(gameId)
 
-            assertFalse(likedGamesTable.isGameLiked(gameId))
+            assertThat(likedGamesTable.isGameLiked(gameId)).isFalse
         }
     }
 
@@ -121,8 +121,8 @@ internal class LikedGamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.likeGame(gameId = 100)
 
-            assertTrue(likedGamesTable.isGameLiked(gameId = 100))
-            assertFalse(likedGamesTable.isGameLiked(gameId = 110))
+            assertThat(likedGamesTable.isGameLiked(gameId = 100)).isTrue
+            assertThat(likedGamesTable.isGameLiked(gameId = 110)).isFalse
         }
     }
 
@@ -132,8 +132,8 @@ internal class LikedGamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.likeGame(gameId = 100)
 
-            assertTrue(likedGamesTable.observeGameLikeState(gameId = 100).first())
-            assertFalse(likedGamesTable.observeGameLikeState(gameId = 110).first())
+            assertThat(likedGamesTable.observeGameLikeState(gameId = 100).first()).isTrue
+            assertThat(likedGamesTable.observeGameLikeState(gameId = 110).first()).isFalse
         }
     }
 
@@ -141,10 +141,8 @@ internal class LikedGamesDatabaseDataStoreTest {
     @Test
     fun `Observes liked games successfully`() {
         runBlockingTest {
-            assertEquals(
-                DATABASE_GAMES,
-                likedGamesTable.observeLikedGames(offset = 0, limit = 20).first()
-            )
+            assertThat(likedGamesTable.observeLikedGames(offset = 0, limit = 20).first())
+                .isEqualTo(DATABASE_GAMES)
         }
     }
 

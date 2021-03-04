@@ -55,6 +55,7 @@ dependencies {
     kapt(deps.misc.hiltBinderCompiler)
 
     testImplementation(deps.testing.jUnit)
+    testImplementation(deps.testing.assertJ)
     testImplementation(deps.testing.coroutines)
 
     // Needed to test a simple json parsing functionality
