@@ -16,42 +16,10 @@
 
 package com.paulrybitskyi.gamedge.core
 
-import com.paulrybitskyi.gamedge.domain.games.DomainCategory
-import com.paulrybitskyi.gamedge.domain.games.DomainGame
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAME
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
-
-
-private val DOMAIN_GAME = DomainGame(
-    id = 1,
-    followerCount = null,
-    hypeCount = null,
-    releaseDate = null,
-    criticsRating = null,
-    usersRating = null,
-    totalRating = null,
-    name = "name",
-    summary = null,
-    storyline = null,
-    category = DomainCategory.UNKNOWN,
-    cover = null,
-    releaseDates = listOf(),
-    ageRatings = listOf(),
-    videos = listOf(),
-    artworks = listOf(),
-    screenshots = listOf(),
-    genres = listOf(),
-    platforms = listOf(),
-    playerPerspectives = listOf(),
-    themes = listOf(),
-    modes = listOf(),
-    keywords = listOf(),
-    involvedCompanies = listOf(),
-    websites = listOf(),
-    similarGames = listOf()
-)
-
 
 internal class GameLikeCountCalculatorImplTest {
 

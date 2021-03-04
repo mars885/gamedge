@@ -73,6 +73,7 @@ object deps {
         const val commonsData = ":commons-data"
         const val commonsUi = ":commons-ui"
         const val commonsUiWidgets = ":commons-ui-widgets"
+        const val commonsTesting = ":commons-testing"
         const val commonsApi = ":commons-api"
         const val gamespotApi = ":gamespot-api"
 

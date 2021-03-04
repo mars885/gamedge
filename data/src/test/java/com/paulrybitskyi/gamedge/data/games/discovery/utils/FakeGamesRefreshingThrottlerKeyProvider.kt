@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.games.utils
+package com.paulrybitskyi.gamedge.data.games.discovery.utils
 
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottlerKeyProvider
 import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
@@ -25,22 +25,22 @@ internal class FakeGamesRefreshingThrottlerKeyProvider : GamesRefreshingThrottle
 
 
     override fun providePopularGamesKey(pagination: DomainPagination): String {
-        return "" // no-op
+        return "providePopularGamesKey"
     }
 
 
     override fun provideRecentlyReleasedGamesKey(pagination: DomainPagination): String {
-        return "" // no-op
+        return "provideRecentlyReleasedGamesKey"
     }
 
 
     override fun provideComingSoonGamesKey(pagination: DomainPagination): String {
-        return "" // no-op
+        return "provideComingSoonGamesKey"
     }
 
 
     override fun provideMostAnticipatedGamesKey(pagination: DomainPagination): String {
-        return "" // no-op
+        return "provideMostAnticipatedGamesKey"
     }
 
 
@@ -48,12 +48,12 @@ internal class FakeGamesRefreshingThrottlerKeyProvider : GamesRefreshingThrottle
         company: DomainCompany,
         pagination: DomainPagination
     ): String {
-        return "" // no-op
+        return "provideCompanyDevelopedGamesKey"
     }
 
 
     override fun provideSimilarGamesKey(game: DomainGame, pagination: DomainPagination): String {
-        return "" // no-op
+        return "provideSimilarGamesKey"
     }
 
 

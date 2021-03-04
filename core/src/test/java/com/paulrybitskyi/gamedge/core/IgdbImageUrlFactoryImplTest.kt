@@ -20,18 +20,10 @@ import com.paulrybitskyi.gamedge.core.factories.IgdbImageExtension
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactoryImpl
-import com.paulrybitskyi.gamedge.domain.games.DomainImage
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_IMAGE
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
-
-
-private val DOMAIN_IMAGE = DomainImage(
-    id = "id",
-    width = 500,
-    height = 1000
-)
-
 
 internal class IgdbImageUrlFactoryImplTest {
 

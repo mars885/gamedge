@@ -19,6 +19,9 @@ package com.paulrybitskyi.gamedge.data.auth
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AUTH_TOKEN_TTL_DEDUCTION
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthExpiryTimeCalculator
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
@@ -31,14 +34,18 @@ private const val CURRENT_TIMESTAMP = 10_000L
 internal class AuthExpiryTimeCalculatorTest {
 
 
+    @MockK private lateinit var timestampProvider: TimestampProvider
+
     private lateinit var SUT: AuthExpiryTimeCalculator
 
 
     @Before
     fun setup() {
-        SUT = AuthExpiryTimeCalculator(
-            timestampProvider = FakeTimestampProvider()
-        )
+        MockKAnnotations.init(this)
+
+        SUT = AuthExpiryTimeCalculator(timestampProvider)
+
+        every { timestampProvider.getUnixTimestamp(any()) } returns CURRENT_TIMESTAMP
     }
 
 
@@ -55,15 +62,6 @@ internal class AuthExpiryTimeCalculatorTest {
 
         assertThat(expiryTime)
             .isEqualTo(expected)
-    }
-
-
-    private class FakeTimestampProvider : TimestampProvider {
-
-        override fun getUnixTimestamp(timeUnit: TimeUnit): Long {
-            return CURRENT_TIMESTAMP
-        }
-
     }
 
 

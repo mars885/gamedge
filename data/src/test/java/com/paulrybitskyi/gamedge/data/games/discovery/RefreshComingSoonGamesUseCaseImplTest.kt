@@ -16,7 +16,10 @@
 
 package com.paulrybitskyi.gamedge.data.games.discovery
 
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
@@ -24,13 +27,14 @@ import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCase
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.data.games.usecases.discovery.RefreshComingSoonGamesUseCaseImpl
-import com.paulrybitskyi.gamedge.data.games.utils.DATA_GAMES
-import com.paulrybitskyi.gamedge.data.games.utils.FakeDispatcherProvider
-import com.paulrybitskyi.gamedge.data.games.utils.FakeGamesLocalDataStore
-import com.paulrybitskyi.gamedge.data.games.utils.FakeGamesRefreshingThrottler
-import com.paulrybitskyi.gamedge.data.games.utils.FakeGamesRefreshingThrottlerKeyProvider
-import com.paulrybitskyi.gamedge.data.games.utils.FakeGamesRemoteDataStore
-import com.paulrybitskyi.gamedge.data.games.utils.REFRESH_USE_CASE_PARAMS
+import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
+import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
+import com.paulrybitskyi.gamedge.data.games.discovery.utils.FakeGamesRefreshingThrottlerKeyProvider
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottler
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
@@ -40,18 +44,18 @@ import org.junit.Test
 internal class RefreshComingSoonGamesUseCaseImplTest {
 
 
-    private lateinit var gamesLocalDataStore: FakeGamesLocalDataStore
-    private lateinit var gamesRemoteDataStore: FakeGamesRemoteDataStore
-    private lateinit var throttler: FakeGamesRefreshingThrottler
+    @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
+    @MockK private lateinit var gamesRemoteDataStore: GamesRemoteDataStore
+    @MockK private lateinit var throttler: GamesRefreshingThrottler
+
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: RefreshComingSoonGamesUseCaseImpl
 
 
     @Before
     fun setup() {
-        gamesLocalDataStore = FakeGamesLocalDataStore()
-        gamesRemoteDataStore = FakeGamesRemoteDataStore()
-        throttler = FakeGamesRefreshingThrottler()
+        MockKAnnotations.init(this, relaxUnitFun = true)
+
         gameMapper = GameMapper()
         SUT = RefreshComingSoonGamesUseCaseImpl(
             gamesDataStores = GamesDataStores(
@@ -74,10 +78,10 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
     @Test
     fun `Emits remote games when refresh is possible`() {
         runBlockingTest {
-            throttler.canRefreshGames = true
-            gamesRemoteDataStore.shouldReturnGames = true
+            coEvery { throttler.canRefreshGames(any()) } returns true
+            coEvery { gamesRemoteDataStore.getComingSoonGames(any()) } returns Ok(DATA_GAMES)
 
-            assertThat(SUT.execute(REFRESH_USE_CASE_PARAMS).first().get())
+            assertThat(SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).first().get())
                 .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
         }
     }
@@ -86,11 +90,11 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
     @Test
     fun `Does not emit remote games when refresh is not possible`() {
         runBlockingTest {
-            throttler.canRefreshGames = false
+            coEvery { throttler.canRefreshGames(any()) } returns false
 
             var isEmptyFlow = false
 
-            SUT.execute(REFRESH_USE_CASE_PARAMS)
+            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS)
                 .onEmpty { isEmptyFlow = true }
                 .firstOrNull()
 
@@ -102,13 +106,12 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
     @Test
     fun `Saves remote games into local data store when refresh is successful`() {
         runBlockingTest {
-            throttler.canRefreshGames = true
-            gamesRemoteDataStore.shouldReturnGames = true
+            coEvery { throttler.canRefreshGames(any()) } returns true
+            coEvery { gamesRemoteDataStore.getComingSoonGames(any()) } returns Ok(DATA_GAMES)
 
-            SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(gamesLocalDataStore.games)
-                .isEqualTo(DATA_GAMES)
+            coVerify { gamesLocalDataStore.saveGames(DATA_GAMES) }
         }
     }
 
@@ -116,11 +119,11 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
     @Test
     fun `Does not save remote games into local data store when refresh is not possible`() {
         runBlockingTest {
-            throttler.canRefreshGames = false
+            coEvery { throttler.canRefreshGames(any()) } returns false
 
-            SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(gamesLocalDataStore.games.isEmpty()).isTrue
+            coVerifyNotCalled { gamesLocalDataStore.saveGames(any()) }
         }
     }
 
@@ -128,12 +131,12 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
     @Test
     fun `Does not save remote games into local data store when refresh is unsuccessful`() {
         runBlockingTest {
-            throttler.canRefreshGames = false
-            gamesRemoteDataStore.shouldReturnError = true
+            coEvery { throttler.canRefreshGames(any()) } returns false
+            coEvery { gamesRemoteDataStore.getComingSoonGames(any()) } returns Err(DATA_ERROR_UNKNOWN)
 
-            SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(gamesLocalDataStore.games.isEmpty()).isTrue
+            coVerifyNotCalled { gamesLocalDataStore.saveGames(any()) }
         }
     }
 
@@ -141,12 +144,12 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
     @Test
     fun `Updates games last refresh time when refresh is successful`() {
         runBlockingTest {
-            throttler.canRefreshGames = true
-            gamesRemoteDataStore.shouldReturnGames = true
+            coEvery { throttler.canRefreshGames(any()) } returns true
+            coEvery { gamesRemoteDataStore.getComingSoonGames(any()) } returns Ok(DATA_GAMES)
 
-            SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(throttler.areGamesLastRefreshTimeUpdated).isTrue
+            coVerify { throttler.updateGamesLastRefreshTime(any()) }
         }
     }
 
@@ -154,11 +157,11 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
     @Test
     fun `Does not update games last refresh time when refresh is not possible`() {
         runBlockingTest {
-            throttler.canRefreshGames = false
+            coEvery { throttler.canRefreshGames(any()) } returns false
 
-            SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(throttler.areGamesLastRefreshTimeUpdated).isFalse
+            coVerifyNotCalled { throttler.updateGamesLastRefreshTime(any()) }
         }
     }
 
@@ -166,12 +169,12 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
     @Test
     fun `Does not update games last refresh time when refresh is unsuccessful`() {
         runBlockingTest {
-            throttler.canRefreshGames = false
-            gamesRemoteDataStore.shouldReturnError = true
+            coEvery { throttler.canRefreshGames(any()) } returns false
+            coEvery { gamesRemoteDataStore.getComingSoonGames(any()) } returns Err(DATA_ERROR_UNKNOWN)
 
-            SUT.execute(REFRESH_USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(throttler.areGamesLastRefreshTimeUpdated).isFalse
+            coVerifyNotCalled { throttler.updateGamesLastRefreshTime(any()) }
         }
     }
 

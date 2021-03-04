@@ -16,40 +16,25 @@
 
 package com.paulrybitskyi.gamedge.feature.news
 
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsUiStateFactory
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsUiState
-import kotlinx.coroutines.CoroutineDispatcher
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-
-
-private val DOMAIN_ARTICLE = DomainArticle(
-    id = 1,
-    title = "Article",
-    lede = "lede",
-    imageUrls = emptyMap(),
-    publicationDate = 0L,
-    siteDetailUrl = ""
-)
-private val DOMAIN_ARTICLES = listOf(
-    DOMAIN_ARTICLE.copy(id = 1),
-    DOMAIN_ARTICLE.copy(id = 2),
-    DOMAIN_ARTICLE.copy(id = 3)
-)
-
 
 internal class GamingNewsViewModelTest {
 
@@ -57,14 +42,16 @@ internal class GamingNewsViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var observeArticlesUseCase: FakeObserveArticlesUseCase
+    @MockK private lateinit var observeArticlesUseCase: ObserveArticlesUseCase
+
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamingNewsViewModel
 
 
     @Before
     fun setup() {
-        observeArticlesUseCase = FakeObserveArticlesUseCase()
+        MockKAnnotations.init(this)
+
         logger = FakeLogger()
         SUT = GamingNewsViewModel(
             observeArticlesUseCase = observeArticlesUseCase,
@@ -79,7 +66,7 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Emits correct ui states when loading data`() {
         mainCoroutineRule.runBlockingTest {
-            observeArticlesUseCase.shouldReturnArticles = true
+            coEvery { observeArticlesUseCase.execute(any()) } returns flowOf(DOMAIN_ARTICLES)
 
             val uiStates = mutableListOf<GamingNewsUiState>()
             val uiStateJob = launch { SUT.uiState.toList(uiStates) }
@@ -100,7 +87,7 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Logs error when articles observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            observeArticlesUseCase.shouldThrowError = true
+            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
             SUT.loadData()
 
@@ -112,7 +99,7 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Dispatches toast showing command when articles observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            observeArticlesUseCase.shouldThrowError = true
+            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
             SUT.loadData()
 
@@ -149,7 +136,7 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Emits correct ui states when refreshing data`() {
         mainCoroutineRule.runBlockingTest {
-            observeArticlesUseCase.shouldReturnArticles = true
+            coEvery { observeArticlesUseCase.execute(any()) } returns flowOf(DOMAIN_ARTICLES)
 
             val uiStates = mutableListOf<GamingNewsUiState>()
             val uiStateJob = launch { SUT.uiState.toList(uiStates) }
@@ -164,23 +151,6 @@ internal class GamingNewsViewModelTest {
 
             uiStateJob.cancel()
         }
-    }
-
-
-    private class FakeObserveArticlesUseCase : ObserveArticlesUseCase {
-
-        var shouldReturnArticles = false
-        var shouldThrowError = false
-
-        override suspend fun execute(params: ObserveArticlesUseCase.Params): Flow<List<DomainArticle>> {
-            return when {
-                shouldReturnArticles -> flowOf(DOMAIN_ARTICLES)
-                shouldThrowError -> flow { throw Exception("error") }
-
-                else -> throw IllegalStateException()
-            }
-        }
-
     }
 
 
@@ -202,43 +172,11 @@ internal class GamingNewsViewModelTest {
                         imageUrl = null,
                         title = it.title,
                         lede = it.lede,
-                        publicationDate = "pub_date",
+                        publicationDate = "publication_date",
                         siteDetailUrl = it.siteDetailUrl
                     )
                 }
             )
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
-
-
-    private class FakeErrorMapper : ErrorMapper {
-
-        override fun mapToMessage(error: Throwable): String {
-            return "error"
-        }
-
-    }
-
-
-    private class FakeLogger : Logger {
-
-        var errorMessage = ""
-
-        override fun info(tag: String, message: String, throwable: Throwable?) {}
-        override fun debug(tag: String, message: String, throwable: Throwable?) {}
-        override fun warning(tag: String, message: String, throwable: Throwable?) {}
-
-        override fun error(tag: String, message: String, throwable: Throwable?) {
-            errorMessage = message
         }
 
     }

@@ -20,29 +20,27 @@ import com.paulrybitskyi.gamedge.data.auth.DataOauthCredentials
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
+import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
-
-private val DATA_OAUTH_CREDENTIALS = DataOauthCredentials(
-    accessToken = "access_token",
-    tokenType = "token_type",
-    tokenTtl = 500L
-)
-
-
 internal class AuthorizerTest {
 
 
-    private lateinit var authLocalDataStore: FakeAuthLocalDataStore
+    @MockK private lateinit var authLocalDataStore: AuthLocalDataStore
+
     private lateinit var SUT: Authorizer
 
 
     @Before
     fun setup() {
-        authLocalDataStore = FakeAuthLocalDataStore()
+        MockKAnnotations.init(this)
+
         SUT = Authorizer(authLocalDataStore)
     }
 
@@ -50,7 +48,7 @@ internal class AuthorizerTest {
     @Test
     fun `Builds basic authorization header successfully`() {
         runBlockingTest {
-            authLocalDataStore.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
+            coEvery { authLocalDataStore.getOauthCredentials() } returns DATA_OAUTH_CREDENTIALS
 
             assertThat(SUT.buildAuthorizationHeader(AuthorizationType.BASIC))
                 .isEqualTo("Basic access_token")
@@ -61,7 +59,7 @@ internal class AuthorizerTest {
     @Test
     fun `Builds bearer authorization header successfully`() {
         runBlockingTest {
-            authLocalDataStore.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
+            coEvery { authLocalDataStore.getOauthCredentials() } returns DATA_OAUTH_CREDENTIALS
 
             assertThat(SUT.buildAuthorizationHeader(AuthorizationType.BEARER))
                 .isEqualTo("Bearer access_token")
@@ -74,28 +72,11 @@ internal class AuthorizerTest {
         assertThatExceptionOfType(IllegalStateException::class.java)
             .isThrownBy {
                 runBlockingTest {
+                    coEvery { authLocalDataStore.getOauthCredentials() } returns null
+
                     SUT.buildAuthorizationHeader(AuthorizationType.BEARER)
                 }
             }
-    }
-
-
-    private class FakeAuthLocalDataStore : AuthLocalDataStore {
-
-        private var oauthCredentials: DataOauthCredentials? = null
-
-        override suspend fun saveOauthCredentials(oauthCredentials: DataOauthCredentials) {
-            this.oauthCredentials = oauthCredentials
-        }
-
-        override suspend fun getOauthCredentials(): DataOauthCredentials? {
-            return this.oauthCredentials
-        }
-
-        override suspend fun isExpired(): Boolean {
-            return false
-        }
-
     }
 
 

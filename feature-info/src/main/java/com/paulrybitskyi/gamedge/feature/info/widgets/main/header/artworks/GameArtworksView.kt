@@ -80,6 +80,7 @@ internal class GameArtworksView @JvmOverloads constructor(
     }
 
 
+    @Suppress("UNUSED_PARAMETER")
     private fun bindListener(item: GameArtworkItem, viewHolder: RecyclerView.ViewHolder) {
         if(viewHolder is GameArtworkItem.ViewHolder) {
             viewHolder.setOnArtworkClickListener {

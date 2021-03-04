@@ -55,6 +55,7 @@ dependencies {
     implementation(deps.misc.hiltBinder)
     kapt(deps.misc.hiltBinderCompiler)
 
+    testImplementation(project(deps.local.commonsTesting))
     testImplementation(deps.testing.jUnit)
     testImplementation(deps.testing.assertJ)
     testImplementation(deps.testing.mockk)

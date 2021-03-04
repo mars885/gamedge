@@ -51,7 +51,7 @@ internal class LikedGamesDatabaseDataStore @Inject constructor(
     }
 
 
-    override suspend fun isGamedLiked(gameId: Int): Boolean {
+    override suspend fun isGameLiked(gameId: Int): Boolean {
         return likedGamesTable.isGameLiked(gameId)
     }
 

@@ -17,8 +17,7 @@
 package com.paulrybitskyi.gamedge.database
 
 import com.paulrybitskyi.gamedge.commons.data.QueryTimestampProvider
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.data.commons.DataPagination
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.data.games.DataCategory
 import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
@@ -27,65 +26,32 @@ import com.paulrybitskyi.gamedge.database.games.datastores.GameMapper
 import com.paulrybitskyi.gamedge.database.games.datastores.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.database.games.datastores.mapToDatabaseGames
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
-import kotlinx.coroutines.CoroutineDispatcher
+import com.paulrybitskyi.gamedge.database.utils.FakeGameMapper
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
-
-private val DATA_GAME = DataGame(
-    id = 1,
-    followerCount = null,
-    hypeCount = null,
-    releaseDate = null,
-    criticsRating = null,
-    usersRating = null,
-    totalRating = null,
-    name = "name",
-    summary = null,
-    storyline = null,
-    category = DataCategory.UNKNOWN,
-    cover = null,
-    releaseDates = listOf(),
-    ageRatings = listOf(),
-    videos = listOf(),
-    artworks = listOf(),
-    screenshots = listOf(),
-    genres = listOf(),
-    platforms = listOf(),
-    playerPerspectives = listOf(),
-    themes = listOf(),
-    modes = listOf(),
-    keywords = listOf(),
-    involvedCompanies = listOf(),
-    websites = listOf(),
-    similarGames = listOf()
-)
-private val DATA_GAMES = listOf(
-    DATA_GAME.copy(id = 1),
-    DATA_GAME.copy(id = 2),
-    DATA_GAME.copy(id = 3)
-)
-
-private val DATA_PAGINATION = DataPagination(offset = 0, limit = 10)
-
-
 internal class GamesDatabaseDataStoreTest {
 
 
-    private lateinit var gamesTable: FakeGamesTable
+    @MockK private lateinit var gamesTable: GamesTable
+
     private lateinit var gameMapper: FakeGameMapper
     private lateinit var SUT: GamesDatabaseDataStore
 
 
     @Before
     fun setup() {
-        gamesTable = FakeGamesTable()
+        MockKAnnotations.init(this, relaxUnitFun = true)
+
         gameMapper = FakeGameMapper()
         SUT = GamesDatabaseDataStore(
             gamesTable = gamesTable,
@@ -101,8 +67,7 @@ internal class GamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.saveGames(DATA_GAMES)
 
-            assertThat(gamesTable.games)
-                .isEqualTo(gameMapper.mapToDatabaseGames(DATA_GAMES))
+            coVerify { gamesTable.saveGames(gameMapper.mapToDatabaseGames(DATA_GAMES)) }
         }
     }
 
@@ -110,14 +75,12 @@ internal class GamesDatabaseDataStoreTest {
     @Test
     fun `Retrieves game successfully`() {
         runBlockingTest {
-            gamesTable.shouldReturnGame = true
+            val dbGame = gameMapper.mapToDatabaseGame(DATA_GAME)
 
-            SUT.saveGames(DATA_GAMES)
+            coEvery { gamesTable.getGame(any()) } returns dbGame
 
-            val game = DATA_GAMES.first()
-
-            assertThat(SUT.getGame(game.id))
-                .isEqualTo(game)
+            assertThat(SUT.getGame(DATA_GAME.id))
+                .isEqualTo(DATA_GAME)
         }
     }
 
@@ -125,9 +88,11 @@ internal class GamesDatabaseDataStoreTest {
     @Test
     fun `Retrieves null instead of game`() {
         runBlockingTest {
-            gamesTable.shouldNotReturnGame = true
+            val gameId = DATA_GAME.id
 
-            assertThat(SUT.getGame(1)).isNull()
+            coEvery { gamesTable.getGame(gameId) } returns null
+
+            assertThat(SUT.getGame(gameId)).isNull()
         }
     }
 
@@ -135,17 +100,11 @@ internal class GamesDatabaseDataStoreTest {
     @Test
     fun `Retrieves company developed games successfully`() {
         runBlockingTest {
-            SUT.saveGames(DATA_GAMES)
+            val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
-            val company = DataCompany(
-                id = 1,
-                name = "name",
-                websiteUrl = "url",
-                logo = null,
-                developedGames = listOf()
-            )
+            coEvery { gamesTable.getGames(any(), any(), any()) } returns dbGames
 
-            assertThat(SUT.getCompanyDevelopedGames(company, DATA_PAGINATION))
+            assertThat(SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION))
                 .isEqualTo(DATA_GAMES)
         }
     }
@@ -154,7 +113,9 @@ internal class GamesDatabaseDataStoreTest {
     @Test
     fun `Retrieves similar games successfully`() {
         runBlockingTest {
-            SUT.saveGames(DATA_GAMES)
+            val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
+
+            coEvery { gamesTable.getGames(any(), any(), any()) } returns dbGames
 
             assertThat(SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION))
                 .isEqualTo(DATA_GAMES)
@@ -165,7 +126,9 @@ internal class GamesDatabaseDataStoreTest {
     @Test
     fun `Searches games successfully`() {
         runBlockingTest {
-            SUT.saveGames(DATA_GAMES)
+            val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
+
+            coEvery { gamesTable.searchGames(any(), any(), any()) } returns dbGames
 
             assertThat(SUT.searchGames("", DATA_PAGINATION))
                 .isEqualTo(DATA_GAMES)
@@ -176,7 +139,9 @@ internal class GamesDatabaseDataStoreTest {
     @Test
     fun `Observes popular games successfully`() {
         runBlockingTest {
-            SUT.saveGames(DATA_GAMES)
+            val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
+
+            coEvery { gamesTable.observePopularGames(any(), any(), any()) } returns flowOf(dbGames)
 
             assertThat(SUT.observePopularGames(DATA_PAGINATION).first())
                 .isEqualTo(DATA_GAMES)
@@ -187,7 +152,9 @@ internal class GamesDatabaseDataStoreTest {
     @Test
     fun `Observes recently released games successfully`() {
         runBlockingTest {
-            SUT.saveGames(DATA_GAMES)
+            val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
+
+            coEvery { gamesTable.observeRecentlyReleasedGames(any(), any(), any(), any()) } returns flowOf(dbGames)
 
             assertThat(SUT.observeRecentlyReleasedGames(DATA_PAGINATION).first())
                 .isEqualTo(DATA_GAMES)
@@ -198,7 +165,9 @@ internal class GamesDatabaseDataStoreTest {
     @Test
     fun `Observes coming soon games successfully`() {
         runBlockingTest {
-            SUT.saveGames(DATA_GAMES)
+            val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
+
+            coEvery { gamesTable.observeComingSoonGames(any(), any(), any()) } returns flowOf(dbGames)
 
             assertThat(SUT.observeComingSoonGames(DATA_PAGINATION).first())
                 .isEqualTo(DATA_GAMES)
@@ -209,79 +178,14 @@ internal class GamesDatabaseDataStoreTest {
     @Test
     fun `Observes most anticipated games successfully`() {
         runBlockingTest {
-            SUT.saveGames(DATA_GAMES)
+            val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
+
+            coEvery { gamesTable.observeMostAnticipatedGames(any(), any(), any()) } returns flowOf(dbGames)
 
             assertThat(SUT.observeMostAnticipatedGames(DATA_PAGINATION).first())
                 .isEqualTo(DATA_GAMES)
         }
     }
-
-
-    private class FakeGamesTable : GamesTable {
-
-        var shouldReturnGame = false
-        var shouldNotReturnGame = false
-
-        var games = listOf<DatabaseGame>()
-
-        override suspend fun saveGames(games: List<DatabaseGame>) {
-            this.games = games
-        }
-
-        override suspend fun getGame(id: Int): DatabaseGame? {
-            return (if(shouldReturnGame) this.games.first() else null)
-        }
-
-        override suspend fun getGames(ids: List<Int>, offset: Int, limit: Int): List<DatabaseGame> {
-            return this.games
-        }
-
-        override suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): List<DatabaseGame> {
-            return this.games
-        }
-
-        override fun observePopularGames(
-            minReleaseDateTimestamp: Long,
-            offset: Int,
-            limit: Int
-        ): Flow<List<DatabaseGame>> {
-            return flowOf(this.games)
-        }
-
-        override fun observeRecentlyReleasedGames(
-            minReleaseDateTimestamp: Long,
-            maxReleaseDateTimestamp: Long,
-            offset: Int,
-            limit: Int
-        ): Flow<List<DatabaseGame>> {
-            return flowOf(this.games)
-        }
-
-        override fun observeComingSoonGames(
-            minReleaseDateTimestamp: Long,
-            offset: Int,
-            limit: Int
-        ): Flow<List<DatabaseGame>> {
-            return flowOf(this.games)
-        }
-
-        override fun observeMostAnticipatedGames(
-            minReleaseDateTimestamp: Long,
-            offset: Int,
-            limit: Int
-        ): Flow<List<DatabaseGame>> {
-            return flowOf(this.games)
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
 
 
     private class FakeQueryTimestampProvider : QueryTimestampProvider {
@@ -291,73 +195,6 @@ internal class GamesDatabaseDataStoreTest {
         override fun getRecentlyReleasedGamesMaxReleaseDate(): Long = 500L
         override fun getComingSoonGamesMinReleaseDate(): Long = 500L
         override fun getMostAnticipatedGamesMinReleaseDate(): Long = 500L
-
-    }
-
-
-    private class FakeGameMapper : GameMapper {
-
-        override fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame {
-            return DatabaseGame(
-                id = dataGame.id,
-                followerCount = dataGame.followerCount,
-                hypeCount = dataGame.hypeCount,
-                releaseDate = dataGame.releaseDate,
-                criticsRating = dataGame.criticsRating,
-                usersRating = dataGame.usersRating,
-                totalRating = dataGame.totalRating,
-                name = dataGame.name,
-                summary = dataGame.summary,
-                storyline = dataGame.storyline,
-                category = "category",
-                cover = "cover",
-                releaseDates = "release_dates",
-                ageRatings = "age_ratings",
-                videos = "videos",
-                artworks = "artworks",
-                screenshots = "screenshots",
-                genres = "genres",
-                platforms = "platforms",
-                playerPerspectives = "player_perspectives",
-                themes = "themes",
-                modes = "modes",
-                keywords = "keywords",
-                involvedCompanies = "involved_companies",
-                websites = "websites",
-                similarGames = "similar_games"
-            )
-        }
-
-        override fun mapToDataGame(databaseGame: DatabaseGame): DataGame {
-            return DataGame(
-                id = databaseGame.id,
-                followerCount = databaseGame.followerCount,
-                hypeCount = databaseGame.hypeCount,
-                releaseDate = databaseGame.releaseDate,
-                criticsRating = databaseGame.criticsRating,
-                usersRating = databaseGame.usersRating,
-                totalRating = databaseGame.totalRating,
-                name = databaseGame.name,
-                summary = databaseGame.summary,
-                storyline = databaseGame.storyline,
-                category = DataCategory.UNKNOWN,
-                cover = null,
-                releaseDates = emptyList(),
-                ageRatings = emptyList(),
-                videos = emptyList(),
-                artworks = emptyList(),
-                screenshots = emptyList(),
-                genres = emptyList(),
-                platforms = emptyList(),
-                playerPerspectives = emptyList(),
-                themes = emptyList(),
-                modes = emptyList(),
-                keywords = emptyList(),
-                involvedCompanies = emptyList(),
-                websites = emptyList(),
-                similarGames = emptyList()
-            )
-        }
 
     }
 

@@ -31,7 +31,7 @@ internal class ToggleGameLikeStateUseCaseImpl @Inject constructor(
 
 
     override suspend fun execute(params: Params) {
-        if(likedGamesLocalDataStore.isGamedLiked(params.gameId)) {
+        if(likedGamesLocalDataStore.isGameLiked(params.gameId)) {
             likedGamesLocalDataStore.unlikeGame(params.gameId)
         } else {
             likedGamesLocalDataStore.likeGame(params.gameId)

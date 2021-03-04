@@ -18,13 +18,16 @@ package com.paulrybitskyi.gamedge.core
 
 import com.paulrybitskyi.gamedge.core.formatters.ArticlePublicationDateFormatterImpl
 import com.paulrybitskyi.gamedge.core.formatters.RelativeDateFormatter
+import com.paulrybitskyi.gamedge.core.formatters.RelativeDateFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.TimeFormat
 import com.paulrybitskyi.gamedge.core.providers.TimeFormatProvider
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
 
@@ -34,20 +37,23 @@ private const val RELATIVE_DATE = "relative_date"
 internal class ArticlePublicationDateFormatterImplTest {
 
 
-    private lateinit var timestampProvider: FakeTimestampProvider
-    private lateinit var timeFormatProvider: FakeTimeFormatProvider
+    @MockK private lateinit var relativeDateFormatter: RelativeDateFormatter
+    @MockK private lateinit var timestampProvider: TimestampProvider
+    @MockK private lateinit var timeFormatProvider: TimeFormatProvider
     private lateinit var SUT: ArticlePublicationDateFormatterImpl
 
 
     @Before
     fun setup() {
-        timestampProvider = FakeTimestampProvider()
-        timeFormatProvider = FakeTimeFormatProvider()
+        MockKAnnotations.init(this)
+
         SUT = ArticlePublicationDateFormatterImpl(
-            relativeDateFormatter = FakeRelativeDateFormatter(),
+            relativeDateFormatter = relativeDateFormatter,
             timestampProvider = timestampProvider,
             timeFormatProvider = timeFormatProvider
         )
+
+        every { relativeDateFormatter.formatRelativeDate(any()) } returns RELATIVE_DATE
     }
 
 
@@ -55,7 +61,7 @@ internal class ArticlePublicationDateFormatterImplTest {
     fun `Formats pub date in relative format`() {
         val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatPublicationDate(timestamp))
             .isEqualTo(RELATIVE_DATE)
@@ -67,8 +73,8 @@ internal class ArticlePublicationDateFormatterImplTest {
         val originalTimestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
         val timestamp = (originalTimestamp - TimeUnit.DAYS.toMillis(2))
 
-        timestampProvider.stubTimestamp = originalTimestamp
-        timeFormatProvider.stubTimeFormat = TimeFormat.TWENTY_FOUR_HOURS
+        every { timestampProvider.getUnixTimestamp(any()) } returns originalTimestamp
+        every { timeFormatProvider.getTimeFormat() } returns TimeFormat.TWENTY_FOUR_HOURS
 
         assertThat(SUT.formatPublicationDate(timestamp))
             .isEqualTo("Mar 2, 1:15")
@@ -80,8 +86,8 @@ internal class ArticlePublicationDateFormatterImplTest {
         val originalTimestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
         val timestamp = (originalTimestamp - TimeUnit.DAYS.toMillis(365))
 
-        timestampProvider.stubTimestamp = originalTimestamp
-        timeFormatProvider.stubTimeFormat = TimeFormat.TWENTY_FOUR_HOURS
+        every { timestampProvider.getUnixTimestamp(any()) } returns originalTimestamp
+        every { timeFormatProvider.getTimeFormat() } returns TimeFormat.TWENTY_FOUR_HOURS
 
         assertThat(SUT.formatPublicationDate(timestamp))
             .isEqualTo("Mar 4, 2020, 1:15")
@@ -93,8 +99,8 @@ internal class ArticlePublicationDateFormatterImplTest {
         val originalTimestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
         val timestamp = (originalTimestamp - TimeUnit.DAYS.toMillis(2))
 
-        timestampProvider.stubTimestamp = originalTimestamp
-        timeFormatProvider.stubTimeFormat = TimeFormat.TWELVE_HOURS
+        every { timestampProvider.getUnixTimestamp(any()) } returns originalTimestamp
+        every { timeFormatProvider.getTimeFormat() } returns TimeFormat.TWELVE_HOURS
 
         assertThat(SUT.formatPublicationDate(timestamp))
             .isEqualTo("Mar 2, 1:15 AM")
@@ -106,42 +112,11 @@ internal class ArticlePublicationDateFormatterImplTest {
         val originalTimestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
         val timestamp = (originalTimestamp - TimeUnit.DAYS.toMillis(365))
 
-        timestampProvider.stubTimestamp = originalTimestamp
-        timeFormatProvider.stubTimeFormat = TimeFormat.TWELVE_HOURS
+        every { timestampProvider.getUnixTimestamp(any()) } returns originalTimestamp
+        every { timeFormatProvider.getTimeFormat() } returns TimeFormat.TWELVE_HOURS
 
         assertThat(SUT.formatPublicationDate(timestamp))
             .isEqualTo("Mar 4, 2020, 1:15 AM")
-    }
-
-
-    private class FakeRelativeDateFormatter : RelativeDateFormatter {
-
-        override fun formatRelativeDate(dateTime: LocalDateTime): String {
-            return RELATIVE_DATE
-        }
-
-    }
-
-
-    private class FakeTimestampProvider : TimestampProvider {
-
-        var stubTimestamp = 0L
-
-        override fun getUnixTimestamp(timeUnit: TimeUnit): Long {
-            return stubTimestamp
-        }
-
-    }
-
-
-    private class FakeTimeFormatProvider : TimeFormatProvider {
-
-        var stubTimeFormat = TimeFormat.TWELVE_HOURS
-
-        override fun getTimeFormat(): TimeFormat {
-            return stubTimeFormat
-        }
-
     }
 
 

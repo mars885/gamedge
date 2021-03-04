@@ -22,9 +22,13 @@ import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ObserveLikedGamesUseCaseImpl
-import com.paulrybitskyi.gamedge.data.games.utils.DATA_GAMES
-import com.paulrybitskyi.gamedge.data.games.utils.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.OBSERVE_GAMES_USE_CASE_PARAMS
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -33,21 +37,19 @@ import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
-
-private val USE_CASE_PARAMS = ObserveGamesUseCaseParams()
-
-
 internal class ObserveLikedGamesUseCaseImplTest {
 
 
-    private lateinit var likedGamesLocalDataStore: FakeLikedGamesLocalDataStore
+    @MockK private lateinit var likedGamesLocalDataStore: LikedGamesLocalDataStore
+
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: ObserveLikedGamesUseCaseImpl
 
 
     @Before
     fun setup() {
-        likedGamesLocalDataStore = FakeLikedGamesLocalDataStore()
+        MockKAnnotations.init(this)
+
         gameMapper = GameMapper()
         SUT = ObserveLikedGamesUseCaseImpl(
             likedGamesLocalDataStore = likedGamesLocalDataStore,
@@ -60,34 +62,11 @@ internal class ObserveLikedGamesUseCaseImplTest {
     @Test
     fun `Emits liked games successfully`() {
         runBlockingTest {
-            assertThat(SUT.execute(USE_CASE_PARAMS).first())
+            coEvery { likedGamesLocalDataStore.observeLikedGames(any()) } returns flowOf(DATA_GAMES)
+
+            assertThat(SUT.execute(OBSERVE_GAMES_USE_CASE_PARAMS).first())
                 .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
         }
-    }
-
-
-    private class FakeLikedGamesLocalDataStore : LikedGamesLocalDataStore {
-
-        override suspend fun likeGame(gameId: Int) {
-            // no-op
-        }
-
-        override suspend fun unlikeGame(gameId: Int) {
-            // no-op
-        }
-
-        override suspend fun isGamedLiked(gameId: Int): Boolean {
-            return false // no-op
-        }
-
-        override suspend fun observeGameLikeState(gameId: Int): Flow<Boolean> {
-            return flowOf() // no-op
-        }
-
-        override suspend fun observeLikedGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf(DATA_GAMES)
-        }
-
     }
 
 

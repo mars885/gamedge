@@ -18,22 +18,23 @@ package com.paulrybitskyi.gamedge.data.games
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.GetCompanyDevelopedGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
-import com.paulrybitskyi.gamedge.data.games.utils.DATA_GAMES
-import com.paulrybitskyi.gamedge.data.games.utils.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
-import com.paulrybitskyi.gamedge.domain.games.DomainCategory
 import com.paulrybitskyi.gamedge.domain.games.DomainCompany
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetCompanyDevelopedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshCompanyDevelopedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshCompanyDevelopedGamesUseCase.Params
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -42,65 +43,20 @@ import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
-
-private val DOMAIN_GAME = DomainGame(
-    id = 1,
-    followerCount = null,
-    hypeCount = null,
-    releaseDate = null,
-    criticsRating = null,
-    usersRating = null,
-    totalRating = null,
-    name = "name",
-    summary = null,
-    storyline = null,
-    category = DomainCategory.UNKNOWN,
-    cover = null,
-    releaseDates = listOf(),
-    ageRatings = listOf(),
-    videos = listOf(),
-    artworks = listOf(),
-    screenshots = listOf(),
-    genres = listOf(),
-    platforms = listOf(),
-    playerPerspectives = listOf(),
-    themes = listOf(),
-    modes = listOf(),
-    keywords = listOf(),
-    involvedCompanies = listOf(),
-    websites = listOf(),
-    similarGames = listOf()
-)
-private val DOMAIN_GAMES = listOf(
-    DOMAIN_GAME.copy(id = 1),
-    DOMAIN_GAME.copy(id = 2),
-    DOMAIN_GAME.copy(id = 3)
-)
-
-private val DOMAIN_COMPANY = DomainCompany(
-    id = 1,
-    name = "name",
-    websiteUrl = "url",
-    logo = null,
-    developedGames = listOf(1, 2, 3)
-)
-
-private val USE_CASE_PARAMS = GetCompanyDevelopedGamesUseCase.Params(DOMAIN_COMPANY, DomainPagination())
-
-
 internal class GetCompanyDevelopedGamesUseCaseImplTest {
 
 
-    private lateinit var refreshCompanyDevelopedGamesUseCase: FakeRefreshCompanyDevelopedGamesUseCase
-    private lateinit var gamesLocalDataStore: FakeGamesLocalDataStore
+    @MockK private lateinit var refreshCompanyDevelopedGamesUseCase: RefreshCompanyDevelopedGamesUseCase
+    @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
+
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: GetCompanyDevelopedGamesUseCaseImpl
 
 
     @Before
     fun setup() {
-        refreshCompanyDevelopedGamesUseCase = FakeRefreshCompanyDevelopedGamesUseCase()
-        gamesLocalDataStore = FakeGamesLocalDataStore()
+        MockKAnnotations.init(this)
+
         gameMapper = GameMapper()
         SUT = GetCompanyDevelopedGamesUseCaseImpl(
             refreshCompanyDevelopedGamesUseCase = refreshCompanyDevelopedGamesUseCase,
@@ -114,9 +70,9 @@ internal class GetCompanyDevelopedGamesUseCaseImplTest {
     @Test
     fun `Emits games that refresh use case successfully emits`() {
         runBlockingTest {
-            refreshCompanyDevelopedGamesUseCase.shouldReturnGames = true
+            coEvery { refreshCompanyDevelopedGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
-            assertThat(SUT.execute(USE_CASE_PARAMS).first())
+            assertThat(SUT.execute(GET_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS).first())
                 .isEqualTo(DOMAIN_GAMES)
         }
     }
@@ -125,80 +81,12 @@ internal class GetCompanyDevelopedGamesUseCaseImplTest {
     @Test
     fun `Emits games from local data store if refresh use case does not emit`() {
         runBlockingTest {
-            refreshCompanyDevelopedGamesUseCase.shouldReturnEmptyFlow = true
+            coEvery { refreshCompanyDevelopedGamesUseCase.execute(any()) } returns flowOf()
+            coEvery { gamesLocalDataStore.getCompanyDevelopedGames(any(), any()) } returns DATA_GAMES
 
-            assertThat(SUT.execute(USE_CASE_PARAMS).first())
+            assertThat(SUT.execute(GET_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS).first())
                 .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
         }
-    }
-
-
-    private class FakeRefreshCompanyDevelopedGamesUseCase : RefreshCompanyDevelopedGamesUseCase {
-
-        var shouldReturnGames = false
-        var shouldReturnEmptyFlow = false
-        var shouldReturnError = false
-
-        override suspend fun execute(params: Params): Flow<DomainResult<List<DomainGame>>> {
-            return when {
-                shouldReturnGames -> flowOf(Ok(DOMAIN_GAMES))
-                shouldReturnEmptyFlow -> flowOf()
-                shouldReturnError -> flowOf(Err(Error.Unknown("error")))
-
-                else -> throw IllegalStateException()
-            }
-        }
-
-    }
-
-
-    private class FakeGamesLocalDataStore : GamesLocalDataStore {
-
-        override suspend fun saveGames(games: List<DataGame>) {
-            // no-op
-        }
-
-        override suspend fun getGame(id: Int): DataGame? {
-            return null // no-op
-        }
-
-        override suspend fun getCompanyDevelopedGames(
-            company: DataCompany,
-            pagination: DataPagination
-        ): List<DataGame> {
-            return DATA_GAMES
-        }
-
-        override suspend fun getSimilarGames(
-            game: DataGame,
-            pagination: DataPagination
-        ): List<DataGame> {
-            return emptyList() // no-op
-        }
-
-        override suspend fun searchGames(
-            searchQuery: String,
-            pagination: DataPagination
-        ): List<DataGame> {
-            return emptyList() // no-op
-        }
-
-        override suspend fun observePopularGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
-        override suspend fun observeRecentlyReleasedGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
-        override suspend fun observeComingSoonGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
-        override suspend fun observeMostAnticipatedGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
     }
 
 

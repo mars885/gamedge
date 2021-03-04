@@ -26,7 +26,7 @@ interface LikedGamesLocalDataStore {
 
     suspend fun unlikeGame(gameId: Int)
 
-    suspend fun isGamedLiked(gameId: Int): Boolean
+    suspend fun isGameLiked(gameId: Int): Boolean
 
     suspend fun observeGameLikeState(gameId: Int): Flow<Boolean>
 

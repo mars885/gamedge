@@ -21,18 +21,17 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
 import com.paulrybitskyi.gamedge.commons.api.ApiResult
-import com.paulrybitskyi.gamedge.commons.api.Error
 import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesEndpoint
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticleMapper
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlePublicationDateMapper
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlesGamespotDataStore
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.mapToDataArticles
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import com.paulrybitskyi.gamedge.commons.testing.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
@@ -45,17 +44,12 @@ private val API_ARTICLES = listOf(
     ApiArticle(publicationDate = "2020-03-02 12:14:16")
 )
 
-private val API_HTTP_ERROR = Error.HttpError(code = 2, message = "http_error")
-private val API_NETWORK_ERROR = Error.NetworkError(Exception("network_error"))
-private val API_UNKNOWN_ERROR = Error.NetworkError(Exception("unknown_error"))
-
-private val DATA_PAGINATION = DataPagination(offset = 0, limit = 20)
-
 
 internal class ArticlesGamespotDataStoreTest {
 
 
-    private lateinit var articlesEndpoint: FakeArticlesEndpoint
+    @MockK private lateinit var articlesEndpoint: ArticlesEndpoint
+
     private lateinit var articleMapper: ArticleMapper
     private lateinit var errorMapper: ErrorMapper
     private lateinit var SUT: ArticlesGamespotDataStore
@@ -63,7 +57,8 @@ internal class ArticlesGamespotDataStoreTest {
 
     @Before
     fun setup() {
-        articlesEndpoint = FakeArticlesEndpoint()
+        MockKAnnotations.init(this)
+
         articleMapper = ArticleMapper(ArticlePublicationDateMapper())
         errorMapper = ErrorMapper()
         SUT = ArticlesGamespotDataStore(
@@ -78,7 +73,7 @@ internal class ArticlesGamespotDataStoreTest {
     @Test
     fun `Returns articles successfully`() {
         runBlockingTest {
-            articlesEndpoint.shouldReturnArticles = true
+            coEvery { articlesEndpoint.getArticles(any(), any()) } returns Ok(API_ARTICLES)
 
             val result = SUT.getArticles(DATA_PAGINATION)
 
@@ -91,12 +86,12 @@ internal class ArticlesGamespotDataStoreTest {
     @Test
     fun `Returns http error when fetching articles`() {
         runBlockingTest {
-            articlesEndpoint.shouldReturnHttpError = true
+            coEvery { articlesEndpoint.getArticles(any(), any()) } returns Err(API_ERROR_HTTP)
 
             val result = SUT.getArticles(DATA_PAGINATION)
 
             assertThat(result.getError())
-                .isEqualTo(errorMapper.mapToDataError(API_HTTP_ERROR))
+                .isEqualTo(errorMapper.mapToDataError(API_ERROR_HTTP))
         }
     }
 
@@ -104,12 +99,12 @@ internal class ArticlesGamespotDataStoreTest {
     @Test
     fun `Returns network error when fetching articles`() {
         runBlockingTest {
-            articlesEndpoint.shouldReturnNetworkError = true
+            coEvery { articlesEndpoint.getArticles(any(), any()) } returns Err(API_ERROR_NETWORK)
 
             val result = SUT.getArticles(DATA_PAGINATION)
 
             assertThat(result.getError())
-                .isEqualTo(errorMapper.mapToDataError(API_NETWORK_ERROR))
+                .isEqualTo(errorMapper.mapToDataError(API_ERROR_NETWORK))
         }
     }
 
@@ -117,43 +112,14 @@ internal class ArticlesGamespotDataStoreTest {
     @Test
     fun `Returns unknown error when fetching articles`() {
         runBlockingTest {
-            articlesEndpoint.shouldReturnUnknownError = true
+            coEvery { articlesEndpoint.getArticles(any(), any()) } returns Err(API_ERROR_UNKNOWN)
 
             val result = SUT.getArticles(DATA_PAGINATION)
 
             assertThat(result.getError())
-                .isEqualTo(errorMapper.mapToDataError(API_UNKNOWN_ERROR))
+                .isEqualTo(errorMapper.mapToDataError(API_ERROR_UNKNOWN))
         }
     }
-
-
-    private class FakeArticlesEndpoint : ArticlesEndpoint {
-
-        var shouldReturnArticles = false
-        var shouldReturnHttpError = false
-        var shouldReturnNetworkError = false
-        var shouldReturnUnknownError = false
-
-        override suspend fun getArticles(offset: Int, limit: Int): ApiResult<List<ApiArticle>> {
-            return when {
-                shouldReturnArticles -> Ok(API_ARTICLES)
-                shouldReturnHttpError -> Err(API_HTTP_ERROR)
-                shouldReturnNetworkError -> Err(API_NETWORK_ERROR)
-                shouldReturnUnknownError -> Err(API_UNKNOWN_ERROR)
-
-                else -> throw IllegalStateException()
-            }
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
 
 
 }

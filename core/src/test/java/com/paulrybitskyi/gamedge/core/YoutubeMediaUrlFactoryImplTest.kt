@@ -18,17 +18,10 @@ package com.paulrybitskyi.gamedge.core
 
 import com.paulrybitskyi.gamedge.core.factories.YoutubeMediaUrlFactoryImpl
 import com.paulrybitskyi.gamedge.core.factories.YoutubeThumbnailSize
-import com.paulrybitskyi.gamedge.domain.games.DomainVideo
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_VIDEO
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
-
-
-private val DOMAIN_VIDEO = DomainVideo(
-    id = "id",
-    name = "name"
-)
-
 
 internal class YoutubeMediaUrlFactoryImplTest {
 

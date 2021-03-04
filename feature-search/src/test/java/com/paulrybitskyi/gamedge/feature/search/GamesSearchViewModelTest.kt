@@ -17,62 +17,26 @@
 package com.paulrybitskyi.gamedge.feature.search
 
 import androidx.lifecycle.SavedStateHandle
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.domain.games.DomainCategory
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-
-
-private val DOMAIN_GAME = DomainGame(
-    id = 1,
-    followerCount = null,
-    hypeCount = null,
-    releaseDate = null,
-    criticsRating = null,
-    usersRating = null,
-    totalRating = null,
-    name = "name",
-    summary = null,
-    storyline = null,
-    category = DomainCategory.UNKNOWN,
-    cover = null,
-    releaseDates = listOf(),
-    ageRatings = listOf(),
-    videos = listOf(),
-    artworks = listOf(),
-    screenshots = listOf(),
-    genres = listOf(),
-    platforms = listOf(),
-    playerPerspectives = listOf(),
-    themes = listOf(),
-    modes = listOf(),
-    keywords = listOf(),
-    involvedCompanies = listOf(),
-    websites = listOf(),
-    similarGames = listOf()
-)
-private val DOMAIN_GAMES = listOf(
-    DOMAIN_GAME.copy(id = 1),
-    DOMAIN_GAME.copy(id = 2),
-    DOMAIN_GAME.copy(id = 3)
-)
-
 
 internal class GamesSearchViewModelTest {
 
@@ -80,14 +44,16 @@ internal class GamesSearchViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var searchGamesUseCase: FakeSearchGamesUseCase
+    @MockK private lateinit var searchGamesUseCase: SearchGamesUseCase
+
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamesSearchViewModel
 
 
     @Before
     fun setup() {
-        searchGamesUseCase = FakeSearchGamesUseCase()
+        MockKAnnotations.init(this)
+
         logger = FakeLogger()
         SUT = GamesSearchViewModel(
             searchGamesUseCase = searchGamesUseCase,
@@ -101,8 +67,8 @@ internal class GamesSearchViewModelTest {
 
 
     private fun setupSavedStateHandle(): SavedStateHandle {
-        return mockk<SavedStateHandle>(relaxed = true).also {
-            every { it.get<String>(any()) } returns ""
+        return mockk(relaxed = true) {
+            every { get<String>(any()) } returns ""
         }
     }
 
@@ -122,7 +88,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Emits correct ui states when searching for games`() {
         mainCoroutineRule.runBlockingTest {
-            searchGamesUseCase.shouldReturnGames = true
+            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             val uiStates = mutableListOf<GamesUiState>()
             val uiStateJob = launch { SUT.uiState.toList(uiStates) }
@@ -159,7 +125,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Does not emit ui states when the current search query is provided`() {
         mainCoroutineRule.runBlockingTest {
-            searchGamesUseCase.shouldReturnGames = true
+            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.onSearchActionRequested("god of war")
 
@@ -194,7 +160,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Dispatches items clearing command when performing new search`() {
         mainCoroutineRule.runBlockingTest {
-            searchGamesUseCase.shouldReturnGames = true
+            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.onSearchActionRequested("god of war")
 
@@ -208,7 +174,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Logs error when searching games use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            searchGamesUseCase.shouldThrowError = true
+            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
             SUT.onSearchActionRequested("god of war")
 
@@ -220,7 +186,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Dispatches toast showing command when searching games use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            searchGamesUseCase.shouldThrowError = true
+            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
             SUT.onSearchActionRequested("god of war")
 
@@ -254,23 +220,6 @@ internal class GamesSearchViewModelTest {
     }
 
 
-    private class FakeSearchGamesUseCase : SearchGamesUseCase {
-
-        var shouldReturnGames = false
-        var shouldThrowError = false
-
-        override suspend fun execute(params: SearchGamesUseCase.Params): Flow<List<DomainGame>> {
-            return when {
-                shouldReturnGames -> flowOf(DOMAIN_GAMES)
-                shouldThrowError -> flow { throw Exception("error") }
-
-                else -> throw IllegalStateException()
-            }
-        }
-
-    }
-
-
     private class FakeGamesSearchUiStateFactory : GamesSearchUiStateFactory {
 
         override fun createWithEmptyState(searchQuery: String): GamesUiState {
@@ -288,44 +237,12 @@ internal class GamesSearchViewModelTest {
                         id = it.id,
                         coverImageUrl = null,
                         name = it.name,
-                        releaseDate = "Sometime",
-                        developerName = "dev",
+                        releaseDate = "release_date",
+                        developerName = "developer_name",
                         description = "description"
                     )
                 }
             )
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
-
-
-    private class FakeErrorMapper : ErrorMapper {
-
-        override fun mapToMessage(error: Throwable): String {
-            return "error"
-        }
-
-    }
-
-
-    private class FakeLogger : Logger {
-
-        var errorMessage = ""
-
-        override fun info(tag: String, message: String, throwable: Throwable?) {}
-        override fun debug(tag: String, message: String, throwable: Throwable?) {}
-        override fun warning(tag: String, message: String, throwable: Throwable?) {}
-
-        override fun error(tag: String, message: String, throwable: Throwable?) {
-            errorMessage = message
         }
 
     }

@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.dashboard
 
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*

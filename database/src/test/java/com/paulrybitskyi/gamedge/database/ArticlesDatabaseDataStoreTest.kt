@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.database
 
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.articles.DataArticle
 import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
@@ -24,43 +23,34 @@ import com.paulrybitskyi.gamedge.database.articles.datastores.ArticleMapper
 import com.paulrybitskyi.gamedge.database.articles.datastores.ArticlesDatabaseDataStore
 import com.paulrybitskyi.gamedge.database.articles.datastores.mapToDatabaseArticles
 import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
-import kotlinx.coroutines.CoroutineDispatcher
+import com.paulrybitskyi.gamedge.commons.testing.DATA_ARTICLES
+import com.paulrybitskyi.gamedge.commons.testing.DATA_PAGINATION
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
-
-private val DATA_ARTICLE = DataArticle(
-    id = 1,
-    title = "title",
-    lede = "lede",
-    imageUrls = emptyMap(),
-    publicationDate = 500L,
-    siteDetailUrl = "url"
-)
-private val DATA_ARTICLES = listOf(
-    DATA_ARTICLE.copy(id = 1),
-    DATA_ARTICLE.copy(id = 2),
-    DATA_ARTICLE.copy(id = 3),
-)
-
-
 internal class ArticlesDatabaseDataStoreTest {
 
 
-    private lateinit var articlesTable: FakeArticlesTable
+    @MockK private lateinit var articlesTable: ArticlesTable
+
     private lateinit var articleMapper: FakeArticleMapper
     private lateinit var SUT: ArticlesDatabaseDataStore
 
 
     @Before
     fun setup() {
-        articlesTable = FakeArticlesTable()
+        MockKAnnotations.init(this, relaxUnitFun = true)
+
         articleMapper = FakeArticleMapper()
         SUT = ArticlesDatabaseDataStore(
             articlesTable = articlesTable,
@@ -75,8 +65,9 @@ internal class ArticlesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.saveArticles(DATA_ARTICLES)
 
-            assertThat(articlesTable.articles)
-                .isEqualTo(articleMapper.mapToDatabaseArticles(DATA_ARTICLES))
+            coVerify {
+                articlesTable.saveArticles(articleMapper.mapToDatabaseArticles(DATA_ARTICLES))
+            }
         }
     }
 
@@ -84,37 +75,14 @@ internal class ArticlesDatabaseDataStoreTest {
     @Test
     fun `Emits articles successfully`() {
         runBlockingTest {
-            SUT.saveArticles(DATA_ARTICLES)
+            val databaseArticles = articleMapper.mapToDatabaseArticles(DATA_ARTICLES)
 
-            val articles = SUT.observeArticles(DataPagination(offset = 0, limit = 20)).first()
+            coEvery { articlesTable.observeArticles(any(), any()) } returns flowOf(databaseArticles)
 
-            assertThat(articles)
+            assertThat(SUT.observeArticles(DATA_PAGINATION).first())
                 .isEqualTo(DATA_ARTICLES)
         }
     }
-
-
-    private class FakeArticlesTable : ArticlesTable {
-
-        var articles = listOf<DatabaseArticle>()
-
-        override suspend fun saveArticles(articles: List<DatabaseArticle>) {
-            this.articles = articles
-        }
-
-        override fun observeArticles(offset: Int, limit: Int): Flow<List<DatabaseArticle>> {
-            return flowOf(this.articles)
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
 
 
     private class FakeArticleMapper : ArticleMapper {

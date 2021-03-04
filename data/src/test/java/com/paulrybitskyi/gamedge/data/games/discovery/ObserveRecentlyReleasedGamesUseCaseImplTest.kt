@@ -16,9 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.games.discovery
 
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.commons.DataPagination
-import com.paulrybitskyi.gamedge.data.games.DataCategory
 import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
@@ -26,54 +24,23 @@ import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.data.games.usecases.discovery.ObserveRecentlyReleasedGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
-import kotlinx.coroutines.CoroutineDispatcher
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
-
-private val DATA_GAME = DataGame(
-    id = 1,
-    followerCount = null,
-    hypeCount = null,
-    releaseDate = null,
-    criticsRating = null,
-    usersRating = null,
-    totalRating = null,
-    name = "name",
-    summary = null,
-    storyline = null,
-    category = DataCategory.UNKNOWN,
-    cover = null,
-    releaseDates = listOf(),
-    ageRatings = listOf(),
-    videos = listOf(),
-    artworks = listOf(),
-    screenshots = listOf(),
-    genres = listOf(),
-    platforms = listOf(),
-    playerPerspectives = listOf(),
-    themes = listOf(),
-    modes = listOf(),
-    keywords = listOf(),
-    involvedCompanies = listOf(),
-    websites = listOf(),
-    similarGames = listOf()
-)
-private val DATA_GAMES = listOf(
-    DATA_GAME.copy(id = 1),
-    DATA_GAME.copy(id = 2),
-    DATA_GAME.copy(id = 3)
-)
-
-
 internal class ObserveRecentlyReleasedGamesUseCaseImplTest {
 
+
+    @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
 
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: ObserveRecentlyReleasedGamesUseCaseImpl
@@ -81,9 +48,11 @@ internal class ObserveRecentlyReleasedGamesUseCaseImplTest {
 
     @Before
     fun setup() {
+        MockKAnnotations.init(this)
+
         gameMapper = GameMapper()
         SUT = ObserveRecentlyReleasedGamesUseCaseImpl(
-            gamesLocalDataStore = FakeGamesLocalDataStore(),
+            gamesLocalDataStore = gamesLocalDataStore,
             dispatcherProvider = FakeDispatcherProvider(),
             gameMapper = gameMapper
         )
@@ -93,68 +62,12 @@ internal class ObserveRecentlyReleasedGamesUseCaseImplTest {
     @Test
     fun `Emits games successfully`() {
         runBlockingTest {
+            coEvery { gamesLocalDataStore.observeRecentlyReleasedGames(any()) } returns flowOf(DATA_GAMES)
+
             assertThat(SUT.execute(ObserveGamesUseCaseParams()).first())
                 .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
         }
     }
-
-
-    private class FakeGamesLocalDataStore : GamesLocalDataStore {
-
-        override suspend fun saveGames(games: List<DataGame>) {
-            // no-op
-        }
-
-        override suspend fun getGame(id: Int): DataGame? {
-            return null // no-op
-        }
-
-        override suspend fun getCompanyDevelopedGames(
-            company: DataCompany,
-            pagination: DataPagination
-        ): List<DataGame> {
-            return emptyList() // no-op
-        }
-
-        override suspend fun getSimilarGames(
-            game: DataGame,
-            pagination: DataPagination
-        ): List<DataGame> {
-            return emptyList() // no-op
-        }
-
-        override suspend fun searchGames(
-            searchQuery: String,
-            pagination: DataPagination
-        ): List<DataGame> {
-            return emptyList() // no-op
-        }
-
-        override suspend fun observePopularGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
-        override suspend fun observeRecentlyReleasedGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf(DATA_GAMES)
-        }
-
-        override suspend fun observeComingSoonGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
-        override suspend fun observeMostAnticipatedGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
 
 
 }

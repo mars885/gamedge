@@ -18,13 +18,12 @@ package com.paulrybitskyi.gamedge.feature.category
 
 import androidx.lifecycle.SavedStateHandle
 import com.github.michaelbull.result.Ok
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
-import com.paulrybitskyi.gamedge.domain.games.DomainCategory
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
@@ -33,12 +32,13 @@ import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.mapping.GamesCategoryUiStateFactory
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
@@ -46,63 +46,27 @@ import org.junit.Rule
 import org.junit.Test
 import javax.inject.Provider
 
-
-private val DOMAIN_GAME = DomainGame(
-    id = 1,
-    followerCount = null,
-    hypeCount = null,
-    releaseDate = null,
-    criticsRating = null,
-    usersRating = null,
-    totalRating = null,
-    name = "name",
-    summary = null,
-    storyline = null,
-    category = DomainCategory.UNKNOWN,
-    cover = null,
-    releaseDates = listOf(),
-    ageRatings = listOf(),
-    videos = listOf(),
-    artworks = listOf(),
-    screenshots = listOf(),
-    genres = listOf(),
-    platforms = listOf(),
-    playerPerspectives = listOf(),
-    themes = listOf(),
-    modes = listOf(),
-    keywords = listOf(),
-    involvedCompanies = listOf(),
-    websites = listOf(),
-    similarGames = listOf()
-)
-private val DOMAIN_GAMES = listOf(
-    DOMAIN_GAME.copy(id = 1),
-    DOMAIN_GAME.copy(id = 2),
-    DOMAIN_GAME.copy(id = 3)
-)
-
-
 internal class GamesCategoryViewModelTest {
 
 
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var observePopularGamesUseCase: FakeObservePopularGamesUseCase
-    private lateinit var refreshPopularGamesUseCase: FakeRefreshPopularGamesUseCase
+    @MockK private lateinit var observePopularGamesUseCase: ObservePopularGamesUseCase
+    @MockK private lateinit var refreshPopularGamesUseCase: RefreshPopularGamesUseCase
 
-    private lateinit var useCases: GamesCategoryUseCases
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamesCategoryViewModel
 
 
     @Before
     fun setup() {
-        useCases = setupUseCases()
+        MockKAnnotations.init(this)
+
         logger = FakeLogger()
         SUT = GamesCategoryViewModel(
             stringProvider = FakeStringProvider(),
-            useCases = useCases,
+            useCases = setupUseCases(),
             uiStateFactory = FakeGamesCategoryUiStateFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
             errorMapper = FakeErrorMapper(),
@@ -113,29 +77,29 @@ internal class GamesCategoryViewModelTest {
 
 
     private fun setupUseCases(): GamesCategoryUseCases {
-        observePopularGamesUseCase = FakeObservePopularGamesUseCase()
-        refreshPopularGamesUseCase = FakeRefreshPopularGamesUseCase()
+        coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+        coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
         return GamesCategoryUseCases(
             observeGamesUseCasesMap = mapOf(
                 GamesCategoryKey.Type.POPULAR to Provider { observePopularGamesUseCase },
-                GamesCategoryKey.Type.RECENTLY_RELEASED to Provider { FakeObserveRecentlyReleasedGamesUseCase() },
-                GamesCategoryKey.Type.COMING_SOON to Provider { FakeObserveComingSoonGamesUseCase() },
-                GamesCategoryKey.Type.MOST_ANTICIPATED to Provider { FakeObserveMostAnticipatedGamesUseCase() },
+                GamesCategoryKey.Type.RECENTLY_RELEASED to Provider(::mockk),
+                GamesCategoryKey.Type.COMING_SOON to Provider(::mockk),
+                GamesCategoryKey.Type.MOST_ANTICIPATED to Provider(::mockk)
             ),
             refreshGamesUseCasesMap = mapOf(
                 GamesCategoryKey.Type.POPULAR to Provider { refreshPopularGamesUseCase },
-                GamesCategoryKey.Type.RECENTLY_RELEASED to Provider { FakeRefreshRecentlyReleasedGamesUseCase() },
-                GamesCategoryKey.Type.COMING_SOON to Provider { FakeRefreshComingSoonGamesUseCase() },
-                GamesCategoryKey.Type.MOST_ANTICIPATED to Provider { FakeRefreshMostAnticipatedGamesUseCase() }
+                GamesCategoryKey.Type.RECENTLY_RELEASED to Provider(::mockk),
+                GamesCategoryKey.Type.COMING_SOON to Provider(::mockk),
+                GamesCategoryKey.Type.MOST_ANTICIPATED to Provider(::mockk)
             )
         )
     }
 
 
     private fun setupSavedStateHandle(): SavedStateHandle {
-        return mockk<SavedStateHandle>(relaxed = true).also {
-            every { it.get<String>(any()) } returns GamesCategory.POPULAR.name
+        return mockk(relaxed = true) {
+            every { get<String>(any()) } returns GamesCategory.POPULAR.name
         }
     }
 
@@ -156,8 +120,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Emits correct ui states when observing games`() {
         mainCoroutineRule.runBlockingTest {
-            observePopularGamesUseCase.shouldReturnGames = true
-            refreshPopularGamesUseCase.shouldReturnGames = true
+            coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             val uiStates = mutableListOf<GamesCategoryUiState>()
             val uiStatesJob = launch { SUT.uiState.toList(uiStates) }
@@ -176,8 +140,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Logs error when games observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            observePopularGamesUseCase.shouldThrowError = true
-            refreshPopularGamesUseCase.shouldReturnGames = true
+            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.loadData(resultEmissionDelay = 0L)
 
@@ -189,8 +153,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Dispatches toast showing command when games observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            observePopularGamesUseCase.shouldThrowError = true
-            refreshPopularGamesUseCase.shouldReturnGames = true
+            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.loadData(resultEmissionDelay = 0L)
 
@@ -204,8 +168,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Emits correct ui states when refreshing games`() {
         mainCoroutineRule.runBlockingTest {
-            observePopularGamesUseCase.shouldReturnGames = true
-            refreshPopularGamesUseCase.shouldReturnGames = true
+            coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             val uiStates = mutableListOf<GamesCategoryUiState>()
             val uiStatesJob = launch { SUT.uiState.toList(uiStates) }
@@ -222,8 +186,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Logs error when games refreshing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            observePopularGamesUseCase.shouldReturnGames = true
-            refreshPopularGamesUseCase.shouldThrowError = true
+            coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
             SUT.loadData(resultEmissionDelay = 0L)
 
@@ -235,8 +199,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Dispatches toast showing command when games refreshing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            observePopularGamesUseCase.shouldReturnGames = true
-            refreshPopularGamesUseCase.shouldThrowError = true
+            coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
             SUT.loadData(resultEmissionDelay = 0L)
 
@@ -279,107 +243,6 @@ internal class GamesCategoryViewModelTest {
     }
 
 
-    private class FakeStringProvider : StringProvider {
-
-        override fun getString(id: Int, vararg args: Any): String {
-            return "string"
-        }
-
-        override fun getQuantityString(id: Int, quantity: Int, vararg formatArgs: Any): String {
-            return "quantity_string"
-        }
-
-    }
-
-
-    private class FakeObservePopularGamesUseCase : ObservePopularGamesUseCase {
-
-        var shouldReturnGames = false
-        var shouldThrowError = false
-
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
-            return when {
-                shouldReturnGames -> flowOf(DOMAIN_GAMES)
-                shouldThrowError -> flow { throw Exception("error") }
-
-                else -> throw IllegalStateException()
-            }
-        }
-
-    }
-
-
-    private class FakeRefreshPopularGamesUseCase : RefreshPopularGamesUseCase {
-
-        var shouldReturnGames = false
-        var shouldThrowError = false
-
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
-            return when {
-                shouldReturnGames -> flowOf(Ok(DOMAIN_GAMES))
-                shouldThrowError -> flow { throw Exception("error") }
-
-                else -> throw IllegalStateException()
-            }
-        }
-
-    }
-
-
-    private class FakeObserveRecentlyReleasedGamesUseCase : ObserveRecentlyReleasedGamesUseCase {
-
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
-            return flowOf(DOMAIN_GAMES)
-        }
-
-    }
-
-
-    private class FakeRefreshRecentlyReleasedGamesUseCase : RefreshRecentlyReleasedGamesUseCase {
-
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
-            return flowOf(Ok(DOMAIN_GAMES))
-        }
-
-    }
-
-
-    private class FakeObserveComingSoonGamesUseCase : ObserveComingSoonGamesUseCase {
-
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
-            return flowOf(DOMAIN_GAMES)
-        }
-
-    }
-
-
-    private class FakeRefreshComingSoonGamesUseCase : RefreshComingSoonGamesUseCase {
-
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
-            return flowOf(Ok(DOMAIN_GAMES))
-        }
-
-    }
-
-
-    private class FakeObserveMostAnticipatedGamesUseCase : ObserveMostAnticipatedGamesUseCase {
-
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
-            return flowOf(DOMAIN_GAMES)
-        }
-
-    }
-
-
-    private class FakeRefreshMostAnticipatedGamesUseCase : RefreshMostAnticipatedGamesUseCase {
-
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
-            return flowOf(Ok(DOMAIN_GAMES))
-        }
-
-    }
-
-
     private class FakeGamesCategoryUiStateFactory : GamesCategoryUiStateFactory {
 
         override fun createWithEmptyState(): GamesCategoryUiState {
@@ -400,38 +263,6 @@ internal class GamesCategoryViewModelTest {
                     )
                 }
             )
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
-
-
-    private class FakeErrorMapper : ErrorMapper {
-
-        override fun mapToMessage(error: Throwable): String {
-            return "error"
-        }
-
-    }
-
-
-    private class FakeLogger : Logger {
-
-        var errorMessage = ""
-
-        override fun info(tag: String, message: String, throwable: Throwable?) {}
-        override fun debug(tag: String, message: String, throwable: Throwable?) {}
-        override fun warning(tag: String, message: String, throwable: Throwable?) {}
-
-        override fun error(tag: String, message: String, throwable: Throwable?) {
-            errorMessage = message
         }
 
     }

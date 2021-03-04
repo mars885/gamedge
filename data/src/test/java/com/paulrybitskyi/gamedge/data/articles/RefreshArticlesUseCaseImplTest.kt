@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.data.articles
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesDataStores
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesLocalDataStore
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesRemoteDataStore
@@ -30,53 +30,31 @@ import com.paulrybitskyi.gamedge.data.articles.usecases.commons.mapToDomainArtic
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling.ArticlesRefreshingThrottler
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling.ArticlesRefreshingThrottlerKeyProvider
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling.ArticlesRefreshingThrottlerTools
-import com.paulrybitskyi.gamedge.data.commons.DataPagination
-import com.paulrybitskyi.gamedge.data.commons.DataResult
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
-import com.paulrybitskyi.gamedge.data.commons.entities.Error
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
-import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
-import kotlinx.coroutines.CoroutineDispatcher
+import io.mockk.*
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
-
-private val DATA_ARTICLE = DataArticle(
-    id = 1,
-    title = "title",
-    lede = "lede",
-    imageUrls = emptyMap(),
-    publicationDate = 500L,
-    siteDetailUrl = "url"
-)
-private val DATA_ARTICLES = listOf(
-    DATA_ARTICLE.copy(id = 1),
-    DATA_ARTICLE.copy(id = 2),
-    DATA_ARTICLE.copy(id = 3),
-)
-
-private val USE_CASE_PARAMS = RefreshArticlesUseCase.Params()
-
-
 internal class RefreshArticlesUseCaseImplTest {
 
 
-    private lateinit var articlesLocalDataStore: FakeArticlesLocalDataStore
-    private lateinit var articlesRemoteDataStore: FakeArticlesRemoteDataStore
-    private lateinit var throttler: FakeArticlesRefreshingThrottler
+    @MockK private lateinit var articlesLocalDataStore: ArticlesLocalDataStore
+    @MockK private lateinit var articlesRemoteDataStore: ArticlesRemoteDataStore
+    @MockK private lateinit var throttler: ArticlesRefreshingThrottler
+    @MockK private lateinit var keyProvider: ArticlesRefreshingThrottlerKeyProvider
     private lateinit var articleMapper: ArticleMapper
     private lateinit var SUT: RefreshArticlesUseCaseImpl
 
 
     @Before
     fun setup() {
-        articlesLocalDataStore = FakeArticlesLocalDataStore()
-        articlesRemoteDataStore = FakeArticlesRemoteDataStore()
-        throttler = FakeArticlesRefreshingThrottler()
+        MockKAnnotations.init(this, relaxUnitFun = true)
+
         articleMapper = ArticleMapper()
         SUT = RefreshArticlesUseCaseImpl(
             articlesDataStores = ArticlesDataStores(
@@ -86,23 +64,25 @@ internal class RefreshArticlesUseCaseImplTest {
             dispatcherProvider = FakeDispatcherProvider(),
             throttlerTools = ArticlesRefreshingThrottlerTools(
                 throttler = throttler,
-                keyProvider = FakeArticlesRefreshingThrottlerKeyProvider()
+                keyProvider = keyProvider
             ),
             mappers = RefreshArticlesUseCaseMappers(
                 article = articleMapper,
                 error = ErrorMapper()
             )
         )
+
+        every { keyProvider.provideArticlesKey(any()) } returns "key"
     }
 
 
     @Test
     fun `Emits remote articles when refresh is possible`() {
         runBlockingTest {
-            throttler.canRefreshArticles = true
-            articlesRemoteDataStore.shouldReturnArticles = true
+            coEvery { throttler.canRefreshArticles(any()) } returns true
+            coEvery { articlesRemoteDataStore.getArticles(any()) } returns Ok(DATA_ARTICLES)
 
-            assertThat(SUT.execute(USE_CASE_PARAMS).first().get())
+            assertThat(SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).first().get())
                 .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
         }
     }
@@ -111,11 +91,11 @@ internal class RefreshArticlesUseCaseImplTest {
     @Test
     fun `Does not emit remote articles when refresh is not possible`() {
         runBlockingTest {
-            throttler.canRefreshArticles = false
+            coEvery { throttler.canRefreshArticles(any()) } returns false
 
             var isEmptyFlow = false
 
-            SUT.execute(USE_CASE_PARAMS)
+            SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS)
                 .onEmpty { isEmptyFlow = true }
                 .firstOrNull()
 
@@ -127,13 +107,12 @@ internal class RefreshArticlesUseCaseImplTest {
     @Test
     fun `Saves remote articles into local data store when refresh is successful`() {
         runBlockingTest {
-            throttler.canRefreshArticles = true
-            articlesRemoteDataStore.shouldReturnArticles = true
+            coEvery { throttler.canRefreshArticles(any()) } returns true
+            coEvery { articlesRemoteDataStore.getArticles(any()) } returns Ok(DATA_ARTICLES)
 
-            SUT.execute(USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(articlesLocalDataStore.articles)
-                .isEqualTo(DATA_ARTICLES)
+            coVerify { articlesLocalDataStore.saveArticles(DATA_ARTICLES) }
         }
     }
 
@@ -141,11 +120,11 @@ internal class RefreshArticlesUseCaseImplTest {
     @Test
     fun `Does not save remote articles into local data store when refresh is not possible`() {
         runBlockingTest {
-            throttler.canRefreshArticles = false
+            coEvery { throttler.canRefreshArticles(any()) } returns false
 
-            SUT.execute(USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(articlesLocalDataStore.articles.isEmpty()).isTrue
+            coVerifyNotCalled { articlesLocalDataStore.saveArticles(any()) }
         }
     }
 
@@ -153,12 +132,12 @@ internal class RefreshArticlesUseCaseImplTest {
     @Test
     fun `Does not save remote articles into local data store when refresh is unsuccessful`() {
         runBlockingTest {
-            throttler.canRefreshArticles = false
-            articlesRemoteDataStore.shouldReturnError = true
+            coEvery { throttler.canRefreshArticles(any()) } returns false
+            coEvery { articlesRemoteDataStore.getArticles(any()) } returns Err(DATA_ERROR_UNKNOWN)
 
-            SUT.execute(USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(articlesLocalDataStore.articles.isEmpty()).isTrue
+            coVerifyNotCalled { articlesLocalDataStore.saveArticles(any()) }
         }
     }
 
@@ -166,12 +145,12 @@ internal class RefreshArticlesUseCaseImplTest {
     @Test
     fun `Updates articles last refresh time when refresh is successful`() {
         runBlockingTest {
-            throttler.canRefreshArticles = true
-            articlesRemoteDataStore.shouldReturnArticles = true
+            coEvery { throttler.canRefreshArticles(any()) } returns true
+            coEvery { articlesRemoteDataStore.getArticles(any()) } returns Ok(DATA_ARTICLES)
 
-            SUT.execute(USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(throttler.areArticlesLastRefreshTimeUpdated).isTrue
+            coVerify { throttler.updateArticlesLastRefreshTime(any()) }
         }
     }
 
@@ -179,11 +158,11 @@ internal class RefreshArticlesUseCaseImplTest {
     @Test
     fun `Does not update articles last refresh time when refresh is not possible`() {
         runBlockingTest {
-            throttler.canRefreshArticles = false
+            coEvery { throttler.canRefreshArticles(any()) } returns false
 
-            SUT.execute(USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(throttler.areArticlesLastRefreshTimeUpdated).isFalse
+            coVerifyNotCalled { throttler.updateArticlesLastRefreshTime(any()) }
         }
     }
 
@@ -191,79 +170,13 @@ internal class RefreshArticlesUseCaseImplTest {
     @Test
     fun `Does not update articles last refresh time when refresh is unsuccessful`() {
         runBlockingTest {
-            throttler.canRefreshArticles = false
-            articlesRemoteDataStore.shouldReturnError = true
+            coEvery { throttler.canRefreshArticles(any()) } returns false
+            coEvery { articlesRemoteDataStore.getArticles(any()) } returns Err(DATA_ERROR_UNKNOWN)
 
-            SUT.execute(USE_CASE_PARAMS).firstOrNull()
+            SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).firstOrNull()
 
-            assertThat(throttler.areArticlesLastRefreshTimeUpdated).isFalse
+            coVerifyNotCalled { throttler.updateArticlesLastRefreshTime(any()) }
         }
-    }
-
-
-    private class FakeArticlesLocalDataStore : ArticlesLocalDataStore {
-
-        var articles = listOf<DataArticle>()
-
-        override suspend fun saveArticles(articles: List<DataArticle>) {
-            this.articles = articles
-        }
-
-        override suspend fun observeArticles(pagination: DataPagination): Flow<List<DataArticle>> {
-            // no-op
-            return flowOf()
-        }
-
-    }
-
-
-    private class FakeArticlesRemoteDataStore : ArticlesRemoteDataStore {
-
-        var shouldReturnArticles = false
-        var shouldReturnError = false
-
-        override suspend fun getArticles(pagination: DataPagination): DataResult<List<DataArticle>> {
-            return when {
-                shouldReturnArticles -> Ok(DATA_ARTICLES)
-                shouldReturnError -> Err(Error.Unknown("error"))
-
-                else -> throw IllegalStateException()
-            }
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
-
-
-    private class FakeArticlesRefreshingThrottler : ArticlesRefreshingThrottler {
-
-        var canRefreshArticles = false
-        var areArticlesLastRefreshTimeUpdated = false
-
-        override suspend fun canRefreshArticles(key: String): Boolean {
-            return canRefreshArticles
-        }
-
-        override suspend fun updateArticlesLastRefreshTime(key: String) {
-            areArticlesLastRefreshTimeUpdated = true
-        }
-
-    }
-
-
-    private class FakeArticlesRefreshingThrottlerKeyProvider : ArticlesRefreshingThrottlerKeyProvider {
-
-        override fun provideArticlesKey(pagination: DomainPagination): String {
-            return "key"
-        }
-
     }
 
 
