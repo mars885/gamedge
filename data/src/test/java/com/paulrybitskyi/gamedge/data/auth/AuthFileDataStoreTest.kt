@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.data.auth
 
 import androidx.datastore.DataStore
-import com.paulrybitskyi.gamedge.OauthCredentials
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthExpiryTimeCalculator
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthFileDataStore
@@ -32,7 +31,7 @@ import org.junit.Test
 import java.util.concurrent.TimeUnit
 
 
-private val PROTO_OAUTH_CREDENTIALS = OauthCredentials.newBuilder()
+private val PROTO_OAUTH_CREDENTIALS = ProtoOauthCredentials.newBuilder()
     .setAccessToken("access_token")
     .setTokenType("token_type")
     .setTokenTtl(5000L)
@@ -51,14 +50,14 @@ internal class AuthFileDataStoreTest {
 
     private lateinit var protoDataStore: FakeProtoDataStore
     private lateinit var timestampProvider: FakeTimestampProvider
-    private lateinit var dataStore: AuthFileDataStore
+    private lateinit var SUT: AuthFileDataStore
 
 
     @Before
     fun setup() {
         protoDataStore = FakeProtoDataStore()
         timestampProvider = FakeTimestampProvider()
-        dataStore = AuthFileDataStore(
+        SUT = AuthFileDataStore(
             protoDataStore = protoDataStore,
             timestampProvider = timestampProvider,
             mapper = AuthMapper(AuthExpiryTimeCalculator(timestampProvider))
@@ -67,55 +66,67 @@ internal class AuthFileDataStoreTest {
 
 
     @Test
-    fun `Saves credentials successfully`() = runBlockingTest {
-        dataStore.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
+    fun `Saves credentials successfully`() {
+        runBlockingTest {
+            SUT.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
 
-        assertTrue(protoDataStore.isDataUpdated)
+            assertTrue(protoDataStore.isDataUpdated)
+        }
     }
 
 
     @Test
-    fun `Retrieves credentials successfully`() = runBlockingTest {
-        protoDataStore.shouldReturnCredentials = true
+    fun `Retrieves credentials successfully`() {
+        runBlockingTest {
+            protoDataStore.shouldReturnCredentials = true
 
-        assertEquals(
-            DATA_OAUTH_CREDENTIALS,
-            dataStore.getOauthCredentials()
-        )
+            assertEquals(
+                DATA_OAUTH_CREDENTIALS,
+                SUT.getOauthCredentials()
+            )
+        }
     }
 
 
     @Test
-    fun `Retrieves null credentials successfully`() = runBlockingTest {
-        protoDataStore.shouldReturnEmptyFlow = true
+    fun `Retrieves null credentials successfully`() {
+        runBlockingTest {
+            protoDataStore.shouldReturnEmptyFlow = true
 
-        assertNull(dataStore.getOauthCredentials())
+            assertNull(SUT.getOauthCredentials())
+        }
     }
 
 
     @Test
-    fun `Credentials should not be expired`() = runBlockingTest {
-        protoDataStore.shouldReturnCredentials = true
-        timestampProvider.timestamp = 0L
+    fun `Credentials should not be expired`() {
+        runBlockingTest {
+            protoDataStore.shouldReturnCredentials = true
+            timestampProvider.timestamp = 0L
 
-        assertFalse(dataStore.isExpired())
+            assertFalse(SUT.isExpired())
+        }
     }
 
 
     @Test
-    fun `Credentials should be expired`() = runBlockingTest {
-        protoDataStore.shouldReturnCredentials = true
-        timestampProvider.timestamp = (PROTO_OAUTH_CREDENTIALS.expirationTime + 10_000L)
+    fun `Credentials should be expired`() {
+        runBlockingTest {
+            protoDataStore.shouldReturnCredentials = true
+            timestampProvider.timestamp = (PROTO_OAUTH_CREDENTIALS.expirationTime + 10_000L)
 
-        assertTrue(dataStore.isExpired())
+            assertTrue(SUT.isExpired())
+        }
     }
 
 
     @Test
-    fun `Credentials are expired if data store is empty`() = runBlockingTest {
-        protoDataStore.shouldReturnEmptyFlow = true
+    fun `Credentials are expired if data store is empty`() {
+        runBlockingTest {
+            protoDataStore.shouldReturnEmptyFlow = true
 
-        assertTrue(dataStore.isExpired())
+            assertTrue(SUT.isExpired())
+        }
     }
 
 

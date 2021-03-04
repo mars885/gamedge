@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.database
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.data.games.DataCategory
 import com.paulrybitskyi.gamedge.data.games.DataGame
-import com.paulrybitskyi.gamedge.data.games.entities.Category
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.datastores.GameMapper
 import com.paulrybitskyi.gamedge.database.games.datastores.LikedGameFactory
@@ -76,13 +76,13 @@ internal class LikedGamesDatabaseDataStoreTest {
 
     private lateinit var likedGamesTable: FakeLikedGamesTable
     private lateinit var gameMapper: FakeGameMapper
-    private lateinit var likedGamesDbDataStore: LikedGamesDatabaseDataStore
+    private lateinit var SUT: LikedGamesDatabaseDataStore
 
 
     @Before
     fun setup() {
         likedGamesTable = FakeLikedGamesTable()
-        likedGamesDbDataStore = LikedGamesDatabaseDataStore(
+        SUT = LikedGamesDatabaseDataStore(
             likedGamesTable = likedGamesTable,
             likedGameFactory = FakeLikedGameFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
@@ -92,50 +92,60 @@ internal class LikedGamesDatabaseDataStoreTest {
 
 
     @Test
-    fun `Likes game successfully`() = runBlockingTest {
-        val gameId = 100
+    fun `Likes game successfully`() {
+        runBlockingTest {
+            val gameId = 100
 
-        likedGamesDbDataStore.likeGame(gameId)
+            SUT.likeGame(gameId)
 
-        assertTrue(likedGamesTable.isGameLiked(gameId))
+            assertTrue(likedGamesTable.isGameLiked(gameId))
+        }
     }
 
 
     @Test
-    fun `Unlikes game successfully`() = runBlockingTest {
-        val gameId = 100
+    fun `Unlikes game successfully`() {
+        runBlockingTest {
+            val gameId = 100
 
-        likedGamesDbDataStore.likeGame(gameId)
-        likedGamesDbDataStore.unlikeGame(gameId)
+            SUT.likeGame(gameId)
+            SUT.unlikeGame(gameId)
 
-        assertFalse(likedGamesTable.isGameLiked(gameId))
+            assertFalse(likedGamesTable.isGameLiked(gameId))
+        }
     }
 
 
     @Test
-    fun `Performs whether game is liked successfully`() = runBlockingTest {
-        likedGamesDbDataStore.likeGame(gameId = 100)
+    fun `Performs whether game is liked successfully`() {
+        runBlockingTest {
+            SUT.likeGame(gameId = 100)
 
-        assertTrue(likedGamesTable.isGameLiked(gameId = 100))
-        assertFalse(likedGamesTable.isGameLiked(gameId = 110))
+            assertTrue(likedGamesTable.isGameLiked(gameId = 100))
+            assertFalse(likedGamesTable.isGameLiked(gameId = 110))
+        }
     }
 
 
     @Test
-    fun `Observes game like state successfully`() = runBlockingTest {
-        likedGamesDbDataStore.likeGame(gameId = 100)
+    fun `Observes game like state successfully`() {
+        runBlockingTest {
+            SUT.likeGame(gameId = 100)
 
-        assertTrue(likedGamesTable.observeGameLikeState(gameId = 100).first())
-        assertFalse(likedGamesTable.observeGameLikeState(gameId = 110).first())
+            assertTrue(likedGamesTable.observeGameLikeState(gameId = 100).first())
+            assertFalse(likedGamesTable.observeGameLikeState(gameId = 110).first())
+        }
     }
 
 
     @Test
-    fun `Observes liked games successfully`() = runBlockingTest {
-        assertEquals(
-            DATABASE_GAMES,
-            likedGamesTable.observeLikedGames(offset = 0, limit = 20).first()
-        )
+    fun `Observes liked games successfully`() {
+        runBlockingTest {
+            assertEquals(
+                DATABASE_GAMES,
+                likedGamesTable.observeLikedGames(offset = 0, limit = 20).first()
+            )
+        }
     }
 
 
@@ -234,7 +244,7 @@ internal class LikedGamesDatabaseDataStoreTest {
                 name = databaseGame.name,
                 summary = databaseGame.summary,
                 storyline = databaseGame.storyline,
-                category = Category.UNKNOWN,
+                category = DataCategory.UNKNOWN,
                 cover = null,
                 releaseDates = emptyList(),
                 ageRatings = emptyList(),

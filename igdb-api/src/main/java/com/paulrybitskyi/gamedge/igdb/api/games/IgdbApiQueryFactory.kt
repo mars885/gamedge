@@ -60,7 +60,7 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
 
 
     override fun createGamesSearchingQuery(searchQuery: String, offset: Int, limit: Int): String {
-        return apicalypseQueryBuilderFactory.newBuilder()
+        return apicalypseQueryBuilderFactory.create()
             .search(searchQuery)
             .select(gameEntityFields)
             .offset(offset)
@@ -72,7 +72,7 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
     override fun createPopularGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getPopularGamesMinReleaseDate()
 
-        return apicalypseQueryBuilderFactory.newBuilder()
+        return apicalypseQueryBuilderFactory.create()
             .select(gameEntityFields)
             .where {
                 USERS_RATING.isNotNull and
@@ -89,7 +89,7 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
         val minReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMinReleaseDate()
         val maxReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMaxReleaseDate()
 
-        return apicalypseQueryBuilderFactory.newBuilder()
+        return apicalypseQueryBuilderFactory.create()
             .select(gameEntityFields)
             .where {
                 RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) and
@@ -105,7 +105,7 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
     override fun createComingSoonGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getComingSoonGamesMinReleaseDate()
 
-        return apicalypseQueryBuilderFactory.newBuilder()
+        return apicalypseQueryBuilderFactory.create()
             .select(gameEntityFields)
             .where { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) }
             .offset(offset)
@@ -118,7 +118,7 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
     override fun createMostAnticipatedGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getMostAnticipatedGamesMinReleaseDate()
 
-        return apicalypseQueryBuilderFactory.newBuilder()
+        return apicalypseQueryBuilderFactory.create()
             .select(gameEntityFields)
             .where {
                 RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) and
@@ -134,7 +134,7 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
     override fun createGamesRetrievalQuery(gameIds: List<Int>, offset: Int, limit: Int): String {
         val stringifiedGameIds = gameIds.map(Integer::toString)
 
-        return apicalypseQueryBuilderFactory.newBuilder()
+        return apicalypseQueryBuilderFactory.create()
             .select(gameEntityFields)
             .where { ID.containsAnyOf(stringifiedGameIds) }
             .offset(offset)

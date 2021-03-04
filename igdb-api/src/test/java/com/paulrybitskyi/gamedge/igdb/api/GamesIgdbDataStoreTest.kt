@@ -24,11 +24,10 @@ import com.paulrybitskyi.gamedge.commons.api.ApiResult
 import com.paulrybitskyi.gamedge.commons.api.Error
 import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.data.commons.Pagination
+import com.paulrybitskyi.gamedge.data.commons.DataPagination
+import com.paulrybitskyi.gamedge.data.games.DataCategory
 import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
-import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
-import com.paulrybitskyi.gamedge.data.games.entities.Category
 import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.games.datastores.GameMapper
@@ -48,19 +47,19 @@ private val API_GAMES = listOf(
     ApiGame(id = 3)
 )
 
-private val HTTP_ERROR = Error.HttpError(code = 2, message = "http_error")
-private val NETWORK_ERROR = Error.NetworkError(Exception("network_error"))
-private val UNKNOWN_ERROR = Error.NetworkError(Exception("unknown_error"))
+private val API_HTTP_ERROR = Error.HttpError(code = 2, message = "http_error")
+private val API_NETWORK_ERROR = Error.NetworkError(Exception("network_error"))
+private val API_UNKNOWN_ERROR = Error.NetworkError(Exception("unknown_error"))
 
-private val PAGINATION = Pagination(offset = 0, limit = 20)
-private val COMPANY = DataCompany(
+private val DATA_PAGINATION = DataPagination(offset = 0, limit = 20)
+private val DATA_COMPANY = DataCompany(
     id = 1,
     name = "",
     websiteUrl = "",
     logo = null,
     developedGames = listOf()
 )
-private val GAME = DataGame(
+private val DATA_GAME = DataGame(
     id = 1,
     followerCount = null,
     hypeCount = null,
@@ -71,7 +70,7 @@ private val GAME = DataGame(
     name = "name",
     summary = null,
     storyline = null,
-    category = Category.UNKNOWN,
+    category = DataCategory.UNKNOWN,
     cover = null,
     releaseDates = listOf(),
     ageRatings = listOf(),
@@ -96,7 +95,7 @@ internal class GamesIgdbDataStoreTest {
     private lateinit var gamesEndpoint: FakeGamesEndpoint
     private lateinit var gameMapper: GameMapper
     private lateinit var errorMapper: ErrorMapper
-    private lateinit var gamesRemoteDataStore: GamesRemoteDataStore
+    private lateinit var SUT: GamesIgdbDataStore
 
 
     @Before
@@ -104,7 +103,7 @@ internal class GamesIgdbDataStoreTest {
         gamesEndpoint = FakeGamesEndpoint()
         gameMapper = GameMapper()
         errorMapper = ErrorMapper()
-        gamesRemoteDataStore = GamesIgdbDataStore(
+        SUT = GamesIgdbDataStore(
             gamesEndpoint = gamesEndpoint,
             dispatcherProvider = FakeDispatcherProvider(),
             gameMapper = gameMapper,
@@ -114,366 +113,422 @@ internal class GamesIgdbDataStoreTest {
 
 
     @Test
-    fun `Returns searched games successfully`() = runBlockingTest {
-        gamesEndpoint.shouldReturnGames = true
+    fun `Returns searched games successfully`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnGames = true
 
-        val result = gamesRemoteDataStore.searchGames("query", PAGINATION)
+            val result = SUT.searchGames("query", DATA_PAGINATION)
 
-        assertEquals(
-            gameMapper.mapToDataGames(API_GAMES),
-            result.get()
-        )
+            assertEquals(
+                gameMapper.mapToDataGames(API_GAMES),
+                result.get()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns http error when searching games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnHttpError = true
+    fun `Returns http error when searching games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnHttpError = true
 
-        val result = gamesRemoteDataStore.searchGames("query", PAGINATION)
+            val result = SUT.searchGames("query", DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(HTTP_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_HTTP_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns network error when searching games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnNetworkError = true
+    fun `Returns network error when searching games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnNetworkError = true
 
-        val result = gamesRemoteDataStore.searchGames("query", PAGINATION)
+            val result = SUT.searchGames("query", DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(NETWORK_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_NETWORK_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns unknown error when searching games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnUnknownError = true
+    fun `Returns unknown error when searching games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnUnknownError = true
 
-        val result = gamesRemoteDataStore.searchGames("query", PAGINATION)
+            val result = SUT.searchGames("query", DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(UNKNOWN_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns popular games successfully`() = runBlockingTest {
-        gamesEndpoint.shouldReturnGames = true
+    fun `Returns popular games successfully`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnGames = true
 
-        val result = gamesRemoteDataStore.getPopularGames(PAGINATION)
+            val result = SUT.getPopularGames(DATA_PAGINATION)
 
-        assertEquals(
-            gameMapper.mapToDataGames(API_GAMES),
-            result.get()
-        )
+            assertEquals(
+                gameMapper.mapToDataGames(API_GAMES),
+                result.get()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns http error when fetching popular games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnHttpError = true
+    fun `Returns http error when fetching popular games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnHttpError = true
 
-        val result = gamesRemoteDataStore.getPopularGames(PAGINATION)
+            val result = SUT.getPopularGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(HTTP_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_HTTP_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns network error when fetching popular games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnNetworkError = true
+    fun `Returns network error when fetching popular games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnNetworkError = true
 
-        val result = gamesRemoteDataStore.getPopularGames(PAGINATION)
+            val result = SUT.getPopularGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(NETWORK_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_NETWORK_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns unknown error when fetching popular games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnUnknownError = true
+    fun `Returns unknown error when fetching popular games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnUnknownError = true
 
-        val result = gamesRemoteDataStore.getPopularGames(PAGINATION)
+            val result = SUT.getPopularGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(UNKNOWN_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns recently released games successfully`() = runBlockingTest {
-        gamesEndpoint.shouldReturnGames = true
+    fun `Returns recently released games successfully`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnGames = true
 
-        val result = gamesRemoteDataStore.getRecentlyReleasedGames(PAGINATION)
+            val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
 
-        assertEquals(
-            gameMapper.mapToDataGames(API_GAMES),
-            result.get()
-        )
+            assertEquals(
+                gameMapper.mapToDataGames(API_GAMES),
+                result.get()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns http error when fetching recently released games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnHttpError = true
+    fun `Returns http error when fetching recently released games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnHttpError = true
 
-        val result = gamesRemoteDataStore.getRecentlyReleasedGames(PAGINATION)
+            val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(HTTP_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_HTTP_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns network error when fetching recently released games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnNetworkError = true
+    fun `Returns network error when fetching recently released games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnNetworkError = true
 
-        val result = gamesRemoteDataStore.getRecentlyReleasedGames(PAGINATION)
+            val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(NETWORK_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_NETWORK_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns unknown error when fetching recently released games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnUnknownError = true
+    fun `Returns unknown error when fetching recently released games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnUnknownError = true
 
-        val result = gamesRemoteDataStore.getRecentlyReleasedGames(PAGINATION)
+            val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(UNKNOWN_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns coming soon games successfully`() = runBlockingTest {
-        gamesEndpoint.shouldReturnGames = true
+    fun `Returns coming soon games successfully`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnGames = true
 
-        val result = gamesRemoteDataStore.getComingSoonGames(PAGINATION)
+            val result = SUT.getComingSoonGames(DATA_PAGINATION)
 
-        assertEquals(
-            gameMapper.mapToDataGames(API_GAMES),
-            result.get()
-        )
+            assertEquals(
+                gameMapper.mapToDataGames(API_GAMES),
+                result.get()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns http error when fetching coming soon games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnHttpError = true
+    fun `Returns http error when fetching coming soon games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnHttpError = true
 
-        val result = gamesRemoteDataStore.getComingSoonGames(PAGINATION)
+            val result = SUT.getComingSoonGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(HTTP_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_HTTP_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns network error when fetching coming soon games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnNetworkError = true
+    fun `Returns network error when fetching coming soon games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnNetworkError = true
 
-        val result = gamesRemoteDataStore.getComingSoonGames(PAGINATION)
+            val result = SUT.getComingSoonGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(NETWORK_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_NETWORK_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns unknown error when fetching coming soon games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnUnknownError = true
+    fun `Returns unknown error when fetching coming soon games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnUnknownError = true
 
-        val result = gamesRemoteDataStore.getComingSoonGames(PAGINATION)
+            val result = SUT.getComingSoonGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(UNKNOWN_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns most anticipated games successfully`() = runBlockingTest {
-        gamesEndpoint.shouldReturnGames = true
+    fun `Returns most anticipated games successfully`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnGames = true
 
-        val result = gamesRemoteDataStore.getMostAnticipatedGames(PAGINATION)
+            val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
 
-        assertEquals(
-            gameMapper.mapToDataGames(API_GAMES),
-            result.get()
-        )
+            assertEquals(
+                gameMapper.mapToDataGames(API_GAMES),
+                result.get()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns http error when fetching most anticipated games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnHttpError = true
+    fun `Returns http error when fetching most anticipated games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnHttpError = true
 
-        val result = gamesRemoteDataStore.getMostAnticipatedGames(PAGINATION)
+            val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(HTTP_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_HTTP_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns network error when fetching most anticipated games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnNetworkError = true
+    fun `Returns network error when fetching most anticipated games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnNetworkError = true
 
-        val result = gamesRemoteDataStore.getMostAnticipatedGames(PAGINATION)
+            val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(NETWORK_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_NETWORK_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns unknown error when fetching most anticipated games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnUnknownError = true
+    fun `Returns unknown error when fetching most anticipated games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnUnknownError = true
 
-        val result = gamesRemoteDataStore.getMostAnticipatedGames(PAGINATION)
+            val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(UNKNOWN_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns company developed games successfully`() = runBlockingTest {
-        gamesEndpoint.shouldReturnGames = true
+    fun `Returns company developed games successfully`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnGames = true
 
-        val result = gamesRemoteDataStore.getCompanyDevelopedGames(COMPANY, PAGINATION)
+            val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
 
-        assertEquals(
-            gameMapper.mapToDataGames(API_GAMES),
-            result.get()
-        )
+            assertEquals(
+                gameMapper.mapToDataGames(API_GAMES),
+                result.get()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns http error when fetching company developed games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnHttpError = true
+    fun `Returns http error when fetching company developed games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnHttpError = true
 
-        val result = gamesRemoteDataStore.getCompanyDevelopedGames(COMPANY, PAGINATION)
+            val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(HTTP_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_HTTP_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns network error when fetching company developed games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnNetworkError = true
+    fun `Returns network error when fetching company developed games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnNetworkError = true
 
-        val result = gamesRemoteDataStore.getCompanyDevelopedGames(COMPANY, PAGINATION)
+            val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(NETWORK_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_NETWORK_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns unknown error when fetching company developed games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnUnknownError = true
+    fun `Returns unknown error when fetching company developed games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnUnknownError = true
 
-        val result = gamesRemoteDataStore.getCompanyDevelopedGames(COMPANY, PAGINATION)
+            val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(UNKNOWN_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns similar games successfully`() = runBlockingTest {
-        gamesEndpoint.shouldReturnGames = true
+    fun `Returns similar games successfully`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnGames = true
 
-        val result = gamesRemoteDataStore.getSimilarGames(GAME, PAGINATION)
+            val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
 
-        assertEquals(
-            gameMapper.mapToDataGames(API_GAMES),
-            result.get()
-        )
+            assertEquals(
+                gameMapper.mapToDataGames(API_GAMES),
+                result.get()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns http error when fetching similar games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnHttpError = true
+    fun `Returns http error when fetching similar games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnHttpError = true
 
-        val result = gamesRemoteDataStore.getSimilarGames(GAME, PAGINATION)
+            val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(HTTP_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_HTTP_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns network error when fetching similar games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnNetworkError = true
+    fun `Returns network error when fetching similar games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnNetworkError = true
 
-        val result = gamesRemoteDataStore.getSimilarGames(GAME, PAGINATION)
+            val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(NETWORK_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_NETWORK_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns unknown error when fetching similar games`() = runBlockingTest {
-        gamesEndpoint.shouldReturnUnknownError = true
+    fun `Returns unknown error when fetching similar games`() {
+        runBlockingTest {
+            gamesEndpoint.shouldReturnUnknownError = true
 
-        val result = gamesRemoteDataStore.getSimilarGames(GAME, PAGINATION)
+            val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(UNKNOWN_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
@@ -499,9 +554,9 @@ internal class GamesIgdbDataStoreTest {
         private fun getTestResult(): ApiResult<List<ApiGame>> {
             return when {
                 shouldReturnGames -> Ok(API_GAMES)
-                shouldReturnHttpError -> Err(HTTP_ERROR)
-                shouldReturnNetworkError -> Err(NETWORK_ERROR)
-                shouldReturnUnknownError -> Err(UNKNOWN_ERROR)
+                shouldReturnHttpError -> Err(API_HTTP_ERROR)
+                shouldReturnNetworkError -> Err(API_NETWORK_ERROR)
+                shouldReturnUnknownError -> Err(API_UNKNOWN_ERROR)
 
                 else -> throw IllegalStateException()
             }

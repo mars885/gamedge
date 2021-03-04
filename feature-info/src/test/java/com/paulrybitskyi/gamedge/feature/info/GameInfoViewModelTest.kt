@@ -27,8 +27,8 @@ import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
-import com.paulrybitskyi.gamedge.domain.games.entities.Category
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.domain.games.DomainCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetCompanyDevelopedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
@@ -51,7 +51,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-private val GAME = Game(
+private val DOMAIN_GAME = DomainGame(
     id = 1,
     followerCount = null,
     hypeCount = null,
@@ -62,7 +62,7 @@ private val GAME = Game(
     name = "name",
     summary = null,
     storyline = null,
-    category = Category.UNKNOWN,
+    category = DomainCategory.UNKNOWN,
     cover = null,
     releaseDates = listOf(),
     ageRatings = listOf(),
@@ -80,9 +80,9 @@ private val GAME = Game(
     similarGames = listOf()
 )
 
-private val API_ERROR = Error.ApiError.ClientError("message")
-private val NOT_FOUND_ERROR = Error.NotFound("message")
-private val UNKNOWN_ERROR = Error.Unknown("unknown")
+private val DOMAIN_API_ERROR = Error.ApiError.ClientError("message")
+private val DOMAIN_NOT_FOUND_ERROR = Error.NotFound("message")
+private val DOMAIN_UNKNOWN_ERROR = Error.Unknown("unknown")
 
 
 internal class GameInfoViewModelTest {
@@ -93,14 +93,14 @@ internal class GameInfoViewModelTest {
 
     private lateinit var useCases: FakeGameInfoUseCases
     private lateinit var logger: FakeLogger
-    private lateinit var viewModel: GameInfoViewModel
+    private lateinit var SUT: GameInfoViewModel
 
 
     @Before
     fun setup() {
         useCases = FakeGameInfoUseCases()
         logger = FakeLogger()
-        viewModel = GameInfoViewModel(
+        SUT = GameInfoViewModel(
             useCases = useCases,
             uiStateFactory = FakeGameInfoUiStateFactory(),
             gameUrlFactory = FakeGameUrlFactory(),
@@ -126,9 +126,9 @@ internal class GameInfoViewModelTest {
             useCases.getGameUseCase.shouldReturnGame = true
 
             val uiStates = mutableListOf<GameInfoUiState>()
-            val uiStateJob = launch { viewModel.uiState.toList(uiStates) }
+            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
 
-            viewModel.loadData(resultEmissionDelay = 0L)
+            SUT.loadData(resultEmissionDelay = 0L)
 
             assertTrue(uiStates[0] is GameInfoUiState.Empty)
             assertTrue(uiStates[1] is GameInfoUiState.Loading)
@@ -144,7 +144,7 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             useCases.getGameUseCase.shouldReturnNotFoundError = true
 
-            viewModel.loadData(resultEmissionDelay = 0L)
+            SUT.loadData(resultEmissionDelay = 0L)
 
             assertNotEquals("", logger.errorMessage)
         }
@@ -156,9 +156,9 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             useCases.getGameUseCase.shouldReturnUnknownError = true
 
-            viewModel.loadData(resultEmissionDelay = 0L)
+            SUT.loadData(resultEmissionDelay = 0L)
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GeneralCommand.ShowLongToast)
         }
@@ -170,9 +170,9 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             useCases.getGameUseCase.shouldReturnGame = true
 
-            viewModel.onArtworkClicked(position = 0)
+            SUT.onArtworkClicked(position = 0)
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GameInfoRoute.ImageViewer)
         }
@@ -182,9 +182,9 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to previous screen when back button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            viewModel.onBackButtonClicked()
+            SUT.onBackButtonClicked()
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GameInfoRoute.Back)
         }
@@ -196,9 +196,9 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             useCases.getGameUseCase.shouldReturnGame = true
 
-            viewModel.onCoverClicked()
+            SUT.onCoverClicked()
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GameInfoRoute.ImageViewer)
         }
@@ -214,9 +214,9 @@ internal class GameInfoViewModelTest {
                 title = "title"
             )
 
-            viewModel.onVideoClicked(video)
+            SUT.onVideoClicked(video)
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GameInfoCommand.OpenUrl)
             assertEquals(
@@ -232,9 +232,9 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             useCases.getGameUseCase.shouldReturnGame = true
 
-            viewModel.onScreenshotClicked(position = 0)
+            SUT.onScreenshotClicked(position = 0)
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GameInfoRoute.ImageViewer)
         }
@@ -251,9 +251,9 @@ internal class GameInfoViewModelTest {
                 payload = "url"
             )
 
-            viewModel.onLinkClicked(link)
+            SUT.onLinkClicked(link)
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GameInfoCommand.OpenUrl)
             assertEquals(
@@ -276,9 +276,9 @@ internal class GameInfoViewModelTest {
                 roles = ""
             )
 
-            viewModel.onCompanyClicked(company)
+            SUT.onCompanyClicked(company)
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GameInfoCommand.OpenUrl)
             assertEquals(
@@ -298,9 +298,9 @@ internal class GameInfoViewModelTest {
                 coverUrl = "url"
             )
 
-            viewModel.onRelatedGameClicked(relatedGame)
+            SUT.onRelatedGameClicked(relatedGame)
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GameInfoRoute.Info)
             assertEquals(
@@ -327,12 +327,12 @@ internal class GameInfoViewModelTest {
         var shouldReturnNotFoundError = false
         var shouldReturnUnknownError = false
 
-        override suspend fun execute(params: GetGameUseCase.Params): Flow<DomainResult<Game>> {
+        override suspend fun execute(params: GetGameUseCase.Params): Flow<DomainResult<DomainGame>> {
             return when {
-                shouldReturnGame -> flowOf(Ok(GAME))
-                shouldReturnApiError -> flowOf(Err(API_ERROR))
-                shouldReturnNotFoundError -> flowOf(Err(NOT_FOUND_ERROR))
-                shouldReturnUnknownError -> flowOf(Err(UNKNOWN_ERROR))
+                shouldReturnGame -> flowOf(Ok(DOMAIN_GAME))
+                shouldReturnApiError -> flowOf(Err(DOMAIN_API_ERROR))
+                shouldReturnNotFoundError -> flowOf(Err(DOMAIN_NOT_FOUND_ERROR))
+                shouldReturnUnknownError -> flowOf(Err(DOMAIN_UNKNOWN_ERROR))
 
                 else -> throw IllegalStateException()
             }
@@ -361,7 +361,7 @@ internal class GameInfoViewModelTest {
 
     private class FakeGetCompanyDevelopedGamesUseCase : GetCompanyDevelopedGamesUseCase {
 
-        override suspend fun execute(params: GetCompanyDevelopedGamesUseCase.Params): Flow<List<Game>> {
+        override suspend fun execute(params: GetCompanyDevelopedGamesUseCase.Params): Flow<List<DomainGame>> {
             return flowOf(emptyList())
         }
 
@@ -370,7 +370,7 @@ internal class GameInfoViewModelTest {
 
     private class FakeGetSimilarGamesUseCase : GetSimilarGamesUseCase {
 
-        override suspend fun execute(params: GetSimilarGamesUseCase.Params): Flow<List<Game>> {
+        override suspend fun execute(params: GetSimilarGamesUseCase.Params): Flow<List<DomainGame>> {
             return flowOf(emptyList())
         }
 
@@ -388,10 +388,10 @@ internal class GameInfoViewModelTest {
         }
 
         override fun createWithResultState(
-            game: Game,
+            game: DomainGame,
             isLiked: Boolean,
-            companyGames: List<Game>,
-            similarGames: List<Game>
+            companyGames: List<DomainGame>,
+            similarGames: List<DomainGame>
         ): GameInfoUiState {
             return GameInfoUiState.Result(
                 GameInfoModel(
@@ -425,15 +425,15 @@ internal class GameInfoViewModelTest {
 
     private class FakeGameUrlFactory : ImageViewerGameUrlFactory {
 
-        override fun createCoverImageUrl(game: Game): String? {
+        override fun createCoverImageUrl(game: DomainGame): String {
             return "url"
         }
 
-        override fun createArtworkImageUrls(game: Game): List<String> {
+        override fun createArtworkImageUrls(game: DomainGame): List<String> {
             return listOf("url")
         }
 
-        override fun createScreenshotImageUrls(game: Game): List<String> {
+        override fun createScreenshotImageUrls(game: DomainGame): List<String> {
             return listOf("url")
         }
 

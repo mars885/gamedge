@@ -24,15 +24,13 @@ import com.paulrybitskyi.gamedge.commons.api.ApiResult
 import com.paulrybitskyi.gamedge.commons.api.Error
 import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesRemoteDataStore
-import com.paulrybitskyi.gamedge.data.commons.Pagination
+import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesEndpoint
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticleMapper
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlePublicationDateMapper
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlesGamespotDataStore
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.mapToDataArticles
-import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.Article
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
@@ -47,11 +45,11 @@ private val API_ARTICLES = listOf(
     ApiArticle(publicationDate = "2020-03-02 12:14:16")
 )
 
-private val HTTP_ERROR = Error.HttpError(code = 2, message = "http_error")
-private val NETWORK_ERROR = Error.NetworkError(Exception("network_error"))
-private val UNKNOWN_ERROR = Error.NetworkError(Exception("unknown_error"))
+private val API_HTTP_ERROR = Error.HttpError(code = 2, message = "http_error")
+private val API_NETWORK_ERROR = Error.NetworkError(Exception("network_error"))
+private val API_UNKNOWN_ERROR = Error.NetworkError(Exception("unknown_error"))
 
-private val PAGINATION = Pagination(offset = 0, limit = 20)
+private val DATA_PAGINATION = DataPagination(offset = 0, limit = 20)
 
 
 internal class ArticlesGamespotDataStoreTest {
@@ -60,7 +58,7 @@ internal class ArticlesGamespotDataStoreTest {
     private lateinit var articlesEndpoint: FakeArticlesEndpoint
     private lateinit var articleMapper: ArticleMapper
     private lateinit var errorMapper: ErrorMapper
-    private lateinit var articlesRemoteDataStore: ArticlesRemoteDataStore
+    private lateinit var SUT: ArticlesGamespotDataStore
 
 
     @Before
@@ -68,7 +66,7 @@ internal class ArticlesGamespotDataStoreTest {
         articlesEndpoint = FakeArticlesEndpoint()
         articleMapper = ArticleMapper(ArticlePublicationDateMapper())
         errorMapper = ErrorMapper()
-        articlesRemoteDataStore = ArticlesGamespotDataStore(
+        SUT = ArticlesGamespotDataStore(
             articlesEndpoint = articlesEndpoint,
             dispatcherProvider = FakeDispatcherProvider(),
             articleMapper = articleMapper,
@@ -78,54 +76,62 @@ internal class ArticlesGamespotDataStoreTest {
 
 
     @Test
-    fun `Returns articles successfully`() = runBlockingTest {
-        articlesEndpoint.shouldReturnArticles = true
+    fun `Returns articles successfully`() {
+        runBlockingTest {
+            articlesEndpoint.shouldReturnArticles = true
 
-        val result = articlesRemoteDataStore.getArticles(PAGINATION)
+            val result = SUT.getArticles(DATA_PAGINATION)
 
-        assertEquals(
-            articleMapper.mapToDataArticles(API_ARTICLES),
-            result.get()
-        )
+            assertEquals(
+                articleMapper.mapToDataArticles(API_ARTICLES),
+                result.get()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns http error when fetching articles`() = runBlockingTest {
-        articlesEndpoint.shouldReturnHttpError = true
+    fun `Returns http error when fetching articles`() {
+        runBlockingTest {
+            articlesEndpoint.shouldReturnHttpError = true
 
-        val result = articlesRemoteDataStore.getArticles(PAGINATION)
+            val result = SUT.getArticles(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(HTTP_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_HTTP_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns network error when fetching articles`() = runBlockingTest {
-        articlesEndpoint.shouldReturnNetworkError = true
+    fun `Returns network error when fetching articles`() {
+        runBlockingTest {
+            articlesEndpoint.shouldReturnNetworkError = true
 
-        val result = articlesRemoteDataStore.getArticles(PAGINATION)
+            val result = SUT.getArticles(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(NETWORK_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_NETWORK_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns unknown error when fetching articles`() = runBlockingTest {
-        articlesEndpoint.shouldReturnUnknownError = true
+    fun `Returns unknown error when fetching articles`() {
+        runBlockingTest {
+            articlesEndpoint.shouldReturnUnknownError = true
 
-        val result = articlesRemoteDataStore.getArticles(PAGINATION)
+            val result = SUT.getArticles(DATA_PAGINATION)
 
-        assertEquals(
-            errorMapper.mapToDataError(UNKNOWN_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
@@ -136,12 +142,12 @@ internal class ArticlesGamespotDataStoreTest {
         var shouldReturnNetworkError = false
         var shouldReturnUnknownError = false
 
-        override suspend fun getArticles(offset: Int, limit: Int): ApiResult<List<Article>> {
+        override suspend fun getArticles(offset: Int, limit: Int): ApiResult<List<ApiArticle>> {
             return when {
                 shouldReturnArticles -> Ok(API_ARTICLES)
-                shouldReturnHttpError -> Err(HTTP_ERROR)
-                shouldReturnNetworkError -> Err(NETWORK_ERROR)
-                shouldReturnUnknownError -> Err(UNKNOWN_ERROR)
+                shouldReturnHttpError -> Err(API_HTTP_ERROR)
+                shouldReturnNetworkError -> Err(API_NETWORK_ERROR)
+                shouldReturnUnknownError -> Err(API_UNKNOWN_ERROR)
 
                 else -> throw IllegalStateException()
             }

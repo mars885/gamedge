@@ -21,7 +21,7 @@ import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.domain.auth.entities.OauthCredentials
+import com.paulrybitskyi.gamedge.domain.auth.DomainOauthCredentials
 import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
@@ -36,7 +36,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-private val OAUTH_CREDENTIALS = OauthCredentials(
+private val DOMAIN_OAUTH_CREDENTIALS = DomainOauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",
     tokenTtl = 500L
@@ -46,19 +46,19 @@ private val OAUTH_CREDENTIALS = OauthCredentials(
 internal class SplashViewModelTest {
 
 
-    private lateinit var refreshAuthUseCase: FakeRefreshAuthUseCase
-    private lateinit var logger: FakeLogger
-    private lateinit var viewModel: SplashViewModel
-
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
+
+    private lateinit var refreshAuthUseCase: FakeRefreshAuthUseCase
+    private lateinit var logger: FakeLogger
+    private lateinit var SUT: SplashViewModel
 
 
     @Before
     fun setup() {
         refreshAuthUseCase = FakeRefreshAuthUseCase()
         logger = FakeLogger()
-        viewModel = SplashViewModel(
+        SUT = SplashViewModel(
             refreshAuthUseCase = refreshAuthUseCase,
             errorMapper = FakeErrorMapper(),
             logger = logger
@@ -67,14 +67,16 @@ internal class SplashViewModelTest {
 
 
     @Test
-    fun `Routes to dashboard when auth refresh use case emits credentials`() = mainCoroutineRule.runBlockingTest {
-        refreshAuthUseCase.shouldReturnCredentials = true
+    fun `Routes to dashboard when auth refresh use case emits credentials`() {
+        mainCoroutineRule.runBlockingTest {
+            refreshAuthUseCase.shouldReturnCredentials = true
 
-        viewModel.init()
+            SUT.init()
 
-        val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
-        assertTrue(route is SplashRoute.Dashboard)
+            assertTrue(route is SplashRoute.Dashboard)
+        }
     }
 
 
@@ -82,7 +84,7 @@ internal class SplashViewModelTest {
     fun `Logs error when auth refresh use case emits error result`() {
         refreshAuthUseCase.shouldReturnError = true
 
-        viewModel.init()
+        SUT.init()
 
         assertNotEquals("", logger.errorMessage)
     }
@@ -92,7 +94,7 @@ internal class SplashViewModelTest {
     fun `Logs error when auth refresh use case throws error`() {
         refreshAuthUseCase.shouldThrowError = true
 
-        viewModel.init()
+        SUT.init()
 
         assertNotEquals("", logger.errorMessage)
     }
@@ -103,9 +105,9 @@ internal class SplashViewModelTest {
         mainCoroutineRule.runBlockingTest {
             refreshAuthUseCase.shouldReturnError = true
 
-            viewModel.init()
+            SUT.init()
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GeneralCommand.ShowLongToast)
         }
@@ -117,9 +119,9 @@ internal class SplashViewModelTest {
         mainCoroutineRule.runBlockingTest {
             refreshAuthUseCase.shouldThrowError = true
 
-            viewModel.init()
+            SUT.init()
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GeneralCommand.ShowLongToast)
         }
@@ -131,9 +133,9 @@ internal class SplashViewModelTest {
         mainCoroutineRule.runBlockingTest {
             refreshAuthUseCase.shouldReturnError = true
 
-            viewModel.init()
+            SUT.init()
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is SplashRoute.Exit)
         }
@@ -145,9 +147,9 @@ internal class SplashViewModelTest {
         mainCoroutineRule.runBlockingTest {
             refreshAuthUseCase.shouldThrowError = true
 
-            viewModel.init()
+            SUT.init()
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is SplashRoute.Exit)
         }
@@ -160,9 +162,9 @@ internal class SplashViewModelTest {
         var shouldReturnError = false
         var shouldThrowError = false
 
-        override suspend fun execute(params: Unit): Flow<DomainResult<OauthCredentials>> {
+        override suspend fun execute(params: Unit): Flow<DomainResult<DomainOauthCredentials>> {
             return when {
-                shouldReturnCredentials -> flowOf(Ok(OAUTH_CREDENTIALS))
+                shouldReturnCredentials -> flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
                 shouldReturnError -> flowOf(Err(Error.Unknown("unknown")))
                 shouldThrowError -> flow { throw Exception("error") }
 

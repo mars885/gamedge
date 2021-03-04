@@ -18,8 +18,8 @@ package com.paulrybitskyi.gamedge.data.games.utils
 
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottlerKeyProvider
 import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
-import com.paulrybitskyi.gamedge.domain.games.entities.Company
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.domain.games.DomainCompany
+import com.paulrybitskyi.gamedge.domain.games.DomainGame
 
 internal class FakeGamesRefreshingThrottlerKeyProvider : GamesRefreshingThrottlerKeyProvider {
 
@@ -45,14 +45,14 @@ internal class FakeGamesRefreshingThrottlerKeyProvider : GamesRefreshingThrottle
 
 
     override fun provideCompanyDevelopedGamesKey(
-        company: Company,
+        company: DomainCompany,
         pagination: DomainPagination
     ): String {
         return "" // no-op
     }
 
 
-    override fun provideSimilarGamesKey(game: Game, pagination: DomainPagination): String {
+    override fun provideSimilarGamesKey(game: DomainGame, pagination: DomainPagination): String {
         return "" // no-op
     }
 

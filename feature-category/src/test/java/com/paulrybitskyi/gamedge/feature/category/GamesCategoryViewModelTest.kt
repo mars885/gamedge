@@ -24,10 +24,10 @@ import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
+import com.paulrybitskyi.gamedge.domain.games.DomainCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.entities.Category
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.*
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.mapping.GamesCategoryUiStateFactory
@@ -47,7 +47,7 @@ import org.junit.Test
 import javax.inject.Provider
 
 
-private val GAME = Game(
+private val DOMAIN_GAME = DomainGame(
     id = 1,
     followerCount = null,
     hypeCount = null,
@@ -58,7 +58,7 @@ private val GAME = Game(
     name = "name",
     summary = null,
     storyline = null,
-    category = Category.UNKNOWN,
+    category = DomainCategory.UNKNOWN,
     cover = null,
     releaseDates = listOf(),
     ageRatings = listOf(),
@@ -75,10 +75,10 @@ private val GAME = Game(
     websites = listOf(),
     similarGames = listOf()
 )
-private val GAMES = listOf(
-    GAME.copy(id = 1),
-    GAME.copy(id = 2),
-    GAME.copy(id = 3)
+private val DOMAIN_GAMES = listOf(
+    DOMAIN_GAME.copy(id = 1),
+    DOMAIN_GAME.copy(id = 2),
+    DOMAIN_GAME.copy(id = 3)
 )
 
 
@@ -93,14 +93,14 @@ internal class GamesCategoryViewModelTest {
 
     private lateinit var useCases: GamesCategoryUseCases
     private lateinit var logger: FakeLogger
-    private lateinit var viewModel: GamesCategoryViewModel
+    private lateinit var SUT: GamesCategoryViewModel
 
 
     @Before
     fun setup() {
         useCases = setupUseCases()
         logger = FakeLogger()
-        viewModel = GamesCategoryViewModel(
+        SUT = GamesCategoryViewModel(
             stringProvider = FakeStringProvider(),
             useCases = useCases,
             uiStateFactory = FakeGamesCategoryUiStateFactory(),
@@ -144,7 +144,7 @@ internal class GamesCategoryViewModelTest {
     fun `Emits toolbar title when initialized`() {
         mainCoroutineRule.runBlockingTest {
             val toolbarTitles = mutableListOf<String>()
-            val toolbarTitlesJob = launch { viewModel.toolbarTitle.toList(toolbarTitles) }
+            val toolbarTitlesJob = launch { SUT.toolbarTitle.toList(toolbarTitles) }
 
             assertNotEquals("", toolbarTitles[0])
 
@@ -160,9 +160,9 @@ internal class GamesCategoryViewModelTest {
             refreshPopularGamesUseCase.shouldReturnGames = true
 
             val uiStates = mutableListOf<GamesCategoryUiState>()
-            val uiStatesJob = launch { viewModel.uiState.toList(uiStates) }
+            val uiStatesJob = launch { SUT.uiState.toList(uiStates) }
 
-            viewModel.loadData(resultEmissionDelay = 0L)
+            SUT.loadData(resultEmissionDelay = 0L)
 
             assertTrue(uiStates[0] is GamesCategoryUiState.Empty)
             assertTrue(uiStates[1] is GamesCategoryUiState.Loading)
@@ -179,7 +179,7 @@ internal class GamesCategoryViewModelTest {
             observePopularGamesUseCase.shouldThrowError = true
             refreshPopularGamesUseCase.shouldReturnGames = true
 
-            viewModel.loadData(resultEmissionDelay = 0L)
+            SUT.loadData(resultEmissionDelay = 0L)
 
             assertNotEquals("", logger.errorMessage)
         }
@@ -192,9 +192,9 @@ internal class GamesCategoryViewModelTest {
             observePopularGamesUseCase.shouldThrowError = true
             refreshPopularGamesUseCase.shouldReturnGames = true
 
-            viewModel.loadData(resultEmissionDelay = 0L)
+            SUT.loadData(resultEmissionDelay = 0L)
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GeneralCommand.ShowLongToast)
         }
@@ -208,9 +208,9 @@ internal class GamesCategoryViewModelTest {
             refreshPopularGamesUseCase.shouldReturnGames = true
 
             val uiStates = mutableListOf<GamesCategoryUiState>()
-            val uiStatesJob = launch { viewModel.uiState.toList(uiStates) }
+            val uiStatesJob = launch { SUT.uiState.toList(uiStates) }
 
-            viewModel.loadData(resultEmissionDelay = 0L)
+            SUT.loadData(resultEmissionDelay = 0L)
 
             assertTrue(uiStates[3] is GamesCategoryUiState.Loading)
 
@@ -225,7 +225,7 @@ internal class GamesCategoryViewModelTest {
             observePopularGamesUseCase.shouldReturnGames = true
             refreshPopularGamesUseCase.shouldThrowError = true
 
-            viewModel.loadData(resultEmissionDelay = 0L)
+            SUT.loadData(resultEmissionDelay = 0L)
 
             assertNotEquals("", logger.errorMessage)
         }
@@ -238,9 +238,9 @@ internal class GamesCategoryViewModelTest {
             observePopularGamesUseCase.shouldReturnGames = true
             refreshPopularGamesUseCase.shouldThrowError = true
 
-            viewModel.loadData(resultEmissionDelay = 0L)
+            SUT.loadData(resultEmissionDelay = 0L)
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GeneralCommand.ShowLongToast)
         }
@@ -250,9 +250,9 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Routes to previous screen when toolbar left button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            viewModel.onToolbarLeftButtonClicked()
+            SUT.onToolbarLeftButtonClicked()
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GamesCategoryRoute.Back)
         }
@@ -268,9 +268,9 @@ internal class GamesCategoryViewModelTest {
                 coverUrl = null
             )
 
-            viewModel.onGameClicked(game)
+            SUT.onGameClicked(game)
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GamesCategoryRoute.Info)
             assertEquals(
@@ -299,9 +299,9 @@ internal class GamesCategoryViewModelTest {
         var shouldReturnGames = false
         var shouldThrowError = false
 
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
+        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
             return when {
-                shouldReturnGames -> flowOf(GAMES)
+                shouldReturnGames -> flowOf(DOMAIN_GAMES)
                 shouldThrowError -> flow { throw Exception("error") }
 
                 else -> throw IllegalStateException()
@@ -316,9 +316,9 @@ internal class GamesCategoryViewModelTest {
         var shouldReturnGames = false
         var shouldThrowError = false
 
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
+        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
             return when {
-                shouldReturnGames -> flowOf(Ok(GAMES))
+                shouldReturnGames -> flowOf(Ok(DOMAIN_GAMES))
                 shouldThrowError -> flow { throw Exception("error") }
 
                 else -> throw IllegalStateException()
@@ -330,8 +330,8 @@ internal class GamesCategoryViewModelTest {
 
     private class FakeObserveRecentlyReleasedGamesUseCase : ObserveRecentlyReleasedGamesUseCase {
 
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
-            return flowOf(GAMES)
+        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
+            return flowOf(DOMAIN_GAMES)
         }
 
     }
@@ -339,8 +339,8 @@ internal class GamesCategoryViewModelTest {
 
     private class FakeRefreshRecentlyReleasedGamesUseCase : RefreshRecentlyReleasedGamesUseCase {
 
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
-            return flowOf(Ok(GAMES))
+        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
+            return flowOf(Ok(DOMAIN_GAMES))
         }
 
     }
@@ -348,8 +348,8 @@ internal class GamesCategoryViewModelTest {
 
     private class FakeObserveComingSoonGamesUseCase : ObserveComingSoonGamesUseCase {
 
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
-            return flowOf(GAMES)
+        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
+            return flowOf(DOMAIN_GAMES)
         }
 
     }
@@ -357,8 +357,8 @@ internal class GamesCategoryViewModelTest {
 
     private class FakeRefreshComingSoonGamesUseCase : RefreshComingSoonGamesUseCase {
 
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
-            return flowOf(Ok(GAMES))
+        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
+            return flowOf(Ok(DOMAIN_GAMES))
         }
 
     }
@@ -366,8 +366,8 @@ internal class GamesCategoryViewModelTest {
 
     private class FakeObserveMostAnticipatedGamesUseCase : ObserveMostAnticipatedGamesUseCase {
 
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
-            return flowOf(GAMES)
+        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
+            return flowOf(DOMAIN_GAMES)
         }
 
     }
@@ -375,8 +375,8 @@ internal class GamesCategoryViewModelTest {
 
     private class FakeRefreshMostAnticipatedGamesUseCase : RefreshMostAnticipatedGamesUseCase {
 
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
-            return flowOf(Ok(GAMES))
+        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
+            return flowOf(Ok(DOMAIN_GAMES))
         }
 
     }
@@ -392,7 +392,7 @@ internal class GamesCategoryViewModelTest {
             return GamesCategoryUiState.Loading
         }
 
-        override fun createWithResultState(games: List<Game>): GamesCategoryUiState {
+        override fun createWithResultState(games: List<DomainGame>): GamesCategoryUiState {
             return GamesCategoryUiState.Result(
                 games.map {
                     GameCategoryModel(
