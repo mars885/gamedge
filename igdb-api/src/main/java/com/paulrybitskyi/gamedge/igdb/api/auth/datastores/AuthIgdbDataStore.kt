@@ -28,7 +28,7 @@ import javax.inject.Singleton
 
 @Singleton
 @BindType
-internal class AuthIgdbDataStoreImpl @Inject constructor(
+internal class AuthIgdbDataStore @Inject constructor(
     private val authEndpoint: AuthEndpoint,
     private val authMapper: AuthMapper,
     private val errorMapper: ErrorMapper

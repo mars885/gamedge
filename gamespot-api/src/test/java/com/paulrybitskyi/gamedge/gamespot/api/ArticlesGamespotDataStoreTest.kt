@@ -30,7 +30,7 @@ import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesEndpoint
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticleMapper
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlePublicationDateMapper
-import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlesGamespotDataStoreImpl
+import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlesGamespotDataStore
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.mapToDataArticles
 import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.Article
 import kotlinx.coroutines.CoroutineDispatcher
@@ -68,7 +68,7 @@ internal class ArticlesGamespotDataStoreTest {
         articlesEndpoint = FakeArticlesEndpoint()
         articleMapper = ArticleMapper(ArticlePublicationDateMapper())
         errorMapper = ErrorMapper()
-        articlesRemoteDataStore = ArticlesGamespotDataStoreImpl(
+        articlesRemoteDataStore = ArticlesGamespotDataStore(
             articlesEndpoint = articlesEndpoint,
             dispatcherProvider = FakeDispatcherProvider(),
             articleMapper = articleMapper,
