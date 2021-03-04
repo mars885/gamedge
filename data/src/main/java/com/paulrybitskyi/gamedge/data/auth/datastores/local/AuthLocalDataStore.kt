@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.auth.datastores.local
 
-import androidx.datastore.DataStore
+import androidx.datastore.core.DataStore
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 import com.paulrybitskyi.hiltbinder.BindType

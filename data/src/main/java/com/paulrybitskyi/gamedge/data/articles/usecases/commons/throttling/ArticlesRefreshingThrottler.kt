@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling
 
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
-import androidx.datastore.preferences.edit
-import androidx.datastore.preferences.preferencesKey
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.first
@@ -55,7 +55,7 @@ internal class ArticlesRefreshingThrottlerImpl @Inject constructor(
 
     override suspend fun canRefreshArticles(key: String): Boolean {
         return articlesPreferences.data
-            .map { it[preferencesKey<Long>(key)] ?: 0L }
+            .map { it[longPreferencesKey(key)] ?: 0L }
             .map { timestampProvider.getUnixTimestamp() > (it + ARTICLES_REFRESH_TIMEOUT) }
             .first()
     }
@@ -63,7 +63,7 @@ internal class ArticlesRefreshingThrottlerImpl @Inject constructor(
 
     override suspend fun updateArticlesLastRefreshTime(key: String) {
         articlesPreferences.edit {
-            it[preferencesKey(key)] = timestampProvider.getUnixTimestamp()
+            it[longPreferencesKey(key)] = timestampProvider.getUnixTimestamp()
         }
     }
 

@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.games.di
+package com.paulrybitskyi.gamedge.data.commons.di
 
 import android.content.Context
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
-import androidx.datastore.preferences.createDataStore
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.paulrybitskyi.gamedge.data.games.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+
+
+private val Context.gamesPreferences by preferencesDataStore(Constants.GAMES_PREFERENCES_NAME)
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -34,9 +37,8 @@ internal object CoreModule {
 
 
     @Provides
-    @Singleton
     fun provideGamesPreferences(@ApplicationContext context: Context): DataStore<Preferences> {
-        return context.createDataStore(Constants.GAMES_PREFERENCES_NAME)
+        return context.gamesPreferences
     }
 
 

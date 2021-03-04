@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling
 
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
-import androidx.datastore.preferences.edit
-import androidx.datastore.preferences.preferencesKey
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.first
@@ -61,20 +61,20 @@ internal class GamesRefreshingThrottlerImpl @Inject constructor(
 
     override suspend fun canRefreshGames(key: String): Boolean {
         return canRefreshGames(
-            key = preferencesKey(key),
+            key = longPreferencesKey(key),
             refreshTimeout = DEFAULT_GAMES_REFRESH_TIMEOUT
         )
     }
 
 
     override suspend fun updateGamesLastRefreshTime(key: String) {
-        updateGamesLastRefreshTime(preferencesKey(key))
+        updateGamesLastRefreshTime(longPreferencesKey(key))
     }
 
 
     override suspend fun canRefreshCompanyDevelopedGames(key: String): Boolean {
         return canRefreshGames(
-            key = preferencesKey(key),
+            key = longPreferencesKey(key),
             refreshTimeout = COMPANY_DEVELOPED_GAMES_REFRESH_TIMEOUT
         )
     }
@@ -82,7 +82,7 @@ internal class GamesRefreshingThrottlerImpl @Inject constructor(
 
     override suspend fun canRefreshSimilarGames(key: String): Boolean {
         return canRefreshGames(
-            key = preferencesKey(key),
+            key = longPreferencesKey(key),
             refreshTimeout = SIMILAR_GAMES_REFRESH_TIMEOUT
         )
     }

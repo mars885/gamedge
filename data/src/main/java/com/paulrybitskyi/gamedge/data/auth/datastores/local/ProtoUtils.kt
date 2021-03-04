@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.auth.datastores.local
 
-import androidx.datastore.Serializer
+import androidx.datastore.core.Serializer
 import com.paulrybitskyi.gamedge.OauthCredentials
 import java.io.InputStream
 import java.io.OutputStream
@@ -36,6 +36,14 @@ internal fun ProtoOauthCredentials.isNotEmpty(): Boolean {
 
 
 internal object ProtoOauthCredentialsSerializer : Serializer<ProtoOauthCredentials> {
+
+    override val defaultValue: ProtoOauthCredentials
+        get() = ProtoOauthCredentials.newBuilder()
+            .setAccessToken("")
+            .setTokenType("")
+            .setTokenTtl(0L)
+            .setExpirationTime(0L)
+            .build()
 
     override fun writeTo(t: ProtoOauthCredentials, output: OutputStream) = t.writeTo(output)
     override fun readFrom(input: InputStream): ProtoOauthCredentials = ProtoOauthCredentials.parseFrom(input)
