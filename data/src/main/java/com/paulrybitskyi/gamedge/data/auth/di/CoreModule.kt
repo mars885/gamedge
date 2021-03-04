@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.data.auth.di
 
 import android.content.Context
-import androidx.datastore.DataStore
-import androidx.datastore.createDataStore
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import com.paulrybitskyi.gamedge.data.auth.Constants
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.ProtoOauthCredentials
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.ProtoOauthCredentialsSerializer
@@ -27,6 +27,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+
+
+private val Context.authProtoDataStore by dataStore(
+    fileName = Constants.AUTH_PREFERENCES_DATA_STORE_NAME,
+    serializer = ProtoOauthCredentialsSerializer
+)
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -37,10 +44,7 @@ internal object CoreModule {
     fun provideAuthProtoDataStore(
         @ApplicationContext context: Context
     ): DataStore<ProtoOauthCredentials> {
-        return context.createDataStore(
-            fileName = Constants.AUTH_PREFERENCES_DATA_STORE_NAME,
-            serializer = ProtoOauthCredentialsSerializer
-        )
+        return context.authProtoDataStore
     }
 
 

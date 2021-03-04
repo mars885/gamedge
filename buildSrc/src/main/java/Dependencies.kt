@@ -107,7 +107,7 @@ object deps {
         private const val roomVersion = "2.2.5"
         private const val coreKtxVersion = "1.3.1"
         private const val fragmentKtxVersion = "1.2.5"
-        private const val dataStoreVersion = "1.0.0-alpha01"
+        private const val dataStoreVersion = "1.0.0-alpha07"
         private const val daggerHiltAssistedInjectionVersion = "1.0.0-alpha02"
 
         const val appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
