@@ -18,10 +18,10 @@ package com.paulrybitskyi.gamedge.database
 
 import com.paulrybitskyi.gamedge.commons.data.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.data.commons.Pagination
+import com.paulrybitskyi.gamedge.data.commons.DataPagination
+import com.paulrybitskyi.gamedge.data.games.DataCategory
 import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
-import com.paulrybitskyi.gamedge.data.games.entities.Category
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.datastores.GameMapper
 import com.paulrybitskyi.gamedge.database.games.datastores.GamesDatabaseDataStore
@@ -49,7 +49,7 @@ private val DATA_GAME = DataGame(
     name = "name",
     summary = null,
     storyline = null,
-    category = Category.UNKNOWN,
+    category = DataCategory.UNKNOWN,
     cover = null,
     releaseDates = listOf(),
     ageRatings = listOf(),
@@ -72,7 +72,7 @@ private val DATA_GAMES = listOf(
     DATA_GAME.copy(id = 3)
 )
 
-private val PAGINATION = Pagination(offset = 0, limit = 10)
+private val DATA_PAGINATION = DataPagination(offset = 0, limit = 10)
 
 
 internal class GamesDatabaseDataStoreTest {
@@ -80,14 +80,14 @@ internal class GamesDatabaseDataStoreTest {
 
     private lateinit var gamesTable: FakeGamesTable
     private lateinit var gameMapper: FakeGameMapper
-    private lateinit var gamesDbDataStore: GamesDatabaseDataStore
+    private lateinit var SUT: GamesDatabaseDataStore
 
 
     @Before
     fun setup() {
         gamesTable = FakeGamesTable()
         gameMapper = FakeGameMapper()
-        gamesDbDataStore = GamesDatabaseDataStore(
+        SUT = GamesDatabaseDataStore(
             gamesTable = gamesTable,
             dispatcherProvider = FakeDispatcherProvider(),
             queryTimestampProvider = FakeQueryTimestampProvider(),
@@ -97,115 +97,135 @@ internal class GamesDatabaseDataStoreTest {
 
 
     @Test
-    fun `Saves games to table successfully`() = runBlockingTest {
-        gamesDbDataStore.saveGames(DATA_GAMES)
+    fun `Saves games to table successfully`() {
+        runBlockingTest {
+            SUT.saveGames(DATA_GAMES)
 
-        assertEquals(
-            gameMapper.mapToDatabaseGames(DATA_GAMES),
-            gamesTable.games
-        )
+            assertEquals(
+                gameMapper.mapToDatabaseGames(DATA_GAMES),
+                gamesTable.games
+            )
+        }
     }
 
 
     @Test
-    fun `Retrieves game successfully`() = runBlockingTest {
-        gamesTable.shouldReturnGame = true
+    fun `Retrieves game successfully`() {
+        runBlockingTest {
+            gamesTable.shouldReturnGame = true
 
-        gamesDbDataStore.saveGames(DATA_GAMES)
+            SUT.saveGames(DATA_GAMES)
 
-        val game = DATA_GAMES.first()
+            val game = DATA_GAMES.first()
 
-        assertEquals(game, gamesDbDataStore.getGame(game.id))
+            assertEquals(game, SUT.getGame(game.id))
+        }
     }
 
 
     @Test
-    fun `Retrieves null instead of game`() = runBlockingTest {
-        gamesTable.shouldNotReturnGame = true
+    fun `Retrieves null instead of game`() {
+        runBlockingTest {
+            gamesTable.shouldNotReturnGame = true
 
-        assertNull(gamesDbDataStore.getGame(1))
+            assertNull(SUT.getGame(1))
+        }
     }
 
 
     @Test
-    fun `Retrieves company developed games successfully`() = runBlockingTest {
-        gamesDbDataStore.saveGames(DATA_GAMES)
+    fun `Retrieves company developed games successfully`() {
+        runBlockingTest {
+            SUT.saveGames(DATA_GAMES)
 
-        val company = DataCompany(
-            id = 1,
-            name = "name",
-            websiteUrl = "url",
-            logo = null,
-            developedGames = listOf()
-        )
+            val company = DataCompany(
+                id = 1,
+                name = "name",
+                websiteUrl = "url",
+                logo = null,
+                developedGames = listOf()
+            )
 
-        assertEquals(DATA_GAMES, gamesDbDataStore.getCompanyDevelopedGames(company, PAGINATION))
+            assertEquals(DATA_GAMES, SUT.getCompanyDevelopedGames(company, DATA_PAGINATION))
+        }
     }
 
 
     @Test
-    fun `Retrieves similar games successfully`() = runBlockingTest {
-        gamesDbDataStore.saveGames(DATA_GAMES)
+    fun `Retrieves similar games successfully`() {
+        runBlockingTest {
+            SUT.saveGames(DATA_GAMES)
 
-        assertEquals(
-            DATA_GAMES,
-            gamesDbDataStore.getSimilarGames(DATA_GAME, PAGINATION)
-        )
+            assertEquals(
+                DATA_GAMES,
+                SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
+            )
+        }
     }
 
 
     @Test
-    fun `Searches games successfully`() = runBlockingTest {
-        gamesDbDataStore.saveGames(DATA_GAMES)
+    fun `Searches games successfully`() {
+        runBlockingTest {
+            SUT.saveGames(DATA_GAMES)
 
-        assertEquals(
-            DATA_GAMES,
-            gamesDbDataStore.searchGames("", PAGINATION)
-        )
+            assertEquals(
+                DATA_GAMES,
+                SUT.searchGames("", DATA_PAGINATION)
+            )
+        }
     }
 
 
     @Test
-    fun `Observes popular games successfully`() = runBlockingTest {
-        gamesDbDataStore.saveGames(DATA_GAMES)
+    fun `Observes popular games successfully`() {
+        runBlockingTest {
+            SUT.saveGames(DATA_GAMES)
 
-        assertEquals(
-            DATA_GAMES,
-            gamesDbDataStore.observePopularGames(PAGINATION).first()
-        )
+            assertEquals(
+                DATA_GAMES,
+                SUT.observePopularGames(DATA_PAGINATION).first()
+            )
+        }
     }
 
 
     @Test
-    fun `Observes recently released games successfully`() = runBlockingTest {
-        gamesDbDataStore.saveGames(DATA_GAMES)
+    fun `Observes recently released games successfully`() {
+        runBlockingTest {
+            SUT.saveGames(DATA_GAMES)
 
-        assertEquals(
-            DATA_GAMES,
-            gamesDbDataStore.observeRecentlyReleasedGames(PAGINATION).first()
-        )
+            assertEquals(
+                DATA_GAMES,
+                SUT.observeRecentlyReleasedGames(DATA_PAGINATION).first()
+            )
+        }
     }
 
 
     @Test
-    fun `Observes coming soon games successfully`() = runBlockingTest {
-        gamesDbDataStore.saveGames(DATA_GAMES)
+    fun `Observes coming soon games successfully`() {
+        runBlockingTest {
+            SUT.saveGames(DATA_GAMES)
 
-        assertEquals(
-            DATA_GAMES,
-            gamesDbDataStore.observeComingSoonGames(PAGINATION).first()
-        )
+            assertEquals(
+                DATA_GAMES,
+                SUT.observeComingSoonGames(DATA_PAGINATION).first()
+            )
+        }
     }
 
 
     @Test
-    fun `Observes most anticipated games successfully`() = runBlockingTest {
-        gamesDbDataStore.saveGames(DATA_GAMES)
+    fun `Observes most anticipated games successfully`() {
+        runBlockingTest {
+            SUT.saveGames(DATA_GAMES)
 
-        assertEquals(
-            DATA_GAMES,
-            gamesDbDataStore.observeMostAnticipatedGames(PAGINATION).first()
-        )
+            assertEquals(
+                DATA_GAMES,
+                SUT.observeMostAnticipatedGames(DATA_PAGINATION).first()
+            )
+        }
     }
 
 
@@ -332,7 +352,7 @@ internal class GamesDatabaseDataStoreTest {
                 name = databaseGame.name,
                 summary = databaseGame.summary,
                 storyline = databaseGame.storyline,
-                category = Category.UNKNOWN,
+                category = DataCategory.UNKNOWN,
                 cover = null,
                 releaseDates = emptyList(),
                 ageRatings = emptyList(),

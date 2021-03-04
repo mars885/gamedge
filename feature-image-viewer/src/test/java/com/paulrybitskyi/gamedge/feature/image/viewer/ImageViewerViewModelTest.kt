@@ -39,12 +39,12 @@ internal class ImageViewerViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var viewModel: ImageViewerViewModel
+    private lateinit var SUT: ImageViewerViewModel
 
 
     @Before
     fun setup() {
-        viewModel = ImageViewerViewModel(
+        SUT = ImageViewerViewModel(
             stringProvider = FakeStringProvider(),
             savedStateHandle = setupSavedStateHandle()
         )
@@ -64,9 +64,9 @@ internal class ImageViewerViewModelTest {
     @Test
     fun `Dispatches text sharing command when toolbar right button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            viewModel.onToolbarRightButtonClicked()
+            SUT.onToolbarRightButtonClicked()
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is ImageViewerCommand.ShareText)
         }
@@ -77,9 +77,9 @@ internal class ImageViewerViewModelTest {
     fun `Emits selected position when page is changed`() {
         mainCoroutineRule.runBlockingTest {
             val selectedPositions = mutableListOf<Int>()
-            val selectedPositionsJob = launch { viewModel.selectedPosition.toList(selectedPositions) }
+            val selectedPositionsJob = launch { SUT.selectedPosition.toList(selectedPositions) }
 
-            viewModel.onPageChanged(10)
+            SUT.onPageChanged(10)
 
             assertTrue(selectedPositions[0] == INITIAL_POSITION)
             assertTrue(selectedPositions[1] == 10)
@@ -93,9 +93,9 @@ internal class ImageViewerViewModelTest {
     fun `Emits toolbar title when page is changed`() {
         mainCoroutineRule.runBlockingTest {
             val toolbarTitles = mutableListOf<String>()
-            val toolbarTitlesJob = launch { viewModel.toolbarTitle.toList(toolbarTitles) }
+            val toolbarTitlesJob = launch { SUT.toolbarTitle.toList(toolbarTitles) }
 
-            viewModel.onPageChanged(10)
+            SUT.onPageChanged(10)
 
             assertNotEquals("", toolbarTitles[0])
 
@@ -107,9 +107,9 @@ internal class ImageViewerViewModelTest {
     @Test
     fun `Dispatches system windows reset command when back button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            viewModel.onBackPressed()
+            SUT.onBackPressed()
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is ImageViewerCommand.ResetSystemWindows)
         }
@@ -119,9 +119,9 @@ internal class ImageViewerViewModelTest {
     @Test
     fun `Routes to previous screen when back button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            viewModel.onBackPressed()
+            SUT.onBackPressed()
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is ImageViewerRoute.Back)
         }

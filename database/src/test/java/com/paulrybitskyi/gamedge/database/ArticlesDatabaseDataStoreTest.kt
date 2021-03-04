@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.database
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.data.articles.DataArticle
-import com.paulrybitskyi.gamedge.data.commons.Pagination
+import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
 import com.paulrybitskyi.gamedge.database.articles.datastores.ArticleMapper
 import com.paulrybitskyi.gamedge.database.articles.datastores.ArticlesDatabaseDataStore
@@ -35,7 +35,7 @@ import org.junit.Before
 import org.junit.Test
 
 
-internal val DATA_ARTICLE = DataArticle(
+private val DATA_ARTICLE = DataArticle(
     id = 1,
     title = "title",
     lede = "lede",
@@ -43,7 +43,7 @@ internal val DATA_ARTICLE = DataArticle(
     publicationDate = 500L,
     siteDetailUrl = "url"
 )
-internal val DATA_ARTICLES = listOf(
+private val DATA_ARTICLES = listOf(
     DATA_ARTICLE.copy(id = 1),
     DATA_ARTICLE.copy(id = 2),
     DATA_ARTICLE.copy(id = 3),
@@ -55,14 +55,14 @@ internal class ArticlesDatabaseDataStoreTest {
 
     private lateinit var articlesTable: FakeArticlesTable
     private lateinit var articleMapper: FakeArticleMapper
-    private lateinit var articlesDbDataStore: ArticlesDatabaseDataStore
+    private lateinit var SUT: ArticlesDatabaseDataStore
 
 
     @Before
     fun setup() {
         articlesTable = FakeArticlesTable()
         articleMapper = FakeArticleMapper()
-        articlesDbDataStore = ArticlesDatabaseDataStore(
+        SUT = ArticlesDatabaseDataStore(
             articlesTable = articlesTable,
             dispatcherProvider = FakeDispatcherProvider(),
             articleMapper = articleMapper
@@ -71,23 +71,27 @@ internal class ArticlesDatabaseDataStoreTest {
 
 
     @Test
-    fun `Saves articles to table successfully`() = runBlockingTest {
-        articlesDbDataStore.saveArticles(DATA_ARTICLES)
+    fun `Saves articles to table successfully`() {
+        runBlockingTest {
+            SUT.saveArticles(DATA_ARTICLES)
 
-        assertEquals(
-            articleMapper.mapToDatabaseArticles(DATA_ARTICLES),
-            articlesTable.articles
-        )
+            assertEquals(
+                articleMapper.mapToDatabaseArticles(DATA_ARTICLES),
+                articlesTable.articles
+            )
+        }
     }
 
 
     @Test
-    fun `Emits articles successfully`() = runBlockingTest {
-        articlesDbDataStore.saveArticles(DATA_ARTICLES)
+    fun `Emits articles successfully`() {
+        runBlockingTest {
+            SUT.saveArticles(DATA_ARTICLES)
 
-        val articles = articlesDbDataStore.observeArticles(Pagination(offset = 0, limit = 20)).first()
+            val articles = SUT.observeArticles(DataPagination(offset = 0, limit = 20)).first()
 
-        assertEquals(DATA_ARTICLES, articles)
+            assertEquals(DATA_ARTICLES, articles)
+        }
     }
 
 

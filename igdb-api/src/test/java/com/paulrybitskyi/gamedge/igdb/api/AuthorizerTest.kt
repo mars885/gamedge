@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.igdb.api
 
+import com.paulrybitskyi.gamedge.data.auth.DataOauthCredentials
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
-import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
 import kotlinx.coroutines.test.runBlockingTest
@@ -26,7 +26,7 @@ import org.junit.Before
 import org.junit.Test
 
 
-private val OAUTH_CREDENTIALS = OauthCredentials(
+private val DATA_OAUTH_CREDENTIALS = DataOauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",
     tokenTtl = 500L
@@ -37,53 +37,59 @@ internal class AuthorizerTest {
 
 
     private lateinit var authLocalDataStore: FakeAuthLocalDataStore
-    private lateinit var authorizer: Authorizer
+    private lateinit var SUT: Authorizer
 
 
     @Before
     fun setup() {
         authLocalDataStore = FakeAuthLocalDataStore()
-        authorizer = Authorizer(authLocalDataStore)
+        SUT = Authorizer(authLocalDataStore)
     }
 
 
     @Test
-    fun `Builds basic authorization header successfully`() = runBlockingTest {
-        authLocalDataStore.saveOauthCredentials(OAUTH_CREDENTIALS)
+    fun `Builds basic authorization header successfully`() {
+        runBlockingTest {
+            authLocalDataStore.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
 
-        assertEquals(
-            "Basic access_token",
-            authorizer.buildAuthorizationHeader(AuthorizationType.BASIC)
-        )
+            assertEquals(
+                "Basic access_token",
+                SUT.buildAuthorizationHeader(AuthorizationType.BASIC)
+            )
+        }
     }
 
 
     @Test
-    fun `Builds bearer authorization header successfully`() = runBlockingTest {
-        authLocalDataStore.saveOauthCredentials(OAUTH_CREDENTIALS)
+    fun `Builds bearer authorization header successfully`() {
+        runBlockingTest {
+            authLocalDataStore.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
 
-        assertEquals(
-            "Bearer access_token",
-            authorizer.buildAuthorizationHeader(AuthorizationType.BEARER)
-        )
+            assertEquals(
+                "Bearer access_token",
+                SUT.buildAuthorizationHeader(AuthorizationType.BEARER)
+            )
+        }
     }
 
 
     @Test(expected = IllegalStateException::class)
-    fun `Throws exception if no oauth credentials are present`() = runBlockingTest {
-        authorizer.buildAuthorizationHeader(AuthorizationType.BEARER)
+    fun `Throws exception if no oauth credentials are present`() {
+        runBlockingTest {
+            SUT.buildAuthorizationHeader(AuthorizationType.BEARER)
+        }
     }
 
 
     private class FakeAuthLocalDataStore : AuthLocalDataStore {
 
-        private var oauthCredentials: OauthCredentials? = null
+        private var oauthCredentials: DataOauthCredentials? = null
 
-        override suspend fun saveOauthCredentials(oauthCredentials: OauthCredentials) {
+        override suspend fun saveOauthCredentials(oauthCredentials: DataOauthCredentials) {
             this.oauthCredentials = oauthCredentials
         }
 
-        override suspend fun getOauthCredentials(): OauthCredentials? {
+        override suspend fun getOauthCredentials(): DataOauthCredentials? {
             return this.oauthCredentials
         }
 

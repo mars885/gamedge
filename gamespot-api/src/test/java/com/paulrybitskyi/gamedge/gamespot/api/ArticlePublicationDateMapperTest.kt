@@ -25,12 +25,12 @@ import java.time.format.DateTimeParseException
 internal class ArticlePublicationDateMapperTest {
 
 
-    private lateinit var dateMapper: ArticlePublicationDateMapper
+    private lateinit var SUT: ArticlePublicationDateMapper
 
 
     @Before
     fun setup() {
-        dateMapper = ArticlePublicationDateMapper()
+        SUT = ArticlePublicationDateMapper()
     }
 
 
@@ -38,20 +38,20 @@ internal class ArticlePublicationDateMapperTest {
     fun `Maps date successfully`() {
         assertEquals(
             1583188216000L,
-            dateMapper.mapToTimestamp("2020-03-02 14:30:16")
+            SUT.mapToTimestamp("2020-03-02 14:30:16")
         )
     }
 
 
     @Test(expected = DateTimeParseException::class)
     fun `Throws exception when providing empty date`() {
-        dateMapper.mapToTimestamp("")
+        SUT.mapToTimestamp("")
     }
 
 
     @Test(expected = DateTimeParseException::class)
     fun `Throws exception when providing blank date`() {
-        dateMapper.mapToTimestamp("   ")
+        SUT.mapToTimestamp("   ")
     }
 
 

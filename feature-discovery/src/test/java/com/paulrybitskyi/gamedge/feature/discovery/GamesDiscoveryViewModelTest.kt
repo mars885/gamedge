@@ -23,10 +23,10 @@ import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
+import com.paulrybitskyi.gamedge.domain.games.DomainCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.entities.Category
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.*
 import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameModelMapper
@@ -42,7 +42,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-private val GAME = Game(
+private val DOMAIN_GAME = DomainGame(
     id = 1,
     followerCount = null,
     hypeCount = null,
@@ -53,7 +53,7 @@ private val GAME = Game(
     name = "name",
     summary = null,
     storyline = null,
-    category = Category.UNKNOWN,
+    category = DomainCategory.UNKNOWN,
     cover = null,
     releaseDates = listOf(),
     ageRatings = listOf(),
@@ -70,10 +70,10 @@ private val GAME = Game(
     websites = listOf(),
     similarGames = listOf()
 )
-private val GAMES = listOf(
-    GAME.copy(id = 1),
-    GAME.copy(id = 2),
-    GAME.copy(id = 3)
+private val DOMAIN_GAMES = listOf(
+    DOMAIN_GAME.copy(id = 1),
+    DOMAIN_GAME.copy(id = 2),
+    DOMAIN_GAME.copy(id = 3)
 )
 
 
@@ -88,14 +88,14 @@ internal class GamesDiscoveryViewModelTest {
 
     private lateinit var useCases: GamesDiscoveryUseCases
     private lateinit var logger: FakeLogger
-    private lateinit var viewModel: GamesDiscoveryViewModel
+    private lateinit var SUT: GamesDiscoveryViewModel
 
 
     @Before
     fun setup() {
         useCases = setupUseCases()
         logger = FakeLogger()
-        viewModel = GamesDiscoveryViewModel(
+        SUT = GamesDiscoveryViewModel(
             useCases = useCases,
             itemModelFactory = GamesDiscoveryItemModelFactoryImpl(FakeStringProvider()),
             itemGameModelMapper = FakeGamesDiscoveryItemGameModelMapper(),
@@ -133,7 +133,7 @@ internal class GamesDiscoveryViewModelTest {
             observePopularGamesUseCase.shouldThrowError = true
             refreshPopularGamesUseCase.shouldReturnGames = true
 
-            viewModel.loadData()
+            SUT.loadData()
 
             assertNotEquals("", logger.errorMessage)
         }
@@ -146,7 +146,7 @@ internal class GamesDiscoveryViewModelTest {
             observePopularGamesUseCase.shouldReturnGames = true
             refreshPopularGamesUseCase.shouldThrowError = true
 
-            viewModel.loadData()
+            SUT.loadData()
 
             assertNotEquals("", logger.errorMessage)
         }
@@ -159,9 +159,9 @@ internal class GamesDiscoveryViewModelTest {
             observePopularGamesUseCase.shouldReturnGames = true
             refreshPopularGamesUseCase.shouldThrowError = true
 
-            viewModel.loadData()
+            SUT.loadData()
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GeneralCommand.ShowLongToast)
         }
@@ -171,9 +171,9 @@ internal class GamesDiscoveryViewModelTest {
     @Test
     fun `Routes to games category screen when more button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            viewModel.onCategoryMoreButtonClicked("popular")
+            SUT.onCategoryMoreButtonClicked("popular")
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GamesDiscoveryRoute.Category)
             assertEquals(
@@ -193,9 +193,9 @@ internal class GamesDiscoveryViewModelTest {
                 coverUrl = null
             )
 
-            viewModel.onCategoryGameClicked(item)
+            SUT.onCategoryGameClicked(item)
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GamesDiscoveryRoute.Info)
             assertEquals(
@@ -211,9 +211,9 @@ internal class GamesDiscoveryViewModelTest {
         var shouldReturnGames = false
         var shouldThrowError = false
 
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
+        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
             return when {
-                shouldReturnGames -> flowOf(GAMES)
+                shouldReturnGames -> flowOf(DOMAIN_GAMES)
                 shouldThrowError -> flow { throw Exception("error") }
 
                 else -> throw IllegalStateException()
@@ -228,9 +228,9 @@ internal class GamesDiscoveryViewModelTest {
         var shouldReturnGames = false
         var shouldThrowError = false
 
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
+        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
             return when {
-                shouldReturnGames -> flowOf(Ok(GAMES))
+                shouldReturnGames -> flowOf(Ok(DOMAIN_GAMES))
                 shouldThrowError -> flow { throw Exception("error") }
 
                 else -> throw IllegalStateException()
@@ -242,8 +242,8 @@ internal class GamesDiscoveryViewModelTest {
 
     private class FakeObserveRecentlyReleasedGamesUseCase : ObserveRecentlyReleasedGamesUseCase {
 
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
-            return flowOf(GAMES)
+        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
+            return flowOf(DOMAIN_GAMES)
         }
 
     }
@@ -251,8 +251,8 @@ internal class GamesDiscoveryViewModelTest {
 
     private class FakeRefreshRecentlyReleasedGamesUseCase : RefreshRecentlyReleasedGamesUseCase {
 
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
-            return flowOf(Ok(GAMES))
+        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
+            return flowOf(Ok(DOMAIN_GAMES))
         }
 
     }
@@ -260,8 +260,8 @@ internal class GamesDiscoveryViewModelTest {
 
     private class FakeObserveComingSoonGamesUseCase : ObserveComingSoonGamesUseCase {
 
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
-            return flowOf(GAMES)
+        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
+            return flowOf(DOMAIN_GAMES)
         }
 
     }
@@ -269,8 +269,8 @@ internal class GamesDiscoveryViewModelTest {
 
     private class FakeRefreshComingSoonGamesUseCase : RefreshComingSoonGamesUseCase {
 
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
-            return flowOf(Ok(GAMES))
+        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
+            return flowOf(Ok(DOMAIN_GAMES))
         }
 
     }
@@ -278,8 +278,8 @@ internal class GamesDiscoveryViewModelTest {
 
     private class FakeObserveMostAnticipatedGamesUseCase : ObserveMostAnticipatedGamesUseCase {
 
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
-            return flowOf(GAMES)
+        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
+            return flowOf(DOMAIN_GAMES)
         }
 
     }
@@ -287,8 +287,8 @@ internal class GamesDiscoveryViewModelTest {
 
     private class FakeRefreshMostAnticipatedGamesUseCase : RefreshMostAnticipatedGamesUseCase {
 
-        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
-            return flowOf(Ok(GAMES))
+        override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<DomainGame>>> {
+            return flowOf(Ok(DOMAIN_GAMES))
         }
 
     }
@@ -309,7 +309,7 @@ internal class GamesDiscoveryViewModelTest {
 
     private class FakeGamesDiscoveryItemGameModelMapper : GamesDiscoveryItemGameModelMapper {
 
-        override fun mapToGameModel(game: Game): GamesDiscoveryItemGameModel {
+        override fun mapToGameModel(game: DomainGame): GamesDiscoveryItemGameModel {
             return GamesDiscoveryItemGameModel(
                 id = game.id,
                 title = game.name,

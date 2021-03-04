@@ -22,9 +22,9 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.domain.games.DomainCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.entities.Category
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
@@ -37,7 +37,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-private val GAME = Game(
+private val DOMAIN_GAME = DomainGame(
     id = 1,
     followerCount = null,
     hypeCount = null,
@@ -48,7 +48,7 @@ private val GAME = Game(
     name = "name",
     summary = null,
     storyline = null,
-    category = Category.UNKNOWN,
+    category = DomainCategory.UNKNOWN,
     cover = null,
     releaseDates = listOf(),
     ageRatings = listOf(),
@@ -65,10 +65,10 @@ private val GAME = Game(
     websites = listOf(),
     similarGames = listOf()
 )
-private val GAMES = listOf(
-    GAME.copy(id = 1),
-    GAME.copy(id = 2),
-    GAME.copy(id = 3)
+private val DOMAIN_GAMES = listOf(
+    DOMAIN_GAME.copy(id = 1),
+    DOMAIN_GAME.copy(id = 2),
+    DOMAIN_GAME.copy(id = 3)
 )
 
 
@@ -80,14 +80,14 @@ internal class LikedGamesViewModelTest {
 
     private lateinit var observeLikedGamesUseCase: FakeObserveLikedGamesUseCase
     private lateinit var logger: FakeLogger
-    private lateinit var viewModel: LikedGamesViewModel
+    private lateinit var SUT: LikedGamesViewModel
 
 
     @Before
     fun setup() {
         observeLikedGamesUseCase = FakeObserveLikedGamesUseCase()
         logger = FakeLogger()
-        viewModel = LikedGamesViewModel(
+        SUT = LikedGamesViewModel(
             observeLikedGamesUseCase = observeLikedGamesUseCase,
             uiStateFactory = FakeUiStateFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
@@ -103,15 +103,15 @@ internal class LikedGamesViewModelTest {
             observeLikedGamesUseCase.shouldReturnGames = true
 
             val uiStates = mutableListOf<GamesUiState>()
-            val uiStateJob = launch { viewModel.uiState.toList(uiStates) }
+            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
 
-            viewModel.loadData()
+            SUT.loadData()
 
             assertTrue(uiStates[0] is GamesUiState.Empty)
             assertTrue(uiStates[1] is GamesUiState.Loading)
             assertTrue(uiStates[2] is GamesUiState.Result)
             assertEquals(
-                GAMES.size,
+                DOMAIN_GAMES.size,
                 (uiStates[2] as GamesUiState.Result).items.size
             )
 
@@ -125,7 +125,7 @@ internal class LikedGamesViewModelTest {
         mainCoroutineRule.runBlockingTest {
             observeLikedGamesUseCase.shouldThrowError = true
 
-            viewModel.loadData()
+            SUT.loadData()
 
             assertNotEquals("", logger.errorMessage)
         }
@@ -137,9 +137,9 @@ internal class LikedGamesViewModelTest {
         mainCoroutineRule.runBlockingTest {
             observeLikedGamesUseCase.shouldThrowError = true
 
-            viewModel.loadData()
+            SUT.loadData()
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GeneralCommand.ShowLongToast)
         }
@@ -158,9 +158,9 @@ internal class LikedGamesViewModelTest {
                 description = null
             )
 
-            viewModel.onGameClicked(gameModel)
+            SUT.onGameClicked(gameModel)
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is LikedGamesRoute.Info)
             assertEquals(gameModel.id, (route as LikedGamesRoute.Info).gameId)
@@ -173,9 +173,9 @@ internal class LikedGamesViewModelTest {
         var shouldReturnGames = false
         var shouldThrowError = false
 
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
+        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
             return when {
-                shouldReturnGames -> flowOf(GAMES)
+                shouldReturnGames -> flowOf(DOMAIN_GAMES)
                 shouldThrowError -> flow { throw Exception("error") }
 
                 else -> throw IllegalStateException()
@@ -195,7 +195,7 @@ internal class LikedGamesViewModelTest {
             return GamesUiState.Loading
         }
 
-        override fun createWithResultState(games: List<Game>): GamesUiState {
+        override fun createWithResultState(games: List<DomainGame>): GamesUiState {
             return GamesUiState.Result(
                 games.map {
                     GameModel(

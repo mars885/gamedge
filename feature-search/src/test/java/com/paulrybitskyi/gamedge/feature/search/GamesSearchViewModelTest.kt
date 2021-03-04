@@ -23,8 +23,8 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.domain.games.entities.Category
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.domain.games.DomainCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import io.mockk.every
 import io.mockk.mockk
@@ -39,7 +39,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-private val GAME = Game(
+private val DOMAIN_GAME = DomainGame(
     id = 1,
     followerCount = null,
     hypeCount = null,
@@ -50,7 +50,7 @@ private val GAME = Game(
     name = "name",
     summary = null,
     storyline = null,
-    category = Category.UNKNOWN,
+    category = DomainCategory.UNKNOWN,
     cover = null,
     releaseDates = listOf(),
     ageRatings = listOf(),
@@ -67,10 +67,10 @@ private val GAME = Game(
     websites = listOf(),
     similarGames = listOf()
 )
-private val GAMES = listOf(
-    GAME.copy(id = 1),
-    GAME.copy(id = 2),
-    GAME.copy(id = 3)
+private val DOMAIN_GAMES = listOf(
+    DOMAIN_GAME.copy(id = 1),
+    DOMAIN_GAME.copy(id = 2),
+    DOMAIN_GAME.copy(id = 3)
 )
 
 
@@ -82,22 +82,20 @@ internal class GamesSearchViewModelTest {
 
     private lateinit var searchGamesUseCase: FakeSearchGamesUseCase
     private lateinit var logger: FakeLogger
-    private lateinit var savedStateHandle: SavedStateHandle
-    private lateinit var viewModel: GamesSearchViewModel
+    private lateinit var SUT: GamesSearchViewModel
 
 
     @Before
     fun setup() {
         searchGamesUseCase = FakeSearchGamesUseCase()
         logger = FakeLogger()
-        savedStateHandle = setupSavedStateHandle()
-        viewModel = GamesSearchViewModel(
+        SUT = GamesSearchViewModel(
             searchGamesUseCase = searchGamesUseCase,
             uiStateFactory = FakeGamesSearchUiStateFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,
-            savedStateHandle = savedStateHandle
+            savedStateHandle = setupSavedStateHandle()
         )
     }
 
@@ -112,9 +110,9 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Routes to previous screen when toolbar back button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            viewModel.onToolbarBackButtonClicked()
+            SUT.onToolbarBackButtonClicked()
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GamesSearchRoute.Back)
         }
@@ -127,15 +125,15 @@ internal class GamesSearchViewModelTest {
             searchGamesUseCase.shouldReturnGames = true
 
             val uiStates = mutableListOf<GamesUiState>()
-            val uiStateJob = launch { viewModel.uiState.toList(uiStates) }
+            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
 
-            viewModel.onSearchActionRequested("god of war")
+            SUT.onSearchActionRequested("god of war")
 
             assertTrue(uiStates[0] is GamesUiState.Empty)
             assertTrue(uiStates[1] is GamesUiState.Loading)
             assertTrue(uiStates[2] is GamesUiState.Result)
             assertEquals(
-                GAMES.size,
+                DOMAIN_GAMES.size,
                 (uiStates[2] as GamesUiState.Result).items.size
             )
 
@@ -148,9 +146,9 @@ internal class GamesSearchViewModelTest {
     fun `Does not emit ui states when search query is empty`() {
         mainCoroutineRule.runBlockingTest {
             val uiStates = mutableListOf<GamesUiState>()
-            val uiStateJob = launch { viewModel.uiState.toList(uiStates) }
+            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
 
-            viewModel.onSearchActionRequested("")
+            SUT.onSearchActionRequested("")
 
             assertEquals(1, uiStates.size)
             assertTrue(uiStates[0] is GamesUiState.Empty)
@@ -165,12 +163,12 @@ internal class GamesSearchViewModelTest {
         mainCoroutineRule.runBlockingTest {
             searchGamesUseCase.shouldReturnGames = true
 
-            viewModel.onSearchActionRequested("god of war")
+            SUT.onSearchActionRequested("god of war")
 
             val uiStates = mutableListOf<GamesUiState>()
-            val uiStateJob = launch { viewModel.uiState.toList(uiStates) }
+            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
 
-            viewModel.onSearchActionRequested("god of war")
+            SUT.onSearchActionRequested("god of war")
 
             assertEquals(1, uiStates.size)
 
@@ -183,9 +181,9 @@ internal class GamesSearchViewModelTest {
     fun `Emits empty ui state when blank search query is provided`() {
         mainCoroutineRule.runBlockingTest {
             val uiStates = mutableListOf<GamesUiState>()
-            val uiStateJob = launch { viewModel.uiState.toList(uiStates) }
+            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
 
-            viewModel.onSearchActionRequested("   ")
+            SUT.onSearchActionRequested("   ")
 
             assertEquals(1, uiStates.size)
             assertTrue(uiStates[0] is GamesUiState.Empty)
@@ -200,9 +198,9 @@ internal class GamesSearchViewModelTest {
         mainCoroutineRule.runBlockingTest {
             searchGamesUseCase.shouldReturnGames = true
 
-            viewModel.onSearchActionRequested("god of war")
+            SUT.onSearchActionRequested("god of war")
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GamesSearchCommand.ClearItems)
         }
@@ -214,7 +212,7 @@ internal class GamesSearchViewModelTest {
         mainCoroutineRule.runBlockingTest {
             searchGamesUseCase.shouldThrowError = true
 
-            viewModel.onSearchActionRequested("god of war")
+            SUT.onSearchActionRequested("god of war")
 
             assertNotEquals("", logger.errorMessage)
         }
@@ -226,9 +224,9 @@ internal class GamesSearchViewModelTest {
         mainCoroutineRule.runBlockingTest {
             searchGamesUseCase.shouldThrowError = true
 
-            viewModel.onSearchActionRequested("god of war")
+            SUT.onSearchActionRequested("god of war")
 
-            val command = viewModel.commandFlow.drop(1).first()
+            val command = SUT.commandFlow.drop(1).first()
 
             assertTrue(command is GeneralCommand.ShowLongToast)
         }
@@ -247,9 +245,9 @@ internal class GamesSearchViewModelTest {
                 description = null
             )
 
-            viewModel.onGameClicked(gameModel)
+            SUT.onGameClicked(gameModel)
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is GamesSearchRoute.Info)
             assertEquals(gameModel.id, (route as GamesSearchRoute.Info).gameId)
@@ -260,13 +258,11 @@ internal class GamesSearchViewModelTest {
     private class FakeSearchGamesUseCase : SearchGamesUseCase {
 
         var shouldReturnGames = false
-        var shouldReturnEmptyList = false
         var shouldThrowError = false
 
-        override suspend fun execute(params: SearchGamesUseCase.Params): Flow<List<Game>> {
+        override suspend fun execute(params: SearchGamesUseCase.Params): Flow<List<DomainGame>> {
             return when {
-                shouldReturnGames -> flowOf(GAMES)
-                shouldReturnEmptyList -> flowOf(emptyList())
+                shouldReturnGames -> flowOf(DOMAIN_GAMES)
                 shouldThrowError -> flow { throw Exception("error") }
 
                 else -> throw IllegalStateException()
@@ -286,7 +282,7 @@ internal class GamesSearchViewModelTest {
             return GamesUiState.Loading
         }
 
-        override fun createWithResultState(games: List<Game>): GamesUiState {
+        override fun createWithResultState(games: List<DomainGame>): GamesUiState {
             return GamesUiState.Result(
                 games.map {
                     GameModel(

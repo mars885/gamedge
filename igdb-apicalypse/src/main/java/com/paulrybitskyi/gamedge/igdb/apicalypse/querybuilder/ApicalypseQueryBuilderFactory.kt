@@ -21,7 +21,7 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.WhereC
 object ApicalypseQueryBuilderFactory {
 
 
-    fun newBuilder(): ApicalypseQueryBuilder {
+    fun create(): ApicalypseQueryBuilder {
         return ApicalypseQueryBuilderImpl(
             whereClauseBuilderFactory = WhereClauseBuilderFactory
         )

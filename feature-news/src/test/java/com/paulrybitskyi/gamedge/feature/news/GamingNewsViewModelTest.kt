@@ -20,7 +20,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.domain.articles.entities.Article
+import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsUiStateFactory
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
@@ -36,7 +36,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-private val ARTICLE = Article(
+private val DOMAIN_ARTICLE = DomainArticle(
     id = 1,
     title = "Article",
     lede = "lede",
@@ -44,10 +44,10 @@ private val ARTICLE = Article(
     publicationDate = 0L,
     siteDetailUrl = ""
 )
-private val ARTICLES = listOf(
-    ARTICLE.copy(id = 1),
-    ARTICLE.copy(id = 2),
-    ARTICLE.copy(id = 3)
+private val DOMAIN_ARTICLES = listOf(
+    DOMAIN_ARTICLE.copy(id = 1),
+    DOMAIN_ARTICLE.copy(id = 2),
+    DOMAIN_ARTICLE.copy(id = 3)
 )
 
 
@@ -59,14 +59,14 @@ internal class GamingNewsViewModelTest {
 
     private lateinit var observeArticlesUseCase: FakeObserveArticlesUseCase
     private lateinit var logger: FakeLogger
-    private lateinit var viewModel: GamingNewsViewModel
+    private lateinit var SUT: GamingNewsViewModel
 
 
     @Before
     fun setup() {
         observeArticlesUseCase = FakeObserveArticlesUseCase()
         logger = FakeLogger()
-        viewModel = GamingNewsViewModel(
+        SUT = GamingNewsViewModel(
             observeArticlesUseCase = observeArticlesUseCase,
             uiStateFactory = FakeGamingNewsUiStateFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
@@ -82,15 +82,15 @@ internal class GamingNewsViewModelTest {
             observeArticlesUseCase.shouldReturnArticles = true
 
             val uiStates = mutableListOf<GamingNewsUiState>()
-            val uiStateJob = launch { viewModel.uiState.toList(uiStates) }
+            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
 
-            viewModel.loadData()
+            SUT.loadData()
 
             assertTrue(uiStates[0] is GamingNewsUiState.Empty)
             assertTrue(uiStates[1] is GamingNewsUiState.Loading)
             assertTrue(uiStates[2] is GamingNewsUiState.Result)
             assertEquals(
-                ARTICLES.size,
+                DOMAIN_ARTICLES.size,
                 (uiStates[2] as GamingNewsUiState.Result).items.size
             )
 
@@ -104,7 +104,7 @@ internal class GamingNewsViewModelTest {
         mainCoroutineRule.runBlockingTest {
             observeArticlesUseCase.shouldThrowError = true
 
-            viewModel.loadData()
+            SUT.loadData()
 
             assertNotEquals("", logger.errorMessage)
         }
@@ -116,9 +116,9 @@ internal class GamingNewsViewModelTest {
         mainCoroutineRule.runBlockingTest {
             observeArticlesUseCase.shouldThrowError = true
 
-            viewModel.loadData()
+            SUT.loadData()
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GeneralCommand.ShowLongToast)
         }
@@ -137,9 +137,9 @@ internal class GamingNewsViewModelTest {
                 siteDetailUrl = "site_detail_url"
             )
 
-            viewModel.onNewsItemClicked(itemModel)
+            SUT.onNewsItemClicked(itemModel)
 
-            val command = viewModel.commandFlow.first()
+            val command = SUT.commandFlow.first()
 
             assertTrue(command is GamingNewsCommand.OpenUrl)
             assertEquals(
@@ -156,15 +156,15 @@ internal class GamingNewsViewModelTest {
             observeArticlesUseCase.shouldReturnArticles = true
 
             val uiStates = mutableListOf<GamingNewsUiState>()
-            val uiStateJob = launch { viewModel.uiState.toList(uiStates) }
+            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
 
-            viewModel.onRefreshRequested()
+            SUT.onRefreshRequested()
 
             assertTrue(uiStates[0] is GamingNewsUiState.Empty)
             assertTrue(uiStates[1] is GamingNewsUiState.Loading)
             assertTrue(uiStates[2] is GamingNewsUiState.Result)
             assertEquals(
-                ARTICLES.size,
+                DOMAIN_ARTICLES.size,
                 (uiStates[2] as GamingNewsUiState.Result).items.size
             )
 
@@ -178,9 +178,9 @@ internal class GamingNewsViewModelTest {
         var shouldReturnArticles = false
         var shouldThrowError = false
 
-        override suspend fun execute(params: ObserveArticlesUseCase.Params): Flow<List<Article>> {
+        override suspend fun execute(params: ObserveArticlesUseCase.Params): Flow<List<DomainArticle>> {
             return when {
-                shouldReturnArticles -> flowOf(ARTICLES)
+                shouldReturnArticles -> flowOf(DOMAIN_ARTICLES)
                 shouldThrowError -> flow { throw Exception("error") }
 
                 else -> throw IllegalStateException()
@@ -200,7 +200,7 @@ internal class GamingNewsViewModelTest {
             return GamingNewsUiState.Loading
         }
 
-        override fun createWithResultState(articles: List<Article>): GamingNewsUiState {
+        override fun createWithResultState(articles: List<DomainArticle>): GamingNewsUiState {
             return GamingNewsUiState.Result(
                 articles.map {
                     GamingNewsItemModel(

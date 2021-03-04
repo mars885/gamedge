@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.data.auth
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AUTH_TOKEN_TTL_DEDUCTION
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthExpiryTimeCalculator
-import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -32,12 +31,12 @@ private const val CURRENT_TIMESTAMP = 10_000L
 internal class AuthExpiryTimeCalculatorTest {
 
 
-    private lateinit var calculator: AuthExpiryTimeCalculator
+    private lateinit var SUT: AuthExpiryTimeCalculator
 
 
     @Before
     fun setup() {
-        calculator = AuthExpiryTimeCalculator(
+        SUT = AuthExpiryTimeCalculator(
             timestampProvider = FakeTimestampProvider()
         )
     }
@@ -45,13 +44,13 @@ internal class AuthExpiryTimeCalculatorTest {
 
     @Test
     fun `Calculates expiry time successfully`() {
-        val credentials = OauthCredentials(
+        val credentials = DataOauthCredentials(
             accessToken = "access_token",
             tokenType = "Bearer",
             tokenTtl = 5000L
         )
 
-        val expiryTime = calculator.calculateExpiryTime(credentials)
+        val expiryTime = SUT.calculateExpiryTime(credentials)
         val expected = (CURRENT_TIMESTAMP + TimeUnit.SECONDS.toMillis(credentials.tokenTtl) - AUTH_TOKEN_TTL_DEDUCTION)
 
         assertEquals(expected, expiryTime)

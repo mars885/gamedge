@@ -23,26 +23,25 @@ import com.github.michaelbull.result.getError
 import com.paulrybitskyi.gamedge.commons.api.ApiResult
 import com.paulrybitskyi.gamedge.commons.api.Error
 import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
-import com.paulrybitskyi.gamedge.data.auth.datastores.AuthRemoteDataStore
+import com.paulrybitskyi.gamedge.igdb.api.auth.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthIgdbDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthMapper
-import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
 
-private val API_OAUTH_CREDENTIALS = OauthCredentials(
+private val API_OAUTH_CREDENTIALS = ApiOauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",
     tokenTtl = 500L
 )
 
-private val HTTP_ERROR = Error.HttpError(code = 2, message = "http_error")
-private val NETWORK_ERROR = Error.NetworkError(Exception("network_error"))
-private val UNKNOWN_ERROR = Error.NetworkError(Exception("unknown_error"))
+private val API_HTTP_ERROR = Error.HttpError(code = 2, message = "http_error")
+private val API_NETWORK_ERROR = Error.NetworkError(Exception("network_error"))
+private val API_UNKNOWN_ERROR = Error.NetworkError(Exception("unknown_error"))
 
 
 internal class AuthIgdbDataStoreTest {
@@ -51,7 +50,7 @@ internal class AuthIgdbDataStoreTest {
     private lateinit var authEndpoint: FakeAuthEndpoint
     private lateinit var authMapper: AuthMapper
     private lateinit var errorMapper: ErrorMapper
-    private lateinit var authRemoteDataStore: AuthRemoteDataStore
+    private lateinit var SUT: AuthIgdbDataStore
 
 
     @Before
@@ -59,7 +58,7 @@ internal class AuthIgdbDataStoreTest {
         authEndpoint = FakeAuthEndpoint()
         authMapper = AuthMapper()
         errorMapper = ErrorMapper()
-        authRemoteDataStore = AuthIgdbDataStore(
+        SUT = AuthIgdbDataStore(
             authEndpoint = authEndpoint,
             authMapper = authMapper,
             errorMapper = errorMapper
@@ -68,54 +67,62 @@ internal class AuthIgdbDataStoreTest {
 
 
     @Test
-    fun `Returns oauth credentials successfully`() = runBlockingTest {
-        authEndpoint.shouldReturnCredentials = true
+    fun `Returns oauth credentials successfully`() {
+        runBlockingTest {
+            authEndpoint.shouldReturnCredentials = true
 
-        val result = authRemoteDataStore.getOauthCredentials()
+            val result = SUT.getOauthCredentials()
 
-        assertEquals(
-            authMapper.mapToDataOauthCredentials(API_OAUTH_CREDENTIALS),
-            result.get()
-        )
+            assertEquals(
+                authMapper.mapToDataOauthCredentials(API_OAUTH_CREDENTIALS),
+                result.get()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns http error successfully`() = runBlockingTest {
-        authEndpoint.shouldReturnHttpError = true
+    fun `Returns http error successfully`() {
+        runBlockingTest {
+            authEndpoint.shouldReturnHttpError = true
 
-        val result = authRemoteDataStore.getOauthCredentials()
+            val result = SUT.getOauthCredentials()
 
-        assertEquals(
-            errorMapper.mapToDataError(HTTP_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_HTTP_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns network error successfully`() = runBlockingTest {
-        authEndpoint.shouldReturnNetworkError = true
+    fun `Returns network error successfully`() {
+        runBlockingTest {
+            authEndpoint.shouldReturnNetworkError = true
 
-        val result = authRemoteDataStore.getOauthCredentials()
+            val result = SUT.getOauthCredentials()
 
-        assertEquals(
-            errorMapper.mapToDataError(NETWORK_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_NETWORK_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
     @Test
-    fun `Returns unknown error successfully`() = runBlockingTest {
-        authEndpoint.shouldReturnUnknownError = true
+    fun `Returns unknown error successfully`() {
+        runBlockingTest {
+            authEndpoint.shouldReturnUnknownError = true
 
-        val result = authRemoteDataStore.getOauthCredentials()
+            val result = SUT.getOauthCredentials()
 
-        assertEquals(
-            errorMapper.mapToDataError(UNKNOWN_ERROR),
-            result.getError()
-        )
+            assertEquals(
+                errorMapper.mapToDataError(API_UNKNOWN_ERROR),
+                result.getError()
+            )
+        }
     }
 
 
@@ -126,12 +133,12 @@ internal class AuthIgdbDataStoreTest {
         var shouldReturnNetworkError = false
         var shouldReturnUnknownError = false
 
-        override suspend fun getOauthCredentials(): ApiResult<OauthCredentials> {
+        override suspend fun getOauthCredentials(): ApiResult<ApiOauthCredentials> {
             return when {
                 shouldReturnCredentials -> Ok(API_OAUTH_CREDENTIALS)
-                shouldReturnHttpError -> Err(HTTP_ERROR)
-                shouldReturnNetworkError -> Err(NETWORK_ERROR)
-                shouldReturnUnknownError -> Err(UNKNOWN_ERROR)
+                shouldReturnHttpError -> Err(API_HTTP_ERROR)
+                shouldReturnNetworkError -> Err(API_NETWORK_ERROR)
+                shouldReturnUnknownError -> Err(API_UNKNOWN_ERROR)
 
                 else -> throw IllegalStateException()
             }

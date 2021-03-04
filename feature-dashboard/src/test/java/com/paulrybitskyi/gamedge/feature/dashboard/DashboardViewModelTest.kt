@@ -29,21 +29,21 @@ internal class DashboardViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var viewModel: DashboardViewModel
+    private lateinit var SUT: DashboardViewModel
 
 
     @Before
     fun setup() {
-        viewModel = DashboardViewModel()
+        SUT = DashboardViewModel()
     }
 
 
     @Test
     fun `Routes to search screen when toolbar right button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            viewModel.onToolbarRightButtonClicked()
+            SUT.onToolbarRightButtonClicked()
 
-            val route = viewModel.routeFlow.first()
+            val route = SUT.routeFlow.first()
 
             assertTrue(route is DashboardRoute.Search)
         }

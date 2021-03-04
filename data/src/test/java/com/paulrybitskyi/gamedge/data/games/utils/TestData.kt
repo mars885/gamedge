@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.data.games.utils
 
+import com.paulrybitskyi.gamedge.data.games.DataCategory
 import com.paulrybitskyi.gamedge.data.games.DataGame
-import com.paulrybitskyi.gamedge.data.games.entities.Category
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 
 
@@ -32,7 +32,7 @@ internal val DATA_GAME = DataGame(
     name = "name",
     summary = null,
     storyline = null,
-    category = Category.UNKNOWN,
+    category = DataCategory.UNKNOWN,
     cover = null,
     releaseDates = listOf(),
     ageRatings = listOf(),

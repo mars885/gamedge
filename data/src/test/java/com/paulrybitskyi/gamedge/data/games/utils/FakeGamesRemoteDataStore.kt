@@ -20,7 +20,6 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.data.commons.DataResult
-import com.paulrybitskyi.gamedge.data.commons.Pagination
 import com.paulrybitskyi.gamedge.data.commons.entities.Error
 import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
@@ -35,7 +34,7 @@ internal class FakeGamesRemoteDataStore : GamesRemoteDataStore {
 
     override suspend fun searchGames(
         searchQuery: String,
-        pagination: Pagination
+        pagination: DataPagination
     ): DataResult<List<DataGame>> {
         return getGames()
     }
