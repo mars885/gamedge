@@ -34,7 +34,7 @@ import javax.inject.Singleton
 
 @Singleton
 @BindType
-internal class GamesIgdbDataStoreImpl @Inject constructor(
+internal class GamesIgdbDataStore @Inject constructor(
     private val gamesEndpoint: GamesEndpoint,
     private val dispatcherProvider: DispatcherProvider,
     private val gameMapper: GameMapper,

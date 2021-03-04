@@ -32,7 +32,7 @@ import com.paulrybitskyi.gamedge.data.games.entities.Category
 import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.games.datastores.GameMapper
-import com.paulrybitskyi.gamedge.igdb.api.games.datastores.GamesIgdbDataStoreImpl
+import com.paulrybitskyi.gamedge.igdb.api.games.datastores.GamesIgdbDataStore
 import com.paulrybitskyi.gamedge.igdb.api.games.datastores.mapToDataGames
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -104,7 +104,7 @@ internal class GamesIgdbDataStoreTest {
         gamesEndpoint = FakeGamesEndpoint()
         gameMapper = GameMapper()
         errorMapper = ErrorMapper()
-        gamesRemoteDataStore = GamesIgdbDataStoreImpl(
+        gamesRemoteDataStore = GamesIgdbDataStore(
             gamesEndpoint = gamesEndpoint,
             dispatcherProvider = FakeDispatcherProvider(),
             gameMapper = gameMapper,

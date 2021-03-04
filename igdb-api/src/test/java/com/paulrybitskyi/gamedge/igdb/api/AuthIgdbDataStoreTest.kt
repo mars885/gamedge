@@ -25,7 +25,7 @@ import com.paulrybitskyi.gamedge.commons.api.Error
 import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
 import com.paulrybitskyi.gamedge.data.auth.datastores.AuthRemoteDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthEndpoint
-import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthIgdbDataStoreImpl
+import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthIgdbDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthMapper
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
 import kotlinx.coroutines.test.runBlockingTest
@@ -59,7 +59,7 @@ internal class AuthIgdbDataStoreTest {
         authEndpoint = FakeAuthEndpoint()
         authMapper = AuthMapper()
         errorMapper = ErrorMapper()
-        authRemoteDataStore = AuthIgdbDataStoreImpl(
+        authRemoteDataStore = AuthIgdbDataStore(
             authEndpoint = authEndpoint,
             authMapper = authMapper,
             errorMapper = errorMapper

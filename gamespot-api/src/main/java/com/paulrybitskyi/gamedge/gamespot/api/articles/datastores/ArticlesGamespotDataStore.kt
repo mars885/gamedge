@@ -17,7 +17,7 @@ import javax.inject.Singleton
 
 @Singleton
 @BindType
-internal class ArticlesGamespotDataStoreImpl @Inject constructor(
+internal class ArticlesGamespotDataStore @Inject constructor(
     private val articlesEndpoint: ArticlesEndpoint,
     private val dispatcherProvider: DispatcherProvider,
     private val articleMapper: ArticleMapper,
