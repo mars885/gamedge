@@ -51,19 +51,26 @@ enum class IgdbImageExtension(internal val rawExtension: String) {
 
 interface IgdbImageUrlFactory {
 
-
     data class Config(
         val size: IgdbImageSize,
         val extension: IgdbImageExtension = IgdbImageExtension.JPG,
         val withRetinaSize: Boolean = false
     )
 
-
     fun createUrl(image: Image, config: Config): String?
 
-    fun createUrls(images: List<Image>, config: Config): List<String>
+}
 
 
+fun IgdbImageUrlFactory.createUrls(
+    images: List<Image>,
+    config: IgdbImageUrlFactory.Config
+): List<String> {
+    if(images.isEmpty()) return emptyList()
+
+    return images.mapNotNull { image ->
+        createUrl(image, config)
+    }
 }
 
 
@@ -76,15 +83,6 @@ internal class IgdbImageUrlFactoryImpl @Inject constructor() : IgdbImageUrlFacto
         private const val IMAGE_URL_TEMPLATE = "https://images.igdb.com/igdb/image/upload/t_%s/%s.%s"
         private const val IMAGE_TYPE_RETINA_EXTENSION = "_2x"
 
-    }
-
-
-    override fun createUrls(images: List<Image>, config: IgdbImageUrlFactory.Config): List<String> {
-        if(images.isEmpty()) return emptyList()
-
-        return images.mapNotNull { image ->
-            createUrl(image, config)
-        }
     }
 
 

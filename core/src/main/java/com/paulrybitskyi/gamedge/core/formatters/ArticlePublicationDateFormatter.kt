@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.core.formatters
 
 import com.paulrybitskyi.gamedge.core.providers.TimeFormat
 import com.paulrybitskyi.gamedge.core.providers.TimeFormatProvider
+import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import java.time.Instant
 import java.time.LocalDateTime
@@ -37,6 +38,7 @@ interface ArticlePublicationDateFormatter {
 @BindType
 internal class ArticlePublicationDateFormatterImpl @Inject constructor(
     private val relativeDateFormatter: RelativeDateFormatter,
+    private val timestampProvider: TimestampProvider,
     private val timeFormatProvider: TimeFormatProvider
 ) : ArticlePublicationDateFormatter {
 
@@ -72,7 +74,7 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
 
 
     private fun shouldFormatAsRelativeDate(dateTime: LocalDateTime): Boolean {
-        val currentDateTime = LocalDateTime.now()
+        val currentDateTime = toLocalDateTime(timestampProvider.getUnixTimestamp())
         val dayDiffCount = ChronoUnit.DAYS.between(dateTime, currentDateTime)
 
         return (dayDiffCount == 0L)

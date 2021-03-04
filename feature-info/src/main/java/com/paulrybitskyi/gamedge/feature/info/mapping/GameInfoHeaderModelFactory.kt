@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.feature.info.mapping
 import com.paulrybitskyi.gamedge.core.GameLikeCountCalculator
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
+import com.paulrybitskyi.gamedge.core.factories.createUrls
 import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameCategoryFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatter

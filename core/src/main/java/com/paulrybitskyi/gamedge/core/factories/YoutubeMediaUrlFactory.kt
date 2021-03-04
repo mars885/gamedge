@@ -61,7 +61,7 @@ internal class YoutubeMediaUrlFactoryImpl @Inject constructor() : YoutubeMediaUr
 
 
     override fun createVideoUrl(video: Video): String? {
-        if(video.id.isEmpty()) return null
+        if(video.id.isBlank()) return null
 
         return String.format(VIDEO_URL_TEMPLATE, video.id)
     }
