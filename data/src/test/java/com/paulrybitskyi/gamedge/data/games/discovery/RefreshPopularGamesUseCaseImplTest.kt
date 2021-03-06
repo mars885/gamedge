@@ -37,7 +37,6 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
@@ -94,11 +93,7 @@ internal class RefreshPopularGamesUseCaseImplTest {
         runBlockingTest {
             coEvery { throttler.canRefreshGames(any()) } returns false
 
-            var isEmptyFlow = false
-
-            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS)
-                .onEmpty { isEmptyFlow = true }
-                .firstOrNull()
+            val isEmptyFlow = SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).isEmpty()
 
             assertThat(isEmptyFlow).isTrue
         }

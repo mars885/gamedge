@@ -29,13 +29,13 @@ import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
 import com.paulrybitskyi.gamedge.commons.testing.coVerifyNotCalled
+import com.paulrybitskyi.gamedge.commons.testing.isEmpty
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
@@ -83,11 +83,7 @@ internal class RefreshAuthUseCaseImplTest {
         runBlockingTest {
             coEvery { authLocalDataStore.isExpired() } returns false
 
-            var isEmptyFlow = false
-
-            SUT.execute()
-                .onEmpty { isEmptyFlow = true }
-                .firstOrNull()
+            val isEmptyFlow = SUT.execute().isEmpty()
 
             assertThat(isEmptyFlow).isTrue
         }
