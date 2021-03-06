@@ -94,8 +94,8 @@ internal class GamesCategoryFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
-            is GamesCategoryRoute.Info -> navigator.navigateToInfo(route.gameId)
-            is GamesCategoryRoute.Back -> navigator.navigateBack()
+            is GamesCategoryRoute.Info -> navigator.goToInfo(route.gameId)
+            is GamesCategoryRoute.Back -> navigator.goBack()
         }
     }
 

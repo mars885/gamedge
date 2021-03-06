@@ -147,7 +147,7 @@ internal class ImageViewerFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
-            is ImageViewerRoute.Back -> navigator.navigateBack()
+            is ImageViewerRoute.Back -> navigator.goBack()
         }
     }
 

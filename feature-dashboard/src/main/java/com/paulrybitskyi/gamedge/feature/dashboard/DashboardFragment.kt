@@ -131,7 +131,7 @@ internal class DashboardFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
-            is DashboardRoute.Search -> navigator.navigateToSearch()
+            is DashboardRoute.Search -> navigator.goToSearch()
         }
     }
 

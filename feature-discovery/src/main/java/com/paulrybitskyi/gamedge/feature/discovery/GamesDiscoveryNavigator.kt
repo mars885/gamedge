@@ -20,8 +20,8 @@ import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface GamesDiscoveryNavigator : Navigator {
 
-    fun navigateToCategory(category: String)
+    fun goToCategory(category: String)
 
-    fun navigateToInfo(gameId: Int)
+    fun goToInfo(gameId: Int)
 
 }

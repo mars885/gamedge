@@ -28,7 +28,7 @@ internal class LikedGamesNavigatorImpl @Inject constructor(
 ) : LikedGamesNavigator {
 
 
-    override fun navigateToInfo(gameId: Int) {
+    override fun goToInfo(gameId: Int) {
         navController.navigate(DashboardFragmentDirections.actionInfoFragment(gameId))
     }
 

@@ -46,8 +46,8 @@ internal class SplashActivity : BaseActivity<
         super.onRoute(route)
 
         when(route) {
-            is SplashRoute.Dashboard -> navigator.navigateToDashboard(this)
-            is SplashRoute.Exit -> navigator.exitApplication()
+            is SplashRoute.Dashboard -> navigator.goToDashboard(this)
+            is SplashRoute.Exit -> navigator.exitApp()
         }
     }
 

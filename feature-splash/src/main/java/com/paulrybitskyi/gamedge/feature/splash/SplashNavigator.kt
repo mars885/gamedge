@@ -21,8 +21,8 @@ import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface SplashNavigator : Navigator {
 
-    fun navigateToDashboard(context: Context)
+    fun goToDashboard(context: Context)
 
-    fun exitApplication()
+    fun exitApp()
 
 }
