@@ -93,11 +93,7 @@ internal class RefreshArticlesUseCaseImplTest {
         runBlockingTest {
             coEvery { throttler.canRefreshArticles(any()) } returns false
 
-            var isEmptyFlow = false
-
-            SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS)
-                .onEmpty { isEmptyFlow = true }
-                .firstOrNull()
+            val isEmptyFlow = SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).isEmpty()
 
             assertThat(isEmptyFlow).isTrue
         }

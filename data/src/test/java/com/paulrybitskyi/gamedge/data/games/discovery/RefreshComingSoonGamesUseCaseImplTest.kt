@@ -92,11 +92,7 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
         runBlockingTest {
             coEvery { throttler.canRefreshGames(any()) } returns false
 
-            var isEmptyFlow = false
-
-            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS)
-                .onEmpty { isEmptyFlow = true }
-                .firstOrNull()
+            val isEmptyFlow = SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).isEmpty()
 
             assertThat(isEmptyFlow).isTrue
         }
