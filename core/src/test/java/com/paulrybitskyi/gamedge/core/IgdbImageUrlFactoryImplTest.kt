@@ -53,8 +53,7 @@ internal class IgdbImageUrlFactoryImplTest {
                     config.extension.rawExtension
                 )
 
-                assertThat(SUT.createUrl(DOMAIN_IMAGE, config))
-                    .isEqualTo(expectedUrl)
+                assertThat(SUT.createUrl(DOMAIN_IMAGE, config)).isEqualTo(expectedUrl)
             }
         }
     }
@@ -77,8 +76,7 @@ internal class IgdbImageUrlFactoryImplTest {
                     config.extension.rawExtension
                 )
 
-                assertThat(SUT.createUrl(DOMAIN_IMAGE, config))
-                    .isEqualTo(expectedUrl)
+                assertThat(SUT.createUrl(DOMAIN_IMAGE, config)).isEqualTo(expectedUrl)
             }
         }
     }

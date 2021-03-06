@@ -56,8 +56,7 @@ internal class AuthExpiryTimeCalculatorTest {
         val expiryTime = SUT.calculateExpiryTime(credentials)
         val expected = (CURRENT_TIMESTAMP + TimeUnit.SECONDS.toMillis(credentials.tokenTtl) - AUTH_TOKEN_TTL_DEDUCTION)
 
-        assertThat(expiryTime)
-            .isEqualTo(expected)
+        assertThat(expiryTime).isEqualTo(expected)
     }
 
 

@@ -42,8 +42,7 @@ internal class TwitchErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertThat(SUT.extract(responseBody))
-            .isEqualTo("invalid client secret")
+        assertThat(SUT.extract(responseBody)).isEqualTo("invalid client secret")
     }
 
 

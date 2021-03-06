@@ -79,8 +79,7 @@ internal class GamingNewsViewModelTest {
                 assertThat(emptyState is GamingNewsUiState.Empty).isTrue
                 assertThat(loadingState is GamingNewsUiState.Loading).isTrue
                 assertThat(resultState is GamingNewsUiState.Result).isTrue
-                assertThat((resultState as GamingNewsUiState.Result).items)
-                    .hasSize(DOMAIN_ARTICLES.size)
+                assertThat((resultState as GamingNewsUiState.Result).items).hasSize(DOMAIN_ARTICLES.size)
             }
         }
     }
@@ -130,8 +129,7 @@ internal class GamingNewsViewModelTest {
                 val command = expectItem()
 
                 assertThat(command is GamingNewsCommand.OpenUrl).isTrue
-                assertThat((command as GamingNewsCommand.OpenUrl).url)
-                    .isEqualTo(itemModel.siteDetailUrl)
+                assertThat((command as GamingNewsCommand.OpenUrl).url).isEqualTo(itemModel.siteDetailUrl)
             }
         }
     }
@@ -152,8 +150,7 @@ internal class GamingNewsViewModelTest {
                 assertThat(emptyState is GamingNewsUiState.Empty).isTrue
                 assertThat(loadingState is GamingNewsUiState.Loading).isTrue
                 assertThat(resultState is GamingNewsUiState.Result).isTrue
-                assertThat((resultState as GamingNewsUiState.Result).items)
-                    .hasSize(DOMAIN_ARTICLES.size)
+                assertThat((resultState as GamingNewsUiState.Result).items).hasSize(DOMAIN_ARTICLES.size)
             }
         }
     }

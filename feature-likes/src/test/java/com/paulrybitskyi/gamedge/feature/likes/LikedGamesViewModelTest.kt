@@ -79,8 +79,7 @@ internal class LikedGamesViewModelTest {
                 assertThat(emptyState is GamesUiState.Empty).isTrue
                 assertThat(loadingState is GamesUiState.Loading).isTrue
                 assertThat(resultState is GamesUiState.Result).isTrue
-                assertThat((resultState as GamesUiState.Result).items)
-                    .hasSize(DOMAIN_GAMES.size)
+                assertThat((resultState as GamesUiState.Result).items).hasSize(DOMAIN_GAMES.size)
             }
         }
     }
@@ -130,8 +129,7 @@ internal class LikedGamesViewModelTest {
                 val route = expectItem()
 
                 assertThat(route is LikedGamesRoute.Info).isTrue
-                assertThat((route as LikedGamesRoute.Info).gameId)
-                    .isEqualTo(gameModel.id)
+                assertThat((route as LikedGamesRoute.Info).gameId).isEqualTo(gameModel.id)
             }
         }
     }

@@ -47,8 +47,7 @@ internal class GamespotErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertThat(SUT.extract(responseBody))
-            .isEqualTo("Invalid API Key")
+        assertThat(SUT.extract(responseBody)).isEqualTo("Invalid API Key")
     }
 
 

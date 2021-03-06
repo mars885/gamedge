@@ -101,8 +101,7 @@ internal class GamesSearchViewModelTest {
                 assertThat(emptyState is GamesUiState.Empty).isTrue
                 assertThat(loadingState is GamesUiState.Loading).isTrue
                 assertThat(resultState is GamesUiState.Result).isTrue
-                assertThat((resultState as GamesUiState.Result).items)
-                    .hasSize(DOMAIN_GAMES.size)
+                assertThat((resultState as GamesUiState.Result).items).hasSize(DOMAIN_GAMES.size)
             }
         }
     }
@@ -131,7 +130,7 @@ internal class GamesSearchViewModelTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("god of war")
 
-                assertThat(expectItem() is GamesUiState.Result)
+                assertThat(expectItem() is GamesUiState.Result).isTrue
                 expectNoEvents()
             }
         }
@@ -210,8 +209,7 @@ internal class GamesSearchViewModelTest {
                 val route = expectItem()
 
                 assertThat(route is GamesSearchRoute.Info).isTrue
-                assertThat((route as GamesSearchRoute.Info).gameId)
-                    .isEqualTo(gameModel.id)
+                assertThat((route as GamesSearchRoute.Info).gameId).isEqualTo(gameModel.id)
             }
         }
     }

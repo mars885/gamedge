@@ -80,8 +80,7 @@ internal class AuthFileDataStoreTest {
         runBlockingTest {
             coEvery { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
 
-            assertThat(SUT.getOauthCredentials())
-                .isEqualTo(DATA_OAUTH_CREDENTIALS)
+            assertThat(SUT.getOauthCredentials()).isEqualTo(DATA_OAUTH_CREDENTIALS)
         }
     }
 

@@ -200,8 +200,7 @@ internal class GameInfoViewModelTest {
                 val command = expectItem()
 
                 assertThat(command is GameInfoCommand.OpenUrl).isTrue
-                assertThat((command as GameInfoCommand.OpenUrl).url)
-                    .isEqualTo(video.videoUrl)
+                assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(video.videoUrl)
             }
         }
     }
@@ -237,8 +236,7 @@ internal class GameInfoViewModelTest {
                 val command = expectItem()
 
                 assertThat(command is GameInfoCommand.OpenUrl).isTrue
-                assertThat((command as GameInfoCommand.OpenUrl).url)
-                    .isEqualTo(link.payload)
+                assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(link.payload)
             }
         }
     }
@@ -262,8 +260,7 @@ internal class GameInfoViewModelTest {
                 val command = expectItem()
 
                 assertThat(command is GameInfoCommand.OpenUrl).isTrue
-                assertThat((command as GameInfoCommand.OpenUrl).url)
-                    .isEqualTo(company.websiteUrl)
+                assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(company.websiteUrl)
             }
         }
     }
@@ -284,8 +281,7 @@ internal class GameInfoViewModelTest {
                 val route = expectItem()
 
                 assertThat(route is GameInfoRoute.Info).isTrue
-                assertThat((route as GameInfoRoute.Info).gameId)
-                    .isEqualTo(relatedGame.id)
+                assertThat((route as GameInfoRoute.Info).gameId).isEqualTo(relatedGame.id)
             }
         }
     }
