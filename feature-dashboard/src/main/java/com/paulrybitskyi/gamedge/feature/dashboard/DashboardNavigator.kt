@@ -20,6 +20,6 @@ import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface DashboardNavigator : Navigator {
 
-    fun navigateToSearch()
+    fun goToSearch()
 
 }

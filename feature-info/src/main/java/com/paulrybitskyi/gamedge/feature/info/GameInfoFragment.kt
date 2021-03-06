@@ -109,14 +109,14 @@ internal class GameInfoFragment : BaseFragment<
 
         when(route) {
             is GameInfoRoute.ImageViewer -> navigateToImageViewer(route)
-            is GameInfoRoute.Info -> navigator.navigateToInfo(route.gameId)
-            is GameInfoRoute.Back -> navigator.navigateBack()
+            is GameInfoRoute.Info -> navigator.goToInfo(route.gameId)
+            is GameInfoRoute.Back -> navigator.goBack()
         }
     }
 
 
     private fun navigateToImageViewer(route: GameInfoRoute.ImageViewer) {
-        navigator.navigateToImageViewer(
+        navigator.goToImageViewer(
             route.title,
             route.initialPosition,
             route.imageUrls

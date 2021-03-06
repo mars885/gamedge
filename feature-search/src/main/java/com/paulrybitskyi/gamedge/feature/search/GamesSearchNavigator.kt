@@ -20,8 +20,8 @@ import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface GamesSearchNavigator : Navigator {
 
-    fun navigateToInfo(gameId: Int)
+    fun goToInfo(gameId: Int)
 
-    fun navigateBack()
+    fun goBack()
 
 }

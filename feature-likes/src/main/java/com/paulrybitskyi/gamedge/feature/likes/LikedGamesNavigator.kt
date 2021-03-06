@@ -20,6 +20,6 @@ import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface LikedGamesNavigator : Navigator {
 
-    fun navigateToInfo(gameId: Int)
+    fun goToInfo(gameId: Int)
 
 }

@@ -110,8 +110,8 @@ internal class GamesSearchFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
-            is GamesSearchRoute.Info -> navigator.navigateToInfo(route.gameId)
-            is GamesSearchRoute.Back -> navigator.navigateBack()
+            is GamesSearchRoute.Info -> navigator.goToInfo(route.gameId)
+            is GamesSearchRoute.Back -> navigator.goBack()
         }
     }
 

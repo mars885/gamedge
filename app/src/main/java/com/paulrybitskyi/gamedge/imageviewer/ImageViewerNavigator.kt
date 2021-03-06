@@ -27,7 +27,7 @@ internal class ImageViewerNavigatorImpl @Inject constructor(
 ) : ImageViewerNavigator {
 
 
-    override fun navigateBack() {
+    override fun goBack() {
         navController.popBackStack()
     }
 

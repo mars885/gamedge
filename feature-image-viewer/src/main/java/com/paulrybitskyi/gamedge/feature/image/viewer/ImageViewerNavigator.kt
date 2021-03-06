@@ -20,6 +20,6 @@ import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface ImageViewerNavigator : Navigator {
 
-    fun navigateBack()
+    fun goBack()
 
 }

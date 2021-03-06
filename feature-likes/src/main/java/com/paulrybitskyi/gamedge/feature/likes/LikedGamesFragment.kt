@@ -75,7 +75,7 @@ class LikedGamesFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
-            is LikedGamesRoute.Info -> navigator.navigateToInfo(route.gameId)
+            is LikedGamesRoute.Info -> navigator.goToInfo(route.gameId)
         }
     }
 

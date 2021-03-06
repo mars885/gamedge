@@ -28,12 +28,12 @@ internal class GamesCategoryNavigatorImpl @Inject constructor(
 ) : GamesCategoryNavigator {
 
 
-    override fun navigateToInfo(gameId: Int) {
+    override fun goToInfo(gameId: Int) {
         navController.navigate(DashboardFragmentDirections.actionInfoFragment(gameId))
     }
 
 
-    override fun navigateBack() {
+    override fun goBack() {
         navController.popBackStack()
     }
 

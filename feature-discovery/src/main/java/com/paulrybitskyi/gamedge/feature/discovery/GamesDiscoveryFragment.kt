@@ -76,8 +76,8 @@ class GamesDiscoveryFragment : BaseFragment<
         super.onRoute(route)
 
         when(route) {
-            is GamesDiscoveryRoute.Category -> navigator.navigateToCategory(route.category)
-            is GamesDiscoveryRoute.Info -> navigator.navigateToInfo(route.gameId)
+            is GamesDiscoveryRoute.Category -> navigator.goToCategory(route.category)
+            is GamesDiscoveryRoute.Info -> navigator.goToInfo(route.gameId)
         }
     }
 
