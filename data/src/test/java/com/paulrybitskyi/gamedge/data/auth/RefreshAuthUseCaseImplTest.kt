@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.auth
 
+import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
@@ -29,12 +30,10 @@ import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
 import com.paulrybitskyi.gamedge.commons.testing.coVerifyNotCalled
-import com.paulrybitskyi.gamedge.commons.testing.isEmpty
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
@@ -46,6 +45,7 @@ internal class RefreshAuthUseCaseImplTest {
 
     @MockK private lateinit var authLocalDataStore: AuthLocalDataStore
     @MockK private lateinit var authRemoteDataStore: AuthRemoteDataStore
+
     private lateinit var authMapper: AuthMapper
     private lateinit var SUT: RefreshAuthUseCaseImpl
 
@@ -72,8 +72,12 @@ internal class RefreshAuthUseCaseImplTest {
             coEvery { authLocalDataStore.isExpired() } returns true
             coEvery { authRemoteDataStore.getOauthCredentials() } returns Ok(DATA_OAUTH_CREDENTIALS)
 
-            assertThat(SUT.execute().first().get())
-                .isEqualTo(authMapper.mapToDomainOauthCredentials(DATA_OAUTH_CREDENTIALS))
+            SUT.execute().test {
+                assertThat(expectItem().get())
+                    .isEqualTo(authMapper.mapToDomainOauthCredentials(DATA_OAUTH_CREDENTIALS))
+
+                expectComplete()
+            }
         }
     }
 
@@ -83,9 +87,9 @@ internal class RefreshAuthUseCaseImplTest {
         runBlockingTest {
             coEvery { authLocalDataStore.isExpired() } returns false
 
-            val isEmptyFlow = SUT.execute().isEmpty()
-
-            assertThat(isEmptyFlow).isTrue
+            SUT.execute().test {
+                expectComplete()
+            }
         }
     }
 

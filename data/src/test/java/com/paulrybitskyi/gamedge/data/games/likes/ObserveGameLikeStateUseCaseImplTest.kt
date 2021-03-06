@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.games.likes
 
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.data.games.DataGame
@@ -26,7 +27,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
@@ -53,10 +53,16 @@ internal class ObserveGameLikeStateUseCaseImplTest {
     fun `Emits game like state successfully`() {
         runBlockingTest {
             coEvery { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(true)
-            assertThat(SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).first()).isTrue
+            SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).test {
+                assertThat(expectItem()).isTrue
+                expectComplete()
+            }
 
             coEvery { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(false)
-            assertThat(SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).first()).isFalse
+            SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).test {
+                assertThat(expectItem()).isFalse
+                expectComplete()
+            }
         }
     }
 

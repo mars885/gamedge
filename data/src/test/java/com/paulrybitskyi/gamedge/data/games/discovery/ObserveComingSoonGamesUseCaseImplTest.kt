@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.games.discovery
 
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
@@ -26,7 +27,6 @@ import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
@@ -60,8 +60,10 @@ internal class ObserveComingSoonGamesUseCaseImplTest {
         runBlockingTest {
             coEvery { gamesLocalDataStore.observeComingSoonGames(any()) } returns flowOf(DATA_GAMES)
 
-            assertThat(SUT.execute(ObserveGamesUseCaseParams()).first())
-                .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+            SUT.execute(ObserveGamesUseCaseParams()).test {
+                assertThat(expectItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+                expectComplete()
+            }
         }
     }
 

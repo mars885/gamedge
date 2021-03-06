@@ -47,6 +47,7 @@ internal class AuthFileDataStoreTest {
 
     @MockK private lateinit var protoDataStore: DataStore<ProtoOauthCredentials>
     @MockK private lateinit var timestampProvider: TimestampProvider
+
     private lateinit var SUT: AuthFileDataStore
 
 

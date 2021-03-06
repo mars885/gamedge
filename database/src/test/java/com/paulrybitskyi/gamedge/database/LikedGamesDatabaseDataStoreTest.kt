@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.database
 
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
 import com.paulrybitskyi.gamedge.commons.testing.DATA_PAGINATION
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
@@ -27,7 +28,6 @@ import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.database.games.datastores.mapToDatabaseGames
 import com.paulrybitskyi.gamedge.database.utils.FakeGameMapper
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
@@ -94,8 +94,15 @@ internal class LikedGamesDatabaseDataStoreTest {
         runBlockingTest {
             SUT.likeGame(GAME_ID)
 
-            assertThat(SUT.observeGameLikeState(gameId = GAME_ID).first()).isTrue
-            assertThat(SUT.observeGameLikeState(gameId = ANOTHER_GAME_ID).first()).isFalse
+            SUT.observeGameLikeState(GAME_ID).test {
+                assertThat(expectItem()).isTrue
+                expectComplete()
+            }
+
+            SUT.observeGameLikeState(ANOTHER_GAME_ID).test {
+                assertThat(expectItem()).isFalse
+                expectComplete()
+            }
         }
     }
 
@@ -107,8 +114,10 @@ internal class LikedGamesDatabaseDataStoreTest {
 
             likedGamesTable.dbGamesToObserve = dbGames
 
-            assertThat(SUT.observeLikedGames(DATA_PAGINATION).first())
-                .isEqualTo(DATA_GAMES)
+            SUT.observeLikedGames(DATA_PAGINATION).test {
+                assertThat(expectItem()).isEqualTo(DATA_GAMES)
+                expectComplete()
+            }
         }
     }
 

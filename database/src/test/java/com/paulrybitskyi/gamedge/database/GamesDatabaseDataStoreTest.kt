@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.database
 
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.data.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.data.games.DataCategory
@@ -143,8 +144,10 @@ internal class GamesDatabaseDataStoreTest {
 
             coEvery { gamesTable.observePopularGames(any(), any(), any()) } returns flowOf(dbGames)
 
-            assertThat(SUT.observePopularGames(DATA_PAGINATION).first())
-                .isEqualTo(DATA_GAMES)
+            SUT.observePopularGames(DATA_PAGINATION).test {
+                assertThat(expectItem()).isEqualTo(DATA_GAMES)
+                expectComplete()
+            }
         }
     }
 
@@ -156,8 +159,10 @@ internal class GamesDatabaseDataStoreTest {
 
             coEvery { gamesTable.observeRecentlyReleasedGames(any(), any(), any(), any()) } returns flowOf(dbGames)
 
-            assertThat(SUT.observeRecentlyReleasedGames(DATA_PAGINATION).first())
-                .isEqualTo(DATA_GAMES)
+            SUT.observeRecentlyReleasedGames(DATA_PAGINATION).test {
+                assertThat(expectItem()).isEqualTo(DATA_GAMES)
+                expectComplete()
+            }
         }
     }
 
@@ -169,8 +174,10 @@ internal class GamesDatabaseDataStoreTest {
 
             coEvery { gamesTable.observeComingSoonGames(any(), any(), any()) } returns flowOf(dbGames)
 
-            assertThat(SUT.observeComingSoonGames(DATA_PAGINATION).first())
-                .isEqualTo(DATA_GAMES)
+            SUT.observeComingSoonGames(DATA_PAGINATION).test {
+                assertThat(expectItem()).isEqualTo(DATA_GAMES)
+                expectComplete()
+            }
         }
     }
 
@@ -182,8 +189,10 @@ internal class GamesDatabaseDataStoreTest {
 
             coEvery { gamesTable.observeMostAnticipatedGames(any(), any(), any()) } returns flowOf(dbGames)
 
-            assertThat(SUT.observeMostAnticipatedGames(DATA_PAGINATION).first())
-                .isEqualTo(DATA_GAMES)
+            SUT.observeMostAnticipatedGames(DATA_PAGINATION).test {
+                assertThat(expectItem()).isEqualTo(DATA_GAMES)
+                expectComplete()
+            }
         }
     }
 

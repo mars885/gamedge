@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.games
 
+import app.cash.turbine.test
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
 import com.paulrybitskyi.gamedge.data.commons.DataPagination
@@ -31,7 +32,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
@@ -65,8 +65,10 @@ internal class GetGameUseCaseImplTest {
         runBlockingTest {
             coEvery { gamesLocalDataStore.getGame(any()) } returns DATA_GAME
 
-            assertThat(SUT.execute(GET_GAME_USE_CASE_PARAMS).first().get())
-                .isEqualTo(gameMapper.mapToDomainGame(DATA_GAME))
+            SUT.execute(GET_GAME_USE_CASE_PARAMS).test {
+                assertThat(expectItem().get()).isEqualTo(gameMapper.mapToDomainGame(DATA_GAME))
+                expectComplete()
+            }
         }
     }
 
@@ -76,9 +78,10 @@ internal class GetGameUseCaseImplTest {
         runBlockingTest {
             coEvery { gamesLocalDataStore.getGame(any()) } returns null
 
-            val error = SUT.execute(GET_GAME_USE_CASE_PARAMS).first().getError()
-
-            assertThat(error is Error.NotFound).isTrue
+            SUT.execute(GET_GAME_USE_CASE_PARAMS).test {
+                assertThat(expectItem().getError() is Error.NotFound).isTrue
+                expectComplete()
+            }
         }
     }
 

@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.search
 
 import androidx.lifecycle.SavedStateHandle
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
@@ -76,11 +77,11 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Routes to previous screen when toolbar back button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            SUT.onToolbarBackButtonClicked()
+            SUT.routeFlow.test {
+                SUT.onToolbarBackButtonClicked()
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is GamesSearchRoute.Back).isTrue
+                assertThat(expectItem() is GamesSearchRoute.Back).isTrue
+            }
         }
     }
 
@@ -90,18 +91,19 @@ internal class GamesSearchViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
-            val uiStates = mutableListOf<GamesUiState>()
-            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
+            SUT.uiState.test {
+                SUT.onSearchActionRequested("god of war")
 
-            SUT.onSearchActionRequested("god of war")
+                val emptyState = expectItem()
+                val loadingState = expectItem()
+                val resultState = expectItem()
 
-            assertThat(uiStates[0] is GamesUiState.Empty).isTrue
-            assertThat(uiStates[1] is GamesUiState.Loading).isTrue
-            assertThat(uiStates[2] is GamesUiState.Result).isTrue
-            assertThat((uiStates[2] as GamesUiState.Result).items)
-                .hasSize(DOMAIN_GAMES.size)
-
-            uiStateJob.cancel()
+                assertThat(emptyState is GamesUiState.Empty).isTrue
+                assertThat(loadingState is GamesUiState.Loading).isTrue
+                assertThat(resultState is GamesUiState.Result).isTrue
+                assertThat((resultState as GamesUiState.Result).items)
+                    .hasSize(DOMAIN_GAMES.size)
+            }
         }
     }
 
@@ -109,15 +111,12 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Does not emit ui states when search query is empty`() {
         mainCoroutineRule.runBlockingTest {
-            val uiStates = mutableListOf<GamesUiState>()
-            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
+            SUT.uiState.test {
+                SUT.onSearchActionRequested("")
 
-            SUT.onSearchActionRequested("")
-
-            assertThat(uiStates).hasSize(1)
-            assertThat(uiStates[0] is GamesUiState.Empty).isTrue
-
-            uiStateJob.cancel()
+                assertThat(expectItem() is GamesUiState.Empty).isTrue
+                expectNoEvents()
+            }
         }
     }
 
@@ -129,14 +128,12 @@ internal class GamesSearchViewModelTest {
 
             SUT.onSearchActionRequested("god of war")
 
-            val uiStates = mutableListOf<GamesUiState>()
-            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
+            SUT.uiState.test {
+                SUT.onSearchActionRequested("god of war")
 
-            SUT.onSearchActionRequested("god of war")
-
-            assertThat(uiStates).hasSize(1)
-
-            uiStateJob.cancel()
+                assertThat(expectItem() is GamesUiState.Result)
+                expectNoEvents()
+            }
         }
     }
 
@@ -144,15 +141,12 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Emits empty ui state when blank search query is provided`() {
         mainCoroutineRule.runBlockingTest {
-            val uiStates = mutableListOf<GamesUiState>()
-            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
+            SUT.uiState.test {
+                SUT.onSearchActionRequested("   ")
 
-            SUT.onSearchActionRequested("   ")
-
-            assertThat(uiStates).hasSize(1)
-            assertThat(uiStates[0] is GamesUiState.Empty).isTrue
-
-            uiStateJob.cancel()
+                assertThat(expectItem() is GamesUiState.Empty).isTrue
+                expectNoEvents()
+            }
         }
     }
 
@@ -162,11 +156,11 @@ internal class GamesSearchViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
-            SUT.onSearchActionRequested("god of war")
+            SUT.commandFlow.test {
+                SUT.onSearchActionRequested("god of war")
 
-            val command = SUT.commandFlow.first()
-
-            assertThat(command is GamesSearchCommand.ClearItems).isTrue
+                assertThat(expectItem() is GamesSearchCommand.ClearItems).isTrue
+            }
         }
     }
 
@@ -188,11 +182,12 @@ internal class GamesSearchViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
-            SUT.onSearchActionRequested("god of war")
+            SUT.commandFlow.test {
+                SUT.onSearchActionRequested("god of war")
 
-            val command = SUT.commandFlow.drop(1).first()
-
-            assertThat(command is GeneralCommand.ShowLongToast).isTrue
+                assertThat(expectItem() is GamesSearchCommand.ClearItems).isTrue
+                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+            }
         }
     }
 
@@ -209,13 +204,15 @@ internal class GamesSearchViewModelTest {
                 description = null
             )
 
-            SUT.onGameClicked(gameModel)
+            SUT.routeFlow.test {
+                SUT.onGameClicked(gameModel)
 
-            val route = SUT.routeFlow.first()
+                val route = expectItem()
 
-            assertThat(route is GamesSearchRoute.Info).isTrue
-            assertThat((route as GamesSearchRoute.Info).gameId)
-                .isEqualTo(gameModel.id)
+                assertThat(route is GamesSearchRoute.Info).isTrue
+                assertThat((route as GamesSearchRoute.Info).gameId)
+                    .isEqualTo(gameModel.id)
+            }
         }
     }
 

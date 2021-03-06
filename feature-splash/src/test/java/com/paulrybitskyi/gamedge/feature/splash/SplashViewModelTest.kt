@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.splash
 
+import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.testing.*
@@ -69,11 +70,11 @@ internal class SplashViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
 
-            SUT.init()
+            SUT.routeFlow.test {
+                SUT.init()
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is SplashRoute.Dashboard).isTrue
+                assertThat(expectItem() is SplashRoute.Dashboard).isTrue
+            }
         }
     }
 
@@ -107,11 +108,11 @@ internal class SplashViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
-            SUT.init()
+            SUT.commandFlow.test {
+                SUT.init()
 
-            val command = SUT.commandFlow.first()
-
-            assertThat(command is GeneralCommand.ShowLongToast).isTrue
+                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+            }
         }
     }
 
@@ -121,11 +122,11 @@ internal class SplashViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { refreshAuthUseCase.execute(any()) } returns flow { throw Exception("error") }
 
-            SUT.init()
+            SUT.commandFlow.test {
+                SUT.init()
 
-            val command = SUT.commandFlow.first()
-
-            assertThat(command is GeneralCommand.ShowLongToast).isTrue
+                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+            }
         }
     }
 
@@ -135,11 +136,11 @@ internal class SplashViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
-            SUT.init()
+            SUT.routeFlow.test {
+                SUT.init()
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is SplashRoute.Exit).isTrue
+                assertThat(expectItem() is SplashRoute.Exit).isTrue
+            }
         }
     }
 
@@ -149,11 +150,11 @@ internal class SplashViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { refreshAuthUseCase.execute(any()) } returns flow { throw Exception("error") }
 
-            SUT.init()
+            SUT.routeFlow.test {
+                SUT.init()
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is SplashRoute.Exit).isTrue
+                assertThat(expectItem() is SplashRoute.Exit).isTrue
+            }
         }
     }
 
