@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.dashboard
+package com.paulrybitskyi.gamedge.feature.dashboard.fragment
 
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-
-@HiltViewModel
-internal class DashboardViewModel @Inject constructor() : BaseViewModel() {
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 
 
-    fun onToolbarRightButtonClicked() {
-        route(DashboardRoute.Search)
-    }
+internal sealed class DashboardRoute : Route {
 
+    object Search : DashboardRoute()
 
 }

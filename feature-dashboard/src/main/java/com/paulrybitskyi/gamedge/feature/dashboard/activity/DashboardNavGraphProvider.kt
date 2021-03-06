@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.dashboard
+package com.paulrybitskyi.gamedge.feature.dashboard.activity
 
-import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+import androidx.annotation.NavigationRes
 
+interface DashboardNavGraphProvider {
 
-internal sealed class DashboardRoute : Route {
-
-    object Search : DashboardRoute()
+    @NavigationRes
+    fun getNavGraphId(): Int
 
 }

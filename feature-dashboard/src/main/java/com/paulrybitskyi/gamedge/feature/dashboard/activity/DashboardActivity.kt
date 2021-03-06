@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.dashboard
+package com.paulrybitskyi.gamedge.feature.dashboard.activity
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.navigation.fragment.NavHostFragment
 import com.paulrybitskyi.commons.ktx.intentFor
 import com.paulrybitskyi.commons.window.anims.WindowAnimations
 import com.paulrybitskyi.commons.window.anims.overrideEnterTransition
+import com.paulrybitskyi.gamedge.feature.dashboard.R
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DashboardActivity : AppCompatActivity(R.layout.activity_dashboard) {
@@ -39,18 +42,30 @@ class DashboardActivity : AppCompatActivity(R.layout.activity_dashboard) {
     }
 
 
+    @Inject lateinit var navGraphProvider: DashboardNavGraphProvider
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         overrideEnterTransition(WindowAnimations.FADING_ANIMATIONS)
         initSystemUiVisibility()
+        initNavGraph()
     }
 
 
     private fun initSystemUiVisibility() {
         // To be able to draw behind system bars & change their colors
-        // https://youtu.be/acC7SR1EXsI?t=127
         WindowCompat.setDecorFitsSystemWindows(window, false)
+    }
+
+
+    private fun initNavGraph() {
+        val navHostFragment = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment)
+        val navController = navHostFragment.navController
+        val graph = navController.navInflater.inflate(navGraphProvider.getNavGraphId())
+
+        navController.graph = graph
     }
 
 

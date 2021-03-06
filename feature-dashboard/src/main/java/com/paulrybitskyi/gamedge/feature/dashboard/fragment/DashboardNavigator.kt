@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.dashboard.adapter
+package com.paulrybitskyi.gamedge.feature.dashboard.fragment
 
-import androidx.fragment.app.Fragment
+import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
-interface DashboardAdapterFragmentFactory {
+interface DashboardNavigator : Navigator {
 
-    fun createNewsFragment(): Fragment
-
-    fun createDiscoveryFragment(): Fragment
-
-    fun createLikesFragment(): Fragment
+    fun goToSearch()
 
 }

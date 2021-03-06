@@ -14,30 +14,18 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.splash
+package com.paulrybitskyi.gamedge.dashboard
 
-import android.app.Activity
-import android.content.Context
-import com.paulrybitskyi.gamedge.feature.dashboard.activity.DashboardActivity
-import com.paulrybitskyi.gamedge.feature.splash.SplashNavigator
+import com.paulrybitskyi.gamedge.R
+import com.paulrybitskyi.gamedge.feature.dashboard.activity.DashboardNavGraphProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 @BindType(installIn = BindType.Component.ACTIVITY)
-internal class SplashNavigatorImpl @Inject constructor(
-    private val activity: Activity
-) : SplashNavigator {
+internal class DashboardNavGraphProviderImpl @Inject constructor(): DashboardNavGraphProvider {
 
 
-    override fun goToDashboard(context: Context) {
-        activity.startActivity(DashboardActivity.newIntent(context))
-        activity.finish()
-    }
-
-
-    override fun exitApp() {
-        activity.finish()
-    }
+    override fun getNavGraphId(): Int = R.navigation.dashboard_graph
 
 
 }
