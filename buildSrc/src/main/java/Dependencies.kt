@@ -37,11 +37,11 @@ object appConfig {
 
 object versions {
 
-    const val kotlin = "1.4.30" // also in buildSrc build.gradle.kts file
-    const val gradleVersionsPlugin = "0.36.0"
-    const val protobufPlugin = "0.8.14"
+    const val kotlin = "1.4.31" // also in buildSrc build.gradle.kts file
+    const val gradleVersionsPlugin = "0.38.0"
+    const val protobufPlugin = "0.8.15"
     const val navigation = "2.3.3"
-    const val daggerHilt = "2.31.2-alpha"
+    const val daggerHilt = "2.33-beta"
     const val coroutines = "1.4.2"
 
 }
@@ -98,18 +98,18 @@ object deps {
 
     object androidX {
 
-        private const val appCompatVersion = "1.1.0"
+        private const val appCompatVersion = "1.2.0"
         private const val constraintLayoutVersion = "2.0.4"
         private const val recyclerViewVersion = "1.1.0"
         private const val viewPager2Version = "1.0.0"
         private const val swipeRefreshLayoutVersion = "1.1.0"
-        private const val lifecycleVersion = "2.2.0"
+        private const val lifecycleVersion = "2.3.0"
         private const val browserVersion = "1.3.0"
-        private const val roomVersion = "2.2.5"
-        private const val coreKtxVersion = "1.3.1"
-        private const val fragmentKtxVersion = "1.2.5"
+        private const val roomVersion = "2.2.6"
+        private const val coreKtxVersion = "1.3.2"
+        private const val fragmentKtxVersion = "1.3.0"
         private const val dataStoreVersion = "1.0.0-alpha07"
-        private const val daggerHiltAssistedInjectionVersion = "1.0.0-alpha02"
+        private const val daggerHiltAssistedInjectionVersion = "1.0.0-alpha03"
 
         const val appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
         const val navFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
@@ -148,7 +148,7 @@ object deps {
 
     object square {
 
-        private const val okHttpVersion = "4.8.0"
+        private const val okHttpVersion = "4.9.1"
         private const val retrofitVersion = "2.9.0"
         private const val moshiVersion = "1.11.0"
         private const val picassoVersion = "2.8"
@@ -190,7 +190,7 @@ object deps {
     object misc {
 
         private const val desugaredLibsVersion = "1.0.10"
-        private const val kotlinResultVersion = "1.1.10"
+        private const val kotlinResultVersion = "1.1.11"
         private const val expandableTextViewVersion = "1.0.5"
         private const val hiltBinderVersion = "1.0.0-alpha01"
         private const val photoViewVersion = "2.3.0"
@@ -208,7 +208,7 @@ object deps {
 
     object testing {
 
-        private const val jUnitVersion = "4.13.1"
+        private const val jUnitVersion = "4.13.2"
         private const val jUnitExtVersion = "1.1.2"
         private const val assertJVersion = "3.19.0"
         private const val mockkVersion = "1.10.6"
