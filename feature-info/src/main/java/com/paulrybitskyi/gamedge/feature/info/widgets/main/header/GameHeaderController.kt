@@ -157,6 +157,10 @@ internal class GameHeaderController(
         }
     }
 
+    // Deprecation suppression should be removed after a new version
+    // of the ktx lib is released and used here to abstract all the
+    // complexity of setting insets
+    @Suppress("DEPRECATION")
     private fun initMotionLayoutInsets() = with(binding.mainView) {
         // Traditional inset applying does not work with views that
         // are direct children of MotionLayout. Have to manually update

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("EXPERIMENTAL_FEATURE_WARNING")
+
 package com.paulrybitskyi.gamedge.commons.ui.base.rv
 
 import android.content.Context
