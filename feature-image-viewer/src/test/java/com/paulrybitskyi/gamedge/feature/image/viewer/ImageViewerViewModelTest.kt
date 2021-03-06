@@ -17,7 +17,9 @@
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.lifecycle.SavedStateHandle
+import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
@@ -52,11 +54,11 @@ internal class ImageViewerViewModelTest {
 
 
     private fun setupSavedStateHandle(): SavedStateHandle {
-        return mockk<SavedStateHandle>(relaxed = true).also {
-            every { it.get<String>(PARAM_TITLE) } returns ""
-            every { it.get<Int>(PARAM_INITIAL_POSITION) } returns INITIAL_POSITION
-            every { it.get<Array<String>>(PARAM_IMAGE_URLS) } returns arrayOf("", "", "")
-            every { it.get<Int>(KEY_SELECTED_POSITION) } returns INITIAL_POSITION
+        return mockk(relaxed = true) {
+            every { get<String>(PARAM_TITLE) } returns ""
+            every { get<Int>(PARAM_INITIAL_POSITION) } returns INITIAL_POSITION
+            every { get<Array<String>>(PARAM_IMAGE_URLS) } returns arrayOf("", "", "")
+            every { get<Int>(KEY_SELECTED_POSITION) } returns INITIAL_POSITION
         }
     }
 
@@ -125,19 +127,6 @@ internal class ImageViewerViewModelTest {
 
             assertThat(route is ImageViewerRoute.Back).isTrue
         }
-    }
-
-
-    private class FakeStringProvider : StringProvider {
-
-        override fun getString(id: Int, vararg args: Any): String {
-            return "string"
-        }
-
-        override fun getQuantityString(id: Int, quantity: Int, vararg formatArgs: Any): String {
-            return "quantity_string"
-        }
-
     }
 
 

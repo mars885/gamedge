@@ -98,6 +98,7 @@ internal class ImageViewerItemView @JvmOverloads constructor(
     }
 
 
+    @Suppress("UNUSED_PARAMETER")
     private fun onImageLoadingFailed(error: Exception) {
         infoViewTitleText = stringProvider.getString(
             if(!networkStateProvider.isNetworkAvailable) {

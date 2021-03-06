@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.games.utils
+package com.paulrybitskyi.gamedge.commons.testing
 
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 
-internal class FakeDispatcherProvider(
-    private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-    override val main: CoroutineDispatcher = testDispatcher,
-    override val io: CoroutineDispatcher = testDispatcher,
-    override val computation: CoroutineDispatcher = testDispatcher
-) : DispatcherProvider
+class FakeStringProvider : StringProvider {
+
+
+    override fun getString(id: Int, vararg args: Any): String {
+        return "string"
+    }
+
+
+    override fun getQuantityString(id: Int, quantity: Int, vararg formatArgs: Any): String {
+        return "quantity_string"
+    }
+
+
+}

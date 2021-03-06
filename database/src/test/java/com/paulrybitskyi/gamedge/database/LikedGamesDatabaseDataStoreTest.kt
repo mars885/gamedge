@@ -16,59 +16,27 @@
 
 package com.paulrybitskyi.gamedge.database
 
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.data.games.DataCategory
-import com.paulrybitskyi.gamedge.data.games.DataGame
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.DATA_PAGINATION
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
-import com.paulrybitskyi.gamedge.database.games.datastores.GameMapper
 import com.paulrybitskyi.gamedge.database.games.datastores.LikedGameFactory
 import com.paulrybitskyi.gamedge.database.games.datastores.LikedGamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.database.games.entities.LikedGame
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
-import kotlinx.coroutines.CoroutineDispatcher
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.database.games.datastores.mapToDatabaseGames
+import com.paulrybitskyi.gamedge.database.utils.FakeGameMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
 
-private val DATABASE_GAME = DatabaseGame(
-    id = 1,
-    followerCount = null,
-    hypeCount = null,
-    releaseDate = null,
-    criticsRating = null,
-    usersRating = null,
-    totalRating = null,
-    name = "name",
-    summary = null,
-    storyline = null,
-    category = "category",
-    cover = "cover",
-    releaseDates = "release_dates",
-    ageRatings = "age_ratings",
-    videos = "videos",
-    artworks = "artworks",
-    screenshots = "screenshots",
-    genres = "genres",
-    platforms = "platforms",
-    playerPerspectives = "player_perspectives",
-    themes = "themes",
-    modes = "modes",
-    keywords = "keywords",
-    involvedCompanies = "involved_companies",
-    websites = "websites",
-    similarGames = "similar_games"
-)
-private val DATABASE_GAMES = listOf(
-    DATABASE_GAME.copy(id = 1),
-    DATABASE_GAME.copy(id = 2),
-    DATABASE_GAME.copy(id = 3)
-)
+private const val GAME_ID = 100
+private const val ANOTHER_GAME_ID = 110
 
 
 internal class LikedGamesDatabaseDataStoreTest {
@@ -82,11 +50,12 @@ internal class LikedGamesDatabaseDataStoreTest {
     @Before
     fun setup() {
         likedGamesTable = FakeLikedGamesTable()
+        gameMapper = FakeGameMapper()
         SUT = LikedGamesDatabaseDataStore(
             likedGamesTable = likedGamesTable,
             likedGameFactory = FakeLikedGameFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
-            gameMapper = FakeGameMapper()
+            gameMapper = gameMapper
         )
     }
 
@@ -94,11 +63,9 @@ internal class LikedGamesDatabaseDataStoreTest {
     @Test
     fun `Likes game successfully`() {
         runBlockingTest {
-            val gameId = 100
+            SUT.likeGame(GAME_ID)
 
-            SUT.likeGame(gameId)
-
-            assertThat(likedGamesTable.isGameLiked(gameId)).isTrue
+            assertThat(SUT.isGameLiked(GAME_ID)).isTrue
         }
     }
 
@@ -106,23 +73,18 @@ internal class LikedGamesDatabaseDataStoreTest {
     @Test
     fun `Unlikes game successfully`() {
         runBlockingTest {
-            val gameId = 100
+            SUT.likeGame(GAME_ID)
+            SUT.unlikeGame(GAME_ID)
 
-            SUT.likeGame(gameId)
-            SUT.unlikeGame(gameId)
-
-            assertThat(likedGamesTable.isGameLiked(gameId)).isFalse
+            assertThat(SUT.isGameLiked(GAME_ID)).isFalse
         }
     }
 
 
     @Test
-    fun `Performs whether game is liked successfully`() {
+    fun `Validates that unliked game is unliked`() {
         runBlockingTest {
-            SUT.likeGame(gameId = 100)
-
-            assertThat(likedGamesTable.isGameLiked(gameId = 100)).isTrue
-            assertThat(likedGamesTable.isGameLiked(gameId = 110)).isFalse
+            assertThat(SUT.isGameLiked(gameId = ANOTHER_GAME_ID)).isFalse
         }
     }
 
@@ -130,10 +92,10 @@ internal class LikedGamesDatabaseDataStoreTest {
     @Test
     fun `Observes game like state successfully`() {
         runBlockingTest {
-            SUT.likeGame(gameId = 100)
+            SUT.likeGame(GAME_ID)
 
-            assertThat(likedGamesTable.observeGameLikeState(gameId = 100).first()).isTrue
-            assertThat(likedGamesTable.observeGameLikeState(gameId = 110).first()).isFalse
+            assertThat(SUT.observeGameLikeState(gameId = GAME_ID).first()).isTrue
+            assertThat(SUT.observeGameLikeState(gameId = ANOTHER_GAME_ID).first()).isFalse
         }
     }
 
@@ -141,36 +103,39 @@ internal class LikedGamesDatabaseDataStoreTest {
     @Test
     fun `Observes liked games successfully`() {
         runBlockingTest {
-            assertThat(likedGamesTable.observeLikedGames(offset = 0, limit = 20).first())
-                .isEqualTo(DATABASE_GAMES)
+            val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
+
+            likedGamesTable.dbGamesToObserve = dbGames
+
+            assertThat(SUT.observeLikedGames(DATA_PAGINATION).first())
+                .isEqualTo(DATA_GAMES)
         }
     }
 
 
     private class FakeLikedGamesTable : LikedGamesTable {
 
-        var likedGames = mutableListOf<LikedGame>()
+        var likedGamesMap = mutableMapOf<Int, LikedGame>()
+        var dbGamesToObserve = listOf<DatabaseGame>()
 
         override suspend fun saveLikedGame(likedGame: LikedGame) {
-            likedGames.add(likedGame)
+            likedGamesMap[likedGame.gameId] = likedGame
         }
 
         override suspend fun deleteLikedGame(gameId: Int) {
-            likedGames.removeAll { it.gameId == gameId }
+            likedGamesMap.remove(gameId)
         }
 
         override suspend fun isGameLiked(gameId: Int): Boolean {
-            return likedGames.any { it.gameId == gameId }
+            return likedGamesMap.containsKey(gameId)
         }
 
         override fun observeGameLikeState(gameId: Int): Flow<Boolean> {
-            return flowOf(
-                likedGames.any { it.gameId == gameId }
-            )
+            return flowOf(likedGamesMap.contains(gameId))
         }
 
         override fun observeLikedGames(offset: Int, limit: Int): Flow<List<DatabaseGame>> {
-            return flowOf(DATABASE_GAMES)
+            return flowOf(dbGamesToObserve)
         }
 
     }
@@ -183,81 +148,6 @@ internal class LikedGamesDatabaseDataStoreTest {
                 id = 1,
                 gameId = gameId,
                 likeTimestamp = 500L
-            )
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
-
-
-    private class FakeGameMapper : GameMapper {
-
-        override fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame {
-            return DatabaseGame(
-                id = dataGame.id,
-                followerCount = dataGame.followerCount,
-                hypeCount = dataGame.hypeCount,
-                releaseDate = dataGame.releaseDate,
-                criticsRating = dataGame.criticsRating,
-                usersRating = dataGame.usersRating,
-                totalRating = dataGame.totalRating,
-                name = dataGame.name,
-                summary = dataGame.summary,
-                storyline = dataGame.storyline,
-                category = "category",
-                cover = "cover",
-                releaseDates = "release_dates",
-                ageRatings = "age_ratings",
-                videos = "videos",
-                artworks = "artworks",
-                screenshots = "screenshots",
-                genres = "genres",
-                platforms = "platforms",
-                playerPerspectives = "player_perspectives",
-                themes = "themes",
-                modes = "modes",
-                keywords = "keywords",
-                involvedCompanies = "involved_companies",
-                websites = "websites",
-                similarGames = "similar_games"
-            )
-        }
-
-        override fun mapToDataGame(databaseGame: DatabaseGame): DataGame {
-            return DataGame(
-                id = databaseGame.id,
-                followerCount = databaseGame.followerCount,
-                hypeCount = databaseGame.hypeCount,
-                releaseDate = databaseGame.releaseDate,
-                criticsRating = databaseGame.criticsRating,
-                usersRating = databaseGame.usersRating,
-                totalRating = databaseGame.totalRating,
-                name = databaseGame.name,
-                summary = databaseGame.summary,
-                storyline = databaseGame.storyline,
-                category = DataCategory.UNKNOWN,
-                cover = null,
-                releaseDates = emptyList(),
-                ageRatings = emptyList(),
-                videos = emptyList(),
-                artworks = emptyList(),
-                screenshots = emptyList(),
-                genres = emptyList(),
-                platforms = emptyList(),
-                playerPerspectives = emptyList(),
-                themes = emptyList(),
-                modes = emptyList(),
-                keywords = emptyList(),
-                involvedCompanies = emptyList(),
-                websites = emptyList(),
-                similarGames = emptyList()
             )
         }
 

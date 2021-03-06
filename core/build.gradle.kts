@@ -50,8 +50,11 @@ dependencies {
 
     coreLibraryDesugaring(deps.misc.desugaredLibs)
 
+    testImplementation(project(deps.local.commonsTesting))
     testImplementation(deps.testing.jUnit)
     testImplementation(deps.testing.assertJ)
+    testImplementation(deps.testing.mockk)
+    testImplementation(deps.testing.coroutines)
 
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)

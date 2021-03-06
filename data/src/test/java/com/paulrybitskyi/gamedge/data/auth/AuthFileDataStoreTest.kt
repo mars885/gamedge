@@ -17,18 +17,21 @@
 package com.paulrybitskyi.gamedge.data.auth
 
 import androidx.datastore.core.DataStore
-import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthExpiryTimeCalculator
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthFileDataStore
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthMapper
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.ProtoOauthCredentials
-import kotlinx.coroutines.flow.Flow
+import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
+import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
-import java.util.concurrent.TimeUnit
 
 
 private val PROTO_OAUTH_CREDENTIALS = ProtoOauthCredentials.newBuilder()
@@ -38,25 +41,19 @@ private val PROTO_OAUTH_CREDENTIALS = ProtoOauthCredentials.newBuilder()
     .setExpirationTime(10_000L)
     .build()
 
-private val DATA_OAUTH_CREDENTIALS = DataOauthCredentials(
-    accessToken = "access_token",
-    tokenType = "token_type",
-    tokenTtl = 5000L
-)
-
 
 internal class AuthFileDataStoreTest {
 
 
-    private lateinit var protoDataStore: FakeProtoDataStore
-    private lateinit var timestampProvider: FakeTimestampProvider
+    @MockK private lateinit var protoDataStore: DataStore<ProtoOauthCredentials>
+    @MockK private lateinit var timestampProvider: TimestampProvider
     private lateinit var SUT: AuthFileDataStore
 
 
     @Before
     fun setup() {
-        protoDataStore = FakeProtoDataStore()
-        timestampProvider = FakeTimestampProvider()
+        MockKAnnotations.init(this)
+
         SUT = AuthFileDataStore(
             protoDataStore = protoDataStore,
             timestampProvider = timestampProvider,
@@ -68,9 +65,11 @@ internal class AuthFileDataStoreTest {
     @Test
     fun `Saves credentials successfully`() {
         runBlockingTest {
+            coEvery { protoDataStore.updateData(any()) } returns PROTO_OAUTH_CREDENTIALS
+
             SUT.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
 
-            assertThat(protoDataStore.isDataUpdated).isTrue
+            coVerify { protoDataStore.updateData(any()) }
         }
     }
 
@@ -78,7 +77,7 @@ internal class AuthFileDataStoreTest {
     @Test
     fun `Retrieves credentials successfully`() {
         runBlockingTest {
-            protoDataStore.shouldReturnCredentials = true
+            coEvery { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
 
             assertThat(SUT.getOauthCredentials())
                 .isEqualTo(DATA_OAUTH_CREDENTIALS)
@@ -89,7 +88,7 @@ internal class AuthFileDataStoreTest {
     @Test
     fun `Retrieves null credentials successfully`() {
         runBlockingTest {
-            protoDataStore.shouldReturnEmptyFlow = true
+            coEvery { protoDataStore.data } returns flowOf()
 
             assertThat(SUT.getOauthCredentials()).isNull()
         }
@@ -99,8 +98,8 @@ internal class AuthFileDataStoreTest {
     @Test
     fun `Credentials should not be expired`() {
         runBlockingTest {
-            protoDataStore.shouldReturnCredentials = true
-            timestampProvider.timestamp = 0L
+            coEvery { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
+            coEvery { timestampProvider.getUnixTimestamp(any()) } returns 0L
 
             assertThat(SUT.isExpired()).isFalse
         }
@@ -110,8 +109,10 @@ internal class AuthFileDataStoreTest {
     @Test
     fun `Credentials should be expired`() {
         runBlockingTest {
-            protoDataStore.shouldReturnCredentials = true
-            timestampProvider.timestamp = (PROTO_OAUTH_CREDENTIALS.expirationTime + 10_000L)
+            coEvery { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
+            coEvery {
+                timestampProvider.getUnixTimestamp(any())
+            } returns (PROTO_OAUTH_CREDENTIALS.expirationTime + 10_000L)
 
             assertThat(SUT.isExpired()).isTrue
         }
@@ -121,42 +122,10 @@ internal class AuthFileDataStoreTest {
     @Test
     fun `Credentials are expired if data store is empty`() {
         runBlockingTest {
-            protoDataStore.shouldReturnEmptyFlow = true
+            coEvery { protoDataStore.data } returns flowOf()
 
             assertThat(SUT.isExpired()).isTrue
         }
-    }
-
-
-    private class FakeProtoDataStore : DataStore<ProtoOauthCredentials> {
-
-        var shouldReturnCredentials = false
-        var shouldReturnEmptyFlow = false
-
-        var isDataUpdated = false
-
-        override val data: Flow<ProtoOauthCredentials>
-            get() = (if(shouldReturnCredentials) flowOf(PROTO_OAUTH_CREDENTIALS) else flowOf())
-
-        override suspend fun updateData(
-            transform: suspend (t: ProtoOauthCredentials) -> ProtoOauthCredentials
-        ): ProtoOauthCredentials {
-            isDataUpdated = true
-
-            return PROTO_OAUTH_CREDENTIALS
-        }
-
-    }
-
-
-    private class FakeTimestampProvider : TimestampProvider {
-
-        var timestamp = 0L
-
-        override fun getUnixTimestamp(timeUnit: TimeUnit): Long {
-            return timestamp
-        }
-
     }
 
 

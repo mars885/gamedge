@@ -22,10 +22,14 @@ import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.GetGameUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
-import com.paulrybitskyi.gamedge.data.games.utils.DATA_GAME
-import com.paulrybitskyi.gamedge.data.games.utils.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAME
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.GET_GAME_USE_CASE_PARAMS
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -34,21 +38,19 @@ import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
-
-private val USE_CASE_PARAMS = GetGameUseCase.Params(gameId = 100)
-
-
 internal class GetGameUseCaseImplTest {
 
 
-    private lateinit var gamesLocalDataStore: FakeGamesLocalDataStore
+    @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
+
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: GetGameUseCaseImpl
 
 
     @Before
     fun setup() {
-        gamesLocalDataStore = FakeGamesLocalDataStore()
+        MockKAnnotations.init(this)
+
         gameMapper = GameMapper()
         SUT = GetGameUseCaseImpl(
             gamesLocalDataStore = gamesLocalDataStore,
@@ -61,9 +63,9 @@ internal class GetGameUseCaseImplTest {
     @Test
     fun `Emits game successfully`() {
         runBlockingTest {
-            gamesLocalDataStore.shouldReturnGame = true
+            coEvery { gamesLocalDataStore.getGame(any()) } returns DATA_GAME
 
-            assertThat(SUT.execute(USE_CASE_PARAMS).first().get())
+            assertThat(SUT.execute(GET_GAME_USE_CASE_PARAMS).first().get())
                 .isEqualTo(gameMapper.mapToDomainGame(DATA_GAME))
         }
     }
@@ -72,64 +74,12 @@ internal class GetGameUseCaseImplTest {
     @Test
     fun `Emits not found error if game ID does not reference existing game`() {
         runBlockingTest {
-            gamesLocalDataStore.shouldReturnGame = false
+            coEvery { gamesLocalDataStore.getGame(any()) } returns null
 
-            val error = SUT.execute(USE_CASE_PARAMS).first().getError()
+            val error = SUT.execute(GET_GAME_USE_CASE_PARAMS).first().getError()
 
             assertThat(error is Error.NotFound).isTrue
         }
-    }
-
-
-    private class FakeGamesLocalDataStore : GamesLocalDataStore {
-
-        var shouldReturnGame = false
-
-        override suspend fun saveGames(games: List<DataGame>) {
-            // no-op
-        }
-
-        override suspend fun getGame(id: Int): DataGame? {
-            return (if(shouldReturnGame) DATA_GAME else null)
-        }
-
-        override suspend fun getCompanyDevelopedGames(
-            company: DataCompany,
-            pagination: DataPagination
-        ): List<DataGame> {
-            return emptyList() // no-op
-        }
-
-        override suspend fun getSimilarGames(
-            game: DataGame,
-            pagination: DataPagination
-        ): List<DataGame> {
-            return emptyList() // no-op
-        }
-
-        override suspend fun searchGames(
-            searchQuery: String,
-            pagination: DataPagination
-        ): List<DataGame> {
-            return emptyList() // no-op
-        }
-
-        override suspend fun observePopularGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
-        override suspend fun observeRecentlyReleasedGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
-        override suspend fun observeComingSoonGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
-        override suspend fun observeMostAnticipatedGames(pagination: DataPagination): Flow<List<DataGame>> {
-            return flowOf() // no-op
-        }
-
     }
 
 

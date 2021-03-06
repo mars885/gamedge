@@ -23,11 +23,8 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
-import com.paulrybitskyi.gamedge.domain.commons.entities.Error
-import com.paulrybitskyi.gamedge.domain.games.DomainCategory
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetCompanyDevelopedGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
@@ -38,51 +35,19 @@ import com.paulrybitskyi.gamedge.feature.info.mapping.GameInfoUiStateFactory
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiState
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.*
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.commons.testing.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-
-
-private val DOMAIN_GAME = DomainGame(
-    id = 1,
-    followerCount = null,
-    hypeCount = null,
-    releaseDate = null,
-    criticsRating = null,
-    usersRating = null,
-    totalRating = null,
-    name = "name",
-    summary = null,
-    storyline = null,
-    category = DomainCategory.UNKNOWN,
-    cover = null,
-    releaseDates = listOf(),
-    ageRatings = listOf(),
-    videos = listOf(),
-    artworks = listOf(),
-    screenshots = listOf(),
-    genres = listOf(),
-    platforms = listOf(),
-    playerPerspectives = listOf(),
-    themes = listOf(),
-    modes = listOf(),
-    keywords = listOf(),
-    involvedCompanies = listOf(),
-    websites = listOf(),
-    similarGames = listOf()
-)
-
-private val DOMAIN_API_ERROR = Error.ApiError.ClientError("message")
-private val DOMAIN_NOT_FOUND_ERROR = Error.NotFound("message")
-private val DOMAIN_UNKNOWN_ERROR = Error.Unknown("unknown")
 
 
 internal class GameInfoViewModelTest {
@@ -91,14 +56,14 @@ internal class GameInfoViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var useCases: FakeGameInfoUseCases
+    private lateinit var useCases: GameInfoUseCases
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GameInfoViewModel
 
 
     @Before
     fun setup() {
-        useCases = FakeGameInfoUseCases()
+        useCases = setupUseCases()
         logger = FakeLogger()
         SUT = GameInfoViewModel(
             useCases = useCases,
@@ -113,9 +78,26 @@ internal class GameInfoViewModelTest {
     }
 
 
+    private fun setupUseCases(): GameInfoUseCases {
+        return GameInfoUseCases(
+            getGameUseCase = mockk(),
+            observeGameLikeStateUseCase = mockk {
+                coEvery { execute(any()) } returns flowOf(true)
+            },
+            toggleGameLikeStateUseCase = mockk(),
+            getCompanyDevelopedGamesUseCase = mockk {
+                coEvery { execute(any()) } returns flowOf(emptyList())
+            },
+            getSimilarGamesUseCase = mockk {
+                coEvery { execute(any()) } returns flowOf(emptyList())
+            }
+        )
+    }
+
+
     private fun setupSavedStateHandle(): SavedStateHandle {
-        return mockk<SavedStateHandle>(relaxed = true).also {
-            every { it.get<Int>(any()) } returns 1
+        return mockk(relaxed = true) {
+            every { get<Int>(any()) } returns 1
         }
     }
 
@@ -123,7 +105,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Emits correct ui states when loading data`() {
         mainCoroutineRule.runBlockingTest {
-            useCases.getGameUseCase.shouldReturnGame = true
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
             val uiStates = mutableListOf<GameInfoUiState>()
             val uiStateJob = launch { SUT.uiState.toList(uiStates) }
@@ -142,7 +124,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Logs error when game fetching use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            useCases.getGameUseCase.shouldReturnNotFoundError = true
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_API))
 
             SUT.loadData(resultEmissionDelay = 0L)
 
@@ -154,7 +136,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches toast showing command when game fetching use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            useCases.getGameUseCase.shouldReturnUnknownError = true
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_NOT_FOUND))
 
             SUT.loadData(resultEmissionDelay = 0L)
 
@@ -168,7 +150,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to image viewer screen when artwork is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            useCases.getGameUseCase.shouldReturnGame = true
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
             SUT.onArtworkClicked(position = 0)
 
@@ -194,7 +176,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to image viewer screen when cover is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            useCases.getGameUseCase.shouldReturnGame = true
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
             SUT.onCoverClicked()
 
@@ -228,7 +210,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to image viewer screen when screenshot is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            useCases.getGameUseCase.shouldReturnGame = true
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
             SUT.onScreenshotClicked(position = 0)
 
@@ -303,72 +285,6 @@ internal class GameInfoViewModelTest {
     }
 
 
-    private class FakeGameInfoUseCases(
-        override val getGameUseCase: FakeGetGameUseCase = FakeGetGameUseCase(),
-        override val observeGameLikeStateUseCase: FakeObserveGameLikeStateUseCase = FakeObserveGameLikeStateUseCase(),
-        override val toggleGameLikeStateUseCase: FakeToggleGameLikeStateUseCase = FakeToggleGameLikeStateUseCase(),
-        override val getCompanyDevelopedGamesUseCase: FakeGetCompanyDevelopedGamesUseCase = FakeGetCompanyDevelopedGamesUseCase(),
-        override val getSimilarGamesUseCase: FakeGetSimilarGamesUseCase = FakeGetSimilarGamesUseCase()
-    ) : GameInfoUseCases
-
-
-    private class FakeGetGameUseCase : GetGameUseCase {
-
-        var shouldReturnGame = false
-        var shouldReturnApiError = false
-        var shouldReturnNotFoundError = false
-        var shouldReturnUnknownError = false
-
-        override suspend fun execute(params: GetGameUseCase.Params): Flow<DomainResult<DomainGame>> {
-            return when {
-                shouldReturnGame -> flowOf(Ok(DOMAIN_GAME))
-                shouldReturnApiError -> flowOf(Err(DOMAIN_API_ERROR))
-                shouldReturnNotFoundError -> flowOf(Err(DOMAIN_NOT_FOUND_ERROR))
-                shouldReturnUnknownError -> flowOf(Err(DOMAIN_UNKNOWN_ERROR))
-
-                else -> throw IllegalStateException()
-            }
-        }
-
-    }
-
-
-    private class FakeObserveGameLikeStateUseCase : ObserveGameLikeStateUseCase {
-
-        override suspend fun execute(params: ObserveGameLikeStateUseCase.Params): Flow<Boolean> {
-            return flowOf(true)
-        }
-
-    }
-
-
-    private class FakeToggleGameLikeStateUseCase : ToggleGameLikeStateUseCase {
-
-        override suspend fun execute(params: ToggleGameLikeStateUseCase.Params) {
-            // no-op
-        }
-
-    }
-
-
-    private class FakeGetCompanyDevelopedGamesUseCase : GetCompanyDevelopedGamesUseCase {
-
-        override suspend fun execute(params: GetCompanyDevelopedGamesUseCase.Params): Flow<List<DomainGame>> {
-            return flowOf(emptyList())
-        }
-
-    }
-
-
-    private class FakeGetSimilarGamesUseCase : GetSimilarGamesUseCase {
-
-        override suspend fun execute(params: GetSimilarGamesUseCase.Params): Flow<List<DomainGame>> {
-            return flowOf(emptyList())
-        }
-
-    }
-
-
     private class FakeGameInfoUiStateFactory : GameInfoUiStateFactory {
 
         override fun createWithEmptyState(): GameInfoUiState {
@@ -395,10 +311,10 @@ internal class GameInfoViewModelTest {
                         title = "title",
                         releaseDate = "release_date",
                         developerName = null,
-                        rating = "",
-                        likeCount = "10",
-                        ageRating = "",
-                        gameCategory = ""
+                        rating = "rating",
+                        likeCount = "like_count",
+                        ageRating = "age_rating",
+                        gameCategory = "game_category"
                     ),
                     videoModels = emptyList(),
                     screenshotUrls = emptyList(),
@@ -418,60 +334,15 @@ internal class GameInfoViewModelTest {
     private class FakeGameUrlFactory : ImageViewerGameUrlFactory {
 
         override fun createCoverImageUrl(game: DomainGame): String {
-            return "url"
+            return "cover_image_url"
         }
 
         override fun createArtworkImageUrls(game: DomainGame): List<String> {
-            return listOf("url")
+            return listOf("url", "url", "url")
         }
 
         override fun createScreenshotImageUrls(game: DomainGame): List<String> {
-            return listOf("url")
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
-
-
-    private class FakeStringProvider : StringProvider {
-
-        override fun getString(id: Int, vararg args: Any): String {
-            return "string"
-        }
-
-        override fun getQuantityString(id: Int, quantity: Int, vararg formatArgs: Any): String {
-            return "quantity_string"
-        }
-
-    }
-
-
-    private class FakeErrorMapper : ErrorMapper {
-
-        override fun mapToMessage(error: Throwable): String {
-            return "error"
-        }
-
-    }
-
-
-    private class FakeLogger : Logger {
-
-        var errorMessage = ""
-
-        override fun info(tag: String, message: String, throwable: Throwable?) {}
-        override fun debug(tag: String, message: String, throwable: Throwable?) {}
-        override fun warning(tag: String, message: String, throwable: Throwable?) {}
-
-        override fun error(tag: String, message: String, throwable: Throwable?) {
-            errorMessage = message
+            return listOf("url", "url", "url")
         }
 
     }

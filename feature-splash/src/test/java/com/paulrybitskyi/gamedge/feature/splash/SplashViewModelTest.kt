@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.feature.splash
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
@@ -25,6 +26,9 @@ import com.paulrybitskyi.gamedge.domain.auth.DomainOauthCredentials
 import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -35,28 +39,22 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-
-private val DOMAIN_OAUTH_CREDENTIALS = DomainOauthCredentials(
-    accessToken = "access_token",
-    tokenType = "token_type",
-    tokenTtl = 500L
-)
-
-
 internal class SplashViewModelTest {
 
 
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var refreshAuthUseCase: FakeRefreshAuthUseCase
+    @MockK private lateinit var refreshAuthUseCase: RefreshAuthUseCase
+
     private lateinit var logger: FakeLogger
     private lateinit var SUT: SplashViewModel
 
 
     @Before
     fun setup() {
-        refreshAuthUseCase = FakeRefreshAuthUseCase()
+        MockKAnnotations.init(this)
+
         logger = FakeLogger()
         SUT = SplashViewModel(
             refreshAuthUseCase = refreshAuthUseCase,
@@ -69,7 +67,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Routes to dashboard when auth refresh use case emits credentials`() {
         mainCoroutineRule.runBlockingTest {
-            refreshAuthUseCase.shouldReturnCredentials = true
+            coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
 
             SUT.init()
 
@@ -82,28 +80,32 @@ internal class SplashViewModelTest {
 
     @Test
     fun `Logs error when auth refresh use case emits error result`() {
-        refreshAuthUseCase.shouldReturnError = true
+        mainCoroutineRule.runBlockingTest {
+            coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
-        SUT.init()
+            SUT.init()
 
-        assertThat(logger.errorMessage).isNotEmpty
+            assertThat(logger.errorMessage).isNotEmpty
+        }
     }
 
 
     @Test
     fun `Logs error when auth refresh use case throws error`() {
-        refreshAuthUseCase.shouldThrowError = true
+        mainCoroutineRule.runBlockingTest {
+            coEvery { refreshAuthUseCase.execute(any()) } returns flow { throw Exception("error") }
 
-        SUT.init()
+            SUT.init()
 
-        assertThat(logger.errorMessage).isNotEmpty
+            assertThat(logger.errorMessage).isNotEmpty
+        }
     }
 
 
     @Test
     fun `Dispatches toast showing command when auth refresh use case emits error result`() {
         mainCoroutineRule.runBlockingTest {
-            refreshAuthUseCase.shouldReturnError = true
+            coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.init()
 
@@ -117,7 +119,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Dispatches toast showing command when auth refresh use cae throws error`() {
         mainCoroutineRule.runBlockingTest {
-            refreshAuthUseCase.shouldThrowError = true
+            coEvery { refreshAuthUseCase.execute(any()) } returns flow { throw Exception("error") }
 
             SUT.init()
 
@@ -131,7 +133,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Routes to application exit when auth refresh use case emits error result`() {
         mainCoroutineRule.runBlockingTest {
-            refreshAuthUseCase.shouldReturnError = true
+            coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.init()
 
@@ -145,7 +147,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Routes to application exit when auth refresh use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            refreshAuthUseCase.shouldThrowError = true
+            coEvery { refreshAuthUseCase.execute(any()) } returns flow { throw Exception("error") }
 
             SUT.init()
 
@@ -153,49 +155,6 @@ internal class SplashViewModelTest {
 
             assertThat(route is SplashRoute.Exit).isTrue
         }
-    }
-
-
-    private class FakeRefreshAuthUseCase : RefreshAuthUseCase {
-
-        var shouldReturnCredentials = false
-        var shouldReturnError = false
-        var shouldThrowError = false
-
-        override suspend fun execute(params: Unit): Flow<DomainResult<DomainOauthCredentials>> {
-            return when {
-                shouldReturnCredentials -> flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
-                shouldReturnError -> flowOf(Err(Error.Unknown("unknown")))
-                shouldThrowError -> flow { throw Exception("error") }
-
-                else -> throw IllegalStateException()
-            }
-        }
-
-    }
-
-
-    private class FakeErrorMapper : ErrorMapper {
-
-        override fun mapToMessage(error: Throwable): String {
-            return "error"
-        }
-
-    }
-
-
-    private class FakeLogger : Logger {
-
-        var errorMessage = ""
-
-        override fun info(tag: String, message: String, throwable: Throwable?) {}
-        override fun debug(tag: String, message: String, throwable: Throwable?) {}
-        override fun warning(tag: String, message: String, throwable: Throwable?) {}
-
-        override fun error(tag: String, message: String, throwable: Throwable?) {
-            errorMessage = message
-        }
-
     }
 
 

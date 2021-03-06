@@ -16,61 +16,25 @@
 
 package com.paulrybitskyi.gamedge.feature.likes
 
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.domain.games.DomainCategory
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
-import kotlinx.coroutines.CoroutineDispatcher
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-
-
-private val DOMAIN_GAME = DomainGame(
-    id = 1,
-    followerCount = null,
-    hypeCount = null,
-    releaseDate = null,
-    criticsRating = null,
-    usersRating = null,
-    totalRating = null,
-    name = "name",
-    summary = null,
-    storyline = null,
-    category = DomainCategory.UNKNOWN,
-    cover = null,
-    releaseDates = listOf(),
-    ageRatings = listOf(),
-    videos = listOf(),
-    artworks = listOf(),
-    screenshots = listOf(),
-    genres = listOf(),
-    platforms = listOf(),
-    playerPerspectives = listOf(),
-    themes = listOf(),
-    modes = listOf(),
-    keywords = listOf(),
-    involvedCompanies = listOf(),
-    websites = listOf(),
-    similarGames = listOf()
-)
-private val DOMAIN_GAMES = listOf(
-    DOMAIN_GAME.copy(id = 1),
-    DOMAIN_GAME.copy(id = 2),
-    DOMAIN_GAME.copy(id = 3)
-)
-
 
 internal class LikedGamesViewModelTest {
 
@@ -78,14 +42,16 @@ internal class LikedGamesViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var observeLikedGamesUseCase: FakeObserveLikedGamesUseCase
+    @MockK private lateinit var observeLikedGamesUseCase: ObserveLikedGamesUseCase
+
     private lateinit var logger: FakeLogger
     private lateinit var SUT: LikedGamesViewModel
 
 
     @Before
     fun setup() {
-        observeLikedGamesUseCase = FakeObserveLikedGamesUseCase()
+        MockKAnnotations.init(this)
+
         logger = FakeLogger()
         SUT = LikedGamesViewModel(
             observeLikedGamesUseCase = observeLikedGamesUseCase,
@@ -100,7 +66,7 @@ internal class LikedGamesViewModelTest {
     @Test
     fun `Emits correct ui states when loading data`() {
         mainCoroutineRule.runBlockingTest {
-            observeLikedGamesUseCase.shouldReturnGames = true
+            coEvery { observeLikedGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             val uiStates = mutableListOf<GamesUiState>()
             val uiStateJob = launch { SUT.uiState.toList(uiStates) }
@@ -121,7 +87,7 @@ internal class LikedGamesViewModelTest {
     @Test
     fun `Logs error when liked games loading fails`() {
         mainCoroutineRule.runBlockingTest {
-            observeLikedGamesUseCase.shouldThrowError = true
+            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
             SUT.loadData()
 
@@ -133,7 +99,7 @@ internal class LikedGamesViewModelTest {
     @Test
     fun `Dispatches toast showing command when liked games loading fails`() {
         mainCoroutineRule.runBlockingTest {
-            observeLikedGamesUseCase.shouldThrowError = true
+            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
             SUT.loadData()
 
@@ -167,23 +133,6 @@ internal class LikedGamesViewModelTest {
     }
 
 
-    private class FakeObserveLikedGamesUseCase : ObserveLikedGamesUseCase {
-
-        var shouldReturnGames = false
-        var shouldThrowError = false
-
-        override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<DomainGame>> {
-            return when {
-                shouldReturnGames -> flowOf(DOMAIN_GAMES)
-                shouldThrowError -> flow { throw Exception("error") }
-
-                else -> throw IllegalStateException()
-            }
-        }
-
-    }
-
-
     private class FakeUiStateFactory : LikedGamesUiStateFactory {
 
         override fun createWithEmptyState(): GamesUiState {
@@ -201,44 +150,12 @@ internal class LikedGamesViewModelTest {
                         id = it.id,
                         coverImageUrl = null,
                         name = it.name,
-                        releaseDate = "",
+                        releaseDate = "release_date",
                         developerName = null,
                         description = null
                     )
                 }
             )
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
-
-
-    private class FakeErrorMapper : ErrorMapper {
-
-        override fun mapToMessage(error: Throwable): String {
-            return "error"
-        }
-
-    }
-
-
-    private class FakeLogger : Logger {
-
-        var errorMessage = ""
-
-        override fun info(tag: String, message: String, throwable: Throwable?) {}
-        override fun debug(tag: String, message: String, throwable: Throwable?) {}
-        override fun warning(tag: String, message: String, throwable: Throwable?) {}
-
-        override fun error(tag: String, message: String, throwable: Throwable?) {
-            errorMessage = message
         }
 
     }

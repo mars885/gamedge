@@ -17,74 +17,35 @@
 package com.paulrybitskyi.gamedge.data.articles
 
 import com.github.michaelbull.result.Ok
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesLocalDataStore
 import com.paulrybitskyi.gamedge.data.articles.usecases.ObserveArticlesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.ArticleMapper
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.mapToDomainArticles
-import com.paulrybitskyi.gamedge.data.commons.DataPagination
-import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
-import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
-import com.paulrybitskyi.gamedge.domain.commons.DomainResult
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
+import io.mockk.*
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
 
-
-private val DATA_ARTICLE = DataArticle(
-    id = 1,
-    title = "title",
-    lede = "lede",
-    imageUrls = emptyMap(),
-    publicationDate = 500L,
-    siteDetailUrl = "url"
-)
-private val DATA_ARTICLES = listOf(
-    DATA_ARTICLE.copy(id = 1),
-    DATA_ARTICLE.copy(id = 2),
-    DATA_ARTICLE.copy(id = 3),
-)
-private val DOMAIN_ARTICLE = DomainArticle(
-    id = 1,
-    title = "title",
-    lede = "lede",
-    imageUrls = emptyMap(),
-    publicationDate = 500L,
-    siteDetailUrl = "url"
-)
-private val DOMAIN_ARTICLES = listOf(
-    DOMAIN_ARTICLE.copy(id = 1),
-    DOMAIN_ARTICLE.copy(id = 2),
-    DOMAIN_ARTICLE.copy(id = 3),
-)
-
-private val DOMAIN_PAGINATION = DomainPagination(offset = 0, limit = 20)
-private val DATA_PAGINATION = DataPagination(offset = 0, limit = 20)
-
-private val USE_CASE_PARAMS = ObserveArticlesUseCase.Params(true, DOMAIN_PAGINATION)
-
-
 internal class ObserveArticlesUseCaseImplTest {
 
 
-    private lateinit var refreshArticlesUseCase: FakeRefreshArticlesUseCase
-    private lateinit var articlesLocalDataStore: FakeArticlesLocalDataStore
+    @MockK private lateinit var refreshArticlesUseCase: RefreshArticlesUseCase
+    @MockK private lateinit var articlesLocalDataStore: ArticlesLocalDataStore
     private lateinit var articleMapper: ArticleMapper
     private lateinit var SUT: ObserveArticlesUseCaseImpl
 
 
     @Before
     fun setup() {
-        refreshArticlesUseCase = FakeRefreshArticlesUseCase()
-        articlesLocalDataStore = FakeArticlesLocalDataStore()
+        MockKAnnotations.init(this)
+
         articleMapper = ArticleMapper()
         SUT = ObserveArticlesUseCaseImpl(
             refreshArticlesUseCase = refreshArticlesUseCase,
@@ -98,11 +59,11 @@ internal class ObserveArticlesUseCaseImplTest {
     @Test
     fun `Verify that articles are refreshed when refresh is requested`() {
         runBlockingTest {
-            refreshArticlesUseCase.shouldReturnArticles = true
+            coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_ARTICLES))
 
-            SUT.execute(USE_CASE_PARAMS)
+            SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS)
 
-            assertThat(refreshArticlesUseCase.isExecuted).isTrue
+            coVerify { refreshArticlesUseCase.execute(any()) }
         }
     }
 
@@ -110,10 +71,10 @@ internal class ObserveArticlesUseCaseImplTest {
     @Test
     fun `Emits articles from local data store when refresh is requested`() {
         runBlockingTest {
-            refreshArticlesUseCase.shouldReturnArticles = true
-            articlesLocalDataStore.saveArticles(DATA_ARTICLES)
+            coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_ARTICLES))
+            coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
-            assertThat(SUT.execute(USE_CASE_PARAMS).first())
+            assertThat(SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).first())
                 .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
         }
     }
@@ -122,10 +83,10 @@ internal class ObserveArticlesUseCaseImplTest {
     @Test
     fun `Emits articles from local data store when refresh use cases emits empty flow`() {
         runBlockingTest {
-            refreshArticlesUseCase.shouldEmitEmptyFlow = true
-            articlesLocalDataStore.saveArticles(DATA_ARTICLES)
+            coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf()
+            coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
-            assertThat(SUT.execute(USE_CASE_PARAMS).first())
+            assertThat(SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).first())
                 .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
         }
     }
@@ -134,56 +95,12 @@ internal class ObserveArticlesUseCaseImplTest {
     @Test
     fun `Emits articles from local data store when refresh is not requested`() {
         runBlockingTest {
-            articlesLocalDataStore.saveArticles(DATA_ARTICLES)
+            coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
-            assertThat(SUT.execute(USE_CASE_PARAMS.copy(refreshArticles = false)).first())
+            assertThat(SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS.copy(refreshArticles = false)).first())
                 .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
         }
     }
-
-
-    private class FakeRefreshArticlesUseCase : RefreshArticlesUseCase {
-
-        var shouldReturnArticles = false
-        var shouldEmitEmptyFlow = false
-
-        var isExecuted = false
-
-        override suspend fun execute(params: RefreshArticlesUseCase.Params): Flow<DomainResult<List<DomainArticle>>> {
-            isExecuted = true
-
-            return when {
-                shouldReturnArticles -> flowOf(Ok(DOMAIN_ARTICLES))
-                shouldEmitEmptyFlow -> flowOf()
-
-                else -> throw IllegalStateException()
-            }
-        }
-
-    }
-
-
-    private class FakeArticlesLocalDataStore : ArticlesLocalDataStore {
-
-        var articles = listOf<DataArticle>()
-
-        override suspend fun saveArticles(articles: List<DataArticle>) {
-            this.articles = articles
-        }
-
-        override suspend fun observeArticles(pagination: DataPagination): Flow<List<DataArticle>> {
-            return flowOf(this.articles)
-        }
-
-    }
-
-
-    private class FakeDispatcherProvider(
-        private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-        override val main: CoroutineDispatcher = testDispatcher,
-        override val io: CoroutineDispatcher = testDispatcher,
-        override val computation: CoroutineDispatcher = testDispatcher
-    ) : DispatcherProvider
 
 
 }

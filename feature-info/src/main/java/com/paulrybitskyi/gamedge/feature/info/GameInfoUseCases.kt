@@ -21,26 +21,12 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
-import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
-internal interface GameInfoUseCases {
-
-    val getGameUseCase: GetGameUseCase
-    val observeGameLikeStateUseCase: ObserveGameLikeStateUseCase
-    val toggleGameLikeStateUseCase: ToggleGameLikeStateUseCase
-    val getCompanyDevelopedGamesUseCase: GetCompanyDevelopedGamesUseCase
+internal class GameInfoUseCases @Inject constructor(
+    val getGameUseCase: GetGameUseCase,
+    val observeGameLikeStateUseCase: ObserveGameLikeStateUseCase,
+    val toggleGameLikeStateUseCase: ToggleGameLikeStateUseCase,
+    val getCompanyDevelopedGamesUseCase: GetCompanyDevelopedGamesUseCase,
     val getSimilarGamesUseCase: GetSimilarGamesUseCase
-
-}
-
-
-@BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoUseCasesImpl @Inject constructor(
-    override val getGameUseCase: GetGameUseCase,
-    override val observeGameLikeStateUseCase: ObserveGameLikeStateUseCase,
-    override val toggleGameLikeStateUseCase: ToggleGameLikeStateUseCase,
-    override val getCompanyDevelopedGamesUseCase: GetCompanyDevelopedGamesUseCase,
-    override val getSimilarGamesUseCase: GetSimilarGamesUseCase
-) : GameInfoUseCases
+)

@@ -19,6 +19,9 @@ package com.paulrybitskyi.gamedge.core
 import com.paulrybitskyi.gamedge.core.formatters.RelativeDateFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
@@ -30,14 +33,15 @@ import java.util.concurrent.TimeUnit
 internal class RelativeDateFormatterImplTest {
 
 
-    private lateinit var timestampProvider: FakeTimestampProvider
+    @MockK private lateinit var timestampProvider: TimestampProvider
     private lateinit var stringProvider: FakeStringProvider
     private lateinit var SUT: RelativeDateFormatterImpl
 
 
     @Before
     fun setup() {
-        timestampProvider = FakeTimestampProvider()
+        MockKAnnotations.init(this)
+
         stringProvider = FakeStringProvider()
         SUT = RelativeDateFormatterImpl(
             timestampProvider = timestampProvider,
@@ -52,7 +56,7 @@ internal class RelativeDateFormatterImplTest {
         val yearDiff = 2L
         val futureTimestamp = (timestamp + TimeUnit.DAYS.toMillis(365 * yearDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("in $yearDiff years")
@@ -65,7 +69,7 @@ internal class RelativeDateFormatterImplTest {
         val monthDiff = 3L
         val futureTimestamp = (timestamp + TimeUnit.DAYS.toMillis(31 * monthDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("in $monthDiff months")
@@ -78,7 +82,7 @@ internal class RelativeDateFormatterImplTest {
         val dayDiff = 15L
         val futureTimestamp = (timestamp + TimeUnit.DAYS.toMillis(dayDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("in $dayDiff days")
@@ -91,7 +95,7 @@ internal class RelativeDateFormatterImplTest {
         val hourDiff = 5L
         val futureTimestamp = (timestamp + TimeUnit.HOURS.toMillis(hourDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("in $hourDiff hours")
@@ -104,7 +108,7 @@ internal class RelativeDateFormatterImplTest {
         val minuteDiff = 5L
         val futureTimestamp = (timestamp + TimeUnit.MINUTES.toMillis(minuteDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("in $minuteDiff minutes")
@@ -117,7 +121,7 @@ internal class RelativeDateFormatterImplTest {
         val secondDiff = 5L
         val futureTimestamp = (timestamp + TimeUnit.SECONDS.toMillis(secondDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("in $secondDiff seconds")
@@ -130,7 +134,7 @@ internal class RelativeDateFormatterImplTest {
         val yearDiff = 1L
         val futureTimestamp = (timestamp - TimeUnit.DAYS.toMillis(365 * yearDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("$yearDiff years ago")
@@ -143,7 +147,7 @@ internal class RelativeDateFormatterImplTest {
         val monthDiff = 3L
         val futureTimestamp = (timestamp - TimeUnit.DAYS.toMillis(31 * monthDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("$monthDiff months ago")
@@ -156,7 +160,7 @@ internal class RelativeDateFormatterImplTest {
         val dayDiff = 15L
         val futureTimestamp = (timestamp - TimeUnit.DAYS.toMillis(dayDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("$dayDiff days ago")
@@ -169,7 +173,7 @@ internal class RelativeDateFormatterImplTest {
         val hourDiff = 5L
         val futureTimestamp = (timestamp - TimeUnit.HOURS.toMillis(hourDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("$hourDiff hours ago")
@@ -182,7 +186,7 @@ internal class RelativeDateFormatterImplTest {
         val minuteDiff = 5L
         val futureTimestamp = (timestamp - TimeUnit.MINUTES.toMillis(minuteDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("$minuteDiff minutes ago")
@@ -195,7 +199,7 @@ internal class RelativeDateFormatterImplTest {
         val secondDiff = 5L
         val futureTimestamp = (timestamp - TimeUnit.SECONDS.toMillis(secondDiff))
 
-        timestampProvider.stubTimestamp = timestamp
+        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
         assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
             .isEqualTo("$secondDiff seconds ago")
@@ -207,17 +211,6 @@ internal class RelativeDateFormatterImplTest {
             Instant.ofEpochMilli(this),
             ZoneId.systemDefault()
         )
-    }
-
-
-    private class FakeTimestampProvider : TimestampProvider {
-
-        var stubTimestamp = 0L
-
-        override fun getUnixTimestamp(timeUnit: TimeUnit): Long {
-            return stubTimestamp
-        }
-
     }
 
 
