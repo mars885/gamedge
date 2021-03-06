@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.core.urlopener
 
 import android.content.Context
 import android.net.Uri
+import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import com.paulrybitskyi.commons.ktx.getCompatColor
 import com.paulrybitskyi.commons.window.anims.WindowAnimations
@@ -51,15 +52,22 @@ internal class CustomTabUrlOpener @Inject constructor(
     private fun createCustomTabsIntent(context: Context): CustomTabsIntent {
         return CustomTabsIntent.Builder()
             .setShowTitle(true)
-            .setToolbarColor(context.getCompatColor(R.color.colorPrimary))
-            .setSecondaryToolbarColor(context.getCompatColor(R.color.colorPrimaryDark))
-            .setNavigationBarColor(context.getCompatColor(R.color.colorNavigationBar))
+            .setDefaultColorSchemeParams(createColorSchemeParams(context))
             .setAnimations(context, WindowAnimations.HORIZONTAL_SLIDING_ANIMATIONS)
             .build()
             .apply {
                 intent.`package` = customTabsProvider.getCustomTabsPackageName()
                 intent.attachNewTaskFlagIfNeeded(context)
             }
+    }
+
+
+    private fun createColorSchemeParams(context: Context): CustomTabColorSchemeParams {
+        return CustomTabColorSchemeParams.Builder()
+            .setToolbarColor(context.getCompatColor(R.color.colorPrimary))
+            .setSecondaryToolbarColor(context.getCompatColor(R.color.colorPrimaryDark))
+            .setNavigationBarColor(context.getCompatColor(R.color.colorNavigationBar))
+            .build()
     }
 
 
