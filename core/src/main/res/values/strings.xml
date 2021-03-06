@@ -36,9 +36,9 @@
     <string name="year_quarter_third">Q3</string>
     <string name="year_quarter_fourth">Q4</string>
 
-    <string name="year_with_quarter_template">%d (%s)</string>
+    <string name="year_with_quarter_template">%1$d (%2$s)</string>
     <string name="rating_template">%d%%</string>
-    <string name='age_rating_template'>%s-%s</string>
+    <string name='age_rating_template'>%1$s-%2$s</string>
     <string name="text_sharing_message_template">Hey, check out this %1$s - %2$s</string>
 
     <string name="company_role_developer">Main Developer</string>
