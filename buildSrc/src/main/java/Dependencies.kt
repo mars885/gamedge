@@ -106,7 +106,7 @@ object deps {
         private const val lifecycleVersion = "2.3.0"
         private const val browserVersion = "1.3.0"
         private const val roomVersion = "2.2.6"
-        private const val coreKtxVersion = "1.3.2"
+        private const val coreKtxVersion = "1.5.0-beta02"
         private const val fragmentKtxVersion = "1.3.0"
         private const val dataStoreVersion = "1.0.0-alpha07"
 

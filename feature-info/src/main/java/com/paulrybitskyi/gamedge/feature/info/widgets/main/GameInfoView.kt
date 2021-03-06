@@ -132,6 +132,7 @@ internal class GameInfoView @JvmOverloads constructor(
     }
 
 
+    @Suppress("UNUSED_PARAMETER")
     private fun bindListener(item: Item<*, NoDependencies>, viewHolder: RecyclerView.ViewHolder) {
         when(viewHolder) {
 

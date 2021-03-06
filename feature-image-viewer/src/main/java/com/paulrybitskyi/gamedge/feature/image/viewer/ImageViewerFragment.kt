@@ -62,6 +62,10 @@ internal class ImageViewerFragment : BaseFragment<
     private fun initSystemWindows() {
         originalStatusBarColor = window.statusBarColor
 
+        // Still using this flag even in newer version since
+        // window.statusBarColor with translucent color does not
+        // seem to work for API 30+
+        @Suppress("DEPRECATION")
         window.clearFlags(FLAG_TRANSLUCENT_STATUS)
 
         statusBarColor = getColor(R.color.image_viewer_bar_background_color)
@@ -136,6 +140,7 @@ internal class ImageViewerFragment : BaseFragment<
 
 
     private fun resetSystemWindows() {
+        @Suppress("DEPRECATION")
         window.addFlags(FLAG_TRANSLUCENT_STATUS)
 
         statusBarColor = originalStatusBarColor
