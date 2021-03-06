@@ -80,8 +80,7 @@ internal class GamesDatabaseDataStoreTest {
 
             coEvery { gamesTable.getGame(any()) } returns dbGame
 
-            assertThat(SUT.getGame(DATA_GAME.id))
-                .isEqualTo(DATA_GAME)
+            assertThat(SUT.getGame(DATA_GAME.id)).isEqualTo(DATA_GAME)
         }
     }
 
@@ -131,8 +130,7 @@ internal class GamesDatabaseDataStoreTest {
 
             coEvery { gamesTable.searchGames(any(), any(), any()) } returns dbGames
 
-            assertThat(SUT.searchGames("", DATA_PAGINATION))
-                .isEqualTo(DATA_GAMES)
+            assertThat(SUT.searchGames("", DATA_PAGINATION)).isEqualTo(DATA_GAMES)
         }
     }
 

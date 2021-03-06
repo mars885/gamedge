@@ -148,8 +148,7 @@ internal class GamesDiscoveryViewModelTest {
                 val route = expectItem()
 
                 assertThat(route is GamesDiscoveryRoute.Category).isTrue
-                assertThat((route as GamesDiscoveryRoute.Category).category)
-                    .isEqualTo("popular")
+                assertThat((route as GamesDiscoveryRoute.Category).category).isEqualTo("popular")
             }
         }
     }
@@ -170,8 +169,7 @@ internal class GamesDiscoveryViewModelTest {
                 val route = expectItem()
 
                 assertThat(route is GamesDiscoveryRoute.Info).isTrue
-                assertThat((route as GamesDiscoveryRoute.Info).gameId)
-                    .isEqualTo(item.id)
+                assertThat((route as GamesDiscoveryRoute.Info).gameId).isEqualTo(item.id)
             }
         }
     }

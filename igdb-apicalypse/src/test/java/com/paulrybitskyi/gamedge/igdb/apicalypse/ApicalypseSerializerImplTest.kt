@@ -105,8 +105,7 @@ internal class ApicalypseSerializerImplTest {
             val field2: Float
         )
 
-        assertThat(SUT.serialize(Entity::class.java))
-            .isEqualTo("field1")
+        assertThat(SUT.serialize(Entity::class.java)).isEqualTo("field1")
     }
 
 
@@ -234,8 +233,7 @@ internal class ApicalypseSerializerImplTest {
             val field2: List<String>
         )
 
-        assertThat(SUT.serialize(Entity::class.java))
-            .isEqualTo("field1, field2")
+        assertThat(SUT.serialize(Entity::class.java)).isEqualTo("field1, field2")
     }
 
 
@@ -249,8 +247,7 @@ internal class ApicalypseSerializerImplTest {
             val field2: Set<String>
         )
 
-        assertThat(SUT.serialize(Entity::class.java))
-            .isEqualTo("field1, field2")
+        assertThat(SUT.serialize(Entity::class.java)).isEqualTo("field1, field2")
     }
 
 

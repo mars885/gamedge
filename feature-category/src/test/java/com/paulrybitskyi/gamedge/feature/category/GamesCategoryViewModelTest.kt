@@ -230,8 +230,7 @@ internal class GamesCategoryViewModelTest {
                 val route = expectItem()
 
                 assertThat(route is GamesCategoryRoute.Info).isTrue
-                assertThat((route as GamesCategoryRoute.Info).gameId)
-                    .isEqualTo(game.id)
+                assertThat((route as GamesCategoryRoute.Info).gameId).isEqualTo(game.id)
             }
         }
     }

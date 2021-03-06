@@ -49,8 +49,7 @@ internal class CompositeErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertThat(SUT.extract(responseBody))
-            .isEqualTo("invalid client secret")
+        assertThat(SUT.extract(responseBody)).isEqualTo("invalid client secret")
     }
 
 
@@ -66,8 +65,7 @@ internal class CompositeErrorMessageExtractorTest {
             ]
         """.trimIndent()
 
-        assertThat(SUT.extract(responseBody))
-            .isEqualTo("Missing `;` at end of query")
+        assertThat(SUT.extract(responseBody)).isEqualTo("Missing `;` at end of query")
     }
 
 
@@ -80,8 +78,7 @@ internal class CompositeErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertThat(SUT.extract(responseBody))
-            .isEqualTo("Unknown Error: $responseBody")
+        assertThat(SUT.extract(responseBody)).isEqualTo("Unknown Error: $responseBody")
     }
 
 

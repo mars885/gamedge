@@ -34,6 +34,7 @@ internal class RelativeDateFormatterImplTest {
 
 
     @MockK private lateinit var timestampProvider: TimestampProvider
+
     private lateinit var stringProvider: FakeStringProvider
     private lateinit var SUT: RelativeDateFormatterImpl
 

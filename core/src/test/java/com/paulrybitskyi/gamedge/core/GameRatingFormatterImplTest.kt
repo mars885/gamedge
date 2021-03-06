@@ -51,8 +51,7 @@ internal class GameRatingFormatterImplTest {
         SUT.formatRating(rating)
 
         assertThat(stringProvider.isRatingAvailable).isTrue
-        assertThat(stringProvider.rating)
-            .isEqualTo(rating.toInt())
+        assertThat(stringProvider.rating).isEqualTo(rating.toInt())
     }
 
 
@@ -63,8 +62,7 @@ internal class GameRatingFormatterImplTest {
         SUT.formatRating(rating)
 
         assertThat(stringProvider.isRatingAvailable).isTrue
-        assertThat(stringProvider.rating)
-            .isEqualTo(0)
+        assertThat(stringProvider.rating).isEqualTo(0)
     }
 
 
@@ -75,8 +73,7 @@ internal class GameRatingFormatterImplTest {
         SUT.formatRating(rating)
 
         assertThat(stringProvider.isRatingAvailable).isTrue
-        assertThat(stringProvider.rating)
-            .isEqualTo(100)
+        assertThat(stringProvider.rating).isEqualTo(100)
     }
 
 

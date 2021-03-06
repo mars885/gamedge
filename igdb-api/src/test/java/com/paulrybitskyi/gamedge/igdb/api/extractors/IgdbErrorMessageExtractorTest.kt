@@ -45,8 +45,7 @@ internal class IgdbErrorMessageExtractorTest {
             ]
         """.trimIndent()
 
-        assertThat(SUT.extract(responseBody))
-            .isEqualTo("Missing `;` at end of query")
+        assertThat(SUT.extract(responseBody)).isEqualTo("Missing `;` at end of query")
     }
 
 

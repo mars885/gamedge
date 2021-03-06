@@ -40,6 +40,7 @@ internal class ArticlePublicationDateFormatterImplTest {
     @MockK private lateinit var relativeDateFormatter: RelativeDateFormatter
     @MockK private lateinit var timestampProvider: TimestampProvider
     @MockK private lateinit var timeFormatProvider: TimeFormatProvider
+
     private lateinit var SUT: ArticlePublicationDateFormatterImpl
 
 
@@ -63,8 +64,7 @@ internal class ArticlePublicationDateFormatterImplTest {
 
         every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
 
-        assertThat(SUT.formatPublicationDate(timestamp))
-            .isEqualTo(RELATIVE_DATE)
+        assertThat(SUT.formatPublicationDate(timestamp)).isEqualTo(RELATIVE_DATE)
     }
 
 
@@ -76,8 +76,7 @@ internal class ArticlePublicationDateFormatterImplTest {
         every { timestampProvider.getUnixTimestamp(any()) } returns originalTimestamp
         every { timeFormatProvider.getTimeFormat() } returns TimeFormat.TWENTY_FOUR_HOURS
 
-        assertThat(SUT.formatPublicationDate(timestamp))
-            .isEqualTo("Mar 2, 1:15")
+        assertThat(SUT.formatPublicationDate(timestamp)).isEqualTo("Mar 2, 1:15")
     }
 
 
@@ -89,8 +88,7 @@ internal class ArticlePublicationDateFormatterImplTest {
         every { timestampProvider.getUnixTimestamp(any()) } returns originalTimestamp
         every { timeFormatProvider.getTimeFormat() } returns TimeFormat.TWENTY_FOUR_HOURS
 
-        assertThat(SUT.formatPublicationDate(timestamp))
-            .isEqualTo("Mar 4, 2020, 1:15")
+        assertThat(SUT.formatPublicationDate(timestamp)).isEqualTo("Mar 4, 2020, 1:15")
     }
 
 
@@ -102,8 +100,7 @@ internal class ArticlePublicationDateFormatterImplTest {
         every { timestampProvider.getUnixTimestamp(any()) } returns originalTimestamp
         every { timeFormatProvider.getTimeFormat() } returns TimeFormat.TWELVE_HOURS
 
-        assertThat(SUT.formatPublicationDate(timestamp))
-            .isEqualTo("Mar 2, 1:15 AM")
+        assertThat(SUT.formatPublicationDate(timestamp)).isEqualTo("Mar 2, 1:15 AM")
     }
 
 
@@ -115,8 +112,7 @@ internal class ArticlePublicationDateFormatterImplTest {
         every { timestampProvider.getUnixTimestamp(any()) } returns originalTimestamp
         every { timeFormatProvider.getTimeFormat() } returns TimeFormat.TWELVE_HOURS
 
-        assertThat(SUT.formatPublicationDate(timestamp))
-            .isEqualTo("Mar 4, 2020, 1:15 AM")
+        assertThat(SUT.formatPublicationDate(timestamp)).isEqualTo("Mar 4, 2020, 1:15 AM")
     }
 
 
