@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.info
 
-import androidx.hilt.Assisted
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
@@ -55,14 +54,14 @@ private const val PARAM_GAME_ID = "game_id"
 
 @HiltViewModel
 internal class GameInfoViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val useCases: GameInfoUseCases,
     private val uiStateFactory: GameInfoUiStateFactory,
     private val gameUrlFactory: ImageViewerGameUrlFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
-    private val logger: Logger,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val logger: Logger
 ) : BaseViewModel() {
 
 

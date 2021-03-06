@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.category
 
-import androidx.hilt.Assisted
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
@@ -49,13 +48,13 @@ private const val PARAM_GAMES_CATEGORY = "games_category"
 
 @HiltViewModel
 internal class GamesCategoryViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     stringProvider: StringProvider,
     private val useCases: GamesCategoryUseCases,
     private val uiStateFactory: GamesCategoryUiStateFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
-    private val logger: Logger,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val logger: Logger
 ): BaseViewModel() {
 
 

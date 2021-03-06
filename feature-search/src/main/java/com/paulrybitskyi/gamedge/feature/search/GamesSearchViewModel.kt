@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.search
 
-import androidx.hilt.Assisted
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
@@ -47,7 +46,7 @@ internal class GamesSearchViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ): BaseViewModel() {
 
 
