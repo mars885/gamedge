@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.dashboard
+package com.paulrybitskyi.gamedge.feature.dashboard.fragment
+
+import com.paulrybitskyi.gamedge.feature.dashboard.R
 
 internal enum class DashboardPage(
     val position: Int,

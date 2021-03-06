@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.paulrybitskyi.gamedge.feature.dashboard.DashboardFragment"/>
+        android:name="com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardFragment"/>
 
     <fragment
         android:id="@+id/searchFragment"

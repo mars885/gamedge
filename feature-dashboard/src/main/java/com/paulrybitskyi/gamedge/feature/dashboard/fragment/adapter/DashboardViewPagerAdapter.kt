@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.dashboard.adapter
+package com.paulrybitskyi.gamedge.feature.dashboard.fragment.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.paulrybitskyi.gamedge.feature.dashboard.DashboardPage
-import com.paulrybitskyi.gamedge.feature.dashboard.DashboardPage.Companion.toDashboardPageFromPosition
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardPage
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardPage.Companion.toDashboardPageFromPosition
 
 internal class DashboardViewPagerAdapter(
     fragment: Fragment,

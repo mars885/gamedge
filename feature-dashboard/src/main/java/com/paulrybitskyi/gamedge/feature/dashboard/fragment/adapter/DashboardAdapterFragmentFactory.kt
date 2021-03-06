@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.dashboard
+package com.paulrybitskyi.gamedge.feature.dashboard.fragment.adapter
 
-import androidx.navigation.NavController
-import com.paulrybitskyi.gamedge.feature.dashboard.DashboardFragmentDirections
-import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardNavigator
-import com.paulrybitskyi.hiltbinder.BindType
-import javax.inject.Inject
+import androidx.fragment.app.Fragment
 
-@BindType(installIn = BindType.Component.FRAGMENT)
-internal class DashboardNavigatorImpl @Inject constructor(
-    private val navController: NavController
-) : DashboardNavigator {
+interface DashboardAdapterFragmentFactory {
 
+    fun createNewsFragment(): Fragment
 
-    override fun goToSearch() {
-        navController.navigate(DashboardFragmentDirections.actionSearchFragment())
-    }
+    fun createDiscoveryFragment(): Fragment
 
+    fun createLikesFragment(): Fragment
 
 }

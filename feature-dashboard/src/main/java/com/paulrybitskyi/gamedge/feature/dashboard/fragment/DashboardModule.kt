@@ -14,27 +14,26 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.dashboard.adapter
+package com.paulrybitskyi.gamedge.feature.dashboard.fragment
 
 import androidx.fragment.app.Fragment
-import com.paulrybitskyi.hiltbinder.BindType
-import javax.inject.Inject
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.adapter.DashboardAdapterFragmentFactory
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.adapter.DashboardViewPagerAdapter
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.FragmentComponent
+
+@Module
+@InstallIn(FragmentComponent::class)
+internal object DashboardModule {
 
 
-internal interface DashboardViewPagerAdapterFactory {
-
-    fun createAdapter(fragment: Fragment): DashboardViewPagerAdapter
-
-}
-
-
-@BindType(installIn = BindType.Component.FRAGMENT)
-internal class DashboardViewPagerAdapterFactoryImpl @Inject constructor(
-    private val fragmentFactory: DashboardAdapterFragmentFactory
-) : DashboardViewPagerAdapterFactory {
-
-
-    override fun createAdapter(fragment: Fragment): DashboardViewPagerAdapter {
+    @Provides
+    fun provideDashboardViewPagerAdapter(
+        fragment: Fragment,
+        fragmentFactory: DashboardAdapterFragmentFactory
+    ): DashboardViewPagerAdapter {
         return DashboardViewPagerAdapter(
             fragment = fragment,
             fragmentFactory = fragmentFactory

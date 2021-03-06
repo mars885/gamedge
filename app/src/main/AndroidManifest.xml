@@ -43,7 +43,7 @@
         </activity>
 
         <activity
-            android:name=".feature.dashboard.DashboardActivity"
+            android:name=".feature.dashboard.activity.DashboardActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
 

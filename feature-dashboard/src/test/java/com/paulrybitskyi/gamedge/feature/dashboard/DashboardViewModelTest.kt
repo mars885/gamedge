@@ -18,7 +18,8 @@ package com.paulrybitskyi.gamedge.feature.dashboard
 
 import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
-import kotlinx.coroutines.flow.first
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardRoute
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardViewModel
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.dashboard
+package com.paulrybitskyi.gamedge.feature.dashboard.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -28,9 +28,10 @@ import com.paulrybitskyi.commons.material.utils.setItemColors
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
-import com.paulrybitskyi.gamedge.feature.dashboard.DashboardPage.Companion.toDashboardPageFromMenuItemId
-import com.paulrybitskyi.gamedge.feature.dashboard.adapter.DashboardViewPagerAdapter
-import com.paulrybitskyi.gamedge.feature.dashboard.adapter.DashboardViewPagerAdapterFactory
+import com.paulrybitskyi.gamedge.feature.dashboard.R
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardPage.Companion.toDashboardPageFromMenuItemId
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.adapter.DashboardViewPagerAdapter
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.adapter.DashboardViewPagerAdapterFactory
 import com.paulrybitskyi.gamedge.feature.dashboard.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

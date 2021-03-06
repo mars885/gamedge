@@ -14,29 +14,31 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.splash
+package com.paulrybitskyi.gamedge.feature.dashboard.fragment.adapter
 
-import android.app.Activity
-import android.content.Context
-import com.paulrybitskyi.gamedge.feature.dashboard.activity.DashboardActivity
-import com.paulrybitskyi.gamedge.feature.splash.SplashNavigator
+import androidx.fragment.app.Fragment
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-@BindType(installIn = BindType.Component.ACTIVITY)
-internal class SplashNavigatorImpl @Inject constructor(
-    private val activity: Activity
-) : SplashNavigator {
+
+internal interface DashboardViewPagerAdapterFactory {
+
+    fun createAdapter(fragment: Fragment): DashboardViewPagerAdapter
+
+}
 
 
-    override fun goToDashboard(context: Context) {
-        activity.startActivity(DashboardActivity.newIntent(context))
-        activity.finish()
-    }
+@BindType(installIn = BindType.Component.FRAGMENT)
+internal class DashboardViewPagerAdapterFactoryImpl @Inject constructor(
+    private val fragmentFactory: DashboardAdapterFragmentFactory
+) : DashboardViewPagerAdapterFactory {
 
 
-    override fun exitApp() {
-        activity.finish()
+    override fun createAdapter(fragment: Fragment): DashboardViewPagerAdapter {
+        return DashboardViewPagerAdapter(
+            fragment = fragment,
+            fragmentFactory = fragmentFactory
+        )
     }
 
 
