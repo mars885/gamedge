@@ -52,9 +52,6 @@ dependencies {
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
 
-    implementation(deps.androidX.daggerHiltAssistedInjection)
-    kapt(deps.androidX.daggerHiltAssistedInjectionCompiler)
-
     implementation(deps.misc.hiltBinder)
     kapt(deps.misc.hiltBinderCompiler)
 

@@ -109,7 +109,6 @@ object deps {
         private const val coreKtxVersion = "1.3.2"
         private const val fragmentKtxVersion = "1.3.0"
         private const val dataStoreVersion = "1.0.0-alpha07"
-        private const val daggerHiltAssistedInjectionVersion = "1.0.0-alpha03"
 
         const val appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
         const val navFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
@@ -128,8 +127,6 @@ object deps {
         const val fragmentKtx = "androidx.fragment:fragment-ktx:${fragmentKtxVersion}"
         const val prefsDataStore = "androidx.datastore:datastore-preferences:${dataStoreVersion}"
         const val protoDataStore = "androidx.datastore:datastore-core:${dataStoreVersion}"
-        const val daggerHiltAssistedInjection = "androidx.hilt:hilt-lifecycle-viewmodel:${daggerHiltAssistedInjectionVersion}"
-        const val daggerHiltAssistedInjectionCompiler = "androidx.hilt:hilt-compiler:${daggerHiltAssistedInjectionVersion}"
 
     }
 

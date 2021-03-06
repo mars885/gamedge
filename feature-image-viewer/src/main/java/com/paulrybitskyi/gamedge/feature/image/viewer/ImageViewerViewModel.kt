@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
-import androidx.hilt.Assisted
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
@@ -39,7 +38,7 @@ internal const val KEY_SELECTED_POSITION = "selected_position"
 @HiltViewModel
 internal class ImageViewerViewModel @Inject constructor(
     private val stringProvider: StringProvider,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
 
