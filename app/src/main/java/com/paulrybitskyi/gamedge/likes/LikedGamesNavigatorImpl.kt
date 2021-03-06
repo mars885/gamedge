@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.likes
 
 import androidx.navigation.NavController
-import com.paulrybitskyi.gamedge.feature.dashboard.DashboardFragmentDirections
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardFragmentDirections
 import com.paulrybitskyi.gamedge.feature.likes.LikedGamesNavigator
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
