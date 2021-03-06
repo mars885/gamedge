@@ -69,6 +69,18 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 sourceCompatibility = appConfig.javaCompatibilityVersion
                 targetCompatibility = appConfig.javaCompatibilityVersion
             }
+
+            // Without the below block, a build failure was happening when running ./gradlew connectedAndroidTest
+            // See: https://github.com/Kotlin/kotlinx.coroutines/tree/master/kotlinx-coroutines-debug#debug-agent-and-android
+            packagingOptions {
+                // for JNA and JNA-platform
+                exclude("META-INF/AL2.0")
+                exclude("META-INF/LGPL2.1")
+                // for byte-buddy
+                exclude("META-INF/licenses/ASM")
+                pickFirst("win32-x86-64/attach_hotspot_windows.dll")
+                pickFirst("win32-x86/attach_hotspot_windows.dll")
+            }
         }
     }
 
