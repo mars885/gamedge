@@ -16,10 +16,12 @@
 
 package com.paulrybitskyi.gamedge.data.articles
 
+import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesDataStores
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesLocalDataStore
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesRemoteDataStore
@@ -31,7 +33,6 @@ import com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling.Artic
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling.ArticlesRefreshingThrottlerKeyProvider
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling.ArticlesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
-import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.*
@@ -47,6 +48,7 @@ internal class RefreshArticlesUseCaseImplTest {
     @MockK private lateinit var articlesRemoteDataStore: ArticlesRemoteDataStore
     @MockK private lateinit var throttler: ArticlesRefreshingThrottler
     @MockK private lateinit var keyProvider: ArticlesRefreshingThrottlerKeyProvider
+
     private lateinit var articleMapper: ArticleMapper
     private lateinit var SUT: RefreshArticlesUseCaseImpl
 
@@ -82,8 +84,10 @@ internal class RefreshArticlesUseCaseImplTest {
             coEvery { throttler.canRefreshArticles(any()) } returns true
             coEvery { articlesRemoteDataStore.getArticles(any()) } returns Ok(DATA_ARTICLES)
 
-            assertThat(SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).first().get())
-                .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+            SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).test {
+                assertThat(expectItem().get()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+                expectComplete()
+            }
         }
     }
 
@@ -93,9 +97,9 @@ internal class RefreshArticlesUseCaseImplTest {
         runBlockingTest {
             coEvery { throttler.canRefreshArticles(any()) } returns false
 
-            val isEmptyFlow = SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).isEmpty()
-
-            assertThat(isEmptyFlow).isTrue
+            SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).test {
+                expectComplete()
+            }
         }
     }
 

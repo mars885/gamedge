@@ -53,6 +53,7 @@ subprojects {
         kotlinOptions {
             freeCompilerArgs += listOf(
                 "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
+                "-Xuse-experimental=kotlin.time.ExperimentalTime",
                 "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
             )

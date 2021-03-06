@@ -16,10 +16,12 @@
 
 package com.paulrybitskyi.gamedge.data.games
 
+import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.RefreshSimilarGamesUseCaseImpl
@@ -28,8 +30,6 @@ import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCase
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.data.games.discovery.utils.FakeGamesRefreshingThrottlerKeyProvider
-import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
-import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottler
@@ -37,7 +37,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
@@ -84,8 +83,10 @@ internal class RefreshSimilarGamesUseCaseImplTest {
             coEvery { throttler.canRefreshSimilarGames(any()) } returns true
             coEvery { gamesRemoteDataStore.getSimilarGames(any(), any()) } returns Ok(DATA_GAMES)
 
-            assertThat(SUT.execute(REFRESH_SIMILAR_GAMES_USE_CASE_PARAMS).first().get())
-                .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+            SUT.execute(REFRESH_SIMILAR_GAMES_USE_CASE_PARAMS).test {
+                assertThat(expectItem().get()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+                expectComplete()
+            }
         }
     }
 
@@ -95,9 +96,9 @@ internal class RefreshSimilarGamesUseCaseImplTest {
         runBlockingTest {
             coEvery { throttler.canRefreshSimilarGames(any()) } returns false
 
-            val isEmptyFlow = SUT.execute(REFRESH_SIMILAR_GAMES_USE_CASE_PARAMS).isEmpty()
-
-            assertThat(isEmptyFlow).isTrue
+            SUT.execute(REFRESH_SIMILAR_GAMES_USE_CASE_PARAMS).test {
+                expectComplete()
+            }
         }
     }
 

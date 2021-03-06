@@ -60,6 +60,7 @@ dependencies {
     testImplementation(deps.testing.assertJ)
     testImplementation(deps.testing.mockk)
     testImplementation(deps.testing.coroutines)
+    testImplementation(deps.testing.turbine)
 
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)

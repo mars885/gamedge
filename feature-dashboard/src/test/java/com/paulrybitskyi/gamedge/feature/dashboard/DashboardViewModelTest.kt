@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.dashboard
 
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
@@ -42,11 +43,11 @@ internal class DashboardViewModelTest {
     @Test
     fun `Routes to search screen when toolbar right button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            SUT.onToolbarRightButtonClicked()
+            SUT.routeFlow.test {
+                SUT.onToolbarRightButtonClicked()
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is DashboardRoute.Search).isTrue
+                assertThat(expectItem() is DashboardRoute.Search).isTrue
+            }
         }
     }
 

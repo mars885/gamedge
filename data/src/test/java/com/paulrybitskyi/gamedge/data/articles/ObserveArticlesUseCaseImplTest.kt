@@ -16,17 +16,16 @@
 
 package com.paulrybitskyi.gamedge.data.articles
 
+import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesLocalDataStore
 import com.paulrybitskyi.gamedge.data.articles.usecases.ObserveArticlesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.ArticleMapper
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.mapToDomainArticles
-import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
@@ -38,6 +37,7 @@ internal class ObserveArticlesUseCaseImplTest {
 
     @MockK private lateinit var refreshArticlesUseCase: RefreshArticlesUseCase
     @MockK private lateinit var articlesLocalDataStore: ArticlesLocalDataStore
+
     private lateinit var articleMapper: ArticleMapper
     private lateinit var SUT: ObserveArticlesUseCaseImpl
 
@@ -74,8 +74,10 @@ internal class ObserveArticlesUseCaseImplTest {
             coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_ARTICLES))
             coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
-            assertThat(SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).first())
-                .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+            SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).test {
+                assertThat(expectItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+                expectComplete()
+            }
         }
     }
 
@@ -86,8 +88,10 @@ internal class ObserveArticlesUseCaseImplTest {
             coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf()
             coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
-            assertThat(SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).first())
-                .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+            SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).test {
+                assertThat(expectItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+                expectComplete()
+            }
         }
     }
 
@@ -97,8 +101,10 @@ internal class ObserveArticlesUseCaseImplTest {
         runBlockingTest {
             coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
-            assertThat(SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS.copy(refreshArticles = false)).first())
-                .isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+            SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS.copy(refreshArticles = false)).test {
+                assertThat(expectItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+                expectComplete()
+            }
         }
     }
 

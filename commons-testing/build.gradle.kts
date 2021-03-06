@@ -29,6 +29,7 @@ dependencies {
     implementation(deps.misc.kotlinResult)
 
     implementation(deps.testing.jUnit)
+    implementation(deps.testing.assertJ)
     implementation(deps.testing.mockk)
     implementation(deps.testing.coroutines)
 }

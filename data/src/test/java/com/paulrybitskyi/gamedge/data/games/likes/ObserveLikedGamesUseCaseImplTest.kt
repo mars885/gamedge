@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.games.likes
 
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.data.games.DataGame
 import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
@@ -29,8 +30,6 @@ import com.paulrybitskyi.gamedge.commons.testing.OBSERVE_GAMES_USE_CASE_PARAMS
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
@@ -64,8 +63,10 @@ internal class ObserveLikedGamesUseCaseImplTest {
         runBlockingTest {
             coEvery { likedGamesLocalDataStore.observeLikedGames(any()) } returns flowOf(DATA_GAMES)
 
-            assertThat(SUT.execute(OBSERVE_GAMES_USE_CASE_PARAMS).first())
-                .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+            SUT.execute(OBSERVE_GAMES_USE_CASE_PARAMS).test {
+                assertThat(expectItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+                expectComplete()
+            }
         }
     }
 

@@ -16,10 +16,12 @@
 
 package com.paulrybitskyi.gamedge.data.games.discovery
 
+import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
@@ -81,8 +83,10 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
             coEvery { throttler.canRefreshGames(any()) } returns true
             coEvery { gamesRemoteDataStore.getComingSoonGames(any()) } returns Ok(DATA_GAMES)
 
-            assertThat(SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).first().get())
-                .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).test {
+                assertThat(expectItem().get()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+                expectComplete()
+            }
         }
     }
 
@@ -92,9 +96,9 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
         runBlockingTest {
             coEvery { throttler.canRefreshGames(any()) } returns false
 
-            val isEmptyFlow = SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).isEmpty()
-
-            assertThat(isEmptyFlow).isTrue
+            SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).test {
+                expectComplete()
+            }
         }
     }
 

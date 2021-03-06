@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.info
 
 import androidx.lifecycle.SavedStateHandle
+import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
@@ -107,16 +108,13 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
-            val uiStates = mutableListOf<GameInfoUiState>()
-            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
+            SUT.uiState.test {
+                SUT.loadData(resultEmissionDelay = 0L)
 
-            SUT.loadData(resultEmissionDelay = 0L)
-
-            assertThat(uiStates[0] is GameInfoUiState.Empty).isTrue
-            assertThat(uiStates[1] is GameInfoUiState.Loading).isTrue
-            assertThat(uiStates[2] is GameInfoUiState.Result).isTrue
-
-            uiStateJob.cancel()
+                assertThat(expectItem() is GameInfoUiState.Empty).isTrue
+                assertThat(expectItem() is GameInfoUiState.Loading).isTrue
+                assertThat(expectItem() is GameInfoUiState.Result).isTrue
+            }
         }
     }
 
@@ -138,11 +136,11 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_NOT_FOUND))
 
-            SUT.loadData(resultEmissionDelay = 0L)
+            SUT.commandFlow.test {
+                SUT.loadData(resultEmissionDelay = 0L)
 
-            val command = SUT.commandFlow.first()
-
-            assertThat(command is GeneralCommand.ShowLongToast).isTrue
+                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+            }
         }
     }
 
@@ -152,11 +150,11 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
-            SUT.onArtworkClicked(position = 0)
+            SUT.routeFlow.test {
+                SUT.onArtworkClicked(position = 0)
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is GameInfoRoute.ImageViewer).isTrue
+                assertThat(expectItem() is GameInfoRoute.ImageViewer).isTrue
+            }
         }
     }
 
@@ -164,11 +162,11 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to previous screen when back button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            SUT.onBackButtonClicked()
+            SUT.routeFlow.test {
+                SUT.onBackButtonClicked()
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is GameInfoRoute.Back).isTrue
+                assertThat(expectItem() is GameInfoRoute.Back).isTrue
+            }
         }
     }
 
@@ -178,11 +176,11 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
-            SUT.onCoverClicked()
+            SUT.routeFlow.test {
+                SUT.onCoverClicked()
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is GameInfoRoute.ImageViewer).isTrue
+                assertThat(expectItem() is GameInfoRoute.ImageViewer).isTrue
+            }
         }
     }
 
@@ -196,13 +194,15 @@ internal class GameInfoViewModelTest {
                 title = "title"
             )
 
-            SUT.onVideoClicked(video)
+            SUT.commandFlow.test {
+                SUT.onVideoClicked(video)
 
-            val command = SUT.commandFlow.first()
+                val command = expectItem()
 
-            assertThat(command is GameInfoCommand.OpenUrl).isTrue
-            assertThat((command as GameInfoCommand.OpenUrl).url)
-                .isEqualTo(video.videoUrl)
+                assertThat(command is GameInfoCommand.OpenUrl).isTrue
+                assertThat((command as GameInfoCommand.OpenUrl).url)
+                    .isEqualTo(video.videoUrl)
+            }
         }
     }
 
@@ -212,11 +212,11 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
-            SUT.onScreenshotClicked(position = 0)
+            SUT.routeFlow.test {
+                SUT.onScreenshotClicked(position = 0)
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is GameInfoRoute.ImageViewer).isTrue
+                assertThat(expectItem() is GameInfoRoute.ImageViewer).isTrue
+            }
         }
     }
 
@@ -231,13 +231,15 @@ internal class GameInfoViewModelTest {
                 payload = "url"
             )
 
-            SUT.onLinkClicked(link)
+            SUT.commandFlow.test {
+                SUT.onLinkClicked(link)
 
-            val command = SUT.commandFlow.first()
+                val command = expectItem()
 
-            assertThat(command is GameInfoCommand.OpenUrl).isTrue
-            assertThat((command as GameInfoCommand.OpenUrl).url)
-                .isEqualTo(link.payload)
+                assertThat(command is GameInfoCommand.OpenUrl).isTrue
+                assertThat((command as GameInfoCommand.OpenUrl).url)
+                    .isEqualTo(link.payload)
+            }
         }
     }
 
@@ -254,13 +256,15 @@ internal class GameInfoViewModelTest {
                 roles = ""
             )
 
-            SUT.onCompanyClicked(company)
+            SUT.commandFlow.test {
+                SUT.onCompanyClicked(company)
 
-            val command = SUT.commandFlow.first()
+                val command = expectItem()
 
-            assertThat(command is GameInfoCommand.OpenUrl).isTrue
-            assertThat((command as GameInfoCommand.OpenUrl).url)
-                .isEqualTo(company.websiteUrl)
+                assertThat(command is GameInfoCommand.OpenUrl).isTrue
+                assertThat((command as GameInfoCommand.OpenUrl).url)
+                    .isEqualTo(company.websiteUrl)
+            }
         }
     }
 
@@ -274,13 +278,15 @@ internal class GameInfoViewModelTest {
                 coverUrl = "url"
             )
 
-            SUT.onRelatedGameClicked(relatedGame)
+            SUT.routeFlow.test {
+                SUT.onRelatedGameClicked(relatedGame)
 
-            val route = SUT.routeFlow.first()
+                val route = expectItem()
 
-            assertThat(route is GameInfoRoute.Info).isTrue
-            assertThat((route as GameInfoRoute.Info).gameId)
-                .isEqualTo(relatedGame.id)
+                assertThat(route is GameInfoRoute.Info).isTrue
+                assertThat((route as GameInfoRoute.Info).gameId)
+                    .isEqualTo(relatedGame.id)
+            }
         }
     }
 

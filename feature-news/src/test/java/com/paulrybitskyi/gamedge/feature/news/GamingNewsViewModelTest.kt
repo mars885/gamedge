@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.news
 
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
@@ -68,18 +69,19 @@ internal class GamingNewsViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { observeArticlesUseCase.execute(any()) } returns flowOf(DOMAIN_ARTICLES)
 
-            val uiStates = mutableListOf<GamingNewsUiState>()
-            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
+            SUT.uiState.test {
+                SUT.loadData()
 
-            SUT.loadData()
+                val emptyState = expectItem()
+                val loadingState = expectItem()
+                val resultState = expectItem()
 
-            assertThat(uiStates[0] is GamingNewsUiState.Empty).isTrue
-            assertThat(uiStates[1] is GamingNewsUiState.Loading).isTrue
-            assertThat(uiStates[2] is GamingNewsUiState.Result).isTrue
-            assertThat((uiStates[2] as GamingNewsUiState.Result).items)
-                .hasSize(DOMAIN_ARTICLES.size)
-
-            uiStateJob.cancel()
+                assertThat(emptyState is GamingNewsUiState.Empty).isTrue
+                assertThat(loadingState is GamingNewsUiState.Loading).isTrue
+                assertThat(resultState is GamingNewsUiState.Result).isTrue
+                assertThat((resultState as GamingNewsUiState.Result).items)
+                    .hasSize(DOMAIN_ARTICLES.size)
+            }
         }
     }
 
@@ -101,11 +103,11 @@ internal class GamingNewsViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
-            SUT.loadData()
+            SUT.commandFlow.test {
+                SUT.loadData()
 
-            val command = SUT.commandFlow.first()
-
-            assertThat(command is GeneralCommand.ShowLongToast).isTrue
+                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+            }
         }
     }
 
@@ -122,13 +124,15 @@ internal class GamingNewsViewModelTest {
                 siteDetailUrl = "site_detail_url"
             )
 
-            SUT.onNewsItemClicked(itemModel)
+            SUT.commandFlow.test {
+                SUT.onNewsItemClicked(itemModel)
 
-            val command = SUT.commandFlow.first()
+                val command = expectItem()
 
-            assertThat(command is GamingNewsCommand.OpenUrl).isTrue
-            assertThat((command as GamingNewsCommand.OpenUrl).url)
-                .isEqualTo(itemModel.siteDetailUrl)
+                assertThat(command is GamingNewsCommand.OpenUrl).isTrue
+                assertThat((command as GamingNewsCommand.OpenUrl).url)
+                    .isEqualTo(itemModel.siteDetailUrl)
+            }
         }
     }
 
@@ -138,18 +142,19 @@ internal class GamingNewsViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { observeArticlesUseCase.execute(any()) } returns flowOf(DOMAIN_ARTICLES)
 
-            val uiStates = mutableListOf<GamingNewsUiState>()
-            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
+            SUT.uiState.test {
+                SUT.onRefreshRequested()
 
-            SUT.onRefreshRequested()
+                val emptyState = expectItem()
+                val loadingState = expectItem()
+                val resultState = expectItem()
 
-            assertThat(uiStates[0] is GamingNewsUiState.Empty).isTrue
-            assertThat(uiStates[1] is GamingNewsUiState.Loading).isTrue
-            assertThat(uiStates[2] is GamingNewsUiState.Result).isTrue
-            assertThat((uiStates[2] as GamingNewsUiState.Result).items)
-                .hasSize(DOMAIN_ARTICLES.size)
-
-            uiStateJob.cancel()
+                assertThat(emptyState is GamingNewsUiState.Empty).isTrue
+                assertThat(loadingState is GamingNewsUiState.Loading).isTrue
+                assertThat(resultState is GamingNewsUiState.Result).isTrue
+                assertThat((resultState as GamingNewsUiState.Result).items)
+                    .hasSize(DOMAIN_ARTICLES.size)
+            }
         }
     }
 

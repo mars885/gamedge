@@ -16,16 +16,11 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery
 
+import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
-import com.paulrybitskyi.gamedge.core.ErrorMapper
-import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
-import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.*
 import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameModelMapper
@@ -33,7 +28,6 @@ import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemMod
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.*
@@ -134,11 +128,13 @@ internal class GamesDiscoveryViewModelTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
-            SUT.loadData()
+            SUT.commandFlow.test {
+                SUT.loadData()
 
-            val command = SUT.commandFlow.first()
+                val command = expectItem()
 
-            assertThat(command is GeneralCommand.ShowLongToast).isTrue
+                assertThat(command is GeneralCommand.ShowLongToast).isTrue
+            }
         }
     }
 
@@ -146,13 +142,15 @@ internal class GamesDiscoveryViewModelTest {
     @Test
     fun `Routes to games category screen when more button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            SUT.onCategoryMoreButtonClicked("popular")
+            SUT.routeFlow.test {
+                SUT.onCategoryMoreButtonClicked("popular")
 
-            val route = SUT.routeFlow.first()
+                val route = expectItem()
 
-            assertThat(route is GamesDiscoveryRoute.Category).isTrue
-            assertThat((route as GamesDiscoveryRoute.Category).category)
-                .isEqualTo("popular")
+                assertThat(route is GamesDiscoveryRoute.Category).isTrue
+                assertThat((route as GamesDiscoveryRoute.Category).category)
+                    .isEqualTo("popular")
+            }
         }
     }
 
@@ -166,13 +164,15 @@ internal class GamesDiscoveryViewModelTest {
                 coverUrl = null
             )
 
-            SUT.onCategoryGameClicked(item)
+            SUT.routeFlow.test {
+                SUT.onCategoryGameClicked(item)
 
-            val route = SUT.routeFlow.first()
+                val route = expectItem()
 
-            assertThat(route is GamesDiscoveryRoute.Info).isTrue
-            assertThat((route as GamesDiscoveryRoute.Info).gameId)
-                .isEqualTo(item.id)
+                assertThat(route is GamesDiscoveryRoute.Info).isTrue
+                assertThat((route as GamesDiscoveryRoute.Info).gameId)
+                    .isEqualTo(item.id)
+            }
         }
     }
 

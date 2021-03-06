@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.likes
 
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
@@ -68,18 +69,19 @@ internal class LikedGamesViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { observeLikedGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
-            val uiStates = mutableListOf<GamesUiState>()
-            val uiStateJob = launch { SUT.uiState.toList(uiStates) }
+            SUT.uiState.test {
+                SUT.loadData()
 
-            SUT.loadData()
+                val emptyState = expectItem()
+                val loadingState = expectItem()
+                val resultState = expectItem()
 
-            assertThat(uiStates[0] is GamesUiState.Empty).isTrue
-            assertThat(uiStates[1] is GamesUiState.Loading).isTrue
-            assertThat(uiStates[2] is GamesUiState.Result).isTrue
-            assertThat((uiStates[2] as GamesUiState.Result).items)
-                .hasSize(DOMAIN_GAMES.size)
-
-            uiStateJob.cancel()
+                assertThat(emptyState is GamesUiState.Empty).isTrue
+                assertThat(loadingState is GamesUiState.Loading).isTrue
+                assertThat(resultState is GamesUiState.Result).isTrue
+                assertThat((resultState as GamesUiState.Result).items)
+                    .hasSize(DOMAIN_GAMES.size)
+            }
         }
     }
 
@@ -101,11 +103,11 @@ internal class LikedGamesViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
-            SUT.loadData()
+            SUT.commandFlow.test {
+                SUT.loadData()
 
-            val command = SUT.commandFlow.first()
-
-            assertThat(command is GeneralCommand.ShowLongToast).isTrue
+                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+            }
         }
     }
 
@@ -122,13 +124,15 @@ internal class LikedGamesViewModelTest {
                 description = null
             )
 
-            SUT.onGameClicked(gameModel)
+            SUT.routeFlow.test {
+                SUT.onGameClicked(gameModel)
 
-            val route = SUT.routeFlow.first()
+                val route = expectItem()
 
-            assertThat(route is LikedGamesRoute.Info).isTrue
-            assertThat((route as LikedGamesRoute.Info).gameId)
-                .isEqualTo(gameModel.id)
+                assertThat(route is LikedGamesRoute.Info).isTrue
+                assertThat((route as LikedGamesRoute.Info).gameId)
+                    .isEqualTo(gameModel.id)
+            }
         }
     }
 

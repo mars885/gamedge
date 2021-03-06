@@ -17,16 +17,11 @@
 package com.paulrybitskyi.gamedge.feature.category
 
 import androidx.lifecycle.SavedStateHandle
+import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
-import com.paulrybitskyi.gamedge.core.ErrorMapper
-import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
-import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.*
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.mapping.GamesCategoryUiStateFactory
@@ -38,7 +33,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
@@ -107,12 +101,9 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Emits toolbar title when initialized`() {
         mainCoroutineRule.runBlockingTest {
-            val toolbarTitles = mutableListOf<String>()
-            val toolbarTitlesJob = launch { SUT.toolbarTitle.toList(toolbarTitles) }
-
-            assertThat(toolbarTitles[0]).isNotEmpty
-
-            toolbarTitlesJob.cancel()
+            SUT.toolbarTitle.test {
+                assertThat(expectItem()).isNotEmpty
+            }
         }
     }
 
@@ -123,16 +114,15 @@ internal class GamesCategoryViewModelTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
-            val uiStates = mutableListOf<GamesCategoryUiState>()
-            val uiStatesJob = launch { SUT.uiState.toList(uiStates) }
+            SUT.uiState.test {
+                SUT.loadData(resultEmissionDelay = 0L)
 
-            SUT.loadData(resultEmissionDelay = 0L)
+                assertThat(expectItem() is GamesCategoryUiState.Empty).isTrue
+                assertThat(expectItem() is GamesCategoryUiState.Loading).isTrue
+                assertThat(expectItem() is GamesCategoryUiState.Result).isTrue
 
-            assertThat(uiStates[0] is GamesCategoryUiState.Empty)
-            assertThat(uiStates[1] is GamesCategoryUiState.Loading)
-            assertThat(uiStates[2] is GamesCategoryUiState.Result)
-
-            uiStatesJob.cancel()
+                cancelAndIgnoreRemainingEvents()
+            }
         }
     }
 
@@ -156,11 +146,11 @@ internal class GamesCategoryViewModelTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
-            SUT.loadData(resultEmissionDelay = 0L)
+            SUT.commandFlow.test {
+                SUT.loadData(resultEmissionDelay = 0L)
 
-            val command = SUT.commandFlow.first()
-
-            assertThat(command is GeneralCommand.ShowLongToast).isTrue
+                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+            }
         }
     }
 
@@ -171,14 +161,16 @@ internal class GamesCategoryViewModelTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
-            val uiStates = mutableListOf<GamesCategoryUiState>()
-            val uiStatesJob = launch { SUT.uiState.toList(uiStates) }
+            SUT.uiState.test {
+                SUT.loadData(resultEmissionDelay = 0L)
 
-            SUT.loadData(resultEmissionDelay = 0L)
+                assertThat(expectItem() is GamesCategoryUiState.Empty).isTrue
+                assertThat(expectItem() is GamesCategoryUiState.Loading).isTrue
+                assertThat(expectItem() is GamesCategoryUiState.Result).isTrue
+                assertThat(expectItem() is GamesCategoryUiState.Loading).isTrue
 
-            assertThat(uiStates[3] is GamesCategoryUiState.Loading).isTrue
-
-            uiStatesJob.cancel()
+                cancelAndIgnoreRemainingEvents()
+            }
         }
     }
 
@@ -202,11 +194,11 @@ internal class GamesCategoryViewModelTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
 
-            SUT.loadData(resultEmissionDelay = 0L)
+            SUT.commandFlow.test {
+                SUT.loadData(resultEmissionDelay = 0L)
 
-            val command = SUT.commandFlow.first()
-
-            assertThat(command is GeneralCommand.ShowLongToast).isTrue
+                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+            }
         }
     }
 
@@ -214,11 +206,11 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Routes to previous screen when toolbar left button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            SUT.onToolbarLeftButtonClicked()
+            SUT.routeFlow.test {
+                SUT.onToolbarLeftButtonClicked()
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is GamesCategoryRoute.Back).isTrue
+                assertThat(expectItem() is GamesCategoryRoute.Back).isTrue
+            }
         }
     }
 
@@ -232,13 +224,15 @@ internal class GamesCategoryViewModelTest {
                 coverUrl = null
             )
 
-            SUT.onGameClicked(game)
+            SUT.routeFlow.test {
+                SUT.onGameClicked(game)
 
-            val route = SUT.routeFlow.first()
+                val route = expectItem()
 
-            assertThat(route is GamesCategoryRoute.Info).isTrue
-            assertThat((route as GamesCategoryRoute.Info).gameId)
-                .isEqualTo(game.id)
+                assertThat(route is GamesCategoryRoute.Info).isTrue
+                assertThat((route as GamesCategoryRoute.Info).gameId)
+                    .isEqualTo(game.id)
+            }
         }
     }
 

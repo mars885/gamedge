@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.database
 
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.data.articles.DataArticle
 import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
@@ -79,8 +80,10 @@ internal class ArticlesDatabaseDataStoreTest {
 
             coEvery { articlesTable.observeArticles(any(), any()) } returns flowOf(databaseArticles)
 
-            assertThat(SUT.observeArticles(DATA_PAGINATION).first())
-                .isEqualTo(DATA_ARTICLES)
+            SUT.observeArticles(DATA_PAGINATION).test {
+                assertThat(expectItem()).isEqualTo(DATA_ARTICLES)
+                expectComplete()
+            }
         }
     }
 

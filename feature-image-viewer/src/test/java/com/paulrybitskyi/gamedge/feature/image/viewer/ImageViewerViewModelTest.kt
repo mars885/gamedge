@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.lifecycle.SavedStateHandle
+import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
@@ -66,11 +67,11 @@ internal class ImageViewerViewModelTest {
     @Test
     fun `Dispatches text sharing command when toolbar right button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            SUT.onToolbarRightButtonClicked()
+            SUT.commandFlow.test {
+                SUT.onToolbarRightButtonClicked()
 
-            val command = SUT.commandFlow.first()
-
-            assertThat(command is ImageViewerCommand.ShareText).isTrue
+                assertThat(expectItem() is ImageViewerCommand.ShareText).isTrue
+            }
         }
     }
 
@@ -78,15 +79,12 @@ internal class ImageViewerViewModelTest {
     @Test
     fun `Emits selected position when page is changed`() {
         mainCoroutineRule.runBlockingTest {
-            val selectedPositions = mutableListOf<Int>()
-            val selectedPositionsJob = launch { SUT.selectedPosition.toList(selectedPositions) }
+            SUT.selectedPosition.test {
+                SUT.onPageChanged(10)
 
-            SUT.onPageChanged(10)
-
-            assertThat(selectedPositions[0] == INITIAL_POSITION).isTrue
-            assertThat(selectedPositions[1] == 10).isTrue
-
-            selectedPositionsJob.cancel()
+                assertThat(expectItem() == INITIAL_POSITION).isTrue
+                assertThat(expectItem() == 10).isTrue
+            }
         }
     }
 
@@ -94,14 +92,11 @@ internal class ImageViewerViewModelTest {
     @Test
     fun `Emits toolbar title when page is changed`() {
         mainCoroutineRule.runBlockingTest {
-            val toolbarTitles = mutableListOf<String>()
-            val toolbarTitlesJob = launch { SUT.toolbarTitle.toList(toolbarTitles) }
+            SUT.toolbarTitle.test {
+                SUT.onPageChanged(10)
 
-            SUT.onPageChanged(10)
-
-            assertThat(toolbarTitles[0]).isNotEmpty
-
-            toolbarTitlesJob.cancel()
+                assertThat(expectItem()).isNotEmpty
+            }
         }
     }
 
@@ -109,11 +104,11 @@ internal class ImageViewerViewModelTest {
     @Test
     fun `Dispatches system windows reset command when back button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            SUT.onBackPressed()
+            SUT.commandFlow.test {
+                SUT.onBackPressed()
 
-            val command = SUT.commandFlow.first()
-
-            assertThat(command is ImageViewerCommand.ResetSystemWindows).isTrue
+                assertThat(expectItem() is ImageViewerCommand.ResetSystemWindows).isTrue
+            }
         }
     }
 
@@ -121,11 +116,11 @@ internal class ImageViewerViewModelTest {
     @Test
     fun `Routes to previous screen when back button is clicked`() {
         mainCoroutineRule.runBlockingTest {
-            SUT.onBackPressed()
+            SUT.routeFlow.test {
+                SUT.onBackPressed()
 
-            val route = SUT.routeFlow.first()
-
-            assertThat(route is ImageViewerRoute.Back).isTrue
+                assertThat(expectItem() is ImageViewerRoute.Back).isTrue
+            }
         }
     }
 

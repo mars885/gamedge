@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.games
 
+import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.testing.*
@@ -36,7 +37,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
@@ -72,8 +72,10 @@ internal class GetSimilarGamesUseCaseImplTest {
         runBlockingTest {
             coEvery { refreshSimilarGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
-            assertThat(SUT.execute(GET_SIMILAR_GAMES_USE_CASE_PARAMS).first())
-                .isEqualTo(DOMAIN_GAMES)
+            SUT.execute(GET_SIMILAR_GAMES_USE_CASE_PARAMS).test {
+                assertThat(expectItem()).isEqualTo(DOMAIN_GAMES)
+                expectComplete()
+            }
         }
     }
 
@@ -84,8 +86,10 @@ internal class GetSimilarGamesUseCaseImplTest {
             coEvery { refreshSimilarGamesUseCase.execute(any()) } returns flowOf()
             coEvery { gamesLocalDataStore.getSimilarGames(any(), any()) } returns DATA_GAMES
 
-            assertThat(SUT.execute(GET_SIMILAR_GAMES_USE_CASE_PARAMS).first())
-                .isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+            SUT.execute(GET_SIMILAR_GAMES_USE_CASE_PARAMS).test {
+                assertThat(expectItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+                expectComplete()
+            }
         }
     }
 
