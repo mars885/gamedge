@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.dashboard
 
 import androidx.navigation.NavController
-import com.paulrybitskyi.gamedge.feature.dashboard.DashboardFragmentDirections
+import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardFragmentDirections
 import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardNavigator
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
