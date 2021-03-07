@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.igdb.api
 
-import com.paulrybitskyi.gamedge.data.auth.DataOauthCredentials
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType

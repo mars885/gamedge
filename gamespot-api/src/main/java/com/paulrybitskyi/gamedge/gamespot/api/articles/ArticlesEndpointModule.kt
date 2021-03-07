@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.gamespot.api.articles
 
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
 import com.paulrybitskyi.gamedge.gamespot.api.articles.serialization.ImageTypeAdapter
-import com.paulrybitskyi.gamedge.gamespot.api.commons.Constants
+import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotConstantsProvider
 import com.paulrybitskyi.gamedge.gamespot.api.commons.di.Endpoint
 import com.paulrybitskyi.gamedge.gamespot.api.commons.di.GamespotApi
 import com.squareup.moshi.Moshi
@@ -46,13 +46,14 @@ internal object ArticlesEndpointModule {
     fun provideRetrofit(
         @GamespotApi okHttpClient: OkHttpClient,
         @GamespotApi callAdapterFactory: ApiResultCallAdapterFactory,
-        @Endpoint(Endpoint.Type.ARTICLES) moshi: Moshi
+        @Endpoint(Endpoint.Type.ARTICLES) moshi: Moshi,
+        gamespotConstantsProvider: GamespotConstantsProvider
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(Constants.GAMESPOT_API_BASE_URL)
+            .baseUrl(gamespotConstantsProvider.apiBaseUrl)
             .build()
     }
 

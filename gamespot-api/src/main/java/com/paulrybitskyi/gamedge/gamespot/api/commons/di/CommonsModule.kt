@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.gamespot.api.commons.di
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.commons.api.addInterceptorAsFirstInChain
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
-import com.paulrybitskyi.gamedge.gamespot.api.BuildConfig
+import com.paulrybitskyi.gamedge.gamespot.api.commons.*
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotFieldsSerializer
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsFactory
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsFactoryImpl
@@ -60,11 +60,12 @@ internal object CommonsModule {
 
     @Provides
     fun provideGamespotQueryParamsBuilder(
-        gamespotFieldsSerializer: GamespotFieldsSerializer
+        gamespotFieldsSerializer: GamespotFieldsSerializer,
+        gamespotConstantsProvider: GamespotConstantsProvider
     ): GamespotQueryParamsFactory {
         return GamespotQueryParamsFactoryImpl(
             gamespotFieldsSerializer = gamespotFieldsSerializer,
-            apiKey = BuildConfig.GAMESPOT_API_KEY
+            apiKey = gamespotConstantsProvider.apiKey
         )
     }
 

@@ -212,6 +212,7 @@ object deps {
         private const val turbineVersion = "0.4.0"
         private const val testRunnerVersion = "1.3.0"
         private const val archCoreVersion = "2.1.0"
+        private const val mockWebServerVersion = "4.9.0"
         private const val orgJsonVersion = "20201115"
 
         const val jUnit = "junit:junit:$jUnitVersion"
@@ -222,7 +223,9 @@ object deps {
         const val turbine = "app.cash.turbine:turbine:$turbineVersion"
         const val testRunner = "androidx.test:runner:$testRunnerVersion"
         const val archCore = "androidx.arch.core:core-testing:$archCoreVersion"
+        const val daggerHilt = "com.google.dagger:hilt-android-testing:${versions.daggerHilt}"
         const val room = "androidx.room:room-testing:${versions.room}"
+        const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
         const val orgJson = "org.json:json:$orgJsonVersion"
 
     }
