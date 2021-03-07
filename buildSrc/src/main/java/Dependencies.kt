@@ -43,6 +43,7 @@ object versions {
     const val navigation = "2.3.3"
     const val daggerHilt = "2.33-beta"
     const val coroutines = "1.4.2"
+    const val room = "2.2.6"
 
 }
 
@@ -105,7 +106,6 @@ object deps {
         private const val swipeRefreshLayoutVersion = "1.1.0"
         private const val lifecycleVersion = "2.3.0"
         private const val browserVersion = "1.3.0"
-        private const val roomVersion = "2.2.6"
         private const val coreKtxVersion = "1.5.0-beta02"
         private const val fragmentKtxVersion = "1.3.0"
         private const val dataStoreVersion = "1.0.0-alpha07"
@@ -120,9 +120,9 @@ object deps {
         const val lifecycleCommonJava8 = "androidx.lifecycle:lifecycle-common-java8:${lifecycleVersion}"
         const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel:${lifecycleVersion}"
         const val browser = "androidx.browser:browser:${browserVersion}"
-        const val room = "androidx.room:room-runtime:${roomVersion}"
-        const val roomKtx = "androidx.room:room-ktx:${roomVersion}"
-        const val roomCompiler = "androidx.room:room-compiler:${roomVersion}"
+        const val room = "androidx.room:room-runtime:${versions.room}"
+        const val roomKtx = "androidx.room:room-ktx:${versions.room}"
+        const val roomCompiler = "androidx.room:room-compiler:${versions.room}"
         const val coreKtx = "androidx.core:core-ktx:${coreKtxVersion}"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:${fragmentKtxVersion}"
         const val prefsDataStore = "androidx.datastore:datastore-preferences:${dataStoreVersion}"
@@ -211,6 +211,7 @@ object deps {
         private const val mockkVersion = "1.10.6"
         private const val turbineVersion = "0.4.0"
         private const val testRunnerVersion = "1.3.0"
+        private const val archCoreVersion = "2.1.0"
         private const val orgJsonVersion = "20201115"
 
         const val jUnit = "junit:junit:$jUnitVersion"
@@ -220,6 +221,8 @@ object deps {
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
         const val turbine = "app.cash.turbine:turbine:$turbineVersion"
         const val testRunner = "androidx.test:runner:$testRunnerVersion"
+        const val archCore = "androidx.arch.core:core-testing:$archCoreVersion"
+        const val room = "androidx.room:room-testing:${versions.room}"
         const val orgJson = "org.json:json:$orgJsonVersion"
 
     }

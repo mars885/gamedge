@@ -28,7 +28,13 @@ android {
             }
         }
     }
+
+    sourceSets {
+        getByName("androidTest").assets.srcDirs("$projectDir/schemas")
+    }
 }
+
+
 
 dependencies {
     implementation(project(deps.local.data))
@@ -61,4 +67,9 @@ dependencies {
 
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
+    androidTestImplementation(deps.testing.assertJ)
+    androidTestImplementation(deps.testing.archCore)
+    androidTestImplementation(deps.testing.coroutines)
+    androidTestImplementation(deps.testing.turbine)
+    androidTestImplementation(deps.testing.room)
 }

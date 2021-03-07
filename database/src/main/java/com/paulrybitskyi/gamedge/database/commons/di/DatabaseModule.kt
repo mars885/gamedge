@@ -21,6 +21,7 @@ import androidx.room.Room
 import com.paulrybitskyi.gamedge.database.Constants
 import com.paulrybitskyi.gamedge.database.GamedgeDatabase
 import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
+import com.paulrybitskyi.gamedge.database.commons.MIGRATIONS
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 import dagger.Module
@@ -43,7 +44,7 @@ internal object DatabaseModule {
             GamedgeDatabase::class.java,
             Constants.DATABASE_NAME
         )
-        .fallbackToDestructiveMigration()
+        .addMigrations(*MIGRATIONS)
         .build()
     }
 
