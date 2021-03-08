@@ -17,9 +17,9 @@
 package com.paulrybitskyi.gamedge.image.loading
 
 import android.widget.ImageView
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.image.loading.utils.PicassoTransformation
 import com.paulrybitskyi.gamedge.image.loading.utils.into
+import com.paulrybitskyi.hiltbinder.BindType
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 import javax.inject.Singleton

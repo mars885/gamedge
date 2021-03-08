@@ -22,7 +22,8 @@ import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.*
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.mapping.GamesCategoryUiStateFactory
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
@@ -32,9 +33,10 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

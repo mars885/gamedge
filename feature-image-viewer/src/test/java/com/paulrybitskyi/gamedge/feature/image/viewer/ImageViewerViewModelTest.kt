@@ -19,15 +19,11 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
-import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

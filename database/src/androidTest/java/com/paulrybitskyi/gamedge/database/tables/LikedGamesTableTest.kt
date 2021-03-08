@@ -27,7 +27,7 @@ import com.paulrybitskyi.gamedge.database.utils.LIKED_GAME
 import com.paulrybitskyi.gamedge.database.utils.LIKED_GAMES
 import com.paulrybitskyi.gamedge.database.utils.createMemoryDb
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

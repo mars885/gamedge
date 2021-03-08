@@ -25,7 +25,7 @@ import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
 import com.paulrybitskyi.gamedge.database.utils.DATABASE_ARTICLES
 import com.paulrybitskyi.gamedge.database.utils.createMemoryDb
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

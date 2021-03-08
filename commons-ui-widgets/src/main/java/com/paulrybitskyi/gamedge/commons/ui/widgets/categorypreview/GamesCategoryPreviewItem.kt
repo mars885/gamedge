@@ -22,12 +22,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
 import com.paulrybitskyi.commons.ktx.onClick
 import com.paulrybitskyi.commons.ktx.setHorizontalMargin
-import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCoverView
-import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractItem
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.HasListeners
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.HasUniqueIdentifier
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
+import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCoverView
+import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewItem.ViewHolder
 
 internal class GamesCategoryPreviewItem(model: GamesCategoryPreviewItemModel) : AbstractItem<
