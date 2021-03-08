@@ -22,8 +22,8 @@ import android.net.Uri
 import com.paulrybitskyi.commons.ktx.canUrlBeOpenedByNativeApp
 import com.paulrybitskyi.commons.ktx.getNativeAppPackageForUrl
 import com.paulrybitskyi.gamedge.core.utils.SdkInfo
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.core.utils.attachNewTaskFlagIfNeeded
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 @BindType(withQualifier = true)

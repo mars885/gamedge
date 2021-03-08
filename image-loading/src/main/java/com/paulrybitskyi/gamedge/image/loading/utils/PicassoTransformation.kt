@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.image.loading.utils
 
 import android.graphics.Bitmap
-import com.paulrybitskyi.gamedge.image.loading.Transformation as MyTransformation
 import com.squareup.picasso.Transformation
+import com.paulrybitskyi.gamedge.image.loading.Transformation as MyTransformation
 
 internal class PicassoTransformation(
     private val transformation: MyTransformation

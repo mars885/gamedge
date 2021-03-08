@@ -20,20 +20,19 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
-import com.paulrybitskyi.gamedge.commons.api.ApiResult
 import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_HTTP
+import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_NETWORK
+import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.igdb.api.auth.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthIgdbDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthMapper
-import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_HTTP
-import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_NETWORK
-import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_UNKNOWN
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 

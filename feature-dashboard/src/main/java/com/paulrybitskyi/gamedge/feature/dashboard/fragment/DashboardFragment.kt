@@ -29,10 +29,10 @@ import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.feature.dashboard.R
+import com.paulrybitskyi.gamedge.feature.dashboard.databinding.FragmentDashboardBinding
 import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardPage.Companion.toDashboardPageFromMenuItemId
 import com.paulrybitskyi.gamedge.feature.dashboard.fragment.adapter.DashboardViewPagerAdapter
 import com.paulrybitskyi.gamedge.feature.dashboard.fragment.adapter.DashboardViewPagerAdapterFactory
-import com.paulrybitskyi.gamedge.feature.dashboard.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

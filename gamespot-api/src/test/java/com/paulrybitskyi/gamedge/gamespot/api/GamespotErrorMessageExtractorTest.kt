@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.gamespot.api
 
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotErrorMessageExtractor
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 

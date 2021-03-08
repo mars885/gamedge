@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.core
 
-import com.paulrybitskyi.hiltbinder.BindType
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 

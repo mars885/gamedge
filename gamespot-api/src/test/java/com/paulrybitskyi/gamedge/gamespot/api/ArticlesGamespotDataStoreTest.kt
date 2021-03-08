@@ -20,20 +20,19 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
-import com.paulrybitskyi.gamedge.commons.api.ApiResult
 import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesEndpoint
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticleMapper
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlePublicationDateMapper
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlesGamespotDataStore
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.mapToDataArticles
-import com.paulrybitskyi.gamedge.commons.testing.*
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 

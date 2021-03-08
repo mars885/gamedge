@@ -17,7 +17,8 @@
 package com.paulrybitskyi.gamedge.gamespot.api
 
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlePublicationDateMapper
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.Before
 import org.junit.Test
 import java.time.format.DateTimeParseException

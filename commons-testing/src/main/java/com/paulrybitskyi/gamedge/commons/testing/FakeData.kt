@@ -16,11 +16,9 @@
 
 package com.paulrybitskyi.gamedge.commons.testing
 
-import com.paulrybitskyi.gamedge.commons.api.Error as ApiError
 import com.paulrybitskyi.gamedge.data.articles.DataArticle
 import com.paulrybitskyi.gamedge.data.auth.DataOauthCredentials
 import com.paulrybitskyi.gamedge.data.commons.DataPagination
-import com.paulrybitskyi.gamedge.data.commons.entities.Error as DataError
 import com.paulrybitskyi.gamedge.data.games.DataCategory
 import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
@@ -30,12 +28,14 @@ import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.auth.DomainOauthCredentials
 import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
 import com.paulrybitskyi.gamedge.domain.games.*
-import com.paulrybitskyi.gamedge.domain.commons.entities.Error as DomainError
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.*
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.commons.api.Error as ApiError
+import com.paulrybitskyi.gamedge.data.commons.entities.Error as DataError
+import com.paulrybitskyi.gamedge.domain.commons.entities.Error as DomainError
 
 
 val DOMAIN_GAME = DomainGame(
