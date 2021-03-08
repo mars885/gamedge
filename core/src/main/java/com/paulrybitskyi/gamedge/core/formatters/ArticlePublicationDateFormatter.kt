@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.core.formatters
 
 import com.paulrybitskyi.gamedge.core.providers.TimeFormat
 import com.paulrybitskyi.gamedge.core.providers.TimeFormatProvider
-import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
+import com.paulrybitskyi.gamedge.core.providers.TimeProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import java.time.Instant
 import java.time.LocalDateTime
@@ -38,7 +38,7 @@ interface ArticlePublicationDateFormatter {
 @BindType
 internal class ArticlePublicationDateFormatterImpl @Inject constructor(
     private val relativeDateFormatter: RelativeDateFormatter,
-    private val timestampProvider: TimestampProvider,
+    private val timeProvider: TimeProvider,
     private val timeFormatProvider: TimeFormatProvider
 ) : ArticlePublicationDateFormatter {
 
@@ -55,7 +55,10 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
 
 
     override fun formatPublicationDate(timestamp: Long): String {
-        val dateTime = toLocalDateTime(timestamp)
+        val dateTime = LocalDateTime.ofInstant(
+            Instant.ofEpochMilli(timestamp),
+            ZoneId.systemDefault()
+        )
 
         return if(shouldFormatAsRelativeDate(dateTime)) {
             relativeDateFormatter.formatRelativeDate(dateTime)
@@ -65,24 +68,11 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
     }
 
 
-    private fun toLocalDateTime(timestamp: Long): LocalDateTime {
-        return LocalDateTime.ofInstant(
-            Instant.ofEpochMilli(timestamp),
-            ZoneId.systemDefault()
-        )
-    }
-
-
     private fun shouldFormatAsRelativeDate(dateTime: LocalDateTime): Boolean {
-        val currentDateTime = getCurrentDateTime()
+        val currentDateTime = timeProvider.getCurrentDateTime()
         val dayDiffCount = ChronoUnit.DAYS.between(dateTime, currentDateTime)
 
         return (dayDiffCount == 0L)
-    }
-
-
-    private fun getCurrentDateTime(): LocalDateTime {
-        return toLocalDateTime(timestampProvider.getUnixTimestamp())
     }
 
 
@@ -95,7 +85,7 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
 
 
     private fun getAbsoluteDatePattern(dateTime: LocalDateTime): String {
-        val currentDateTime = getCurrentDateTime()
+        val currentDateTime = timeProvider.getCurrentDateTime()
         val yearDiffCount = ChronoUnit.YEARS.between(dateTime, currentDateTime).toInt()
         val hasYearDiff = (yearDiffCount > 0)
 
