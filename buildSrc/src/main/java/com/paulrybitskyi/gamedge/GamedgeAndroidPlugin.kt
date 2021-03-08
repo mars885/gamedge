@@ -59,7 +59,16 @@ class GamedgeAndroidPlugin : Plugin<Project> {
             }
 
             buildTypes {
+                // Enabling accessing sites with http schemas for testing (especially
+                // instrumented tests using MockWebServer) and disabling it in the
+                // production to avoid security issues
+                getByName("debug") {
+                    manifestPlaceholders["usesCleartextTraffic"] = true
+                }
+
                 getByName("release") {
+                    manifestPlaceholders["usesCleartextTraffic"] = false
+
                     isMinifyEnabled = false
                     proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
                 }

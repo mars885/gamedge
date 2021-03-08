@@ -19,9 +19,9 @@ package com.paulrybitskyi.gamedge.igdb.api.commons.di
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.commons.api.addInterceptorAsFirstInChain
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
-import com.paulrybitskyi.gamedge.igdb.api.BuildConfig
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.commons.AuthorizationInterceptor
+import com.paulrybitskyi.gamedge.igdb.api.commons.TwitchConstantsProvider
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
 import dagger.Module
 import dagger.Provides
@@ -58,10 +58,13 @@ internal object CommonsModule {
 
 
     @Provides
-    fun provideAuthorizationInterceptor(authorizer: Authorizer): AuthorizationInterceptor {
+    fun provideAuthorizationInterceptor(
+        authorizer: Authorizer,
+        twitchConstantsProvider: TwitchConstantsProvider
+    ): AuthorizationInterceptor {
         return AuthorizationInterceptor(
             authorizer = authorizer,
-            clientId = BuildConfig.TWITCH_APP_CLIENT_ID
+            clientId = twitchConstantsProvider.clientId
         )
     }
 

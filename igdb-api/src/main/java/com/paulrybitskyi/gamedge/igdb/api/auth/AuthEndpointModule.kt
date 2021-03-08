@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.auth
 
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
-import com.paulrybitskyi.gamedge.igdb.api.BuildConfig
+import com.paulrybitskyi.gamedge.igdb.api.commons.TwitchConstantsProvider
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.Endpoint
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
 import com.squareup.moshi.Moshi
@@ -37,11 +37,14 @@ internal object AuthEndpointModule {
 
     @Provides
     @Singleton
-    fun provideAuthEndpoint(authService: AuthService): AuthEndpoint {
+    fun provideAuthEndpoint(
+        authService: AuthService,
+        twitchConstantsProvider: TwitchConstantsProvider
+    ): AuthEndpoint {
         return AuthEndpointImpl(
             authService = authService,
-            clientId = BuildConfig.TWITCH_APP_CLIENT_ID,
-            clientSecret = BuildConfig.TWITCH_APP_CLIENT_SECRET
+            clientId = twitchConstantsProvider.clientId,
+            clientSecret = twitchConstantsProvider.clientSecret
         )
     }
 
@@ -57,13 +60,14 @@ internal object AuthEndpointModule {
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         @IgdbApi callAdapterFactory: ApiResultCallAdapterFactory,
-        @Endpoint(Endpoint.Type.AUTH) moshi: Moshi
+        @Endpoint(Endpoint.Type.AUTH) moshi: Moshi,
+        twitchConstantsProvider: TwitchConstantsProvider
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(Constants.TWITCH_API_BASE_URL)
+            .baseUrl(twitchConstantsProvider.apiBaseUrl)
             .build()
     }
 

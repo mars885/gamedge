@@ -17,6 +17,7 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    kotlinKapt()
 }
 
 dependencies {
@@ -28,8 +29,17 @@ dependencies {
 
     implementation(deps.misc.kotlinResult)
 
+    // Unit tests
     implementation(deps.testing.jUnit)
     implementation(deps.testing.assertJ)
     implementation(deps.testing.mockk)
     implementation(deps.testing.coroutines)
+
+    // Instrumentation tests
+    implementation(deps.testing.testRunner)
+    implementation(deps.testing.mockWebServer)
+
+    implementation(deps.testing.daggerHilt)
+    kapt(deps.google.daggerHiltCompiler)
+
 }

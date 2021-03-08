@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.games
 
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
+import com.paulrybitskyi.gamedge.igdb.api.commons.IgdbConstantsProvider
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.Endpoint
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
 import com.paulrybitskyi.gamedge.igdb.api.games.serialization.*
@@ -49,14 +50,15 @@ internal object GamesEndpointModule {
     fun provideRetrofit(
         @IgdbApi okHttpClient: OkHttpClient,
         @IgdbApi callAdapterFactory: ApiResultCallAdapterFactory,
-        @Endpoint(Endpoint.Type.GAMES) moshi: Moshi
+        @Endpoint(Endpoint.Type.GAMES) moshi: Moshi,
+        igdbConstantsProvider: IgdbConstantsProvider
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(Constants.IGDB_API_BASE_URL)
+            .baseUrl(igdbConstantsProvider.apiBaseUrl)
             .build()
     }
 

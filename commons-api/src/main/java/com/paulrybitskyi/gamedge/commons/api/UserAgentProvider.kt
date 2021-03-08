@@ -40,15 +40,22 @@ internal class UserAgentProviderImpl @Inject constructor(
     override fun getUserAgent(): String {
         val appName = stringProvider.getString(R.string.app_name)
         val versionName = getVersionName()
+        val userAgent = buildString {
+            append(appName)
 
-        return "$appName/$versionName"
+            if(versionName != null) {
+                append("/$versionName")
+            }
+        }
+
+        return userAgent
     }
 
 
-    private fun getVersionName(): String {
+    private fun getVersionName(): String? {
         return context.packageManager
             .getPackageInfo(context.packageName, 0)
-            .versionName
+            ?.versionName
     }
 
 

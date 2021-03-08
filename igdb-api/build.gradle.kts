@@ -21,13 +21,25 @@ plugins {
     androidLibrary()
     gamedgeAndroid()
     kotlinKapt()
+    daggerHiltAndroid() // does not compile instrumented tests without the plugin
 }
 
 android {
     defaultConfig {
+        testInstrumentationRunner = "com.paulrybitskyi.gamedge.commons.testing.GamedgeTestRunner"
+
         stringField("TWITCH_APP_CLIENT_ID", property("TWITCH_APP_CLIENT_ID", ""))
         stringField("TWITCH_APP_CLIENT_SECRET", property("TWITCH_APP_CLIENT_SECRET", ""))
     }
+
+    // https://dagger.dev/hilt/gradle-setup#classpath-aggregation
+    lintOptions {
+        isCheckReleaseBuilds = false
+    }
+}
+
+hilt {
+    enableExperimentalClasspathAggregation = true
 }
 
 dependencies {
@@ -63,6 +75,12 @@ dependencies {
     // because by default org.json classes need to mocked
     testImplementation(deps.testing.orgJson)
 
+    androidTestImplementation(project(deps.local.commonsTesting))
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
+    androidTestImplementation(deps.testing.assertJ)
+    androidTestImplementation(deps.testing.mockWebServer)
+
+    androidTestImplementation(deps.testing.daggerHilt)
+    kaptAndroidTest(deps.google.daggerHiltCompiler)
 }

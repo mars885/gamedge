@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.api.auth
+package com.paulrybitskyi.gamedge.gamespot.api.utils
 
-internal object Constants {
+import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotConstantsProvider
+import okhttp3.mockwebserver.MockWebServer
+import javax.inject.Inject
 
-    const val TWITCH_API_BASE_URL = "https://id.twitch.tv/"
+internal class FakeGamespotConstantsProvider @Inject constructor(
+    mockWebServer: MockWebServer
+) : GamespotConstantsProvider {
+
+    override val apiKey: String = "api_key"
+    override val apiBaseUrl: String = mockWebServer.url("/").toString()
 
 }
