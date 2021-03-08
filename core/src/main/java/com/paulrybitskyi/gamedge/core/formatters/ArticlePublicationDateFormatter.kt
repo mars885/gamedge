@@ -74,10 +74,15 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
 
 
     private fun shouldFormatAsRelativeDate(dateTime: LocalDateTime): Boolean {
-        val currentDateTime = toLocalDateTime(timestampProvider.getUnixTimestamp())
+        val currentDateTime = getCurrentDateTime()
         val dayDiffCount = ChronoUnit.DAYS.between(dateTime, currentDateTime)
 
         return (dayDiffCount == 0L)
+    }
+
+
+    private fun getCurrentDateTime(): LocalDateTime {
+        return toLocalDateTime(timestampProvider.getUnixTimestamp())
     }
 
 
@@ -90,7 +95,7 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
 
 
     private fun getAbsoluteDatePattern(dateTime: LocalDateTime): String {
-        val currentDateTime = LocalDateTime.now()
+        val currentDateTime = getCurrentDateTime()
         val yearDiffCount = ChronoUnit.YEARS.between(dateTime, currentDateTime).toInt()
         val hasYearDiff = (yearDiffCount > 0)
 
