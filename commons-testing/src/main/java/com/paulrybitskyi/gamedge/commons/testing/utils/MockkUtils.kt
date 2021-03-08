@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.testing
+package com.paulrybitskyi.gamedge.commons.testing.utils
 
 import io.mockk.MockKVerificationScope
 import io.mockk.Ordering

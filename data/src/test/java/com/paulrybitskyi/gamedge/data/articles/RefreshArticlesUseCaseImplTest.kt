@@ -21,7 +21,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.paulrybitskyi.gamedge.commons.testing.*
-import com.paulrybitskyi.gamedge.commons.testing.coVerifyNotCalled
+import com.paulrybitskyi.gamedge.commons.testing.utils.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesDataStores
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesLocalDataStore
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesRemoteDataStore

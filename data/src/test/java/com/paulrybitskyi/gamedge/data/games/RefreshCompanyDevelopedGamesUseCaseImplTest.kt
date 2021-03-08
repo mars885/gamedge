@@ -21,7 +21,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.paulrybitskyi.gamedge.commons.testing.*
-import com.paulrybitskyi.gamedge.commons.testing.coVerifyNotCalled
+import com.paulrybitskyi.gamedge.commons.testing.utils.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.data.games.usecases.RefreshCompanyDevelopedGamesUseCaseImpl

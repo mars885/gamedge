@@ -29,7 +29,7 @@ import com.paulrybitskyi.gamedge.data.auth.usecases.mappers.AuthMapper
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
-import com.paulrybitskyi.gamedge.commons.testing.coVerifyNotCalled
+import com.paulrybitskyi.gamedge.commons.testing.utils.coVerifyNotCalled
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
