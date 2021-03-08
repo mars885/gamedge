@@ -18,22 +18,20 @@ package com.paulrybitskyi.gamedge.core
 
 import com.paulrybitskyi.gamedge.core.formatters.RelativeDateFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
+import com.paulrybitskyi.gamedge.core.providers.TimeProvider
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
-import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneId
-import java.util.concurrent.TimeUnit
+import java.time.Month
 
 internal class RelativeDateFormatterImplTest {
 
 
-    @MockK private lateinit var timestampProvider: TimestampProvider
+    @MockK private lateinit var timeProvider: TimeProvider
 
     private lateinit var stringProvider: FakeStringProvider
     private lateinit var SUT: RelativeDateFormatterImpl
@@ -45,7 +43,7 @@ internal class RelativeDateFormatterImplTest {
 
         stringProvider = FakeStringProvider()
         SUT = RelativeDateFormatterImpl(
-            timestampProvider = timestampProvider,
+            timeProvider = timeProvider,
             stringProvider = stringProvider
         )
     }
@@ -53,165 +51,145 @@ internal class RelativeDateFormatterImplTest {
 
     @Test
     fun `Formats future date with year difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val yearDiff = 2L
-        val futureTimestamp = (timestamp + TimeUnit.DAYS.toMillis(365 * yearDiff))
+        val futureTime = currentTime.plusYears(yearDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("in $yearDiff years")
+        assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $yearDiff years")
     }
 
 
     @Test
     fun `Formats future date with month difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val monthDiff = 3L
-        val futureTimestamp = (timestamp + TimeUnit.DAYS.toMillis(31 * monthDiff))
+        val futureTime = currentTime.plusMonths(monthDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("in $monthDiff months")
+        assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $monthDiff months")
     }
 
 
     @Test
     fun `Formats future date with day difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val dayDiff = 15L
-        val futureTimestamp = (timestamp + TimeUnit.DAYS.toMillis(dayDiff))
+        val futureTime = currentTime.plusDays(dayDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("in $dayDiff days")
+        assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $dayDiff days")
     }
 
 
     @Test
     fun `Formats future date with hour difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val hourDiff = 5L
-        val futureTimestamp = (timestamp + TimeUnit.HOURS.toMillis(hourDiff))
+        val futureTime = currentTime.plusHours(hourDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("in $hourDiff hours")
+        assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $hourDiff hours")
     }
 
 
     @Test
     fun `Formats future date with minute difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val minuteDiff = 5L
-        val futureTimestamp = (timestamp + TimeUnit.MINUTES.toMillis(minuteDiff))
+        val futureTime = currentTime.plusMinutes(minuteDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("in $minuteDiff minutes")
+        assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $minuteDiff minutes")
     }
 
 
     @Test
     fun `Formats future date with second difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val secondDiff = 5L
-        val futureTimestamp = (timestamp + TimeUnit.SECONDS.toMillis(secondDiff))
+        val futureTime = currentTime.plusSeconds(secondDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("in $secondDiff seconds")
+        assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $secondDiff seconds")
     }
 
 
     @Test
     fun `Formats past date with year difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val yearDiff = 1L
-        val futureTimestamp = (timestamp - TimeUnit.DAYS.toMillis(365 * yearDiff))
+        val pastTime = currentTime.minusYears(yearDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("$yearDiff years ago")
+        assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$yearDiff years ago")
     }
 
 
     @Test
     fun `Formats past date with month difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val monthDiff = 3L
-        val futureTimestamp = (timestamp - TimeUnit.DAYS.toMillis(31 * monthDiff))
+        val pastTime = currentTime.minusMonths(monthDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("$monthDiff months ago")
+        assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$monthDiff months ago")
     }
 
 
     @Test
     fun `Formats past date with day difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val dayDiff = 15L
-        val futureTimestamp = (timestamp - TimeUnit.DAYS.toMillis(dayDiff))
+        val pastTime = currentTime.minusDays(dayDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("$dayDiff days ago")
+        assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$dayDiff days ago")
     }
 
 
     @Test
     fun `Formats past date with hour difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val hourDiff = 5L
-        val futureTimestamp = (timestamp - TimeUnit.HOURS.toMillis(hourDiff))
+        val pastTime = currentTime.minusHours(hourDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("$hourDiff hours ago")
+        assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$hourDiff hours ago")
     }
 
 
     @Test
     fun `Formats past date with minute difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val minuteDiff = 5L
-        val futureTimestamp = (timestamp - TimeUnit.MINUTES.toMillis(minuteDiff))
+        val pastTime = currentTime.minusMinutes(minuteDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("$minuteDiff minutes ago")
+        assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$minuteDiff minutes ago")
     }
 
 
     @Test
     fun `Formats past date with second difference correctly`() {
-        val timestamp = 1614813308317L  // March 4th, 2021 at 1:15 AM
+        val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
         val secondDiff = 5L
-        val futureTimestamp = (timestamp - TimeUnit.SECONDS.toMillis(secondDiff))
+        val pastTime = currentTime.minusSeconds(secondDiff)
 
-        every { timestampProvider.getUnixTimestamp(any()) } returns timestamp
+        every { timeProvider.getCurrentDateTime() } returns currentTime
 
-        assertThat(SUT.formatRelativeDate(futureTimestamp.toLocalDateTime()))
-            .isEqualTo("$secondDiff seconds ago")
-    }
-
-
-    private fun Long.toLocalDateTime(): LocalDateTime {
-        return LocalDateTime.ofInstant(
-            Instant.ofEpochMilli(this),
-            ZoneId.systemDefault()
-        )
+        assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$secondDiff seconds ago")
     }
 
 

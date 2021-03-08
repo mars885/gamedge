@@ -18,11 +18,9 @@ package com.paulrybitskyi.gamedge.core.formatters
 
 import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
+import com.paulrybitskyi.gamedge.core.providers.TimeProvider
 import com.paulrybitskyi.hiltbinder.BindType
-import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
@@ -36,16 +34,13 @@ interface RelativeDateFormatter {
 
 @BindType
 internal class RelativeDateFormatterImpl @Inject constructor(
-    private val timestampProvider: TimestampProvider,
+    private val timeProvider: TimeProvider,
     private val stringProvider: StringProvider
 ) : RelativeDateFormatter {
 
 
     override fun formatRelativeDate(dateTime: LocalDateTime): String {
-        val currentDateTime = LocalDateTime.ofInstant(
-            Instant.ofEpochMilli(timestampProvider.getUnixTimestamp()),
-            ZoneId.systemDefault()
-        )
+        val currentDateTime = timeProvider.getCurrentDateTime()
         val isDateTimeInFuture = currentDateTime.isBefore(dateTime)
 
         return if(isDateTimeInFuture) {

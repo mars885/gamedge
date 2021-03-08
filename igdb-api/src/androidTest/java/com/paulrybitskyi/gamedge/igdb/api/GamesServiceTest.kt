@@ -19,7 +19,9 @@ package com.paulrybitskyi.gamedge.igdb.api
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
 import com.paulrybitskyi.gamedge.commons.api.Error
+import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
 import com.paulrybitskyi.gamedge.commons.testing.utils.startSafe
+import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
 import com.paulrybitskyi.gamedge.igdb.api.games.ApiCategory
 import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesService
@@ -44,6 +46,7 @@ internal class GamesServiceTest {
     var hiltRule = HiltAndroidRule(this)
 
     @Inject lateinit var mockWebServer: MockWebServer
+    @Inject lateinit var authLocalDataStore: AuthLocalDataStore
     @Inject lateinit var gamesService: GamesService
 
 
@@ -51,6 +54,10 @@ internal class GamesServiceTest {
     fun setup() {
         hiltRule.inject()
         mockWebServer.startSafe()
+
+        runBlocking {
+            authLocalDataStore.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
+        }
     }
 
 
