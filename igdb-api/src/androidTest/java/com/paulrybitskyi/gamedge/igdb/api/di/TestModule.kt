@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.di
 
-import com.paulrybitskyi.gamedge.commons.testing.MocksModule
+import com.paulrybitskyi.gamedge.commons.testing.di.MocksModule
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent

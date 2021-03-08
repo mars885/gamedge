@@ -14,13 +14,24 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.testing
+package com.paulrybitskyi.gamedge.commons.testing.di
 
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.migration.DisableInstallInCheck
 import okhttp3.mockwebserver.MockWebServer
+import javax.inject.Singleton
+
+@Module
+@DisableInstallInCheck
+object MocksModule {
 
 
-fun MockWebServer.startSafe() = try {
-    start()
-} catch(error: Throwable) {
-    // ignore
+    @Provides
+    @Singleton
+    fun provideMockWebServer(): MockWebServer {
+        return MockWebServer()
+    }
+
+
 }

@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.gamespot.api
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
 import com.paulrybitskyi.gamedge.commons.api.Error
-import com.paulrybitskyi.gamedge.commons.testing.startSafe
+import com.paulrybitskyi.gamedge.commons.testing.utils.startSafe
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesService
 import dagger.hilt.android.testing.HiltAndroidRule
