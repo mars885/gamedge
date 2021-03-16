@@ -40,7 +40,7 @@ object versions {
     const val kotlin = "1.4.31" // also in buildSrc build.gradle.kts file
     const val gradleVersionsPlugin = "0.38.0"
     const val protobufPlugin = "0.8.15"
-    const val navigation = "2.3.3"
+    const val navigation = "2.3.4"
     const val daggerHilt = "2.33-beta"
     const val coroutines = "1.4.2"
     const val room = "2.2.6"
@@ -107,7 +107,7 @@ object deps {
         private const val lifecycleVersion = "2.3.0"
         private const val browserVersion = "1.3.0"
         private const val coreKtxVersion = "1.5.0-beta02"
-        private const val fragmentKtxVersion = "1.3.0"
+        private const val fragmentKtxVersion = "1.3.1"
         private const val dataStoreVersion = "1.0.0-alpha07"
 
         const val appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
@@ -209,11 +209,11 @@ object deps {
         private const val jUnitExtVersion = "1.1.2"
         private const val assertJVersion = "3.19.0"
         private const val mockkVersion = "1.10.6"
-        private const val turbineVersion = "0.4.0"
+        private const val turbineVersion = "0.4.1"
         private const val testRunnerVersion = "1.3.0"
         private const val archCoreVersion = "2.1.0"
         private const val mockWebServerVersion = "4.9.0"
-        private const val orgJsonVersion = "20201115"
+        private const val orgJsonVersion = "20210307"
 
         const val jUnit = "junit:junit:$jUnitVersion"
         const val jUnitExt = "androidx.test.ext:junit:$jUnitExtVersion"
