@@ -65,7 +65,7 @@ The aim of this project is to showcase the latest trends in Android development 
   - [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Hilt is a dependency injection library for Android.
   - [ViewBinding](https://developer.android.com/topic/libraries/view-binding) - View binding is a feature that allows you to more easily write code that interacts with views.
   - [MotionLayout](https://developer.android.com/training/constraint-layout/motionlayout) - MotionLayout allows you to create beautiful animations in your app without too much hassle.
-  - [Custom Tabs](https://developers.google.com/web/android/custom-tabs/implementation-guide) - Custom Tabs is a browser feature tha gives apps more control over their web experience.
+  - [Custom Tabs](https://developers.google.com/web/android/custom-tabs/implementation-guide) - Custom Tabs is a browser feature that gives apps more control over their web experience.
 - [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android.
 - [OkHttp](https://github.com/square/okhttp) - An HTTP client for making network calls.
 - [Retrofit](https://github.com/square/retrofit) - A library for building REST API clients.
