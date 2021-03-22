@@ -37,7 +37,7 @@ object appConfig {
 
 object versions {
 
-    const val kotlin = "1.4.31" // also in buildSrc build.gradle.kts file
+    const val kotlin = "1.4.32" // also in buildSrc build.gradle.kts file
     const val gradleVersionsPlugin = "0.38.0"
     const val protobufPlugin = "0.8.15"
     const val navigation = "2.3.4"
