@@ -18,20 +18,20 @@ package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @ApicalypseClass
-@JsonClass(generateAdapter = true)
+@Serializable
 internal data class Image(
-    @Apicalypse(name = Schema.ID)
-    @field:Json(name = Schema.ID)
+    @Apicalypse(Schema.ID)
+    @SerialName(Schema.ID)
     val id: String,
-    @Apicalypse(name = Schema.WIDTH)
-    @field:Json(name = Schema.WIDTH)
+    @Apicalypse(Schema.WIDTH)
+    @SerialName(Schema.WIDTH)
     val width: Int?,
-    @Apicalypse(name = Schema.HEIGHT)
-    @field:Json(name = Schema.HEIGHT)
+    @Apicalypse(Schema.HEIGHT)
+    @SerialName(Schema.HEIGHT)
     val height: Int?,
 ) {
 

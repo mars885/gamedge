@@ -17,40 +17,49 @@
 package com.paulrybitskyi.gamedge.database.tables
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.database.GamedgeDatabase
+import com.paulrybitskyi.gamedge.database.commons.di.DatabaseModule
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 import com.paulrybitskyi.gamedge.database.utils.DATABASE_GAMES
 import com.paulrybitskyi.gamedge.database.utils.LIKED_GAME
 import com.paulrybitskyi.gamedge.database.utils.LIKED_GAMES
-import com.paulrybitskyi.gamedge.database.utils.createMemoryDb
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import javax.inject.Inject
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
+@UninstallModules(DatabaseModule::class)
 internal class LikedGamesTableTest {
 
 
-    @get:Rule
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var db: GamedgeDatabase
-    private lateinit var gamesTable: GamesTable
-    private lateinit var SUT: LikedGamesTable
+    @Inject lateinit var gamesTable: GamesTable
+    @Inject lateinit var SUT: LikedGamesTable
+
+
+    @Module(includes = [TestDatabaseModule::class])
+    @InstallIn(SingletonComponent::class)
+    class TestModule
 
 
     @Before
     fun setup() {
-        db = createMemoryDb()
-        gamesTable = db.gamesTable
-        SUT = db.likedGamesTable
+        hiltRule.inject()
     }
 
 
@@ -126,12 +135,6 @@ internal class LikedGamesTableTest {
                     assertThat(expectItem()).isEqualTo(expectedGames)
                 }
         }
-    }
-
-
-    @After
-    fun cleanup() {
-        db.close()
     }
 
 

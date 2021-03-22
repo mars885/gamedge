@@ -17,36 +17,46 @@
 package com.paulrybitskyi.gamedge.database.tables
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.database.GamedgeDatabase
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
 import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
+import com.paulrybitskyi.gamedge.database.commons.di.DatabaseModule
 import com.paulrybitskyi.gamedge.database.utils.DATABASE_ARTICLES
-import com.paulrybitskyi.gamedge.database.utils.createMemoryDb
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import javax.inject.Inject
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
+@UninstallModules(DatabaseModule::class)
 internal class ArticlesTableTest {
 
 
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
 
-    private lateinit var db: GamedgeDatabase
-    private lateinit var SUT: ArticlesTable
+    @get:Rule(order = 1)
+    val executorRule = InstantTaskExecutorRule()
+
+    @Inject lateinit var SUT: ArticlesTable
+
+
+    @Module(includes = [TestDatabaseModule::class])
+    @InstallIn(SingletonComponent::class)
+    class TestModule
 
 
     @Before
     fun setup() {
-        db = createMemoryDb()
-        SUT = db.articlesTable
+        hiltRule.inject()
     }
 
 
@@ -61,12 +71,6 @@ internal class ArticlesTableTest {
                 assertThat(expectItem()).isEqualTo(expectedArticles)
             }
         }
-    }
-
-
-    @After
-    fun cleanup() {
-        db.close()
     }
 
 

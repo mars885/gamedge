@@ -16,12 +16,12 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api.commons
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 internal data class Response<T : Any>(
-    @field:Json(name = Schema.RESULTS)
+    @SerialName(Schema.RESULTS)
     val results: List<T> = emptyList()
 ) {
 

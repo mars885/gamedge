@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.gamespot.api.commons
+package com.paulrybitskyi.gamedge.gamespot.api.commons.serialization
 
 import com.paulrybitskyi.hiltbinder.BindType
-import com.squareup.moshi.Json
 import java.lang.reflect.Field
 import javax.inject.Inject
 
@@ -38,25 +37,25 @@ internal class GamespotFieldsSerializerImpl @Inject constructor() : GamespotFiel
 
 
     override fun serializeFields(clazz: Class<*>): String {
-        return clazz.getJsonFieldNames().joinToString(FIELD_SEPARATOR)
+        return clazz.getGamespotFieldNames().joinToString(FIELD_SEPARATOR)
     }
 
 
-    private fun Class<*>.getJsonFieldNames(): List<String> {
+    private fun Class<*>.getGamespotFieldNames(): List<String> {
         return declaredFields
-            .filter { it.hasJsonAnnotation() }
-            .map { it.getJsonName() }
+            .filter { it.hasGamespotAnnotation() }
+            .map { it.getGamespotName() }
     }
 
 
-    private fun Field.hasJsonAnnotation(): Boolean {
-        return isAnnotationPresent(Json::class.java)
+    private fun Field.hasGamespotAnnotation(): Boolean {
+        return isAnnotationPresent(Gamespot::class.java)
     }
 
 
-    private fun Field.getJsonName(): String {
-        val jsonAnnotation = checkNotNull(getAnnotation(Json::class.java))
-        val fieldName = jsonAnnotation.name
+    private fun Field.getGamespotName(): String {
+        val annotation = checkNotNull(getAnnotation(Gamespot::class.java))
+        val fieldName = annotation.value
 
         if(fieldName.isBlank()) {
             throw IllegalArgumentException(

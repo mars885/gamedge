@@ -31,7 +31,7 @@ internal data class Article(
     @ColumnInfo(name = Schema.ID) val id: Int,
     @ColumnInfo(name = Schema.TITLE) val title: String,
     @ColumnInfo(name = Schema.LEDE) val lede: String,
-    @ColumnInfo(name = Schema.IMAGE_URLS) val imageUrls: String,
+    @ColumnInfo(name = Schema.IMAGE_URLS) val imageUrls: Map<ImageType, String>,
     @ColumnInfo(name = Schema.PUBLICATION_DATE) val publicationDate: Long,
     @ColumnInfo(name = Schema.SITE_DETAIL_URL) val siteDetailUrl: String
 ) {

@@ -18,20 +18,20 @@ package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @ApicalypseClass
-@JsonClass(generateAdapter = true)
+@Serializable
 internal data class Website(
-    @Apicalypse(name = Schema.ID)
-    @field:Json(name = Schema.ID)
+    @Apicalypse(Schema.ID)
+    @SerialName(Schema.ID)
     val id: Int,
-    @Apicalypse(name = Schema.URL)
-    @field:Json(name = Schema.URL)
+    @Apicalypse(Schema.URL)
+    @SerialName(Schema.URL)
     val url: String,
-    @Apicalypse(name = Schema.CATEGORY)
-    @field:Json(name = Schema.CATEGORY)
+    @Apicalypse(Schema.CATEGORY)
+    @SerialName(Schema.CATEGORY)
     val category: WebsiteCategory,
 ) {
 

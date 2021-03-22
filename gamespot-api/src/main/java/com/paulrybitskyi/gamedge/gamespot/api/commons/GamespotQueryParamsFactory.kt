@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.gamespot.api.commons
 
 import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.Article
+import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.GamespotFieldsSerializer
 
 
 internal interface GamespotQueryParamsFactory {

@@ -18,17 +18,17 @@ package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @ApicalypseClass
-@JsonClass(generateAdapter = true)
+@Serializable
 internal data class AgeRating(
-    @Apicalypse(name = Schema.CATEGORY)
-    @field:Json(name = Schema.CATEGORY)
+    @Apicalypse(Schema.CATEGORY)
+    @SerialName(Schema.CATEGORY)
     val category: AgeRatingCategory,
-    @Apicalypse(name = Schema.RATING)
-    @field:Json(name = Schema.RATING)
+    @Apicalypse(Schema.RATING)
+    @SerialName(Schema.RATING)
     val type: AgeRatingType,
 ) {
 

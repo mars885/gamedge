@@ -17,36 +17,46 @@
 package com.paulrybitskyi.gamedge.database.tables
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.database.GamedgeDatabase
+import com.paulrybitskyi.gamedge.database.commons.di.DatabaseModule
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import com.paulrybitskyi.gamedge.database.utils.DATABASE_GAMES
-import com.paulrybitskyi.gamedge.database.utils.createMemoryDb
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import javax.inject.Inject
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
+@UninstallModules(DatabaseModule::class)
 internal class GamesTableTest {
 
 
-    @get:Rule
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var db: GamedgeDatabase
-    private lateinit var SUT: GamesTable
+    @Inject lateinit var SUT: GamesTable
+
+
+    @Module(includes = [TestDatabaseModule::class])
+    @InstallIn(SingletonComponent::class)
+    class TestModule
 
 
     @Before
     fun setup() {
-        db = createMemoryDb()
-        SUT = db.gamesTable
+        hiltRule.inject()
     }
 
 
@@ -592,12 +602,6 @@ internal class GamesTableTest {
                 assertThat(expectItem()).isEqualTo(expectedGames)
             }
         }
-    }
-
-
-    @After
-    fun cleanup() {
-        db.close()
     }
 
 

@@ -14,26 +14,22 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.api.games.serialization
+package com.paulrybitskyi.gamedge.database.games.entities
 
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.AgeRatingType
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.AgeRatingType.Companion.asAgeRatingType
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.ToJson
+internal enum class AgeRatingType {
 
-internal class AgeRatingTypeAdapter {
-
-
-    @FromJson
-    fun fromJson(rating: Int): AgeRatingType {
-        return rating.asAgeRatingType()
-    }
-
-
-    @ToJson
-    fun toJson(ageRatingType: AgeRatingType): Int {
-        return ageRatingType.value
-    }
-
+    UNKNOWN,
+    THREE,
+    SEVEN,
+    TWELVE,
+    SIXTEEN,
+    EIGHTEEN,
+    RP,
+    EC,
+    E,
+    E10,
+    T,
+    M,
+    AO,
 
 }

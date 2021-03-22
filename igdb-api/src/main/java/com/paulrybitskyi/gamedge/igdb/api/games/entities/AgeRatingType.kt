@@ -16,30 +16,62 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
-internal enum class AgeRatingType(val value: Int) {
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.AgeRatingType.Companion.asAgeRatingType
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 
-    UNKNOWN(value = -1),
-    THREE(value = 1),
-    SEVEN(value = 2),
-    TWELVE(value = 3),
-    SIXTEEN(value = 4),
-    EIGHTEEN(value = 5),
-    RP(value = 6),
-    EC(value = 7),
-    E(value = 8),
-    E10(value = 9),
-    T(value = 10),
-    M(value = 11),
-    AO(value = 12);
+@Serializable(with = AgeRatingTypeSerializer::class)
+internal enum class AgeRatingType(val rawValue: Int) {
+
+
+    UNKNOWN(rawValue = -1),
+    THREE(rawValue = 1),
+    SEVEN(rawValue = 2),
+    TWELVE(rawValue = 3),
+    SIXTEEN(rawValue = 4),
+    EIGHTEEN(rawValue = 5),
+    RP(rawValue = 6),
+    EC(rawValue = 7),
+    E(rawValue = 8),
+    E10(rawValue = 9),
+    T(rawValue = 10),
+    M(rawValue = 11),
+    AO(rawValue = 12);
 
 
     internal companion object {
 
         fun Int.asAgeRatingType(): AgeRatingType {
-            return values().find { it.value == this } ?: UNKNOWN
+            return values().find { it.rawValue == this } ?: UNKNOWN
         }
 
+    }
+
+
+}
+
+
+internal object AgeRatingTypeSerializer : KSerializer<AgeRatingType> {
+
+
+    override val descriptor = PrimitiveSerialDescriptor(
+        checkNotNull(AgeRatingTypeSerializer::class.qualifiedName),
+        PrimitiveKind.INT
+    )
+
+
+    override fun serialize(encoder: Encoder, value: AgeRatingType) {
+        encoder.encodeInt(value.rawValue)
+    }
+
+
+    override fun deserialize(decoder: Decoder): AgeRatingType {
+        return decoder.decodeInt().asAgeRatingType()
     }
 
 

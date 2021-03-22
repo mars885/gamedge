@@ -18,89 +18,89 @@ package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @ApicalypseClass
-@JsonClass(generateAdapter = true)
+@Serializable
 internal data class Game(
-    @Apicalypse(name = Schema.ID)
-    @field:Json(name = Schema.ID)
+    @Apicalypse(Schema.ID)
+    @SerialName(Schema.ID)
     val id: Int = -1,
-    @Apicalypse(name = Schema.FOLLOWER_COUNT)
-    @field:Json(name = Schema.FOLLOWER_COUNT)
+    @Apicalypse(Schema.FOLLOWER_COUNT)
+    @SerialName(Schema.FOLLOWER_COUNT)
     val followerCount: Int? = null,
-    @Apicalypse(name = Schema.HYPE_COUNT)
-    @field:Json(name = Schema.HYPE_COUNT)
+    @Apicalypse(Schema.HYPE_COUNT)
+    @SerialName(Schema.HYPE_COUNT)
     val hypeCount: Int? = null,
-    @Apicalypse(name = Schema.RELEASE_DATE)
-    @field:Json(name = Schema.RELEASE_DATE)
+    @Apicalypse(Schema.RELEASE_DATE)
+    @SerialName(Schema.RELEASE_DATE)
     val releaseDate: Long? = null,
-    @Apicalypse(name = Schema.CRITICS_RATING)
-    @field:Json(name = Schema.CRITICS_RATING)
+    @Apicalypse(Schema.CRITICS_RATING)
+    @SerialName(Schema.CRITICS_RATING)
     val criticsRating: Double? = null,
-    @Apicalypse(name = Schema.USERS_RATING)
-    @field:Json(name = Schema.USERS_RATING)
+    @Apicalypse(Schema.USERS_RATING)
+    @SerialName(Schema.USERS_RATING)
     val usersRating: Double? = null,
-    @Apicalypse(name = Schema.TOTAL_RATING)
-    @field:Json(name = Schema.TOTAL_RATING)
+    @Apicalypse(Schema.TOTAL_RATING)
+    @SerialName(Schema.TOTAL_RATING)
     val totalRating: Double? = null,
-    @Apicalypse(name = Schema.NAME)
-    @field:Json(name = Schema.NAME)
+    @Apicalypse(Schema.NAME)
+    @SerialName(Schema.NAME)
     val name: String = "",
-    @Apicalypse(name = Schema.SUMMARY)
-    @field:Json(name = Schema.SUMMARY)
+    @Apicalypse(Schema.SUMMARY)
+    @SerialName(Schema.SUMMARY)
     val summary: String? = null,
-    @Apicalypse(name = Schema.STORYLINE)
-    @field:Json(name = Schema.STORYLINE)
+    @Apicalypse(Schema.STORYLINE)
+    @SerialName(Schema.STORYLINE)
     val storyline: String? = null,
-    @Apicalypse(name = Schema.CATEGORY)
-    @field:Json(name = Schema.CATEGORY)
+    @Apicalypse(Schema.CATEGORY)
+    @SerialName(Schema.CATEGORY)
     val category: Category = Category.UNKNOWN,
-    @Apicalypse(name = Schema.COVER)
-    @field:Json(name = Schema.COVER)
+    @Apicalypse(Schema.COVER)
+    @SerialName(Schema.COVER)
     val cover: Image? = null,
-    @Apicalypse(name = Schema.RELEASE_DATES)
-    @field:Json(name = Schema.RELEASE_DATES)
+    @Apicalypse(Schema.RELEASE_DATES)
+    @SerialName(Schema.RELEASE_DATES)
     val releaseDates: List<ReleaseDate> = listOf(),
-    @Apicalypse(name = Schema.AGE_RATINGS)
-    @field:Json(name = Schema.AGE_RATINGS)
+    @Apicalypse(Schema.AGE_RATINGS)
+    @SerialName(Schema.AGE_RATINGS)
     val ageRatings: List<AgeRating> = listOf(),
-    @Apicalypse(name = Schema.VIDEOS)
-    @field:Json(name = Schema.VIDEOS)
+    @Apicalypse(Schema.VIDEOS)
+    @SerialName(Schema.VIDEOS)
     val videos: List<Video> = listOf(),
-    @Apicalypse(name = Schema.ARTWORKS)
-    @field:Json(name = Schema.ARTWORKS)
+    @Apicalypse(Schema.ARTWORKS)
+    @SerialName(Schema.ARTWORKS)
     val artworks: List<Image> = listOf(),
-    @Apicalypse(name = Schema.SCREENSHOTS)
-    @field:Json(name = Schema.SCREENSHOTS)
+    @Apicalypse(Schema.SCREENSHOTS)
+    @SerialName(Schema.SCREENSHOTS)
     val screenshots: List<Image> = listOf(),
-    @Apicalypse(name = Schema.GENRES)
-    @field:Json(name = Schema.GENRES)
+    @Apicalypse(Schema.GENRES)
+    @SerialName(Schema.GENRES)
     val genres: List<Genre> = listOf(),
-    @Apicalypse(name = Schema.PLATFORMS)
-    @field:Json(name = Schema.PLATFORMS)
+    @Apicalypse(Schema.PLATFORMS)
+    @SerialName(Schema.PLATFORMS)
     val platforms: List<Platform> = listOf(),
-    @Apicalypse(name = Schema.PLAYER_PERSPECTIVES)
-    @field:Json(name = Schema.PLAYER_PERSPECTIVES)
+    @Apicalypse(Schema.PLAYER_PERSPECTIVES)
+    @SerialName(Schema.PLAYER_PERSPECTIVES)
     val playerPerspectives: List<PlayerPerspective> = listOf(),
-    @Apicalypse(name = Schema.THEMES)
-    @field:Json(name = Schema.THEMES)
+    @Apicalypse(Schema.THEMES)
+    @SerialName(Schema.THEMES)
     val themes: List<Theme> = listOf(),
-    @Apicalypse(name = Schema.MODES)
-    @field:Json(name = Schema.MODES)
+    @Apicalypse(Schema.MODES)
+    @SerialName(Schema.MODES)
     val modes: List<Mode> = listOf(),
-    @Apicalypse(name = Schema.KEYWORDS)
-    @field:Json(name = Schema.KEYWORDS)
+    @Apicalypse(Schema.KEYWORDS)
+    @SerialName(Schema.KEYWORDS)
     val keywords: List<Keyword> = listOf(),
-    @Apicalypse(name = Schema.INVOLVED_COMPANIES)
-    @field:Json(name = Schema.INVOLVED_COMPANIES)
+    @Apicalypse(Schema.INVOLVED_COMPANIES)
+    @SerialName(Schema.INVOLVED_COMPANIES)
     val involvedCompanies: List<InvolvedCompany> = listOf(),
-    @Apicalypse(name = Schema.WEBSITES)
-    @field:Json(name = Schema.WEBSITES)
+    @Apicalypse(Schema.WEBSITES)
+    @SerialName(Schema.WEBSITES)
     val websites: List<Website> = listOf(),
-    @Apicalypse(name = Schema.SIMILAR_GAMES)
-    @field:Json(name = Schema.SIMILAR_GAMES)
+    @Apicalypse(Schema.SIMILAR_GAMES)
+    @SerialName(Schema.SIMILAR_GAMES)
     val similarGames: List<Int> = listOf(),
 ) {
 

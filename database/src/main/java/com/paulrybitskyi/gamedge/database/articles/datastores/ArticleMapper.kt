@@ -17,48 +17,49 @@
 package com.paulrybitskyi.gamedge.database.articles.datastores
 
 import com.paulrybitskyi.gamedge.data.articles.DataArticle
+import com.paulrybitskyi.gamedge.data.articles.DataImageType
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
-import com.paulrybitskyi.gamedge.database.commons.JsonConverter
-import com.paulrybitskyi.hiltbinder.BindType
+import com.paulrybitskyi.gamedge.database.articles.DatabaseImageType
 import javax.inject.Inject
 
-
-internal interface ArticleMapper {
-
-    fun mapToDatabaseArticle(dataArticle: DataArticle): DatabaseArticle
-
-    fun mapToDataArticle(databaseArticle: DatabaseArticle): DataArticle
-
-}
+internal class ArticleMapper @Inject constructor() {
 
 
-@BindType
-internal class ArticleMapperImpl @Inject constructor(
-    private val jsonConverter: JsonConverter
-) : ArticleMapper {
-
-
-    override fun mapToDatabaseArticle(dataArticle: DataArticle): DatabaseArticle {
+    fun mapToDatabaseArticle(dataArticle: DataArticle): DatabaseArticle {
         return DatabaseArticle(
             id = dataArticle.id,
             title = dataArticle.title,
             lede = dataArticle.lede,
-            imageUrls = jsonConverter.toJson(dataArticle.imageUrls),
+            imageUrls = dataArticle.imageUrls.toDatabaseImageUrls(),
             publicationDate = dataArticle.publicationDate,
             siteDetailUrl = dataArticle.siteDetailUrl
         )
     }
 
 
-    override fun mapToDataArticle(databaseArticle: DatabaseArticle): DataArticle {
+    private fun Map<DataImageType, String>.toDatabaseImageUrls(): Map<DatabaseImageType, String> {
+        return mapKeys {
+            DatabaseImageType.valueOf(it.key.name)
+        }
+    }
+
+
+    fun mapToDataArticle(databaseArticle: DatabaseArticle): DataArticle {
         return DataArticle(
             id = databaseArticle.id,
             title = databaseArticle.title,
             lede = databaseArticle.lede,
-            imageUrls = (jsonConverter.fromJson(databaseArticle.imageUrls) ?: emptyMap()),
+            imageUrls = databaseArticle.imageUrls.toDataImageUrls(),
             publicationDate = databaseArticle.publicationDate,
             siteDetailUrl = databaseArticle.siteDetailUrl
         )
+    }
+
+
+    private fun Map<DatabaseImageType, String>.toDataImageUrls(): Map<DataImageType, String> {
+        return mapKeys {
+            DataImageType.valueOf(it.key.name)
+        }
     }
 
 

@@ -16,7 +16,25 @@
 
 package com.paulrybitskyi.gamedge.database.games
 
-import com.paulrybitskyi.gamedge.database.games.entities.Game
+import com.paulrybitskyi.gamedge.database.games.entities.*
 
 
 internal typealias DatabaseGame = Game
+internal typealias DatabaseCategory = Category
+internal typealias DatabaseImage = Image
+internal typealias DatabaseReleaseDate = ReleaseDate
+internal typealias DatabaseReleaseDateCategory = ReleaseDateCategory
+internal typealias DatabaseAgeRating = AgeRating
+internal typealias DatabaseAgeRatingCategory = AgeRatingCategory
+internal typealias DatabaseAgeRatingType = AgeRatingType
+internal typealias DatabaseVideo = Video
+internal typealias DatabaseGenre = Genre
+internal typealias DatabasePlatform = Platform
+internal typealias DatabasePlayerPerspective = PlayerPerspective
+internal typealias DatabaseTheme = Theme
+internal typealias DatabaseMode = Mode
+internal typealias DatabaseKeyword = Keyword
+internal typealias DatabaseInvolvedCompany = InvolvedCompany
+internal typealias DatabaseCompany = Company
+internal typealias DatabaseWebsite = Website
+internal typealias DatabaseWebsiteCategory = WebsiteCategory

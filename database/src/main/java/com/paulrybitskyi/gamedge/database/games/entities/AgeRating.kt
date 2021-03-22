@@ -14,26 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.api.games.serialization
+package com.paulrybitskyi.gamedge.database.games.entities
 
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.WebsiteCategory
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.WebsiteCategory.Companion.asWebsiteCategory
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.ToJson
+import kotlinx.serialization.Serializable
 
-internal class WebsiteCategoryAdapter {
-
-
-    @FromJson
-    fun fromJson(category: Int): WebsiteCategory {
-        return category.asWebsiteCategory()
-    }
-
-
-    @ToJson
-    fun toJson(websiteCategory: WebsiteCategory): Int {
-        return websiteCategory.value
-    }
-
-
-}
+@Serializable
+internal data class AgeRating(
+    val category: AgeRatingCategory,
+    val type: AgeRatingType,
+)

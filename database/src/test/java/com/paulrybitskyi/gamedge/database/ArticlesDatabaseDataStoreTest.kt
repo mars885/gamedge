@@ -17,25 +17,20 @@
 package com.paulrybitskyi.gamedge.database
 
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.data.articles.DataArticle
-import com.paulrybitskyi.gamedge.data.commons.DataPagination
-import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
+import com.paulrybitskyi.gamedge.commons.testing.DATA_ARTICLES
+import com.paulrybitskyi.gamedge.commons.testing.DATA_PAGINATION
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.database.articles.datastores.ArticleMapper
 import com.paulrybitskyi.gamedge.database.articles.datastores.ArticlesDatabaseDataStore
 import com.paulrybitskyi.gamedge.database.articles.datastores.mapToDatabaseArticles
 import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
-import com.paulrybitskyi.gamedge.commons.testing.DATA_ARTICLES
-import com.paulrybitskyi.gamedge.commons.testing.DATA_PAGINATION
-import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -44,7 +39,7 @@ internal class ArticlesDatabaseDataStoreTest {
 
     @MockK private lateinit var articlesTable: ArticlesTable
 
-    private lateinit var articleMapper: FakeArticleMapper
+    private lateinit var articleMapper: ArticleMapper
     private lateinit var SUT: ArticlesDatabaseDataStore
 
 
@@ -52,7 +47,7 @@ internal class ArticlesDatabaseDataStoreTest {
     fun setup() {
         MockKAnnotations.init(this, relaxUnitFun = true)
 
-        articleMapper = FakeArticleMapper()
+        articleMapper = ArticleMapper()
         SUT = ArticlesDatabaseDataStore(
             articlesTable = articlesTable,
             dispatcherProvider = FakeDispatcherProvider(),
@@ -85,33 +80,6 @@ internal class ArticlesDatabaseDataStoreTest {
                 expectComplete()
             }
         }
-    }
-
-
-    private class FakeArticleMapper : ArticleMapper {
-
-        override fun mapToDatabaseArticle(dataArticle: DataArticle): DatabaseArticle {
-            return DatabaseArticle(
-                id = dataArticle.id,
-                title = dataArticle.title,
-                lede = dataArticle.lede,
-                imageUrls = "",
-                publicationDate = dataArticle.publicationDate,
-                siteDetailUrl = dataArticle.siteDetailUrl
-            )
-        }
-
-        override fun mapToDataArticle(databaseArticle: DatabaseArticle): DataArticle {
-            return DataArticle(
-                id = databaseArticle.id,
-                title = databaseArticle.title,
-                lede = databaseArticle.lede,
-                imageUrls = emptyMap(),
-                publicationDate = databaseArticle.publicationDate,
-                siteDetailUrl = databaseArticle.siteDetailUrl
-            )
-        }
-
     }
 
 

@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.database.utils
 
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
+import com.paulrybitskyi.gamedge.database.games.DatabaseCategory
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.entities.LikedGame
 
@@ -25,7 +26,7 @@ internal val DATABASE_ARTICLE = DatabaseArticle(
     id = 1,
     title = "title",
     lede = "lede",
-    imageUrls = "image_urls",
+    imageUrls = mapOf(),
     publicationDate = 0L,
     siteDetailUrl = "site_detail_url"
 )
@@ -49,22 +50,22 @@ internal val DATABASE_GAME = DatabaseGame(
     name = "Game1",
     summary = null,
     storyline = null,
-    category = "category",
-    cover = "cover",
-    releaseDates = "release_dates",
-    ageRatings = "age_ratings",
-    videos = "videos",
-    artworks = "artworks",
-    screenshots = "screenshots",
-    genres = "genres",
-    platforms = "platforms",
-    playerPerspectives = "player_perspectives",
-    themes = "themes",
-    modes = "modes",
-    keywords = "keywords",
-    involvedCompanies = "involved_companies",
-    websites = "websites",
-    similarGames = "similar_games"
+    category = DatabaseCategory.UNKNOWN,
+    cover = null,
+    releaseDates = listOf(),
+    ageRatings = listOf(),
+    videos = listOf(),
+    artworks = listOf(),
+    screenshots = listOf(),
+    genres = listOf(),
+    platforms = listOf(),
+    playerPerspectives = listOf(),
+    themes = listOf(),
+    modes = listOf(),
+    keywords = listOf(),
+    involvedCompanies = listOf(),
+    websites = listOf(),
+    similarGames = listOf()
 )
 internal val DATABASE_GAMES = listOf(
     DATABASE_GAME.copy(

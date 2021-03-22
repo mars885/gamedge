@@ -43,7 +43,7 @@ object versions {
     const val navigation = "2.3.4"
     const val daggerHilt = "2.33-beta"
     const val coroutines = "1.4.3"
-    const val room = "2.2.6"
+    const val room = "2.3.0-beta03"
 
 }
 
@@ -92,8 +92,11 @@ object deps {
 
     object kotlin {
 
+        private const val serializationVersion = "1.1.0"
+
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"
 
     }
 
@@ -147,15 +150,13 @@ object deps {
 
         private const val okHttpVersion = "4.9.1"
         private const val retrofitVersion = "2.9.0"
-        private const val moshiVersion = "1.11.0"
+        private const val retrofitKotlinxSerializationConverterVersion = "0.8.0"
         private const val picassoVersion = "2.8"
 
         const val okHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
         const val retrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
-        const val retrofitMoshiConverter = "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
         const val retrofitScalarsConverter = "com.squareup.retrofit2:converter-scalars:${retrofitVersion}"
-        const val moshi = "com.squareup.moshi:moshi:${moshiVersion}"
-        const val moshiCodeGenerator = "com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}"
+        const val retrofitKotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$retrofitKotlinxSerializationConverterVersion"
         const val picasso = "com.squareup.picasso:picasso:${picassoVersion}"
 
     }
@@ -191,7 +192,6 @@ object deps {
         private const val expandableTextViewVersion = "1.0.5"
         private const val hiltBinderVersion = "1.0.0-alpha01"
         private const val photoViewVersion = "2.3.0"
-        private const val moshiMetadataReflectVersion = "0.9.1"
 
         const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${desugaredLibsVersion}"
         const val kotlinResult = "com.michael-bull.kotlin-result:kotlin-result:${kotlinResultVersion}"
@@ -199,7 +199,6 @@ object deps {
         const val hiltBinder = "com.paulrybitskyi:hilt-binder:$hiltBinderVersion"
         const val hiltBinderCompiler = "com.paulrybitskyi:hilt-binder-compiler:$hiltBinderVersion"
         const val photoView = "com.github.chrisbanes:PhotoView:$photoViewVersion"
-        const val moshiMetadataReflect = "dev.zacsweers.moshix:moshi-metadata-reflect:$moshiMetadataReflectVersion"
 
     }
 
@@ -213,7 +212,6 @@ object deps {
         private const val testRunnerVersion = "1.3.0"
         private const val archCoreVersion = "2.1.0"
         private const val mockWebServerVersion = "4.9.0"
-        private const val orgJsonVersion = "20210307"
 
         const val jUnit = "junit:junit:$jUnitVersion"
         const val jUnitExt = "androidx.test.ext:junit:$jUnitExtVersion"
@@ -226,7 +224,6 @@ object deps {
         const val daggerHilt = "com.google.dagger:hilt-android-testing:${versions.daggerHilt}"
         const val room = "androidx.room:room-testing:${versions.room}"
         const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
-        const val orgJson = "org.json:json:$orgJsonVersion"
 
     }
 

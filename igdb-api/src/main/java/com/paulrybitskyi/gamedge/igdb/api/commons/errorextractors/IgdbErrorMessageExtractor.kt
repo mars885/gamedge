@@ -19,24 +19,32 @@ package com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.ErrorMessageExtractorKey
 import com.paulrybitskyi.hiltbinder.BindType
-import org.json.JSONArray
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import javax.inject.Inject
 
 
-private const val ERROR_MESSAGE_NAME = "cause"
+private const val ERROR_MESSAGE_NAME = "title"
 
 
 @BindType(withQualifier = true)
 @ErrorMessageExtractorKey(ErrorMessageExtractorKey.Type.IGDB)
-internal class IgdbErrorMessageExtractor @Inject constructor() : ErrorMessageExtractor {
+internal class IgdbErrorMessageExtractor @Inject constructor(
+    private val json: Json
+) : ErrorMessageExtractor {
 
 
     override fun extract(responseBody: String): String = try {
-        val jsonArray = JSONArray(responseBody)
-        val jsonObject = jsonArray.getJSONObject(0)
-        val message = jsonObject.getString(ERROR_MESSAGE_NAME)
+        val rootElement = json.parseToJsonElement(responseBody)
+        val rootArray = rootElement.jsonArray
+        val rootObject = rootArray.first().jsonObject
+        val errorElement = rootObject.getValue(ERROR_MESSAGE_NAME)
+        val errorPrimitive = errorElement.jsonPrimitive
+        val errorMessage = errorPrimitive.content
 
-        message
+        errorMessage
     } catch(error: Throwable) {
         throw IllegalStateException(
             "Cannot extract a message from the response body: $responseBody",

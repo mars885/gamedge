@@ -16,16 +16,16 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.auth.entities
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 internal data class OauthCredentials(
-    @field:Json(name = Schema.ACCESS_TOKEN)
+    @SerialName(Schema.ACCESS_TOKEN)
     val accessToken: String,
-    @field:Json(name = Schema.TOKEN_TYPE)
+    @SerialName(Schema.TOKEN_TYPE)
     val tokenType: String,
-    @field:Json(name = Schema.TOKEN_TTL)
+    @SerialName(Schema.TOKEN_TTL)
     val tokenTtl: Long
 ) {
 

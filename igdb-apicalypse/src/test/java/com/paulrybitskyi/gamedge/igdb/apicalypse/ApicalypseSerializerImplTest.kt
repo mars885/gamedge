@@ -39,17 +39,17 @@ internal class ApicalypseSerializerImplTest {
     fun `Serializes simple entity successfully`() {
         @ApicalypseClass
         data class Entity(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: Int,
-            @Apicalypse(name = "field2")
+            @Apicalypse("field2")
             val field2: String,
-            @Apicalypse(name = "field3")
+            @Apicalypse("field3")
             val field3: Double,
-            @Apicalypse(name = "field4")
+            @Apicalypse("field4")
             val field4: Float,
-            @Apicalypse(name = "field5")
+            @Apicalypse("field5")
             val field5: String,
-            @Apicalypse(name = "field6")
+            @Apicalypse("field6")
             val field6: Float
         )
 
@@ -74,7 +74,7 @@ internal class ApicalypseSerializerImplTest {
     fun `Throws exception if name of field is empty`() {
         @ApicalypseClass
         data class Entity(
-            @Apicalypse(name = "")
+            @Apicalypse("")
             val field1: Int
         )
 
@@ -87,7 +87,7 @@ internal class ApicalypseSerializerImplTest {
     fun `Throws exception if name of field is blank`() {
         @ApicalypseClass
         data class Entity(
-            @Apicalypse(name = "   ")
+            @Apicalypse("   ")
             val field1: Int
         )
 
@@ -100,7 +100,7 @@ internal class ApicalypseSerializerImplTest {
     fun `Does not serialize fields that are not annotated with @Apicalypse annotation`() {
         @ApicalypseClass
         data class Entity(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: Int,
             val field2: Float
         )
@@ -113,37 +113,37 @@ internal class ApicalypseSerializerImplTest {
     fun `Serializes parent entity that contains child entities successfully`() {
         @ApicalypseClass
         data class Child1(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: Int
         )
 
         @ApicalypseClass
         data class Child2(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: Int,
-            @Apicalypse(name = "field2")
+            @Apicalypse("field2")
             val field2: String
         )
 
         @ApicalypseClass
         data class Child3(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: Int,
-            @Apicalypse(name = "field2")
+            @Apicalypse("field2")
             val field2: String,
-            @Apicalypse(name = "field3")
+            @Apicalypse("field3")
             val field3: Double
         )
 
         @ApicalypseClass
         data class Parent(
-            @Apicalypse(name = "parent")
+            @Apicalypse("parent")
             val parent: Int,
-            @Apicalypse(name = "child1")
+            @Apicalypse("child1")
             val child1: Child1,
-            @Apicalypse(name = "child2")
+            @Apicalypse("child2")
             val child2: Child2,
-            @Apicalypse(name = "child3")
+            @Apicalypse("child3")
             val child3: Child3
         )
 
@@ -156,61 +156,61 @@ internal class ApicalypseSerializerImplTest {
     fun `Serializes parent entity with deeply nested child entities successfully`() {
         @ApicalypseClass
         data class Grandchild1(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: Int
         )
 
         @ApicalypseClass
         data class Grandchild2(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: String,
-            @Apicalypse(name = "field2")
+            @Apicalypse("field2")
             val field2: String
         )
 
         @ApicalypseClass
         data class Grandchild3(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: String,
-            @Apicalypse(name = "field2")
+            @Apicalypse("field2")
             val field2: String,
-            @Apicalypse(name = "field3")
+            @Apicalypse("field3")
             val field3: String
         )
 
         @ApicalypseClass
         data class Child1(
-            @Apicalypse(name = "kid1")
+            @Apicalypse("kid1")
             val child1: Grandchild1
         )
 
         @ApicalypseClass
         data class Child2(
-            @Apicalypse(name = "kid1")
+            @Apicalypse("kid1")
             val child1: Grandchild1,
-            @Apicalypse(name = "kid2")
+            @Apicalypse("kid2")
             val child2: Grandchild2
         )
 
         @ApicalypseClass
         data class Child3(
-            @Apicalypse(name = "kid1")
+            @Apicalypse("kid1")
             val child1: Grandchild1,
-            @Apicalypse(name = "kid2")
+            @Apicalypse("kid2")
             val child2: Grandchild2,
-            @Apicalypse(name = "kid3")
+            @Apicalypse("kid3")
             val child3: Grandchild3
         )
 
         @ApicalypseClass
         data class Parent(
-            @Apicalypse(name = "parent")
+            @Apicalypse("parent")
             val parent: Int,
-            @Apicalypse(name = "child1")
+            @Apicalypse("child1")
             val child1: Child1,
-            @Apicalypse(name = "child2")
+            @Apicalypse("child2")
             val child2: Child2,
-            @Apicalypse(name = "child3")
+            @Apicalypse("child3")
             val child3: Child3
         )
 
@@ -227,9 +227,9 @@ internal class ApicalypseSerializerImplTest {
     fun `Serializes entity with list collection type`() {
         @ApicalypseClass
         data class Entity(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: Int,
-            @Apicalypse(name = "field2")
+            @Apicalypse("field2")
             val field2: List<String>
         )
 
@@ -241,9 +241,9 @@ internal class ApicalypseSerializerImplTest {
     fun `Serializes entity with set collection type`() {
         @ApicalypseClass
         data class Entity(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: Int,
-            @Apicalypse(name = "field2")
+            @Apicalypse("field2")
             val field2: Set<String>
         )
 
@@ -255,9 +255,9 @@ internal class ApicalypseSerializerImplTest {
     fun `Throws exception when serializing non collection generic type`() {
         @ApicalypseClass
         data class Entity(
-            @Apicalypse(name = "field1")
+            @Apicalypse("field1")
             val field1: Int,
-            @Apicalypse(name = "field2")
+            @Apicalypse("field2")
             val field2: Map<String, String>
         )
 

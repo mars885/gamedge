@@ -16,22 +16,29 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api.articles.entities
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.Gamespot
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 internal data class Article(
-    @field:Json(name = Schema.ID)
+    @Gamespot(Schema.ID)
+    @SerialName(Schema.ID)
     val id: Int = -1,
-    @field:Json(name = Schema.TITLE)
+    @Gamespot(Schema.TITLE)
+    @SerialName(Schema.TITLE)
     val title: String = "",
-    @field:Json(name = Schema.LEDE)
+    @Gamespot(Schema.LEDE)
+    @SerialName(Schema.LEDE)
     val lede: String = "",
-    @field:Json(name = Schema.IMAGE_URLS)
+    @Gamespot(Schema.IMAGE_URLS)
+    @SerialName(Schema.IMAGE_URLS)
     val imageUrls: Map<ImageType, String> = mapOf(),
-    @field:Json(name = Schema.PUBLICATION_DATE)
+    @Gamespot(Schema.PUBLICATION_DATE)
+    @SerialName(Schema.PUBLICATION_DATE)
     val publicationDate: String = "",
-    @field:Json(name = Schema.SITE_DETAIL_URL)
+    @Gamespot(Schema.SITE_DETAIL_URL)
+    @SerialName(Schema.SITE_DETAIL_URL)
     val siteDetailUrl: String = ""
 ) {
 

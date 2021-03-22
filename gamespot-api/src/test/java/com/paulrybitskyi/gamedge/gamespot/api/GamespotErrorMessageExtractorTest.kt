@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.gamespot.api
 
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotErrorMessageExtractor
+import kotlinx.serialization.json.Json
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -29,7 +30,7 @@ internal class GamespotErrorMessageExtractorTest {
 
     @Before
     fun setup() {
-        SUT = GamespotErrorMessageExtractor()
+        SUT = GamespotErrorMessageExtractor(Json)
     }
 
 

@@ -16,26 +16,58 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
-internal enum class Category(val value: Int) {
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Category.Companion.asCategory
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 
-    UNKNOWN(value = -1),
-    MAIN_GAME(value = 0),
-    DLC(value = 1),
-    EXPANSION(value = 2),
-    BUNDLE(value = 3),
-    STANDALONE_EXPANSION(value = 4),
-    MOD(value = 5),
-    EPISODE(value = 6),
-    SEASON(value = 7);
+@Serializable(with = CategorySerializer::class)
+internal enum class Category(val rawValue: Int) {
+
+
+    UNKNOWN(rawValue = -1),
+    MAIN_GAME(rawValue = 0),
+    DLC(rawValue = 1),
+    EXPANSION(rawValue = 2),
+    BUNDLE(rawValue = 3),
+    STANDALONE_EXPANSION(rawValue = 4),
+    MOD(rawValue = 5),
+    EPISODE(rawValue = 6),
+    SEASON(rawValue = 7);
 
 
     internal companion object {
 
         fun Int.asCategory(): Category {
-            return values().find { it.value == this } ?: UNKNOWN
+            return values().find { it.rawValue == this } ?: UNKNOWN
         }
 
+    }
+
+
+}
+
+
+internal object CategorySerializer : KSerializer<Category> {
+
+
+    override val descriptor = PrimitiveSerialDescriptor(
+        checkNotNull(CategorySerializer::class.qualifiedName),
+        PrimitiveKind.INT
+    )
+
+
+    override fun serialize(encoder: Encoder, value: Category) {
+        encoder.encodeInt(value.rawValue)
+    }
+
+
+    override fun deserialize(decoder: Decoder): Category {
+        return decoder.decodeInt().asCategory()
     }
 
 

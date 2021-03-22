@@ -18,20 +18,20 @@ package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @ApicalypseClass
-@JsonClass(generateAdapter = true)
+@Serializable
 internal data class ReleaseDate(
-    @Apicalypse(name = Schema.DATE)
-    @field:Json(name = Schema.DATE)
+    @Apicalypse(Schema.DATE)
+    @SerialName(Schema.DATE)
     val date: Long? = null,
-    @Apicalypse(name = Schema.YEAR)
-    @field:Json(name = Schema.YEAR)
+    @Apicalypse(Schema.YEAR)
+    @SerialName(Schema.YEAR)
     val year: Int? = null,
-    @Apicalypse(name = Schema.CATEGORY)
-    @field:Json(name = Schema.CATEGORY)
+    @Apicalypse(Schema.CATEGORY)
+    @SerialName(Schema.CATEGORY)
     val category: ReleaseDateCategory,
 ) {
 

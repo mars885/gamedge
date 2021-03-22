@@ -31,7 +31,7 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.SocketPolicy
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -96,7 +96,7 @@ internal class GamesServiceTest {
                         """
                         [
                           {
-                            "cause": "Missing `;` at end of query"
+                            "title": "Syntax Error"
                           }
                         ]
                         """.trimIndent()
@@ -106,7 +106,7 @@ internal class GamesServiceTest {
             val error = gamesService.getGames("").getError()
 
             assertThat(error is Error.HttpError).isTrue
-            assertThat((error as Error.HttpError).message).isEqualTo("Missing `;` at end of query")
+            assertThat((error as Error.HttpError).message).isEqualTo("Syntax Error")
         }
     }
 
@@ -190,13 +190,13 @@ internal class GamesServiceTest {
 
 
     @Test
-    fun network_error_is_returned_when_games_endpoint_returns_successful_response_with_no_body() {
+    fun unknown_error_is_returned_when_games_endpoint_returns_successful_response_with_no_body() {
         runBlocking {
             mockWebServer.enqueue(MockResponse().setResponseCode(200))
 
             val error = gamesService.getGames("").getError()
 
-            assertThat(error is Error.NetworkError).isTrue
+            assertThat(error is Error.UnknownError).isTrue
         }
     }
 

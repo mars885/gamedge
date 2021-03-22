@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.database.utils
+package com.paulrybitskyi.gamedge.database.games.entities
 
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import com.paulrybitskyi.gamedge.database.GamedgeDatabase
+import kotlinx.serialization.Serializable
 
-
-internal fun createMemoryDb(): GamedgeDatabase {
-    return Room.inMemoryDatabaseBuilder(
-        ApplicationProvider.getApplicationContext(),
-        GamedgeDatabase::class.java
-    )
-    .build()
-}
+@Serializable
+internal data class Platform(
+    val abbreviation: String,
+    val name: String,
+)

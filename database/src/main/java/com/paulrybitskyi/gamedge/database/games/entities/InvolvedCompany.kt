@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers
+package com.paulrybitskyi.gamedge.database.games.entities
 
-internal object StubFieldSerializer : FieldSerializer {
+import kotlinx.serialization.Serializable
 
-
-    override fun serialize(): String {
-        return ""
-    }
-
-
-}
+@Serializable
+internal data class InvolvedCompany(
+    val company: Company,
+    val isDeveloper: Boolean,
+    val isPublisher: Boolean,
+    val isPorter: Boolean,
+    val isSupporting: Boolean,
+)

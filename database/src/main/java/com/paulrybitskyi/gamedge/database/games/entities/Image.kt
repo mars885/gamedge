@@ -14,28 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.database.commons.di
+package com.paulrybitskyi.gamedge.database.games.entities
 
-import com.paulrybitskyi.gamedge.database.commons.di.qualifiers.Database
-import com.squareup.moshi.Moshi
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import dev.zacsweers.moshix.reflect.MetadataKotlinJsonAdapterFactory
+import kotlinx.serialization.Serializable
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal object CoreModule {
-
-
-    @Provides
-    @Database
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder()
-            .addLast(MetadataKotlinJsonAdapterFactory())
-            .build()
-    }
-
-
-}
+@Serializable
+internal data class Image(
+    val id: String,
+    val width: Int?,
+    val height: Int?
+)

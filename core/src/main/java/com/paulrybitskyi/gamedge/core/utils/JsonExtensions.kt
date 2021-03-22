@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,16 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.api.games.serialization
+package com.paulrybitskyi.gamedge.core.utils
 
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.Category
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.Category.Companion.asCategory
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.ToJson
-
-internal class CategoryAdapter {
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 
-    @FromJson
-    fun fromJson(category: Int): Category {
-        return category.asCategory()
+inline fun <reified T> Json.decodeFromStringOrNull(json: String): T? {
+    return try {
+        decodeFromString(json)
+    } catch(error: Throwable) {
+        null
     }
-
-
-    @ToJson
-    fun toJson(category: Category): Int {
-        return category.value
-    }
-
-
 }

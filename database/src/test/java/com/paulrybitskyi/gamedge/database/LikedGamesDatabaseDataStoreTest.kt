@@ -19,18 +19,18 @@ package com.paulrybitskyi.gamedge.database
 import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
 import com.paulrybitskyi.gamedge.commons.testing.DATA_PAGINATION
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
+import com.paulrybitskyi.gamedge.database.games.datastores.GameMapper
 import com.paulrybitskyi.gamedge.database.games.datastores.LikedGameFactory
 import com.paulrybitskyi.gamedge.database.games.datastores.LikedGamesDatabaseDataStore
+import com.paulrybitskyi.gamedge.database.games.datastores.mapToDatabaseGames
 import com.paulrybitskyi.gamedge.database.games.entities.LikedGame
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
-import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
-import com.paulrybitskyi.gamedge.database.games.datastores.mapToDatabaseGames
-import com.paulrybitskyi.gamedge.database.utils.FakeGameMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -43,14 +43,14 @@ internal class LikedGamesDatabaseDataStoreTest {
 
 
     private lateinit var likedGamesTable: FakeLikedGamesTable
-    private lateinit var gameMapper: FakeGameMapper
+    private lateinit var gameMapper: GameMapper
     private lateinit var SUT: LikedGamesDatabaseDataStore
 
 
     @Before
     fun setup() {
         likedGamesTable = FakeLikedGamesTable()
-        gameMapper = FakeGameMapper()
+        gameMapper = GameMapper()
         SUT = LikedGamesDatabaseDataStore(
             likedGamesTable = likedGamesTable,
             likedGameFactory = FakeLikedGameFactory(),
