@@ -16,19 +16,18 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api.articles
 
+import com.paulrybitskyi.gamedge.commons.api.asConverterFactory
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
-import com.paulrybitskyi.gamedge.gamespot.api.articles.serialization.ImageTypeAdapter
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotConstantsProvider
 import com.paulrybitskyi.gamedge.gamespot.api.commons.di.Endpoint
 import com.paulrybitskyi.gamedge.gamespot.api.commons.di.GamespotApi
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -46,23 +45,14 @@ internal object ArticlesEndpointModule {
     fun provideRetrofit(
         @GamespotApi okHttpClient: OkHttpClient,
         @GamespotApi callAdapterFactory: ApiResultCallAdapterFactory,
-        @Endpoint(Endpoint.Type.ARTICLES) moshi: Moshi,
+        json: Json,
         gamespotConstantsProvider: GamespotConstantsProvider
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .addCallAdapterFactory(callAdapterFactory)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(json.asConverterFactory())
             .baseUrl(gamespotConstantsProvider.apiBaseUrl)
-            .build()
-    }
-
-
-    @Provides
-    @Endpoint(Endpoint.Type.ARTICLES)
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder()
-            .add(ImageTypeAdapter())
             .build()
     }
 

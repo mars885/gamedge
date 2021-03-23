@@ -16,22 +16,21 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games
 
+import com.paulrybitskyi.gamedge.commons.api.asConverterFactory
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
 import com.paulrybitskyi.gamedge.igdb.api.commons.IgdbConstantsProvider
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.Endpoint
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
-import com.paulrybitskyi.gamedge.igdb.api.games.serialization.*
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializerFactory
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 @Module
@@ -50,28 +49,15 @@ internal object GamesEndpointModule {
     fun provideRetrofit(
         @IgdbApi okHttpClient: OkHttpClient,
         @IgdbApi callAdapterFactory: ApiResultCallAdapterFactory,
-        @Endpoint(Endpoint.Type.GAMES) moshi: Moshi,
+        json: Json,
         igdbConstantsProvider: IgdbConstantsProvider
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(json.asConverterFactory())
             .baseUrl(igdbConstantsProvider.apiBaseUrl)
-            .build()
-    }
-
-
-    @Provides
-    @Endpoint(Endpoint.Type.GAMES)
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder()
-            .add(CategoryAdapter())
-            .add(AgeRatingCategoryAdapter())
-            .add(AgeRatingTypeAdapter())
-            .add(ReleaseDateCategoryAdapter())
-            .add(WebsiteCategoryAdapter())
             .build()
     }
 

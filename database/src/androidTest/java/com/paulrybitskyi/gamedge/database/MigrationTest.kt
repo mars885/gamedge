@@ -16,47 +16,49 @@
 
 package com.paulrybitskyi.gamedge.database
 
-import androidx.room.Room
 import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.paulrybitskyi.gamedge.database.commons.MIGRATIONS
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-
-
-private const val TEST_DB_NAME = "migration-test"
-
+import javax.inject.Inject
+import javax.inject.Provider
 
 // https://developer.android.com/training/data-storage/room/migrating-db-versions
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 internal class MigrationTest {
 
 
-    @get:Rule
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val migrationTestHelper = MigrationTestHelper(
         InstrumentationRegistry.getInstrumentation(),
         GamedgeDatabase::class.java.canonicalName,
         FrameworkSQLiteOpenHelperFactory()
     )
 
+    @Inject lateinit var databaseProvider: Provider<GamedgeDatabase>
+
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+    }
+
 
     @Test
     fun run_all_migrations() {
-        migrationTestHelper.createDatabase(TEST_DB_NAME, 1).close()
+        migrationTestHelper.createDatabase(Constants.DATABASE_NAME, 1).close()
 
-        Room.databaseBuilder(
-            InstrumentationRegistry.getInstrumentation().targetContext,
-            GamedgeDatabase::class.java,
-            TEST_DB_NAME
-        ).addMigrations(*MIGRATIONS)
-            .build()
-            .apply {
-                openHelper.writableDatabase
-                close()
-            }
+        databaseProvider.get().apply {
+            openHelper.writableDatabase
+            close()
+        }
     }
 
 

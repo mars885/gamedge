@@ -16,29 +16,14 @@
 
 package com.paulrybitskyi.gamedge.database.games.datastores
 
-import com.paulrybitskyi.gamedge.data.games.DataGame
-import com.paulrybitskyi.gamedge.database.commons.JsonConverter
-import com.paulrybitskyi.gamedge.database.games.DatabaseGame
-import com.paulrybitskyi.hiltbinder.BindType
+import com.paulrybitskyi.gamedge.data.games.*
+import com.paulrybitskyi.gamedge.database.games.*
 import javax.inject.Inject
 
-
-internal interface GameMapper {
-
-    fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame
-
-    fun mapToDataGame(databaseGame: DatabaseGame): DataGame
-
-}
+internal class GameMapper @Inject constructor() {
 
 
-@BindType
-internal class GameMapperImpl @Inject constructor(
-    private val jsonConverter: JsonConverter
-) : GameMapper {
-
-
-    override fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame {
+    fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame {
         return DatabaseGame(
             id = dataGame.id,
             followerCount = dataGame.followerCount,
@@ -50,27 +35,167 @@ internal class GameMapperImpl @Inject constructor(
             name = dataGame.name,
             summary = dataGame.summary,
             storyline = dataGame.storyline,
-            category = jsonConverter.toJson(dataGame.category),
-            cover = jsonConverter.toJson(dataGame.cover),
-            releaseDates = jsonConverter.toJson(dataGame.releaseDates),
-            ageRatings = jsonConverter.toJson(dataGame.ageRatings),
-            videos = jsonConverter.toJson(dataGame.videos),
-            artworks = jsonConverter.toJson(dataGame.artworks),
-            screenshots = jsonConverter.toJson(dataGame.screenshots),
-            genres = jsonConverter.toJson(dataGame.genres),
-            platforms = jsonConverter.toJson(dataGame.platforms),
-            playerPerspectives = jsonConverter.toJson(dataGame.playerPerspectives),
-            themes = jsonConverter.toJson(dataGame.themes),
-            modes = jsonConverter.toJson(dataGame.modes),
-            keywords = jsonConverter.toJson(dataGame.keywords),
-            involvedCompanies = jsonConverter.toJson(dataGame.involvedCompanies),
-            websites = jsonConverter.toJson(dataGame.websites),
-            similarGames = jsonConverter.toJson(dataGame.similarGames)
+            category = dataGame.category.toDatabaseCategory(),
+            cover = dataGame.cover?.toDatabaseImage(),
+            releaseDates = dataGame.releaseDates.toDatabaseReleaseDates(),
+            ageRatings = dataGame.ageRatings.toDatabaseAgeRatings(),
+            videos = dataGame.videos.toDatabaseVideos(),
+            artworks = dataGame.artworks.toDatabaseImages(),
+            screenshots = dataGame.screenshots.toDatabaseImages(),
+            genres = dataGame.genres.toDatabaseGenres(),
+            platforms = dataGame.platforms.toDatabasePlatforms(),
+            playerPerspectives = dataGame.playerPerspectives.toDatabasePlayerPerspectives(),
+            themes = dataGame.themes.toDatabaseThemes(),
+            modes = dataGame.modes.toDatabaseModes(),
+            keywords = dataGame.keywords.toDatabaseKeywords(),
+            involvedCompanies = dataGame.involvedCompanies.toDatabaseInvolvedCompanies(),
+            websites = dataGame.websites.toDatabaseWebsites(),
+            similarGames = dataGame.similarGames
         )
     }
 
 
-    override fun mapToDataGame(databaseGame: DatabaseGame): DataGame {
+    private fun DataCategory.toDatabaseCategory(): DatabaseCategory {
+        return DatabaseCategory.valueOf(name)
+    }
+
+
+    private fun DataImage.toDatabaseImage(): DatabaseImage {
+        return DatabaseImage(
+            id = id,
+            width = width,
+            height = height
+        )
+    }
+
+
+    private fun List<DataImage>.toDatabaseImages(): List<DatabaseImage> {
+        return map { it.toDatabaseImage() }
+    }
+
+
+    private fun List<DataReleaseDate>.toDatabaseReleaseDates(): List<DatabaseReleaseDate> {
+        return map {
+            DatabaseReleaseDate(
+                date = it.date,
+                year = it.year,
+                category = DatabaseReleaseDateCategory.valueOf(it.category.name)
+            )
+        }
+    }
+
+
+    private fun List<DataAgeRating>.toDatabaseAgeRatings(): List<DatabaseAgeRating> {
+        return map {
+            DatabaseAgeRating(
+                category = DatabaseAgeRatingCategory.valueOf(it.category.name),
+                type = DatabaseAgeRatingType.valueOf(it.type.name)
+            )
+        }
+    }
+
+
+    private fun List<DataVideo>.toDatabaseVideos(): List<DatabaseVideo> {
+        return map {
+            DatabaseVideo(
+                id = it.id,
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DataGenre>.toDatabaseGenres(): List<DatabaseGenre> {
+        return map {
+            DatabaseGenre(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DataPlatform>.toDatabasePlatforms(): List<DatabasePlatform> {
+        return map {
+            DatabasePlatform(
+                abbreviation = it.abbreviation,
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DataPlayerPerspective>.toDatabasePlayerPerspectives(): List<DatabasePlayerPerspective> {
+        return map {
+            DatabasePlayerPerspective(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DataTheme>.toDatabaseThemes(): List<DatabaseTheme> {
+        return map {
+            DatabaseTheme(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DataMode>.toDatabaseModes(): List<DatabaseMode> {
+        return map {
+            DatabaseMode(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DataKeyword>.toDatabaseKeywords(): List<DatabaseKeyword> {
+        return map {
+            DatabaseKeyword(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DataInvolvedCompany>.toDatabaseInvolvedCompanies(): List<DatabaseInvolvedCompany> {
+        return map {
+            DatabaseInvolvedCompany(
+                company = it.company.toDatabaseCompany(),
+                isDeveloper = it.isDeveloper,
+                isPublisher = it.isPublisher,
+                isPorter = it.isPorter,
+                isSupporting = it.isSupporting
+            )
+        }
+    }
+
+
+    private fun DataCompany.toDatabaseCompany(): DatabaseCompany {
+        return DatabaseCompany(
+            id = id,
+            name = name,
+            websiteUrl = websiteUrl,
+            logo = logo?.toDatabaseImage(),
+            developedGames = developedGames
+        )
+    }
+
+
+    private fun List<DataWebsite>.toDatabaseWebsites(): List<DatabaseWebsite> {
+        return map {
+            DatabaseWebsite(
+                id = it.id,
+                url = it.url,
+                category = DatabaseWebsiteCategory.valueOf(it.category.name)
+            )
+        }
+    }
+
+
+    fun mapToDataGame(databaseGame: DatabaseGame): DataGame {
         return DataGame(
             id = databaseGame.id,
             followerCount = databaseGame.followerCount,
@@ -82,23 +207,163 @@ internal class GameMapperImpl @Inject constructor(
             name = databaseGame.name,
             summary = databaseGame.summary,
             storyline = databaseGame.storyline,
-            category = checkNotNull(jsonConverter.fromJson(databaseGame.category)),
-            cover = jsonConverter.fromJson(databaseGame.cover),
-            releaseDates = (jsonConverter.fromJson(databaseGame.releaseDates) ?: emptyList()),
-            ageRatings = (jsonConverter.fromJson(databaseGame.ageRatings) ?: emptyList()),
-            videos = (jsonConverter.fromJson(databaseGame.videos) ?: emptyList()),
-            artworks = (jsonConverter.fromJson(databaseGame.artworks) ?: emptyList()),
-            screenshots = (jsonConverter.fromJson(databaseGame.screenshots) ?: emptyList()),
-            genres = (jsonConverter.fromJson(databaseGame.genres) ?: emptyList()),
-            platforms = (jsonConverter.fromJson(databaseGame.platforms) ?: emptyList()),
-            playerPerspectives = (jsonConverter.fromJson(databaseGame.playerPerspectives) ?: emptyList()),
-            themes = (jsonConverter.fromJson(databaseGame.themes) ?: emptyList()),
-            modes = (jsonConverter.fromJson(databaseGame.modes) ?: emptyList()),
-            keywords = (jsonConverter.fromJson(databaseGame.keywords) ?: emptyList()),
-            involvedCompanies = (jsonConverter.fromJson(databaseGame.involvedCompanies) ?: emptyList()),
-            websites = (jsonConverter.fromJson(databaseGame.websites) ?: emptyList()),
-            similarGames = (jsonConverter.fromJson(databaseGame.similarGames) ?: emptyList())
+            category = databaseGame.category.toDataCategory(),
+            cover = databaseGame.cover?.toDataImage(),
+            releaseDates = databaseGame.releaseDates.toDataReleaseDates(),
+            ageRatings = databaseGame.ageRatings.toDataAgeRatings(),
+            videos = databaseGame.videos.toDataVideos(),
+            artworks = databaseGame.artworks.toDataImages(),
+            screenshots = databaseGame.screenshots.toDataImages(),
+            genres = databaseGame.genres.toDataGenres(),
+            platforms = databaseGame.platforms.toDataPlatforms(),
+            playerPerspectives = databaseGame.playerPerspectives.toDataPlayerPerspectives(),
+            themes = databaseGame.themes.toDataThemes(),
+            modes = databaseGame.modes.toDataModes(),
+            keywords = databaseGame.keywords.toDataKeywords(),
+            involvedCompanies = databaseGame.involvedCompanies.toDataInvolvedCompanies(),
+            websites = databaseGame.websites.toDataWebsites(),
+            similarGames = databaseGame.similarGames
         )
+    }
+
+
+    private fun DatabaseCategory.toDataCategory(): DataCategory {
+        return DataCategory.valueOf(name)
+    }
+
+
+    private fun DatabaseImage.toDataImage(): DataImage {
+        return DataImage(
+            id = id,
+            width = width,
+            height = height
+        )
+    }
+
+
+    private fun List<DatabaseImage>.toDataImages(): List<DataImage> {
+        return map { it.toDataImage() }
+    }
+
+
+    private fun List<DatabaseReleaseDate>.toDataReleaseDates(): List<DataReleaseDate> {
+        return map {
+            DataReleaseDate(
+                date = it.date,
+                year = it.year,
+                category = DataReleaseDateCategory.valueOf(it.category.name)
+            )
+        }
+    }
+
+
+    private fun List<DatabaseAgeRating>.toDataAgeRatings(): List<DataAgeRating> {
+        return map {
+            DataAgeRating(
+                category = DataAgeRatingCategory.valueOf(it.category.name),
+                type = DataAgeRatingType.valueOf(it.type.name)
+            )
+        }
+    }
+
+
+    private fun List<DatabaseVideo>.toDataVideos(): List<DataVideo> {
+        return map {
+            DataVideo(
+                id = it.id,
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DatabaseGenre>.toDataGenres(): List<DataGenre> {
+        return map {
+            DataGenre(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DatabasePlatform>.toDataPlatforms(): List<DataPlatform> {
+        return map {
+            DataPlatform(
+                abbreviation = it.abbreviation,
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DatabasePlayerPerspective>.toDataPlayerPerspectives(): List<DataPlayerPerspective> {
+        return map {
+            DataPlayerPerspective(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DatabaseTheme>.toDataThemes(): List<DataTheme> {
+        return map {
+            DataTheme(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DatabaseMode>.toDataModes(): List<DataMode> {
+        return map {
+            DataMode(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DatabaseKeyword>.toDataKeywords(): List<DataKeyword> {
+        return map {
+            DataKeyword(
+                name = it.name
+            )
+        }
+    }
+
+
+    private fun List<DatabaseInvolvedCompany>.toDataInvolvedCompanies(): List<DataInvolvedCompany> {
+        return map {
+            DataInvolvedCompany(
+                company = mapToDataCompany(it.company),
+                isDeveloper = it.isDeveloper,
+                isPublisher = it.isPublisher,
+                isPorter = it.isPorter,
+                isSupporting = it.isSupporting
+            )
+        }
+    }
+
+
+    fun mapToDataCompany(company: DatabaseCompany): DataCompany {
+        return DataCompany(
+            id = company.id,
+            name = company.name,
+            websiteUrl = company.websiteUrl,
+            logo = company.logo?.toDataImage(),
+            developedGames = company.developedGames
+        )
+    }
+
+
+    private fun List<DatabaseWebsite>.toDataWebsites(): List<DataWebsite> {
+        return map {
+            DataWebsite(
+                id = it.id,
+                url = it.url,
+                category = DataWebsiteCategory.valueOf(it.category.name)
+            )
+        }
     }
 
 

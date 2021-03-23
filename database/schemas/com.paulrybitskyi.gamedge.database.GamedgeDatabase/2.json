@@ -1,0 +1,333 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "b6849546fe98d4dbce53e5ec533ce300",
+    "entities": [
+      {
+        "tableName": "games",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `follower_count` INTEGER, `hype_count` INTEGER, `release_date` INTEGER, `critics_rating` REAL, `users_rating` REAL, `total_rating` REAL, `name` TEXT NOT NULL, `summary` TEXT, `storyline` TEXT, `category` TEXT NOT NULL, `cover` TEXT, `release_dates` TEXT NOT NULL, `age_ratings` TEXT NOT NULL, `videos` TEXT NOT NULL, `artworks` TEXT NOT NULL, `screenshots` TEXT NOT NULL, `genres` TEXT NOT NULL, `platforms` TEXT NOT NULL, `player_perspectives` TEXT NOT NULL, `themes` TEXT NOT NULL, `modes` TEXT NOT NULL, `keywords` TEXT NOT NULL, `involved_companies` TEXT NOT NULL, `websites` TEXT NOT NULL, `similar_games` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followerCount",
+            "columnName": "follower_count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hypeCount",
+            "columnName": "hype_count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "releaseDate",
+            "columnName": "release_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "criticsRating",
+            "columnName": "critics_rating",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "usersRating",
+            "columnName": "users_rating",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalRating",
+            "columnName": "total_rating",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "summary",
+            "columnName": "summary",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "storyline",
+            "columnName": "storyline",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cover",
+            "columnName": "cover",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "releaseDates",
+            "columnName": "release_dates",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ageRatings",
+            "columnName": "age_ratings",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "videos",
+            "columnName": "videos",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "artworks",
+            "columnName": "artworks",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "screenshots",
+            "columnName": "screenshots",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "genres",
+            "columnName": "genres",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "platforms",
+            "columnName": "platforms",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playerPerspectives",
+            "columnName": "player_perspectives",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "themes",
+            "columnName": "themes",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modes",
+            "columnName": "modes",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "keywords",
+            "columnName": "keywords",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "involvedCompanies",
+            "columnName": "involved_companies",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "websites",
+            "columnName": "websites",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "similarGames",
+            "columnName": "similar_games",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_games_hype_count",
+            "unique": false,
+            "columnNames": [
+              "hype_count"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_hype_count` ON `${TABLE_NAME}` (`hype_count`)"
+          },
+          {
+            "name": "index_games_release_date",
+            "unique": false,
+            "columnNames": [
+              "release_date"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_release_date` ON `${TABLE_NAME}` (`release_date`)"
+          },
+          {
+            "name": "index_games_users_rating",
+            "unique": false,
+            "columnNames": [
+              "users_rating"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_users_rating` ON `${TABLE_NAME}` (`users_rating`)"
+          },
+          {
+            "name": "index_games_total_rating",
+            "unique": false,
+            "columnNames": [
+              "total_rating"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_total_rating` ON `${TABLE_NAME}` (`total_rating`)"
+          },
+          {
+            "name": "index_games_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "liked_games",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `game_id` INTEGER NOT NULL, `like_timestamp` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gameId",
+            "columnName": "game_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "likeTimestamp",
+            "columnName": "like_timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_liked_games_game_id",
+            "unique": false,
+            "columnNames": [
+              "game_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_liked_games_game_id` ON `${TABLE_NAME}` (`game_id`)"
+          },
+          {
+            "name": "index_liked_games_like_timestamp",
+            "unique": false,
+            "columnNames": [
+              "like_timestamp"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_liked_games_like_timestamp` ON `${TABLE_NAME}` (`like_timestamp`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "articles",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `lede` TEXT NOT NULL, `image_urls` TEXT NOT NULL, `publication_date` INTEGER NOT NULL, `site_detail_url` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lede",
+            "columnName": "lede",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageUrls",
+            "columnName": "image_urls",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "publicationDate",
+            "columnName": "publication_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "siteDetailUrl",
+            "columnName": "site_detail_url",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_articles_publication_date",
+            "unique": false,
+            "columnNames": [
+              "publication_date"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_articles_publication_date` ON `${TABLE_NAME}` (`publication_date`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b6849546fe98d4dbce53e5ec533ce300')"
+    ]
+  }
+}

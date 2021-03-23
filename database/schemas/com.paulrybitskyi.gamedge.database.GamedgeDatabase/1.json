@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1194794f830692319349558c71139baa",
+    "identityHash": "b6849546fe98d4dbce53e5ec533ce300",
     "entities": [
       {
         "tableName": "games",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `follower_count` INTEGER, `hype_count` INTEGER, `release_date` INTEGER, `critics_rating` REAL, `users_rating` REAL, `total_rating` REAL, `name` TEXT NOT NULL, `summary` TEXT, `storyline` TEXT, `category` TEXT NOT NULL, `cover` TEXT NOT NULL, `release_dates` TEXT NOT NULL, `age_ratings` TEXT NOT NULL, `videos` TEXT NOT NULL, `artworks` TEXT NOT NULL, `screenshots` TEXT NOT NULL, `genres` TEXT NOT NULL, `platforms` TEXT NOT NULL, `player_perspectives` TEXT NOT NULL, `themes` TEXT NOT NULL, `modes` TEXT NOT NULL, `keywords` TEXT NOT NULL, `involved_companies` TEXT NOT NULL, `websites` TEXT NOT NULL, `similar_games` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `follower_count` INTEGER, `hype_count` INTEGER, `release_date` INTEGER, `critics_rating` REAL, `users_rating` REAL, `total_rating` REAL, `name` TEXT NOT NULL, `summary` TEXT, `storyline` TEXT, `category` TEXT NOT NULL, `cover` TEXT, `release_dates` TEXT NOT NULL, `age_ratings` TEXT NOT NULL, `videos` TEXT NOT NULL, `artworks` TEXT NOT NULL, `screenshots` TEXT NOT NULL, `genres` TEXT NOT NULL, `platforms` TEXT NOT NULL, `player_perspectives` TEXT NOT NULL, `themes` TEXT NOT NULL, `modes` TEXT NOT NULL, `keywords` TEXT NOT NULL, `involved_companies` TEXT NOT NULL, `websites` TEXT NOT NULL, `similar_games` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -78,7 +78,7 @@
             "fieldPath": "cover",
             "columnName": "cover",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "releaseDates",
@@ -327,7 +327,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1194794f830692319349558c71139baa')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b6849546fe98d4dbce53e5ec533ce300')"
     ]
   }
 }

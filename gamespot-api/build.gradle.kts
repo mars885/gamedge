@@ -21,6 +21,7 @@ plugins {
     androidLibrary()
     gamedgeAndroid()
     kotlinKapt()
+    kotlinxSerialization()
     daggerHiltAndroid() // does not compile instrumented tests without the plugin
 }
 
@@ -51,14 +52,12 @@ dependencies {
     implementation(project(deps.local.core))
 
     implementation(deps.kotlin.coroutines)
+    implementation(deps.kotlin.serialization)
 
     implementation(deps.square.retrofit)
-    implementation(deps.square.retrofitMoshiConverter)
+    implementation(deps.square.retrofitKotlinxSerializationConverter)
 
     implementation(deps.misc.kotlinResult)
-
-    implementation(deps.square.moshi)
-    kapt(deps.square.moshiCodeGenerator)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
@@ -73,9 +72,6 @@ dependencies {
     testImplementation(deps.testing.assertJ)
     testImplementation(deps.testing.mockk)
     testImplementation(deps.testing.coroutines)
-    // Needed to test a simple json parsing functionality
-    // because by default org.json classes need to mocked
-    testImplementation(deps.testing.orgJson)
 
     androidTestImplementation(project(deps.local.commonsTesting))
     androidTestImplementation(deps.testing.testRunner)

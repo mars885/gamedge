@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.igdb.api.extractors
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.CompositeErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.IgdbErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.TwitchErrorMessageExtractor
+import kotlinx.serialization.json.Json
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -33,8 +34,8 @@ internal class CompositeErrorMessageExtractorTest {
     fun setup() {
         SUT = CompositeErrorMessageExtractor(
             setOf(
-                TwitchErrorMessageExtractor(),
-                IgdbErrorMessageExtractor()
+                TwitchErrorMessageExtractor(Json),
+                IgdbErrorMessageExtractor(Json)
             )
         )
     }
@@ -65,7 +66,7 @@ internal class CompositeErrorMessageExtractorTest {
             ]
         """.trimIndent()
 
-        assertThat(SUT.extract(responseBody)).isEqualTo("Missing `;` at end of query")
+        assertThat(SUT.extract(responseBody)).isEqualTo("Syntax Error")
     }
 
 

@@ -16,20 +16,52 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
-internal enum class AgeRatingCategory(val value: Int) {
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.AgeRatingCategory.Companion.asAgeRatingCategory
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 
-    UNKNOWN(value = -1),
-    ESRB(value = 1),
-    PEGI(value = 2);
+@Serializable(with = AgeRatingCategorySerializer::class)
+internal enum class AgeRatingCategory(val rawValue: Int) {
+
+
+    UNKNOWN(rawValue = -1),
+    ESRB(rawValue = 1),
+    PEGI(rawValue = 2);
 
 
     internal companion object {
 
         fun Int.asAgeRatingCategory(): AgeRatingCategory {
-            return values().find { it.value == this } ?: UNKNOWN
+            return values().find { it.rawValue == this } ?: UNKNOWN
         }
 
+    }
+
+
+}
+
+
+internal object AgeRatingCategorySerializer : KSerializer<AgeRatingCategory> {
+
+
+    override val descriptor = PrimitiveSerialDescriptor(
+        checkNotNull(AgeRatingCategorySerializer::class.qualifiedName),
+        PrimitiveKind.INT
+    )
+
+
+    override fun serialize(encoder: Encoder, value: AgeRatingCategory) {
+        encoder.encodeInt(value.rawValue)
+    }
+
+
+    override fun deserialize(decoder: Decoder): AgeRatingCategory {
+        return decoder.decodeInt().asAgeRatingCategory()
     }
 
 

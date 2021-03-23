@@ -14,24 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.database.commons
+package com.paulrybitskyi.gamedge.database.games.entities
 
-import com.paulrybitskyi.gamedge.database.commons.di.qualifiers.Database
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapter
-import javax.inject.Inject
+import kotlinx.serialization.Serializable
 
-internal class JsonConverter @Inject constructor(@Database private val moshi: Moshi) {
-
-
-    inline fun <reified T> toJson(clazz: T): String {
-        return moshi.adapter<T>().toJson(clazz)
-    }
-
-
-    inline fun <reified T> fromJson(json: String): T? {
-        return moshi.adapter<T>().fromJson(json)
-    }
-
-
-}
+@Serializable
+internal data class ReleaseDate(
+    val date: Long?,
+    val year: Int?,
+    val category: ReleaseDateCategory,
+)

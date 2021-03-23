@@ -24,8 +24,11 @@ dependencies {
     implementation(project(deps.local.data))
     implementation(project(deps.local.core))
 
+    implementation(deps.kotlin.serialization)
+
     implementation(deps.square.okHttpLoggingInterceptor)
     implementation(deps.square.retrofit)
+    implementation(deps.square.retrofitKotlinxSerializationConverter)
 
     implementation(deps.misc.kotlinResult)
 

@@ -21,7 +21,6 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apica
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.FieldSerializer
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.FieldSerializerFactory
-import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers.StubFieldSerializer
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
 
@@ -31,13 +30,12 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
     override fun serialize(clazz: Class<*>): String {
         checkIfMarkerAnnotationIsPresent(clazz)
 
-        val fieldSerializers = clazz.fieldSerializers(fieldChain = mutableListOf())
-        val validFieldSerializers = fieldSerializers.filter { it !is StubFieldSerializer }
-
-        return validFieldSerializers.joinToString(
-            separator = Constants.FIELD_SEPARATOR,
-            transform = FieldSerializer::serialize
-        )
+        return clazz
+            .fieldSerializers(fieldChain = mutableListOf())
+            .joinToString(
+                separator = Constants.FIELD_SEPARATOR,
+                transform = FieldSerializer::serialize
+            )
     }
 
 
@@ -56,7 +54,7 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
 
         return buildList {
             for(field in declaredFields) {
-                add(field.serializer(fieldChain))
+                field.serializer(fieldChain)?.let(::add)
             }
         }
     }
@@ -67,8 +65,8 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
     }
 
 
-    private fun Field.serializer(fieldChain: MutableList<String>): FieldSerializer {
-        if(!shouldBeSerialized()) return StubFieldSerializer
+    private fun Field.serializer(fieldChain: MutableList<String>): FieldSerializer? {
+        if(!shouldBeSerialized()) return null
 
         val apicalypseAnnotation = checkNotNull(getAnnotation(Apicalypse::class.java))
         val fieldName = apicalypseAnnotation.name

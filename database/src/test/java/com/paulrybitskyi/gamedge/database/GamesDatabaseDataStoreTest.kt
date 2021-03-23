@@ -19,24 +19,17 @@ package com.paulrybitskyi.gamedge.database
 import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.data.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.commons.testing.*
-import com.paulrybitskyi.gamedge.data.games.DataCategory
-import com.paulrybitskyi.gamedge.data.games.DataCompany
-import com.paulrybitskyi.gamedge.data.games.DataGame
-import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.datastores.GameMapper
 import com.paulrybitskyi.gamedge.database.games.datastores.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.database.games.datastores.mapToDatabaseGames
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
-import com.paulrybitskyi.gamedge.database.utils.FakeGameMapper
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -45,7 +38,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @MockK private lateinit var gamesTable: GamesTable
 
-    private lateinit var gameMapper: FakeGameMapper
+    private lateinit var gameMapper: GameMapper
     private lateinit var SUT: GamesDatabaseDataStore
 
 
@@ -53,7 +46,7 @@ internal class GamesDatabaseDataStoreTest {
     fun setup() {
         MockKAnnotations.init(this, relaxUnitFun = true)
 
-        gameMapper = FakeGameMapper()
+        gameMapper = GameMapper()
         SUT = GamesDatabaseDataStore(
             gamesTable = gamesTable,
             dispatcherProvider = FakeDispatcherProvider(),

@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.extractors
 
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.IgdbErrorMessageExtractor
+import kotlinx.serialization.json.Json
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.Before
@@ -30,7 +31,7 @@ internal class IgdbErrorMessageExtractorTest {
 
     @Before
     fun setup() {
-        SUT = IgdbErrorMessageExtractor()
+        SUT = IgdbErrorMessageExtractor(Json)
     }
 
 
@@ -46,7 +47,7 @@ internal class IgdbErrorMessageExtractorTest {
             ]
         """.trimIndent()
 
-        assertThat(SUT.extract(responseBody)).isEqualTo("Missing `;` at end of query")
+        assertThat(SUT.extract(responseBody)).isEqualTo("Syntax Error")
     }
 
 
@@ -62,7 +63,7 @@ internal class IgdbErrorMessageExtractorTest {
         val responseBody = """
             [
               {
-                "title": "Syntax Error",
+                "cause": "Syntax Error",
                 "status": 400
               }
             ]

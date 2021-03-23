@@ -18,26 +18,26 @@ package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @ApicalypseClass
-@JsonClass(generateAdapter = true)
+@Serializable
 internal data class InvolvedCompany(
-    @Apicalypse(name = Schema.COMPANY)
-    @field:Json(name = Schema.COMPANY)
+    @Apicalypse(Schema.COMPANY)
+    @SerialName(Schema.COMPANY)
     val company: Company,
-    @Apicalypse(name = Schema.IS_DEVELOPER)
-    @field:Json(name = Schema.IS_DEVELOPER)
+    @Apicalypse(Schema.IS_DEVELOPER)
+    @SerialName(Schema.IS_DEVELOPER)
     val isDeveloper: Boolean,
-    @Apicalypse(name = Schema.IS_PUBLISHER)
-    @field:Json(name = Schema.IS_PUBLISHER)
+    @Apicalypse(Schema.IS_PUBLISHER)
+    @SerialName(Schema.IS_PUBLISHER)
     val isPublisher: Boolean,
-    @Apicalypse(name = Schema.IS_PORTER)
-    @field:Json(name = Schema.IS_PORTER)
+    @Apicalypse(Schema.IS_PORTER)
+    @SerialName(Schema.IS_PORTER)
     val isPorter: Boolean,
-    @Apicalypse(name = Schema.IS_SUPPORTING)
-    @field:Json(name = Schema.IS_SUPPORTING)
+    @Apicalypse(Schema.IS_SUPPORTING)
+    @SerialName(Schema.IS_SUPPORTING)
     val isSupporting: Boolean,
 ) {
 

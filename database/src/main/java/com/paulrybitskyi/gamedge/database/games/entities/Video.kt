@@ -14,26 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.api.games.serialization
+package com.paulrybitskyi.gamedge.database.games.entities
 
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.ReleaseDateCategory
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.ReleaseDateCategory.Companion.asReleaseDateCategory
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.ToJson
+import kotlinx.serialization.Serializable
 
-internal class ReleaseDateCategoryAdapter {
-
-
-    @FromJson
-    fun fromJson(category: Int): ReleaseDateCategory {
-        return category.asReleaseDateCategory()
-    }
-
-
-    @ToJson
-    fun toJson(releaseDateCategory: ReleaseDateCategory): Int {
-        return releaseDateCategory.value
-    }
-
-
-}
+@Serializable
+internal data class Video(
+    val id: String,
+    val name: String
+)

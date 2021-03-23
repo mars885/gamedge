@@ -18,26 +18,26 @@ package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @ApicalypseClass
-@JsonClass(generateAdapter = true)
+@Serializable
 internal data class Company(
-    @Apicalypse(name = Schema.ID)
-    @field:Json(name = Schema.ID)
+    @Apicalypse(Schema.ID)
+    @SerialName(Schema.ID)
     val id: Int,
-    @Apicalypse(name = Schema.NAME)
-    @field:Json(name = Schema.NAME)
+    @Apicalypse(Schema.NAME)
+    @SerialName(Schema.NAME)
     val name: String,
-    @Apicalypse(name = Schema.WEBSITE_URL)
-    @field:Json(name = Schema.WEBSITE_URL)
+    @Apicalypse(Schema.WEBSITE_URL)
+    @SerialName(Schema.WEBSITE_URL)
     val websiteUrl: String,
-    @Apicalypse(name = Schema.LOGO)
-    @field:Json(name = Schema.LOGO)
+    @Apicalypse(Schema.LOGO)
+    @SerialName(Schema.LOGO)
     val logo: Image? = null,
-    @Apicalypse(name = Schema.DEVELOPED_GAMES)
-    @field:Json(name = Schema.DEVELOPED_GAMES)
+    @Apicalypse(Schema.DEVELOPED_GAMES)
+    @SerialName(Schema.DEVELOPED_GAMES)
     val developedGames: List<Int> = listOf(),
 ) {
 

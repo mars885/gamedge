@@ -20,10 +20,9 @@ import android.content.Context
 import androidx.room.Room
 import com.paulrybitskyi.gamedge.database.Constants
 import com.paulrybitskyi.gamedge.database.GamedgeDatabase
-import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
 import com.paulrybitskyi.gamedge.database.commons.MIGRATIONS
-import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
-import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
+import com.paulrybitskyi.gamedge.database.commons.RoomTypeConverter
+import com.paulrybitskyi.gamedge.database.commons.addTypeConverters
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,35 +37,18 @@ internal object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideGamedgeDatabase(@ApplicationContext context: Context): GamedgeDatabase {
+    fun provideGamedgeDatabase(
+        @ApplicationContext context: Context,
+        typeConverters: Set<@JvmSuppressWildcards RoomTypeConverter>
+    ): GamedgeDatabase {
         return Room.databaseBuilder(
             context,
             GamedgeDatabase::class.java,
             Constants.DATABASE_NAME
         )
+        .addTypeConverters(typeConverters)
         .addMigrations(*MIGRATIONS)
         .build()
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideGamesTable(gamedgeDatabase: GamedgeDatabase): GamesTable {
-        return gamedgeDatabase.gamesTable
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideLikedGamesTable(gamedgeDatabase: GamedgeDatabase): LikedGamesTable {
-        return gamedgeDatabase.likedGamesTable
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideArticlesTable(gamedgeDatabase: GamedgeDatabase): ArticlesTable {
-        return gamedgeDatabase.articlesTable
     }
 
 

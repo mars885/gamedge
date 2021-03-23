@@ -16,33 +16,65 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
-internal enum class WebsiteCategory(val value: Int) {
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.WebsiteCategory.Companion.asWebsiteCategory
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 
-    UNKNOWN(value = -1),
-    OFFICIAL(value = 1),
-    WIKIA(value = 2),
-    WIKIPEDIA(value = 3),
-    FACEBOOK(value = 4),
-    TWITTER(value = 5),
-    TWITCH(value = 6),
-    INSTAGRAM(value = 8),
-    YOUTUBE(value = 9),
-    APP_STORE(value = 10),
-    GOOGLE_PLAY(value = 12),
-    STEAM(value = 13),
-    SUBREDDIT(value = 14),
-    EPIC_GAMES(value = 16),
-    GOG(value = 17),
-    DISCORD(value = 18);
+@Serializable(with = WebsiteCategorySerializer::class)
+internal enum class WebsiteCategory(val rawValue: Int) {
+
+
+    UNKNOWN(rawValue = -1),
+    OFFICIAL(rawValue = 1),
+    WIKIA(rawValue = 2),
+    WIKIPEDIA(rawValue = 3),
+    FACEBOOK(rawValue = 4),
+    TWITTER(rawValue = 5),
+    TWITCH(rawValue = 6),
+    INSTAGRAM(rawValue = 8),
+    YOUTUBE(rawValue = 9),
+    APP_STORE(rawValue = 10),
+    GOOGLE_PLAY(rawValue = 12),
+    STEAM(rawValue = 13),
+    SUBREDDIT(rawValue = 14),
+    EPIC_GAMES(rawValue = 16),
+    GOG(rawValue = 17),
+    DISCORD(rawValue = 18);
 
 
     internal companion object {
 
         fun Int.asWebsiteCategory(): WebsiteCategory {
-            return values().find { it.value == this } ?: UNKNOWN
+            return values().find { it.rawValue == this } ?: UNKNOWN
         }
 
+    }
+
+
+}
+
+
+internal object WebsiteCategorySerializer : KSerializer<WebsiteCategory> {
+
+
+    override val descriptor = PrimitiveSerialDescriptor(
+        checkNotNull(WebsiteCategorySerializer::class.qualifiedName),
+        PrimitiveKind.INT
+    )
+
+
+    override fun serialize(encoder: Encoder, value: WebsiteCategory) {
+        encoder.encodeInt(value.rawValue)
+    }
+
+
+    override fun deserialize(decoder: Decoder): WebsiteCategory {
+        return decoder.decodeInt().asWebsiteCategory()
     }
 
 

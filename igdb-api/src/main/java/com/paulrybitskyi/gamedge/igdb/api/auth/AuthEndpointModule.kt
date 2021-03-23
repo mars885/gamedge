@@ -16,18 +16,18 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.auth
 
+import com.paulrybitskyi.gamedge.commons.api.asConverterFactory
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
 import com.paulrybitskyi.gamedge.igdb.api.commons.TwitchConstantsProvider
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.Endpoint
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -60,22 +60,15 @@ internal object AuthEndpointModule {
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         @IgdbApi callAdapterFactory: ApiResultCallAdapterFactory,
-        @Endpoint(Endpoint.Type.AUTH) moshi: Moshi,
+        json: Json,
         twitchConstantsProvider: TwitchConstantsProvider
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .addCallAdapterFactory(callAdapterFactory)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(json.asConverterFactory())
             .baseUrl(twitchConstantsProvider.apiBaseUrl)
             .build()
-    }
-
-
-    @Provides
-    @Endpoint(Endpoint.Type.AUTH)
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder().build()
     }
 
 

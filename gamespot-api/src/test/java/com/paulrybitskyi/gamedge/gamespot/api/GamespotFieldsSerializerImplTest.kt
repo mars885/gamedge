@@ -16,10 +16,11 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api
 
-import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotFieldsSerializer
-import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotFieldsSerializerImpl
-import com.squareup.moshi.Json
-import org.assertj.core.api.Assertions.*
+import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.Gamespot
+import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.GamespotFieldsSerializer
+import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.GamespotFieldsSerializerImpl
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.Before
 import org.junit.Test
 
@@ -38,17 +39,17 @@ internal class GamespotFieldsSerializerImplTest {
     @Test
     fun `Serializes simple entity successfully`() {
         data class Entity(
-            @field:Json(name = "field1")
+            @Gamespot("field1")
             val field1: Int,
-            @field:Json(name = "field2")
+            @Gamespot("field2")
             val field2: String,
-            @field:Json(name = "field3")
+            @Gamespot("field3")
             val field3: Double,
-            @field:Json(name = "field4")
+            @Gamespot("field4")
             val field4: Float,
-            @field:Json(name = "field5")
+            @Gamespot("field5")
             val field5: String,
-            @field:Json(name = "field6")
+            @Gamespot("field6")
             val field6: Float
         )
 
@@ -72,7 +73,7 @@ internal class GamespotFieldsSerializerImplTest {
     @Test
     fun `Throws exception if name of field is empty`() {
         data class Entity(
-            @field:Json(name = "")
+            @Gamespot("")
             val field1: Int
         )
 
@@ -84,7 +85,7 @@ internal class GamespotFieldsSerializerImplTest {
     @Test
     fun `Throws exception if name of field is blank`() {
         data class Entity(
-            @field:Json(name = "   ")
+            @Gamespot("   ")
             val field1: Int
         )
 

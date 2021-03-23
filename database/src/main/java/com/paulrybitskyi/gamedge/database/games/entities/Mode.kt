@@ -14,26 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.gamespot.api.articles.serialization
+package com.paulrybitskyi.gamedge.database.games.entities
 
-import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.ImageType
-import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.ImageType.Companion.asImageType
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.ToJson
+import kotlinx.serialization.Serializable
 
-internal class ImageTypeAdapter {
-
-
-    @FromJson
-    fun fromJson(imageType: String): ImageType {
-        return imageType.asImageType()
-    }
-
-
-    @ToJson
-    fun toJson(imageType: ImageType): String {
-        return imageType.value
-    }
-
-
-}
+@Serializable
+internal data class Mode(
+    val name: String,
+)

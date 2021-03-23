@@ -28,7 +28,7 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.SocketPolicy
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -144,13 +144,13 @@ internal class AuthServiceTest {
 
 
     @Test
-    fun network_error_is_returned_when_credentials_endpoint_returns_successful_response_with_no_body() {
+    fun unknown_error_is_returned_when_credentials_endpoint_returns_successful_response_with_no_body() {
         runBlocking {
             mockWebServer.enqueue(MockResponse().setResponseCode(200))
 
             val error = authService.getOauthCredentials("", "", "").getError()
 
-            assertThat(error is Error.NetworkError).isTrue
+            assertThat(error is Error.UnknownError).isTrue
         }
     }
 

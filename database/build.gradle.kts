@@ -18,10 +18,14 @@ plugins {
     androidLibrary()
     gamedgeAndroid()
     kotlinKapt()
+    kotlinxSerialization()
+    daggerHiltAndroid() // does not compile instrumented tests without the plugin
 }
 
 android {
     defaultConfig {
+        testInstrumentationRunner = "com.paulrybitskyi.gamedge.commons.testing.GamedgeTestRunner"
+
         javaCompileOptions {
             annotationProcessorOptions {
                 argument("room.schemaLocation", "$projectDir/schemas")
@@ -32,9 +36,16 @@ android {
     sourceSets {
         getByName("androidTest").assets.srcDirs("$projectDir/schemas")
     }
+
+    // https://dagger.dev/hilt/gradle-setup#classpath-aggregation
+    lintOptions {
+        isCheckReleaseBuilds = false
+    }
 }
 
-
+hilt {
+    enableExperimentalClasspathAggregation = true
+}
 
 dependencies {
     implementation(project(deps.local.data))
@@ -42,11 +53,9 @@ dependencies {
     implementation(project(deps.local.core))
 
     implementation(deps.kotlin.coroutines)
-
-    implementation(deps.square.moshi)
+    implementation(deps.kotlin.serialization)
 
     implementation(deps.misc.kotlinResult)
-    implementation(deps.misc.moshiMetadataReflect)
 
     implementation(deps.androidX.room)
     implementation(deps.androidX.roomKtx)
@@ -65,6 +74,7 @@ dependencies {
     testImplementation(deps.testing.coroutines)
     testImplementation(deps.testing.turbine)
 
+    androidTestImplementation(project(deps.local.commonsTesting))
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
     androidTestImplementation(deps.testing.assertJ)
@@ -72,4 +82,7 @@ dependencies {
     androidTestImplementation(deps.testing.coroutines)
     androidTestImplementation(deps.testing.turbine)
     androidTestImplementation(deps.testing.room)
+
+    androidTestImplementation(deps.testing.daggerHilt)
+    kaptAndroidTest(deps.google.daggerHiltCompiler)
 }

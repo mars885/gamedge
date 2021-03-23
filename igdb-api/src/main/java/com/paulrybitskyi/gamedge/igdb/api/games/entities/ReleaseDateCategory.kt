@@ -16,28 +16,60 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.entities
 
-internal enum class ReleaseDateCategory(val value: Int) {
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ReleaseDateCategory.Companion.asReleaseDateCategory
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 
-    UNKNOWN(value = -1),
+@Serializable(with = ReleaseDateCategorySerializer::class)
+internal enum class ReleaseDateCategory(val rawValue: Int) {
 
-    YYYY_MMMM_DD(value = 0),
-    YYYY_MMMM(value = 1),
-    YYYY(value = 2),
-    YYYYQ1(value = 3),
-    YYYYQ2(value = 4),
-    YYYYQ3(value = 5),
-    YYYYQ4(value = 6),
 
-    TBD(value = 7);
+    UNKNOWN(rawValue = -1),
+
+    YYYY_MMMM_DD(rawValue = 0),
+    YYYY_MMMM(rawValue = 1),
+    YYYY(rawValue = 2),
+    YYYYQ1(rawValue = 3),
+    YYYYQ2(rawValue = 4),
+    YYYYQ3(rawValue = 5),
+    YYYYQ4(rawValue = 6),
+
+    TBD(rawValue = 7);
 
 
     internal companion object {
 
         fun Int.asReleaseDateCategory(): ReleaseDateCategory {
-            return values().find { it.value == this } ?: UNKNOWN
+            return values().find { it.rawValue == this } ?: UNKNOWN
         }
 
+    }
+
+
+}
+
+
+internal object ReleaseDateCategorySerializer : KSerializer<ReleaseDateCategory> {
+
+
+    override val descriptor = PrimitiveSerialDescriptor(
+        checkNotNull(ReleaseDateCategorySerializer::class.qualifiedName),
+        PrimitiveKind.INT
+    )
+
+
+    override fun serialize(encoder: Encoder, value: ReleaseDateCategory) {
+        encoder.encodeInt(value.rawValue)
+    }
+
+
+    override fun deserialize(decoder: Decoder): ReleaseDateCategory {
+        return decoder.decodeInt().asReleaseDateCategory()
     }
 
 
