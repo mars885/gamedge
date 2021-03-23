@@ -42,9 +42,6 @@ internal class TwitchErrorMessageExtractor @Inject constructor(
         val errorPrimitive = errorElement.jsonPrimitive
         val errorMessage = errorPrimitive.content
 
-        /*val jsonObject = JSONObject(responseBody)
-        val message = jsonObject.getString(ERROR_MESSAGE_NAME)*/
-
         errorMessage
     } catch(error: Throwable) {
         throw IllegalStateException(
