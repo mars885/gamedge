@@ -40,10 +40,10 @@ object versions {
     const val kotlin = "1.4.32" // also in buildSrc build.gradle.kts file
     const val gradleVersionsPlugin = "0.38.0"
     const val protobufPlugin = "0.8.15"
-    const val navigation = "2.3.4"
-    const val daggerHilt = "2.33-beta"
+    const val navigation = "2.3.5"
+    const val daggerHilt = "2.34-beta"
     const val coroutines = "1.4.3"
-    const val room = "2.3.0-beta03"
+    const val room = "2.3.0-rc01"
 
 }
 
@@ -52,7 +52,7 @@ object deps {
 
     object plugins {
 
-        private const val gradlePluginVersion = "4.1.2" // also in buildSrc build.gradle.kts file
+        private const val gradlePluginVersion = "4.1.3" // also in buildSrc build.gradle.kts file
 
         const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
@@ -104,14 +104,14 @@ object deps {
 
         private const val appCompatVersion = "1.2.0"
         private const val constraintLayoutVersion = "2.0.4"
-        private const val recyclerViewVersion = "1.1.0"
+        private const val recyclerViewVersion = "1.2.0"
         private const val viewPager2Version = "1.0.0"
         private const val swipeRefreshLayoutVersion = "1.1.0"
-        private const val lifecycleVersion = "2.3.0"
+        private const val lifecycleVersion = "2.3.1"
         private const val browserVersion = "1.3.0"
-        private const val coreKtxVersion = "1.5.0-beta02"
-        private const val fragmentKtxVersion = "1.3.1"
-        private const val dataStoreVersion = "1.0.0-alpha07"
+        private const val coreKtxVersion = "1.5.0-rc01"
+        private const val fragmentKtxVersion = "1.3.2"
+        private const val dataStoreVersion = "1.0.0-alpha08"
 
         const val appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
         const val navFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
@@ -136,7 +136,7 @@ object deps {
     object google {
 
         private const val materialComponentsVersion = "1.3.0"
-        private const val protobufVersion = "3.10.0"
+        private const val protobufVersion = "3.15.8"
 
         const val daggerHilt = "com.google.dagger:hilt-android:${versions.daggerHilt}"
         const val daggerHiltCompiler = "com.google.dagger:hilt-android-compiler:${versions.daggerHilt}"
@@ -163,12 +163,12 @@ object deps {
 
     object commons {
 
-        private const val coreVersion = "1.0.1"
-        private const val ktxVersion = "1.0.1"
+        private const val coreVersion = "1.0.2"
+        private const val ktxVersion = "1.0.2"
         private const val widgetsVersion = "1.0.1"
         private const val navigationVersion = "1.0.1"
         private const val materialVersion = "1.0.1"
-        private const val networkVersion = "1.0.0"
+        private const val networkVersion = "1.0.1"
         private const val recyclerViewVersion = "1.0.0"
         private const val windowAnimsVersion = "1.0.0"
         private const val deviceInfoVersion = "1.0.0"
@@ -207,11 +207,11 @@ object deps {
         private const val jUnitVersion = "4.13.2"
         private const val jUnitExtVersion = "1.1.2"
         private const val assertJVersion = "3.19.0"
-        private const val mockkVersion = "1.10.6"
+        private const val mockkVersion = "1.11.0"
         private const val turbineVersion = "0.4.1"
         private const val testRunnerVersion = "1.3.0"
         private const val archCoreVersion = "2.1.0"
-        private const val mockWebServerVersion = "4.9.0"
+        private const val mockWebServerVersion = "4.9.1"
 
         const val jUnit = "junit:junit:$jUnitVersion"
         const val jUnitExt = "androidx.test.ext:junit:$jUnitExtVersion"

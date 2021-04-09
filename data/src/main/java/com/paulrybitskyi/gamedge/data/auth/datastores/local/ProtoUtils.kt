@@ -35,6 +35,7 @@ internal fun ProtoOauthCredentials.isNotEmpty(): Boolean {
 }
 
 
+@Suppress("BlockingMethodInNonBlockingContext")
 internal object ProtoOauthCredentialsSerializer : Serializer<ProtoOauthCredentials> {
 
     override val defaultValue: ProtoOauthCredentials
@@ -45,7 +46,7 @@ internal object ProtoOauthCredentialsSerializer : Serializer<ProtoOauthCredentia
             .setExpirationTime(0L)
             .build()
 
-    override fun writeTo(t: ProtoOauthCredentials, output: OutputStream) = t.writeTo(output)
-    override fun readFrom(input: InputStream): ProtoOauthCredentials = ProtoOauthCredentials.parseFrom(input)
+    override suspend fun writeTo(t: ProtoOauthCredentials, output: OutputStream) = t.writeTo(output)
+    override suspend fun readFrom(input: InputStream): ProtoOauthCredentials = ProtoOauthCredentials.parseFrom(input)
 
 }
