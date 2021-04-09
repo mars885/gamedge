@@ -20,7 +20,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.viewpager2.widget.ViewPager2
-import com.paulrybitskyi.gamedge.commons.ui.detachFromParent
+import com.paulrybitskyi.commons.ktx.detachFromParent
 
 class ViewPager2Container @JvmOverloads constructor(
     context: Context,

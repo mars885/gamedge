@@ -30,8 +30,6 @@ import com.paulrybitskyi.commons.recyclerview.utils.addOnScrollListener
 import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.extensions.disableAfterAnimationEnds
-import com.paulrybitskyi.gamedge.commons.ui.extensions.getFloat
-import com.paulrybitskyi.gamedge.commons.ui.extensions.getInteger
 import com.paulrybitskyi.gamedge.commons.ui.fadeIn
 import com.paulrybitskyi.gamedge.commons.ui.resetAnimation
 import com.paulrybitskyi.gamedge.feature.category.R
