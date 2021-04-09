@@ -34,6 +34,7 @@ dependencies {
     implementation(deps.androidX.recyclerView)
     implementation(deps.androidX.viewPager2)
     implementation(deps.androidX.swipeRefreshLayout)
+    implementation(deps.androidX.lifecycleRuntime)
     implementation(deps.androidX.coreKtx)
     implementation(deps.androidX.fragmentKtx)
 
