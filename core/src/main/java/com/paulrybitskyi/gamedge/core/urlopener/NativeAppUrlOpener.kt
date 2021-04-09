@@ -19,9 +19,9 @@ package com.paulrybitskyi.gamedge.core.urlopener
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.paulrybitskyi.commons.SdkInfo
 import com.paulrybitskyi.commons.ktx.canUrlBeOpenedByNativeApp
 import com.paulrybitskyi.commons.ktx.getNativeAppPackageForUrl
-import com.paulrybitskyi.gamedge.core.utils.SdkInfo
 import com.paulrybitskyi.gamedge.core.utils.attachNewTaskFlagIfNeeded
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject

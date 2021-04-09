@@ -40,6 +40,7 @@ dependencies {
     implementation(deps.androidX.lifecycleCommonJava8)
     implementation(deps.androidX.browser)
 
+    implementation(deps.commons.core)
     implementation(deps.commons.ktx)
     implementation(deps.commons.network)
     implementation(deps.commons.windowAnims)

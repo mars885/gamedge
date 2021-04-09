@@ -22,9 +22,9 @@ import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams.MATCH_PARENT
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.paulrybitskyi.commons.ktx.views.recyclerView
+import com.paulrybitskyi.commons.ktx.views.registerOnPageChangeCallback
 import com.paulrybitskyi.commons.utils.observeChanges
-import com.paulrybitskyi.gamedge.commons.ui.extensions.recyclerView
-import com.paulrybitskyi.gamedge.commons.ui.extensions.registerOnPageChangeCallback
 
 internal class GameArtworksView @JvmOverloads constructor(
     context: Context,

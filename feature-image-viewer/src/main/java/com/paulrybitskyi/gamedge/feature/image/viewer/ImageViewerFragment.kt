@@ -18,15 +18,11 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
 import androidx.fragment.app.viewModels
-import com.paulrybitskyi.commons.ktx.getColor
-import com.paulrybitskyi.commons.ktx.navigationBarColor
-import com.paulrybitskyi.commons.ktx.statusBarColor
+import com.paulrybitskyi.commons.ktx.*
 import com.paulrybitskyi.commons.utils.viewBinding
-import com.paulrybitskyi.gamedge.commons.ui.addOnBackPressCallback
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
-import com.paulrybitskyi.gamedge.commons.ui.extensions.window
 import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.core.sharers.TextSharer
 import com.paulrybitskyi.gamedge.feature.image.viewer.databinding.FragmentImageViewerBinding

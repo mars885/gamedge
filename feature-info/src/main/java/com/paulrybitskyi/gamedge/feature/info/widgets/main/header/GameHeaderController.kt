@@ -22,10 +22,10 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.views.addTransitionListener
+import com.paulrybitskyi.commons.ktx.views.updateConstraintSets
 import com.paulrybitskyi.commons.utils.observeChanges
-import com.paulrybitskyi.gamedge.commons.ui.extensions.addTransitionListener
 import com.paulrybitskyi.gamedge.commons.ui.extensions.isChecked
-import com.paulrybitskyi.gamedge.commons.ui.extensions.updateConstraintSets
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.databinding.ViewGameInfoBinding

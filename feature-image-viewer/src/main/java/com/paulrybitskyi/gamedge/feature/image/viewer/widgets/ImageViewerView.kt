@@ -25,9 +25,9 @@ import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsMargin
 import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
 import com.paulrybitskyi.commons.ktx.layoutInflater
 import com.paulrybitskyi.commons.ktx.removeElevation
+import com.paulrybitskyi.commons.ktx.views.recyclerView
+import com.paulrybitskyi.commons.ktx.views.registerOnPageChangeCallback
 import com.paulrybitskyi.commons.utils.observeChanges
-import com.paulrybitskyi.gamedge.commons.ui.extensions.recyclerView
-import com.paulrybitskyi.gamedge.commons.ui.extensions.registerOnPageChangeCallback
 import com.paulrybitskyi.gamedge.feature.image.viewer.R
 import com.paulrybitskyi.gamedge.feature.image.viewer.databinding.ViewImageViewerBinding
 
