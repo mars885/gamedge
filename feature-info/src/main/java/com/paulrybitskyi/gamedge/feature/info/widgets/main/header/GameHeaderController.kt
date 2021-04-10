@@ -275,7 +275,18 @@ internal class GameHeaderController(
     fun bindModel(model: GameInfoHeaderModel) {
         coverImageUrl = model.coverImageUrl
 
-        if(isLiked != model.isLiked) isLiked = model.isLiked
+        if(isLiked != model.isLiked) {
+            isLiked = model.isLiked
+        } else {
+            // See onAttachedToWindow method's comment. This crutch is exactly like that,
+            // with the only difference is that icon resets its state when pressing home
+            // button and then coming back.
+            if(isLiked) {
+                isLiked = false
+                isLiked = true
+            }
+        }
+
         if(backgroundImageModels != model.backgroundImageModels) backgroundImageModels = model.backgroundImageModels
         if(title != model.title) title = model.title
         if(releaseDate != model.releaseDate) releaseDate = model.releaseDate
