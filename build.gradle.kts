@@ -25,7 +25,6 @@ buildscript {
     repositories {
         mavenCentral()
         google()
-        jcenter()
     }
 
     dependencies {
@@ -42,7 +41,6 @@ allprojects {
         mavenCentral()
         google()
         maven { setUrl("https://jitpack.io") }
-        jcenter()
     }
 
     // Without the below block, a build failure was happening when

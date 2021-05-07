@@ -24,7 +24,7 @@ object appConfig {
     const val compileSdkVersion = 30
     const val targetSdkVersion = 30
     const val minSdkVersion = 21
-    const val buildToolsVersion = "29.0.3"
+    const val buildToolsVersion = "30.0.2"
     const val applicationId = "com.paulrybitskyi.gamedge"
     const val versionCode = 1
     const val versionName = "1.0.0"
@@ -37,13 +37,13 @@ object appConfig {
 
 object versions {
 
-    const val kotlin = "1.4.32" // also in buildSrc build.gradle.kts file
+    const val kotlin = "1.5.0" // also in buildSrc build.gradle.kts file
     const val gradleVersionsPlugin = "0.38.0"
-    const val protobufPlugin = "0.8.15"
+    const val protobufPlugin = "0.8.16"
     const val navigation = "2.3.5"
-    const val daggerHilt = "2.34-beta"
+    const val daggerHilt = "2.35.1"
     const val coroutines = "1.4.3"
-    const val room = "2.3.0-rc01"
+    const val room = "2.3.0"
 
 }
 
@@ -52,7 +52,7 @@ object deps {
 
     object plugins {
 
-        private const val gradlePluginVersion = "4.1.3" // also in buildSrc build.gradle.kts file
+        private const val gradlePluginVersion = "4.2.0" // also in buildSrc build.gradle.kts file
 
         const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
@@ -92,7 +92,7 @@ object deps {
 
     object kotlin {
 
-        private const val serializationVersion = "1.1.0"
+        private const val serializationVersion = "1.2.0"
 
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
@@ -109,9 +109,9 @@ object deps {
         private const val swipeRefreshLayoutVersion = "1.1.0"
         private const val lifecycleVersion = "2.4.0-alpha01"
         private const val browserVersion = "1.3.0"
-        private const val coreKtxVersion = "1.5.0-rc01"
-        private const val fragmentKtxVersion = "1.3.2"
-        private const val dataStoreVersion = "1.0.0-alpha08"
+        private const val coreKtxVersion = "1.5.0-rc02"
+        private const val fragmentKtxVersion = "1.3.3"
+        private const val dataStoreVersion = "1.0.0-beta01"
 
         const val appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
         const val navFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
@@ -191,7 +191,7 @@ object deps {
         private const val desugaredLibsVersion = "1.0.10"
         private const val kotlinResultVersion = "1.1.11"
         private const val expandableTextViewVersion = "1.0.5"
-        private const val hiltBinderVersion = "1.0.0-alpha03"
+        private const val hiltBinderVersion = "1.0.0-beta01"
         private const val photoViewVersion = "2.3.0"
 
         const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${desugaredLibsVersion}"
