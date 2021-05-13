@@ -21,17 +21,11 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
-import com.paulrybitskyi.gamedge.core.ErrorMapper
-import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.domain.auth.DomainOauthCredentials
 import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
-import com.paulrybitskyi.gamedge.domain.commons.DomainResult
-import com.paulrybitskyi.gamedge.domain.commons.entities.Error
+import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
@@ -68,7 +62,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Routes to dashboard when auth refresh use case emits credentials`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
+            coEvery { refreshAuthUseCase.execute() } returns flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
 
             SUT.routeFlow.test {
                 SUT.init()
@@ -82,7 +76,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Logs error when auth refresh use case emits error result`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery { refreshAuthUseCase.execute() } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.init()
 
@@ -94,7 +88,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Logs error when auth refresh use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { refreshAuthUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshAuthUseCase.execute() } returns flow { throw Exception("error") }
 
             SUT.init()
 
@@ -106,7 +100,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Dispatches toast showing command when auth refresh use case emits error result`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery { refreshAuthUseCase.execute() } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.commandFlow.test {
                 SUT.init()
@@ -120,7 +114,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Dispatches toast showing command when auth refresh use cae throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { refreshAuthUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshAuthUseCase.execute() } returns flow { throw Exception("error") }
 
             SUT.commandFlow.test {
                 SUT.init()
@@ -134,7 +128,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Routes to application exit when auth refresh use case emits error result`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { refreshAuthUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery { refreshAuthUseCase.execute() } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.routeFlow.test {
                 SUT.init()
@@ -148,7 +142,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Routes to application exit when auth refresh use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { refreshAuthUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshAuthUseCase.execute() } returns flow { throw Exception("error") }
 
             SUT.routeFlow.test {
                 SUT.init()
