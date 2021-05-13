@@ -42,7 +42,7 @@ object versions {
     const val protobufPlugin = "0.8.16"
     const val navigation = "2.3.5"
     const val daggerHilt = "2.35.1"
-    const val coroutines = "1.4.3"
+    const val coroutines = "1.5.0-RC"
     const val room = "2.3.0"
 
 }
