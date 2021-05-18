@@ -42,7 +42,7 @@ object versions {
     const val protobufPlugin = "0.8.16"
     const val navigation = "2.3.5"
     const val daggerHilt = "2.35.1"
-    const val coroutines = "1.5.0-RC"
+    const val coroutines = "1.5.0"
     const val room = "2.3.0"
 
 }
@@ -52,7 +52,7 @@ object deps {
 
     object plugins {
 
-        private const val gradlePluginVersion = "4.2.0" // also in buildSrc build.gradle.kts file
+        private const val gradlePluginVersion = "4.2.1" // also in buildSrc build.gradle.kts file
 
         const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
@@ -209,7 +209,7 @@ object deps {
         private const val jUnitExtVersion = "1.1.2"
         private const val assertJVersion = "3.19.0"
         private const val mockkVersion = "1.11.0"
-        private const val turbineVersion = "0.5.0-rc1"
+        private const val turbineVersion = "0.5.0"
         private const val testRunnerVersion = "1.3.0"
         private const val archCoreVersion = "2.1.0"
         private const val mockWebServerVersion = "4.9.1"

@@ -37,12 +37,12 @@ abstract class BaseViewModel : ViewModel(), Loggable {
 
 
     protected fun dispatchCommand(command: Command) {
-        _commandChannel.offer(command)
+        _commandChannel.trySend(command)
     }
 
 
     protected fun route(route: Route) {
-        _routeChannel.offer(route)
+        _routeChannel.trySend(route)
     }
 
 
