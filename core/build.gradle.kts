@@ -18,6 +18,7 @@ plugins {
     androidLibrary()
     gamedgeAndroid()
     kotlinKapt()
+    ksp()
 }
 
 android {
@@ -51,7 +52,7 @@ dependencies {
     kapt(deps.google.daggerHiltCompiler)
 
     implementation(deps.misc.hiltBinder)
-    kapt(deps.misc.hiltBinderCompiler)
+    ksp(deps.misc.hiltBinderCompiler)
 
     coreLibraryDesugaring(deps.misc.desugaredLibs)
 

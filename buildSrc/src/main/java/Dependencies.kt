@@ -37,9 +37,10 @@ object appConfig {
 
 object versions {
 
-    const val kotlin = "1.5.0" // also in buildSrc build.gradle.kts file
+    const val kotlin = "1.5.10" // also in buildSrc build.gradle.kts file
     const val gradleVersionsPlugin = "0.38.0"
     const val protobufPlugin = "0.8.16"
+    const val kspPlugin = "1.5.10-1.0.0-beta01"
     const val navigation = "2.3.5"
     const val daggerHilt = "2.35.1"
     const val coroutines = "1.5.0"
@@ -191,7 +192,7 @@ object deps {
         private const val desugaredLibsVersion = "1.0.10"
         private const val kotlinResultVersion = "1.1.11"
         private const val expandableTextViewVersion = "1.0.5"
-        private const val hiltBinderVersion = "1.0.0"
+        private const val hiltBinderVersion = "1.1.0"
         private const val photoViewVersion = "2.3.0"
 
         const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${desugaredLibsVersion}"

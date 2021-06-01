@@ -23,6 +23,7 @@ import PLUGIN_ANDROID_APPLICATION
 import PLUGIN_KOTLIN_ANDROID
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.kotlin.dsl.findByType
+import java.io.File
 
 class GamedgeAndroidPlugin : Plugin<Project> {
 
@@ -64,10 +65,26 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 // production to avoid security issues
                 getByName("debug") {
                     manifestPlaceholders["usesCleartextTraffic"] = true
+
+                    // TODO (26.05.2021): To be removed once KSP supports it by
+                    // default. See this issue: https://github.com/google/ksp/issues/37
+                    sourceSets {
+                        getByName("main") {
+                            java.srcDir(File("build/generated/ksp/debug/java"))
+                            java.srcDir(File("build/generated/ksp/debug/kotlin"))
+                        }
+                    }
                 }
 
                 getByName("release") {
                     manifestPlaceholders["usesCleartextTraffic"] = false
+
+                    sourceSets {
+                        getByName("main") {
+                            java.srcDir(File("build/generated/ksp/release/java"))
+                            java.srcDir(File("build/generated/ksp/release/kotlin"))
+                        }
+                    }
 
                     isMinifyEnabled = false
                     proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
