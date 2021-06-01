@@ -18,6 +18,7 @@ plugins {
     androidApplication()
     gamedgeAndroid()
     kotlinKapt()
+    ksp()
     navSafeArgsKotlin()
     daggerHiltAndroid()
 }
@@ -64,7 +65,7 @@ dependencies {
     kapt(deps.google.daggerHiltCompiler)
 
     implementation(deps.misc.hiltBinder)
-    kapt(deps.misc.hiltBinderCompiler)
+    ksp(deps.misc.hiltBinderCompiler)
 
     coreLibraryDesugaring(deps.misc.desugaredLibs)
 

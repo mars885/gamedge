@@ -23,3 +23,10 @@ include(":feature-likes")
 include(":feature-news")
 include(":feature-search")
 include(":feature-splash")
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+    }
+}

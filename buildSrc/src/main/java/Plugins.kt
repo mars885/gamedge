@@ -26,6 +26,7 @@ const val PLUGIN_ANDROID_LIBRARY = "com.android.library"
 const val PLUGIN_KOTLIN = "kotlin"
 const val PLUGIN_KOTLIN_ANDROID = "kotlin-android"
 const val PLUGIN_KOTLIN_KAPT = "kotlin-kapt"
+const val PLUGIN_KSP = "com.google.devtools.ksp"
 const val PLUGIN_KOTLINX_SERIALIZATION = "org.jetbrains.kotlin.plugin.serialization"
 const val PLUGIN_NAV_SAFE_ARGS_KOTLIN = "androidx.navigation.safeargs.kotlin"
 const val PLUGIN_DAGGER_HILT_ANDROID = "dagger.hilt.android.plugin"
@@ -64,6 +65,11 @@ fun PluginDependenciesSpec.kotlinAndroid(): PluginDependencySpec {
 
 fun PluginDependenciesSpec.kotlinKapt(): PluginDependencySpec {
     return id(PLUGIN_KOTLIN_KAPT)
+}
+
+
+fun PluginDependenciesSpec.ksp(): PluginDependencySpec {
+    return (id(PLUGIN_KSP) version versions.kspPlugin)
 }
 
 
