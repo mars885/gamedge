@@ -37,10 +37,10 @@ object appConfig {
 
 object versions {
 
-    const val kotlin = "1.5.21" // also in buildSrc build.gradle.kts file
+    const val kotlin = "1.5.10" // also in buildSrc build.gradle.kts file
     const val compose = "1.0.0-rc01"
     const val gradleVersionsPlugin = "0.39.0"
-    const val kspPlugin = "1.5.20-1.0.0-beta04"
+    const val kspPlugin = "1.5.10-1.0.0-beta02"
     const val navigation = "2.3.5"
     const val daggerHilt = "2.37"
     const val coroutines = "1.5.1"
@@ -134,6 +134,16 @@ object deps {
         const val fragmentKtx = "androidx.fragment:fragment-ktx:${fragmentKtxVersion}"
         const val prefsDataStore = "androidx.datastore:datastore-preferences:${dataStoreVersion}"
         const val protoDataStore = "androidx.datastore:datastore-core:${dataStoreVersion}"
+
+    }
+
+    object compose {
+
+        const val ui = "androidx.compose.ui:ui:${versions.compose}"
+        const val tooling = "androidx.compose.ui:ui-tooling:${versions.compose}"
+        const val foundation = "androidx.compose.foundation:foundation:${versions.compose}"
+        const val material = "androidx.compose.material:material:${versions.compose}"
+        const val runtime = "androidx.compose.runtime:runtime:${versions.compose}"
 
     }
 

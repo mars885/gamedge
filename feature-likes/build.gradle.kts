@@ -44,6 +44,12 @@ dependencies {
     implementation(deps.androidX.constraintLayout)
     implementation(deps.androidX.fragmentKtx)
 
+    implementation(deps.compose.ui)
+    implementation(deps.compose.tooling)
+    implementation(deps.compose.foundation)
+    implementation(deps.compose.material)
+    implementation(deps.compose.runtime)
+
     implementation(deps.commons.core)
 
     implementation(deps.google.daggerHilt)
