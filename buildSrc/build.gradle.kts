@@ -23,12 +23,8 @@ repositories {
     google()
 }
 
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
-
 dependencies {
-    implementation("com.android.tools.build:gradle:4.2.1")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
+    implementation("com.android.tools.build:gradle:7.0.0-beta05")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
     implementation(gradleApi()) // for custom plugins
 }

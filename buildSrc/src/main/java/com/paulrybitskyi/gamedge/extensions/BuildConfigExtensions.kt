@@ -16,35 +16,19 @@
 
 package com.paulrybitskyi.gamedge.extensions
 
-import com.android.build.gradle.internal.dsl.BaseFlavor
-import com.android.build.gradle.internal.dsl.BuildType
+import com.android.build.api.dsl.VariantDimension
 
 
-fun BuildType.booleanField(name: String, value: Boolean) {
+fun VariantDimension.booleanField(name: String, value: Boolean) {
     buildConfigField("Boolean", name, value.toString())
 }
 
 
-fun BuildType.integerField(name: String, value: Int) {
+fun VariantDimension.integerField(name: String, value: Int) {
     buildConfigField("Integer", name, value.toString())
 }
 
 
-fun BuildType.stringField(name: String, value: String) {
-    buildConfigField("String", name, "\"$value\"")
-}
-
-
-fun BaseFlavor.booleanField(name: String, value: Boolean) {
-    buildConfigField("Boolean", name, value.toString())
-}
-
-
-fun BaseFlavor.integerField(name: String, value: Int) {
-    buildConfigField("Integer", name, value.toString())
-}
-
-
-fun BaseFlavor.stringField(name: String, value: String) {
+fun VariantDimension.stringField(name: String, value: String) {
     buildConfigField("String", name, "\"$value\"")
 }
