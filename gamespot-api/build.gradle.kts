@@ -36,15 +36,10 @@ android {
 
         stringField("GAMESPOT_API_KEY", property("GAMESPOT_API_KEY", ""))
     }
-
-    // https://dagger.dev/hilt/gradle-setup#classpath-aggregation
-    lintOptions {
-        isCheckReleaseBuilds = false
-    }
 }
 
 hilt {
-    enableExperimentalClasspathAggregation = true
+    enableAggregatingTask = true
 }
 
 dependencies {

@@ -89,5 +89,5 @@ fun PluginDependenciesSpec.daggerHiltAndroid(): PluginDependencySpec {
 
 
 fun PluginDependenciesSpec.protobuf(): PluginDependencySpec {
-    return (id(PLUGIN_PROTOBUF) version versions.protobufPlugin)
+    return id(PLUGIN_PROTOBUF)
 }

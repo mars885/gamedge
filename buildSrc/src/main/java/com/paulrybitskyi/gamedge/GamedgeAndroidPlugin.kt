@@ -51,8 +51,8 @@ class GamedgeAndroidPlugin : Plugin<Project> {
             buildToolsVersion(appConfig.buildToolsVersion)
 
             defaultConfig {
-                minSdkVersion(appConfig.minSdkVersion)
-                targetSdkVersion(appConfig.targetSdkVersion)
+                minSdk = appConfig.minSdkVersion
+                targetSdk = appConfig.targetSdkVersion
                 versionCode = appConfig.versionCode
                 versionName = appConfig.versionName
 
@@ -84,12 +84,12 @@ class GamedgeAndroidPlugin : Plugin<Project> {
             // See: https://github.com/Kotlin/kotlinx.coroutines/tree/master/kotlinx-coroutines-debug#debug-agent-and-android
             packagingOptions {
                 // for JNA and JNA-platform
-                exclude("META-INF/AL2.0")
-                exclude("META-INF/LGPL2.1")
+                resources.excludes.add("META-INF/AL2.0")
+                resources.excludes.add("META-INF/LGPL2.1")
                 // for byte-buddy
-                exclude("META-INF/licenses/ASM")
-                pickFirst("win32-x86-64/attach_hotspot_windows.dll")
-                pickFirst("win32-x86/attach_hotspot_windows.dll")
+                resources.excludes.add("META-INF/licenses/ASM")
+                resources.pickFirsts.add("win32-x86-64/attach_hotspot_windows.dll")
+                resources.pickFirsts.add("win32-x86/attach_hotspot_windows.dll")
             }
         }
     }
