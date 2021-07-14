@@ -144,7 +144,17 @@ object deps {
         const val foundation = "androidx.compose.foundation:foundation:${versions.compose}"
         const val activity = "androidx.activity:activity-compose:${versions.compose}"
         const val material = "androidx.compose.material:material:${versions.compose}"
+        const val iconsCore = "androidx.compose.material:material-icons-core:${versions.compose}"
+        const val extendedIcons = "androidx.compose.material:material-icons-extended:${versions.compose}"
         const val runtime = "androidx.compose.runtime:runtime:${versions.compose}"
+
+        object accompanist {
+
+            const val version = "0.14.0"
+
+            const val insets = "com.google.accompanist:accompanist-insets:$version"
+
+        }
 
     }
 

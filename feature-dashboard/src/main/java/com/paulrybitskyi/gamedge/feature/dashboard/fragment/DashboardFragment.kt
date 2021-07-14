@@ -18,8 +18,16 @@ package com.paulrybitskyi.gamedge.feature.dashboard.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.MenuItem
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.ui.Modifier
 import androidx.fragment.app.viewModels
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.statusBarsHeight
+import com.google.accompanist.insets.statusBarsPadding
 import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
 import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.ktx.getColor
@@ -28,6 +36,7 @@ import com.paulrybitskyi.commons.material.utils.setItemColors
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+import com.paulrybitskyi.gamedge.commons.ui.widgets.Toolbar
 import com.paulrybitskyi.gamedge.feature.dashboard.R
 import com.paulrybitskyi.gamedge.feature.dashboard.databinding.FragmentDashboardBinding
 import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardPage.Companion.toDashboardPageFromMenuItemId
@@ -72,8 +81,16 @@ internal class DashboardFragment : BaseFragment<
 
 
     private fun initToolbar() = with(viewBinding.toolbar) {
-        applyWindowTopInsetAsPadding()
-        onRightButtonClickListener = { viewModel.onToolbarRightButtonClicked() }
+        setContent {
+            ProvideWindowInsets {
+                Toolbar(
+                    title = getString(R.string.dashboard_toolbar_title),
+                    modifier = Modifier.statusBarsPadding(),
+                    rightButtonIcon = Icons.Filled.Search,
+                    onRightButtonClick = viewModel::onToolbarRightButtonClicked
+                )
+            }
+        }
     }
 
 

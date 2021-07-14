@@ -21,6 +21,13 @@
     <!-- General -->
     <dimen name="progress_bar_stroke_width">3dp</dimen>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="toolbar_title_horizontal_padding_with_icon">16dp</dimen>
+    <dimen name="toolbar_title_horizontal_padding_without_icon">20dp</dimen>
+    <dimen name="toolbar_title_text_size">20sp</dimen>
+
     <!-- ChipFlowView -->
     <dimen name="chip_flow_item_background_shadow_dx">1dp</dimen>
     <dimen name="chip_flow_item_background_shadow_dy">2dp</dimen>
