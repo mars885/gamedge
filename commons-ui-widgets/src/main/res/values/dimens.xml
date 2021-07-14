@@ -18,6 +18,9 @@
 
 <resources>
 
+    <!-- General -->
+    <dimen name="progress_bar_stroke_width">3dp</dimen>
+
     <!-- ChipFlowView -->
     <dimen name="chip_flow_item_background_shadow_dx">1dp</dimen>
     <dimen name="chip_flow_item_background_shadow_dy">2dp</dimen>

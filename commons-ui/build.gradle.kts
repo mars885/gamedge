@@ -38,6 +38,9 @@ dependencies {
     implementation(deps.androidX.coreKtx)
     implementation(deps.androidX.fragmentKtx)
 
+    implementation(deps.compose.tooling)
+    implementation(deps.compose.activity)
+
     implementation(deps.google.materialComponents)
 
     implementation(deps.commons.core)

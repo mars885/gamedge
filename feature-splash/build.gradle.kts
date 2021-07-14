@@ -47,6 +47,7 @@ dependencies {
     implementation(deps.compose.ui)
     implementation(deps.compose.tooling)
     implementation(deps.compose.foundation)
+    implementation(deps.compose.activity)
     implementation(deps.compose.material)
     implementation(deps.compose.runtime)
 

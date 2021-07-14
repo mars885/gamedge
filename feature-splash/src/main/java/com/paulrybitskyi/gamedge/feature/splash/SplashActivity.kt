@@ -16,23 +16,33 @@
 
 package com.paulrybitskyi.gamedge.feature.splash
 
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import com.paulrybitskyi.commons.utils.viewBinding
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseActivity
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.BiasAlignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.paulrybitskyi.gamedge.commons.ui.base.BaseComposeActivity
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
-import com.paulrybitskyi.gamedge.feature.splash.databinding.ActivitySplashBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-internal class SplashActivity : BaseActivity<
-    ActivitySplashBinding,
-    SplashViewModel,
-    SplashNavigator
->() {
+internal class SplashActivity : BaseComposeActivity<SplashViewModel, SplashNavigator>() {
 
 
-    override val viewBinding by viewBinding(ActivitySplashBinding::inflate)
     override val viewModel by viewModels<SplashViewModel>()
+
+
+    override fun onInitUi() {
+        setContent {
+            SplashScreen()
+        }
+    }
 
 
     override fun onLoadData() {
@@ -52,4 +62,23 @@ internal class SplashActivity : BaseActivity<
     }
 
 
+}
+
+
+@Preview
+@Composable
+private fun SplashScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = BiasAlignment(
+            horizontalBias = 0f,
+            verticalBias = 0.5f
+        )
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.size(dimensionResource(R.dimen.splash_progress_bar_size)),
+            color = colorResource(R.color.colorAccent),
+            strokeWidth = dimensionResource(R.dimen.progress_bar_stroke_width)
+        )
+    }
 }

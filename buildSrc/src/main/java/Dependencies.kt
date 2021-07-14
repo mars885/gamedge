@@ -140,8 +140,9 @@ object deps {
     object compose {
 
         const val ui = "androidx.compose.ui:ui:${versions.compose}"
-        const val tooling = "androidx.compose.ui:ui-tooling:${versions.compose}"
+        const val tooling = "androidx.compose.ui:ui-tooling:1.0.0-beta09" // Should be changed to rc02 when it is released
         const val foundation = "androidx.compose.foundation:foundation:${versions.compose}"
+        const val activity = "androidx.activity:activity-compose:${versions.compose}"
         const val material = "androidx.compose.material:material:${versions.compose}"
         const val runtime = "androidx.compose.runtime:runtime:${versions.compose}"
 
