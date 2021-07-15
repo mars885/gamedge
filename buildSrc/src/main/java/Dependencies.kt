@@ -139,6 +139,8 @@ object deps {
 
     object compose {
 
+        private const val coilCompose = "1.3.0"
+
         const val ui = "androidx.compose.ui:ui:${versions.compose}"
         const val tooling = "androidx.compose.ui:ui-tooling:1.0.0-beta09" // Should be changed to rc02 when it is released
         const val foundation = "androidx.compose.foundation:foundation:${versions.compose}"
@@ -147,6 +149,8 @@ object deps {
         const val iconsCore = "androidx.compose.material:material-icons-core:${versions.compose}"
         const val extendedIcons = "androidx.compose.material:material-icons-extended:${versions.compose}"
         const val runtime = "androidx.compose.runtime:runtime:${versions.compose}"
+
+        const val coil = "io.coil-kt:coil-compose:$coilCompose"
 
         object accompanist {
 

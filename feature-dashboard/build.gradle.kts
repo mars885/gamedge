@@ -50,8 +50,6 @@ dependencies {
     implementation(deps.compose.tooling)
     implementation(deps.compose.foundation)
     implementation(deps.compose.material)
-    implementation(deps.compose.iconsCore)
-    implementation(deps.compose.extendedIcons)
     implementation(deps.compose.runtime)
     implementation(deps.compose.accompanist.insets)
 

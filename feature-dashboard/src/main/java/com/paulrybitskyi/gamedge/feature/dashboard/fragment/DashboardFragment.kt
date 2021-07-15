@@ -18,18 +18,15 @@ package com.paulrybitskyi.gamedge.feature.dashboard.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.MenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.fragment.app.viewModels
-import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.statusBarsHeight
 import com.google.accompanist.insets.statusBarsPadding
 import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
-import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
 import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.commons.ktx.getSerializable
 import com.paulrybitskyi.commons.material.utils.setItemColors
@@ -86,7 +83,7 @@ internal class DashboardFragment : BaseFragment<
                 Toolbar(
                     title = getString(R.string.dashboard_toolbar_title),
                     modifier = Modifier.statusBarsPadding(),
-                    rightButtonIcon = Icons.Filled.Search,
+                    rightButtonIcon = painterResource(R.drawable.magnify),
                     onRightButtonClick = viewModel::onToolbarRightButtonClicked
                 )
             }

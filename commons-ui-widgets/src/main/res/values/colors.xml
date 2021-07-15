@@ -23,6 +23,10 @@
     <color name="toolbar_title_text_color">@color/colorPrimaryText</color>
     <color name="toolbar_button_icon_color">@color/colorPrimaryText</color>
 
+    <!-- Info -->
+    <color name="info_view_icon_color">#000000</color>
+    <color name="info_view_title_text_color">#000000</color>
+
     <!-- ChipFlowView -->
     <color name="chip_flow_item_background_shadow_color">#30000000</color>
 

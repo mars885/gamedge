@@ -19,15 +19,14 @@ package com.paulrybitskyi.gamedge.commons.ui.widgets
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,8 +43,8 @@ fun Toolbar(
     titleTextColor: Color = colorResource(R.color.toolbar_title_text_color),
     iconColor: Color = colorResource(R.color.toolbar_button_icon_color),
     titleTextSize: TextUnit = textSizeResource(R.dimen.toolbar_title_text_size),
-    leftButtonIcon: ImageVector? = null,
-    rightButtonIcon: ImageVector? = null,
+    leftButtonIcon: Painter? = null,
+    rightButtonIcon: Painter? = null,
     onLeftButtonClick: (() -> Unit)? = null,
     onRightButtonClick: (() -> Unit)? = null
 ) {
@@ -63,7 +62,6 @@ fun Toolbar(
         if(leftButtonIcon != null) {
             ToolbarButton(
                 icon = leftButtonIcon,
-                iconDescription = "Left button of the toolbar",
                 iconColor = iconColor,
                 onClick = { onLeftButtonClick?.invoke() }
             )
@@ -84,7 +82,6 @@ fun Toolbar(
         if(rightButtonIcon != null) {
             ToolbarButton(
                 icon = rightButtonIcon,
-                iconDescription = "Right button of the toolbar",
                 iconColor = iconColor,
                 onClick = { onRightButtonClick?.invoke() }
             )
@@ -94,7 +91,7 @@ fun Toolbar(
 
 
 @Composable
-private fun getTitleHorizontalPadding(icon: ImageVector?): Dp {
+private fun getTitleHorizontalPadding(icon: Painter?): Dp {
     return dimensionResource(
         if(icon != null) {
             R.dimen.toolbar_title_horizontal_padding_with_icon
@@ -107,8 +104,7 @@ private fun getTitleHorizontalPadding(icon: ImageVector?): Dp {
 
 @Composable
 private fun ToolbarButton(
-    icon: ImageVector,
-    iconDescription: String? = null,
+    icon: Painter,
     iconColor: Color = colorResource(R.color.toolbar_button_icon_color),
     onClick: (() -> Unit)? = null
 ) {
@@ -117,8 +113,8 @@ private fun ToolbarButton(
         onClick = { onClick?.invoke() }
     ) {
         Icon(
-            imageVector = icon,
-            contentDescription = iconDescription,
+            painter = icon,
+            contentDescription = null,
             tint = iconColor
         )
     }
@@ -148,8 +144,8 @@ private fun ToolbarPreviewWithLongTitle() {
 private fun ToolbarPreviewWithBothIcons() {
     Toolbar(
         title = "Toolbar",
-        leftButtonIcon = Icons.Filled.Menu,
-        rightButtonIcon = Icons.Filled.Check
+        leftButtonIcon = painterResource(R.drawable.arrow_left),
+        rightButtonIcon = painterResource(R.drawable.magnify)
     )
 }
 
@@ -159,7 +155,7 @@ private fun ToolbarPreviewWithBothIcons() {
 private fun ToolbarPreviewWithLeftIcon() {
     Toolbar(
         title = "Toolbar",
-        leftButtonIcon = Icons.Filled.Menu
+        leftButtonIcon = painterResource(R.drawable.arrow_left),
     )
 }
 
@@ -169,6 +165,6 @@ private fun ToolbarPreviewWithLeftIcon() {
 private fun ToolbarPreviewWithRightIcon() {
     Toolbar(
         title = "Toolbar",
-        rightButtonIcon = Icons.Filled.Check
+        rightButtonIcon = painterResource(R.drawable.magnify)
     )
 }
