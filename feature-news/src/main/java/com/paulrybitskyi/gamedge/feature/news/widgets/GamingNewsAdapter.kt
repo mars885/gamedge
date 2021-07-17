@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.feature.news.widgets
 import android.content.Context
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractRecyclerViewAdapter
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
+import com.paulrybitskyi.gamedge.feature.news.GamingNewsItem
 
 internal class GamingNewsAdapter(
     context: Context

@@ -26,12 +26,12 @@
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="toolbar_title_horizontal_padding_with_icon">16dp</dimen>
     <dimen name="toolbar_title_horizontal_padding_without_icon">20dp</dimen>
-    <dimen name="toolbar_title_text_size">20sp</dimen>
+    <dimen name="toolbar_title_text_size">18sp</dimen>
 
     <!-- Info -->
     <dimen name="info_view_icon_size">100dp</dimen>
     <dimen name="info_view_title_margin_top">5dp</dimen>
-    <dimen name="info_view_title_text_size">18sp</dimen>
+    <dimen name="info_view_title_text_size">17sp</dimen>
     <dimen name="info_view_title_text_line_spacing_extra">4dp</dimen>
 
     <!-- ChipFlowView -->

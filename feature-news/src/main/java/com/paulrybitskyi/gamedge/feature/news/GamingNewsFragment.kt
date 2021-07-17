@@ -16,57 +16,34 @@
 
 package com.paulrybitskyi.gamedge.feature.news
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.ktx.showShortToast
-import com.paulrybitskyi.commons.utils.viewBinding
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.commons.ui.base.BaseComposeFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.StubNavigator
-import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
-import com.paulrybitskyi.gamedge.feature.news.databinding.FragmentGamingNewsBinding
+import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNews
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GamingNewsFragment : BaseFragment<
-    FragmentGamingNewsBinding,
-    GamingNewsViewModel,
-    StubNavigator
->(R.layout.fragment_gaming_news) {
+class GamingNewsFragment : BaseComposeFragment<GamingNewsViewModel, StubNavigator>() {
 
 
-    override val viewBinding by viewBinding(FragmentGamingNewsBinding::bind)
     override val viewModel by viewModels<GamingNewsViewModel>()
 
     @Inject lateinit var urlOpener: UrlOpener
 
 
-    override fun onInit() {
-        super.onInit()
-
-        initGamingNewsView()
-    }
-
-
-    private fun initGamingNewsView() = with(viewBinding.gamingNewsView) {
-        onNewsItemClicked = viewModel::onNewsItemClicked
-        onRefreshRequested = viewModel::onRefreshRequested
-    }
-
-
-    override fun onBindViewModel() {
-        super.onBindViewModel()
-
-        observeUiState()
-    }
-
-
-    private fun observeUiState() {
-        viewModel.uiState
-            .onEach { viewBinding.gamingNewsView.uiState = it }
-            .observeIn(this)
+    @Composable
+    override fun InitUi() {
+        GamingNews(
+            uiState = viewModel.uiState.collectAsState().value,
+            onNewsItemClicked = viewModel::onNewsItemClicked,
+            onRefreshRequested = viewModel::onRefreshRequested
+        )
     }
 
 

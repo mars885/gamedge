@@ -31,6 +31,7 @@ import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.fadeIn
 import com.paulrybitskyi.gamedge.commons.ui.resetAnimation
+import com.paulrybitskyi.gamedge.feature.news.GamingNewsItem
 import com.paulrybitskyi.gamedge.feature.news.R
 import com.paulrybitskyi.gamedge.feature.news.databinding.ViewGamingNewsBinding
 

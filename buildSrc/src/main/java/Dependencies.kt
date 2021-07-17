@@ -38,7 +38,7 @@ object appConfig {
 object versions {
 
     const val kotlin = "1.5.10" // also in buildSrc build.gradle.kts file
-    const val compose = "1.0.0-rc01"
+    const val compose = "1.0.0-rc02"
     const val gradleVersionsPlugin = "0.39.0"
     const val kspPlugin = "1.5.10-1.0.0-beta02"
     const val navigation = "2.3.5"
@@ -142,7 +142,7 @@ object deps {
         private const val coilCompose = "1.3.0"
 
         const val ui = "androidx.compose.ui:ui:${versions.compose}"
-        const val tooling = "androidx.compose.ui:ui-tooling:1.0.0-beta09" // Should be changed to rc02 when it is released
+        const val tooling = "androidx.compose.ui:ui-tooling:${versions.compose}"
         const val foundation = "androidx.compose.foundation:foundation:${versions.compose}"
         const val activity = "androidx.activity:activity-compose:${versions.compose}"
         const val material = "androidx.compose.material:material:${versions.compose}"
@@ -157,6 +157,7 @@ object deps {
             const val version = "0.14.0"
 
             const val insets = "com.google.accompanist:accompanist-insets:$version"
+            const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
 
         }
 

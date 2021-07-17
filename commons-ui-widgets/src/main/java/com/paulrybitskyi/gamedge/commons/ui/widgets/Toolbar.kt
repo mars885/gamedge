@@ -28,6 +28,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -75,6 +76,7 @@ fun Toolbar(
             color = titleTextColor,
             fontSize = titleTextSize,
             fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Medium,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
         )

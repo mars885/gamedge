@@ -16,55 +16,139 @@
 
 package com.paulrybitskyi.gamedge.feature.news.widgets
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractItem
-import com.paulrybitskyi.gamedge.commons.ui.base.rv.HasListeners
-import com.paulrybitskyi.gamedge.commons.ui.base.rv.HasUniqueIdentifier
-import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
-
-internal class GamingNewsItem(model: GamingNewsItemModel) : AbstractItem<
-    GamingNewsItemModel,
-    GamingNewsItem.ViewHolder,
-    NoDependencies
->(model), HasUniqueIdentifier<Int> {
-
-
-    override val uniqueIdentifier: Int
-        get() = model.id
-
-
-    override fun createViewHolder(
-        inflater: LayoutInflater,
-        parent: ViewGroup,
-        dependencies: NoDependencies
-    ): ViewHolder {
-        return ViewHolder(GamingNewsItemView(parent.context))
-    }
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.rememberImagePainter
+import com.paulrybitskyi.gamedge.commons.ui.extensions.textSizeResource
+import com.paulrybitskyi.gamedge.feature.news.R
 
 
-    override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
-        viewHolder.bind(model)
-    }
+@Composable
+internal fun GamingNewsItem(
+    imageUrl: String?,
+    title: String,
+    lede: String,
+    publicationDate: String,
+    onClick: (() -> Unit)? = null
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(),
+                onClick = { onClick?.invoke() }
+            ),
+        shape = RectangleShape,
+        backgroundColor = colorResource(R.color.gaming_news_item_card_background_color),
+        elevation = dimensionResource(R.dimen.gaming_news_item_card_elevation)
+    ) {
+        Column(modifier = Modifier.padding(dimensionResource(R.dimen.gaming_news_item_padding))) {
+            if(imageUrl != null) {
+                GamingNewsItemImage(
+                    imageUrl = imageUrl,
+                    modifier = Modifier
+                        .height(dimensionResource(R.dimen.gaming_news_item_image_height))
+                        .padding(bottom = dimensionResource(R.dimen.gaming_news_item_image_margin_bottom))
+                )
+            }
 
-
-    internal class ViewHolder(
-        private val view: GamingNewsItemView
-    ): RecyclerView.ViewHolder(view), HasListeners {
-
-        fun bind(model: GamingNewsItemModel) = with(view) {
-            imageUrl = model.imageUrl
-            title = model.title
-            lede = model.lede
-            publicationDate = model.publicationDate
+            Text(
+                text = title,
+                modifier = Modifier.fillMaxWidth(),
+                color = colorResource(R.color.gaming_news_item_title_text_color),
+                fontSize = textSizeResource(R.dimen.gaming_news_item_title_text_size),
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Medium
+            )
+            Text(
+                text = lede,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = dimensionResource(R.dimen.gaming_news_item_lede_margin_top)),
+                color = colorResource(R.color.gaming_news_item_lede_text_color),
+                fontSize = textSizeResource(R.dimen.gaming_news_item_lede_text_size),
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Medium
+            )
+            Row(
+                modifier = Modifier.padding(top = dimensionResource(R.dimen.gaming_news_item_publication_date_margin_top)),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.clock_outline_16dp),
+                    contentDescription = null,
+                    modifier = Modifier.padding(end = dimensionResource(R.dimen.gaming_news_item_publication_date_icon_padding)),
+                    tint = colorResource(R.color.gaming_news_item_publication_date_text_color)
+                )
+                Text(
+                    text = publicationDate,
+                    color = colorResource(R.color.gaming_news_item_publication_date_text_color),
+                    fontSize = textSizeResource(R.dimen.gaming_news_item_publication_date_text_size),
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Medium
+                )
+            }
         }
-
-        fun setOnNewsItemClickListener(onClick: () -> Unit) {
-            view.onNewsItemClicked = onClick
-        }
-
     }
+}
 
 
+@Composable
+private fun GamingNewsItemImage(
+    imageUrl: String,
+    modifier: Modifier
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(modifier),
+        shape = RoundedCornerShape(dimensionResource(R.dimen.gaming_news_item_image_card_radius)),
+        backgroundColor = colorResource(R.color.gaming_news_item_image_card_background_color),
+        elevation = dimensionResource(R.dimen.gaming_news_item_image_card_elevation)
+    ) {
+        Image(
+            painter = rememberImagePainter(
+                data = imageUrl,
+                builder = {
+                    placeholder(R.drawable.game_landscape_placeholder)
+                    error(R.drawable.game_landscape_placeholder)
+                    crossfade(durationMillis = 200)
+                }
+            ),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
+
+@Preview
+@Composable
+internal fun GamingNewsItemPreview() {
+    GamingNewsItem(
+        imageUrl = "url",
+        title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
+        lede = "However, the record for those actively in a game has not been broken yet.",
+        publicationDate = "3 mins ago"
+    )
 }

@@ -31,6 +31,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -39,15 +40,19 @@ import com.paulrybitskyi.gamedge.commons.ui.extensions.textSizeResource
 
 
 @Composable
-internal fun Info(
+fun Info(
     icon: Painter,
     title: String,
+    modifier: Modifier = Modifier,
     iconSize: Dp = dimensionResource(R.dimen.info_view_icon_size),
     iconColor: Color = colorResource(R.color.info_view_icon_color),
     titleTextSize: TextUnit = textSizeResource(R.dimen.info_view_title_text_size),
     titleTextColor: Color = colorResource(R.color.info_view_title_text_color)
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Icon(
             painter = icon,
             modifier = Modifier.size(iconSize),
@@ -60,10 +65,9 @@ internal fun Info(
             color = titleTextColor,
             fontSize = titleTextSize,
             fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center
         )
-
-        // TODO. Line spacing extra?
     }
 }
 

@@ -65,7 +65,8 @@ subprojects {
                 "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-Xuse-experimental=kotlinx.coroutines.FlowPreview",
                 "-Xuse-experimental=kotlinx.serialization.ExperimentalSerializationApi",
-                "-Xuse-experimental=androidx.compose.material.ExperimentalMaterialApi"
+                "-Xuse-experimental=androidx.compose.material.ExperimentalMaterialApi",
+                "-Xuse-experimental=androidx.compose.animation.ExperimentalAnimationApi"
             )
 
             jvmTarget = appConfig.kotlinCompatibilityVersion.toString()
