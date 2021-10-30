@@ -26,7 +26,12 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getDimension
+import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.commons.ktx.getDrawable
+import com.paulrybitskyi.commons.ktx.getString
+import com.paulrybitskyi.commons.ktx.setHorizontalPadding
 import com.paulrybitskyi.commons.ktx.views.setFontFamily
 import com.paulrybitskyi.commons.ktx.views.setTextSizeInPx
 import com.paulrybitskyi.commons.utils.observeChanges

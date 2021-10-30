@@ -23,7 +23,7 @@ import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 
 
-internal class DefaultValues(
+internal data class DefaultValues(
     val backgroundColor: Int,
     val iconColor: Int,
     val backgroundCornerRadius: Float,
