@@ -41,7 +41,7 @@ object versions {
     const val gradleVersionsPlugin = "0.39.0"
     const val kspPlugin = "1.5.31-1.0.0"
     const val navigation = "2.3.5"
-    const val daggerHilt = "2.37"
+    const val daggerHilt = "2.40"
     const val coroutines = "1.5.1"
     const val room = "2.3.0"
 
