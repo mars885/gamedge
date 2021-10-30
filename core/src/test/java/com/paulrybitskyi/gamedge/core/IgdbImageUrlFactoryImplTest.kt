@@ -24,6 +24,7 @@ import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_IMAGE
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
 import org.junit.Test
+import java.util.*
 
 internal class IgdbImageUrlFactoryImplTest {
 
@@ -47,6 +48,7 @@ internal class IgdbImageUrlFactoryImplTest {
                 )
 
                 val expectedUrl = String.format(
+                    Locale.US,
                     "https://images.igdb.com/igdb/image/upload/t_%s/%s.%s",
                     config.size.rawSize,
                     DOMAIN_IMAGE.id,
@@ -70,6 +72,7 @@ internal class IgdbImageUrlFactoryImplTest {
                 )
 
                 val expectedUrl = String.format(
+                    Locale.US,
                     "https://images.igdb.com/igdb/image/upload/t_%s/%s.%s",
                     (config.size.rawSize + "_2x"),
                     DOMAIN_IMAGE.id,

@@ -36,6 +36,7 @@ internal class WebsiteNameProviderImpl @Inject constructor(
 ) : WebsiteNameProvider {
 
 
+    @Suppress("ComplexMethod")
     override fun provideWebsiteName(website: Website): String {
         return stringProvider.getString(
             when(website.category) {

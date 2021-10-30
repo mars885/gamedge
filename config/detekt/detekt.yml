@@ -88,7 +88,7 @@ complexity:
   ComplexMethod:
     active: true
     threshold: 15
-    ignoreSingleWhenExpression: false
+    ignoreSingleWhenExpression: true
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
     nestingFunctions:
