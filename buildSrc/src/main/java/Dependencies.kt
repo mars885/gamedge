@@ -214,7 +214,7 @@ object deps {
         private const val turbineVersion = "0.7.0"
         private const val testRunnerVersion = "1.4.0"
         private const val archCoreVersion = "2.1.0"
-        private const val mockWebServerVersion = "4.9.1"
+        private const val mockWebServerVersion = "4.9.2"
 
         const val jUnit = "junit:junit:$jUnitVersion"
         const val jUnitExt = "androidx.test.ext:junit:$jUnitExtVersion"
