@@ -168,7 +168,7 @@ object deps {
 
         private const val coreVersion = "1.0.4"
         private const val ktxVersion = "1.0.4"
-        private const val widgetsVersion = "1.0.1"
+        private const val widgetsVersion = "1.0.3"
         private const val navigationVersion = "1.0.1"
         private const val materialVersion = "1.0.1"
         private const val networkVersion = "1.0.1"
