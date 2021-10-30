@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("MagicNumber")
+
 package com.paulrybitskyi.gamedge.commons.testing
 
 import com.paulrybitskyi.gamedge.data.articles.DataArticle
@@ -27,10 +29,18 @@ import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.auth.DomainOauthCredentials
 import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
-import com.paulrybitskyi.gamedge.domain.games.*
+import com.paulrybitskyi.gamedge.domain.games.DomainCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainCompany
+import com.paulrybitskyi.gamedge.domain.games.DomainGame
+import com.paulrybitskyi.gamedge.domain.games.DomainImage
+import com.paulrybitskyi.gamedge.domain.games.DomainVideo
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.usecases.*
+import com.paulrybitskyi.gamedge.domain.games.usecases.GetCompanyDevelopedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshCompanyDevelopedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.commons.api.Error as ApiError
@@ -190,7 +200,13 @@ val REFRESH_GAMES_USE_CASE_PARAMS = RefreshGamesUseCaseParams()
 val OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS = ObserveGameLikeStateUseCase.Params(gameId = 10)
 val TOGGLE_GAME_LIKE_STATE_USE_CASE_PARAMS = ToggleGameLikeStateUseCase.Params(gameId = 10)
 val GET_GAME_USE_CASE_PARAMS = GetGameUseCase.Params(gameId = 10)
-val GET_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS = GetCompanyDevelopedGamesUseCase.Params(DOMAIN_COMPANY, DOMAIN_PAGINATION)
-val REFRESH_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS = RefreshCompanyDevelopedGamesUseCase.Params(DOMAIN_COMPANY, DOMAIN_PAGINATION)
+val GET_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS = GetCompanyDevelopedGamesUseCase.Params(
+    DOMAIN_COMPANY,
+    DOMAIN_PAGINATION
+)
+val REFRESH_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS = RefreshCompanyDevelopedGamesUseCase.Params(
+    DOMAIN_COMPANY,
+    DOMAIN_PAGINATION
+)
 val GET_SIMILAR_GAMES_USE_CASE_PARAMS = GetSimilarGamesUseCase.Params(DOMAIN_GAME, DOMAIN_PAGINATION)
 val REFRESH_SIMILAR_GAMES_USE_CASE_PARAMS = RefreshSimilarGamesUseCase.Params(DOMAIN_GAME, DOMAIN_PAGINATION)

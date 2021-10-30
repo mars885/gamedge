@@ -21,6 +21,6 @@ import okhttp3.mockwebserver.MockWebServer
 
 fun MockWebServer.startSafe() = try {
     start()
-} catch(error: Throwable) {
+} catch(ignore: Throwable) {
     // ignore
 }
