@@ -104,7 +104,7 @@ internal class GamesCategoryViewModelTest {
     fun `Emits toolbar title when initialized`() {
         mainCoroutineRule.runBlockingTest {
             SUT.toolbarTitle.test {
-                assertThat(expectItem()).isNotEmpty
+                assertThat(awaitItem()).isNotEmpty
             }
         }
     }
@@ -119,9 +119,9 @@ internal class GamesCategoryViewModelTest {
             SUT.uiState.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
-                assertThat(expectItem() is GamesCategoryUiState.Empty).isTrue
-                assertThat(expectItem() is GamesCategoryUiState.Loading).isTrue
-                assertThat(expectItem() is GamesCategoryUiState.Result).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Empty).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Loading).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Result).isTrue
 
                 cancelAndIgnoreRemainingEvents()
             }
@@ -151,7 +151,7 @@ internal class GamesCategoryViewModelTest {
             SUT.commandFlow.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
@@ -166,10 +166,10 @@ internal class GamesCategoryViewModelTest {
             SUT.uiState.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
-                assertThat(expectItem() is GamesCategoryUiState.Empty).isTrue
-                assertThat(expectItem() is GamesCategoryUiState.Loading).isTrue
-                assertThat(expectItem() is GamesCategoryUiState.Result).isTrue
-                assertThat(expectItem() is GamesCategoryUiState.Loading).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Empty).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Loading).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Result).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Loading).isTrue
 
                 cancelAndIgnoreRemainingEvents()
             }
@@ -199,7 +199,7 @@ internal class GamesCategoryViewModelTest {
             SUT.commandFlow.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
@@ -211,7 +211,7 @@ internal class GamesCategoryViewModelTest {
             SUT.routeFlow.test {
                 SUT.onToolbarLeftButtonClicked()
 
-                assertThat(expectItem() is GamesCategoryRoute.Back).isTrue
+                assertThat(awaitItem() is GamesCategoryRoute.Back).isTrue
             }
         }
     }
@@ -229,7 +229,7 @@ internal class GamesCategoryViewModelTest {
             SUT.routeFlow.test {
                 SUT.onGameClicked(game)
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is GamesCategoryRoute.Info).isTrue
                 assertThat((route as GamesCategoryRoute.Info).gameId).isEqualTo(game.id)

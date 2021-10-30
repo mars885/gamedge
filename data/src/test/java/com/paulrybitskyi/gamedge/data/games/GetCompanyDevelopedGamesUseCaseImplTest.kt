@@ -72,8 +72,8 @@ internal class GetCompanyDevelopedGamesUseCaseImplTest {
             coEvery { refreshCompanyDevelopedGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.execute(GET_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS).test {
-                assertThat(expectItem()).isEqualTo(DOMAIN_GAMES)
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(DOMAIN_GAMES)
+                awaitComplete()
             }
         }
     }
@@ -86,8 +86,8 @@ internal class GetCompanyDevelopedGamesUseCaseImplTest {
             coEvery { gamesLocalDataStore.getCompanyDevelopedGames(any(), any()) } returns DATA_GAMES
 
             SUT.execute(GET_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS).test {
-                assertThat(expectItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+                awaitComplete()
             }
         }
     }

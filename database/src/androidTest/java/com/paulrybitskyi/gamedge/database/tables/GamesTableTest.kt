@@ -244,7 +244,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = DATABASE_GAMES.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -269,7 +269,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -296,7 +296,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -325,7 +325,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -345,7 +345,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = DATABASE_GAMES.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -371,7 +371,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -399,7 +399,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -429,7 +429,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -447,7 +447,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = DATABASE_GAMES.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -472,7 +472,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -499,7 +499,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -518,7 +518,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = DATABASE_GAMES.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -543,7 +543,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -570,7 +570,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
@@ -599,7 +599,7 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }

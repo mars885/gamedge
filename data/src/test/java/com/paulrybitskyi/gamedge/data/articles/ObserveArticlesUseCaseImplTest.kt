@@ -75,8 +75,8 @@ internal class ObserveArticlesUseCaseImplTest {
             coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
             SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).test {
-                assertThat(expectItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+                awaitComplete()
             }
         }
     }
@@ -89,8 +89,8 @@ internal class ObserveArticlesUseCaseImplTest {
             coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
             SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).test {
-                assertThat(expectItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+                awaitComplete()
             }
         }
     }
@@ -102,8 +102,8 @@ internal class ObserveArticlesUseCaseImplTest {
             coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
             SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS.copy(refreshArticles = false)).test {
-                assertThat(expectItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+                awaitComplete()
             }
         }
     }

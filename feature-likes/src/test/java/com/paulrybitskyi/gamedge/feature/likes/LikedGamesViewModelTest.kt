@@ -72,9 +72,9 @@ internal class LikedGamesViewModelTest {
             SUT.uiState.test {
                 SUT.loadData()
 
-                val emptyState = expectItem()
-                val loadingState = expectItem()
-                val resultState = expectItem()
+                val emptyState = awaitItem()
+                val loadingState = awaitItem()
+                val resultState = awaitItem()
 
                 assertThat(emptyState is GamesUiState.Empty).isTrue
                 assertThat(loadingState is GamesUiState.Loading).isTrue
@@ -105,7 +105,7 @@ internal class LikedGamesViewModelTest {
             SUT.commandFlow.test {
                 SUT.loadData()
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
@@ -126,7 +126,7 @@ internal class LikedGamesViewModelTest {
             SUT.routeFlow.test {
                 SUT.onGameClicked(gameModel)
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is LikedGamesRoute.Info).isTrue
                 assertThat((route as LikedGamesRoute.Info).gameId).isEqualTo(gameModel.id)

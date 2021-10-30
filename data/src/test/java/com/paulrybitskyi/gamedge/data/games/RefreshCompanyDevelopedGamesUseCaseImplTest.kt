@@ -84,8 +84,8 @@ internal class RefreshCompanyDevelopedGamesUseCaseImplTest {
             coEvery { gamesRemoteDataStore.getCompanyDevelopedGames(any(), any()) } returns Ok(DATA_GAMES)
 
             SUT.execute(REFRESH_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS).test {
-                assertThat(expectItem().get()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
-                expectComplete()
+                assertThat(awaitItem().get()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+                awaitComplete()
             }
         }
     }
@@ -97,7 +97,7 @@ internal class RefreshCompanyDevelopedGamesUseCaseImplTest {
             coEvery { throttler.canRefreshCompanyDevelopedGames(any()) } returns false
 
             SUT.execute(REFRESH_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS).test {
-                expectComplete()
+                awaitComplete()
             }
         }
     }

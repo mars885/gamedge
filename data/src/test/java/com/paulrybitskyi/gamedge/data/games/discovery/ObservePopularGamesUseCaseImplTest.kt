@@ -64,8 +64,8 @@ internal class ObservePopularGamesUseCaseImplTest {
             coEvery { gamesLocalDataStore.observePopularGames(any()) } returns flowOf(DATA_GAMES)
 
             SUT.execute(ObserveGamesUseCaseParams()).test {
-                assertThat(expectItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+                awaitComplete()
             }
         }
     }

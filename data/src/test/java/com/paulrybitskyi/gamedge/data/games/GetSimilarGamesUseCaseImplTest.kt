@@ -73,8 +73,8 @@ internal class GetSimilarGamesUseCaseImplTest {
             coEvery { refreshSimilarGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.execute(GET_SIMILAR_GAMES_USE_CASE_PARAMS).test {
-                assertThat(expectItem()).isEqualTo(DOMAIN_GAMES)
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(DOMAIN_GAMES)
+                awaitComplete()
             }
         }
     }
@@ -87,8 +87,8 @@ internal class GetSimilarGamesUseCaseImplTest {
             coEvery { gamesLocalDataStore.getSimilarGames(any(), any()) } returns DATA_GAMES
 
             SUT.execute(GET_SIMILAR_GAMES_USE_CASE_PARAMS).test {
-                assertThat(expectItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))
+                awaitComplete()
             }
         }
     }

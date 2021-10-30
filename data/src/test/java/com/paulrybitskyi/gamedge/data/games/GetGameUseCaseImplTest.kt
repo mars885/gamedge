@@ -66,8 +66,8 @@ internal class GetGameUseCaseImplTest {
             coEvery { gamesLocalDataStore.getGame(any()) } returns DATA_GAME
 
             SUT.execute(GET_GAME_USE_CASE_PARAMS).test {
-                assertThat(expectItem().get()).isEqualTo(gameMapper.mapToDomainGame(DATA_GAME))
-                expectComplete()
+                assertThat(awaitItem().get()).isEqualTo(gameMapper.mapToDomainGame(DATA_GAME))
+                awaitComplete()
             }
         }
     }
@@ -79,8 +79,8 @@ internal class GetGameUseCaseImplTest {
             coEvery { gamesLocalDataStore.getGame(any()) } returns null
 
             SUT.execute(GET_GAME_USE_CASE_PARAMS).test {
-                assertThat(expectItem().getError() is Error.NotFound).isTrue
-                expectComplete()
+                assertThat(awaitItem().getError() is Error.NotFound).isTrue
+                awaitComplete()
             }
         }
     }

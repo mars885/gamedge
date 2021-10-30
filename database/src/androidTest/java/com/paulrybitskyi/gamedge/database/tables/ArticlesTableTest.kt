@@ -68,7 +68,7 @@ internal class ArticlesTableTest {
             val expectedArticles = DATABASE_ARTICLES.sortedByDescending(DatabaseArticle::publicationDate)
 
             SUT.observeArticles(offset = 0, limit = DATABASE_ARTICLES.size).test {
-                assertThat(expectItem()).isEqualTo(expectedArticles)
+                assertThat(awaitItem()).isEqualTo(expectedArticles)
             }
         }
     }

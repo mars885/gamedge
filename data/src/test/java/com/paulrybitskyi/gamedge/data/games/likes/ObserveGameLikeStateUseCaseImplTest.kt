@@ -54,14 +54,14 @@ internal class ObserveGameLikeStateUseCaseImplTest {
         runBlockingTest {
             coEvery { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(true)
             SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).test {
-                assertThat(expectItem()).isTrue
-                expectComplete()
+                assertThat(awaitItem()).isTrue
+                awaitComplete()
             }
 
             coEvery { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(false)
             SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).test {
-                assertThat(expectItem()).isFalse
-                expectComplete()
+                assertThat(awaitItem()).isFalse
+                awaitComplete()
             }
         }
     }

@@ -33,10 +33,6 @@ android {
     }
 }
 
-hilt {
-    enableAggregatingTask = true
-}
-
 dependencies {
     implementation(project(deps.local.commonsUi))
     implementation(project(deps.local.igdbApi))

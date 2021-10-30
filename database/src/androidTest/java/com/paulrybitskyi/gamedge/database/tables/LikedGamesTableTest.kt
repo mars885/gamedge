@@ -98,7 +98,7 @@ internal class LikedGamesTableTest {
             SUT.saveLikedGame(LIKED_GAME)
 
             SUT.observeGameLikeState(LIKED_GAME.gameId).test {
-                assertThat(expectItem()).isTrue
+                assertThat(awaitItem()).isTrue
             }
         }
     }
@@ -111,7 +111,7 @@ internal class LikedGamesTableTest {
             SUT.deleteLikedGame(LIKED_GAME.gameId)
 
             SUT.observeGameLikeState(LIKED_GAME.gameId).test {
-                assertThat(expectItem()).isFalse
+                assertThat(awaitItem()).isFalse
             }
         }
     }
@@ -132,7 +132,7 @@ internal class LikedGamesTableTest {
 
             SUT.observeLikedGames(offset = 0, limit = expectedGames.size)
                 .test {
-                    assertThat(expectItem()).isEqualTo(expectedGames)
+                    assertThat(awaitItem()).isEqualTo(expectedGames)
                 }
         }
     }

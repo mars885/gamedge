@@ -85,8 +85,8 @@ internal class RefreshArticlesUseCaseImplTest {
             coEvery { articlesRemoteDataStore.getArticles(any()) } returns Ok(DATA_ARTICLES)
 
             SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).test {
-                assertThat(expectItem().get()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
-                expectComplete()
+                assertThat(awaitItem().get()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
+                awaitComplete()
             }
         }
     }
@@ -98,7 +98,7 @@ internal class RefreshArticlesUseCaseImplTest {
             coEvery { throttler.canRefreshArticles(any()) } returns false
 
             SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).test {
-                expectComplete()
+                awaitComplete()
             }
         }
     }

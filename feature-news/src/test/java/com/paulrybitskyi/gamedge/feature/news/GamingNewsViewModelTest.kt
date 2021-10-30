@@ -70,9 +70,9 @@ internal class GamingNewsViewModelTest {
             SUT.uiState.test {
                 SUT.loadData()
 
-                val emptyState = expectItem()
-                val loadingState = expectItem()
-                val resultState = expectItem()
+                val emptyState = awaitItem()
+                val loadingState = awaitItem()
+                val resultState = awaitItem()
 
                 assertThat(emptyState is GamingNewsUiState.Empty).isTrue
                 assertThat(loadingState is GamingNewsUiState.Loading).isTrue
@@ -103,7 +103,7 @@ internal class GamingNewsViewModelTest {
             SUT.commandFlow.test {
                 SUT.loadData()
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
@@ -124,7 +124,7 @@ internal class GamingNewsViewModelTest {
             SUT.commandFlow.test {
                 SUT.onNewsItemClicked(itemModel)
 
-                val command = expectItem()
+                val command = awaitItem()
 
                 assertThat(command is GamingNewsCommand.OpenUrl).isTrue
                 assertThat((command as GamingNewsCommand.OpenUrl).url).isEqualTo(itemModel.siteDetailUrl)
@@ -141,9 +141,9 @@ internal class GamingNewsViewModelTest {
             SUT.uiState.test {
                 SUT.onRefreshRequested()
 
-                val emptyState = expectItem()
-                val loadingState = expectItem()
-                val resultState = expectItem()
+                val emptyState = awaitItem()
+                val loadingState = awaitItem()
+                val resultState = awaitItem()
 
                 assertThat(emptyState is GamingNewsUiState.Empty).isTrue
                 assertThat(loadingState is GamingNewsUiState.Loading).isTrue

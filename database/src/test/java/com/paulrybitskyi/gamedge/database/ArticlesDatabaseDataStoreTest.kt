@@ -76,8 +76,8 @@ internal class ArticlesDatabaseDataStoreTest {
             coEvery { articlesTable.observeArticles(any(), any()) } returns flowOf(databaseArticles)
 
             SUT.observeArticles(DATA_PAGINATION).test {
-                assertThat(expectItem()).isEqualTo(DATA_ARTICLES)
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(DATA_ARTICLES)
+                awaitComplete()
             }
         }
     }
