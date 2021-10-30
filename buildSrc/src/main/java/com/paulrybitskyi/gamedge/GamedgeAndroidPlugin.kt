@@ -47,7 +47,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     private fun Project.configureAndroidCommonInfo() {
         extensions.findByType<BaseExtension>()?.run {
             compileSdkVersion(appConfig.compileSdkVersion)
-            buildToolsVersion(appConfig.buildToolsVersion)
 
             defaultConfig {
                 minSdk = appConfig.minSdkVersion
