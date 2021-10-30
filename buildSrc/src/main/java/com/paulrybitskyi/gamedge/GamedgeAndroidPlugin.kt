@@ -23,7 +23,6 @@ import PLUGIN_ANDROID_APPLICATION
 import PLUGIN_KOTLIN_ANDROID
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.kotlin.dsl.findByType
-import java.io.File
 
 class GamedgeAndroidPlugin : Plugin<Project> {
 
