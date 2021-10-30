@@ -104,7 +104,7 @@ object deps {
 
     object androidX {
 
-        private const val appCompatVersion = "1.3.0"
+        private const val appCompatVersion = "1.3.1"
         private const val constraintLayoutVersion = "2.0.4"
         private const val recyclerViewVersion = "1.2.1"
         private const val viewPager2Version = "1.0.0"
