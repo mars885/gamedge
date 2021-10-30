@@ -31,6 +31,7 @@ import java.io.IOException
 import java.lang.reflect.Type
 import com.paulrybitskyi.gamedge.commons.api.Error as ApiError
 
+@Suppress("TooManyFunctions")
 class ApiResultCall<T>(
     private val delegate: Call<T>,
     private val successType: Type,
