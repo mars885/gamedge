@@ -174,7 +174,7 @@ object deps {
         private const val networkVersion = "1.0.3"
         private const val recyclerViewVersion = "1.0.2"
         private const val windowAnimsVersion = "1.0.2"
-        private const val deviceInfoVersion = "1.0.0"
+        private const val deviceInfoVersion = "1.0.2"
 
         const val core = "com.paulrybitskyi.commons:commons-core:${coreVersion}"
         const val ktx = "com.paulrybitskyi.commons:commons-ktx:${ktxVersion}"
