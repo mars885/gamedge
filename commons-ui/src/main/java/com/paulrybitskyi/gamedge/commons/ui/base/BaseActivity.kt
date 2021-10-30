@@ -31,6 +31,7 @@ import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 abstract class BaseActivity<
     VB : ViewBinding,
     VM : BaseViewModel,

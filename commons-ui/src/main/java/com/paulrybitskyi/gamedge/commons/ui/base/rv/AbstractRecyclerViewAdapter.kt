@@ -86,7 +86,7 @@ abstract class AbstractRecyclerViewAdapter<IT: Item<*, in Dependencies>, Depende
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return viewHolderFactories[ViewType(viewType)]?.create(inflater, parent, dependencies)
-            ?: throw RuntimeException("The ViewHolder factory was not found.")
+            ?: throw IllegalStateException("The ViewHolder factory was not found.")
     }
 
 
