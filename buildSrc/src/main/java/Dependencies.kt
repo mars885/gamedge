@@ -53,7 +53,7 @@ object deps {
     object plugins {
 
         private const val gradlePluginVersion = "7.0.3" // also in buildSrc build.gradle.kts file
-        private const val protobufPluginVersion = "0.8.16"
+        private const val protobufPluginVersion = "0.8.17"
 
         const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
