@@ -66,7 +66,7 @@ internal class ImageViewerViewModelTest {
             SUT.commandFlow.test {
                 SUT.onToolbarRightButtonClicked()
 
-                assertThat(expectItem() is ImageViewerCommand.ShareText).isTrue
+                assertThat(awaitItem() is ImageViewerCommand.ShareText).isTrue
             }
         }
     }
@@ -78,8 +78,8 @@ internal class ImageViewerViewModelTest {
             SUT.selectedPosition.test {
                 SUT.onPageChanged(10)
 
-                assertThat(expectItem() == INITIAL_POSITION).isTrue
-                assertThat(expectItem() == 10).isTrue
+                assertThat(awaitItem() == INITIAL_POSITION).isTrue
+                assertThat(awaitItem() == 10).isTrue
             }
         }
     }
@@ -91,7 +91,7 @@ internal class ImageViewerViewModelTest {
             SUT.toolbarTitle.test {
                 SUT.onPageChanged(10)
 
-                assertThat(expectItem()).isNotEmpty
+                assertThat(awaitItem()).isNotEmpty
             }
         }
     }
@@ -103,7 +103,7 @@ internal class ImageViewerViewModelTest {
             SUT.commandFlow.test {
                 SUT.onBackPressed()
 
-                assertThat(expectItem() is ImageViewerCommand.ResetSystemWindows).isTrue
+                assertThat(awaitItem() is ImageViewerCommand.ResetSystemWindows).isTrue
             }
         }
     }
@@ -115,7 +115,7 @@ internal class ImageViewerViewModelTest {
             SUT.routeFlow.test {
                 SUT.onBackPressed()
 
-                assertThat(expectItem() is ImageViewerRoute.Back).isTrue
+                assertThat(awaitItem() is ImageViewerRoute.Back).isTrue
             }
         }
     }

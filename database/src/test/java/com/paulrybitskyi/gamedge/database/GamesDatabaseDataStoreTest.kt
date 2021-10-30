@@ -136,8 +136,8 @@ internal class GamesDatabaseDataStoreTest {
             coEvery { gamesTable.observePopularGames(any(), any(), any()) } returns flowOf(dbGames)
 
             SUT.observePopularGames(DATA_PAGINATION).test {
-                assertThat(expectItem()).isEqualTo(DATA_GAMES)
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(DATA_GAMES)
+                awaitComplete()
             }
         }
     }
@@ -151,8 +151,8 @@ internal class GamesDatabaseDataStoreTest {
             coEvery { gamesTable.observeRecentlyReleasedGames(any(), any(), any(), any()) } returns flowOf(dbGames)
 
             SUT.observeRecentlyReleasedGames(DATA_PAGINATION).test {
-                assertThat(expectItem()).isEqualTo(DATA_GAMES)
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(DATA_GAMES)
+                awaitComplete()
             }
         }
     }
@@ -166,8 +166,8 @@ internal class GamesDatabaseDataStoreTest {
             coEvery { gamesTable.observeComingSoonGames(any(), any(), any()) } returns flowOf(dbGames)
 
             SUT.observeComingSoonGames(DATA_PAGINATION).test {
-                assertThat(expectItem()).isEqualTo(DATA_GAMES)
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(DATA_GAMES)
+                awaitComplete()
             }
         }
     }
@@ -181,8 +181,8 @@ internal class GamesDatabaseDataStoreTest {
             coEvery { gamesTable.observeMostAnticipatedGames(any(), any(), any()) } returns flowOf(dbGames)
 
             SUT.observeMostAnticipatedGames(DATA_PAGINATION).test {
-                assertThat(expectItem()).isEqualTo(DATA_GAMES)
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(DATA_GAMES)
+                awaitComplete()
             }
         }
     }

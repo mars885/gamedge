@@ -111,9 +111,9 @@ internal class GameInfoViewModelTest {
             SUT.uiState.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
-                assertThat(expectItem() is GameInfoUiState.Empty).isTrue
-                assertThat(expectItem() is GameInfoUiState.Loading).isTrue
-                assertThat(expectItem() is GameInfoUiState.Result).isTrue
+                assertThat(awaitItem() is GameInfoUiState.Empty).isTrue
+                assertThat(awaitItem() is GameInfoUiState.Loading).isTrue
+                assertThat(awaitItem() is GameInfoUiState.Result).isTrue
             }
         }
     }
@@ -139,7 +139,7 @@ internal class GameInfoViewModelTest {
             SUT.commandFlow.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
@@ -153,7 +153,7 @@ internal class GameInfoViewModelTest {
             SUT.routeFlow.test {
                 SUT.onArtworkClicked(position = 0)
 
-                assertThat(expectItem() is GameInfoRoute.ImageViewer).isTrue
+                assertThat(awaitItem() is GameInfoRoute.ImageViewer).isTrue
             }
         }
     }
@@ -165,7 +165,7 @@ internal class GameInfoViewModelTest {
             SUT.routeFlow.test {
                 SUT.onBackButtonClicked()
 
-                assertThat(expectItem() is GameInfoRoute.Back).isTrue
+                assertThat(awaitItem() is GameInfoRoute.Back).isTrue
             }
         }
     }
@@ -179,7 +179,7 @@ internal class GameInfoViewModelTest {
             SUT.routeFlow.test {
                 SUT.onCoverClicked()
 
-                assertThat(expectItem() is GameInfoRoute.ImageViewer).isTrue
+                assertThat(awaitItem() is GameInfoRoute.ImageViewer).isTrue
             }
         }
     }
@@ -197,7 +197,7 @@ internal class GameInfoViewModelTest {
             SUT.commandFlow.test {
                 SUT.onVideoClicked(video)
 
-                val command = expectItem()
+                val command = awaitItem()
 
                 assertThat(command is GameInfoCommand.OpenUrl).isTrue
                 assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(video.videoUrl)
@@ -214,7 +214,7 @@ internal class GameInfoViewModelTest {
             SUT.routeFlow.test {
                 SUT.onScreenshotClicked(position = 0)
 
-                assertThat(expectItem() is GameInfoRoute.ImageViewer).isTrue
+                assertThat(awaitItem() is GameInfoRoute.ImageViewer).isTrue
             }
         }
     }
@@ -233,7 +233,7 @@ internal class GameInfoViewModelTest {
             SUT.commandFlow.test {
                 SUT.onLinkClicked(link)
 
-                val command = expectItem()
+                val command = awaitItem()
 
                 assertThat(command is GameInfoCommand.OpenUrl).isTrue
                 assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(link.payload)
@@ -257,7 +257,7 @@ internal class GameInfoViewModelTest {
             SUT.commandFlow.test {
                 SUT.onCompanyClicked(company)
 
-                val command = expectItem()
+                val command = awaitItem()
 
                 assertThat(command is GameInfoCommand.OpenUrl).isTrue
                 assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(company.websiteUrl)
@@ -278,7 +278,7 @@ internal class GameInfoViewModelTest {
             SUT.routeFlow.test {
                 SUT.onRelatedGameClicked(relatedGame)
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is GameInfoRoute.Info).isTrue
                 assertThat((route as GameInfoRoute.Info).gameId).isEqualTo(relatedGame.id)

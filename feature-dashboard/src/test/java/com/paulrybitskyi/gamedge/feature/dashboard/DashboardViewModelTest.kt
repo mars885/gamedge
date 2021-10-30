@@ -47,7 +47,7 @@ internal class DashboardViewModelTest {
             SUT.routeFlow.test {
                 SUT.onToolbarRightButtonClicked()
 
-                assertThat(expectItem() is DashboardRoute.Search).isTrue
+                assertThat(awaitItem() is DashboardRoute.Search).isTrue
             }
         }
     }

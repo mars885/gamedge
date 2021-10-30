@@ -78,7 +78,7 @@ internal class GamesSearchViewModelTest {
             SUT.routeFlow.test {
                 SUT.onToolbarBackButtonClicked()
 
-                assertThat(expectItem() is GamesSearchRoute.Back).isTrue
+                assertThat(awaitItem() is GamesSearchRoute.Back).isTrue
             }
         }
     }
@@ -92,9 +92,9 @@ internal class GamesSearchViewModelTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("god of war")
 
-                val emptyState = expectItem()
-                val loadingState = expectItem()
-                val resultState = expectItem()
+                val emptyState = awaitItem()
+                val loadingState = awaitItem()
+                val resultState = awaitItem()
 
                 assertThat(emptyState is GamesUiState.Empty).isTrue
                 assertThat(loadingState is GamesUiState.Loading).isTrue
@@ -111,7 +111,7 @@ internal class GamesSearchViewModelTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("")
 
-                assertThat(expectItem() is GamesUiState.Empty).isTrue
+                assertThat(awaitItem() is GamesUiState.Empty).isTrue
                 expectNoEvents()
             }
         }
@@ -128,7 +128,7 @@ internal class GamesSearchViewModelTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("god of war")
 
-                assertThat(expectItem() is GamesUiState.Result).isTrue
+                assertThat(awaitItem() is GamesUiState.Result).isTrue
                 expectNoEvents()
             }
         }
@@ -141,7 +141,7 @@ internal class GamesSearchViewModelTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("   ")
 
-                assertThat(expectItem() is GamesUiState.Empty).isTrue
+                assertThat(awaitItem() is GamesUiState.Empty).isTrue
                 expectNoEvents()
             }
         }
@@ -156,7 +156,7 @@ internal class GamesSearchViewModelTest {
             SUT.commandFlow.test {
                 SUT.onSearchActionRequested("god of war")
 
-                assertThat(expectItem() is GamesSearchCommand.ClearItems).isTrue
+                assertThat(awaitItem() is GamesSearchCommand.ClearItems).isTrue
             }
         }
     }
@@ -182,8 +182,8 @@ internal class GamesSearchViewModelTest {
             SUT.commandFlow.test {
                 SUT.onSearchActionRequested("god of war")
 
-                assertThat(expectItem() is GamesSearchCommand.ClearItems).isTrue
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GamesSearchCommand.ClearItems).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
@@ -204,7 +204,7 @@ internal class GamesSearchViewModelTest {
             SUT.routeFlow.test {
                 SUT.onGameClicked(gameModel)
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is GamesSearchRoute.Info).isTrue
                 assertThat((route as GamesSearchRoute.Info).gameId).isEqualTo(gameModel.id)

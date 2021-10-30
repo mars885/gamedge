@@ -67,7 +67,7 @@ internal class SplashViewModelTest {
             SUT.routeFlow.test {
                 SUT.init()
 
-                assertThat(expectItem() is SplashRoute.Dashboard).isTrue
+                assertThat(awaitItem() is SplashRoute.Dashboard).isTrue
             }
         }
     }
@@ -105,7 +105,7 @@ internal class SplashViewModelTest {
             SUT.commandFlow.test {
                 SUT.init()
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
@@ -119,7 +119,7 @@ internal class SplashViewModelTest {
             SUT.commandFlow.test {
                 SUT.init()
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
@@ -133,7 +133,7 @@ internal class SplashViewModelTest {
             SUT.routeFlow.test {
                 SUT.init()
 
-                assertThat(expectItem() is SplashRoute.Exit).isTrue
+                assertThat(awaitItem() is SplashRoute.Exit).isTrue
             }
         }
     }
@@ -147,7 +147,7 @@ internal class SplashViewModelTest {
             SUT.routeFlow.test {
                 SUT.init()
 
-                assertThat(expectItem() is SplashRoute.Exit).isTrue
+                assertThat(awaitItem() is SplashRoute.Exit).isTrue
             }
         }
     }

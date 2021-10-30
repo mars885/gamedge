@@ -73,10 +73,10 @@ internal class RefreshAuthUseCaseImplTest {
             coEvery { authRemoteDataStore.getOauthCredentials() } returns Ok(DATA_OAUTH_CREDENTIALS)
 
             SUT.execute().test {
-                assertThat(expectItem().get())
+                assertThat(awaitItem().get())
                     .isEqualTo(authMapper.mapToDomainOauthCredentials(DATA_OAUTH_CREDENTIALS))
 
-                expectComplete()
+                awaitComplete()
             }
         }
     }
@@ -88,7 +88,7 @@ internal class RefreshAuthUseCaseImplTest {
             coEvery { authLocalDataStore.isExpired() } returns false
 
             SUT.execute().test {
-                expectComplete()
+                awaitComplete()
             }
         }
     }

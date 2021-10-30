@@ -133,7 +133,7 @@ internal class GamesDiscoveryViewModelTest {
             SUT.commandFlow.test {
                 SUT.loadData()
 
-                val command = expectItem()
+                val command = awaitItem()
 
                 assertThat(command is GeneralCommand.ShowLongToast).isTrue
             }
@@ -147,7 +147,7 @@ internal class GamesDiscoveryViewModelTest {
             SUT.routeFlow.test {
                 SUT.onCategoryMoreButtonClicked("popular")
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is GamesDiscoveryRoute.Category).isTrue
                 assertThat((route as GamesDiscoveryRoute.Category).category).isEqualTo("popular")
@@ -168,7 +168,7 @@ internal class GamesDiscoveryViewModelTest {
             SUT.routeFlow.test {
                 SUT.onCategoryGameClicked(item)
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is GamesDiscoveryRoute.Info).isTrue
                 assertThat((route as GamesDiscoveryRoute.Info).gameId).isEqualTo(item.id)

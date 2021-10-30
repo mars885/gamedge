@@ -95,13 +95,13 @@ internal class LikedGamesDatabaseDataStoreTest {
             SUT.likeGame(GAME_ID)
 
             SUT.observeGameLikeState(GAME_ID).test {
-                assertThat(expectItem()).isTrue
-                expectComplete()
+                assertThat(awaitItem()).isTrue
+                awaitComplete()
             }
 
             SUT.observeGameLikeState(ANOTHER_GAME_ID).test {
-                assertThat(expectItem()).isFalse
-                expectComplete()
+                assertThat(awaitItem()).isFalse
+                awaitComplete()
             }
         }
     }
@@ -115,8 +115,8 @@ internal class LikedGamesDatabaseDataStoreTest {
             likedGamesTable.dbGamesToObserve = dbGames
 
             SUT.observeLikedGames(DATA_PAGINATION).test {
-                assertThat(expectItem()).isEqualTo(DATA_GAMES)
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(DATA_GAMES)
+                awaitComplete()
             }
         }
     }
