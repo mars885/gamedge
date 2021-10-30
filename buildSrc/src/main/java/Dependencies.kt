@@ -109,7 +109,7 @@ object deps {
         private const val recyclerViewVersion = "1.2.1"
         private const val viewPager2Version = "1.0.0"
         private const val swipeRefreshLayoutVersion = "1.1.0"
-        private const val lifecycleVersion = "2.4.0-alpha02"
+        private const val lifecycleVersion = "2.4.0"
         private const val browserVersion = "1.3.0"
         private const val coreKtxVersion = "1.6.0"
         private const val fragmentKtxVersion = "1.3.5"
