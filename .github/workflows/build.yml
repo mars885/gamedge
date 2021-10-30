@@ -40,7 +40,7 @@ jobs:
             cache-gradle-
 
       - name: Run Static Analysis Tools
-        run: ./gradlew lint --continue
+        run: ./gradlew lint detekt --continue
 
   unit-test:
     name: Unit Tests

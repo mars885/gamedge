@@ -30,6 +30,7 @@ const val PLUGIN_KSP = "com.google.devtools.ksp"
 const val PLUGIN_KOTLINX_SERIALIZATION = "org.jetbrains.kotlin.plugin.serialization"
 const val PLUGIN_NAV_SAFE_ARGS_KOTLIN = "androidx.navigation.safeargs.kotlin"
 const val PLUGIN_DAGGER_HILT_ANDROID = "dagger.hilt.android.plugin"
+const val PLUGIN_DETEKT = "io.gitlab.arturbosch.detekt"
 const val PLUGIN_PROTOBUF = "com.google.protobuf"
 
 
@@ -85,6 +86,11 @@ fun PluginDependenciesSpec.navSafeArgsKotlin(): PluginDependencySpec {
 
 fun PluginDependenciesSpec.daggerHiltAndroid(): PluginDependencySpec {
     return id(PLUGIN_DAGGER_HILT_ANDROID)
+}
+
+
+fun PluginDependenciesSpec.detekt(): PluginDependencySpec {
+    return (id(PLUGIN_DETEKT) version versions.detektPlugin)
 }
 
 
