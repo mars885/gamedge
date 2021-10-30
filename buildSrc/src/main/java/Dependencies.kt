@@ -42,7 +42,7 @@ object versions {
     const val kspPlugin = "1.5.31-1.0.0"
     const val navigation = "2.3.5"
     const val daggerHilt = "2.40"
-    const val coroutines = "1.5.1"
+    const val coroutines = "1.5.2"
     const val room = "2.3.0"
 
 }
