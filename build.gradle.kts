@@ -96,7 +96,6 @@ subprojects {
             correctErrorTypes = true
         }
     }
-
 }
 
 tasks {
