@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 interface TimestampProvider {
-
     fun getUnixTimestamp(timeUnit: TimeUnit = TimeUnit.MILLISECONDS): Long
 }
 

@@ -133,7 +133,6 @@ private class LogoImageTransformation(
 ) : Transformation {
 
     private companion object {
-
         private const val FILL_COLOR_CALCULATION_PIXEL_OFFSET = 10
         private const val TARGET_BITMAP_SCALE_FACTOR = 0.85f
     }

@@ -32,7 +32,6 @@ internal class GamespotQueryParamsFactoryImpl(
 ) : GamespotQueryParamsFactory {
 
     private companion object {
-
         private const val ARTICLE_FIELD_CATEGORIES = "categories"
         private const val ARTICLE_CATEGORY_ID_GAMES = 18
 

@@ -68,7 +68,6 @@ fun IgdbImageUrlFactory.createUrls(
 internal class IgdbImageUrlFactoryImpl @Inject constructor() : IgdbImageUrlFactory {
 
     private companion object {
-
         private const val IMAGE_URL_TEMPLATE = "https://images.igdb.com/igdb/image/upload/t_%s/%s.%s"
         private const val IMAGE_TYPE_RETINA_EXTENSION = "_2x"
     }

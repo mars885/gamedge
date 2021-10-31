@@ -24,7 +24,6 @@ import javax.inject.Inject
 internal class ArticlePublicationDateMapper @Inject constructor() {
 
     private companion object {
-
         private const val PUBLICATION_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
         // The best we can do here, since the API does not return

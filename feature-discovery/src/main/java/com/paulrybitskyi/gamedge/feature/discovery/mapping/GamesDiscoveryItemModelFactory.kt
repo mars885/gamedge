@@ -26,7 +26,6 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 interface GamesDiscoveryItemModelFactory {
-
     fun createDefault(category: GamesDiscoveryCategory): GamesDiscoveryItemModel
     fun createCopyWithVisibleProgressBar(item: GamesDiscoveryItemModel): GamesDiscoveryItemModel
     fun createCopyWithHiddenProgressBar(item: GamesDiscoveryItemModel): GamesDiscoveryItemModel

@@ -24,7 +24,6 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 interface GameModelMapper {
-
     fun mapToGameModel(game: Game): GameModel
 }
 

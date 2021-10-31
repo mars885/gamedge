@@ -44,7 +44,6 @@ internal class DashboardFragment : BaseFragment<
 >(R.layout.fragment_dashboard) {
 
     private companion object {
-
         private const val KEY_ADAPTER_STATE = "adapter_state"
         private const val KEY_SELECTED_PAGE = "selected_page"
 

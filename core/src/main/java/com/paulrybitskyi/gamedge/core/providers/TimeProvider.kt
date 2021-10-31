@@ -21,7 +21,6 @@ import java.time.LocalDateTime
 import javax.inject.Inject
 
 interface TimeProvider {
-
     fun getCurrentDateTime(): LocalDateTime
 }
 

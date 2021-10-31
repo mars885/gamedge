@@ -26,9 +26,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 interface CustomTabsProvider {
-
     fun getCustomTabsPackageName(): String?
-
     fun areCustomTabsSupported(): Boolean
 }
 
@@ -39,7 +37,6 @@ internal class CustomTabsProviderImpl @Inject constructor(
 ) : CustomTabsProvider {
 
     private companion object {
-
         private const val STABLE_PACKAGE = "com.android.chrome"
         private const val BETA_PACKAGE = "com.chrome.beta"
         private const val DEV_PACKAGE = "com.chrome.dev"

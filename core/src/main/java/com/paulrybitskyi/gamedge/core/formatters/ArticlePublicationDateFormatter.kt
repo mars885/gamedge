@@ -39,7 +39,6 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
 ) : ArticlePublicationDateFormatter {
 
     private companion object {
-
         private const val ABS_DATE_24_HOUR_PATTERN_WITHOUT_YEAR = "MMM d, H:mm"
         private const val ABS_DATE_12_HOUR_PATTERN_WITHOUT_YEAR = "MMM d, h:mm a"
 

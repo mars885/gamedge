@@ -21,13 +21,9 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 interface Logger {
-
     fun info(tag: String, message: String, throwable: Throwable? = null)
-
     fun debug(tag: String, message: String, throwable: Throwable? = null)
-
     fun warning(tag: String, message: String, throwable: Throwable? = null)
-
     fun error(tag: String, message: String, throwable: Throwable? = null)
 }
 

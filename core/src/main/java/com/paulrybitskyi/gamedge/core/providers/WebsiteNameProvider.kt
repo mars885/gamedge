@@ -23,7 +23,6 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 interface WebsiteNameProvider {
-
     fun provideWebsiteName(website: Website): String
 }
 
