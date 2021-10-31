@@ -31,6 +31,7 @@ const val PLUGIN_KOTLINX_SERIALIZATION = "org.jetbrains.kotlin.plugin.serializat
 const val PLUGIN_NAV_SAFE_ARGS_KOTLIN = "androidx.navigation.safeargs.kotlin"
 const val PLUGIN_DAGGER_HILT_ANDROID = "dagger.hilt.android.plugin"
 const val PLUGIN_DETEKT = "io.gitlab.arturbosch.detekt"
+const val PLUGIN_KTLINT = "org.jlleitschuh.gradle.ktlint"
 const val PLUGIN_PROTOBUF = "com.google.protobuf"
 
 
@@ -91,6 +92,11 @@ fun PluginDependenciesSpec.daggerHiltAndroid(): PluginDependencySpec {
 
 fun PluginDependenciesSpec.detekt(): PluginDependencySpec {
     return (id(PLUGIN_DETEKT) version versions.detektPlugin)
+}
+
+
+fun PluginDependenciesSpec.ktlint(): PluginDependencySpec {
+    return (id(PLUGIN_KTLINT) version versions.ktlintPlugin)
 }
 
 
