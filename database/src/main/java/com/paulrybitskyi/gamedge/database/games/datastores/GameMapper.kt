@@ -16,10 +16,47 @@
 
 package com.paulrybitskyi.gamedge.database.games.datastores
 
-import com.paulrybitskyi.gamedge.data.games.*
-import com.paulrybitskyi.gamedge.database.games.*
+import com.paulrybitskyi.gamedge.data.games.DataAgeRating
+import com.paulrybitskyi.gamedge.data.games.DataAgeRatingCategory
+import com.paulrybitskyi.gamedge.data.games.DataAgeRatingType
+import com.paulrybitskyi.gamedge.data.games.DataCategory
+import com.paulrybitskyi.gamedge.data.games.DataCompany
+import com.paulrybitskyi.gamedge.data.games.DataGame
+import com.paulrybitskyi.gamedge.data.games.DataGenre
+import com.paulrybitskyi.gamedge.data.games.DataImage
+import com.paulrybitskyi.gamedge.data.games.DataInvolvedCompany
+import com.paulrybitskyi.gamedge.data.games.DataKeyword
+import com.paulrybitskyi.gamedge.data.games.DataMode
+import com.paulrybitskyi.gamedge.data.games.DataPlatform
+import com.paulrybitskyi.gamedge.data.games.DataPlayerPerspective
+import com.paulrybitskyi.gamedge.data.games.DataReleaseDate
+import com.paulrybitskyi.gamedge.data.games.DataReleaseDateCategory
+import com.paulrybitskyi.gamedge.data.games.DataTheme
+import com.paulrybitskyi.gamedge.data.games.DataVideo
+import com.paulrybitskyi.gamedge.data.games.DataWebsite
+import com.paulrybitskyi.gamedge.data.games.DataWebsiteCategory
+import com.paulrybitskyi.gamedge.database.games.DatabaseAgeRating
+import com.paulrybitskyi.gamedge.database.games.DatabaseAgeRatingCategory
+import com.paulrybitskyi.gamedge.database.games.DatabaseAgeRatingType
+import com.paulrybitskyi.gamedge.database.games.DatabaseCategory
+import com.paulrybitskyi.gamedge.database.games.DatabaseCompany
+import com.paulrybitskyi.gamedge.database.games.DatabaseGame
+import com.paulrybitskyi.gamedge.database.games.DatabaseGenre
+import com.paulrybitskyi.gamedge.database.games.DatabaseImage
+import com.paulrybitskyi.gamedge.database.games.DatabaseInvolvedCompany
+import com.paulrybitskyi.gamedge.database.games.DatabaseKeyword
+import com.paulrybitskyi.gamedge.database.games.DatabaseMode
+import com.paulrybitskyi.gamedge.database.games.DatabasePlatform
+import com.paulrybitskyi.gamedge.database.games.DatabasePlayerPerspective
+import com.paulrybitskyi.gamedge.database.games.DatabaseReleaseDate
+import com.paulrybitskyi.gamedge.database.games.DatabaseReleaseDateCategory
+import com.paulrybitskyi.gamedge.database.games.DatabaseTheme
+import com.paulrybitskyi.gamedge.database.games.DatabaseVideo
+import com.paulrybitskyi.gamedge.database.games.DatabaseWebsite
+import com.paulrybitskyi.gamedge.database.games.DatabaseWebsiteCategory
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 internal class GameMapper @Inject constructor() {
 
 
