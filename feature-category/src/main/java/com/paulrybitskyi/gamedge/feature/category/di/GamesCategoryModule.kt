@@ -18,7 +18,14 @@ package com.paulrybitskyi.gamedge.feature.category.di
 
 import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.*
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveComingSoonGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveMostAnticipatedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveRecentlyReleasedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshComingSoonGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshMostAnticipatedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshRecentlyReleasedGamesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

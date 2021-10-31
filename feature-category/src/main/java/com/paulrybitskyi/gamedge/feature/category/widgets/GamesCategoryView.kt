@@ -24,7 +24,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.paulrybitskyi.commons.device.info.screenMetrics
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.commons.ktx.getFloat
+import com.paulrybitskyi.commons.ktx.getInteger
+import com.paulrybitskyi.commons.ktx.layoutInflater
+import com.paulrybitskyi.commons.ktx.makeGone
+import com.paulrybitskyi.commons.ktx.makeInvisible
+import com.paulrybitskyi.commons.ktx.makeVisible
 import com.paulrybitskyi.commons.recyclerview.decorators.GridSpacingItemDecorator
 import com.paulrybitskyi.commons.recyclerview.utils.addOnScrollListener
 import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
