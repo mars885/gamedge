@@ -18,5 +18,4 @@ package com.paulrybitskyi.gamedge.commons.api
 
 import com.github.michaelbull.result.Result
 
-
 typealias ApiResult<T> = Result<T, Error>

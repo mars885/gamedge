@@ -16,12 +16,11 @@
 
 package com.paulrybitskyi.gamedge.commons.api
 
-import javax.inject.Inject
 import com.paulrybitskyi.gamedge.commons.api.Error as ApiError
 import com.paulrybitskyi.gamedge.data.commons.entities.Error as DataError
+import javax.inject.Inject
 
 class ErrorMapper @Inject constructor() {
-
 
     fun mapToDataError(apiError: ApiError): DataError = with(apiError) {
         return when {
@@ -33,6 +32,4 @@ class ErrorMapper @Inject constructor() {
             else -> throw IllegalStateException("Could not map the api error $this to a data error.")
         }
     }
-
-
 }

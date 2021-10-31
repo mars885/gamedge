@@ -19,24 +19,23 @@ package com.paulrybitskyi.gamedge.commons.api.calladapter
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.api.ApiResult
+import com.paulrybitskyi.gamedge.commons.api.Error as ApiError
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.commons.api.enqueue
+import java.io.IOException
+import java.lang.reflect.Type
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
-import java.lang.reflect.Type
-import com.paulrybitskyi.gamedge.commons.api.Error as ApiError
 
 class ApiResultCall<T>(
     private val delegate: Call<T>,
     private val successType: Type,
     private val errorMessageExtractor: ErrorMessageExtractor
 ) : Call<ApiResult<T>> {
-
 
     override fun enqueue(callback: Callback<ApiResult<T>>) {
         delegate.enqueue(
@@ -45,10 +44,9 @@ class ApiResultCall<T>(
         )
     }
 
-
     @Suppress("UNCHECKED_CAST")
     private fun Response<T>.toApiResult(): ApiResult<T> {
-        if(!isSuccessful) {
+        if (!isSuccessful) {
             val httpCode = code()
             val message = (errorBody()?.extractErrorMessage() ?: "")
 
@@ -57,52 +55,41 @@ class ApiResultCall<T>(
 
         body()?.let { return Ok(it) }
 
-        return if(successType == Unit::class.java) {
+        return if (successType == Unit::class.java) {
             (Ok(Unit) as ApiResult<T>)
         } else {
             Err(ApiError.UnknownError(IllegalStateException("The response body was null.")))
         }
     }
 
-
     private fun ResponseBody.extractErrorMessage(): String {
         return errorMessageExtractor.extract(string())
     }
 
-
     private fun <T> Throwable.toApiResult(): ApiResult<T> {
         return Err(
-            when(this) {
+            when (this) {
                 is IOException -> ApiError.NetworkError(this)
                 else -> ApiError.UnknownError(this)
             }
         )
     }
 
-
     override fun isExecuted(): Boolean = delegate.isExecuted
-
 
     override fun isCanceled(): Boolean = delegate.isCanceled
 
-
     override fun cancel() = delegate.cancel()
-
 
     override fun request(): Request = delegate.request()
 
-
     override fun timeout(): Timeout = delegate.timeout()
-
 
     override fun execute(): Response<ApiResult<T>> {
         throw UnsupportedOperationException()
     }
 
-
     override fun clone(): Call<ApiResult<T>> {
         return ApiResultCall(delegate.clone(), successType, errorMessageExtractor)
     }
-
-
 }
