@@ -148,11 +148,15 @@ internal class ApicalypseSerializerImplTest {
         )
 
         assertThat(SUT.serialize(Parent::class.java))
-            .isEqualTo("parent, child1.field1, child2.field1, child2.field2, child3.field1, child3.field2, child3.field3")
+            .isEqualTo(
+                "parent, child1.field1, child2.field1, child2.field2, child3.field1, child3.field2, " +
+                "child3.field3"
+            )
     }
 
 
     @Test
+    @Suppress("LongMethod")
     fun `Serializes parent entity with deeply nested child entities successfully`() {
         @ApicalypseClass
         data class Grandchild1(

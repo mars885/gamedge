@@ -294,7 +294,10 @@ internal class ApicalypseQueryBuilderImplTest {
             .build()
 
         assertThat(query)
-            .isEqualTo("fields id, title, genres;where genres = {20, 30, 40};offset 100;limit 500;sort title asc;")
+            .isEqualTo(
+                "fields id, title, genres;where genres = {20, 30, 40};offset 100;" +
+                "limit 500;sort title asc;"
+            )
     }
 
 
@@ -311,7 +314,10 @@ internal class ApicalypseQueryBuilderImplTest {
             .build()
 
         assertThat(query)
-            .isEqualTo("fields id, title, genres, likes;where genres = (20, 30, 40) & likes > 20;offset 100;limit 500;sort title asc;")
+            .isEqualTo(
+                "fields id, title, genres, likes;where genres = (20, 30, 40) & likes > 20;offset 100;" +
+                "limit 500;sort title asc;"
+            )
     }
 
 
@@ -328,7 +334,10 @@ internal class ApicalypseQueryBuilderImplTest {
             .build()
 
         assertThat(query)
-            .isEqualTo("fields id, title, genres, likes;where genres = (20, 30, 40) | likes > 20;offset 100;limit 500;sort title asc;")
+            .isEqualTo(
+                "fields id, title, genres, likes;where genres = (20, 30, 40) | likes > 20;" +
+                "offset 100;limit 500;sort title asc;"
+            )
     }
 
 
