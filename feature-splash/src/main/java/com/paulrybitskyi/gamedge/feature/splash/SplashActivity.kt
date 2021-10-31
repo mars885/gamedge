@@ -30,10 +30,8 @@ internal class SplashActivity : BaseActivity<
     SplashNavigator
 >() {
 
-
     override val viewBinding by viewBinding(ActivitySplashBinding::inflate)
     override val viewModel by viewModels<SplashViewModel>()
-
 
     override fun onLoadData() {
         super.onLoadData()
@@ -41,15 +39,12 @@ internal class SplashActivity : BaseActivity<
         viewModel.init()
     }
 
-
     override fun onRoute(route: Route) {
         super.onRoute(route)
 
-        when(route) {
+        when (route) {
             is SplashRoute.Dashboard -> navigator.goToDashboard(this)
             is SplashRoute.Exit -> navigator.exitApp()
         }
     }
-
-
 }

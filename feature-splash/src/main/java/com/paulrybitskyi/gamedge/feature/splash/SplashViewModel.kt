@@ -27,10 +27,10 @@ import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
 import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 internal class SplashViewModel @Inject constructor(
@@ -39,11 +39,9 @@ internal class SplashViewModel @Inject constructor(
     private val logger: Logger
 ) : BaseViewModel() {
 
-
     fun init() {
         runInitializationFlow()
     }
-
 
     private fun runInitializationFlow() = viewModelScope.launch {
         refreshAuth()
@@ -52,23 +50,18 @@ internal class SplashViewModel @Inject constructor(
             .collect()
     }
 
-
     private suspend fun refreshAuth(): Flow<*> {
         return refreshAuthUseCase.execute()
             .resultOrError()
     }
 
-
     private fun onInitializationFlowSucceeded() {
         route(SplashRoute.Dashboard)
     }
-
 
     private fun onInitializationFlowFailed(error: Throwable) {
         logger.error(logTag, "Failed to initialize.", error)
         dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(error)))
         route(SplashRoute.Exit)
     }
-
-
 }

@@ -19,7 +19,11 @@ package com.paulrybitskyi.gamedge.feature.splash
 import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_ERROR_UNKNOWN
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_OAUTH_CREDENTIALS
+import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
 import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
@@ -29,13 +33,12 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 internal class SplashViewModelTest {
-
 
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
@@ -44,7 +47,6 @@ internal class SplashViewModelTest {
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: SplashViewModel
-
 
     @Before
     fun setup() {
@@ -57,7 +59,6 @@ internal class SplashViewModelTest {
             logger = logger
         )
     }
-
 
     @Test
     fun `Routes to dashboard when auth refresh use case emits credentials`() {
@@ -72,7 +73,6 @@ internal class SplashViewModelTest {
         }
     }
 
-
     @Test
     fun `Logs error when auth refresh use case emits error result`() {
         mainCoroutineRule.runBlockingTest {
@@ -84,7 +84,6 @@ internal class SplashViewModelTest {
         }
     }
 
-
     @Test
     fun `Logs error when auth refresh use case throws error`() {
         mainCoroutineRule.runBlockingTest {
@@ -95,7 +94,6 @@ internal class SplashViewModelTest {
             assertThat(logger.errorMessage).isNotEmpty
         }
     }
-
 
     @Test
     fun `Dispatches toast showing command when auth refresh use case emits error result`() {
@@ -110,7 +108,6 @@ internal class SplashViewModelTest {
         }
     }
 
-
     @Test
     fun `Dispatches toast showing command when auth refresh use cae throws error`() {
         mainCoroutineRule.runBlockingTest {
@@ -123,7 +120,6 @@ internal class SplashViewModelTest {
             }
         }
     }
-
 
     @Test
     fun `Routes to application exit when auth refresh use case emits error result`() {
@@ -138,7 +134,6 @@ internal class SplashViewModelTest {
         }
     }
 
-
     @Test
     fun `Routes to application exit when auth refresh use case throws error`() {
         mainCoroutineRule.runBlockingTest {
@@ -151,6 +146,4 @@ internal class SplashViewModelTest {
             }
         }
     }
-
-
 }
