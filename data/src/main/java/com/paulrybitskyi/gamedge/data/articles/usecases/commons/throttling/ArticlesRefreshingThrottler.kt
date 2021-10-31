@@ -29,9 +29,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 internal interface ArticlesRefreshingThrottler {
-
     suspend fun canRefreshArticles(key: String): Boolean
-
     suspend fun updateArticlesLastRefreshTime(key: String)
 }
 
@@ -43,8 +41,7 @@ internal class ArticlesRefreshingThrottlerImpl @Inject constructor(
 ) : ArticlesRefreshingThrottler {
 
     private companion object {
-
-        val ARTICLES_REFRESH_TIMEOUT = TimeUnit.MINUTES.toMillis(10L)
+        private val ARTICLES_REFRESH_TIMEOUT = TimeUnit.MINUTES.toMillis(10L)
     }
 
     override suspend fun canRefreshArticles(key: String): Boolean {

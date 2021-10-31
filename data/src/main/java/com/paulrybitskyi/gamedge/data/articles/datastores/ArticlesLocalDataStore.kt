@@ -21,8 +21,6 @@ import com.paulrybitskyi.gamedge.data.commons.Pagination
 import kotlinx.coroutines.flow.Flow
 
 interface ArticlesLocalDataStore {
-
     suspend fun saveArticles(articles: List<DataArticle>)
-
     suspend fun observeArticles(pagination: Pagination): Flow<List<DataArticle>>
 }

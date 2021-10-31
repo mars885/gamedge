@@ -25,11 +25,8 @@ import javax.inject.Singleton
 import kotlinx.coroutines.flow.firstOrNull
 
 interface AuthLocalDataStore {
-
     suspend fun saveOauthCredentials(oauthCredentials: OauthCredentials)
-
     suspend fun getOauthCredentials(): OauthCredentials?
-
     suspend fun isExpired(): Boolean
 }
 

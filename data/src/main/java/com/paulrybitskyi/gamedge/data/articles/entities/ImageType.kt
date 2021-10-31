@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.data.articles.entities
 
 enum class ImageType {
-
     UNKNOWN,
     SQUARE_TINY,
     SQUARE_SMALL,

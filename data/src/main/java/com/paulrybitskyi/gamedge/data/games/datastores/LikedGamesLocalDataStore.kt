@@ -21,14 +21,9 @@ import com.paulrybitskyi.gamedge.data.games.entities.Game
 import kotlinx.coroutines.flow.Flow
 
 interface LikedGamesLocalDataStore {
-
     suspend fun likeGame(gameId: Int)
-
     suspend fun unlikeGame(gameId: Int)
-
     suspend fun isGameLiked(gameId: Int): Boolean
-
     suspend fun observeGameLikeState(gameId: Int): Flow<Boolean>
-
     suspend fun observeLikedGames(pagination: Pagination): Flow<List<Game>>
 }

@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.data.games.entities
 
 enum class Category {
-
     UNKNOWN,
     MAIN_GAME,
     DLC,

@@ -21,7 +21,6 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 internal interface ArticlesRefreshingThrottlerKeyProvider {
-
     fun provideArticlesKey(pagination: Pagination): String
 }
 

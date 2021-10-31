@@ -29,13 +29,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 internal interface GamesRefreshingThrottler {
-
     suspend fun canRefreshGames(key: String): Boolean
-
     suspend fun updateGamesLastRefreshTime(key: String)
-
     suspend fun canRefreshCompanyDevelopedGames(key: String): Boolean
-
     suspend fun canRefreshSimilarGames(key: String): Boolean
 }
 
@@ -47,7 +43,6 @@ internal class GamesRefreshingThrottlerImpl @Inject constructor(
 ) : GamesRefreshingThrottler {
 
     private companion object {
-
         val DEFAULT_GAMES_REFRESH_TIMEOUT = TimeUnit.MINUTES.toMillis(10L)
         val COMPANY_DEVELOPED_GAMES_REFRESH_TIMEOUT = TimeUnit.DAYS.toMillis(7L)
         val SIMILAR_GAMES_REFRESH_TIMEOUT = TimeUnit.DAYS.toMillis(7L)
