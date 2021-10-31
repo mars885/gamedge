@@ -23,17 +23,11 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GamesSearchUiStateFactory {
-
     fun createWithEmptyState(searchQuery: String): GamesUiState
-
     fun createWithLoadingState(): GamesUiState
-
     fun createWithResultState(games: List<Game>): GamesUiState
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GamesSearchUiStateFactoryImpl @Inject constructor(
@@ -41,9 +35,8 @@ internal class GamesSearchUiStateFactoryImpl @Inject constructor(
     private val gameModelMapper: GameModelMapper
 ) : GamesSearchUiStateFactory {
 
-
     override fun createWithEmptyState(searchQuery: String): GamesUiState {
-        val title = if(searchQuery.isBlank()) {
+        val title = if (searchQuery.isBlank()) {
             stringProvider.getString(R.string.games_search_fragment_info_title_default)
         } else {
             stringProvider.getString(
@@ -58,15 +51,11 @@ internal class GamesSearchUiStateFactoryImpl @Inject constructor(
         )
     }
 
-
     override fun createWithLoadingState(): GamesUiState {
         return GamesUiState.Loading
     }
 
-
     override fun createWithResultState(games: List<Game>): GamesUiState {
         return GamesUiState.Result(games.map(gameModelMapper::mapToGameModel))
     }
-
-
 }

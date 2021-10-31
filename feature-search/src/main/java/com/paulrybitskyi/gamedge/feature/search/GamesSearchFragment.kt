@@ -36,10 +36,8 @@ internal class GamesSearchFragment : BaseFragment<
     GamesSearchNavigator
 >(R.layout.fragment_games_search) {
 
-
     override val viewBinding by viewBinding(FragmentGamesSearchBinding::bind)
     override val viewModel by viewModels<GamesSearchViewModel>()
-
 
     override fun onInit() {
         super.onInit()
@@ -47,7 +45,6 @@ internal class GamesSearchFragment : BaseFragment<
         initSearchToolbar()
         initGamesView()
     }
-
 
     private fun initSearchToolbar() = with(viewBinding.searchToolbar) {
         applyWindowTopInsetAsPadding()
@@ -58,7 +55,6 @@ internal class GamesSearchFragment : BaseFragment<
         onBackButtonClicked = { viewModel.onToolbarBackButtonClicked() }
     }
 
-
     private fun initGamesView() = with(viewBinding.gamesView) {
         applyWindowBottomInsetAsMargin()
 
@@ -66,13 +62,11 @@ internal class GamesSearchFragment : BaseFragment<
         onBottomReached = viewModel::onBottomReached
     }
 
-
     override fun onBindViewModel() {
         super.onBindViewModel()
 
         observeUiState()
     }
-
 
     private fun observeUiState() {
         viewModel.uiState
@@ -80,15 +74,13 @@ internal class GamesSearchFragment : BaseFragment<
             .observeIn(this)
     }
 
-
     override fun onResume() {
         super.onResume()
 
-        if(viewBinding.searchToolbar.searchQuery.isEmpty()) {
+        if (viewBinding.searchToolbar.searchQuery.isEmpty()) {
             viewBinding.searchToolbar.showKeyboard(true)
         }
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -96,24 +88,20 @@ internal class GamesSearchFragment : BaseFragment<
         viewBinding.searchToolbar.hideKeyboard()
     }
 
-
     override fun onHandleCommand(command: Command) {
         super.onHandleCommand(command)
 
-        when(command) {
+        when (command) {
             is GamesSearchCommand.ClearItems -> viewBinding.gamesView.clearItems()
         }
     }
 
-
     override fun onRoute(route: Route) {
         super.onRoute(route)
 
-        when(route) {
+        when (route) {
             is GamesSearchRoute.Info -> navigator.goToInfo(route.gameId)
             is GamesSearchRoute.Back -> navigator.goBack()
         }
     }
-
-
 }

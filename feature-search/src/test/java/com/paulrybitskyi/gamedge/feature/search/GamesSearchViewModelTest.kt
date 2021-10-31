@@ -18,7 +18,11 @@ package com.paulrybitskyi.gamedge.feature.search
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
@@ -39,7 +43,6 @@ import org.junit.Test
 
 internal class GamesSearchViewModelTest {
 
-
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
@@ -47,7 +50,6 @@ internal class GamesSearchViewModelTest {
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamesSearchViewModel
-
 
     @Before
     fun setup() {
@@ -64,13 +66,11 @@ internal class GamesSearchViewModelTest {
         )
     }
 
-
     private fun setupSavedStateHandle(): SavedStateHandle {
         return mockk(relaxed = true) {
             every { get<String>(any()) } returns ""
         }
     }
-
 
     @Test
     fun `Routes to previous screen when toolbar back button is clicked`() {
@@ -82,7 +82,6 @@ internal class GamesSearchViewModelTest {
             }
         }
     }
-
 
     @Test
     fun `Emits correct ui states when searching for games`() {
@@ -104,7 +103,6 @@ internal class GamesSearchViewModelTest {
         }
     }
 
-
     @Test
     fun `Does not emit ui states when search query is empty`() {
         mainCoroutineRule.runBlockingTest {
@@ -116,7 +114,6 @@ internal class GamesSearchViewModelTest {
             }
         }
     }
-
 
     @Test
     fun `Does not emit ui states when the current search query is provided`() {
@@ -134,7 +131,6 @@ internal class GamesSearchViewModelTest {
         }
     }
 
-
     @Test
     fun `Emits empty ui state when blank search query is provided`() {
         mainCoroutineRule.runBlockingTest {
@@ -146,7 +142,6 @@ internal class GamesSearchViewModelTest {
             }
         }
     }
-
 
     @Test
     fun `Dispatches items clearing command when performing new search`() {
@@ -161,7 +156,6 @@ internal class GamesSearchViewModelTest {
         }
     }
 
-
     @Test
     fun `Logs error when searching games use case throws error`() {
         mainCoroutineRule.runBlockingTest {
@@ -172,7 +166,6 @@ internal class GamesSearchViewModelTest {
             assertThat(logger.errorMessage).isNotEmpty
         }
     }
-
 
     @Test
     fun `Dispatches toast showing command when searching games use case throws error`() {
@@ -187,7 +180,6 @@ internal class GamesSearchViewModelTest {
             }
         }
     }
-
 
     @Test
     fun `Routes to info screen when game is clicked`() {
@@ -211,7 +203,6 @@ internal class GamesSearchViewModelTest {
             }
         }
     }
-
 
     private class FakeGamesSearchUiStateFactory : GamesSearchUiStateFactory {
 
@@ -237,8 +228,5 @@ internal class GamesSearchViewModelTest {
                 }
             )
         }
-
     }
-
-
 }
