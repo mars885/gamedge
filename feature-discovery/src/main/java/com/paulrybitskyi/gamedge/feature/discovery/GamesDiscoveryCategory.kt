@@ -17,10 +17,8 @@
 package com.paulrybitskyi.gamedge.feature.discovery
 
 enum class GamesDiscoveryCategory {
-
     POPULAR,
     RECENTLY_RELEASED,
     COMING_SOON,
     MOST_ANTICIPATED
-
 }

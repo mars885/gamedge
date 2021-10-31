@@ -23,19 +23,14 @@ import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGam
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 interface GamesDiscoveryItemGameModelMapper {
-
     fun mapToGameModel(game: Game): GamesDiscoveryItemGameModel
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GamesDiscoveryItemGameModelMapperImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory
 ) : GamesDiscoveryItemGameModelMapper {
-
 
     override fun mapToGameModel(game: Game): GamesDiscoveryItemGameModel {
         return GamesDiscoveryItemGameModel(
@@ -46,10 +41,7 @@ internal class GamesDiscoveryItemGameModelMapperImpl @Inject constructor(
             }
         )
     }
-
-
 }
-
 
 internal fun GamesDiscoveryItemGameModelMapper.mapToGameModels(
     games: List<Game>

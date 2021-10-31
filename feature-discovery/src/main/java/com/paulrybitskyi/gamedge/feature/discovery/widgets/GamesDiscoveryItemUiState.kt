@@ -17,9 +17,6 @@
 package com.paulrybitskyi.gamedge.feature.discovery.widgets
 
 sealed class GamesDiscoveryItemUiState {
-
     object Empty : GamesDiscoveryItemUiState()
-
     data class Result(val items: List<GamesDiscoveryItemGameModel>) : GamesDiscoveryItemUiState()
-
 }
