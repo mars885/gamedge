@@ -35,6 +35,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@Suppress("TooGenericExceptionThrown")
 internal class GamingNewsViewModelTest {
 
 
