@@ -28,18 +28,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-
 private const val INITIAL_POSITION = 0
 
-
 internal class ImageViewerViewModelTest {
-
 
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var SUT: ImageViewerViewModel
-
 
     @Before
     fun setup() {
@@ -49,7 +45,6 @@ internal class ImageViewerViewModelTest {
         )
     }
 
-
     private fun setupSavedStateHandle(): SavedStateHandle {
         return mockk(relaxed = true) {
             every { get<String>(PARAM_TITLE) } returns ""
@@ -58,7 +53,6 @@ internal class ImageViewerViewModelTest {
             every { get<Int>(KEY_SELECTED_POSITION) } returns INITIAL_POSITION
         }
     }
-
 
     @Test
     fun `Dispatches text sharing command when toolbar right button is clicked`() {
@@ -70,7 +64,6 @@ internal class ImageViewerViewModelTest {
             }
         }
     }
-
 
     @Test
     fun `Emits selected position when page is changed`() {
@@ -84,7 +77,6 @@ internal class ImageViewerViewModelTest {
         }
     }
 
-
     @Test
     fun `Emits toolbar title when page is changed`() {
         mainCoroutineRule.runBlockingTest {
@@ -95,7 +87,6 @@ internal class ImageViewerViewModelTest {
             }
         }
     }
-
 
     @Test
     fun `Dispatches system windows reset command when back button is clicked`() {
@@ -108,7 +99,6 @@ internal class ImageViewerViewModelTest {
         }
     }
 
-
     @Test
     fun `Routes to previous screen when back button is clicked`() {
         mainCoroutineRule.runBlockingTest {
@@ -119,6 +109,4 @@ internal class ImageViewerViewModelTest {
             }
         }
     }
-
-
 }

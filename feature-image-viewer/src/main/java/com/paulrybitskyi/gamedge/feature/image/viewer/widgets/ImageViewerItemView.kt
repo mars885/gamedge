@@ -31,19 +31,16 @@ import com.paulrybitskyi.gamedge.image.loading.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 private const val DEFAULT_MIN_SCALE = 1f
 private const val DEFAULT_MID_SCALE = 1.75f
 private const val DEFAULT_MAX_SCALE = 3f
-
 
 @AndroidEntryPoint
 internal class ImageViewerItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): FrameLayout(context, attrs, defStyleAttr) {
-
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val binding = ViewImageViewerItewBinding.inflate(context.layoutInflater, this)
 
@@ -66,18 +63,15 @@ internal class ImageViewerItemView @JvmOverloads constructor(
     @Inject lateinit var stringProvider: StringProvider
     @Inject lateinit var networkStateProvider: NetworkStateProvider
 
-
     init {
         initPhotoView()
     }
-
 
     private fun initPhotoView() = with(binding.photoView) {
         minimumScale = DEFAULT_MIN_SCALE
         mediumScale = DEFAULT_MID_SCALE
         maximumScale = DEFAULT_MAX_SCALE
     }
-
 
     private fun loadUrlImage(url: String) {
         imageLoader.loadImage(
@@ -92,16 +86,14 @@ internal class ImageViewerItemView @JvmOverloads constructor(
         )
     }
 
-
     private fun onImageLoadingSucceeded() {
         isInfoViewVisible = false
     }
 
-
     @Suppress("UNUSED_PARAMETER")
     private fun onImageLoadingFailed(error: Exception) {
         infoViewTitleText = stringProvider.getString(
-            if(!networkStateProvider.isNetworkAvailable) {
+            if (!networkStateProvider.isNetworkAvailable) {
                 R.string.error_no_network_message
             } else {
                 R.string.error_unknown_message
@@ -111,10 +103,7 @@ internal class ImageViewerItemView @JvmOverloads constructor(
         isInfoViewVisible = true
     }
 
-
     fun resetScale(animate: Boolean) {
         binding.photoView.setScale(DEFAULT_MIN_SCALE, animate)
     }
-
-
 }

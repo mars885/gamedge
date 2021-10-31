@@ -21,12 +21,11 @@ import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
-
 
 internal const val PARAM_TITLE = "title"
 internal const val PARAM_INITIAL_POSITION = "initial_position"
@@ -34,13 +33,11 @@ internal const val PARAM_IMAGE_URLS = "image_urls"
 
 internal const val KEY_SELECTED_POSITION = "selected_position"
 
-
 @HiltViewModel
 internal class ImageViewerViewModel @Inject constructor(
     private val stringProvider: StringProvider,
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
-
 
     private val title: String
 
@@ -57,7 +54,6 @@ internal class ImageViewerViewModel @Inject constructor(
     val toolbarTitle: StateFlow<String>
         get() = _toolbarTitle
 
-
     init {
         title = savedStateHandle.get<String>(PARAM_TITLE)
             ?: stringProvider.getString(R.string.image_viewer_default_toolbar_title)
@@ -72,12 +68,10 @@ internal class ImageViewerViewModel @Inject constructor(
         observeSelectedPositionChanges()
     }
 
-
     private fun getSelectedPosition(): Int {
-        return savedStateHandle.get(KEY_SELECTED_POSITION) ?:
-            checkNotNull(savedStateHandle.get<Int>(PARAM_INITIAL_POSITION))
+        return savedStateHandle.get(KEY_SELECTED_POSITION)
+            ?: checkNotNull(savedStateHandle.get<Int>(PARAM_INITIAL_POSITION))
     }
-
 
     private fun observeSelectedPositionChanges() {
         selectedPosition
@@ -88,9 +82,8 @@ internal class ImageViewerViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-
     private fun updateToolbarTitle(): String {
-        if(imageUrls.value.size == 1) return title
+        if (imageUrls.value.size == 1) return title
 
         return stringProvider.getString(
             R.string.image_viewer_toolbar_title_template,
@@ -99,7 +92,6 @@ internal class ImageViewerViewModel @Inject constructor(
             imageUrls.value.size
         )
     }
-
 
     fun onToolbarRightButtonClicked() {
         val currentImageUrl = imageUrls.value[selectedPosition.value]
@@ -112,16 +104,12 @@ internal class ImageViewerViewModel @Inject constructor(
         dispatchCommand(ImageViewerCommand.ShareText(textToShare))
     }
 
-
     fun onPageChanged(position: Int) {
         _selectedPosition.value = position
     }
-
 
     fun onBackPressed() {
         dispatchCommand(ImageViewerCommand.ResetSystemWindows)
         route(ImageViewerRoute.Back)
     }
-
-
 }
