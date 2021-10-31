@@ -25,12 +25,11 @@ import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractItem
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.HasListeners
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
-internal class GameArtworkItem(model: GameArtworkModel): AbstractItem<
+internal class GameArtworkItem(model: GameArtworkModel) : AbstractItem<
     GameArtworkModel,
     GameArtworkItem.ViewHolder,
     NoDependencies
 >(model) {
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -44,15 +43,13 @@ internal class GameArtworkItem(model: GameArtworkModel): AbstractItem<
         )
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameArtworkView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: GameArtworkModel) {
             view.model = model
@@ -61,8 +58,5 @@ internal class GameArtworkItem(model: GameArtworkModel): AbstractItem<
         fun setOnArtworkClickListener(onClick: () -> Unit) {
             view.onClick { onClick() }
         }
-
     }
-
-
 }

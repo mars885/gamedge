@@ -50,7 +50,6 @@ internal class GameCompanyView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val defaultImage = checkNotNull(getDrawable(R.drawable.game_landscape_placeholder))
 
     private val binding = ViewGameCompanyBinding.inflate(context.layoutInflater, this)
@@ -67,7 +66,7 @@ internal class GameCompanyView @JvmOverloads constructor(
         get() = binding.logoIv.layoutParamsHeight
 
     var logoUrl by observeChanges<String?>(null) { _, newUrl ->
-        if(newUrl != null) loadLogo(newUrl) else loadDefaultImage()
+        if (newUrl != null) loadLogo(newUrl) else loadDefaultImage()
     }
 
     var name: CharSequence
@@ -86,11 +85,9 @@ internal class GameCompanyView @JvmOverloads constructor(
 
     var onCompanyClicked: (() -> Unit)? = null
 
-
     init {
         initCard()
     }
-
 
     private fun initCard() {
         setCardBackgroundColor(getColor(R.color.game_company_card_background_color))
@@ -98,7 +95,6 @@ internal class GameCompanyView @JvmOverloads constructor(
         radius = getDimension(R.dimen.game_company_card_corner_radius)
         onClick { onCompanyClicked?.invoke() }
     }
-
 
     private fun loadLogo(url: String) {
         resetLogoScaleType()
@@ -116,43 +112,32 @@ internal class GameCompanyView @JvmOverloads constructor(
         )
     }
 
-
     private fun resetLogoScaleType() {
         logoScaleType = ImageView.ScaleType.CENTER_CROP
     }
 
-
     private fun onLogoLoadingSucceeded() {
         logoScaleType = ImageView.ScaleType.CENTER_INSIDE
     }
-
 
     private fun loadDefaultImage() {
         resetLogoScaleType()
 
         binding.logoIv.setImageDrawable(defaultImage)
     }
-
-
 }
-
 
 private class LogoImageTransformation(
     private val logoViewWidth: Int,
     private val logoViewHeight: Int
 ) : Transformation {
 
-
     private companion object {
-
         private const val FILL_COLOR_CALCULATION_PIXEL_OFFSET = 10
         private const val TARGET_BITMAP_SCALE_FACTOR = 0.85f
-
     }
 
-
     override val key = "logo: w - $logoViewWidth, h - $logoViewHeight"
-
 
     override fun transform(source: Bitmap): Bitmap {
         val targetBitmap = Bitmap
@@ -179,22 +164,19 @@ private class LogoImageTransformation(
             .let { targetBitmap }
     }
 
-
     private fun Bitmap.calculateFillColor(): Int {
-        if(hasTransparentPixels()) return Color.WHITE
+        if (hasTransparentPixels()) return Color.WHITE
 
         var pixelColor: Int
 
-        for(x in FILL_COLOR_CALCULATION_PIXEL_OFFSET..centerX.toInt()) {
-            for(y in FILL_COLOR_CALCULATION_PIXEL_OFFSET..centerY.toInt()) {
+        for (x in FILL_COLOR_CALCULATION_PIXEL_OFFSET..centerX.toInt()) {
+            for (y in FILL_COLOR_CALCULATION_PIXEL_OFFSET..centerY.toInt()) {
                 pixelColor = getPixel(x, y)
 
-                if(pixelColor.isOpaque) return pixelColor
+                if (pixelColor.isOpaque) return pixelColor
             }
         }
 
         return Color.WHITE
     }
-
-
 }

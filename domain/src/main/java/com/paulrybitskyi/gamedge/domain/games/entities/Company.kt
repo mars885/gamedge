@@ -29,5 +29,4 @@ data class Company(
 
     val hasDevelopedGames: Boolean
         get() = developedGames.isNotEmpty()
-
 }

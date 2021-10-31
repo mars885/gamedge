@@ -28,5 +28,4 @@ interface RefreshSimilarGamesUseCase : UseCase<RefreshSimilarGamesUseCase.Params
         val game: Game,
         val pagination: Pagination
     )
-
 }

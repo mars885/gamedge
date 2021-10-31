@@ -1,5 +1,3 @@
-import com.google.protobuf.gradle.*
-
 /*
  * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
@@ -15,6 +13,11 @@ import com.google.protobuf.gradle.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import com.google.protobuf.gradle.generateProtoTasks
+import com.google.protobuf.gradle.id
+import com.google.protobuf.gradle.protobuf
+import com.google.protobuf.gradle.protoc
 
 plugins {
     androidLibrary()

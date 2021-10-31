@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
 internal enum class GameInfoAdapterItem(val id: Long) {
-
     VIDEOS(id = 1L),
     SCREENSHOTS(id = 2L),
     SUMMARY(id = 3L),
@@ -26,5 +25,4 @@ internal enum class GameInfoAdapterItem(val id: Long) {
     COMPANIES(id = 6L),
     OTHER_COMPANY_GAMES(id = 7L),
     SIMILAR_GAMES(id = 8L)
-
 }

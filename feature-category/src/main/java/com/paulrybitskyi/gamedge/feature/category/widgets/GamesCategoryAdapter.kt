@@ -21,4 +21,4 @@ import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractRecyclerViewAdapter
 
 internal class GamesCategoryAdapter(
     context: Context
-): AbstractRecyclerViewAdapter<GameCategoryItem, GamesCategoryAdapterDeps>(context)
+) : AbstractRecyclerViewAdapter<GameCategoryItem, GamesCategoryAdapterDeps>(context)

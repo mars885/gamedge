@@ -23,10 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class DashboardViewModel @Inject constructor() : BaseViewModel() {
 
-
     fun onToolbarRightButtonClicked() {
         route(DashboardRoute.Search)
     }
-
-
 }

@@ -32,15 +32,14 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 import com.paulrybitskyi.gamedge.commons.ui.observeIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+import kotlinx.coroutines.flow.onEach
 
 abstract class BaseFragment<
     VB : ViewBinding,
     VM : BaseViewModel,
     NA : Navigator
 >(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
-
 
     private var isViewCreated = false
 
@@ -49,20 +48,18 @@ abstract class BaseFragment<
 
     @Inject lateinit var navigator: NA
 
-
     final override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Prevent the view from recreation until onDestroy is called
-        return if(isViewCreated) {
+        return if (isViewCreated) {
             viewBinding.root
         } else {
             super.onCreateView(inflater, container, savedInstanceState)
         }
     }
-
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,7 +67,7 @@ abstract class BaseFragment<
         val wasViewCreated = isViewCreated
         isViewCreated = true
 
-        if(!wasViewCreated) {
+        if (!wasViewCreated) {
             onPreInit()
             onInit()
             onPostInit()
@@ -78,29 +75,25 @@ abstract class BaseFragment<
 
         onBindViewModel()
 
-        if(!wasViewCreated) {
+        if (!wasViewCreated) {
             savedInstanceState?.let(::onRestoreState)
         }
     }
-
 
     @CallSuper
     protected open fun onPreInit() {
         // Stub
     }
 
-
     @CallSuper
     protected open fun onInit() {
         // Stub
     }
 
-
     @CallSuper
     protected open fun onPostInit() {
         loadData()
     }
-
 
     private fun loadData() {
         lifecycleScope.launchWhenResumed {
@@ -108,11 +101,9 @@ abstract class BaseFragment<
         }
     }
 
-
     protected open fun onLoadData() {
         // Stub
     }
-
 
     @CallSuper
     protected open fun onBindViewModel() {
@@ -120,13 +111,11 @@ abstract class BaseFragment<
         bindViewModelRoutes()
     }
 
-
     private fun bindViewModelCommands() {
         viewModel.commandFlow
             .onEach(::onHandleCommand)
             .observeIn(this)
     }
-
 
     private fun bindViewModelRoutes() {
         viewModel.routeFlow
@@ -134,27 +123,23 @@ abstract class BaseFragment<
             .observeIn(this)
     }
 
-
     @CallSuper
     protected open fun onHandleCommand(command: Command) {
-        when(command) {
+        when (command) {
             is GeneralCommand.ShowShortToast -> showShortToast(command.message)
             is GeneralCommand.ShowLongToast -> showLongToast(command.message)
         }
     }
-
 
     @CallSuper
     protected open fun onRoute(route: Route) {
         // Stub
     }
 
-
     @CallSuper
     protected open fun onRestoreState(state: Bundle) {
         // Stub
     }
-
 
     final override fun onSaveInstanceState(state: Bundle) {
         onSaveState(state)
@@ -162,18 +147,14 @@ abstract class BaseFragment<
         super.onSaveInstanceState(state)
     }
 
-
     @CallSuper
     protected open fun onSaveState(state: Bundle) {
         // Stub
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
 
         isViewCreated = false
     }
-
-
 }

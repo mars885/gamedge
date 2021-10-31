@@ -28,13 +28,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
 import javax.inject.Singleton
+import okhttp3.OkHttpClient
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object CommonsModule {
-
 
     @Provides
     @Singleton
@@ -48,7 +47,6 @@ internal object CommonsModule {
             .build()
     }
 
-
     @Provides
     @GamespotApi
     fun provideApiResultCallAdapterFactory(
@@ -56,7 +54,6 @@ internal object CommonsModule {
     ): ApiResultCallAdapterFactory {
         return ApiResultCallAdapterFactory(errorMessageExtractor)
     }
-
 
     @Provides
     fun provideGamespotQueryParamsBuilder(
@@ -68,6 +65,4 @@ internal object CommonsModule {
             apiKey = gamespotConstantsProvider.apiKey
         )
     }
-
-
 }

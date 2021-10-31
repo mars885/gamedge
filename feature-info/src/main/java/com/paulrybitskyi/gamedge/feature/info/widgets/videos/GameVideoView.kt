@@ -41,7 +41,6 @@ internal class GameVideoView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val defaultImage = checkNotNull(getDrawable(R.drawable.game_landscape_placeholder))
 
     private val binding = ViewGameVideoBinding.inflate(context.layoutInflater, this)
@@ -65,11 +64,9 @@ internal class GameVideoView @JvmOverloads constructor(
 
     var onVideoClicked: (() -> Unit)? = null
 
-
     init {
         initCard()
     }
-
 
     private fun initCard() {
         setCardBackgroundColor(getColor(R.color.game_video_card_background_color))
@@ -77,7 +74,6 @@ internal class GameVideoView @JvmOverloads constructor(
         radius = getDimension(R.dimen.game_video_card_corner_radius)
         onClick { onVideoClicked?.invoke() }
     }
-
 
     private fun loadThumbnail(url: String) {
         imageLoader.loadImage(
@@ -90,6 +86,4 @@ internal class GameVideoView @JvmOverloads constructor(
                 .build()
         )
     }
-
-
 }

@@ -35,19 +35,17 @@ internal class CustomTabUrlOpener @Inject constructor(
     private val customTabsProvider: CustomTabsProvider
 ) : UrlOpener {
 
-
     override fun openUrl(url: String, context: Context): Boolean {
         // If the context is not activity based, then exit animations
         // won't work.
 
-        return if(customTabsProvider.areCustomTabsSupported()) {
+        return if (customTabsProvider.areCustomTabsSupported()) {
             createCustomTabsIntent(context).launchUrl(context, Uri.parse(url))
             true
         } else {
             false
         }
     }
-
 
     private fun createCustomTabsIntent(context: Context): CustomTabsIntent {
         return CustomTabsIntent.Builder()
@@ -61,7 +59,6 @@ internal class CustomTabUrlOpener @Inject constructor(
             }
     }
 
-
     private fun createColorSchemeParams(context: Context): CustomTabColorSchemeParams {
         return CustomTabColorSchemeParams.Builder()
             .setToolbarColor(context.getCompatColor(R.color.colorPrimary))
@@ -69,6 +66,4 @@ internal class CustomTabUrlOpener @Inject constructor(
             .setNavigationBarColor(context.getCompatColor(R.color.colorNavigationBar))
             .build()
     }
-
-
 }

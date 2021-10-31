@@ -21,41 +21,30 @@ import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsUiState
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 interface GamingNewsUiStateFactory {
-
     fun createWithEmptyState(): GamingNewsUiState
-
     fun createWithLoadingState(): GamingNewsUiState
-
     fun createWithResultState(articles: List<Article>): GamingNewsUiState
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GamingNewsUiStateFactoryImpl @Inject constructor(
     private val gamingNewsItemModelMapper: GamingNewsItemModelMapper
 ) : GamingNewsUiStateFactory {
 
-
     override fun createWithEmptyState(): GamingNewsUiState {
         return GamingNewsUiState.Empty
     }
-
 
     override fun createWithLoadingState(): GamingNewsUiState {
         return GamingNewsUiState.Loading
     }
 
-
     override fun createWithResultState(articles: List<Article>): GamingNewsUiState {
-        if(articles.isEmpty()) return createWithEmptyState()
+        if (articles.isEmpty()) return createWithEmptyState()
 
         return GamingNewsUiState.Result(
             articles.map(gamingNewsItemModelMapper::mapToGamingNewsItemModel)
         )
     }
-
-
 }

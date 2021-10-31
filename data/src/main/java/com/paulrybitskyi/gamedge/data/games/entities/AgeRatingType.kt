@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.data.games.entities
 
 enum class AgeRatingType {
-
     UNKNOWN,
     THREE,
     SEVEN,
@@ -31,5 +30,4 @@ enum class AgeRatingType {
     T,
     M,
     AO,
-
 }

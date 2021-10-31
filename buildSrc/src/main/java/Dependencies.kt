@@ -18,7 +18,6 @@
 
 import org.gradle.api.JavaVersion
 
-
 object appConfig {
 
     const val compileSdkVersion = 31
@@ -30,9 +29,7 @@ object appConfig {
 
     val javaCompatibilityVersion = JavaVersion.VERSION_1_8
     val kotlinCompatibilityVersion = JavaVersion.VERSION_1_8
-
 }
-
 
 object versions {
 
@@ -42,11 +39,10 @@ object versions {
     const val navigation = "2.3.5"
     const val daggerHilt = "2.40"
     const val detektPlugin = "1.18.1"
+    const val ktlintPlugin = "10.2.0"
     const val coroutines = "1.5.2"
     const val room = "2.3.0"
-
 }
-
 
 object deps {
 
@@ -62,7 +58,6 @@ object deps {
         const val protobuf = "com.google.protobuf:protobuf-gradle-plugin:$protobufPluginVersion"
         const val detekt = ""
         const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${versions.gradleVersionsPlugin}"
-
     }
 
     object local {
@@ -90,7 +85,6 @@ object deps {
         const val featureNews = ":feature-news"
         const val featureSearch = ":feature-search"
         const val featureSplash = ":feature-splash"
-
     }
 
     object kotlin {
@@ -100,7 +94,6 @@ object deps {
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
         const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"
-
     }
 
     object androidX {
@@ -134,7 +127,6 @@ object deps {
         const val fragmentKtx = "androidx.fragment:fragment-ktx:${fragmentKtxVersion}"
         const val prefsDataStore = "androidx.datastore:datastore-preferences:${dataStoreVersion}"
         const val protoDataStore = "androidx.datastore:datastore-core:${dataStoreVersion}"
-
     }
 
     object google {
@@ -147,7 +139,6 @@ object deps {
         const val materialComponents = "com.google.android.material:material:${materialComponentsVersion}"
         const val protobuf = "com.google.protobuf:protobuf-javalite:${protobufVersion}"
         const val protobufCompiler = "com.google.protobuf:protoc:${protobufVersion}"
-
     }
 
     object square {
@@ -162,7 +153,6 @@ object deps {
         const val retrofitScalarsConverter = "com.squareup.retrofit2:converter-scalars:${retrofitVersion}"
         const val retrofitKotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$retrofitKotlinxSerializationConverterVersion"
         const val picasso = "com.squareup.picasso:picasso:${picassoVersion}"
-
     }
 
     object commons {
@@ -186,7 +176,6 @@ object deps {
         const val recyclerView = "com.paulrybitskyi.commons:commons-recyclerview:${recyclerViewVersion}"
         const val windowAnims = "com.paulrybitskyi.commons:commons-window-anims:${windowAnimsVersion}"
         const val deviceInfo = "com.paulrybitskyi.commons:commons-device-info:${deviceInfoVersion}"
-
     }
 
     object misc {
@@ -203,7 +192,6 @@ object deps {
         const val hiltBinder = "com.paulrybitskyi:hilt-binder:$hiltBinderVersion"
         const val hiltBinderCompiler = "com.paulrybitskyi:hilt-binder-compiler:$hiltBinderVersion"
         const val photoView = "com.github.chrisbanes:PhotoView:$photoViewVersion"
-
     }
 
     object testing {
@@ -228,7 +216,5 @@ object deps {
         const val daggerHilt = "com.google.dagger:hilt-android-testing:${versions.daggerHilt}"
         const val room = "androidx.room:room-testing:${versions.room}"
         const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
-
     }
-
 }

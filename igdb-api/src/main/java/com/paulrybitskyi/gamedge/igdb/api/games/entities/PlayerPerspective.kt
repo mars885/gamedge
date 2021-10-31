@@ -29,12 +29,7 @@ internal data class PlayerPerspective(
     val name: String,
 ) {
 
-
     object Schema {
-
         const val NAME = "name"
-
     }
-
-
 }

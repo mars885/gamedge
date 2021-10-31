@@ -38,16 +38,13 @@ import com.paulrybitskyi.gamedge.commons.ui.hideKeyboard
 import com.paulrybitskyi.gamedge.commons.ui.showKeyboard
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewSearchToolbarBinding
 
-
 private const val CLEAR_BUTTON_ANIMATION_DURATION = 100L
-
 
 class SearchToolbar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
-
 
     private val binding = ViewSearchToolbarBinding.inflate(context.layoutInflater, this)
 
@@ -82,16 +79,14 @@ class SearchToolbar @JvmOverloads constructor(
 
     var onClearButtonClicked: ((View) -> Unit)? = null
 
-
     init {
         initQueryInput()
         initClearButton()
         initDefaults()
     }
 
-
     private fun initQueryInput() {
-        if(isSearchQueryEmpty) {
+        if (isSearchQueryEmpty) {
             hideClearButton(false)
         } else {
             showClearButton(false)
@@ -102,7 +97,6 @@ class SearchToolbar @JvmOverloads constructor(
         initQueryInputActionListener()
     }
 
-
     private fun initQueryInputMargins() = with(binding.queryInputEt) {
         val buttonContainerSize = getDimensionPixelSize(R.dimen.toolbar_button_container_size)
         val horizontalMargin = getDimensionPixelSize(R.dimen.search_toolbar_query_input_horizontal_margin)
@@ -112,16 +106,15 @@ class SearchToolbar @JvmOverloads constructor(
         endMargin = totalHorizontalMargin
     }
 
-
     private fun initQueryInputTextWatcher() = with(binding) {
         queryInputEt.onTextChanged { query ->
-            if(query.isNotEmpty()) {
-                if(isSearchQueryEmpty) {
+            if (query.isNotEmpty()) {
+                if (isSearchQueryEmpty) {
                     isSearchQueryEmpty = false
                     showClearButton(true)
                 }
             } else {
-                if(!isSearchQueryEmpty) {
+                if (!isSearchQueryEmpty) {
                     isSearchQueryEmpty = true
                     hideClearButton(true)
                 }
@@ -131,10 +124,9 @@ class SearchToolbar @JvmOverloads constructor(
         }
     }
 
-
     private fun initQueryInputActionListener() {
         binding.queryInputEt.setOnEditorActionListener { _, actionId, _ ->
-            if((actionId == EditorInfo.IME_ACTION_SEARCH) && searchQuery.isNotBlank()) {
+            if ((actionId == EditorInfo.IME_ACTION_SEARCH) && searchQuery.isNotBlank()) {
                 hideKeyboard()
                 onSearchActionRequested?.invoke(searchQuery.toString())
             }
@@ -142,7 +134,6 @@ class SearchToolbar @JvmOverloads constructor(
             true
         }
     }
-
 
     private fun initClearButton() {
         binding.clearBtnContainer.onClick {
@@ -153,7 +144,6 @@ class SearchToolbar @JvmOverloads constructor(
 
         clearBtnValueAnimator = initClearButtonValueAnimator()
     }
-
 
     private fun initClearButtonValueAnimator(): ValueAnimator {
         return ValueAnimator.ofFloat().apply {
@@ -166,20 +156,17 @@ class SearchToolbar @JvmOverloads constructor(
         }
     }
 
-
     private fun initDefaults() {
         elevation = getDimension(R.dimen.toolbar_elevation)
         setBackgroundColor(getColor(R.color.toolbar_background_color))
     }
 
-
     private fun clearQueryText() {
         binding.queryInputEt.setText("")
     }
 
-
     private fun showClearButton(animate: Boolean) {
-        if(animate) {
+        if (animate) {
             clearBtnValueAnimator.cancel()
             clearBtnValueAnimator.removeAllListeners()
 
@@ -192,9 +179,8 @@ class SearchToolbar @JvmOverloads constructor(
         }
     }
 
-
     private fun hideClearButton(animate: Boolean) {
-        if(animate) {
+        if (animate) {
             clearBtnValueAnimator.cancel()
             clearBtnValueAnimator.removeAllListeners()
             clearBtnValueAnimator.doOnEnd { isClearButtonVisible = false }
@@ -207,28 +193,22 @@ class SearchToolbar @JvmOverloads constructor(
         }
     }
 
-
     private fun runClearButtonAnimation(vararg values: Float) {
         clearBtnValueAnimator.setFloatValues(*values)
         clearBtnValueAnimator.start()
     }
 
-
     fun showKeyboard(withDelay: Boolean = false) {
         binding.queryInputEt.showKeyboard(withDelay)
     }
 
-
     fun hideKeyboard() {
         binding.queryInputEt.hideKeyboard()
     }
-
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
 
         clearBtnValueAnimator.cancel()
     }
-
-
 }

@@ -32,15 +32,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
-
 internal interface GameInfoCompanyModelFactory {
-
     fun createCompanyModels(companies: List<InvolvedCompany>): List<GameInfoCompanyModel>
-
     fun createCompanyModel(company: InvolvedCompany): GameInfoCompanyModel?
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
@@ -49,16 +44,12 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GameInfoCompanyModelFactory {
 
-
     private companion object {
-
         private const val COMPANY_ROLE_SEPARATOR = ", "
-
     }
 
-
     override fun createCompanyModels(companies: List<InvolvedCompany>): List<GameInfoCompanyModel> {
-        if(companies.isEmpty()) return emptyList()
+        if (companies.isEmpty()) return emptyList()
 
         val comparator = compareByDescending(InvolvedCompany::isDeveloper)
             .thenByDescending(InvolvedCompany::isPublisher)
@@ -69,7 +60,6 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
             .sortedWith(comparator)
             .map(::createCompanyModel)
     }
-
 
     override fun createCompanyModel(company: InvolvedCompany): GameInfoCompanyModel {
         val logoImageSize = company.calculateLogoImageSize()
@@ -86,7 +76,6 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
         )
     }
 
-
     private fun InvolvedCompany.calculateLogoImageSize(): Pair<Int, Int> {
         val maxLogoWidth = context.getDimensionPixelSize(R.dimen.game_info_company_logo_view_width)
         val maxLogoHeight = context.getDimensionPixelSize(R.dimen.game_info_company_logo_view_height)
@@ -94,14 +83,14 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
         val logoWidth = company.logo?.width
         val logoHeight = company.logo?.height
 
-        if((logoWidth == null) || (logoHeight == null)) {
+        if ((logoWidth == null) || (logoHeight == null)) {
             return (maxLogoWidth to maxLogoHeight)
         }
 
         val aspectRatio = (logoWidth.toFloat() / logoHeight.toFloat())
         val adjustedWidth = (aspectRatio * maxLogoHeight).roundToInt()
 
-        if(adjustedWidth <= maxLogoWidth) {
+        if (adjustedWidth <= maxLogoWidth) {
             return (adjustedWidth to maxLogoHeight)
         }
 
@@ -111,13 +100,11 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
         return (finalWidth to finalHeight)
     }
 
-
     private fun InvolvedCompany.createLogoUrl(): String? {
         return company.logo?.let { image ->
             igdbImageUrlFactory.createUrl(image, Config(IgdbImageSize.HD, IgdbImageExtension.PNG))
         }
     }
-
 
     private fun InvolvedCompany.createRolesString(): String {
         return buildList {
@@ -130,8 +117,5 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
             separator = COMPANY_ROLE_SEPARATOR,
             transform = stringProvider::getString
         )
-
     }
-
-
 }

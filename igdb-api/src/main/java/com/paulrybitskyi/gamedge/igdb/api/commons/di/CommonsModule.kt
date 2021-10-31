@@ -27,13 +27,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
 import javax.inject.Singleton
+import okhttp3.OkHttpClient
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object CommonsModule {
-
 
     @Provides
     @Singleton
@@ -47,7 +46,6 @@ internal object CommonsModule {
             .build()
     }
 
-
     @Provides
     @IgdbApi
     fun provideApiResultCallAdapterFactory(
@@ -55,7 +53,6 @@ internal object CommonsModule {
     ): ApiResultCallAdapterFactory {
         return ApiResultCallAdapterFactory(errorMessageExtractor)
     }
-
 
     @Provides
     fun provideAuthorizationInterceptor(
@@ -67,6 +64,4 @@ internal object CommonsModule {
             clientId = twitchConstantsProvider.clientId
         )
     }
-
-
 }

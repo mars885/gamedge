@@ -19,6 +19,5 @@ package com.paulrybitskyi.gamedge.data.articles
 import com.paulrybitskyi.gamedge.data.articles.entities.Article
 import com.paulrybitskyi.gamedge.data.articles.entities.ImageType
 
-
 typealias DataArticle = Article
 typealias DataImageType = ImageType

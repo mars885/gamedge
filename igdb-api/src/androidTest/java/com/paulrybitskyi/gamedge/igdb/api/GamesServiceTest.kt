@@ -27,6 +27,7 @@ import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesService
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -36,11 +37,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
 
 @HiltAndroidTest
 internal class GamesServiceTest {
-
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -48,7 +47,6 @@ internal class GamesServiceTest {
     @Inject lateinit var mockWebServer: MockWebServer
     @Inject lateinit var authLocalDataStore: AuthLocalDataStore
     @Inject lateinit var gamesService: GamesService
-
 
     @Before
     fun setup() {
@@ -59,7 +57,6 @@ internal class GamesServiceTest {
             authLocalDataStore.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
         }
     }
-
 
     @Test
     fun http_error_is_returned_when_games_endpoint_returns_bad_request_response() {
@@ -72,7 +69,6 @@ internal class GamesServiceTest {
         }
     }
 
-
     @Test
     fun http_error_with_400_code_is_returned_when_games_endpoint_returns_bad_request_response() {
         runBlocking {
@@ -84,7 +80,6 @@ internal class GamesServiceTest {
             assertThat((error as Error.HttpError).code).isEqualTo(400)
         }
     }
-
 
     @Test
     fun http_error_with_proper_error_message_is_returned_when_games_endpoint_returns_bad_request_response() {
@@ -110,7 +105,6 @@ internal class GamesServiceTest {
         }
     }
 
-
     @Test
     fun http_error_with_unknown_error_message_is_returned_when_games_endpoint_returns_bad_request_response() {
         runBlocking {
@@ -128,7 +122,6 @@ internal class GamesServiceTest {
             assertThat((error as Error.HttpError).message).isEqualTo("Unknown Error: $errorBody")
         }
     }
-
 
     @Test
     fun parsed_credentials_are_returned_when_games_endpoint_returns_successful_response() {
@@ -188,7 +181,6 @@ internal class GamesServiceTest {
         }
     }
 
-
     @Test
     fun unknown_error_is_returned_when_games_endpoint_returns_successful_response_with_no_body() {
         runBlocking {
@@ -199,7 +191,6 @@ internal class GamesServiceTest {
             assertThat(error is Error.UnknownError).isTrue
         }
     }
-
 
     @Test
     fun unknown_error_is_returned_when_games_endpoint_returns_successful_response_with_bad_json() {
@@ -216,7 +207,6 @@ internal class GamesServiceTest {
         }
     }
 
-
     @Test
     fun network_error_is_returned_when_network_is_disconnected_while_fetching_games() {
         runBlocking {
@@ -231,11 +221,8 @@ internal class GamesServiceTest {
         }
     }
 
-
     @After
     fun cleanup() {
         mockWebServer.shutdown()
     }
-
-
 }

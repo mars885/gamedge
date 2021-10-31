@@ -31,10 +31,8 @@ internal class GamesDiscoveryItem(model: GamesDiscoveryItemModel) : AbstractItem
     NoDependencies
 >(model), HasUniqueIdentifier<String> {
 
-
     override val uniqueIdentifier: String
         get() = model.title
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -44,15 +42,13 @@ internal class GamesDiscoveryItem(model: GamesDiscoveryItemModel) : AbstractItem
         return ViewHolder(GamesCategoryPreviewView(parent.context))
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GamesCategoryPreviewView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: GamesDiscoveryItemModel) = with(view) {
             title = model.title
@@ -67,8 +63,5 @@ internal class GamesDiscoveryItem(model: GamesDiscoveryItemModel) : AbstractItem
         fun setOnGameClickListener(onClick: (GamesDiscoveryItemGameModel) -> Unit) {
             view.onGameClicked = { onClick(it.mapToDiscoveryItemGameModel()) }
         }
-
     }
-
-
 }

@@ -32,10 +32,8 @@ class LikedGamesFragment : BaseFragment<
     LikedGamesNavigator
 >(R.layout.fragment_liked_games) {
 
-
     override val viewBinding by viewBinding(FragmentLikedGamesBinding::bind)
     override val viewModel by viewModels<LikedGamesViewModel>()
-
 
     override fun onInit() {
         super.onInit()
@@ -43,12 +41,10 @@ class LikedGamesFragment : BaseFragment<
         initGamesView()
     }
 
-
     private fun initGamesView() = with(viewBinding.gamesView) {
         onGameClicked = viewModel::onGameClicked
         onBottomReached = viewModel::onBottomReached
     }
-
 
     override fun onBindViewModel() {
         super.onBindViewModel()
@@ -56,13 +52,11 @@ class LikedGamesFragment : BaseFragment<
         observeUiState()
     }
 
-
     private fun observeUiState() {
         viewModel.uiState
             .onEach { viewBinding.gamesView.uiState = it }
             .observeIn(this)
     }
-
 
     override fun onLoadData() {
         super.onLoadData()
@@ -70,14 +64,11 @@ class LikedGamesFragment : BaseFragment<
         viewModel.loadData()
     }
 
-
     override fun onRoute(route: Route) {
         super.onRoute(route)
 
-        when(route) {
+        when (route) {
             is LikedGamesRoute.Info -> navigator.goToInfo(route.gameId)
         }
     }
-
-
 }

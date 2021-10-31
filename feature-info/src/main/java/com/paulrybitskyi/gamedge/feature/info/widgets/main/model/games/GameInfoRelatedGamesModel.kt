@@ -24,5 +24,4 @@ internal data class GameInfoRelatedGamesModel(
 
     val hasItems: Boolean
         get() = items.isNotEmpty()
-
 }

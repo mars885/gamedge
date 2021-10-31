@@ -43,9 +43,7 @@ import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
     ArticlesTypeConverter::class
 )
 internal abstract class GamedgeDatabase : RoomDatabase() {
-
     abstract val gamesTable: GamesTable
     abstract val likedGamesTable: LikedGamesTable
     abstract val articlesTable: ArticlesTable
-
 }

@@ -29,5 +29,4 @@ internal interface AuthService {
         @Query("client_secret") clientSecret: String,
         @Query("grant_type") grantType: String
     ): ApiResult<OauthCredentials>
-
 }

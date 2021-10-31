@@ -18,14 +18,12 @@ package com.paulrybitskyi.gamedge.feature.category.widgets
 
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.ItemDependencies
 
-
 internal val DEFAULT_ADAPTER_DEPS = GamesCategoryAdapterDeps(
     itemWidth = 0,
     itemHeight = 0
 )
 
-
 internal data class GamesCategoryAdapterDeps(
     val itemWidth: Int,
     val itemHeight: Int
-): ItemDependencies
+) : ItemDependencies

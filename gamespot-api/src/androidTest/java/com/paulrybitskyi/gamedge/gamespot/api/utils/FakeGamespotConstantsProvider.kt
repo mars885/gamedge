@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.gamespot.api.utils
 
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotConstantsProvider
-import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Inject
+import okhttp3.mockwebserver.MockWebServer
 
 internal class FakeGamespotConstantsProvider @Inject constructor(
     mockWebServer: MockWebServer
@@ -26,5 +26,4 @@ internal class FakeGamespotConstantsProvider @Inject constructor(
 
     override val apiKey: String = "api_key"
     override val apiBaseUrl: String = mockWebServer.url("/").toString()
-
 }

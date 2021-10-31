@@ -33,12 +33,10 @@ import retrofit2.Retrofit
 @InstallIn(SingletonComponent::class)
 internal object ArticlesEndpointModule {
 
-
     @Provides
     fun provideArticlesService(@Endpoint(Endpoint.Type.ARTICLES) retrofit: Retrofit): ArticlesService {
         return retrofit.create(ArticlesService::class.java)
     }
-
 
     @Provides
     @Endpoint(Endpoint.Type.ARTICLES)
@@ -55,6 +53,4 @@ internal object ArticlesEndpointModule {
             .baseUrl(gamespotConstantsProvider.apiBaseUrl)
             .build()
     }
-
-
 }

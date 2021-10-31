@@ -20,9 +20,6 @@ package com.paulrybitskyi.gamedge.feature.dashboard.fragment
 
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 
-
 internal sealed class DashboardRoute : Route {
-
     object Search : DashboardRoute()
-
 }

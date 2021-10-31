@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.core.utils
 
-
 val <T : Number> Pair<T, T>.width: T
     get() = first
 

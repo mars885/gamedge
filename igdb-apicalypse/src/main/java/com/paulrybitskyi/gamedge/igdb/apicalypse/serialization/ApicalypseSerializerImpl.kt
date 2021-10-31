@@ -26,7 +26,6 @@ import java.lang.reflect.ParameterizedType
 
 internal class ApicalypseSerializerImpl : ApicalypseSerializer {
 
-
     override fun serialize(clazz: Class<*>): String {
         checkIfMarkerAnnotationIsPresent(clazz)
 
@@ -38,9 +37,8 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
             )
     }
 
-
     private fun checkIfMarkerAnnotationIsPresent(clazz: Class<*>) {
-        if(!clazz.isAnnotationPresent(ApicalypseClass::class.java)) {
+        if (!clazz.isAnnotationPresent(ApicalypseClass::class.java)) {
             throw IllegalArgumentException(
                 "The provided class, \"${clazz.simpleName}\', does not have the " +
                 "\"${ApicalypseClass::class.simpleName}\" annotation present."
@@ -48,25 +46,22 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
         }
     }
 
-
     private fun Class<*>.fieldSerializers(fieldChain: MutableList<String>): List<FieldSerializer> {
-        if(!shouldBeSerialized()) return listOf()
+        if (!shouldBeSerialized()) return listOf()
 
         return buildList {
-            for(field in declaredFields) {
+            for (field in declaredFields) {
                 field.serializer(fieldChain)?.let(::add)
             }
         }
     }
 
-
     private fun Class<*>.shouldBeSerialized(): Boolean {
         return isAnnotationPresent(ApicalypseClass::class.java)
     }
 
-
     private fun Field.serializer(fieldChain: MutableList<String>): FieldSerializer? {
-        if(!shouldBeSerialized()) return null
+        if (!shouldBeSerialized()) return null
 
         val apicalypseAnnotation = checkNotNull(getAnnotation(Apicalypse::class.java))
         val fieldName = apicalypseAnnotation.name
@@ -86,21 +81,18 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
         return fieldSerializer
     }
 
-
     private fun Field.shouldBeSerialized(): Boolean {
         return isAnnotationPresent(Apicalypse::class.java)
     }
 
-
     private fun checkIfFieldNameIsValid(field: Field, name: String) {
-        if(name.isBlank()) {
+        if (name.isBlank()) {
             throw IllegalArgumentException(
                 "The field \"${field.name}\" of the class \"${field.declaringClass.simpleName}\" " +
                 "is annotated with an invalid name \"$name\"."
             )
         }
     }
-
 
     private fun Field.childSerializers(fieldChain: MutableList<String>): List<FieldSerializer> {
         return when {
@@ -120,15 +112,11 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
         }
     }
 
-
     private fun Class<*>.isGeneric(): Boolean {
         return typeParameters.isNotEmpty()
     }
 
-
     private fun Class<*>.isCollectionGenericType(): Boolean {
         return Collection::class.java.isAssignableFrom(this)
     }
-
-
 }

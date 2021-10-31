@@ -30,13 +30,9 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoHeaderM
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GameInfoHeaderModelFactory {
-
     fun createHeaderModel(game: Game, isLiked: Boolean): GameInfoHeaderModel
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
@@ -47,7 +43,6 @@ internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
     private val ageRatingFormatter: GameAgeRatingFormatter,
     private val categoryFormatter: GameCategoryFormatter
 ) : GameInfoHeaderModelFactory {
-
 
     override fun createHeaderModel(game: Game, isLiked: Boolean): GameInfoHeaderModel {
         return GameInfoHeaderModel(
@@ -64,15 +59,13 @@ internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
         )
     }
 
-
     private fun Game.createBackgroundImageModels(): List<GameHeaderImageModel> {
-        if(artworks.isEmpty()) return listOf(GameHeaderImageModel.DefaultImage)
+        if (artworks.isEmpty()) return listOf(GameHeaderImageModel.DefaultImage)
 
         return igdbImageUrlFactory
             .createUrls(artworks, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_SCREENSHOT))
             .map(GameHeaderImageModel::UrlImage)
     }
-
 
     private fun Game.createCoverImageUrl(): String? {
         return cover?.let { cover ->
@@ -80,30 +73,23 @@ internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
         }
     }
 
-
     private fun Game.formatReleaseDate(): String {
         return releaseDateFormatter.formatReleaseDate(this)
     }
-
 
     private fun Game.formatRating(): String {
         return ratingFormatter.formatRating(totalRating)
     }
 
-
     private fun Game.calculateLikeCount(): String {
         return likeCountCalculator.calculateLikeCount(this).toString()
     }
-
 
     private fun Game.formatCategory(): String {
         return categoryFormatter.formatCategory(category)
     }
 
-
     private fun Game.formatAgeRating(): String {
         return ageRatingFormatter.formatAgeRating(this)
     }
-
-
 }

@@ -23,26 +23,21 @@ import com.paulrybitskyi.gamedge.domain.games.DomainGame
 
 internal class FakeGamesRefreshingThrottlerKeyProvider : GamesRefreshingThrottlerKeyProvider {
 
-
     override fun providePopularGamesKey(pagination: DomainPagination): String {
         return "providePopularGamesKey"
     }
-
 
     override fun provideRecentlyReleasedGamesKey(pagination: DomainPagination): String {
         return "provideRecentlyReleasedGamesKey"
     }
 
-
     override fun provideComingSoonGamesKey(pagination: DomainPagination): String {
         return "provideComingSoonGamesKey"
     }
 
-
     override fun provideMostAnticipatedGamesKey(pagination: DomainPagination): String {
         return "provideMostAnticipatedGamesKey"
     }
-
 
     override fun provideCompanyDevelopedGamesKey(
         company: DomainCompany,
@@ -51,10 +46,7 @@ internal class FakeGamesRefreshingThrottlerKeyProvider : GamesRefreshingThrottle
         return "provideCompanyDevelopedGamesKey"
     }
 
-
     override fun provideSimilarGamesKey(game: DomainGame, pagination: DomainPagination): String {
         return "provideSimilarGamesKey"
     }
-
-
 }

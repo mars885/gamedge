@@ -19,11 +19,7 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.main
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoModel
 
 internal sealed class GameInfoUiState {
-
     object Empty : GameInfoUiState()
-
     object Loading : GameInfoUiState()
-
-    data class Result(val model: GameInfoModel): GameInfoUiState()
-
+    data class Result(val model: GameInfoModel) : GameInfoUiState()
 }

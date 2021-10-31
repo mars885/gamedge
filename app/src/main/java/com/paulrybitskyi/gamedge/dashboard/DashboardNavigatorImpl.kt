@@ -27,10 +27,7 @@ internal class DashboardNavigatorImpl @Inject constructor(
     private val navController: NavController
 ) : DashboardNavigator {
 
-
     override fun goToSearch() {
         navController.navigate(DashboardFragmentDirections.actionSearchFragment())
     }
-
-
 }

@@ -23,7 +23,6 @@ internal class AuthMapper @Inject constructor(
     private val authExpiryTimeCalculator: AuthExpiryTimeCalculator
 ) {
 
-
     fun mapToProtoOauthCredentials(oauthCredentials: DataOauthCredentials): ProtoOauthCredentials {
         return ProtoOauthCredentials.newBuilder()
             .setAccessToken(oauthCredentials.accessToken)
@@ -33,7 +32,6 @@ internal class AuthMapper @Inject constructor(
             .build()
     }
 
-
     fun mapToDataOauthCredentials(oauthCredentials: ProtoOauthCredentials): DataOauthCredentials {
         return DataOauthCredentials(
             accessToken = oauthCredentials.accessToken,
@@ -41,6 +39,4 @@ internal class AuthMapper @Inject constructor(
             tokenTtl = oauthCredentials.tokenTtl
         )
     }
-
-
 }

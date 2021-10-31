@@ -33,7 +33,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object ImageLoadingModule {
 
-
     @Provides
     @Singleton
     fun providePicasso(@ApplicationContext context: Context): Picasso {
@@ -48,6 +47,4 @@ internal object ImageLoadingModule {
             .memoryCache(LruCache(cacheSizeInBytes))
             .build()
     }
-
-
 }

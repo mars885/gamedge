@@ -31,9 +31,7 @@ internal class GameInfoDetailsItem(model: GameInfoDetailsModel) : AbstractItem<
     NoDependencies
 >(model) {
 
-
     override val itemId = GameInfoAdapterItem.DETAILS.id
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -43,15 +41,13 @@ internal class GameInfoDetailsItem(model: GameInfoDetailsModel) : AbstractItem<
         return ViewHolder(GameDetailsView(parent.context))
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameDetailsView
-    ): RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(view) {
 
         fun bind(model: GameInfoDetailsModel) = with(view) {
             genresText = model.genresText
@@ -60,8 +56,5 @@ internal class GameInfoDetailsItem(model: GameInfoDetailsModel) : AbstractItem<
             playerPerspectivesText = model.playerPerspectivesText
             themesText = model.themesText
         }
-
     }
-
-
 }

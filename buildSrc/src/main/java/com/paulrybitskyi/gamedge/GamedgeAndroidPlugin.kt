@@ -26,23 +26,19 @@ import org.gradle.kotlin.dsl.findByType
 
 class GamedgeAndroidPlugin : Plugin<Project> {
 
-
     override fun apply(project: Project) = with(project) {
         configurePlugins()
         configureAndroid()
     }
 
-
     private fun Project.configurePlugins() {
         plugins.apply(PLUGIN_KOTLIN_ANDROID)
     }
-
 
     private fun Project.configureAndroid() {
         configureAndroidCommonInfo()
         configureAndroidApplicationId()
     }
-
 
     private fun Project.configureAndroidCommonInfo() {
         extensions.findByType<BaseExtension>()?.run {
@@ -92,7 +88,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
         }
     }
 
-
     private fun Project.configureAndroidApplicationId() {
         plugins.withId(PLUGIN_ANDROID_APPLICATION) {
             extensions.findByType<BaseAppModuleExtension>()?.run {
@@ -102,6 +97,4 @@ class GamedgeAndroidPlugin : Plugin<Project> {
             }
         }
     }
-
-
 }

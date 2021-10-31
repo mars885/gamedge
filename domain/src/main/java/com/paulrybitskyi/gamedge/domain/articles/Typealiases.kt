@@ -19,6 +19,5 @@ package com.paulrybitskyi.gamedge.domain.articles
 import com.paulrybitskyi.gamedge.domain.articles.entities.Article
 import com.paulrybitskyi.gamedge.domain.articles.entities.ImageType
 
-
 typealias DomainArticle = Article
 typealias DomainImageType = ImageType

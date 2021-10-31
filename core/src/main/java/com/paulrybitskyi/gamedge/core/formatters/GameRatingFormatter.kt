@@ -22,30 +22,22 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
-
 interface GameRatingFormatter {
-
     fun formatRating(rating: Double?): String
-
 }
-
 
 @BindType
 internal class GameRatingFormatterImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GameRatingFormatter {
 
-
     private companion object {
-
-        const val MIN_RATING = 0
-        const val MAX_RATING = 100
-
+        private const val MIN_RATING = 0
+        private const val MAX_RATING = 100
     }
 
-
     override fun formatRating(rating: Double?): String {
-        if(rating == null) {
+        if (rating == null) {
             return stringProvider.getString(R.string.not_available_abbr)
         }
 
@@ -54,6 +46,4 @@ internal class GameRatingFormatterImpl @Inject constructor(
             rating.roundToInt().coerceIn(MIN_RATING, MAX_RATING)
         )
     }
-
-
 }

@@ -22,24 +22,19 @@ import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 interface WebsiteNameProvider {
-
     fun provideWebsiteName(website: Website): String
-
 }
-
 
 @BindType
 internal class WebsiteNameProviderImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : WebsiteNameProvider {
 
-
     @Suppress("ComplexMethod")
     override fun provideWebsiteName(website: Website): String {
         return stringProvider.getString(
-            when(website.category) {
+            when (website.category) {
                 WebsiteCategory.UNKNOWN -> R.string.website_unknown
                 WebsiteCategory.OFFICIAL -> R.string.website_official
                 WebsiteCategory.WIKIA -> R.string.website_wikia
@@ -59,6 +54,4 @@ internal class WebsiteNameProviderImpl @Inject constructor(
             }
         )
     }
-
-
 }

@@ -24,11 +24,8 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-
 @Serializable(with = ReleaseDateCategorySerializer::class)
 internal enum class ReleaseDateCategory(val rawValue: Int) {
-
-
     UNKNOWN(rawValue = -1),
 
     YYYY_MMMM_DD(rawValue = 0),
@@ -41,36 +38,26 @@ internal enum class ReleaseDateCategory(val rawValue: Int) {
 
     TBD(rawValue = 7);
 
-
     internal companion object {
 
         fun Int.asReleaseDateCategory(): ReleaseDateCategory {
             return values().find { it.rawValue == this } ?: UNKNOWN
         }
-
     }
-
-
 }
 
-
 internal object ReleaseDateCategorySerializer : KSerializer<ReleaseDateCategory> {
-
 
     override val descriptor = PrimitiveSerialDescriptor(
         checkNotNull(ReleaseDateCategorySerializer::class.qualifiedName),
         PrimitiveKind.INT
     )
 
-
     override fun serialize(encoder: Encoder, value: ReleaseDateCategory) {
         encoder.encodeInt(value.rawValue)
     }
 
-
     override fun deserialize(decoder: Decoder): ReleaseDateCategory {
         return decoder.decodeInt().asReleaseDateCategory()
     }
-
-
 }

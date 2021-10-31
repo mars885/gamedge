@@ -18,7 +18,12 @@ package com.paulrybitskyi.gamedge.feature.discovery
 
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
@@ -41,7 +46,6 @@ import org.junit.Test
 
 internal class GamesDiscoveryViewModelTest {
 
-
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
@@ -50,7 +54,6 @@ internal class GamesDiscoveryViewModelTest {
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamesDiscoveryViewModel
-
 
     @Before
     fun setup() {
@@ -66,7 +69,6 @@ internal class GamesDiscoveryViewModelTest {
             logger = logger
         )
     }
-
 
     private fun setupUseCases(): GamesDiscoveryUseCases {
         return GamesDiscoveryUseCases(
@@ -97,7 +99,6 @@ internal class GamesDiscoveryViewModelTest {
         )
     }
 
-
     @Test
     fun `Logs error when games observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
@@ -110,7 +111,6 @@ internal class GamesDiscoveryViewModelTest {
         }
     }
 
-
     @Test
     fun `Logs error when games refreshing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
@@ -122,7 +122,6 @@ internal class GamesDiscoveryViewModelTest {
             assertThat(logger.errorMessage).isNotEmpty
         }
     }
-
 
     @Test
     fun `Dispatches toast showing command when games refreshing use case throws error`() {
@@ -140,7 +139,6 @@ internal class GamesDiscoveryViewModelTest {
         }
     }
 
-
     @Test
     fun `Routes to games category screen when more button is clicked`() {
         mainCoroutineRule.runBlockingTest {
@@ -154,7 +152,6 @@ internal class GamesDiscoveryViewModelTest {
             }
         }
     }
-
 
     @Test
     fun `Routes to game info screen when game is clicked`() {
@@ -176,7 +173,6 @@ internal class GamesDiscoveryViewModelTest {
         }
     }
 
-
     private class FakeGamesDiscoveryItemGameModelMapper : GamesDiscoveryItemGameModelMapper {
 
         override fun mapToGameModel(game: DomainGame): GamesDiscoveryItemGameModel {
@@ -186,8 +182,5 @@ internal class GamesDiscoveryViewModelTest {
                 coverUrl = null
             )
         }
-
     }
-
-
 }

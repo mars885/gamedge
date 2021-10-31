@@ -28,11 +28,9 @@ internal class AuthorizationInterceptor(
     private val clientId: String
 ) : Interceptor {
 
-
     private val authorizationHeader by lazy {
         runBlocking { authorizer.buildAuthorizationHeader(AuthorizationType.BEARER) }
     }
-
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val authorizedRequest = chain.request()
@@ -43,6 +41,4 @@ internal class AuthorizationInterceptor(
 
         return chain.proceed(authorizedRequest)
     }
-
-
 }

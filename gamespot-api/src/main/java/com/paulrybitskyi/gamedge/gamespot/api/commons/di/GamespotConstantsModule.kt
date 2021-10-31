@@ -27,9 +27,6 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 internal interface GamespotConstantsModule {
 
-
     @Binds
     fun bindGamespotConstantsProvider(binding: ProdGamespotConstantsProvider): GamespotConstantsProvider
-
-
 }

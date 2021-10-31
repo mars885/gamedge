@@ -19,18 +19,11 @@ package com.paulrybitskyi.gamedge.feature.search
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 
-
 internal sealed class GamesSearchCommand : Command {
-
     object ClearItems : GamesSearchCommand()
-
 }
 
-
 internal sealed class GamesSearchRoute : Route {
-
-    data class Info(val gameId: Int): GamesSearchRoute()
-
-    object Back: GamesSearchRoute()
-
+    data class Info(val gameId: Int) : GamesSearchRoute()
+    object Back : GamesSearchRoute()
 }

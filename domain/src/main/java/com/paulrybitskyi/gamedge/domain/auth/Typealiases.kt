@@ -18,5 +18,4 @@ package com.paulrybitskyi.gamedge.domain.auth
 
 import com.paulrybitskyi.gamedge.domain.auth.entities.OauthCredentials
 
-
 typealias DomainOauthCredentials = OauthCredentials

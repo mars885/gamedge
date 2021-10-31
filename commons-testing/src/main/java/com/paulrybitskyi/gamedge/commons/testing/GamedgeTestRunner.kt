@@ -23,7 +23,6 @@ import dagger.hilt.android.testing.HiltTestApplication
 
 class GamedgeTestRunner : AndroidJUnitRunner() {
 
-
     override fun newApplication(
         classLoader: ClassLoader,
         className: String,
@@ -35,6 +34,4 @@ class GamedgeTestRunner : AndroidJUnitRunner() {
             context
         )
     }
-
-
 }

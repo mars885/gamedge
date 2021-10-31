@@ -24,15 +24,12 @@ import org.junit.Test
 
 internal class GamespotErrorMessageExtractorTest {
 
-
     private lateinit var SUT: GamespotErrorMessageExtractor
-
 
     @Before
     fun setup() {
         SUT = GamespotErrorMessageExtractor(Json)
     }
-
 
     @Test
     fun `Extracts error message successfully`() {
@@ -51,12 +48,10 @@ internal class GamespotErrorMessageExtractorTest {
         assertThat(SUT.extract(responseBody)).isEqualTo("Invalid API Key")
     }
 
-
     @Test
     fun `Returns unknown error's message when response body is not json`() {
         assertThat(SUT.extract("hello there")).isNotEmpty
     }
-
 
     @Test
     fun `Returns unknown error's message when response body does not have message field`() {
@@ -73,6 +68,4 @@ internal class GamespotErrorMessageExtractorTest {
 
         assertThat(SUT.extract(responseBody)).isNotEmpty
     }
-
-
 }

@@ -25,26 +25,22 @@ import com.paulrybitskyi.gamedge.core.utils.toMillis
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import org.assertj.core.api.Assertions.*
-import org.junit.Before
-import org.junit.Test
 import java.time.LocalDateTime
 import java.time.Month
 import java.time.ZoneId
-
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.Before
+import org.junit.Test
 
 private const val RELATIVE_DATE = "relative_date"
 
-
 internal class ArticlePublicationDateFormatterImplTest {
-
 
     @MockK private lateinit var relativeDateFormatter: RelativeDateFormatter
     @MockK private lateinit var timeProvider: TimeProvider
     @MockK private lateinit var timeFormatProvider: TimeFormatProvider
 
     private lateinit var SUT: ArticlePublicationDateFormatterImpl
-
 
     @Before
     fun setup() {
@@ -59,7 +55,6 @@ internal class ArticlePublicationDateFormatterImplTest {
         every { relativeDateFormatter.formatRelativeDate(any()) } returns RELATIVE_DATE
     }
 
-
     @Test
     fun `Formats pub date in relative format`() {
         val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
@@ -69,7 +64,6 @@ internal class ArticlePublicationDateFormatterImplTest {
 
         assertThat(SUT.formatPublicationDate(timestamp)).isEqualTo(RELATIVE_DATE)
     }
-
 
     @Test
     fun `Formats pub date in absolute 24 hours format without year`() {
@@ -82,7 +76,6 @@ internal class ArticlePublicationDateFormatterImplTest {
         assertThat(SUT.formatPublicationDate(timestamp)).isEqualTo("Mar 2, 1:15")
     }
 
-
     @Test
     fun `Formats pub date in absolute 24 hours format with year`() {
         val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
@@ -93,7 +86,6 @@ internal class ArticlePublicationDateFormatterImplTest {
 
         assertThat(SUT.formatPublicationDate(timestamp)).isEqualTo("Mar 4, 2020, 1:15")
     }
-
 
     @Test
     fun `Formats pub date in absolute 12 hours format without year`() {
@@ -106,7 +98,6 @@ internal class ArticlePublicationDateFormatterImplTest {
         assertThat(SUT.formatPublicationDate(timestamp)).isEqualTo("Mar 2, 1:15 AM")
     }
 
-
     @Test
     fun `Formats pub date in absolute 12 hours format with year`() {
         val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
@@ -117,6 +108,4 @@ internal class ArticlePublicationDateFormatterImplTest {
 
         assertThat(SUT.formatPublicationDate(timestamp)).isEqualTo("Mar 4, 2020, 1:15 AM")
     }
-
-
 }

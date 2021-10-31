@@ -23,13 +23,13 @@ import com.paulrybitskyi.gamedge.data.commons.Pagination
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
 import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
 import com.paulrybitskyi.hiltbinder.BindType
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 @BindType
@@ -39,7 +39,6 @@ internal class ArticlesDatabaseDataStore @Inject constructor(
     private val articleMapper: ArticleMapper
 ) : ArticlesLocalDataStore {
 
-
     override suspend fun saveArticles(articles: List<DataArticle>) {
         articlesTable.saveArticles(
             withContext(dispatcherProvider.computation) {
@@ -47,7 +46,6 @@ internal class ArticlesDatabaseDataStore @Inject constructor(
             }
         )
     }
-
 
     override suspend fun observeArticles(pagination: Pagination): Flow<List<DataArticle>> {
         return articlesTable.observeArticles(
@@ -57,12 +55,9 @@ internal class ArticlesDatabaseDataStore @Inject constructor(
         .toDataArticlesFlow()
     }
 
-
     private fun Flow<List<DatabaseArticle>>.toDataArticlesFlow(): Flow<List<DataArticle>> {
         return distinctUntilChanged()
             .map(articleMapper::mapToDataArticles)
             .flowOn(dispatcherProvider.computation)
     }
-
-
 }

@@ -17,7 +17,11 @@
 package com.paulrybitskyi.gamedge.feature.news
 
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_ARTICLES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
@@ -37,7 +41,6 @@ import org.junit.Test
 
 internal class GamingNewsViewModelTest {
 
-
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
@@ -45,7 +48,6 @@ internal class GamingNewsViewModelTest {
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamingNewsViewModel
-
 
     @Before
     fun setup() {
@@ -60,7 +62,6 @@ internal class GamingNewsViewModelTest {
             logger = logger
         )
     }
-
 
     @Test
     fun `Emits correct ui states when loading data`() {
@@ -82,7 +83,6 @@ internal class GamingNewsViewModelTest {
         }
     }
 
-
     @Test
     fun `Logs error when articles observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
@@ -93,7 +93,6 @@ internal class GamingNewsViewModelTest {
             assertThat(logger.errorMessage).isNotEmpty
         }
     }
-
 
     @Test
     fun `Dispatches toast showing command when articles observing use case throws error`() {
@@ -107,7 +106,6 @@ internal class GamingNewsViewModelTest {
             }
         }
     }
-
 
     @Test
     fun `Dispatches url opening command when clicking on news item`() {
@@ -132,7 +130,6 @@ internal class GamingNewsViewModelTest {
         }
     }
 
-
     @Test
     fun `Emits correct ui states when refreshing data`() {
         mainCoroutineRule.runBlockingTest {
@@ -152,7 +149,6 @@ internal class GamingNewsViewModelTest {
             }
         }
     }
-
 
     private class FakeGamingNewsUiStateFactory : GamingNewsUiStateFactory {
 
@@ -178,8 +174,5 @@ internal class GamingNewsViewModelTest {
                 }
             )
         }
-
     }
-
-
 }

@@ -22,4 +22,4 @@ import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
 internal class ImageViewerAdapter(
     context: Context
-): AbstractRecyclerViewAdapter<ImageViewerItem, NoDependencies>(context)
+) : AbstractRecyclerViewAdapter<ImageViewerItem, NoDependencies>(context)

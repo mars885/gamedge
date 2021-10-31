@@ -17,22 +17,21 @@
 package com.paulrybitskyi.gamedge.data.auth
 
 import androidx.datastore.core.DataStore
+import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
+import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthExpiryTimeCalculator
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthFileDataStore
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthMapper
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.ProtoOauthCredentials
-import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
-import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
-
 
 private val PROTO_OAUTH_CREDENTIALS = ProtoOauthCredentials.newBuilder()
     .setAccessToken("access_token")
@@ -41,15 +40,12 @@ private val PROTO_OAUTH_CREDENTIALS = ProtoOauthCredentials.newBuilder()
     .setExpirationTime(10_000L)
     .build()
 
-
 internal class AuthFileDataStoreTest {
-
 
     @MockK private lateinit var protoDataStore: DataStore<ProtoOauthCredentials>
     @MockK private lateinit var timestampProvider: TimestampProvider
 
     private lateinit var SUT: AuthFileDataStore
-
 
     @Before
     fun setup() {
@@ -62,7 +58,6 @@ internal class AuthFileDataStoreTest {
         )
     }
 
-
     @Test
     fun `Saves credentials successfully`() {
         runBlockingTest {
@@ -74,7 +69,6 @@ internal class AuthFileDataStoreTest {
         }
     }
 
-
     @Test
     fun `Retrieves credentials successfully`() {
         runBlockingTest {
@@ -83,7 +77,6 @@ internal class AuthFileDataStoreTest {
             assertThat(SUT.getOauthCredentials()).isEqualTo(DATA_OAUTH_CREDENTIALS)
         }
     }
-
 
     @Test
     fun `Retrieves null credentials successfully`() {
@@ -94,7 +87,6 @@ internal class AuthFileDataStoreTest {
         }
     }
 
-
     @Test
     fun `Credentials should not be expired`() {
         runBlockingTest {
@@ -104,7 +96,6 @@ internal class AuthFileDataStoreTest {
             assertThat(SUT.isExpired()).isFalse
         }
     }
-
 
     @Test
     fun `Credentials should be expired`() {
@@ -118,7 +109,6 @@ internal class AuthFileDataStoreTest {
         }
     }
 
-
     @Test
     fun `Credentials are expired if data store is empty`() {
         runBlockingTest {
@@ -127,6 +117,4 @@ internal class AuthFileDataStoreTest {
             assertThat(SUT.isExpired()).isTrue
         }
     }
-
-
 }

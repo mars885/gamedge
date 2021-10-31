@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api.commons
 
-
 internal const val QUERY_PARAM_API_KEY = "api_key"
 internal const val QUERY_PARAM_FORMAT = "format"
 internal const val QUERY_PARAM_FIELDS = "field_list"

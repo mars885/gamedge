@@ -35,7 +35,6 @@ internal class GameCompaniesView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val binding = ViewGameCompaniesBinding.inflate(context.layoutInflater, this)
 
     private lateinit var adapter: GameCompaniesAdapter
@@ -50,18 +49,15 @@ internal class GameCompaniesView @JvmOverloads constructor(
 
     var onCompanyClicked: ((GameCompanyModel) -> Unit)? = null
 
-
     init {
         initCard()
         initRecyclerView(context)
     }
 
-
     private fun initCard() {
         setBackgroundColor(getColor(R.color.game_companies_card_background_color))
         cardElevation = getDimension(R.dimen.game_companies_card_elevation)
     }
-
 
     private fun initRecyclerView(context: Context) = with(binding.recyclerView) {
         disableAnimations()
@@ -70,11 +66,9 @@ internal class GameCompaniesView @JvmOverloads constructor(
         adapter = initAdapter(context)
     }
 
-
     private fun initLayoutManager(context: Context): LinearLayoutManager {
         return LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
-
 
     private fun initAdapter(context: Context): GameCompaniesAdapter {
         return GameCompaniesAdapter(context)
@@ -82,17 +76,13 @@ internal class GameCompaniesView @JvmOverloads constructor(
             .also { adapter = it }
     }
 
-
     private fun bindListener(item: GameCompanyItem, viewHolder: RecyclerView.ViewHolder) {
-        if(viewHolder is GameCompanyItem.ViewHolder) {
+        if (viewHolder is GameCompanyItem.ViewHolder) {
             viewHolder.setOnCompanyClickListener { onCompanyClicked?.invoke(item.model) }
         }
     }
 
-
     private fun List<GameCompanyModel>.toAdapterItems(): List<GameCompanyItem> {
         return map(::GameCompanyItem)
     }
-
-
 }

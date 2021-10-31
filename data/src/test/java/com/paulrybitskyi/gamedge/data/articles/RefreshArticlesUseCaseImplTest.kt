@@ -20,7 +20,10 @@ import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DATA_ARTICLES
+import com.paulrybitskyi.gamedge.commons.testing.DATA_ERROR_UNKNOWN
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.REFRESH_ARTICLES_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.commons.testing.utils.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesDataStores
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesLocalDataStore
@@ -33,16 +36,18 @@ import com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling.Artic
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling.ArticlesRefreshingThrottlerKeyProvider
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.throttling.ArticlesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
 internal class RefreshArticlesUseCaseImplTest {
-
 
     @MockK private lateinit var articlesLocalDataStore: ArticlesLocalDataStore
     @MockK private lateinit var articlesRemoteDataStore: ArticlesRemoteDataStore
@@ -51,7 +56,6 @@ internal class RefreshArticlesUseCaseImplTest {
 
     private lateinit var articleMapper: ArticleMapper
     private lateinit var SUT: RefreshArticlesUseCaseImpl
-
 
     @Before
     fun setup() {
@@ -77,7 +81,6 @@ internal class RefreshArticlesUseCaseImplTest {
         every { keyProvider.provideArticlesKey(any()) } returns "key"
     }
 
-
     @Test
     fun `Emits remote articles when refresh is possible`() {
         runBlockingTest {
@@ -91,7 +94,6 @@ internal class RefreshArticlesUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Does not emit remote articles when refresh is not possible`() {
         runBlockingTest {
@@ -102,7 +104,6 @@ internal class RefreshArticlesUseCaseImplTest {
             }
         }
     }
-
 
     @Test
     fun `Saves remote articles into local data store when refresh is successful`() {
@@ -116,7 +117,6 @@ internal class RefreshArticlesUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Does not save remote articles into local data store when refresh is not possible`() {
         runBlockingTest {
@@ -127,7 +127,6 @@ internal class RefreshArticlesUseCaseImplTest {
             coVerifyNotCalled { articlesLocalDataStore.saveArticles(any()) }
         }
     }
-
 
     @Test
     fun `Does not save remote articles into local data store when refresh is unsuccessful`() {
@@ -141,7 +140,6 @@ internal class RefreshArticlesUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Updates articles last refresh time when refresh is successful`() {
         runBlockingTest {
@@ -154,7 +152,6 @@ internal class RefreshArticlesUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Does not update articles last refresh time when refresh is not possible`() {
         runBlockingTest {
@@ -165,7 +162,6 @@ internal class RefreshArticlesUseCaseImplTest {
             coVerifyNotCalled { throttler.updateArticlesLastRefreshTime(any()) }
         }
     }
-
 
     @Test
     fun `Does not update articles last refresh time when refresh is unsuccessful`() {
@@ -178,6 +174,4 @@ internal class RefreshArticlesUseCaseImplTest {
             coVerifyNotCalled { throttler.updateArticlesLastRefreshTime(any()) }
         }
     }
-
-
 }

@@ -19,7 +19,5 @@ package com.paulrybitskyi.gamedge.feature.dashboard.fragment
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface DashboardNavigator : Navigator {
-
     fun goToSearch()
-
 }

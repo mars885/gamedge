@@ -28,8 +28,8 @@ import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
 import com.paulrybitskyi.gamedge.feature.info.databinding.FragmentGameInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 internal class GameInfoFragment : BaseFragment<
@@ -38,19 +38,16 @@ internal class GameInfoFragment : BaseFragment<
     GameInfoNavigator
 >(R.layout.fragment_game_info) {
 
-
     override val viewBinding by viewBinding(FragmentGameInfoBinding::bind)
     override val viewModel by viewModels<GameInfoViewModel>()
 
     @Inject lateinit var urlOpener: UrlOpener
-
 
     override fun onInit() {
         super.onInit()
 
         initGameInfoView()
     }
-
 
     private fun initGameInfoView() = with(viewBinding.gameInfoView) {
         applyWindowBottomInsetAsMargin()
@@ -66,13 +63,11 @@ internal class GameInfoFragment : BaseFragment<
         onRelatedGameClicked = viewModel::onRelatedGameClicked
     }
 
-
     override fun onBindViewModel() {
         super.onBindViewModel()
 
         observeUiState()
     }
-
 
     private fun observeUiState() {
         viewModel.uiState
@@ -80,40 +75,35 @@ internal class GameInfoFragment : BaseFragment<
             .observeIn(this)
     }
 
-
     override fun onLoadData() {
         super.onLoadData()
 
         viewModel.loadData(requireContext().defaultWindowAnimationDuration())
     }
 
-
     override fun onHandleCommand(command: Command) {
         super.onHandleCommand(command)
 
-        when(command) {
+        when (command) {
             is GameInfoCommand.OpenUrl -> openUrl(command.url)
         }
     }
 
-
     private fun openUrl(url: String) {
-        if(!urlOpener.openUrl(url, requireActivity())) {
+        if (!urlOpener.openUrl(url, requireActivity())) {
             showShortToast(getString(R.string.url_opener_not_found))
         }
     }
 
-
     override fun onRoute(route: Route) {
         super.onRoute(route)
 
-        when(route) {
+        when (route) {
             is GameInfoRoute.ImageViewer -> navigateToImageViewer(route)
             is GameInfoRoute.Info -> navigator.goToInfo(route.gameId)
             is GameInfoRoute.Back -> navigator.goBack()
         }
     }
-
 
     private fun navigateToImageViewer(route: GameInfoRoute.ImageViewer) {
         navigator.goToImageViewer(
@@ -122,6 +112,4 @@ internal class GameInfoFragment : BaseFragment<
             route.imageUrls
         )
     }
-
-
 }

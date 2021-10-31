@@ -104,9 +104,7 @@ internal data class Game(
     val similarGames: List<Int> = listOf(),
 ) {
 
-
     object Schema {
-
         const val ID = "id"
         const val FOLLOWER_COUNT = "follows"
         const val HYPE_COUNT = "hypes"
@@ -133,8 +131,5 @@ internal data class Game(
         const val INVOLVED_COMPANIES = "involved_companies"
         const val WEBSITES = "websites"
         const val SIMILAR_GAMES = "similar_games"
-
     }
-
-
 }

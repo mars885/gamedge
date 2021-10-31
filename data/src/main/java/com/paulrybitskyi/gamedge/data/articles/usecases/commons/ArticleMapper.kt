@@ -22,9 +22,7 @@ import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.DomainImageType
 import javax.inject.Inject
 
-
 internal class ArticleMapper @Inject constructor() {
-
 
     fun mapToDomainArticle(dataArticle: DataArticle): DomainArticle {
         return DomainArticle(
@@ -37,16 +35,12 @@ internal class ArticleMapper @Inject constructor() {
         )
     }
 
-
     private fun Map<DataImageType, String>.toDomainImageUrls(): Map<DomainImageType, String> {
         return mapKeys {
             DomainImageType.valueOf(it.key.name)
         }
     }
-
-
 }
-
 
 internal fun ArticleMapper.mapToDomainArticles(dataArticles: List<DataArticle>): List<DomainArticle> {
     return dataArticles.map(::mapToDomainArticle)

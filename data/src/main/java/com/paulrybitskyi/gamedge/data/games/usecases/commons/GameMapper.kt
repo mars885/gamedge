@@ -56,9 +56,7 @@ import com.paulrybitskyi.gamedge.domain.games.DomainWebsite
 import com.paulrybitskyi.gamedge.domain.games.DomainWebsiteCategory
 import javax.inject.Inject
 
-
 internal class GameMapper @Inject constructor() {
-
 
     fun mapToDomainGame(game: DataGame): DomainGame {
         return DomainGame(
@@ -91,11 +89,9 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun DataCategory.toDomainCategory(): DomainCategory {
         return DomainCategory.valueOf(name)
     }
-
 
     private fun DataImage.toDomainImage(): DomainImage {
         return DomainImage(
@@ -105,11 +101,9 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun List<DataImage>.toDomainImages(): List<DomainImage> {
         return map { it.toDomainImage() }
     }
-
 
     private fun List<DataReleaseDate>.toDomainReleaseDates(): List<DomainReleaseDate> {
         return map {
@@ -121,7 +115,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DataAgeRating>.toDomainAgeRatings(): List<DomainAgeRating> {
         return map {
             DomainAgeRating(
@@ -130,7 +123,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DataVideo>.toDomainVideos(): List<DomainVideo> {
         return map {
@@ -141,7 +133,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DataGenre>.toDomainGenres(): List<DomainGenre> {
         return map {
             DomainGenre(
@@ -149,7 +140,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DataPlatform>.toDomainPlatforms(): List<DomainPlatform> {
         return map {
@@ -160,7 +150,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DataPlayerPerspective>.toDomainPlayerPerspectives(): List<DomainPlayerPerspective> {
         return map {
             DomainPlayerPerspective(
@@ -168,7 +157,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DataTheme>.toDomainThemes(): List<DomainTheme> {
         return map {
@@ -178,7 +166,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DataMode>.toDomainModes(): List<DomainMode> {
         return map {
             DomainMode(
@@ -187,7 +174,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DataKeyword>.toDomainKeywords(): List<DomainKeyword> {
         return map {
             DomainKeyword(
@@ -195,7 +181,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DataInvolvedCompany>.toDomainInvolvedCompanies(): List<DomainInvolvedCompany> {
         return map {
@@ -209,7 +194,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun DataCompany.toDomainCompany(): DomainCompany {
         return DomainCompany(
             id = id,
@@ -220,7 +204,6 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun List<DataWebsite>.toDomainWebsites(): List<DomainWebsite> {
         return map {
             DomainWebsite(
@@ -230,7 +213,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     fun mapToDataGame(game: DomainGame): DataGame {
         return DataGame(
@@ -263,11 +245,9 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun DomainCategory.toDataCategory(): DataCategory {
         return DataCategory.valueOf(name)
     }
-
 
     private fun DomainImage.toDataImage(): DataImage {
         return DataImage(
@@ -277,11 +257,9 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun List<DomainImage>.toDataImages(): List<DataImage> {
         return map { it.toDataImage() }
     }
-
 
     private fun List<DomainReleaseDate>.toDataReleaseDates(): List<DataReleaseDate> {
         return map {
@@ -293,7 +271,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DomainAgeRating>.toDataAgeRatings(): List<DataAgeRating> {
         return map {
             DataAgeRating(
@@ -302,7 +279,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DomainVideo>.toDataVideos(): List<DataVideo> {
         return map {
@@ -313,7 +289,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DomainGenre>.toDataGenres(): List<DataGenre> {
         return map {
             DataGenre(
@@ -321,7 +296,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DomainPlatform>.toDataPlatforms(): List<DataPlatform> {
         return map {
@@ -332,7 +306,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DomainPlayerPerspective>.toDataPlayerPerspectives(): List<DataPlayerPerspective> {
         return map {
             DataPlayerPerspective(
@@ -340,7 +313,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DomainTheme>.toDataThemes(): List<DataTheme> {
         return map {
@@ -350,7 +322,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DomainMode>.toDataModes(): List<DataMode> {
         return map {
             DataMode(
@@ -359,7 +330,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DomainKeyword>.toDataKeywords(): List<DataKeyword> {
         return map {
             DataKeyword(
@@ -367,7 +337,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DomainInvolvedCompany>.toDataInvolvedCompanies(): List<DataInvolvedCompany> {
         return map {
@@ -381,7 +350,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     fun mapToDataCompany(company: DomainCompany): DataCompany {
         return DataCompany(
             id = company.id,
@@ -392,7 +360,6 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun List<DomainWebsite>.toDataWebsites(): List<DataWebsite> {
         return map {
             DataWebsite(
@@ -402,10 +369,7 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
-
 }
-
 
 internal fun GameMapper.mapToDomainGames(dataGames: List<DataGame>): List<DomainGame> {
     return dataGames.map(::mapToDomainGame)

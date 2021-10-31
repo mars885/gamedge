@@ -20,31 +20,33 @@ import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DATA_ERROR_UNKNOWN
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.REFRESH_GAMES_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.commons.testing.utils.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesDataStores
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCaseMappers
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
-import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottlerTools
-import com.paulrybitskyi.gamedge.data.games.usecases.discovery.RefreshComingSoonGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.data.games.discovery.utils.FakeGamesRefreshingThrottlerKeyProvider
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.RefreshGamesUseCaseMappers
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottler
+import com.paulrybitskyi.gamedge.data.games.usecases.commons.throttling.GamesRefreshingThrottlerTools
+import com.paulrybitskyi.gamedge.data.games.usecases.discovery.RefreshComingSoonGamesUseCaseImpl
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
 internal class RefreshComingSoonGamesUseCaseImplTest {
-
 
     @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
     @MockK private lateinit var gamesRemoteDataStore: GamesRemoteDataStore
@@ -52,7 +54,6 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
 
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: RefreshComingSoonGamesUseCaseImpl
-
 
     @Before
     fun setup() {
@@ -76,7 +77,6 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
         )
     }
 
-
     @Test
     fun `Emits remote games when refresh is possible`() {
         runBlockingTest {
@@ -90,7 +90,6 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Does not emit remote games when refresh is not possible`() {
         runBlockingTest {
@@ -101,7 +100,6 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
             }
         }
     }
-
 
     @Test
     fun `Saves remote games into local data store when refresh is successful`() {
@@ -115,7 +113,6 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Does not save remote games into local data store when refresh is not possible`() {
         runBlockingTest {
@@ -126,7 +123,6 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
             coVerifyNotCalled { gamesLocalDataStore.saveGames(any()) }
         }
     }
-
 
     @Test
     fun `Does not save remote games into local data store when refresh is unsuccessful`() {
@@ -140,7 +136,6 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Updates games last refresh time when refresh is successful`() {
         runBlockingTest {
@@ -153,7 +148,6 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Does not update games last refresh time when refresh is not possible`() {
         runBlockingTest {
@@ -164,7 +158,6 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
             coVerifyNotCalled { throttler.updateGamesLastRefreshTime(any()) }
         }
     }
-
 
     @Test
     fun `Does not update games last refresh time when refresh is unsuccessful`() {
@@ -177,6 +170,4 @@ internal class RefreshComingSoonGamesUseCaseImplTest {
             coVerifyNotCalled { throttler.updateGamesLastRefreshTime(any()) }
         }
     }
-
-
 }

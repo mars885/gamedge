@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.database.commons
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-
 private val MIGRATION_FROM_1_TO_2 = object : Migration(1, 2) {
 
     override fun migrate(db: SupportSQLiteDatabase) = with(db) {
@@ -49,9 +48,7 @@ private val MIGRATION_FROM_1_TO_2 = object : Migration(1, 2) {
         execSQL("CREATE INDEX index_games_total_rating ON games(total_rating)")
         execSQL("CREATE INDEX index_games_name ON games(name)")
     }
-
 }
-
 
 internal val MIGRATIONS = arrayOf<Migration>(
     MIGRATION_FROM_1_TO_2

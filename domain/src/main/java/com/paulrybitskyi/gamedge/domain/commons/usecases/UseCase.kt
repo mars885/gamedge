@@ -17,7 +17,5 @@
 package com.paulrybitskyi.gamedge.domain.commons.usecases
 
 interface UseCase<In, Out> {
-
     suspend fun execute(params: In): Out
-
 }

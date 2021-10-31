@@ -24,9 +24,7 @@ internal class ConditionBuilderImpl(
     private val whereClauseBuilderFactory: WhereClauseBuilderFactory
 ) : ConditionBuilder {
 
-
     private val conditionBuilder = StringBuilder()
-
 
     override fun condition(condition: Condition) = apply {
         conditionBuilder
@@ -34,15 +32,11 @@ internal class ConditionBuilderImpl(
             .append(condition.buildCondition())
     }
 
-
     private fun Condition.buildCondition(): String {
         return whereClauseBuilderFactory.newBuilder().apply(this).build()
     }
 
-
     override fun build(): String {
         return conditionBuilder.toString()
     }
-
-
 }

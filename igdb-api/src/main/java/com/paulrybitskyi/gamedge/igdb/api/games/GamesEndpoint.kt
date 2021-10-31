@@ -21,23 +21,14 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 internal interface GamesEndpoint {
-
     suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): ApiResult<List<ApiGame>>
-
     suspend fun getPopularGames(offset: Int, limit: Int): ApiResult<List<ApiGame>>
-
     suspend fun getRecentlyReleasedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>>
-
     suspend fun getComingSoonGames(offset: Int, limit: Int): ApiResult<List<ApiGame>>
-
     suspend fun getMostAnticipatedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>>
-
     suspend fun getGames(gameIds: List<Int>, offset: Int, limit: Int): ApiResult<List<ApiGame>>
-
 }
-
 
 @Singleton
 @BindType
@@ -45,7 +36,6 @@ internal class GamesEndpointImpl @Inject constructor(
     private val gamesService: GamesService,
     private val igdbApiQueryFactory: IgdbApiQueryFactory
 ) : GamesEndpoint {
-
 
     override suspend fun searchGames(
         searchQuery: String,
@@ -61,7 +51,6 @@ internal class GamesEndpointImpl @Inject constructor(
         )
     }
 
-
     override suspend fun getPopularGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
             igdbApiQueryFactory.createPopularGamesRetrievalQuery(
@@ -70,7 +59,6 @@ internal class GamesEndpointImpl @Inject constructor(
             )
         )
     }
-
 
     override suspend fun getRecentlyReleasedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
@@ -81,7 +69,6 @@ internal class GamesEndpointImpl @Inject constructor(
         )
     }
 
-
     override suspend fun getComingSoonGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
             igdbApiQueryFactory.createComingSoonGamesRetrievalQuery(
@@ -91,7 +78,6 @@ internal class GamesEndpointImpl @Inject constructor(
         )
     }
 
-
     override suspend fun getMostAnticipatedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
             igdbApiQueryFactory.createMostAnticipatedGamesRetrievalQuery(
@@ -100,7 +86,6 @@ internal class GamesEndpointImpl @Inject constructor(
             )
         )
     }
-
 
     override suspend fun getGames(
         gameIds: List<Int>,
@@ -115,6 +100,4 @@ internal class GamesEndpointImpl @Inject constructor(
             )
         )
     }
-
-
 }

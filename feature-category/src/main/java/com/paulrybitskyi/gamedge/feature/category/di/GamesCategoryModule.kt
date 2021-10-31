@@ -36,7 +36,6 @@ import dagger.multibindings.IntoMap
 @InstallIn(ActivityRetainedComponent::class)
 internal object GamesCategoryModule {
 
-
     @Provides
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.POPULAR)
@@ -45,7 +44,6 @@ internal object GamesCategoryModule {
     ): ObservableGamesUseCase {
         return observePopularGamesUseCase
     }
-
 
     @Provides
     @IntoMap
@@ -56,7 +54,6 @@ internal object GamesCategoryModule {
         return refreshPopularGamesUseCase
     }
 
-
     @Provides
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.RECENTLY_RELEASED)
@@ -65,7 +62,6 @@ internal object GamesCategoryModule {
     ): ObservableGamesUseCase {
         return observeRecentlyReleasedGamesUseCase
     }
-
 
     @Provides
     @IntoMap
@@ -76,7 +72,6 @@ internal object GamesCategoryModule {
         return refreshRecentlyReleasedGamesUseCase
     }
 
-
     @Provides
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.COMING_SOON)
@@ -85,7 +80,6 @@ internal object GamesCategoryModule {
     ): ObservableGamesUseCase {
         return observeComingSoonGamesUseCase
     }
-
 
     @Provides
     @IntoMap
@@ -96,7 +90,6 @@ internal object GamesCategoryModule {
         return refreshComingSoonGamesUseCase
     }
 
-
     @Provides
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.MOST_ANTICIPATED)
@@ -106,7 +99,6 @@ internal object GamesCategoryModule {
         return observeMostAnticipatedGamesUseCase
     }
 
-
     @Provides
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.MOST_ANTICIPATED)
@@ -115,6 +107,4 @@ internal object GamesCategoryModule {
     ): RefreshableGamesUseCase {
         return refreshMostAnticipatedGamesUseCase
     }
-
-
 }

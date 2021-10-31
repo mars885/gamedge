@@ -28,7 +28,6 @@ import dagger.hilt.android.components.FragmentComponent
 @InstallIn(FragmentComponent::class)
 internal object DashboardModule {
 
-
     @Provides
     fun provideDashboardViewPagerAdapter(
         fragment: Fragment,
@@ -39,6 +38,4 @@ internal object DashboardModule {
             fragmentFactory = fragmentFactory
         )
     }
-
-
 }

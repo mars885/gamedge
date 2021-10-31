@@ -18,7 +18,11 @@ package com.paulrybitskyi.gamedge.database
 
 import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.data.QueryTimestampProvider
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DATA_COMPANY
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAME
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.DATA_PAGINATION
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.database.games.datastores.GameMapper
 import com.paulrybitskyi.gamedge.database.games.datastores.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.database.games.datastores.mapToDatabaseGames
@@ -35,12 +39,10 @@ import org.junit.Test
 
 internal class GamesDatabaseDataStoreTest {
 
-
     @MockK private lateinit var gamesTable: GamesTable
 
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: GamesDatabaseDataStore
-
 
     @Before
     fun setup() {
@@ -55,7 +57,6 @@ internal class GamesDatabaseDataStoreTest {
         )
     }
 
-
     @Test
     fun `Saves games to table successfully`() {
         runBlockingTest {
@@ -64,7 +65,6 @@ internal class GamesDatabaseDataStoreTest {
             coVerify { gamesTable.saveGames(gameMapper.mapToDatabaseGames(DATA_GAMES)) }
         }
     }
-
 
     @Test
     fun `Retrieves game successfully`() {
@@ -77,7 +77,6 @@ internal class GamesDatabaseDataStoreTest {
         }
     }
 
-
     @Test
     fun `Retrieves null instead of game`() {
         runBlockingTest {
@@ -88,7 +87,6 @@ internal class GamesDatabaseDataStoreTest {
             assertThat(SUT.getGame(gameId)).isNull()
         }
     }
-
 
     @Test
     fun `Retrieves company developed games successfully`() {
@@ -102,7 +100,6 @@ internal class GamesDatabaseDataStoreTest {
         }
     }
 
-
     @Test
     fun `Retrieves similar games successfully`() {
         runBlockingTest {
@@ -115,7 +112,6 @@ internal class GamesDatabaseDataStoreTest {
         }
     }
 
-
     @Test
     fun `Searches games successfully`() {
         runBlockingTest {
@@ -126,7 +122,6 @@ internal class GamesDatabaseDataStoreTest {
             assertThat(SUT.searchGames("", DATA_PAGINATION)).isEqualTo(DATA_GAMES)
         }
     }
-
 
     @Test
     fun `Observes popular games successfully`() {
@@ -142,7 +137,6 @@ internal class GamesDatabaseDataStoreTest {
         }
     }
 
-
     @Test
     fun `Observes recently released games successfully`() {
         runBlockingTest {
@@ -156,7 +150,6 @@ internal class GamesDatabaseDataStoreTest {
             }
         }
     }
-
 
     @Test
     fun `Observes coming soon games successfully`() {
@@ -172,7 +165,6 @@ internal class GamesDatabaseDataStoreTest {
         }
     }
 
-
     @Test
     fun `Observes most anticipated games successfully`() {
         runBlockingTest {
@@ -187,7 +179,6 @@ internal class GamesDatabaseDataStoreTest {
         }
     }
 
-
     private class FakeQueryTimestampProvider : QueryTimestampProvider {
 
         override fun getPopularGamesMinReleaseDate(): Long = 500L
@@ -195,8 +186,5 @@ internal class GamesDatabaseDataStoreTest {
         override fun getRecentlyReleasedGamesMaxReleaseDate(): Long = 500L
         override fun getComingSoonGamesMinReleaseDate(): Long = 500L
         override fun getMostAnticipatedGamesMinReleaseDate(): Long = 500L
-
     }
-
-
 }

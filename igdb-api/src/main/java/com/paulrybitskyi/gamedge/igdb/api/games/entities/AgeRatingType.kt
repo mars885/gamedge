@@ -24,11 +24,8 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-
 @Serializable(with = AgeRatingTypeSerializer::class)
 internal enum class AgeRatingType(val rawValue: Int) {
-
-
     UNKNOWN(rawValue = -1),
     THREE(rawValue = 1),
     SEVEN(rawValue = 2),
@@ -43,36 +40,26 @@ internal enum class AgeRatingType(val rawValue: Int) {
     M(rawValue = 11),
     AO(rawValue = 12);
 
-
     internal companion object {
 
         fun Int.asAgeRatingType(): AgeRatingType {
             return values().find { it.rawValue == this } ?: UNKNOWN
         }
-
     }
-
-
 }
 
-
 internal object AgeRatingTypeSerializer : KSerializer<AgeRatingType> {
-
 
     override val descriptor = PrimitiveSerialDescriptor(
         checkNotNull(AgeRatingTypeSerializer::class.qualifiedName),
         PrimitiveKind.INT
     )
 
-
     override fun serialize(encoder: Encoder, value: AgeRatingType) {
         encoder.encodeInt(value.rawValue)
     }
 
-
     override fun deserialize(decoder: Decoder): AgeRatingType {
         return decoder.decodeInt().asAgeRatingType()
     }
-
-
 }

@@ -43,6 +43,7 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkMod
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGameModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -56,11 +57,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-
 
 private const val PARAM_GAME_ID = "game_id"
-
 
 @HiltViewModel
 @Suppress("LongParameterList")
@@ -75,7 +73,6 @@ internal class GameInfoViewModel @Inject constructor(
     private val logger: Logger
 ) : BaseViewModel() {
 
-
     private var isObservingGameData = false
 
     private val gameId = checkNotNull(savedStateHandle.get<Int>(PARAM_GAME_ID))
@@ -87,20 +84,17 @@ internal class GameInfoViewModel @Inject constructor(
     val uiState: StateFlow<GameInfoUiState>
         get() = _uiState
 
-
     fun loadData(resultEmissionDelay: Long) {
         observeGameData(resultEmissionDelay)
     }
 
-
     private fun observeGameData(resultEmissionDelay: Long) {
-        if(isObservingGameData) return
+        if (isObservingGameData) return
 
         viewModelScope.launch {
             observeGameDataInternal(resultEmissionDelay)
         }
     }
-
 
     private suspend fun observeGameDataInternal(resultEmissionDelay: Long) {
         getGame()
@@ -135,19 +129,16 @@ internal class GameInfoViewModel @Inject constructor(
             .collect { _uiState.value = it }
     }
 
-
     private suspend fun getGame(): Flow<Game> {
         return useCases.getGameUseCase
             .execute(GetGameUseCase.Params(gameId))
             .resultOrError()
     }
 
-
     private suspend fun observeGameLikeState(game: Game): Flow<Boolean> {
         return useCases.observeGameLikeStateUseCase
             .execute(ObserveGameLikeStateUseCase.Params(game.id))
     }
-
 
     private suspend fun getCompanyGames(game: Game): Flow<List<Game>> {
         val company = game.developerCompany
@@ -158,14 +149,12 @@ internal class GameInfoViewModel @Inject constructor(
             .execute(GetCompanyDevelopedGamesUseCase.Params(company, relatedGamesUseCasePagination))
     }
 
-
     private suspend fun getSimilarGames(game: Game): Flow<List<Game>> {
-        if(!game.hasSimilarGames) return flowOf(emptyList())
+        if (!game.hasSimilarGames) return flowOf(emptyList())
 
         return useCases.getSimilarGamesUseCase
             .execute(GetSimilarGamesUseCase.Params(game, relatedGamesUseCasePagination))
     }
-
 
     fun onArtworkClicked(position: Int) {
         navigateToImageViewer(
@@ -174,7 +163,6 @@ internal class GameInfoViewModel @Inject constructor(
             gameImageUrlsProvider = gameUrlFactory::createArtworkImageUrls
         )
     }
-
 
     private fun navigateToImageViewer(
         title: String,
@@ -198,11 +186,9 @@ internal class GameInfoViewModel @Inject constructor(
         }
     }
 
-
     fun onBackButtonClicked() {
         route(GameInfoRoute.Back)
     }
-
 
     fun onCoverClicked() {
         navigateToImageViewer(
@@ -215,7 +201,6 @@ internal class GameInfoViewModel @Inject constructor(
         )
     }
 
-
     fun onLikeButtonClicked() {
         viewModelScope.launch {
             useCases.toggleGameLikeStateUseCase
@@ -223,11 +208,9 @@ internal class GameInfoViewModel @Inject constructor(
         }
     }
 
-
     fun onVideoClicked(video: GameInfoVideoModel) {
         openUrl(video.videoUrl)
     }
-
 
     fun onScreenshotClicked(position: Int) {
         navigateToImageViewer(
@@ -237,25 +220,19 @@ internal class GameInfoViewModel @Inject constructor(
         )
     }
 
-
     fun onLinkClicked(link: GameInfoLinkModel) {
         openUrl(link.payload as String)
     }
-
 
     fun onCompanyClicked(company: GameInfoCompanyModel) {
         openUrl(company.websiteUrl)
     }
 
-
     private fun openUrl(url: String) {
         dispatchCommand(GameInfoCommand.OpenUrl(url))
     }
 
-
     fun onRelatedGameClicked(game: GameInfoRelatedGameModel) {
         route(GameInfoRoute.Info(gameId = game.id))
     }
-
-
 }

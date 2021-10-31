@@ -36,7 +36,6 @@ import com.paulrybitskyi.gamedge.database.games.entities.Video
 import com.paulrybitskyi.gamedge.database.games.entities.Website
 import com.paulrybitskyi.gamedge.database.games.entities.WebsiteCategory
 
-
 internal typealias DatabaseGame = Game
 internal typealias DatabaseCategory = Category
 internal typealias DatabaseImage = Image

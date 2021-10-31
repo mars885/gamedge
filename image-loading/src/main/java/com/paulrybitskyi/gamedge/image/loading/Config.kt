@@ -36,7 +36,6 @@ class Config private constructor(
     val onFailure: ((Exception) -> Unit)?
 ) {
 
-
     internal val hasTargetSize: Boolean
         get() = ((targetWidth > 0) && (targetHeight > 0))
 
@@ -45,7 +44,6 @@ class Config private constructor(
 
     internal val hasAtLeastOneResultListener: Boolean
         get() = ((onSuccess != null) || (onFailure != null))
-
 
     class Builder {
 
@@ -123,8 +121,5 @@ class Config private constructor(
                 onFailure = onFailure
             )
         }
-
     }
-
-
 }

@@ -22,8 +22,6 @@ internal enum class DashboardPage(
     val position: Int,
     val menuItemId: Int
 ) {
-
-
     NEWS(
         position = 0,
         menuItemId = R.id.dashboard_bottom_navigation_item_news
@@ -36,7 +34,6 @@ internal enum class DashboardPage(
         position = 2,
         menuItemId = R.id.dashboard_bottom_navigation_item_likes
     );
-
 
     internal companion object {
 
@@ -53,8 +50,5 @@ internal enum class DashboardPage(
                     "Could not find the dashboard page for the specified menu item ID: $this."
                 )
         }
-
     }
-
-
 }

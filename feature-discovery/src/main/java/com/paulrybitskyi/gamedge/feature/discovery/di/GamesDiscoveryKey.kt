@@ -23,15 +23,10 @@ import dagger.MapKey
 @Retention(AnnotationRetention.BINARY)
 annotation class GamesDiscoveryKey(val type: Type) {
 
-
     enum class Type {
-
         POPULAR,
         RECENTLY_RELEASED,
         COMING_SOON,
         MOST_ANTICIPATED
-
     }
-
-
 }

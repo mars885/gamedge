@@ -17,41 +17,32 @@
 package com.paulrybitskyi.gamedge.data.games
 
 import app.cash.turbine.test
-import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import com.paulrybitskyi.gamedge.commons.testing.*
-import com.paulrybitskyi.gamedge.data.commons.DataPagination
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.GET_SIMILAR_GAMES_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.GetSimilarGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
-import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
-import com.paulrybitskyi.gamedge.domain.commons.DomainResult
-import com.paulrybitskyi.gamedge.domain.commons.entities.Error
-import com.paulrybitskyi.gamedge.domain.games.DomainCategory
-import com.paulrybitskyi.gamedge.domain.games.DomainGame
-import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshSimilarGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshSimilarGamesUseCase.Params
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
 internal class GetSimilarGamesUseCaseImplTest {
-
 
     @MockK private lateinit var refreshSimilarGamesUseCase: RefreshSimilarGamesUseCase
     @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
 
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: GetSimilarGamesUseCaseImpl
-
 
     @Before
     fun setup() {
@@ -66,7 +57,6 @@ internal class GetSimilarGamesUseCaseImplTest {
         )
     }
 
-
     @Test
     fun `Emits games that refresh use case successfully emits`() {
         runBlockingTest {
@@ -78,7 +68,6 @@ internal class GetSimilarGamesUseCaseImplTest {
             }
         }
     }
-
 
     @Test
     fun `Emits games from local data store if refresh use case does not emit`() {
@@ -92,6 +81,4 @@ internal class GetSimilarGamesUseCaseImplTest {
             }
         }
     }
-
-
 }

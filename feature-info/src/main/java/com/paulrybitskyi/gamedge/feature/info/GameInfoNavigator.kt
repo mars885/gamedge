@@ -19,11 +19,7 @@ package com.paulrybitskyi.gamedge.feature.info
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface GameInfoNavigator : Navigator {
-
     fun goToImageViewer(title: String?, initialPosition: Int, imageUrls: List<String>)
-
     fun goToInfo(gameId: Int)
-
     fun goBack()
-
 }

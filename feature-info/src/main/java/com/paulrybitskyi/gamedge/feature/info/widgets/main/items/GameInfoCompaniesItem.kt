@@ -28,15 +28,13 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.mapToCompanyModels
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.mapToInfoCompanyModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoCompanyModel
 
-internal class GameInfoCompaniesItem(model: List<GameInfoCompanyModel>): AbstractItem<
+internal class GameInfoCompaniesItem(model: List<GameInfoCompanyModel>) : AbstractItem<
     List<GameInfoCompanyModel>,
     GameInfoCompaniesItem.ViewHolder,
     NoDependencies
 >(model) {
 
-
     override val itemId = GameInfoAdapterItem.COMPANIES.id
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -46,15 +44,13 @@ internal class GameInfoCompaniesItem(model: List<GameInfoCompanyModel>): Abstrac
         return ViewHolder(GameCompaniesView(parent.context))
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameCompaniesView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: List<GameInfoCompanyModel>) {
             view.items = model.mapToCompanyModels()
@@ -63,8 +59,5 @@ internal class GameInfoCompaniesItem(model: List<GameInfoCompanyModel>): Abstrac
         fun setOnCompanyClickListener(onClick: (GameInfoCompanyModel) -> Unit) {
             view.onCompanyClicked = { onClick(it.mapToInfoCompanyModel()) }
         }
-
     }
-
-
 }

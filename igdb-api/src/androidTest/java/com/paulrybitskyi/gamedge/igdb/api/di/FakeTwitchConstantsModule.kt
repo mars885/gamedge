@@ -31,9 +31,6 @@ import dagger.hilt.testing.TestInstallIn
 )
 internal interface FakeTwitchConstantsModule {
 
-
     @Binds
     fun bindAuthConstantsProvider(binding: FakeTwitchConstantsProvider): TwitchConstantsProvider
-
-
 }

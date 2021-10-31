@@ -31,9 +31,7 @@ internal class GameInfoSummaryItem(model: String) : AbstractItem<
     NoDependencies
 >(model) {
 
-
     override val itemId = GameInfoAdapterItem.SUMMARY.id
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -43,21 +41,16 @@ internal class GameInfoSummaryItem(model: String) : AbstractItem<
         return ViewHolder(GameSummaryView(parent.context))
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameSummaryView
-    ): RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(view) {
 
         fun bind(contentText: String) {
             view.contentText = contentText
         }
-
     }
-
-
 }

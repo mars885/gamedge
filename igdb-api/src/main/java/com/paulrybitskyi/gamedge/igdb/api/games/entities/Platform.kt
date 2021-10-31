@@ -32,12 +32,8 @@ internal data class Platform(
     val name: String = "",
 ) {
 
-
     object Schema {
-
         const val ABBREVIATION = "abbreviation"
         const val NAME = "name"
     }
-
-
 }

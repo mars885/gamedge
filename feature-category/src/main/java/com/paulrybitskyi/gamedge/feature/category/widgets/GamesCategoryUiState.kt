@@ -17,11 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
 internal sealed class GamesCategoryUiState {
-
     object Empty : GamesCategoryUiState()
-
     object Loading : GamesCategoryUiState()
-
     data class Result(val items: List<GameCategoryModel>) : GamesCategoryUiState()
-
 }

@@ -47,8 +47,7 @@ internal class GamesCategoryView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): FrameLayout(context, attrs, defStyleAttr) {
-
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val gridSpanCount = getInteger(R.integer.games_category_grid_span_count)
     private val gridItemSpacing = getDimensionPixelSize(R.dimen.games_category_grid_item_spacing)
@@ -73,19 +72,16 @@ internal class GamesCategoryView @JvmOverloads constructor(
     var onGameClicked: ((GameCategoryModel) -> Unit)? = null
     var onBottomReached: (() -> Unit)? = null
 
-
     init {
         initSwipeRefreshLayout()
         initRecyclerView(context)
         initDefaults()
     }
 
-
     private fun initSwipeRefreshLayout() = with(binding.swipeRefreshLayout) {
         setColorSchemeColors(getColor(R.color.games_category_swipe_refresh_color))
         hideSwipeRefresh()
     }
-
 
     private fun initRecyclerView(context: Context) = with(binding.recyclerView) {
         disableChangeAnimations()
@@ -94,14 +90,11 @@ internal class GamesCategoryView @JvmOverloads constructor(
         adapterDeps = initAdapterDeps()
         addItemDecoration(initItemDecorator())
         addOnScrollListener(onBottomReached = { _, _ -> onBottomReached?.invoke() })
-
     }
-
 
     private fun initLayoutManager(context: Context): LinearLayoutManager {
         return GridLayoutManager(context, gridSpanCount)
     }
-
 
     private fun initAdapter(context: Context): GamesCategoryAdapter {
         return GamesCategoryAdapter(context)
@@ -109,13 +102,11 @@ internal class GamesCategoryView @JvmOverloads constructor(
             .also { adapter = it }
     }
 
-
     private fun bindListener(item: GameCategoryItem, viewHolder: RecyclerView.ViewHolder) {
-        if(viewHolder is GameCategoryItem.ViewHolder) {
+        if (viewHolder is GameCategoryItem.ViewHolder) {
             viewHolder.setOnGameClickListener { onGameClicked?.invoke(item.model) }
         }
     }
-
 
     private fun initAdapterDeps(): GamesCategoryAdapterDeps {
         val horizontalTotalSpacing = (gridItemSpacing * (gridSpanCount + 1))
@@ -129,7 +120,6 @@ internal class GamesCategoryView @JvmOverloads constructor(
         )
     }
 
-
     private fun initItemDecorator(): GridSpacingItemDecorator {
         return GridSpacingItemDecorator(
             spacing = gridItemSpacing,
@@ -138,25 +128,21 @@ internal class GamesCategoryView @JvmOverloads constructor(
         )
     }
 
-
     private fun initDefaults() {
         uiState = uiState
     }
-
 
     private fun List<GameCategoryModel>.toAdapterItems(): List<GameCategoryItem> {
         return map(::GameCategoryItem)
     }
 
-
     private fun handleUiStateChanged(newState: GamesCategoryUiState) {
-        when(newState) {
+        when (newState) {
             is GamesCategoryUiState.Empty -> onEmptyUiStateSelected()
             is GamesCategoryUiState.Loading -> onLoadingStateSelected()
             is GamesCategoryUiState.Result -> onResultUiStateSelected(newState)
         }
     }
-
 
     private fun onEmptyUiStateSelected() {
         showInfoView()
@@ -164,9 +150,8 @@ internal class GamesCategoryView @JvmOverloads constructor(
         hideRecyclerView()
     }
 
-
     private fun onLoadingStateSelected() {
-        if(adapterItems.isNotEmpty()) {
+        if (adapterItems.isNotEmpty()) {
             showSwipeRefresh()
         } else {
             showProgressBar()
@@ -174,7 +159,6 @@ internal class GamesCategoryView @JvmOverloads constructor(
             hideRecyclerView()
         }
     }
-
 
     private fun onResultUiStateSelected(uiState: GamesCategoryUiState.Result) {
         adapterItems = uiState.items.toAdapterItems()
@@ -184,63 +168,52 @@ internal class GamesCategoryView @JvmOverloads constructor(
         hideLoadingIndicators()
     }
 
-
     private fun showInfoView() = with(binding.infoView) {
-        if(isVisible) return
+        if (isVisible) return
 
         makeVisible()
         fadeIn()
     }
-
 
     private fun hideInfoView() = with(binding.infoView) {
         makeGone()
         resetAnimation()
     }
 
-
     private fun showProgressBar() = with(binding.progressBar) {
         makeVisible()
         fadeIn()
     }
-
 
     private fun hideProgressBar() = with(binding.progressBar) {
         makeGone()
         resetAnimation()
     }
 
-
     private fun showSwipeRefresh() = with(binding.swipeRefreshLayout) {
         isEnabled = true
         isRefreshing = true
     }
-
 
     private fun hideSwipeRefresh() = with(binding.swipeRefreshLayout) {
         isRefreshing = false
         disableAfterAnimationEnds()
     }
 
-
     private fun hideLoadingIndicators() {
         hideProgressBar()
         hideSwipeRefresh()
     }
 
-
     private fun showRecyclerView() = with(binding.recyclerView) {
-        if(isVisible) return
+        if (isVisible) return
 
         makeVisible()
         fadeIn()
     }
 
-
     private fun hideRecyclerView() = with(binding.recyclerView) {
         makeInvisible()
         resetAnimation()
     }
-
-
 }

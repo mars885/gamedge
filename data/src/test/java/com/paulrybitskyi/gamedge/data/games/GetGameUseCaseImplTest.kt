@@ -19,33 +19,27 @@ package com.paulrybitskyi.gamedge.data.games
 import app.cash.turbine.test
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
-import com.paulrybitskyi.gamedge.data.commons.DataPagination
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAME
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.GET_GAME_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.GetGameUseCaseImpl
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
-import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
-import com.paulrybitskyi.gamedge.commons.testing.DATA_GAME
-import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
-import com.paulrybitskyi.gamedge.commons.testing.GET_GAME_USE_CASE_PARAMS
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
 internal class GetGameUseCaseImplTest {
 
-
     @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
 
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: GetGameUseCaseImpl
-
 
     @Before
     fun setup() {
@@ -59,7 +53,6 @@ internal class GetGameUseCaseImplTest {
         )
     }
 
-
     @Test
     fun `Emits game successfully`() {
         runBlockingTest {
@@ -72,7 +65,6 @@ internal class GetGameUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Emits not found error if game ID does not reference existing game`() {
         runBlockingTest {
@@ -84,6 +76,4 @@ internal class GetGameUseCaseImplTest {
             }
         }
     }
-
-
 }

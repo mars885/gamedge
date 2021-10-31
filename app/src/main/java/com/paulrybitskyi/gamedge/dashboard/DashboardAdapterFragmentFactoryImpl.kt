@@ -14,5 +14,4 @@ internal class DashboardAdapterFragmentFactoryImpl @Inject constructor() :
     override fun createNewsFragment() = GamingNewsFragment()
     override fun createDiscoveryFragment() = GamesDiscoveryFragment()
     override fun createLikesFragment() = LikedGamesFragment()
-
 }

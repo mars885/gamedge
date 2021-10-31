@@ -62,7 +62,6 @@ internal class GameInfoView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-
     private val binding = ViewGameInfoBinding.inflate(context.layoutInflater, this)
 
     private lateinit var headerController: GameHeaderController
@@ -88,13 +87,11 @@ internal class GameInfoView @JvmOverloads constructor(
     var onCompanyClicked: ((GameInfoCompanyModel) -> Unit)? = null
     var onRelatedGameClicked: ((GameInfoRelatedGameModel) -> Unit)? = null
 
-
     init {
         initGameHeaderController(context)
         initRecyclerView(context)
         initDefaults()
     }
-
 
     private fun initGameHeaderController(context: Context) {
         GameHeaderController(context, binding, stringProvider)
@@ -118,7 +115,6 @@ internal class GameInfoView @JvmOverloads constructor(
             .also { headerController = it }
     }
 
-
     private fun initRecyclerView(context: Context) = with(binding.recyclerView) {
         disableChangeAnimations()
         layoutManager = initLayoutManager(context)
@@ -126,17 +122,14 @@ internal class GameInfoView @JvmOverloads constructor(
         addItemDecoration(initItemDecorator())
     }
 
-
     private fun initLayoutManager(context: Context): LinearLayoutManager {
         return object : LinearLayoutManager(context) {
 
             override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
                 return RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             }
-
         }
     }
-
 
     private fun initAdapter(context: Context): GameInfoAdapter {
         return GameInfoAdapter(context)
@@ -144,10 +137,9 @@ internal class GameInfoView @JvmOverloads constructor(
             .also { infoAdapter = it }
     }
 
-
     @Suppress("UNUSED_PARAMETER")
     private fun bindListener(item: Item<*, NoDependencies>, viewHolder: RecyclerView.ViewHolder) {
-        when(viewHolder) {
+        when (viewHolder) {
 
             is GameInfoVideosItem.ViewHolder -> with(viewHolder) {
                 setOnVideoClickListener { onVideoClicked?.invoke(it) }
@@ -168,10 +160,8 @@ internal class GameInfoView @JvmOverloads constructor(
             is GameInfoRelatedGamesItem.ViewHolder -> with(viewHolder) {
                 setOnGameClickListener { onRelatedGameClicked?.invoke(it) }
             }
-
         }
     }
-
 
     private fun initItemDecorator(): SpacingItemDecorator {
         return SpacingItemDecorator(
@@ -180,20 +170,17 @@ internal class GameInfoView @JvmOverloads constructor(
         )
     }
 
-
     private fun initDefaults() {
         uiState = uiState
     }
 
-
     private fun handleUiStateChange(newState: GameInfoUiState) {
-        when(newState) {
+        when (newState) {
             is GameInfoUiState.Empty -> onEmptyStateSelected()
             is GameInfoUiState.Loading -> onLoadingStateSelected()
             is GameInfoUiState.Result -> onResultStateSelected(newState)
         }
     }
-
 
     private fun onEmptyStateSelected() {
         showInfoView()
@@ -201,13 +188,11 @@ internal class GameInfoView @JvmOverloads constructor(
         hideMainView()
     }
 
-
     private fun onLoadingStateSelected() {
         showProgressBar()
         hideInfoView()
         hideMainView()
     }
-
 
     private fun onResultStateSelected(uiState: GameInfoUiState.Result) {
         bindModel(uiState.model)
@@ -217,70 +202,59 @@ internal class GameInfoView @JvmOverloads constructor(
         hideProgressBar()
     }
 
-
     private fun bindModel(model: GameInfoModel) {
         headerController.bindModel(model.headerModel)
         adapterItems = model.toAdapterItems()
     }
 
-
     private fun showInfoView() = with(binding.infoView) {
-        if(isVisible) return
+        if (isVisible) return
 
         makeVisible()
         fadeIn()
     }
-
 
     private fun hideInfoView() = with(binding.infoView) {
         makeGone()
         resetAnimation()
     }
 
-
     private fun showProgressBar() = with(binding.progressBar) {
         makeVisible()
     }
-
 
     private fun hideProgressBar() = with(binding.progressBar) {
         makeGone()
     }
 
-
     private fun showMainView() = with(binding.mainView) {
-        if(isVisible) return
+        if (isVisible) return
 
         makeVisible()
         fadeIn()
     }
-
 
     private fun hideMainView() = with(binding.mainView) {
         makeInvisible()
         resetAnimation()
     }
 
-
     private fun GameInfoModel.toAdapterItems(): List<Item<*, NoDependencies>> {
         return buildList {
-            if(hasVideoModels) add(GameInfoVideosItem(videoModels))
-            if(hasScreenshotUrls) add(GameInfoScreenshotsItem(screenshotUrls))
-            if(hasSummary) add(GameInfoSummaryItem(checkNotNull(summary)))
-            if(hasDetailsModel) add(GameInfoDetailsItem(checkNotNull(detailsModel)))
-            if(hasLinkModels) add(GameInfoLinksItem(linkModels))
-            if(hasCompanyModels) add(GameInfoCompaniesItem(companyModels))
-            if(hasOtherCompanyGames) add(GameInfoRelatedGamesItem(checkNotNull(otherCompanyGames)))
-            if(hasSimilarGames) add(GameInfoRelatedGamesItem(checkNotNull(similarGames)))
+            if (hasVideoModels) add(GameInfoVideosItem(videoModels))
+            if (hasScreenshotUrls) add(GameInfoScreenshotsItem(screenshotUrls))
+            if (hasSummary) add(GameInfoSummaryItem(checkNotNull(summary)))
+            if (hasDetailsModel) add(GameInfoDetailsItem(checkNotNull(detailsModel)))
+            if (hasLinkModels) add(GameInfoLinksItem(linkModels))
+            if (hasCompanyModels) add(GameInfoCompaniesItem(companyModels))
+            if (hasOtherCompanyGames) add(GameInfoRelatedGamesItem(checkNotNull(otherCompanyGames)))
+            if (hasSimilarGames) add(GameInfoRelatedGamesItem(checkNotNull(similarGames)))
         }
     }
-
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
         headerController.onAttachedToWindow()
     }
-
-
 }

@@ -19,7 +19,5 @@ package com.paulrybitskyi.gamedge.feature.likes
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface LikedGamesNavigator : Navigator {
-
     fun goToInfo(gameId: Int)
-
 }

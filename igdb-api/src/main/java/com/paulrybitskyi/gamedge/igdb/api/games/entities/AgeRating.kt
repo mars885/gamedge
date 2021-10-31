@@ -32,13 +32,8 @@ internal data class AgeRating(
     val type: AgeRatingType,
 ) {
 
-
     object Schema {
-
         const val CATEGORY = "category"
         const val RATING = "rating"
-
     }
-
-
 }

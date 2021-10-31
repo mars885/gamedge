@@ -17,7 +17,5 @@
 package com.paulrybitskyi.gamedge.data.games
 
 internal object Constants {
-
     const val GAMES_PREFERENCES_NAME = "games"
-
 }

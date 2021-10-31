@@ -20,11 +20,7 @@ package com.paulrybitskyi.gamedge.feature.category
 
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 
-
 internal sealed class GamesCategoryRoute : Route {
-
     data class Info(val gameId: Int) : GamesCategoryRoute()
-
     object Back : GamesCategoryRoute()
-
 }

@@ -22,4 +22,4 @@ import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
 internal class GamingNewsAdapter(
     context: Context
-): AbstractRecyclerViewAdapter<GamingNewsItem, NoDependencies>(context)
+) : AbstractRecyclerViewAdapter<GamingNewsItem, NoDependencies>(context)

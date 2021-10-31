@@ -19,7 +19,5 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface ImageViewerNavigator : Navigator {
-
     fun goBack()
-
 }

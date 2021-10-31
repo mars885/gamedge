@@ -22,19 +22,11 @@ import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
 
 interface GamesRemoteDataStore {
-
     suspend fun searchGames(searchQuery: String, pagination: Pagination): DataResult<List<DataGame>>
-
     suspend fun getPopularGames(pagination: Pagination): DataResult<List<DataGame>>
-
     suspend fun getRecentlyReleasedGames(pagination: Pagination): DataResult<List<DataGame>>
-
     suspend fun getComingSoonGames(pagination: Pagination): DataResult<List<DataGame>>
-
     suspend fun getMostAnticipatedGames(pagination: Pagination): DataResult<List<DataGame>>
-
     suspend fun getCompanyDevelopedGames(company: DataCompany, pagination: Pagination): DataResult<List<DataGame>>
-
     suspend fun getSimilarGames(game: DataGame, pagination: Pagination): DataResult<List<DataGame>>
-
 }

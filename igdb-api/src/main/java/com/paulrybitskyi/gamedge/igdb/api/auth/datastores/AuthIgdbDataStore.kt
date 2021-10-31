@@ -34,12 +34,9 @@ internal class AuthIgdbDataStore @Inject constructor(
     private val errorMapper: ErrorMapper
 ) : AuthRemoteDataStore {
 
-
     override suspend fun getOauthCredentials(): DataResult<OauthCredentials> {
         return authEndpoint
             .getOauthCredentials()
             .mapEither(authMapper::mapToDataOauthCredentials, errorMapper::mapToDataError)
     }
-
-
 }

@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     gradleVersions()
     detekt()
+    ktlint()
 }
 
 buildscript {
@@ -47,11 +48,20 @@ detekt {
 
 allprojects {
     apply(plugin = PLUGIN_DETEKT)
+    apply(plugin = PLUGIN_KTLINT)
 
     repositories {
         mavenCentral()
         google()
         maven { setUrl("https://jitpack.io") }
+    }
+
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        android.set(true)
+        outputToConsole.set(true)
+        reporters {
+            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
+        }
     }
 
     // Without the below block, a build failure was happening when
@@ -86,7 +96,6 @@ subprojects {
             correctErrorTypes = true
         }
     }
-
 }
 
 tasks {

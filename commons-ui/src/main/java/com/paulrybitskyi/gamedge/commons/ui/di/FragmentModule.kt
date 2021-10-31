@@ -28,11 +28,8 @@ import dagger.hilt.android.components.FragmentComponent
 @InstallIn(FragmentComponent::class)
 internal object FragmentModule {
 
-
     @Provides
     fun provideNavController(fragment: Fragment): NavController {
         return fragment.navController
     }
-
-
 }

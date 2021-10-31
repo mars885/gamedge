@@ -22,13 +22,10 @@ import com.paulrybitskyi.hiltbinder.BindType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-
 interface UserAgentProvider {
 
     fun getUserAgent(): String
-
 }
-
 
 @BindType
 internal class UserAgentProviderImpl @Inject constructor(
@@ -36,14 +33,13 @@ internal class UserAgentProviderImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : UserAgentProvider {
 
-
     override fun getUserAgent(): String {
         val appName = stringProvider.getString(R.string.app_name)
         val versionName = getVersionName()
         val userAgent = buildString {
             append(appName)
 
-            if(versionName != null) {
+            if (versionName != null) {
                 append("/$versionName")
             }
         }
@@ -51,12 +47,9 @@ internal class UserAgentProviderImpl @Inject constructor(
         return userAgent
     }
 
-
     private fun getVersionName(): String? {
         return context.packageManager
             .getPackageInfo(context.packageName, 0)
             ?.versionName
     }
-
-
 }

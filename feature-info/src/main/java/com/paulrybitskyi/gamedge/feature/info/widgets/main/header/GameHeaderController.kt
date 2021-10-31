@@ -44,7 +44,6 @@ internal class GameHeaderController(
     private val stringProvider: StringProvider
 ) {
 
-
     private val pageIndicatorTopMargin = context.getDimensionPixelSize(R.dimen.game_info_header_page_indicator_margin)
 
     private var areWindowInsetsApplied = false
@@ -119,7 +118,6 @@ internal class GameHeaderController(
     var onCoverClicked: (() -> Unit)? = null
     var onLikeButtonClicked: (() -> Unit)? = null
 
-
     init {
         initMotionLayout()
         initArtworksView()
@@ -127,7 +125,6 @@ internal class GameHeaderController(
         initCoverView()
         initLikeButton()
     }
-
 
     private fun initMotionLayout() {
         // Fixes a weird behavior where interacting with one UI element actually
@@ -140,16 +137,14 @@ internal class GameHeaderController(
         initMotionLayoutInsets()
     }
 
-
     private fun initMotionLayoutListener() {
         binding.mainView.addTransitionListener(
             onTransitionTrigger = { triggerId, positive, _ -> onTransitionTrigger(triggerId, positive) }
         )
     }
 
-
     private fun onTransitionTrigger(triggerId: Int, positive: Boolean) {
-        when(triggerId) {
+        when (triggerId) {
 
             R.id.configureArtworks -> {
                 binding.artworksView.isScrollingEnabled = !positive
@@ -157,9 +152,8 @@ internal class GameHeaderController(
             }
 
             R.id.trimFirstTitle -> {
-                binding.firstTitleTv.ellipsize = (if(positive) TextUtils.TruncateAt.END else null)
+                binding.firstTitleTv.ellipsize = (if (positive) TextUtils.TruncateAt.END else null)
             }
-
         }
     }
 
@@ -178,7 +172,7 @@ internal class GameHeaderController(
             // for some reason. Combining this all creates a sluggish user experience
             // and cripples any animations that may be running. To mitigate this,
             // we apply insets only one time and exit in all other cases.
-            if(areWindowInsetsApplied) {
+            if (areWindowInsetsApplied) {
                 return@doOnApplyWindowInsets
             } else {
                 areWindowInsetsApplied = true
@@ -192,7 +186,7 @@ internal class GameHeaderController(
                     (pageIndicatorTopMargin + insets.systemWindowInsetTop)
                 )
 
-                if(id == R.id.collapsed) {
+                if (id == R.id.collapsed) {
                     val toolbarHeight = getDimensionPixelSize(R.dimen.toolbar_height)
                     val statusBarHeight = insets.systemWindowInsetTop
                     val totalHeight = (toolbarHeight + statusBarHeight)
@@ -204,15 +198,13 @@ internal class GameHeaderController(
         }
     }
 
-
     private fun initArtworksView() = with(binding.artworksView) {
         onArtworkChanged = ::updateArtworkPageIndicator
         onArtworkClicked = { this@GameHeaderController.onArtworkClicked?.invoke(it) }
     }
 
-
     private fun updateArtworkPageIndicator(newPosition: Int) {
-        if(!isPageIndicatorEnabled) return
+        if (!isPageIndicatorEnabled) return
 
         val oneIndexedPosition = (newPosition + 1)
         val totalCount = binding.artworksView.artworkModels.size
@@ -228,11 +220,9 @@ internal class GameHeaderController(
         }
     }
 
-
     private fun initBackButton() = with(binding.backBtnIv) {
         onClick { onBackButtonClicked?.invoke() }
     }
-
 
     private fun initCoverView() = with(binding.coverView) {
         cardElevation = getDimension(R.dimen.game_info_header_backdrop_elevation)
@@ -240,14 +230,12 @@ internal class GameHeaderController(
         onClick { onCoverClicked?.invoke() }
     }
 
-
     private fun initLikeButton() {
         binding.likeBtn.onClick { onLikeButtonClicked?.invoke() }
     }
 
-
     private fun disableScrimConstraintIfNeeded() {
-        if(!hasDefaultBackgroundImage) return
+        if (!hasDefaultBackgroundImage) return
 
         binding.mainView.updateConstraintSets { _, constraintSet ->
             constraintSet.clear(R.id.artworksScrimView)
@@ -256,16 +244,15 @@ internal class GameHeaderController(
         binding.artworksScrimView.makeGone()
     }
 
-
     private fun onTitleChanged(oldTitle: String, newTitle: String) {
-        if((oldTitle == newTitle) || newTitle.isBlank()) return
+        if ((oldTitle == newTitle) || newTitle.isBlank()) return
 
         val firstTitleTv = binding.firstTitleTv
         val secondTitleTv = binding.secondTitleTv
 
         firstTitleTv.text = newTitle
         firstTitleTv.doOnPreDraw {
-            if(firstTitleTv.lineCount == 1) {
+            if (firstTitleTv.lineCount == 1) {
                 isSecondTitleVisible = false
             } else {
                 val firstTitleWidth = firstTitleTv.width.toFloat()
@@ -277,32 +264,30 @@ internal class GameHeaderController(
         }
     }
 
-
     fun bindModel(model: GameInfoHeaderModel) {
         coverImageUrl = model.coverImageUrl
 
-        if(isLiked != model.isLiked) {
+        if (isLiked != model.isLiked) {
             isLiked = model.isLiked
         } else {
             // See onAttachedToWindow method's comment. This crutch is exactly like that,
             // with the only difference is that icon resets its state when pressing home
             // button and then coming back.
-            if(isLiked) {
+            if (isLiked) {
                 isLiked = false
                 isLiked = true
             }
         }
 
-        if(backgroundImageModels != model.backgroundImageModels) backgroundImageModels = model.backgroundImageModels
-        if(title != model.title) title = model.title
-        if(releaseDate != model.releaseDate) releaseDate = model.releaseDate
-        if(developerName != model.developerName) developerName = model.developerName
-        if(rating != model.rating) rating = model.rating
-        if(likeCount != model.likeCount) likeCount = model.likeCount
-        if(ageRating != model.ageRating) ageRating = model.ageRating
-        if(gameCategory != model.gameCategory) gameCategory = model.gameCategory
+        if (backgroundImageModels != model.backgroundImageModels) backgroundImageModels = model.backgroundImageModels
+        if (title != model.title) title = model.title
+        if (releaseDate != model.releaseDate) releaseDate = model.releaseDate
+        if (developerName != model.developerName) developerName = model.developerName
+        if (rating != model.rating) rating = model.rating
+        if (likeCount != model.likeCount) likeCount = model.likeCount
+        if (ageRating != model.ageRating) ageRating = model.ageRating
+        if (gameCategory != model.gameCategory) gameCategory = model.gameCategory
     }
-
 
     fun onAttachedToWindow() {
         // This is a crutch solution to fix a very strange bug, where a user likes a game,
@@ -310,13 +295,11 @@ internal class GameHeaderController(
         // button resets its icon from a filled heart to an empty heart. To fix it, when
         // the user comes back and this view gets reattached to the window, we are asking
         // the button to reset its state and then go to the liked state again.
-        if(isLiked) {
+        if (isLiked) {
             binding.likeBtn.postAction {
                 isLiked = false
                 isLiked = true
             }
         }
     }
-
-
 }

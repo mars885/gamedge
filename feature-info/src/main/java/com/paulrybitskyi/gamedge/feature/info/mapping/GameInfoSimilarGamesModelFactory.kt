@@ -27,13 +27,9 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoR
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GameInfoSimilarGamesModelFactory {
-
     fun createSimilarGamesModel(similarGames: List<Game>): GameInfoRelatedGamesModel?
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoSimilarGamesModelFactoryImpl @Inject constructor(
@@ -41,9 +37,8 @@ internal class GameInfoSimilarGamesModelFactoryImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory
 ) : GameInfoSimilarGamesModelFactory {
 
-
     override fun createSimilarGamesModel(similarGames: List<Game>): GameInfoRelatedGamesModel? {
-        if(similarGames.isEmpty()) return null
+        if (similarGames.isEmpty()) return null
 
         return GameInfoRelatedGamesModel(
             type = GameInfoRelatedGamesType.SIMILAR_GAMES,
@@ -51,7 +46,6 @@ internal class GameInfoSimilarGamesModelFactoryImpl @Inject constructor(
             items = similarGames.toRelatedGameModels()
         )
     }
-
 
     private fun List<Game>.toRelatedGameModels(): List<GameInfoRelatedGameModel> {
         return map {
@@ -64,6 +58,4 @@ internal class GameInfoSimilarGamesModelFactoryImpl @Inject constructor(
             )
         }
     }
-
-
 }

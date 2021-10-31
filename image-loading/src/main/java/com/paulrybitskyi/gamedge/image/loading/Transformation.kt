@@ -23,5 +23,4 @@ interface Transformation {
     val key: String
 
     fun transform(source: Bitmap): Bitmap
-
 }

@@ -17,33 +17,28 @@
 package com.paulrybitskyi.gamedge.data.games.likes
 
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.data.commons.DataPagination
-import com.paulrybitskyi.gamedge.data.games.DataGame
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.OBSERVE_GAMES_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ObserveLikedGamesUseCaseImpl
-import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
-import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
-import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
-import com.paulrybitskyi.gamedge.commons.testing.OBSERVE_GAMES_USE_CASE_PARAMS
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
 internal class ObserveLikedGamesUseCaseImplTest {
 
-
     @MockK private lateinit var likedGamesLocalDataStore: LikedGamesLocalDataStore
 
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: ObserveLikedGamesUseCaseImpl
-
 
     @Before
     fun setup() {
@@ -57,7 +52,6 @@ internal class ObserveLikedGamesUseCaseImplTest {
         )
     }
 
-
     @Test
     fun `Emits liked games successfully`() {
         runBlockingTest {
@@ -69,6 +63,4 @@ internal class ObserveLikedGamesUseCaseImplTest {
             }
         }
     }
-
-
 }

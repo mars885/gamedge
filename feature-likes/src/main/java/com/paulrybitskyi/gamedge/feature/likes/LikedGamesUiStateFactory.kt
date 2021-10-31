@@ -23,24 +23,17 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 interface LikedGamesUiStateFactory {
-
     fun createWithEmptyState(): GamesUiState
-
     fun createWithLoadingState(): GamesUiState
-
     fun createWithResultState(games: List<Game>): GamesUiState
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class LikedGamesUiStateFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider,
     private val likedGameModelMapper: GameModelMapper
 ) : LikedGamesUiStateFactory {
-
 
     override fun createWithEmptyState(): GamesUiState {
         return GamesUiState.Empty(
@@ -49,17 +42,13 @@ internal class LikedGamesUiStateFactoryImpl @Inject constructor(
         )
     }
 
-
     override fun createWithLoadingState(): GamesUiState {
         return GamesUiState.Loading
     }
 
-
     override fun createWithResultState(games: List<Game>): GamesUiState {
-        if(games.isEmpty()) return createWithEmptyState()
+        if (games.isEmpty()) return createWithEmptyState()
 
         return GamesUiState.Result(games.map(likedGameModelMapper::mapToGameModel))
     }
-
-
 }

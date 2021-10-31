@@ -35,7 +35,6 @@ internal class GameVideosView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val binding = ViewGameVideosBinding.inflate(context.layoutInflater, this)
 
     private lateinit var adapter: GameVideosAdapter
@@ -50,18 +49,15 @@ internal class GameVideosView @JvmOverloads constructor(
 
     var onVideoClicked: ((GameVideoModel) -> Unit)? = null
 
-
     init {
         initCard()
         initRecyclerView(context)
     }
 
-
     private fun initCard() {
         setBackgroundColor(getColor(R.color.game_videos_card_background_color))
         cardElevation = getDimension(R.dimen.game_videos_card_elevation)
     }
-
 
     private fun initRecyclerView(context: Context) = with(binding.recyclerView) {
         disableAnimations()
@@ -70,11 +66,9 @@ internal class GameVideosView @JvmOverloads constructor(
         adapter = initAdapter(context)
     }
 
-
     private fun initLayoutManager(context: Context): LinearLayoutManager {
         return LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
-
 
     private fun initAdapter(context: Context): GameVideosAdapter {
         return GameVideosAdapter(context)
@@ -82,17 +76,13 @@ internal class GameVideosView @JvmOverloads constructor(
             .also { adapter = it }
     }
 
-
     private fun bindListener(item: GameVideoItem, viewHolder: RecyclerView.ViewHolder) {
-        if(viewHolder is GameVideoItem.ViewHolder) {
+        if (viewHolder is GameVideoItem.ViewHolder) {
             viewHolder.setOnVideoClickListener { onVideoClicked?.invoke(item.model) }
         }
     }
 
-
     private fun List<GameVideoModel>.toAdapterItems(): List<GameVideoItem> {
         return map(::GameVideoItem)
     }
-
-
 }

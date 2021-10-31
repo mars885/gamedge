@@ -18,16 +18,14 @@ package com.paulrybitskyi.gamedge.core
 
 import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
 internal class GameRatingFormatterImplTest {
 
-
     private lateinit var stringProvider: FakeStringProvider
     private lateinit var SUT: GameRatingFormatterImpl
-
 
     @Before
     fun setup() {
@@ -35,14 +33,12 @@ internal class GameRatingFormatterImplTest {
         SUT = GameRatingFormatterImpl(stringProvider)
     }
 
-
     @Test
     fun `Returns not available string when rating is null`() {
         SUT.formatRating(null)
 
         assertThat(stringProvider.isRatingNotAvailable).isTrue
     }
-
 
     @Test
     fun `Returns properly formatted string without coercing rating`() {
@@ -54,7 +50,6 @@ internal class GameRatingFormatterImplTest {
         assertThat(stringProvider.rating).isEqualTo(rating.toInt())
     }
 
-
     @Test
     fun `Returns properly formatted string with rating coerced to min rating`() {
         val rating = -50.0
@@ -65,7 +60,6 @@ internal class GameRatingFormatterImplTest {
         assertThat(stringProvider.rating).isEqualTo(0)
     }
 
-
     @Test
     fun `Returns properly formatted string with rating coerced to max rating`() {
         val rating = 150.0
@@ -75,7 +69,6 @@ internal class GameRatingFormatterImplTest {
         assertThat(stringProvider.isRatingAvailable).isTrue
         assertThat(stringProvider.rating).isEqualTo(100)
     }
-
 
     private class FakeStringProvider : StringProvider {
 
@@ -88,7 +81,7 @@ internal class GameRatingFormatterImplTest {
             isRatingAvailable = (id == R.string.rating_template)
             isRatingNotAvailable = (id == R.string.not_available_abbr)
 
-            if(args.isNotEmpty()) rating = (args.first() as Int)
+            if (args.isNotEmpty()) rating = (args.first() as Int)
 
             return ""
         }
@@ -96,8 +89,5 @@ internal class GameRatingFormatterImplTest {
         override fun getQuantityString(id: Int, quantity: Int, vararg formatArgs: Any): String {
             return ""
         }
-
     }
-
-
 }

@@ -45,7 +45,7 @@ dependencies {
     implementation(deps.commons.ktx)
     implementation(deps.commons.network)
     implementation(deps.commons.windowAnims)
-    
+
     implementation(deps.misc.kotlinResult)
 
     implementation(deps.google.daggerHilt)

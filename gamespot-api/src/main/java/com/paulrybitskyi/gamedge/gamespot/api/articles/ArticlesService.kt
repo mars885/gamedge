@@ -28,5 +28,4 @@ internal interface ArticlesService {
     suspend fun getArticles(
         @QueryMap queryParams: Map<String, String>
     ): ApiResult<Response<Article>>
-
 }

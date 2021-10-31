@@ -35,14 +35,9 @@ internal data class ReleaseDate(
     val category: ReleaseDateCategory,
 ) {
 
-
     object Schema {
-
         const val DATE = "date"
         const val YEAR = "y"
         const val CATEGORY = "category"
-
     }
-
-
 }

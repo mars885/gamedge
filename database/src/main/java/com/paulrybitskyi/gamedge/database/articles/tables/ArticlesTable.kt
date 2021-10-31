@@ -37,5 +37,4 @@ internal interface ArticlesTable {
         """
     )
     fun observeArticles(offset: Int, limit: Int): Flow<List<Article>>
-
 }

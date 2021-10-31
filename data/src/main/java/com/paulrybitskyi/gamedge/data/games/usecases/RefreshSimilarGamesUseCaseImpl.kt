@@ -29,12 +29,12 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshSimilarGamesUseCase.Params
 import com.paulrybitskyi.hiltbinder.BindType
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 @BindType
@@ -45,7 +45,6 @@ internal class RefreshSimilarGamesUseCaseImpl @Inject constructor(
     private val mappers: RefreshGamesUseCaseMappers
 ) : RefreshSimilarGamesUseCase {
 
-
     override suspend fun execute(params: Params): Flow<DomainResult<List<Game>>> {
         val throttlerKey = withContext(dispatcherProvider.computation) {
             throttlerTools.keyProvider.provideSimilarGamesKey(
@@ -55,7 +54,7 @@ internal class RefreshSimilarGamesUseCaseImpl @Inject constructor(
         }
 
         return flow {
-            if(throttlerTools.throttler.canRefreshSimilarGames(throttlerKey)) {
+            if (throttlerTools.throttler.canRefreshSimilarGames(throttlerKey)) {
                 val dataGame = mappers.game.mapToDataGame(params.game)
                 val dataPagination = params.pagination.toDataPagination()
 
@@ -70,6 +69,4 @@ internal class RefreshSimilarGamesUseCaseImpl @Inject constructor(
         .mapResult(mappers.game::mapToDomainGames, mappers.error::mapToDomainError)
         .flowOn(dispatcherProvider.computation)
     }
-
-
 }

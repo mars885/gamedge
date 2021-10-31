@@ -17,11 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.news.widgets
 
 sealed class GamingNewsUiState {
-
     object Empty : GamingNewsUiState()
-
     object Loading : GamingNewsUiState()
-
     data class Result(val items: List<GamingNewsItemModel>) : GamingNewsUiState()
-
 }

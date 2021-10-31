@@ -27,13 +27,9 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 internal interface ArticlesEndpoint {
-
     suspend fun getArticles(offset: Int, limit: Int): ApiResult<List<Article>>
-
 }
-
 
 @Singleton
 @BindType
@@ -41,7 +37,6 @@ internal class ArticlesEndpointImpl @Inject constructor(
     private val articlesService: ArticlesService,
     private val queryParamsFactory: GamespotQueryParamsFactory
 ) : ArticlesEndpoint {
-
 
     override suspend fun getArticles(offset: Int, limit: Int): ApiResult<List<Article>> {
         val queryParams = queryParamsFactory.createArticlesQueryParams {
@@ -52,6 +47,4 @@ internal class ArticlesEndpointImpl @Inject constructor(
         return articlesService.getArticles(queryParams)
             .map(Response<Article>::results)
     }
-
-
 }

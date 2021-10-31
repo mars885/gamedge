@@ -17,9 +17,6 @@
 package com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview
 
 sealed class GamesCategoryPreviewUiState {
-
     object Empty : GamesCategoryPreviewUiState()
-
     data class Result(val items: List<GamesCategoryPreviewItemModel>) : GamesCategoryPreviewUiState()
-
 }

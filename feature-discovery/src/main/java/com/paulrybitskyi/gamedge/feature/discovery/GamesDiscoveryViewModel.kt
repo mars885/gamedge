@@ -33,6 +33,7 @@ import com.paulrybitskyi.gamedge.feature.discovery.mapping.mapToGameModels
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameModel
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -43,7 +44,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class GamesDiscoveryViewModel @Inject constructor(
@@ -54,7 +54,6 @@ class GamesDiscoveryViewModel @Inject constructor(
     private val errorMapper: ErrorMapper,
     private val logger: Logger
 ) : BaseViewModel() {
-
 
     private var isObservingGames = false
     private var isRefreshingGames = false
@@ -67,25 +66,21 @@ class GamesDiscoveryViewModel @Inject constructor(
     val items: StateFlow<List<GamesDiscoveryItemModel>>
         get() = _items
 
-
     init {
         initDiscoveryItemsData()
     }
 
-
     private fun initDiscoveryItemsData() {
         _items.value = GamesDiscoveryCategory.values().map(itemModelFactory::createDefault)
     }
-
 
     fun loadData() {
         observeGames()
         refreshGames()
     }
 
-
     private fun observeGames() {
-        if(isObservingGames) return
+        if (isObservingGames) return
 
         viewModelScope.launch {
             combine(
@@ -100,14 +95,12 @@ class GamesDiscoveryViewModel @Inject constructor(
         }
     }
 
-
     private suspend fun observeGames(category: GamesDiscoveryCategory): Flow<List<GamesDiscoveryItemGameModel>> {
         return useCases.getObservableUseCase(category.toKeyType())
             .execute(observeGamesUseCaseParams)
             .map(itemGameModelMapper::mapToGameModels)
             .flowOn(dispatcherProvider.computation)
     }
-
 
     private fun List<GamesDiscoveryItemModel>.withResultState(
         games: List<List<GamesDiscoveryItemGameModel>>
@@ -117,9 +110,8 @@ class GamesDiscoveryViewModel @Inject constructor(
         }
     }
 
-
     private fun refreshGames() {
-        if(isRefreshingGames) return
+        if (isRefreshingGames) return
 
         viewModelScope.launch {
             combine(
@@ -142,37 +134,29 @@ class GamesDiscoveryViewModel @Inject constructor(
         }
     }
 
-
     private suspend fun refreshGames(category: GamesDiscoveryCategory): Flow<List<Game>> {
         return useCases.getRefreshableUseCase(category.toKeyType())
             .execute(refreshGamesUseCaseParams)
             .resultOrError()
     }
 
-
     private fun List<GamesDiscoveryItemModel>.withVisibleProgressBar(): List<GamesDiscoveryItemModel> {
         return map(itemModelFactory::createCopyWithVisibleProgressBar)
     }
-
 
     private fun List<GamesDiscoveryItemModel>.withHiddenProgressBar(): List<GamesDiscoveryItemModel> {
         return map(itemModelFactory::createCopyWithHiddenProgressBar)
     }
 
-
     fun onCategoryMoreButtonClicked(category: String) {
         route(GamesDiscoveryRoute.Category(category))
     }
-
 
     fun onCategoryGameClicked(item: GamesDiscoveryItemGameModel) {
         route(GamesDiscoveryRoute.Info(gameId = item.id))
     }
 
-
     fun onRefreshRequested() {
         refreshGames()
     }
-
-
 }

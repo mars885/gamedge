@@ -24,6 +24,7 @@ import com.paulrybitskyi.gamedge.igdb.api.auth.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthService
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -33,11 +34,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
 
 @HiltAndroidTest
 internal class AuthServiceTest {
-
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -45,13 +44,11 @@ internal class AuthServiceTest {
     @Inject lateinit var mockWebServer: MockWebServer
     @Inject lateinit var authService: AuthService
 
-
     @Before
     fun setup() {
         hiltRule.inject()
         mockWebServer.startSafe()
     }
-
 
     @Test
     fun http_error_is_returned_when_credentials_endpoint_returns_bad_request_response() {
@@ -64,7 +61,6 @@ internal class AuthServiceTest {
         }
     }
 
-
     @Test
     fun http_error_with_400_code_is_returned_when_credentials_endpoint_returns_bad_request_response() {
         runBlocking {
@@ -76,7 +72,6 @@ internal class AuthServiceTest {
             assertThat((error as Error.HttpError).code).isEqualTo(400)
         }
     }
-
 
     @Test
     fun http_error_with_proper_error_message_is_returned_when_credentials_endpoint_returns_bad_request_response() {
@@ -93,7 +88,6 @@ internal class AuthServiceTest {
             assertThat((error as Error.HttpError).message).isEqualTo("invalid client secret")
         }
     }
-
 
     @Test
     fun http_error_with_unknown_error_message_is_returned_when_credentials_endpoint_returns_bad_request_response() {
@@ -112,7 +106,6 @@ internal class AuthServiceTest {
             assertThat((error as Error.HttpError).message).isEqualTo("Unknown Error: $errorBody")
         }
     }
-
 
     @Test
     fun parsed_credentials_are_returned_when_credentials_endpoint_returns_successful_response() {
@@ -142,7 +135,6 @@ internal class AuthServiceTest {
         }
     }
 
-
     @Test
     fun unknown_error_is_returned_when_credentials_endpoint_returns_successful_response_with_no_body() {
         runBlocking {
@@ -153,7 +145,6 @@ internal class AuthServiceTest {
             assertThat(error is Error.UnknownError).isTrue
         }
     }
-
 
     @Test
     fun unknown_error_is_returned_when_credentials_endpoint_returns_successful_response_with_bad_json() {
@@ -170,7 +161,6 @@ internal class AuthServiceTest {
         }
     }
 
-
     @Test
     fun network_error_is_returned_when_network_is_disconnected_while_fetching_credentials() {
         runBlocking {
@@ -185,11 +175,8 @@ internal class AuthServiceTest {
         }
     }
 
-
     @After
     fun cleanup() {
         mockWebServer.shutdown()
     }
-
-
 }

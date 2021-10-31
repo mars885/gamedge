@@ -37,12 +37,10 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 @InstallIn(SingletonComponent::class)
 internal object GamesEndpointModule {
 
-
     @Provides
     fun provideGamesService(@Endpoint(Endpoint.Type.GAMES) retrofit: Retrofit): GamesService {
         return retrofit.create(GamesService::class.java)
     }
-
 
     @Provides
     @Endpoint(Endpoint.Type.GAMES)
@@ -61,17 +59,13 @@ internal object GamesEndpointModule {
             .build()
     }
 
-
     @Provides
     fun provideApicalypseQueryBuilderFactory(): ApicalypseQueryBuilderFactory {
         return ApicalypseQueryBuilderFactory
     }
 
-
     @Provides
     fun provideApicalypseSerializer(): ApicalypseSerializer {
         return ApicalypseSerializerFactory.create()
     }
-
-
 }

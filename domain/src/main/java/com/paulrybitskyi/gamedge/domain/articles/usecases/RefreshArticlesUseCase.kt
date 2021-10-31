@@ -24,5 +24,4 @@ import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
 interface RefreshArticlesUseCase : ObservableUseCase<RefreshArticlesUseCase.Params, DomainResult<List<Article>>> {
 
     data class Params(val pagination: Pagination = Pagination())
-
 }

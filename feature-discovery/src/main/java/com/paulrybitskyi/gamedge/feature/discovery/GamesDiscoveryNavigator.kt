@@ -19,9 +19,6 @@ package com.paulrybitskyi.gamedge.feature.discovery
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface GamesDiscoveryNavigator : Navigator {
-
     fun goToCategory(category: String)
-
     fun goToInfo(gameId: Int)
-
 }

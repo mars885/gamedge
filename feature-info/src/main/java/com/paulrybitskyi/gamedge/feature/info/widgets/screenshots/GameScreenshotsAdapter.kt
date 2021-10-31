@@ -22,4 +22,4 @@ import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
 internal class GameScreenshotsAdapter(
     context: Context
-): AbstractRecyclerViewAdapter<GameScreenshotItem, NoDependencies>(context)
+) : AbstractRecyclerViewAdapter<GameScreenshotItem, NoDependencies>(context)
