@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("MatchingDeclarationName")
+
 package com.paulrybitskyi.gamedge.feature.news
 
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command

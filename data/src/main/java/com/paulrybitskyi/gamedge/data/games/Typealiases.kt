@@ -16,7 +16,25 @@
 
 package com.paulrybitskyi.gamedge.data.games
 
-import com.paulrybitskyi.gamedge.data.games.entities.*
+import com.paulrybitskyi.gamedge.data.games.entities.AgeRating
+import com.paulrybitskyi.gamedge.data.games.entities.AgeRatingCategory
+import com.paulrybitskyi.gamedge.data.games.entities.AgeRatingType
+import com.paulrybitskyi.gamedge.data.games.entities.Category
+import com.paulrybitskyi.gamedge.data.games.entities.Company
+import com.paulrybitskyi.gamedge.data.games.entities.Game
+import com.paulrybitskyi.gamedge.data.games.entities.Genre
+import com.paulrybitskyi.gamedge.data.games.entities.Image
+import com.paulrybitskyi.gamedge.data.games.entities.InvolvedCompany
+import com.paulrybitskyi.gamedge.data.games.entities.Keyword
+import com.paulrybitskyi.gamedge.data.games.entities.Mode
+import com.paulrybitskyi.gamedge.data.games.entities.Platform
+import com.paulrybitskyi.gamedge.data.games.entities.PlayerPerspective
+import com.paulrybitskyi.gamedge.data.games.entities.ReleaseDate
+import com.paulrybitskyi.gamedge.data.games.entities.ReleaseDateCategory
+import com.paulrybitskyi.gamedge.data.games.entities.Theme
+import com.paulrybitskyi.gamedge.data.games.entities.Video
+import com.paulrybitskyi.gamedge.data.games.entities.Website
+import com.paulrybitskyi.gamedge.data.games.entities.WebsiteCategory
 
 
 typealias DataAgeRating = AgeRating

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("MatchingDeclarationName")
+
 package com.paulrybitskyi.gamedge.feature.likes
 
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route

@@ -21,16 +21,12 @@ import com.paulrybitskyi.gamedge.commons.testing.*
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
-import com.paulrybitskyi.gamedge.core.ErrorMapper
-import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
-import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.*
 import org.junit.Before
@@ -88,7 +84,7 @@ internal class LikedGamesViewModelTest {
     @Test
     fun `Logs error when liked games loading fails`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.loadData()
 
@@ -100,7 +96,7 @@ internal class LikedGamesViewModelTest {
     @Test
     fun `Dispatches toast showing command when liked games loading fails`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 SUT.loadData()

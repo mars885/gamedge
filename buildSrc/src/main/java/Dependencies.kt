@@ -41,6 +41,7 @@ object versions {
     const val kspPlugin = "1.5.31-1.0.0"
     const val navigation = "2.3.5"
     const val daggerHilt = "2.40"
+    const val detektPlugin = "1.18.1"
     const val coroutines = "1.5.2"
     const val room = "2.3.0"
 
@@ -59,6 +60,7 @@ object deps {
         const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
         const val daggerHiltGradle = "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}"
         const val protobuf = "com.google.protobuf:protobuf-gradle-plugin:$protobufPluginVersion"
+        const val detekt = ""
         const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${versions.gradleVersionsPlugin}"
 
     }

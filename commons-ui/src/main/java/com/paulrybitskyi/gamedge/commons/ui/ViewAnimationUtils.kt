@@ -21,7 +21,7 @@ import android.view.animation.DecelerateInterpolator
 
 
 private const val DATA_SET_ANIMATION_DURATION = 500L
-private val DATA_SET_ANIMATION_INTERPOLATOR = DecelerateInterpolator(1.5F)
+private val DATA_SET_ANIMATION_INTERPOLATOR = DecelerateInterpolator(@Suppress("MagicNumber") 1.5F)
 
 
 fun View.fadeIn() {

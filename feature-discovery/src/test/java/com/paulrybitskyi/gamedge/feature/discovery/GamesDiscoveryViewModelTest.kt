@@ -101,7 +101,7 @@ internal class GamesDiscoveryViewModelTest {
     @Test
     fun `Logs error when games observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.loadData()
@@ -115,7 +115,7 @@ internal class GamesDiscoveryViewModelTest {
     fun `Logs error when games refreshing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.loadData()
 
@@ -128,7 +128,7 @@ internal class GamesDiscoveryViewModelTest {
     fun `Dispatches toast showing command when games refreshing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 SUT.loadData()

@@ -25,11 +25,22 @@ import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.view.isVisible
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.endMargin
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getDimension
+import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.commons.ktx.layoutInflater
+import com.paulrybitskyi.commons.ktx.onClick
+import com.paulrybitskyi.commons.ktx.setScale
+import com.paulrybitskyi.commons.ktx.startMargin
 import com.paulrybitskyi.commons.ktx.views.onTextChanged
 import com.paulrybitskyi.gamedge.commons.ui.hideKeyboard
 import com.paulrybitskyi.gamedge.commons.ui.showKeyboard
 import com.paulrybitskyi.gamedge.commons.ui.widgets.databinding.ViewSearchToolbarBinding
+
+
+private const val CLEAR_BUTTON_ANIMATION_DURATION = 100L
+
 
 class SearchToolbar @JvmOverloads constructor(
     context: Context,
@@ -151,7 +162,7 @@ class SearchToolbar @JvmOverloads constructor(
             }
 
             interpolator = LinearInterpolator()
-            duration = 100L
+            duration = CLEAR_BUTTON_ANIMATION_DURATION
         }
     }
 

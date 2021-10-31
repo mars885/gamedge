@@ -38,7 +38,7 @@ internal class CompositeErrorMessageExtractor @Inject constructor(
                 val message = errorMessageExtractor.extract(responseBody)
 
                 if(message.isNotBlank()) return message
-            } catch(error: Throwable) {
+            } catch(ignore: Throwable) {
                 continue
             }
         }

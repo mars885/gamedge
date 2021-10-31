@@ -23,7 +23,17 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.widget.ImageView
 import com.google.android.material.card.MaterialCardView
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.centerX
+import com.paulrybitskyi.commons.ktx.centerY
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getDimension
+import com.paulrybitskyi.commons.ktx.getDrawable
+import com.paulrybitskyi.commons.ktx.hasTransparentPixels
+import com.paulrybitskyi.commons.ktx.isOpaque
+import com.paulrybitskyi.commons.ktx.layoutInflater
+import com.paulrybitskyi.commons.ktx.layoutParamsHeight
+import com.paulrybitskyi.commons.ktx.layoutParamsWidth
+import com.paulrybitskyi.commons.ktx.onClick
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.databinding.ViewGameCompanyBinding
@@ -135,6 +145,7 @@ private class LogoImageTransformation(
 
     private companion object {
 
+        private const val FILL_COLOR_CALCULATION_PIXEL_OFFSET = 10
         private const val TARGET_BITMAP_SCALE_FACTOR = 0.85f
 
     }
@@ -174,8 +185,8 @@ private class LogoImageTransformation(
 
         var pixelColor: Int
 
-        for(x in 10..centerX.toInt()) {
-            for(y in 10..centerY.toInt()) {
+        for(x in FILL_COLOR_CALCULATION_PIXEL_OFFSET..centerX.toInt()) {
+            for(y in FILL_COLOR_CALCULATION_PIXEL_OFFSET..centerY.toInt()) {
                 pixelColor = getPixel(x, y)
 
                 if(pixelColor.isOpaque) return pixelColor

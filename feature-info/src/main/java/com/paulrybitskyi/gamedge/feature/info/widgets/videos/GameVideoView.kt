@@ -20,7 +20,12 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getDimension
+import com.paulrybitskyi.commons.ktx.getDrawable
+import com.paulrybitskyi.commons.ktx.layoutInflater
+import com.paulrybitskyi.commons.ktx.layoutParamsHeight
+import com.paulrybitskyi.commons.ktx.onClick
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.databinding.ViewGameVideoBinding

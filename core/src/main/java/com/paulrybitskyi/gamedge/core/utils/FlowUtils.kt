@@ -16,10 +16,20 @@
 
 package com.paulrybitskyi.gamedge.core.utils
 
-import com.github.michaelbull.result.*
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.map
+import com.github.michaelbull.result.mapEither
+import com.github.michaelbull.result.mapError
 import com.paulrybitskyi.gamedge.domain.commons.DomainException
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import java.io.Serializable
 
 
@@ -28,7 +38,7 @@ data class Tuple4<T1, T2, T3, T4>(
     val second: T2,
     val third: T3,
     val fourth: T4
-) : Serializable
+)
 
 
 data class Tuple5<T1, T2, T3, T4, T5>(
@@ -37,7 +47,7 @@ data class Tuple5<T1, T2, T3, T4, T5>(
     val third: T3,
     val fourth: T4,
     val fifth: T5
-) : Serializable
+)
 
 
 fun <T1, T2> combine(

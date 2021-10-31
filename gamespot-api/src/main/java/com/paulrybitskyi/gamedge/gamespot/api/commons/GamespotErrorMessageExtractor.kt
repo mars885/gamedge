@@ -43,8 +43,8 @@ internal class GamespotErrorMessageExtractor @Inject constructor(
         val errorMessage = errorPrimitive.content
 
         errorMessage
-    } catch(error: Throwable) {
-        (error.message ?: error.javaClass.simpleName)
+    } catch(expected: Throwable) {
+        (expected.message ?: expected.javaClass.simpleName)
     }
 
 

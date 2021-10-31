@@ -86,7 +86,7 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Logs error when articles observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.loadData()
 
@@ -98,7 +98,7 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Dispatches toast showing command when articles observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 SUT.loadData()

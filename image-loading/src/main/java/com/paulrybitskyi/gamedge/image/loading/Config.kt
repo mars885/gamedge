@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.image.loading
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 
+@Suppress("LongParameterList")
 class Config private constructor(
     val shouldCenterInside: Boolean,
     val shouldCenterCrop: Boolean,

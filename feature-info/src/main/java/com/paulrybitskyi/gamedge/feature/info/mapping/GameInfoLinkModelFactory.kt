@@ -62,10 +62,11 @@ internal class GameInfoLinkModelFactoryImpl @Inject constructor(
     }
 
 
+    @Suppress("MagicNumber")
     private val WebsiteCategory.orderPosition: Int
         get() = when(this) {
             WebsiteCategory.UNKNOWN -> -1
-            WebsiteCategory.STEAM -> -0
+            WebsiteCategory.STEAM -> 0
             WebsiteCategory.GOG -> 1
             WebsiteCategory.EPIC_GAMES -> 2
             WebsiteCategory.GOOGLE_PLAY -> 3

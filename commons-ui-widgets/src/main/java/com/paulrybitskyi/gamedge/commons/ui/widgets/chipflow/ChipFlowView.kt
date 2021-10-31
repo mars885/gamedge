@@ -17,7 +17,9 @@
 package com.paulrybitskyi.gamedge.commons.ui.widgets.chipflow
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.BlurMaskFilter
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.AttributeSet
@@ -26,7 +28,12 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.graphics.toRectF
 import com.google.android.material.chip.ChipDrawable
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.applyBounds
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getDimension
+import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.commons.ktx.getDrawable
+import com.paulrybitskyi.commons.ktx.indexOfFirstOrNull
 import com.paulrybitskyi.commons.material.utils.setChipBackgroundColor
 import com.paulrybitskyi.commons.material.utils.setChipBackgroundCornerRadius
 import com.paulrybitskyi.commons.material.utils.setChipIconColor

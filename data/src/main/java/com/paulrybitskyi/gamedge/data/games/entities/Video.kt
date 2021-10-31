@@ -18,5 +18,5 @@ package com.paulrybitskyi.gamedge.data.games.entities
 
 data class Video(
     val id: String,
-    val name: String
+    val name: String,
 )

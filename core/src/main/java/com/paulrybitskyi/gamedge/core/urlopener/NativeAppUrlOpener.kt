@@ -48,7 +48,7 @@ internal class NativeAppUrlOpener @Inject constructor() : UrlOpener {
         return try {
             context.startActivity(intent)
             true
-        } catch(error: Throwable) {
+        } catch(ignore: Throwable) {
             false
         }
     }

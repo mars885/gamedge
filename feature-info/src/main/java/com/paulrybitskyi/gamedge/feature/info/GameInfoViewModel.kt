@@ -44,7 +44,17 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoVideoMo
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGameModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -53,6 +63,7 @@ private const val PARAM_GAME_ID = "game_id"
 
 
 @HiltViewModel
+@Suppress("LongParameterList")
 internal class GameInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val useCases: GameInfoUseCases,

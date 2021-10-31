@@ -165,7 +165,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Logs error when searching games use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.onSearchActionRequested("god of war")
 
@@ -177,7 +177,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Dispatches toast showing command when searching games use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 SUT.onSearchActionRequested("god of war")

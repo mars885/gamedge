@@ -20,7 +20,25 @@ import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.entities.*
+import com.paulrybitskyi.gamedge.domain.games.entities.AgeRating
+import com.paulrybitskyi.gamedge.domain.games.entities.AgeRatingCategory
+import com.paulrybitskyi.gamedge.domain.games.entities.AgeRatingType
+import com.paulrybitskyi.gamedge.domain.games.entities.Category
+import com.paulrybitskyi.gamedge.domain.games.entities.Company
+import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.domain.games.entities.Genre
+import com.paulrybitskyi.gamedge.domain.games.entities.Image
+import com.paulrybitskyi.gamedge.domain.games.entities.InvolvedCompany
+import com.paulrybitskyi.gamedge.domain.games.entities.Keyword
+import com.paulrybitskyi.gamedge.domain.games.entities.Mode
+import com.paulrybitskyi.gamedge.domain.games.entities.Platform
+import com.paulrybitskyi.gamedge.domain.games.entities.PlayerPerspective
+import com.paulrybitskyi.gamedge.domain.games.entities.ReleaseDate
+import com.paulrybitskyi.gamedge.domain.games.entities.ReleaseDateCategory
+import com.paulrybitskyi.gamedge.domain.games.entities.Theme
+import com.paulrybitskyi.gamedge.domain.games.entities.Video
+import com.paulrybitskyi.gamedge.domain.games.entities.Website
+import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 
 
 typealias ObservableGamesUseCase = ObservableUseCase<ObserveGamesUseCaseParams, List<Game>>

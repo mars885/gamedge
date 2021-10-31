@@ -37,6 +37,7 @@ internal object DatabaseModule {
 
     @Provides
     @Singleton
+    @Suppress("SpreadOperator")
     fun provideGamedgeDatabase(
         @ApplicationContext context: Context,
         typeConverters: Set<@JvmSuppressWildcards RoomTypeConverter>
