@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.database.games.entities
 
 internal enum class Category {
-
     UNKNOWN,
     MAIN_GAME,
     DLC,
@@ -27,5 +26,4 @@ internal enum class Category {
     MOD,
     EPISODE,
     SEASON
-
 }

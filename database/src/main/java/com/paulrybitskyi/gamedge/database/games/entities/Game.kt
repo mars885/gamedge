@@ -60,9 +60,7 @@ internal data class Game(
     @ColumnInfo(name = Schema.SIMILAR_GAMES) val similarGames: List<Int>,
 ) {
 
-
     object Schema {
-
         const val TABLE_NAME = "games"
         const val ID = "id"
         const val FOLLOWER_COUNT = "follower_count"
@@ -90,8 +88,5 @@ internal data class Game(
         const val INVOLVED_COMPANIES = "involved_companies"
         const val WEBSITES = "websites"
         const val SIMILAR_GAMES = "similar_games"
-
     }
-
-
 }

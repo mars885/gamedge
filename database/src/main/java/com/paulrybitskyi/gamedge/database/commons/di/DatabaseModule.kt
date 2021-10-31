@@ -34,7 +34,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object DatabaseModule {
 
-
     @Provides
     @Singleton
     @Suppress("SpreadOperator")
@@ -51,6 +50,4 @@ internal object DatabaseModule {
         .addMigrations(*MIGRATIONS)
         .build()
     }
-
-
 }

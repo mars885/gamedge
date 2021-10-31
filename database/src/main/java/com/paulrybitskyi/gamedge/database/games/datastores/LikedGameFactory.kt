@@ -22,19 +22,14 @@ import com.paulrybitskyi.gamedge.database.games.entities.LikedGame
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface LikedGameFactory {
-
     fun createLikedGame(gameId: Int): LikedGame
-
 }
-
 
 @BindType
 internal class LikedGameFactoryImpl @Inject constructor(
     private val timestampProvider: TimestampProvider
 ) : LikedGameFactory {
-
 
     override fun createLikedGame(gameId: Int): LikedGame {
         return LikedGame(
@@ -43,6 +38,4 @@ internal class LikedGameFactoryImpl @Inject constructor(
             likeTimestamp = timestampProvider.getUnixTimestamp()
         )
     }
-
-
 }

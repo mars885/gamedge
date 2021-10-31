@@ -34,18 +34,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
-
 private const val GAME_ID = 100
 private const val ANOTHER_GAME_ID = 110
 
-
 internal class LikedGamesDatabaseDataStoreTest {
-
 
     private lateinit var likedGamesTable: FakeLikedGamesTable
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: LikedGamesDatabaseDataStore
-
 
     @Before
     fun setup() {
@@ -59,7 +55,6 @@ internal class LikedGamesDatabaseDataStoreTest {
         )
     }
 
-
     @Test
     fun `Likes game successfully`() {
         runBlockingTest {
@@ -68,7 +63,6 @@ internal class LikedGamesDatabaseDataStoreTest {
             assertThat(SUT.isGameLiked(GAME_ID)).isTrue
         }
     }
-
 
     @Test
     fun `Unlikes game successfully`() {
@@ -80,14 +74,12 @@ internal class LikedGamesDatabaseDataStoreTest {
         }
     }
 
-
     @Test
     fun `Validates that unliked game is unliked`() {
         runBlockingTest {
             assertThat(SUT.isGameLiked(gameId = ANOTHER_GAME_ID)).isFalse
         }
     }
-
 
     @Test
     fun `Observes game like state successfully`() {
@@ -106,7 +98,6 @@ internal class LikedGamesDatabaseDataStoreTest {
         }
     }
 
-
     @Test
     fun `Observes liked games successfully`() {
         runBlockingTest {
@@ -120,7 +111,6 @@ internal class LikedGamesDatabaseDataStoreTest {
             }
         }
     }
-
 
     private class FakeLikedGamesTable : LikedGamesTable {
 
@@ -146,9 +136,7 @@ internal class LikedGamesDatabaseDataStoreTest {
         override fun observeLikedGames(offset: Int, limit: Int): Flow<List<DatabaseGame>> {
             return flowOf(dbGamesToObserve)
         }
-
     }
-
 
     private class FakeLikedGameFactory : LikedGameFactory {
 
@@ -159,8 +147,5 @@ internal class LikedGamesDatabaseDataStoreTest {
                 likeTimestamp = 500L
             )
         }
-
     }
-
-
 }

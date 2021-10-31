@@ -64,5 +64,4 @@ internal interface LikedGamesTable {
         """
     )
     fun observeLikedGames(offset: Int, limit: Int): Flow<List<Game>>
-
 }

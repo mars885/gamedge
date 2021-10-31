@@ -25,13 +25,13 @@ import com.paulrybitskyi.gamedge.data.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import com.paulrybitskyi.hiltbinder.BindType
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 @BindType
@@ -42,7 +42,6 @@ internal class GamesDatabaseDataStore @Inject constructor(
     private val gameMapper: GameMapper
 ) : GamesLocalDataStore {
 
-
     override suspend fun saveGames(games: List<DataGame>) {
         gamesTable.saveGames(
             withContext(dispatcherProvider.computation) {
@@ -50,7 +49,6 @@ internal class GamesDatabaseDataStore @Inject constructor(
             }
         )
     }
-
 
     override suspend fun getGame(id: Int): DataGame? {
         return gamesTable.getGame(id)
@@ -61,7 +59,6 @@ internal class GamesDatabaseDataStore @Inject constructor(
             }
     }
 
-
     override suspend fun getCompanyDevelopedGames(company: DataCompany, pagination: Pagination): List<DataGame> {
         return gamesTable.getGames(
             ids = company.developedGames,
@@ -71,7 +68,6 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGames()
     }
 
-
     override suspend fun getSimilarGames(game: DataGame, pagination: Pagination): List<DataGame> {
         return gamesTable.getGames(
             ids = game.similarGames,
@@ -80,7 +76,6 @@ internal class GamesDatabaseDataStore @Inject constructor(
         )
         .toDataGames()
     }
-
 
     override suspend fun searchGames(searchQuery: String, pagination: Pagination): List<DataGame> {
         return gamesTable.searchGames(
@@ -95,7 +90,6 @@ internal class GamesDatabaseDataStore @Inject constructor(
         }
     }
 
-
     override suspend fun observePopularGames(pagination: Pagination): Flow<List<DataGame>> {
         return gamesTable.observePopularGames(
             minReleaseDateTimestamp = queryTimestampProvider.getPopularGamesMinReleaseDate(),
@@ -104,7 +98,6 @@ internal class GamesDatabaseDataStore @Inject constructor(
         )
         .toDataGamesFlow()
     }
-
 
     override suspend fun observeRecentlyReleasedGames(pagination: Pagination): Flow<List<DataGame>> {
         return gamesTable.observeRecentlyReleasedGames(
@@ -116,7 +109,6 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGamesFlow()
     }
 
-
     override suspend fun observeComingSoonGames(pagination: Pagination): Flow<List<DataGame>> {
         return gamesTable.observeComingSoonGames(
             minReleaseDateTimestamp = queryTimestampProvider.getComingSoonGamesMinReleaseDate(),
@@ -125,7 +117,6 @@ internal class GamesDatabaseDataStore @Inject constructor(
         )
         .toDataGamesFlow()
     }
-
 
     override suspend fun observeMostAnticipatedGames(pagination: Pagination): Flow<List<DataGame>> {
         return gamesTable.observeMostAnticipatedGames(
@@ -136,19 +127,15 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGamesFlow()
     }
 
-
     private suspend fun List<DatabaseGame>.toDataGames(): List<DataGame> {
         return withContext(dispatcherProvider.computation) {
             gameMapper.mapToDataGames(this@toDataGames)
         }
     }
 
-
     private fun Flow<List<DatabaseGame>>.toDataGamesFlow(): Flow<List<DataGame>> {
         return distinctUntilChanged()
             .map(gameMapper::mapToDataGames)
             .flowOn(dispatcherProvider.computation)
     }
-
-
 }

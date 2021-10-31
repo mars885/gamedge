@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.database.games.entities
 
 internal enum class ReleaseDateCategory {
-
     UNKNOWN,
 
     YYYY_MMMM_DD,
@@ -29,5 +28,4 @@ internal enum class ReleaseDateCategory {
     YYYYQ4,
 
     TBD
-
 }
