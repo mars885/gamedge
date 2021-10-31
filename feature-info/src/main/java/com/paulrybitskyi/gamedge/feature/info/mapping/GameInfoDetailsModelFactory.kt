@@ -26,28 +26,20 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoDetails
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GameInfoDetailsModelFactory {
-
     fun createDetailsModel(game: Game): GameInfoDetailsModel?
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoDetailsModelFactory {
 
-
     private companion object {
-
         private const val TEXT_SEPARATOR = " • "
-
     }
-
 
     override fun createDetailsModel(game: Game): GameInfoDetailsModel? {
         @Suppress("ComplexCondition")
-        if(game.genres.isEmpty() &&
+        if (game.genres.isEmpty() &&
             game.platforms.isEmpty() &&
             game.modes.isEmpty() &&
             game.playerPerspectives.isEmpty() &&
@@ -64,14 +56,12 @@ internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoD
         )
     }
 
-
     private fun Game.genresToText(): String? {
         return genres
             .takeIf(List<Genre>::isNotEmpty)
             ?.map(Genre::name)
             ?.joinToString()
     }
-
 
     private fun Game.platformsToText(): String? {
         return platforms
@@ -80,14 +70,12 @@ internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoD
             ?.joinToString()
     }
 
-
     private fun Game.modesToText(): String? {
         return modes
             .takeIf(List<Mode>::isNotEmpty)
             ?.map(Mode::name)
             ?.joinToString()
     }
-
 
     private fun Game.playerPerspectivesToText(): String? {
         return playerPerspectives
@@ -96,7 +84,6 @@ internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoD
             ?.joinToString()
     }
 
-
     private fun Game.themesToText(): String? {
         return themes
             .takeIf(List<Theme>::isNotEmpty)
@@ -104,10 +91,7 @@ internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoD
             ?.joinToString()
     }
 
-
     private fun List<String>.joinToString(): String {
         return joinToString(separator = TEXT_SEPARATOR)
     }
-
-
 }

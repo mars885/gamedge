@@ -23,28 +23,21 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoVideoMo
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GameInfoVideoModelFactory {
-
     fun createVideoModels(videos: List<Video>): List<GameInfoVideoModel>
-
     fun createVideoModel(video: Video): GameInfoVideoModel?
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoVideoModelFactoryImpl @Inject constructor(
     private val youtubeMediaUrlFactory: YoutubeMediaUrlFactory,
 ) : GameInfoVideoModelFactory {
 
-
     override fun createVideoModels(videos: List<Video>): List<GameInfoVideoModel> {
-        if(videos.isEmpty()) return emptyList()
+        if (videos.isEmpty()) return emptyList()
 
         return videos.mapNotNull(::createVideoModel)
     }
-
 
     override fun createVideoModel(video: Video): GameInfoVideoModel? {
         val thumbnailUrl = youtubeMediaUrlFactory.createThumbnailUrl(
@@ -53,7 +46,7 @@ internal class GameInfoVideoModelFactoryImpl @Inject constructor(
         )
         val videoUrl = youtubeMediaUrlFactory.createVideoUrl(video)
 
-        if((thumbnailUrl == null) && (videoUrl == null)) return null
+        if ((thumbnailUrl == null) && (videoUrl == null)) return null
 
         return GameInfoVideoModel(
             thumbnailUrl = checkNotNull(thumbnailUrl),
@@ -61,6 +54,4 @@ internal class GameInfoVideoModelFactoryImpl @Inject constructor(
             title = video.name
         )
     }
-
-
 }

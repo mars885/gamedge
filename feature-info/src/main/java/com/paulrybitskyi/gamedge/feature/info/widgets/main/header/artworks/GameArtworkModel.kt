@@ -17,9 +17,6 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.main.header.artworks
 
 internal sealed class GameArtworkModel {
-
     object DefaultImage : GameArtworkModel()
-
-    data class UrlImage(val url: String): GameArtworkModel()
-
+    data class UrlImage(val url: String) : GameArtworkModel()
 }

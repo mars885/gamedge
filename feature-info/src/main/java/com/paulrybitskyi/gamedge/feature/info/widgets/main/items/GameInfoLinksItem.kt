@@ -28,15 +28,13 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.mapToInfoLinkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.mapToLinkModels
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkModel
 
-internal class GameInfoLinksItem(model: List<GameInfoLinkModel>): AbstractItem<
+internal class GameInfoLinksItem(model: List<GameInfoLinkModel>) : AbstractItem<
     List<GameInfoLinkModel>,
     GameInfoLinksItem.ViewHolder,
     NoDependencies
 >(model) {
 
-
     override val itemId = GameInfoAdapterItem.LINKS.id
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -46,15 +44,13 @@ internal class GameInfoLinksItem(model: List<GameInfoLinkModel>): AbstractItem<
         return ViewHolder(GameLinksView(parent.context))
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameLinksView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: List<GameInfoLinkModel>) {
             view.links = model.mapToLinkModels()
@@ -63,8 +59,5 @@ internal class GameInfoLinksItem(model: List<GameInfoLinkModel>): AbstractItem<
         fun setOnLinkClickListener(onClick: (GameInfoLinkModel) -> Unit) {
             view.onLinkClicked = { onClick(it.mapToInfoLinkModel()) }
         }
-
     }
-
-
 }

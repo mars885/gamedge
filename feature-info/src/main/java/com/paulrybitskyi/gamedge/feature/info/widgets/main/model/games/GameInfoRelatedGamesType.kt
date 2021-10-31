@@ -17,8 +17,6 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games
 
 internal enum class GameInfoRelatedGamesType {
-
     OTHER_COMPANY_GAMES,
     SIMILAR_GAMES
-
 }

@@ -28,12 +28,11 @@ import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameScreenshotItem.ViewHolder
 
-internal class GameScreenshotItem(model: String): AbstractItem<
+internal class GameScreenshotItem(model: String) : AbstractItem<
     String,
     ViewHolder,
     NoDependencies
 >(model) {
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -53,15 +52,13 @@ internal class GameScreenshotItem(model: String): AbstractItem<
         )
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameScreenshotView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: String) {
             view.loadImage(model)
@@ -70,8 +67,5 @@ internal class GameScreenshotItem(model: String): AbstractItem<
         fun setOnScreenshotClickListener(onClick: () -> Unit) {
             view.onClick { onClick() }
         }
-
     }
-
-
 }

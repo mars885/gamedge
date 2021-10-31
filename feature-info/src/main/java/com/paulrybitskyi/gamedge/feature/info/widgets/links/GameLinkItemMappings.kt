@@ -18,7 +18,6 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.links
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.chipflow.ChipFlowItem
 
-
 internal fun List<GameLinkItemModel>.mapToChipFlowItems(): List<ChipFlowItem> {
     return map {
         ChipFlowItem(
@@ -29,7 +28,6 @@ internal fun List<GameLinkItemModel>.mapToChipFlowItems(): List<ChipFlowItem> {
         )
     }
 }
-
 
 internal fun ChipFlowItem.mapToLinkItemModel(): GameLinkItemModel {
     return GameLinkItemModel(

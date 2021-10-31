@@ -32,7 +32,6 @@ internal class GameArtworksView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-
     var isScrollingEnabled: Boolean
         set(value) { viewPager.isUserInputEnabled = value }
         get() = viewPager.isUserInputEnabled
@@ -54,11 +53,9 @@ internal class GameArtworksView @JvmOverloads constructor(
     var onArtworkChanged: ((Int) -> Unit)? = null
     var onArtworkClicked: ((Int) -> Unit)? = null
 
-
     init {
         initViewPager(context)
     }
-
 
     private fun initViewPager(context: Context) {
         viewPager = ViewPager2(context)
@@ -72,24 +69,20 @@ internal class GameArtworksView @JvmOverloads constructor(
             .also(::addView)
     }
 
-
     private fun initAdapter(context: Context): GameArtworksAdapter {
         return GameArtworksAdapter(context)
             .apply { listenerBinder = ::bindListener }
             .also { adapter = it }
     }
 
-
     @Suppress("UNUSED_PARAMETER")
     private fun bindListener(item: GameArtworkItem, viewHolder: RecyclerView.ViewHolder) {
-        if(viewHolder is GameArtworkItem.ViewHolder) {
+        if (viewHolder is GameArtworkItem.ViewHolder) {
             viewHolder.setOnArtworkClickListener {
-                if(isArtworkClickEnabled) {
+                if (isArtworkClickEnabled) {
                     onArtworkClicked?.invoke(viewPager.currentItem)
                 }
             }
         }
     }
-
-
 }

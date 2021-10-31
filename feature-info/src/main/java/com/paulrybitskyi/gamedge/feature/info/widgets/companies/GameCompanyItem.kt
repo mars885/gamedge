@@ -29,12 +29,11 @@ import com.paulrybitskyi.gamedge.core.utils.height
 import com.paulrybitskyi.gamedge.core.utils.width
 import com.paulrybitskyi.gamedge.feature.info.R
 
-internal class GameCompanyItem(model: GameCompanyModel): AbstractItem<
+internal class GameCompanyItem(model: GameCompanyModel) : AbstractItem<
     GameCompanyModel,
     GameCompanyItem.ViewHolder,
     NoDependencies
 >(model) {
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -52,15 +51,13 @@ internal class GameCompanyItem(model: GameCompanyModel): AbstractItem<
         )
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameCompanyView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: GameCompanyModel) = with(view) {
             logoViewWidth = model.logoViewSize.width
@@ -75,8 +72,5 @@ internal class GameCompanyItem(model: GameCompanyModel): AbstractItem<
         fun setOnCompanyClickListener(onClick: () -> Unit) {
             view.onCompanyClicked = onClick
         }
-
     }
-
-
 }

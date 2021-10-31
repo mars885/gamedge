@@ -33,7 +33,6 @@ internal class GameVideoItem(model: GameVideoModel) : AbstractItem<
     NoDependencies
 >(model) {
 
-
     override fun createViewHolder(
         inflater: LayoutInflater,
         parent: ViewGroup,
@@ -53,15 +52,13 @@ internal class GameVideoItem(model: GameVideoModel) : AbstractItem<
         )
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameVideoView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: GameVideoModel) = with(view) {
             thumbnailUrl = model.thumbnailUrl
@@ -71,8 +68,5 @@ internal class GameVideoItem(model: GameVideoModel) : AbstractItem<
         fun setOnVideoClickListener(onClick: () -> Unit) {
             view.onVideoClicked = onClick
         }
-
     }
-
-
 }
