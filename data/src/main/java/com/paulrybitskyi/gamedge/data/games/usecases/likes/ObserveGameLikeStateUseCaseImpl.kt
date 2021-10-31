@@ -20,9 +20,9 @@ import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase.Params
 import com.paulrybitskyi.hiltbinder.BindType
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
 
 @Singleton
 @BindType
@@ -30,10 +30,7 @@ internal class ObserveGameLikeStateUseCaseImpl @Inject constructor(
     private val likedGamesLocalDataStore: LikedGamesLocalDataStore
 ) : ObserveGameLikeStateUseCase {
 
-
     override suspend fun execute(params: Params): Flow<Boolean> {
         return likedGamesLocalDataStore.observeGameLikeState(params.gameId)
     }
-
-
 }

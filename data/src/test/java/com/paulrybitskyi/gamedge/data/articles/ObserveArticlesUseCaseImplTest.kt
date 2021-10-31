@@ -18,29 +18,33 @@ package com.paulrybitskyi.gamedge.data.articles
 
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DATA_ARTICLES
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_ARTICLES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.OBSERVE_ARTICLES_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesLocalDataStore
 import com.paulrybitskyi.gamedge.data.articles.usecases.ObserveArticlesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.ArticleMapper
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.mapToDomainArticles
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.any
 import org.junit.Before
 import org.junit.Test
 
 internal class ObserveArticlesUseCaseImplTest {
-
 
     @MockK private lateinit var refreshArticlesUseCase: RefreshArticlesUseCase
     @MockK private lateinit var articlesLocalDataStore: ArticlesLocalDataStore
 
     private lateinit var articleMapper: ArticleMapper
     private lateinit var SUT: ObserveArticlesUseCaseImpl
-
 
     @Before
     fun setup() {
@@ -55,7 +59,6 @@ internal class ObserveArticlesUseCaseImplTest {
         )
     }
 
-
     @Test
     fun `Verify that articles are refreshed when refresh is requested`() {
         runBlockingTest {
@@ -66,7 +69,6 @@ internal class ObserveArticlesUseCaseImplTest {
             coVerify { refreshArticlesUseCase.execute(any()) }
         }
     }
-
 
     @Test
     fun `Emits articles from local data store when refresh is requested`() {
@@ -81,7 +83,6 @@ internal class ObserveArticlesUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Emits articles from local data store when refresh use cases emits empty flow`() {
         runBlockingTest {
@@ -95,7 +96,6 @@ internal class ObserveArticlesUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Emits articles from local data store when refresh is not requested`() {
         runBlockingTest {
@@ -107,6 +107,4 @@ internal class ObserveArticlesUseCaseImplTest {
             }
         }
     }
-
-
 }

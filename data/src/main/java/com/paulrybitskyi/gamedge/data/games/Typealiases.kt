@@ -36,7 +36,6 @@ import com.paulrybitskyi.gamedge.data.games.entities.Video
 import com.paulrybitskyi.gamedge.data.games.entities.Website
 import com.paulrybitskyi.gamedge.data.games.entities.WebsiteCategory
 
-
 typealias DataAgeRating = AgeRating
 typealias DataAgeRatingCategory = AgeRatingCategory
 typealias DataAgeRatingType = AgeRatingType

@@ -23,22 +23,16 @@ import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 interface TextSharer : ContentSharer<String>
-
 
 @BindType
 internal class TextSharerImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : TextSharer {
 
-
     private companion object {
-
         private const val DATA_TYPE_TEXT = "text/*"
-
     }
-
 
     override fun share(context: Context, content: String) {
         val textSharingIntent = Intent().apply {
@@ -55,6 +49,4 @@ internal class TextSharerImpl @Inject constructor(
             )
         )
     }
-
-
 }

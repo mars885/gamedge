@@ -20,22 +20,16 @@ import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface ArticlesRefreshingThrottlerKeyProvider {
 
     fun provideArticlesKey(pagination: Pagination): String
-
 }
-
 
 @BindType
 internal class ArticlesRefreshingThrottlerKeyProviderImpl @Inject constructor() :
     ArticlesRefreshingThrottlerKeyProvider {
 
-
     override fun provideArticlesKey(pagination: Pagination): String {
         return "articles | offset: ${pagination.offset} | limit: ${pagination.limit}"
     }
-
-
 }

@@ -23,5 +23,4 @@ enum class ImageType {
     SQUARE_SMALL,
     SCREEN_TINY,
     ORIGINAL
-
 }

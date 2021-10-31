@@ -22,7 +22,6 @@ import javax.inject.Inject
 
 internal class AuthMapper @Inject constructor() {
 
-
     fun mapToDomainOauthCredentials(oauthCredentials: DataOauthCredentials): DomainOauthCredentials {
         return DomainOauthCredentials(
             accessToken = oauthCredentials.accessToken,
@@ -30,6 +29,4 @@ internal class AuthMapper @Inject constructor() {
             tokenTtl = oauthCredentials.tokenTtl
         )
     }
-
-
 }

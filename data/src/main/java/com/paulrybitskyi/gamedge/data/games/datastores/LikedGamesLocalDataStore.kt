@@ -31,5 +31,4 @@ interface LikedGamesLocalDataStore {
     suspend fun observeGameLikeState(gameId: Int): Flow<Boolean>
 
     suspend fun observeLikedGames(pagination: Pagination): Flow<List<Game>>
-
 }

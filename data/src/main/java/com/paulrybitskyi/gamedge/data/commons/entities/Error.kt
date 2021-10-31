@@ -27,11 +27,9 @@ sealed class Error {
         object ServiceUnavailable : ApiError()
 
         data class Unknown(val message: String) : ApiError()
-
     }
 
     data class NotFound(val message: String) : Error()
 
     data class Unknown(val message: String) : Error()
-
 }

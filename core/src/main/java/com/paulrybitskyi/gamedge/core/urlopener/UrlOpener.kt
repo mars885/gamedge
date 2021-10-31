@@ -29,5 +29,4 @@ interface UrlOpener {
      * @return true if the url was opened; false otherwise
      */
     fun openUrl(url: String, context: Context): Boolean
-
 }

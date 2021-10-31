@@ -16,27 +16,26 @@
 
 package com.paulrybitskyi.gamedge.core
 
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.domain.games.*
-import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAME
-import org.assertj.core.api.Assertions.*
+import com.paulrybitskyi.gamedge.domain.games.DomainAgeRating
+import com.paulrybitskyi.gamedge.domain.games.DomainAgeRatingCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainAgeRatingType
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
 internal class GameAgeRatingFormatterImplTest {
 
-
     private lateinit var stringProvider: FakeStringProvider
     private lateinit var SUT: GameAgeRatingFormatterImpl
-
 
     @Before
     fun setup() {
         stringProvider = FakeStringProvider()
         SUT = GameAgeRatingFormatterImpl(stringProvider)
     }
-
 
     @Test
     fun `Returns properly formatted string with age rating`() {
@@ -51,14 +50,12 @@ internal class GameAgeRatingFormatterImplTest {
         assertThat(stringProvider.isRatingAvailable).isTrue
     }
 
-
     @Test
     fun `Returns not available string when game does not contain any ratings`() {
         SUT.formatAgeRating(DOMAIN_GAME)
 
         assertThat(stringProvider.isRatingNotAvailable).isTrue
     }
-
 
     @Test
     fun `Returns not available string when game does not contain valid ratings`() {
@@ -73,7 +70,6 @@ internal class GameAgeRatingFormatterImplTest {
 
         assertThat(stringProvider.isRatingNotAvailable).isTrue
     }
-
 
     private class FakeStringProvider : StringProvider {
 
@@ -90,8 +86,5 @@ internal class GameAgeRatingFormatterImplTest {
         override fun getQuantityString(id: Int, quantity: Int, vararg formatArgs: Any): String {
             return ""
         }
-
     }
-
-
 }

@@ -22,7 +22,6 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GamesRefreshingThrottlerKeyProvider {
 
     fun providePopularGamesKey(pagination: Pagination): String
@@ -36,33 +35,26 @@ internal interface GamesRefreshingThrottlerKeyProvider {
     fun provideCompanyDevelopedGamesKey(company: Company, pagination: Pagination): String
 
     fun provideSimilarGamesKey(game: Game, pagination: Pagination): String
-
 }
-
 
 @BindType
 internal class GamesRefreshingThrottlerKeyProviderImpl @Inject constructor() : GamesRefreshingThrottlerKeyProvider {
-
 
     override fun providePopularGamesKey(pagination: Pagination): String {
         return "popular_games | offset: ${pagination.offset} | limit: ${pagination.limit}"
     }
 
-
     override fun provideRecentlyReleasedGamesKey(pagination: Pagination): String {
         return "recently_released_games | offset: ${pagination.offset} | limit: ${pagination.limit}"
     }
-
 
     override fun provideComingSoonGamesKey(pagination: Pagination): String {
         return "coming_soon_games | offset: ${pagination.offset} | limit: ${pagination.limit}"
     }
 
-
     override fun provideMostAnticipatedGamesKey(pagination: Pagination): String {
         return "most_anticipated_games | offset: ${pagination.offset} | limit: ${pagination.limit}"
     }
-
 
     override fun provideCompanyDevelopedGamesKey(company: Company, pagination: Pagination): String {
         return """
@@ -74,7 +66,6 @@ internal class GamesRefreshingThrottlerKeyProviderImpl @Inject constructor() : G
         """.trimIndent()
     }
 
-
     override fun provideSimilarGamesKey(game: Game, pagination: Pagination): String {
         return """
             similar_games | 
@@ -84,6 +75,4 @@ internal class GamesRefreshingThrottlerKeyProviderImpl @Inject constructor() : G
             limit: ${pagination.limit}
         """.trimIndent()
     }
-
-
 }

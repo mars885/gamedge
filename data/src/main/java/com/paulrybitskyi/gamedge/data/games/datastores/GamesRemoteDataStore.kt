@@ -36,5 +36,4 @@ interface GamesRemoteDataStore {
     suspend fun getCompanyDevelopedGames(company: DataCompany, pagination: Pagination): DataResult<List<DataGame>>
 
     suspend fun getSimilarGames(game: DataGame, pagination: Pagination): DataResult<List<DataGame>>
-
 }

@@ -28,17 +28,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
-
 private val Context.authProtoDataStore by dataStore(
     fileName = Constants.AUTH_PREFERENCES_DATA_STORE_NAME,
     serializer = ProtoOauthCredentialsSerializer
 )
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 internal object CoreModule {
-
 
     @Provides
     fun provideAuthProtoDataStore(
@@ -46,6 +43,4 @@ internal object CoreModule {
     ): DataStore<ProtoOauthCredentials> {
         return context.authProtoDataStore
     }
-
-
 }

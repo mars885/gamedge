@@ -17,10 +17,9 @@
 package com.paulrybitskyi.gamedge.core.providers
 
 import com.paulrybitskyi.hiltbinder.BindType
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
-
 
 interface DispatcherProvider {
 
@@ -29,9 +28,7 @@ interface DispatcherProvider {
     val io: CoroutineDispatcher
 
     val computation: CoroutineDispatcher
-
 }
-
 
 @BindType
 internal class DispatcherProviderImpl @Inject constructor() : DispatcherProvider {
@@ -41,5 +38,4 @@ internal class DispatcherProviderImpl @Inject constructor() : DispatcherProvider
     override val io: CoroutineDispatcher = Dispatchers.IO
 
     override val computation: CoroutineDispatcher = Dispatchers.Default
-
 }

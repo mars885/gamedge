@@ -22,20 +22,18 @@ import com.paulrybitskyi.gamedge.core.providers.TimeProvider
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import org.assertj.core.api.Assertions.*
-import org.junit.Before
-import org.junit.Test
 import java.time.LocalDateTime
 import java.time.Month
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.Before
+import org.junit.Test
 
 internal class RelativeDateFormatterImplTest {
-
 
     @MockK private lateinit var timeProvider: TimeProvider
 
     private lateinit var stringProvider: FakeStringProvider
     private lateinit var SUT: RelativeDateFormatterImpl
-
 
     @Before
     fun setup() {
@@ -48,7 +46,6 @@ internal class RelativeDateFormatterImplTest {
         )
     }
 
-
     @Test
     fun `Formats future date with year difference correctly`() {
         val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
@@ -59,7 +56,6 @@ internal class RelativeDateFormatterImplTest {
 
         assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $yearDiff years")
     }
-
 
     @Test
     fun `Formats future date with month difference correctly`() {
@@ -72,7 +68,6 @@ internal class RelativeDateFormatterImplTest {
         assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $monthDiff months")
     }
 
-
     @Test
     fun `Formats future date with day difference correctly`() {
         val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
@@ -83,7 +78,6 @@ internal class RelativeDateFormatterImplTest {
 
         assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $dayDiff days")
     }
-
 
     @Test
     fun `Formats future date with hour difference correctly`() {
@@ -96,7 +90,6 @@ internal class RelativeDateFormatterImplTest {
         assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $hourDiff hours")
     }
 
-
     @Test
     fun `Formats future date with minute difference correctly`() {
         val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
@@ -107,7 +100,6 @@ internal class RelativeDateFormatterImplTest {
 
         assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $minuteDiff minutes")
     }
-
 
     @Test
     fun `Formats future date with second difference correctly`() {
@@ -120,7 +112,6 @@ internal class RelativeDateFormatterImplTest {
         assertThat(SUT.formatRelativeDate(futureTime)).isEqualTo("in $secondDiff seconds")
     }
 
-
     @Test
     fun `Formats past date with year difference correctly`() {
         val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
@@ -131,7 +122,6 @@ internal class RelativeDateFormatterImplTest {
 
         assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$yearDiff years ago")
     }
-
 
     @Test
     fun `Formats past date with month difference correctly`() {
@@ -144,7 +134,6 @@ internal class RelativeDateFormatterImplTest {
         assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$monthDiff months ago")
     }
 
-
     @Test
     fun `Formats past date with day difference correctly`() {
         val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
@@ -155,7 +144,6 @@ internal class RelativeDateFormatterImplTest {
 
         assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$dayDiff days ago")
     }
-
 
     @Test
     fun `Formats past date with hour difference correctly`() {
@@ -168,7 +156,6 @@ internal class RelativeDateFormatterImplTest {
         assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$hourDiff hours ago")
     }
 
-
     @Test
     fun `Formats past date with minute difference correctly`() {
         val currentTime = LocalDateTime.of(2021, Month.MARCH, 4, 1, 15) // March 4th, 2021 at 1:15 AM
@@ -179,7 +166,6 @@ internal class RelativeDateFormatterImplTest {
 
         assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$minuteDiff minutes ago")
     }
-
 
     @Test
     fun `Formats past date with second difference correctly`() {
@@ -192,7 +178,6 @@ internal class RelativeDateFormatterImplTest {
         assertThat(SUT.formatRelativeDate(pastTime)).isEqualTo("$secondDiff seconds ago")
     }
 
-
     private class FakeStringProvider : StringProvider {
 
         override fun getString(id: Int, vararg args: Any): String {
@@ -200,7 +185,7 @@ internal class RelativeDateFormatterImplTest {
         }
 
         override fun getQuantityString(id: Int, quantity: Int, vararg formatArgs: Any): String {
-            return when(id) {
+            return when (id) {
                 R.plurals.future_relative_timestamp_year -> "in $quantity years"
                 R.plurals.future_relative_timestamp_month -> "in $quantity months"
                 R.plurals.future_relative_timestamp_day -> "in $quantity days"
@@ -218,8 +203,5 @@ internal class RelativeDateFormatterImplTest {
                 else -> throw IllegalStateException()
             }
         }
-
     }
-
-
 }

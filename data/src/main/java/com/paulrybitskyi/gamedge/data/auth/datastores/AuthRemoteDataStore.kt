@@ -22,5 +22,4 @@ import com.paulrybitskyi.gamedge.data.commons.DataResult
 interface AuthRemoteDataStore {
 
     suspend fun getOauthCredentials(): DataResult<OauthCredentials>
-
 }

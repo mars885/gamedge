@@ -34,5 +34,4 @@ enum class WebsiteCategory {
     EPIC_GAMES,
     GOG,
     DISCORD,
-
 }

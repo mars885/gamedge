@@ -31,5 +31,4 @@ enum class AgeRatingType {
     T,
     M,
     AO,
-
 }

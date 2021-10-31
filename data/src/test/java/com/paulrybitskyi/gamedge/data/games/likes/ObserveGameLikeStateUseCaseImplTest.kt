@@ -18,28 +18,22 @@ package com.paulrybitskyi.gamedge.data.games.likes
 
 import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS
-import com.paulrybitskyi.gamedge.data.commons.DataPagination
-import com.paulrybitskyi.gamedge.data.games.DataGame
 import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ObserveGameLikeStateUseCaseImpl
-import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
 internal class ObserveGameLikeStateUseCaseImplTest {
 
-
     @MockK private lateinit var likedGamesLocalDataStore: LikedGamesLocalDataStore
 
     private lateinit var SUT: ObserveGameLikeStateUseCaseImpl
-
 
     @Before
     fun setup() {
@@ -47,7 +41,6 @@ internal class ObserveGameLikeStateUseCaseImplTest {
 
         SUT = ObserveGameLikeStateUseCaseImpl(likedGamesLocalDataStore)
     }
-
 
     @Test
     fun `Emits game like state successfully`() {
@@ -65,6 +58,4 @@ internal class ObserveGameLikeStateUseCaseImplTest {
             }
         }
     }
-
-
 }

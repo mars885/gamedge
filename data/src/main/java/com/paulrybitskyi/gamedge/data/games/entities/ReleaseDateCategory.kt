@@ -29,5 +29,4 @@ enum class ReleaseDateCategory {
     YYYYQ4,
 
     TBD
-
 }

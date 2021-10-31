@@ -27,5 +27,4 @@ enum class Category {
     MOD,
     EPISODE,
     SEASON
-
 }

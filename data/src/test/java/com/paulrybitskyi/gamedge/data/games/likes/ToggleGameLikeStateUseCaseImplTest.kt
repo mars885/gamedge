@@ -24,29 +24,24 @@ import com.paulrybitskyi.gamedge.data.games.usecases.likes.ToggleGameLikeStateUs
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
-
 
 private const val GAME_ID = 100
 
 private val USE_CASE_PARAMS = TOGGLE_GAME_LIKE_STATE_USE_CASE_PARAMS.copy(gameId = GAME_ID)
 
-
 internal class ToggleGameLikeStateUseCaseImplTest {
-
 
     private lateinit var likedGamesLocalDataStore: FakeLikedGamesLocalDataStore
     private lateinit var SUT: ToggleGameLikeStateUseCaseImpl
-
 
     @Before
     fun setup() {
         likedGamesLocalDataStore = FakeLikedGamesLocalDataStore()
         SUT = ToggleGameLikeStateUseCaseImpl(likedGamesLocalDataStore)
     }
-
 
     @Test
     fun `Toggles game from unliked to liked state`() {
@@ -58,7 +53,6 @@ internal class ToggleGameLikeStateUseCaseImplTest {
             assertThat(likedGamesLocalDataStore.isGameLiked(GAME_ID)).isTrue
         }
     }
-
 
     @Test
     fun `Toggles game from liked to unliked state`() {
@@ -72,7 +66,6 @@ internal class ToggleGameLikeStateUseCaseImplTest {
             assertThat(likedGamesLocalDataStore.isGameLiked(GAME_ID)).isFalse
         }
     }
-
 
     private class FakeLikedGamesLocalDataStore : LikedGamesLocalDataStore {
 
@@ -97,8 +90,5 @@ internal class ToggleGameLikeStateUseCaseImplTest {
         override suspend fun observeLikedGames(pagination: Pagination): Flow<List<Game>> {
             return flowOf() // no-op
         }
-
     }
-
-
 }

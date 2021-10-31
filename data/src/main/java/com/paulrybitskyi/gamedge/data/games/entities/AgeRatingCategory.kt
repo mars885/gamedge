@@ -21,5 +21,4 @@ enum class AgeRatingCategory {
     UNKNOWN,
     ESRB,
     PEGI,
-
 }

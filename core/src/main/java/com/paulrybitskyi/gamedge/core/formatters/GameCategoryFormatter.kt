@@ -22,23 +22,18 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Category
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 interface GameCategoryFormatter {
-
     fun formatCategory(category: Category): String
-
 }
-
 
 @BindType
 internal class GameCategoryFormatterImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GameCategoryFormatter {
 
-
     override fun formatCategory(category: Category): String {
         return stringProvider.getString(
-            when(category) {
+            when (category) {
                 Category.UNKNOWN -> R.string.not_available_abbr
                 Category.MAIN_GAME -> R.string.game_category_main
                 Category.BUNDLE -> R.string.game_category_bundle
@@ -52,6 +47,4 @@ internal class GameCategoryFormatterImpl @Inject constructor(
             }
         )
     }
-
-
 }

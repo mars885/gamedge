@@ -40,5 +40,4 @@ interface GamesLocalDataStore {
     suspend fun observeComingSoonGames(pagination: Pagination): Flow<List<DataGame>>
 
     suspend fun observeMostAnticipatedGames(pagination: Pagination): Flow<List<DataGame>>
-
 }

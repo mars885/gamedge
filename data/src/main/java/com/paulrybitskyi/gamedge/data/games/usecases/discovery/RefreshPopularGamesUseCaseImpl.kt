@@ -29,11 +29,11 @@ import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
 import com.paulrybitskyi.hiltbinder.BindType
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 @BindType
@@ -44,12 +44,11 @@ internal class RefreshPopularGamesUseCaseImpl @Inject constructor(
     private val mappers: RefreshGamesUseCaseMappers
 ) : RefreshPopularGamesUseCase {
 
-
     override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
         val throttlerKey = throttlerTools.keyProvider.providePopularGamesKey(params.pagination)
 
         return flow {
-            if(throttlerTools.throttler.canRefreshGames(throttlerKey)) {
+            if (throttlerTools.throttler.canRefreshGames(throttlerKey)) {
                 emit(gamesDataStores.remote.getPopularGames(params.pagination.toDataPagination()))
             }
         }
@@ -61,6 +60,4 @@ internal class RefreshPopularGamesUseCaseImpl @Inject constructor(
         .mapResult(mappers.game::mapToDomainGames, mappers.error::mapToDomainError)
         .flowOn(dispatcherProvider.computation)
     }
-
-
 }
