@@ -35,10 +35,8 @@ internal class GamesCategoryFragment : BaseFragment<
     GamesCategoryNavigator
 >(R.layout.fragment_games_category) {
 
-
     override val viewBinding by viewBinding(FragmentGamesCategoryBinding::bind)
     override val viewModel by viewModels<GamesCategoryViewModel>()
-
 
     override fun onInit() {
         super.onInit()
@@ -47,19 +45,16 @@ internal class GamesCategoryFragment : BaseFragment<
         initGamesCategoryView()
     }
 
-
     private fun initToolbar() = with(viewBinding.toolbar) {
         applyWindowTopInsetAsPadding()
         onLeftButtonClickListener = { viewModel.onToolbarLeftButtonClicked() }
     }
-
 
     private fun initGamesCategoryView() = with(viewBinding.gamesCategoryView) {
         applyWindowBottomInsetAsMargin()
         onGameClicked = viewModel::onGameClicked
         onBottomReached = viewModel::onBottomReached
     }
-
 
     override fun onBindViewModel() {
         super.onBindViewModel()
@@ -68,13 +63,11 @@ internal class GamesCategoryFragment : BaseFragment<
         observeUiState()
     }
 
-
     private fun observeToolbarTitle() {
         viewModel.toolbarTitle
             .onEach { viewBinding.toolbar.titleText = it }
             .observeIn(this)
     }
-
 
     private fun observeUiState() {
         viewModel.uiState
@@ -82,22 +75,18 @@ internal class GamesCategoryFragment : BaseFragment<
             .observeIn(this)
     }
 
-
     override fun onLoadData() {
         super.onLoadData()
 
         viewModel.loadData(requireContext().defaultWindowAnimationDuration())
     }
 
-
     override fun onRoute(route: Route) {
         super.onRoute(route)
 
-        when(route) {
+        when (route) {
             is GamesCategoryRoute.Info -> navigator.goToInfo(route.gameId)
             is GamesCategoryRoute.Back -> navigator.goBack()
         }
     }
-
-
 }
