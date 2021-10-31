@@ -28,20 +28,16 @@ class ViewPager2Container @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-
     lateinit var viewPager: ViewPager2
         private set
-
 
     init {
         initViewPager()
     }
 
-
     private fun initViewPager() {
         viewPager = ViewPager2(context)
     }
-
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -51,7 +47,6 @@ class ViewPager2Container @JvmOverloads constructor(
             LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         )
     }
-
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
@@ -71,6 +66,4 @@ class ViewPager2Container @JvmOverloads constructor(
         // in conjunction with the Navigation Library.
         viewPager.detachFromParent()
     }
-
-
 }

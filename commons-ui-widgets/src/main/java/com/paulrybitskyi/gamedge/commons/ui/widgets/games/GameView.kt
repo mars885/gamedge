@@ -34,7 +34,6 @@ class GameView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val binding = ViewGameBinding.inflate(context.layoutInflater, this)
 
     private var isDeveloperNameVisible: Boolean
@@ -75,13 +74,11 @@ class GameView @JvmOverloads constructor(
 
     var onGameClicked: (() -> Unit)? = null
 
-
     init {
         initCard()
         initCoverView()
         initDescription()
     }
-
 
     private fun initCard() {
         setCardBackgroundColor(getColor(R.color.game_card_background_color))
@@ -89,11 +86,9 @@ class GameView @JvmOverloads constructor(
         onClick { onGameClicked?.invoke() }
     }
 
-
     private fun initCoverView() {
         binding.coverView.isTitleVisible = false
     }
-
 
     private fun initDescription() = with(binding.descriptionTv) {
         addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
@@ -105,6 +100,4 @@ class GameView @JvmOverloads constructor(
             description = description
         }
     }
-
-
 }

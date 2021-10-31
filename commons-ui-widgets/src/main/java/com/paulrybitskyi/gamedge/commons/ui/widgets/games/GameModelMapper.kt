@@ -23,20 +23,16 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 interface GameModelMapper {
 
     fun mapToGameModel(game: Game): GameModel
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameModelMapperImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
     private val gameReleaseDateFormatter: GameReleaseDateFormatter
 ) : GameModelMapper {
-
 
     override fun mapToGameModel(game: Game): GameModel {
         return GameModel(
@@ -49,20 +45,16 @@ internal class GameModelMapperImpl @Inject constructor(
         )
     }
 
-
     private fun Game.buildCoverImageUrl(): String? {
         return cover?.let { cover ->
             igdbImageUrlFactory.createUrl(cover, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_COVER))
         }
     }
 
-
     private fun Game.buildDescription(): String? {
-        if(summary != null) return summary
-        if(storyline != null) return storyline
+        if (summary != null) return summary
+        if (storyline != null) return storyline
 
         return null
     }
-
-
 }

@@ -22,7 +22,6 @@ import com.paulrybitskyi.commons.ktx.getDimension
 import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 
-
 internal data class DefaultValues(
     val backgroundColor: Int,
     val iconColor: Int,
@@ -32,7 +31,6 @@ internal data class DefaultValues(
     val horizontalSpacing: Int,
     val verticalSpacing: Int
 )
-
 
 internal fun initDefaultValues(context: Context): DefaultValues {
     return DefaultValues(

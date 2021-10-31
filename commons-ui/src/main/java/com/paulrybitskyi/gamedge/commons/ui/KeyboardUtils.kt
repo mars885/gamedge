@@ -21,9 +21,7 @@ import android.view.inputmethod.InputMethodManager
 import com.paulrybitskyi.commons.ktx.getSystemService
 import com.paulrybitskyi.commons.ktx.postActionDelayed
 
-
 private const val KEYBOARD_SHOWING_DELAY = 300L
-
 
 fun View.showKeyboard(withDelay: Boolean = false) {
     requestFocus()
@@ -32,13 +30,12 @@ fun View.showKeyboard(withDelay: Boolean = false) {
         context.getSystemService<InputMethodManager>().showSoftInput(this, 0)
     }
 
-    if(withDelay) {
+    if (withDelay) {
         postActionDelayed(KEYBOARD_SHOWING_DELAY, action)
     } else {
         action()
     }
 }
-
 
 fun View.hideKeyboard() {
     clearFocus()

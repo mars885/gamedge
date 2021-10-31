@@ -40,7 +40,6 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     var isMoreButtonVisible: Boolean
         set(value) { binding.moreBtn.isVisible = value }
         get() = binding.moreBtn.isVisible
@@ -72,26 +71,22 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
     var onMoreButtonClicked: (() -> Unit)? = null
     var onGameClicked: ((GamesCategoryPreviewItemModel) -> Unit)? = null
 
-
     init {
         initCard()
         initMoreButton()
         initRecyclerView(context)
     }
 
-
     private fun initCard() {
         setBackgroundColor(getColor(R.color.games_category_preview_card_background_color))
         cardElevation = getDimension(R.dimen.games_category_preview_card_elevation)
     }
-
 
     private fun initMoreButton() {
         binding.moreBtn.setOnClickListener {
             onMoreButtonClicked?.invoke()
         }
     }
-
 
     private fun initRecyclerView(context: Context) = with(binding.recyclerView) {
         disableAnimations()
@@ -100,11 +95,9 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
         adapter = initAdapter(context)
     }
 
-
     private fun initLayoutManager(context: Context): LinearLayoutManager {
         return LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
-
 
     private fun initAdapter(context: Context): GamesCategoryPreviewAdapter {
         return GamesCategoryPreviewAdapter(context)
@@ -112,33 +105,28 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
             .also { adapter = it }
     }
 
-
     private fun bindListener(item: GamesCategoryPreviewItem, viewHolder: RecyclerView.ViewHolder) {
-        if(viewHolder is GamesCategoryPreviewItem.ViewHolder) {
+        if (viewHolder is GamesCategoryPreviewItem.ViewHolder) {
             viewHolder.setOnGameClickListener {
                 onGameClicked?.invoke(item.model)
             }
         }
     }
 
-
     private fun List<GamesCategoryPreviewItemModel>.toAdapterItems(): List<GamesCategoryPreviewItem> {
         return map(::GamesCategoryPreviewItem)
     }
 
-
     private fun handleUiStateChange(newState: GamesCategoryPreviewUiState) {
-        when(newState) {
+        when (newState) {
             is GamesCategoryPreviewUiState.Empty -> onEmptyUiStateSelected()
             is GamesCategoryPreviewUiState.Result -> onResultUiStateSelected(newState)
         }
     }
 
-
     private fun onEmptyUiStateSelected() {
         showInfoView()
     }
-
 
     private fun onResultUiStateSelected(uiState: GamesCategoryPreviewUiState.Result) {
         adapterItems = uiState.items.toAdapterItems()
@@ -146,19 +134,15 @@ class GamesCategoryPreviewView @JvmOverloads constructor(
         hideInfoView()
     }
 
-
     private fun showInfoView() = with(binding.infoView) {
-        if(isVisible) return
+        if (isVisible) return
 
         makeVisible()
         fadeIn()
     }
 
-
     private fun hideInfoView() = with(binding.infoView) {
         makeGone()
         resetAnimation()
     }
-
-
 }

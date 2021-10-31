@@ -36,10 +36,8 @@ internal class GamesCategoryPreviewItem(model: GamesCategoryPreviewItemModel) : 
     NoDependencies
 >(model), HasUniqueIdentifier<Int> {
 
-
     override val uniqueIdentifier: Int
         get() = model.id
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -59,15 +57,13 @@ internal class GamesCategoryPreviewItem(model: GamesCategoryPreviewItemModel) : 
         )
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameCoverView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: GamesCategoryPreviewItemModel) = with(view) {
             title = model.title
@@ -77,8 +73,5 @@ internal class GamesCategoryPreviewItem(model: GamesCategoryPreviewItemModel) : 
         fun setOnGameClickListener(onClick: () -> Unit) {
             view.onClick { onClick() }
         }
-
     }
-
-
 }

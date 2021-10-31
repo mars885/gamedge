@@ -40,16 +40,13 @@ import com.paulrybitskyi.commons.material.utils.setChipIconColor
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 
-
 private const val ITEM_BACKGROUND_SHADOW_RADIUS = 6f
-
 
 class ChipFlowView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-
 
     private val itemBackgroundShadowColor = getColor(R.color.chip_flow_item_background_shadow_color)
     private val itemIconStartPadding = getDimension(R.dimen.chip_flow_item_icon_start_padding)
@@ -119,7 +116,7 @@ class ChipFlowView @JvmOverloads constructor(
     private var pressedChip: ChipDrawable? = null
 
     var items by observeChanges<List<ChipFlowItem>>(emptyList()) { oldItems, newItems ->
-        if(newItems != oldItems) {
+        if (newItems != oldItems) {
             initChips(newItems)
             requestLayout()
         }
@@ -129,15 +126,13 @@ class ChipFlowView @JvmOverloads constructor(
 
     var onItemClicked: ((ChipFlowItem) -> Unit)? = null
 
-
     private fun initChips(items: List<ChipFlowItem>) {
         chips.clear()
 
-        for(item in items) {
+        for (item in items) {
             chips.add(initChip(item))
         }
     }
-
 
     private fun initChip(chipItem: ChipFlowItem): ChipDrawable {
         return ChipDrawable.createFromAttributes(
@@ -164,25 +159,21 @@ class ChipFlowView @JvmOverloads constructor(
         }
     }
 
-
     private fun updateChipAttribute(action: (ChipDrawable) -> Unit) {
-        if(chips.isEmpty()) return
+        if (chips.isEmpty()) return
 
         chips.forEach(action)
     }
 
-
     override fun verifyDrawable(who: Drawable): Boolean {
         return (super.verifyDrawable(who) || (pressedChip == who))
     }
-
 
     override fun drawableStateChanged() {
         super.drawableStateChanged()
 
         pressedChip?.state = drawableState
     }
-
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val availableWidth = MeasureSpec.getSize(widthMeasureSpec)
@@ -194,7 +185,6 @@ class ChipFlowView @JvmOverloads constructor(
 
         super.onMeasure(widthMeasureSpec, newHeightMeasureSpec)
     }
-
 
     private fun measureChips(availableWidth: Int): Int {
         var chipWidth: Int
@@ -218,13 +208,13 @@ class ChipFlowView @JvmOverloads constructor(
 
         var newWidth: Int
 
-        for(chip in chips) {
-            chipWidth = (if(chip.intrinsicWidth > availableWidth) availableWidth else chip.intrinsicWidth)
+        for (chip in chips) {
+            chipWidth = (if (chip.intrinsicWidth > availableWidth) availableWidth else chip.intrinsicWidth)
             chipHeight = chip.intrinsicHeight
-            chipHorizontalSpacing = (if(takenWidth > initialWidth) itemHorizontalSpacing else 0)
+            chipHorizontalSpacing = (if (takenWidth > initialWidth) itemHorizontalSpacing else 0)
             newWidth = (takenWidth + chipWidth + chipTotalShadowDx + chipHorizontalSpacing)
 
-            if(newWidth > availableWidth) {
+            if (newWidth > availableWidth) {
                 takenWidth = initialWidth
                 takenHeight += (chipHeight + chipTotalShadowDy + itemVerticalSpacing)
                 chipHorizontalSpacing = 0
@@ -243,14 +233,12 @@ class ChipFlowView @JvmOverloads constructor(
         return (takenHeight + chipHeight + lastItemHeightCompensation)
     }
 
-
     override fun onDraw(canvas: Canvas) = with(canvas) {
-        for(chip in chips) {
+        for (chip in chips) {
             drawShadow(chip)
             drawChip(chip)
         }
     }
-
 
     private fun Canvas.drawShadow(chip: ChipDrawable) {
         val chipBounds = chip.bounds.toRectF()
@@ -266,14 +254,12 @@ class ChipFlowView @JvmOverloads constructor(
         )
     }
 
-
     private fun Canvas.drawChip(chip: ChipDrawable) {
         chip.draw(this)
     }
 
-
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        when(event.action) {
+        when (event.action) {
             MotionEvent.ACTION_DOWN -> onPointerDown(event)
             MotionEvent.ACTION_MOVE -> onPointerMoved(event)
 
@@ -284,23 +270,20 @@ class ChipFlowView @JvmOverloads constructor(
         return true
     }
 
-
     private fun onPointerDown(event: MotionEvent) {
         pressedChip = findPressedChip(event.x, event.y)
         isPressed = true
     }
 
-
     private fun onPointerMoved(event: MotionEvent) {
-        if(pressedChip?.bounds?.contains(event.x.toInt(), event.y.toInt()) == false) {
+        if (pressedChip?.bounds?.contains(event.x.toInt(), event.y.toInt()) == false) {
             isPressed = false
             pressedChip = null
         }
     }
 
-
     private fun onPointerReleased(event: MotionEvent) {
-        if((event.action == MotionEvent.ACTION_UP) && (pressedChip != null)) {
+        if ((event.action == MotionEvent.ACTION_UP) && (pressedChip != null)) {
             val clickedChip = checkNotNull(pressedChip)
             val chipItem = findItemForChip(clickedChip)
 
@@ -311,13 +294,11 @@ class ChipFlowView @JvmOverloads constructor(
         pressedChip = null
     }
 
-
     private fun findPressedChip(eventX: Float, eventY: Float): ChipDrawable? {
         return chips.firstOrNull {
             it.bounds.contains(eventX.toInt(), eventY.toInt())
         }
     }
-
 
     private fun findItemForChip(chip: ChipDrawable): ChipFlowItem? {
         return chips
@@ -325,10 +306,7 @@ class ChipFlowView @JvmOverloads constructor(
             ?.let(items::getOrNull)
     }
 
-
     private fun onClickDetected(item: ChipFlowItem) {
         onItemClicked?.invoke(item)
     }
-
-
 }
