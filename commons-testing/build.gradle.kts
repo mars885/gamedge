@@ -41,5 +41,4 @@ dependencies {
 
     implementation(deps.testing.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
-
 }

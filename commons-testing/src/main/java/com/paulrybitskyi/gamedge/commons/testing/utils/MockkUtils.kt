@@ -20,7 +20,6 @@ import io.mockk.MockKVerificationScope
 import io.mockk.Ordering
 import io.mockk.coVerify
 
-
 @Suppress("LongParameterList")
 fun coVerifyNotCalled(
     ordering: Ordering = Ordering.UNORDERED,
