@@ -34,7 +34,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@Suppress("TooGenericExceptionThrown")
 internal class SplashViewModelTest {
 
 
@@ -89,7 +88,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Logs error when auth refresh use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { refreshAuthUseCase.execute() } returns flow { throw Exception("error") }
+            coEvery { refreshAuthUseCase.execute() } returns flow { throw IllegalStateException("error") }
 
             SUT.init()
 
@@ -115,7 +114,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Dispatches toast showing command when auth refresh use cae throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { refreshAuthUseCase.execute() } returns flow { throw Exception("error") }
+            coEvery { refreshAuthUseCase.execute() } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 SUT.init()
@@ -143,7 +142,7 @@ internal class SplashViewModelTest {
     @Test
     fun `Routes to application exit when auth refresh use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { refreshAuthUseCase.execute() } returns flow { throw Exception("error") }
+            coEvery { refreshAuthUseCase.execute() } returns flow { throw IllegalStateException("error") }
 
             SUT.routeFlow.test {
                 SUT.init()

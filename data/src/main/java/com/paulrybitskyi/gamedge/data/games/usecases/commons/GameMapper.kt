@@ -57,7 +57,6 @@ import com.paulrybitskyi.gamedge.domain.games.DomainWebsiteCategory
 import javax.inject.Inject
 
 
-@Suppress("TooManyFunctions")
 internal class GameMapper @Inject constructor() {
 
 
