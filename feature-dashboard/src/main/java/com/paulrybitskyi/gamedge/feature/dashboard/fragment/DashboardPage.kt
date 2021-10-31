@@ -42,12 +42,16 @@ internal enum class DashboardPage(
 
         fun Int.toDashboardPageFromPosition(): DashboardPage {
             return values().find { it.position == this }
-                ?: throw IllegalArgumentException("Could not find the dashboard page for the specified position: $this.")
+                ?: throw IllegalArgumentException(
+                    "Could not find the dashboard page for the specified position: $this."
+                )
         }
 
         fun Int.toDashboardPageFromMenuItemId(): DashboardPage {
             return values().find { it.menuItemId == this }
-                ?: throw IllegalArgumentException("Could not find the dashboard page for the specified menu item ID: $this.")
+                ?: throw IllegalArgumentException(
+                    "Could not find the dashboard page for the specified menu item ID: $this."
+                )
         }
 
     }
