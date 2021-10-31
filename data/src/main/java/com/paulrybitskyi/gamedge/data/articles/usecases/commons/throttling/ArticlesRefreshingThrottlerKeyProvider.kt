@@ -29,7 +29,8 @@ internal interface ArticlesRefreshingThrottlerKeyProvider {
 
 
 @BindType
-internal class ArticlesRefreshingThrottlerKeyProviderImpl @Inject constructor() : ArticlesRefreshingThrottlerKeyProvider {
+internal class ArticlesRefreshingThrottlerKeyProviderImpl @Inject constructor() :
+    ArticlesRefreshingThrottlerKeyProvider {
 
 
     override fun provideArticlesKey(pagination: Pagination): String {

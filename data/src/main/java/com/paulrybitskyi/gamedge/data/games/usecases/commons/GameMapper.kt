@@ -16,11 +16,48 @@
 
 package com.paulrybitskyi.gamedge.data.games.usecases.commons
 
-import com.paulrybitskyi.gamedge.data.games.*
-import com.paulrybitskyi.gamedge.domain.games.*
+import com.paulrybitskyi.gamedge.data.games.DataAgeRating
+import com.paulrybitskyi.gamedge.data.games.DataAgeRatingCategory
+import com.paulrybitskyi.gamedge.data.games.DataAgeRatingType
+import com.paulrybitskyi.gamedge.data.games.DataCategory
+import com.paulrybitskyi.gamedge.data.games.DataCompany
+import com.paulrybitskyi.gamedge.data.games.DataGame
+import com.paulrybitskyi.gamedge.data.games.DataGenre
+import com.paulrybitskyi.gamedge.data.games.DataImage
+import com.paulrybitskyi.gamedge.data.games.DataInvolvedCompany
+import com.paulrybitskyi.gamedge.data.games.DataKeyword
+import com.paulrybitskyi.gamedge.data.games.DataMode
+import com.paulrybitskyi.gamedge.data.games.DataPlatform
+import com.paulrybitskyi.gamedge.data.games.DataPlayerPerspective
+import com.paulrybitskyi.gamedge.data.games.DataReleaseDate
+import com.paulrybitskyi.gamedge.data.games.DataReleaseDateCategory
+import com.paulrybitskyi.gamedge.data.games.DataTheme
+import com.paulrybitskyi.gamedge.data.games.DataVideo
+import com.paulrybitskyi.gamedge.data.games.DataWebsite
+import com.paulrybitskyi.gamedge.data.games.DataWebsiteCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainAgeRating
+import com.paulrybitskyi.gamedge.domain.games.DomainAgeRatingCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainAgeRatingType
+import com.paulrybitskyi.gamedge.domain.games.DomainCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainCompany
+import com.paulrybitskyi.gamedge.domain.games.DomainGame
+import com.paulrybitskyi.gamedge.domain.games.DomainGenre
+import com.paulrybitskyi.gamedge.domain.games.DomainImage
+import com.paulrybitskyi.gamedge.domain.games.DomainInvolvedCompany
+import com.paulrybitskyi.gamedge.domain.games.DomainKeyword
+import com.paulrybitskyi.gamedge.domain.games.DomainMode
+import com.paulrybitskyi.gamedge.domain.games.DomainPlatform
+import com.paulrybitskyi.gamedge.domain.games.DomainPlayerPerspective
+import com.paulrybitskyi.gamedge.domain.games.DomainReleaseDate
+import com.paulrybitskyi.gamedge.domain.games.DomainReleaseDateCategory
+import com.paulrybitskyi.gamedge.domain.games.DomainTheme
+import com.paulrybitskyi.gamedge.domain.games.DomainVideo
+import com.paulrybitskyi.gamedge.domain.games.DomainWebsite
+import com.paulrybitskyi.gamedge.domain.games.DomainWebsiteCategory
 import javax.inject.Inject
 
 
+@Suppress("TooManyFunctions")
 internal class GameMapper @Inject constructor() {
 
 

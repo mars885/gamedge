@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
-internal val AUTH_TOKEN_TTL_DEDUCTION = TimeUnit.DAYS.toMillis(7)
+internal val AUTH_TOKEN_TTL_DEDUCTION = TimeUnit.DAYS.toMillis(@Suppress("MagicNumber") 7)
 
 
 internal class AuthExpiryTimeCalculator @Inject constructor(
