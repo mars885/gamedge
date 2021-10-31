@@ -20,9 +20,6 @@ package com.paulrybitskyi.gamedge.feature.news
 
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 
-
 internal sealed class GamingNewsCommand : Command {
-
-    data class OpenUrl(val url: String): GamingNewsCommand()
-
+    data class OpenUrl(val url: String) : GamingNewsCommand()
 }

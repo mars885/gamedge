@@ -34,11 +34,10 @@ internal class GamingNewsItemView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val binding = ViewGamingNewsItemBinding.inflate(context.layoutInflater, this)
 
     var imageUrl by observeChanges<String?>(null) { _, newValue ->
-        if(newValue == null) {
+        if (newValue == null) {
             binding.imageView.isVisible = false
         } else {
             binding.imageView.isVisible = true
@@ -60,17 +59,13 @@ internal class GamingNewsItemView @JvmOverloads constructor(
 
     var onNewsItemClicked: (() -> Unit)? = null
 
-
     init {
         initCard()
     }
-
 
     private fun initCard() {
         setCardBackgroundColor(getColor(R.color.gaming_news_item_card_background_color))
         cardElevation = getDimension(R.dimen.gaming_news_item_card_elevation)
         onClick { onNewsItemClicked?.invoke() }
     }
-
-
 }

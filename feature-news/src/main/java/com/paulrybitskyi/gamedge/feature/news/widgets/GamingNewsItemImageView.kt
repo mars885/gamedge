@@ -39,30 +39,26 @@ internal class GamingNewsItemImageView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val defaultImage = checkNotNull(getDrawable(R.drawable.game_landscape_placeholder))
 
     var imageUrl by observeChanges("") { oldValue, newValue ->
-        if((imageIv.drawable == null) || (oldValue != newValue)) loadImage(newValue)
+        if ((imageIv.drawable == null) || (oldValue != newValue)) loadImage(newValue)
     }
 
     private lateinit var imageIv: AppCompatImageView
 
     @Inject lateinit var imageLoader: ImageLoader
 
-
     init {
         initCard()
         initImage()
     }
-
 
     private fun initCard() {
         setCardBackgroundColor(getColor(R.color.gaming_news_item_image_card_background_color))
         cardElevation = getDimension(R.dimen.gaming_news_item_image_card_elevation)
         radius = getDimension(R.dimen.gaming_news_item_image_card_radius)
     }
-
 
     private fun initImage() {
         imageIv = AppCompatImageView(context)
@@ -73,9 +69,8 @@ internal class GamingNewsItemImageView @JvmOverloads constructor(
             .also(::addView)
     }
 
-
     private fun loadImage(url: String) {
-        if(url.isBlank()) return
+        if (url.isBlank()) return
 
         imageLoader.loadImage(
             Config.Builder()
@@ -88,6 +83,4 @@ internal class GamingNewsItemImageView @JvmOverloads constructor(
                 .build()
         )
     }
-
-
 }

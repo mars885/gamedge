@@ -26,8 +26,8 @@ import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
 import com.paulrybitskyi.gamedge.feature.news.databinding.FragmentGamingNewsBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class GamingNewsFragment : BaseFragment<
@@ -36,12 +36,10 @@ class GamingNewsFragment : BaseFragment<
     StubNavigator
 >(R.layout.fragment_gaming_news) {
 
-
     override val viewBinding by viewBinding(FragmentGamingNewsBinding::bind)
     override val viewModel by viewModels<GamingNewsViewModel>()
 
     @Inject lateinit var urlOpener: UrlOpener
-
 
     override fun onInit() {
         super.onInit()
@@ -49,12 +47,10 @@ class GamingNewsFragment : BaseFragment<
         initGamingNewsView()
     }
 
-
     private fun initGamingNewsView() = with(viewBinding.gamingNewsView) {
         onNewsItemClicked = viewModel::onNewsItemClicked
         onRefreshRequested = viewModel::onRefreshRequested
     }
-
 
     override fun onBindViewModel() {
         super.onBindViewModel()
@@ -62,13 +58,11 @@ class GamingNewsFragment : BaseFragment<
         observeUiState()
     }
 
-
     private fun observeUiState() {
         viewModel.uiState
             .onEach { viewBinding.gamingNewsView.uiState = it }
             .observeIn(this)
     }
-
 
     override fun onLoadData() {
         super.onLoadData()
@@ -76,21 +70,17 @@ class GamingNewsFragment : BaseFragment<
         viewModel.loadData()
     }
 
-
     override fun onHandleCommand(command: Command) {
         super.onHandleCommand(command)
 
-        when(command) {
+        when (command) {
             is GamingNewsCommand.OpenUrl -> openUrl(command.url)
         }
     }
 
-
     private fun openUrl(url: String) {
-        if(!urlOpener.openUrl(url, requireActivity())) {
+        if (!urlOpener.openUrl(url, requireActivity())) {
             showShortToast(getString(R.string.url_opener_not_found))
         }
     }
-
-
 }

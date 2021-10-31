@@ -29,6 +29,7 @@ import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsUiStateFactory
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,11 +40,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-
 
 private const val MAX_ARTICLE_COUNT = 100
-
 
 @HiltViewModel
 class GamingNewsViewModel @Inject constructor(
@@ -53,7 +51,6 @@ class GamingNewsViewModel @Inject constructor(
     private val errorMapper: ErrorMapper,
     private val logger: Logger
 ) : BaseViewModel() {
-
 
     private var isObservingArticles = false
 
@@ -66,7 +63,6 @@ class GamingNewsViewModel @Inject constructor(
     val uiState: StateFlow<GamingNewsUiState>
         get() = _uiState
 
-
     init {
         useCaseParams = ObserveArticlesUseCase.Params(
             refreshArticles = true,
@@ -74,14 +70,12 @@ class GamingNewsViewModel @Inject constructor(
         )
     }
 
-
     fun loadData() {
         observeArticles()
     }
 
-
     private fun observeArticles() {
-        if(isObservingArticles) return
+        if (isObservingArticles) return
 
         articlesObservingJob = viewModelScope.launch {
             observeArticlesUseCase.execute(useCaseParams)
@@ -101,16 +95,13 @@ class GamingNewsViewModel @Inject constructor(
         }
     }
 
-
     fun onNewsItemClicked(model: GamingNewsItemModel) {
         dispatchCommand(GamingNewsCommand.OpenUrl(model.siteDetailUrl))
     }
 
-
     fun onRefreshRequested() {
         refreshArticles()
     }
-
 
     private fun refreshArticles() {
         viewModelScope.launch {
@@ -118,6 +109,4 @@ class GamingNewsViewModel @Inject constructor(
             observeArticles()
         }
     }
-
-
 }
