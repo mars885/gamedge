@@ -30,6 +30,7 @@ import com.paulrybitskyi.gamedge.domain.commons.entities.nextLimitPage
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
@@ -41,11 +42,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-
 
 private const val SUBSEQUENT_EMISSION_DELAY = 500L
-
 
 @HiltViewModel
 class LikedGamesViewModel @Inject constructor(
@@ -55,7 +53,6 @@ class LikedGamesViewModel @Inject constructor(
     private val errorMapper: ErrorMapper,
     private val logger: Logger
 ) : BaseViewModel() {
-
 
     private var isObservingGames = false
     private var hasMoreGamesToLoad = false
@@ -69,14 +66,12 @@ class LikedGamesViewModel @Inject constructor(
     val uiState: StateFlow<GamesUiState>
         get() = _uiState
 
-
     fun loadData() {
         observeGames()
     }
 
-
     private fun observeGames() {
-        if(isObservingGames) return
+        if (isObservingGames) return
 
         gamesObservingJob = viewModelScope.launch {
             observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
@@ -93,7 +88,7 @@ class LikedGamesViewModel @Inject constructor(
 
                     // Delaying to give a sense of "loading" since progress indicators
                     // do not have the time to fully show themselves
-                    if(isSubsequentEmission()) delay(SUBSEQUENT_EMISSION_DELAY)
+                    if (isSubsequentEmission()) delay(SUBSEQUENT_EMISSION_DELAY)
                 }
                 .onCompletion { isObservingGames = false }
                 .collect {
@@ -103,14 +98,12 @@ class LikedGamesViewModel @Inject constructor(
         }
     }
 
-
     private fun isSubsequentEmission(): Boolean {
         return !observeGamesUseCaseParams.pagination.hasDefaultLimit()
     }
 
-
     private fun configureNextLoad(uiState: GamesUiState) {
-        if(uiState !is GamesUiState.Result) return
+        if (uiState !is GamesUiState.Result) return
 
         val paginationLimit = observeGamesUseCaseParams.pagination.limit
         val itemCount = uiState.items.size
@@ -118,19 +111,16 @@ class LikedGamesViewModel @Inject constructor(
         hasMoreGamesToLoad = (paginationLimit == itemCount)
     }
 
-
     fun onGameClicked(game: GameModel) {
         route(LikedGamesRoute.Info(game.id))
     }
-
 
     fun onBottomReached() {
         observeNewGamesBatch()
     }
 
-
     private fun observeNewGamesBatch() {
-        if(!hasMoreGamesToLoad) return
+        if (!hasMoreGamesToLoad) return
 
         observeGamesUseCaseParams = observeGamesUseCaseParams.copy(
             observeGamesUseCaseParams.pagination.nextLimitPage()
@@ -141,6 +131,4 @@ class LikedGamesViewModel @Inject constructor(
             observeGames()
         }
     }
-
-
 }

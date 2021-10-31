@@ -17,7 +17,11 @@
 package com.paulrybitskyi.gamedge.feature.likes
 
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
@@ -26,15 +30,15 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUs
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 internal class LikedGamesViewModelTest {
-
 
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
@@ -43,7 +47,6 @@ internal class LikedGamesViewModelTest {
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: LikedGamesViewModel
-
 
     @Before
     fun setup() {
@@ -58,7 +61,6 @@ internal class LikedGamesViewModelTest {
             logger = logger
         )
     }
-
 
     @Test
     fun `Emits correct ui states when loading data`() {
@@ -80,7 +82,6 @@ internal class LikedGamesViewModelTest {
         }
     }
 
-
     @Test
     fun `Logs error when liked games loading fails`() {
         mainCoroutineRule.runBlockingTest {
@@ -91,7 +92,6 @@ internal class LikedGamesViewModelTest {
             assertThat(logger.errorMessage).isNotEmpty
         }
     }
-
 
     @Test
     fun `Dispatches toast showing command when liked games loading fails`() {
@@ -105,7 +105,6 @@ internal class LikedGamesViewModelTest {
             }
         }
     }
-
 
     @Test
     fun `Routes to info screen when game is clicked`() {
@@ -129,7 +128,6 @@ internal class LikedGamesViewModelTest {
             }
         }
     }
-
 
     private class FakeUiStateFactory : LikedGamesUiStateFactory {
 
@@ -155,8 +153,5 @@ internal class LikedGamesViewModelTest {
                 }
             )
         }
-
     }
-
-
 }
