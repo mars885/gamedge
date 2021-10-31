@@ -21,7 +21,11 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
 import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_HTTP
+import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_NETWORK
+import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_UNKNOWN
+import com.paulrybitskyi.gamedge.commons.testing.DATA_PAGINATION
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesEndpoint
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticleMapper
@@ -36,23 +40,19 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
-
 private val API_ARTICLES = listOf(
     ApiArticle(publicationDate = "2020-03-02 12:14:16"),
     ApiArticle(publicationDate = "2020-03-02 12:14:16"),
     ApiArticle(publicationDate = "2020-03-02 12:14:16")
 )
 
-
 internal class ArticlesGamespotDataStoreTest {
-
 
     @MockK private lateinit var articlesEndpoint: ArticlesEndpoint
 
     private lateinit var articleMapper: ArticleMapper
     private lateinit var errorMapper: ErrorMapper
     private lateinit var SUT: ArticlesGamespotDataStore
-
 
     @Before
     fun setup() {
@@ -68,7 +68,6 @@ internal class ArticlesGamespotDataStoreTest {
         )
     }
 
-
     @Test
     fun `Returns articles successfully`() {
         runBlockingTest {
@@ -80,7 +79,6 @@ internal class ArticlesGamespotDataStoreTest {
                 .isEqualTo(articleMapper.mapToDataArticles(API_ARTICLES))
         }
     }
-
 
     @Test
     fun `Returns http error when fetching articles`() {
@@ -94,7 +92,6 @@ internal class ArticlesGamespotDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns network error when fetching articles`() {
         runBlockingTest {
@@ -107,7 +104,6 @@ internal class ArticlesGamespotDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns unknown error when fetching articles`() {
         runBlockingTest {
@@ -119,6 +115,4 @@ internal class ArticlesGamespotDataStoreTest {
                 .isEqualTo(errorMapper.mapToDataError(API_ERROR_UNKNOWN))
         }
     }
-
-
 }

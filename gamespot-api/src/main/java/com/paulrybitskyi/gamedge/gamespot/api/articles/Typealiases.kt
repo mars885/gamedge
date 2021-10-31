@@ -19,6 +19,5 @@ package com.paulrybitskyi.gamedge.gamespot.api.articles
 import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.Article
 import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.ImageType
 
-
 internal typealias ApiArticle = Article
 internal typealias ApiImageType = ImageType

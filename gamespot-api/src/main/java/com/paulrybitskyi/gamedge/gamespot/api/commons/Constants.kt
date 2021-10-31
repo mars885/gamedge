@@ -17,7 +17,5 @@
 package com.paulrybitskyi.gamedge.gamespot.api.commons
 
 internal object Constants {
-
     const val GAMESPOT_API_BASE_URL = "https://www.gamespot.com/api/"
-
 }

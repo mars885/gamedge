@@ -25,12 +25,7 @@ internal data class Response<T : Any>(
     val results: List<T> = emptyList()
 ) {
 
-
     object Schema {
-
         const val RESULTS = "results"
-
     }
-
-
 }

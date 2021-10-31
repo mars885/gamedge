@@ -23,7 +23,6 @@ import javax.inject.Inject
 
 internal class ArticlePublicationDateMapper @Inject constructor() {
 
-
     private companion object {
 
         private const val PUBLICATION_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
@@ -31,9 +30,7 @@ internal class ArticlePublicationDateMapper @Inject constructor() {
         // The best we can do here, since the API does not return
         // the time zone for some reason.
         private const val PUBLICATION_DATE_TIME_ZONE = "America/Los_Angeles"
-
     }
-
 
     fun mapToTimestamp(publicationDate: String): Long {
         return LocalDateTime.parse(publicationDate, ofPattern(PUBLICATION_DATE_FORMAT))
@@ -41,6 +38,4 @@ internal class ArticlePublicationDateMapper @Inject constructor() {
             .toInstant()
             .toEpochMilli()
     }
-
-
 }
