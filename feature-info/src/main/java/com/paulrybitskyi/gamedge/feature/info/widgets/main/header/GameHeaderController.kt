@@ -21,7 +21,13 @@ import android.text.TextUtils
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.DimensionSnapshotType
+import com.paulrybitskyi.commons.ktx.doOnApplyWindowInsets
+import com.paulrybitskyi.commons.ktx.getDimension
+import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.commons.ktx.makeGone
+import com.paulrybitskyi.commons.ktx.onClick
+import com.paulrybitskyi.commons.ktx.postAction
 import com.paulrybitskyi.commons.ktx.views.addTransitionListener
 import com.paulrybitskyi.commons.ktx.views.updateConstraintSets
 import com.paulrybitskyi.commons.utils.observeChanges

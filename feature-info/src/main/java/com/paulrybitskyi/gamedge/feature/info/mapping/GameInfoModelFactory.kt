@@ -39,6 +39,7 @@ internal interface GameInfoModelFactory {
 
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
+@Suppress("LongParameterList")
 internal class GameInfoModelFactoryImpl @Inject constructor(
     private val headerModelFactory: GameInfoHeaderModelFactory,
     private val videoModelFactory: GameInfoVideoModelFactory,

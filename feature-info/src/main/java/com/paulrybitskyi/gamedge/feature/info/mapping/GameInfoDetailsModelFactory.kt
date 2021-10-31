@@ -16,7 +16,12 @@
 
 package com.paulrybitskyi.gamedge.feature.info.mapping
 
-import com.paulrybitskyi.gamedge.domain.games.entities.*
+import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.domain.games.entities.Genre
+import com.paulrybitskyi.gamedge.domain.games.entities.Mode
+import com.paulrybitskyi.gamedge.domain.games.entities.Platform
+import com.paulrybitskyi.gamedge.domain.games.entities.PlayerPerspective
+import com.paulrybitskyi.gamedge.domain.games.entities.Theme
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoDetailsModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
@@ -41,6 +46,7 @@ internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoD
 
 
     override fun createDetailsModel(game: Game): GameInfoDetailsModel? {
+        @Suppress("ComplexCondition")
         if(game.genres.isEmpty() &&
             game.platforms.isEmpty() &&
             game.modes.isEmpty() &&
