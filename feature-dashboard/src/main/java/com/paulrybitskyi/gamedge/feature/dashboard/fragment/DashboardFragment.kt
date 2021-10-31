@@ -43,16 +43,13 @@ internal class DashboardFragment : BaseFragment<
     DashboardNavigator
 >(R.layout.fragment_dashboard) {
 
-
     private companion object {
 
         private const val KEY_ADAPTER_STATE = "adapter_state"
         private const val KEY_SELECTED_PAGE = "selected_page"
 
         private val DEFAULT_SELECTED_PAGE = DashboardPage.DISCOVER
-
     }
-
 
     override val viewBinding by viewBinding(FragmentDashboardBinding::bind)
     override val viewModel by viewModels<DashboardViewModel>()
@@ -60,7 +57,6 @@ internal class DashboardFragment : BaseFragment<
     private lateinit var viewPagerAdapter: DashboardViewPagerAdapter
 
     @Inject lateinit var viewPagerAdapterFactory: DashboardViewPagerAdapterFactory
-
 
     override fun onInit() {
         super.onInit()
@@ -70,12 +66,10 @@ internal class DashboardFragment : BaseFragment<
         initViewPager()
     }
 
-
     private fun initToolbar() = with(viewBinding.toolbar) {
         applyWindowTopInsetAsPadding()
         onRightButtonClickListener = { viewModel.onToolbarRightButtonClicked() }
     }
-
 
     private fun initBottomNavigation() = with(viewBinding.bottomNav) {
         applyWindowBottomInsetAsMargin()
@@ -86,7 +80,6 @@ internal class DashboardFragment : BaseFragment<
         setOnNavigationItemSelectedListener(::onNavigationItemSelected)
     }
 
-
     private fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         viewBinding.viewPagerContainer.viewPager.setCurrentItem(
             menuItem.toPagePosition(),
@@ -96,11 +89,9 @@ internal class DashboardFragment : BaseFragment<
         return true
     }
 
-
     private fun MenuItem.toPagePosition(): Int {
         return itemId.toDashboardPageFromMenuItemId().position
     }
-
 
     private fun initViewPager() = with(viewBinding.viewPagerContainer.viewPager) {
         adapter = initViewPagerAdapter()
@@ -108,12 +99,10 @@ internal class DashboardFragment : BaseFragment<
         isUserInputEnabled = false
     }
 
-
     private fun initViewPagerAdapter(): DashboardViewPagerAdapter {
         return viewPagerAdapterFactory.createAdapter(this)
             .also { viewPagerAdapter = it }
     }
-
 
     override fun onPostInit() {
         super.onPostInit()
@@ -121,21 +110,18 @@ internal class DashboardFragment : BaseFragment<
         selectPage(DEFAULT_SELECTED_PAGE)
     }
 
-
     private fun selectPage(page: DashboardPage) = with(viewBinding) {
         bottomNav.selectedItemId = page.menuItemId
         viewPagerContainer.viewPager.setCurrentItem(page.position, false)
     }
 
-
     override fun onRoute(route: Route) {
         super.onRoute(route)
 
-        when(route) {
+        when (route) {
             is DashboardRoute.Search -> navigator.goToSearch()
         }
     }
-
 
     override fun onRestoreState(state: Bundle) {
         super.onRestoreState(state)
@@ -144,7 +130,6 @@ internal class DashboardFragment : BaseFragment<
         state.getParcelable<Parcelable>(KEY_ADAPTER_STATE)?.let(viewPagerAdapter::restoreState)
         selectPage(state.getSerializable(KEY_SELECTED_PAGE, DEFAULT_SELECTED_PAGE))
     }
-
 
     override fun onSaveState(state: Bundle) {
         super.onSaveState(state)
@@ -156,6 +141,4 @@ internal class DashboardFragment : BaseFragment<
             viewBinding.bottomNav.selectedItemId.toDashboardPageFromMenuItemId()
         )
     }
-
-
 }

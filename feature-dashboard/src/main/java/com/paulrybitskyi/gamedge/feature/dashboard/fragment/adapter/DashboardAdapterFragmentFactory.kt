@@ -19,11 +19,7 @@ package com.paulrybitskyi.gamedge.feature.dashboard.fragment.adapter
 import androidx.fragment.app.Fragment
 
 interface DashboardAdapterFragmentFactory {
-
     fun createNewsFragment(): Fragment
-
     fun createDiscoveryFragment(): Fragment
-
     fun createLikesFragment(): Fragment
-
 }
