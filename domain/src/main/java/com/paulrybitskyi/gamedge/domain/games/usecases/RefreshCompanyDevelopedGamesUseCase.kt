@@ -32,5 +32,4 @@ interface RefreshCompanyDevelopedGamesUseCase : UseCase<
         val company: Company,
         val pagination: Pagination
     )
-
 }

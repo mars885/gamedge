@@ -50,5 +50,4 @@ data class Game(
 
     val developerCompany: Company?
         get() = involvedCompanies.firstOrNull(InvolvedCompany::isDeveloper)?.company
-
 }

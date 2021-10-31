@@ -40,7 +40,6 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Video
 import com.paulrybitskyi.gamedge.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 
-
 typealias ObservableGamesUseCase = ObservableUseCase<ObserveGamesUseCaseParams, List<Game>>
 typealias RefreshableGamesUseCase = ObservableUseCase<RefreshGamesUseCaseParams, DomainResult<List<Game>>>
 

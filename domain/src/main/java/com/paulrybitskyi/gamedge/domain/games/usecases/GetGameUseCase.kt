@@ -24,5 +24,4 @@ import kotlinx.coroutines.flow.Flow
 interface GetGameUseCase : UseCase<GetGameUseCase.Params, Flow<DomainResult<Game>>> {
 
     data class Params(val gameId: Int)
-
 }

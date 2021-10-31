@@ -26,5 +26,4 @@ interface ObserveArticlesUseCase : ObservableUseCase<ObserveArticlesUseCase.Para
         val refreshArticles: Boolean,
         val pagination: Pagination = Pagination()
     )
-
 }
