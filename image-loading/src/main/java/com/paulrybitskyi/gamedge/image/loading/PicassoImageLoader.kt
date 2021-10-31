@@ -28,29 +28,28 @@ import javax.inject.Singleton
 @BindType
 internal class PicassoImageLoader @Inject constructor(
     private val picasso: Picasso
-): ImageLoader {
-
+) : ImageLoader {
 
     override fun loadImage(config: Config) {
         config.onStart?.invoke()
 
         val requestCreator = picasso.load(config.imageUrl)
 
-        if(config.shouldCenterCrop) requestCreator.centerCrop()
-        if(config.shouldCenterInside) requestCreator.centerInside()
-        if(config.shouldFit) requestCreator.fit()
-        if(config.hasTargetSize) requestCreator.resize(config.targetWidth, config.targetHeight)
+        if (config.shouldCenterCrop) requestCreator.centerCrop()
+        if (config.shouldCenterInside) requestCreator.centerInside()
+        if (config.shouldFit) requestCreator.fit()
+        if (config.hasTargetSize) requestCreator.resize(config.targetWidth, config.targetHeight)
 
         config.progressDrawable?.let(requestCreator::placeholder)
         config.errorDrawable?.let(requestCreator::error)
 
-        if(config.hasTransformations) {
+        if (config.hasTransformations) {
             config.transformations
                 .map(::PicassoTransformation)
                 .let { requestCreator.transform(it) }
         }
 
-        if(config.hasAtLeastOneResultListener) {
+        if (config.hasAtLeastOneResultListener) {
             requestCreator.into(
                 target = config.target,
                 onSuccess = config.onSuccess,
@@ -61,10 +60,7 @@ internal class PicassoImageLoader @Inject constructor(
         }
     }
 
-
     override fun cancelRequests(target: ImageView) {
         picasso.cancelRequest(target)
     }
-
-
 }
