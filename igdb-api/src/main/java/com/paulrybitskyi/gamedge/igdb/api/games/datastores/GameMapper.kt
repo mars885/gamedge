@@ -16,8 +16,40 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.datastores
 
-import com.paulrybitskyi.gamedge.data.games.*
-import com.paulrybitskyi.gamedge.igdb.api.games.*
+import com.paulrybitskyi.gamedge.data.games.DataAgeRating
+import com.paulrybitskyi.gamedge.data.games.DataAgeRatingCategory
+import com.paulrybitskyi.gamedge.data.games.DataAgeRatingType
+import com.paulrybitskyi.gamedge.data.games.DataCategory
+import com.paulrybitskyi.gamedge.data.games.DataCompany
+import com.paulrybitskyi.gamedge.data.games.DataGame
+import com.paulrybitskyi.gamedge.data.games.DataGenre
+import com.paulrybitskyi.gamedge.data.games.DataImage
+import com.paulrybitskyi.gamedge.data.games.DataInvolvedCompany
+import com.paulrybitskyi.gamedge.data.games.DataKeyword
+import com.paulrybitskyi.gamedge.data.games.DataMode
+import com.paulrybitskyi.gamedge.data.games.DataPlatform
+import com.paulrybitskyi.gamedge.data.games.DataPlayerPerspective
+import com.paulrybitskyi.gamedge.data.games.DataReleaseDate
+import com.paulrybitskyi.gamedge.data.games.DataReleaseDateCategory
+import com.paulrybitskyi.gamedge.data.games.DataTheme
+import com.paulrybitskyi.gamedge.data.games.DataVideo
+import com.paulrybitskyi.gamedge.data.games.DataWebsite
+import com.paulrybitskyi.gamedge.data.games.DataWebsiteCategory
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiAgeRating
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiCategory
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiCompany
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiGenre
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiImage
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiInvolvedCompany
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiKeyword
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiMode
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiPlatform
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiPlayerPerspective
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiReleaseDate
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiTheme
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiVideo
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiWebsite
 import javax.inject.Inject
 
 

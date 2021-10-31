@@ -45,10 +45,10 @@ internal class IgdbErrorMessageExtractor @Inject constructor(
         val errorMessage = errorPrimitive.content
 
         errorMessage
-    } catch(error: Throwable) {
+    } catch(expected: Throwable) {
         throw IllegalStateException(
             "Cannot extract a message from the response body: $responseBody",
-            error
+            expected
         )
     }
 
