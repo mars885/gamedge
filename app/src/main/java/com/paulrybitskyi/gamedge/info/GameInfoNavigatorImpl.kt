@@ -27,7 +27,6 @@ internal class GameInfoNavigatorImpl @Inject constructor(
     private val navController: NavController
 ) : GameInfoNavigator {
 
-
     override fun goToImageViewer(
         title: String?,
         initialPosition: Int,
@@ -42,15 +41,11 @@ internal class GameInfoNavigatorImpl @Inject constructor(
         )
     }
 
-
     override fun goToInfo(gameId: Int) {
         navController.navigate(GameInfoFragmentDirections.actionInfoFragment(gameId))
     }
 
-
     override fun goBack() {
         navController.popBackStack()
     }
-
-
 }

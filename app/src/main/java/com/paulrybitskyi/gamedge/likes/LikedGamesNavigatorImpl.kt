@@ -27,10 +27,7 @@ internal class LikedGamesNavigatorImpl @Inject constructor(
     private val navController: NavController
 ) : LikedGamesNavigator {
 
-
     override fun goToInfo(gameId: Int) {
         navController.navigate(DashboardFragmentDirections.actionInfoFragment(gameId))
     }
-
-
 }
