@@ -23,3 +23,4 @@ internal enum class ResponseFormat(val rawFormat: String) {
     JSONP("jsonp")
 
 }
+
