@@ -18,7 +18,11 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
 import androidx.fragment.app.viewModels
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.addOnBackPressCallback
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.navigationBarColor
+import com.paulrybitskyi.commons.ktx.statusBarColor
+import com.paulrybitskyi.commons.ktx.window
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
