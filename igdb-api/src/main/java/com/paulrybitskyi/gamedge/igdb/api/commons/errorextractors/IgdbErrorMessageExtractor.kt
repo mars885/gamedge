@@ -19,22 +19,19 @@ package com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.ErrorMessageExtractorKey
 import com.paulrybitskyi.hiltbinder.BindType
+import javax.inject.Inject
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import javax.inject.Inject
-
 
 private const val ERROR_MESSAGE_NAME = "title"
-
 
 @BindType(withQualifier = true)
 @ErrorMessageExtractorKey(ErrorMessageExtractorKey.Type.IGDB)
 internal class IgdbErrorMessageExtractor @Inject constructor(
     private val json: Json
 ) : ErrorMessageExtractor {
-
 
     override fun extract(responseBody: String): String = try {
         val rootElement = json.parseToJsonElement(responseBody)
@@ -45,12 +42,10 @@ internal class IgdbErrorMessageExtractor @Inject constructor(
         val errorMessage = errorPrimitive.content
 
         errorMessage
-    } catch(expected: Throwable) {
+    } catch (expected: Throwable) {
         throw IllegalStateException(
             "Cannot extract a message from the response body: $responseBody",
             expected
         )
     }
-
-
 }

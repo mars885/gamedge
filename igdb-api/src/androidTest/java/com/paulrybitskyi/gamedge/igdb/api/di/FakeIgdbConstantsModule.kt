@@ -31,9 +31,6 @@ import dagger.hilt.testing.TestInstallIn
 )
 internal interface FakeIgdbConstantsModule {
 
-
     @Binds
     fun bindIgdbConstantsProvider(binding: FakeIgdbConstantsProvider): IgdbConstantsProvider
-
-
 }

@@ -36,23 +36,19 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
-
 private val API_OAUTH_CREDENTIALS = ApiOauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",
     tokenTtl = 500L
 )
 
-
 internal class AuthIgdbDataStoreTest {
-
 
     @MockK private lateinit var authEndpoint: AuthEndpoint
 
     private lateinit var authMapper: AuthMapper
     private lateinit var errorMapper: ErrorMapper
     private lateinit var SUT: AuthIgdbDataStore
-
 
     @Before
     fun setup() {
@@ -67,7 +63,6 @@ internal class AuthIgdbDataStoreTest {
         )
     }
 
-
     @Test
     fun `Returns oauth credentials successfully`() {
         runBlockingTest {
@@ -79,7 +74,6 @@ internal class AuthIgdbDataStoreTest {
                 .isEqualTo(authMapper.mapToDataOauthCredentials(API_OAUTH_CREDENTIALS))
         }
     }
-
 
     @Test
     fun `Returns http error successfully`() {
@@ -93,7 +87,6 @@ internal class AuthIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns network error successfully`() {
         runBlockingTest {
@@ -106,7 +99,6 @@ internal class AuthIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns unknown error successfully`() {
         runBlockingTest {
@@ -118,6 +110,4 @@ internal class AuthIgdbDataStoreTest {
                 .isEqualTo(errorMapper.mapToDataError(API_ERROR_UNKNOWN))
         }
     }
-
-
 }

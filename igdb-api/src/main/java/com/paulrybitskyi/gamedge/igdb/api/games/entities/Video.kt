@@ -32,13 +32,8 @@ internal data class Video(
     val name: String
 ) {
 
-
     object Schema {
-
         const val ID = "video_id"
         const val NAME = "name"
-
     }
-
-
 }

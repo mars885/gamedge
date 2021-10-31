@@ -18,16 +18,10 @@ package com.paulrybitskyi.gamedge.igdb.api.commons
 
 import javax.inject.Inject
 
-
 interface IgdbConstantsProvider {
-
     val apiBaseUrl: String
-
 }
 
-
 internal class ProdIgdbConstantsProvider @Inject constructor() : IgdbConstantsProvider {
-
     override val apiBaseUrl: String = Constants.IGDB_API_BASE_URL
-
 }

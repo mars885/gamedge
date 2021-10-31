@@ -41,16 +41,11 @@ internal data class Company(
     val developedGames: List<Int> = listOf(),
 ) {
 
-
     object Schema {
-
         const val ID = "id"
         const val NAME = "name"
         const val WEBSITE_URL = "url"
         const val LOGO = "logo"
         const val DEVELOPED_GAMES = "developed"
-
     }
-
-
 }

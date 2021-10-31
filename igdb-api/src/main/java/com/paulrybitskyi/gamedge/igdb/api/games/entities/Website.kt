@@ -35,14 +35,9 @@ internal data class Website(
     val category: WebsiteCategory,
 ) {
 
-
     object Schema {
-
         const val ID = "id"
         const val URL = "url"
         const val CATEGORY = "category"
-
     }
-
-
 }

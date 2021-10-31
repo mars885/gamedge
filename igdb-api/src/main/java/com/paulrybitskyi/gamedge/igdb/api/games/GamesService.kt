@@ -25,5 +25,4 @@ internal interface GamesService {
 
     @POST("games")
     suspend fun getGames(@Body body: String): ApiResult<List<Game>>
-
 }

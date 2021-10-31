@@ -17,13 +17,12 @@
 package com.paulrybitskyi.gamedge.igdb.api.utils
 
 import com.paulrybitskyi.gamedge.igdb.api.commons.IgdbConstantsProvider
-import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Inject
+import okhttp3.mockwebserver.MockWebServer
 
 internal class FakeIgdbConstantsProvider @Inject constructor(
     mockWebServer: MockWebServer
 ) : IgdbConstantsProvider {
 
     override val apiBaseUrl: String = mockWebServer.url("/").toString()
-
 }

@@ -22,7 +22,6 @@ import javax.inject.Inject
 
 internal class Authorizer @Inject constructor(private val authLocalDataStore: AuthLocalDataStore) {
 
-
     suspend fun buildAuthorizationHeader(type: AuthorizationType): String {
         val credentials = checkNotNull(authLocalDataStore.getOauthCredentials())
         val authorizationHeader = buildString {
@@ -33,6 +32,4 @@ internal class Authorizer @Inject constructor(private val authLocalDataStore: Au
 
         return authorizationHeader
     }
-
-
 }

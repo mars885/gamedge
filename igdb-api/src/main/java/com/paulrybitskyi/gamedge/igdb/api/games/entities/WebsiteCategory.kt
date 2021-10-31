@@ -24,11 +24,8 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-
 @Serializable(with = WebsiteCategorySerializer::class)
 internal enum class WebsiteCategory(val rawValue: Int) {
-
-
     UNKNOWN(rawValue = -1),
     OFFICIAL(rawValue = 1),
     WIKIA(rawValue = 2),
@@ -46,36 +43,26 @@ internal enum class WebsiteCategory(val rawValue: Int) {
     GOG(rawValue = 17),
     DISCORD(rawValue = 18);
 
-
     internal companion object {
 
         fun Int.asWebsiteCategory(): WebsiteCategory {
             return values().find { it.rawValue == this } ?: UNKNOWN
         }
-
     }
-
-
 }
 
-
 internal object WebsiteCategorySerializer : KSerializer<WebsiteCategory> {
-
 
     override val descriptor = PrimitiveSerialDescriptor(
         checkNotNull(WebsiteCategorySerializer::class.qualifiedName),
         PrimitiveKind.INT
     )
 
-
     override fun serialize(encoder: Encoder, value: WebsiteCategory) {
         encoder.encodeInt(value.rawValue)
     }
 
-
     override fun deserialize(decoder: Decoder): WebsiteCategory {
         return decoder.decodeInt().asWebsiteCategory()
     }
-
-
 }

@@ -29,14 +29,9 @@ internal data class OauthCredentials(
     val tokenTtl: Long
 ) {
 
-
     object Schema {
-
         const val ACCESS_TOKEN = "access_token"
         const val TOKEN_TYPE = "token_type"
         const val TOKEN_TTL = "expires_in"
-
     }
-
-
 }

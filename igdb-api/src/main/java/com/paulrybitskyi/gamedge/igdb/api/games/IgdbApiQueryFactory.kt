@@ -28,23 +28,14 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSeriali
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface IgdbApiQueryFactory {
-
     fun createGamesSearchingQuery(searchQuery: String, offset: Int, limit: Int): String
-
     fun createPopularGamesRetrievalQuery(offset: Int, limit: Int): String
-
     fun createRecentlyReleasedGamesRetrievalQuery(offset: Int, limit: Int): String
-
     fun createComingSoonGamesRetrievalQuery(offset: Int, limit: Int): String
-
     fun createMostAnticipatedGamesRetrievalQuery(offset: Int, limit: Int): String
-
     fun createGamesRetrievalQuery(gameIds: List<Int>, offset: Int, limit: Int): String
-
 }
-
 
 @BindType
 internal class IgdbApiQueryFactoryImpl @Inject constructor(
@@ -53,11 +44,9 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
     private val queryTimestampProvider: QueryTimestampProvider
 ) : IgdbApiQueryFactory {
 
-
     private val gameEntityFields by lazy {
         apicalypseSerializer.serialize(Game::class.java)
     }
-
 
     override fun createGamesSearchingQuery(searchQuery: String, offset: Int, limit: Int): String {
         return apicalypseQueryBuilderFactory.create()
@@ -67,7 +56,6 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
             .limit(limit)
             .build()
     }
-
 
     override fun createPopularGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getPopularGamesMinReleaseDate()
@@ -83,7 +71,6 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
             .sortDesc(TOTAL_RATING)
             .build()
     }
-
 
     override fun createRecentlyReleasedGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMinReleaseDate()
@@ -101,7 +88,6 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
             .build()
     }
 
-
     override fun createComingSoonGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getComingSoonGamesMinReleaseDate()
 
@@ -113,7 +99,6 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
             .sortAsc(RELEASE_DATE)
             .build()
     }
-
 
     override fun createMostAnticipatedGamesRetrievalQuery(offset: Int, limit: Int): String {
         val minReleaseDateTimestamp = queryTimestampProvider.getMostAnticipatedGamesMinReleaseDate()
@@ -130,7 +115,6 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
             .build()
     }
 
-
     override fun createGamesRetrievalQuery(gameIds: List<Int>, offset: Int, limit: Int): String {
         val stringifiedGameIds = gameIds.map(Integer::toString)
 
@@ -141,6 +125,4 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
             .limit(limit)
             .build()
     }
-
-
 }

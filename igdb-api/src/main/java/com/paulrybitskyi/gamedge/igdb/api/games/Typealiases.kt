@@ -35,7 +35,6 @@ import com.paulrybitskyi.gamedge.igdb.api.games.entities.Video
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Website
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.WebsiteCategory
 
-
 internal typealias ApiAgeRating = AgeRating
 internal typealias ApiAgeRatingCategory = AgeRatingCategory
 internal typealias ApiAgeRatingType = AgeRatingType
