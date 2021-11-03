@@ -26,7 +26,8 @@ import com.paulrybitskyi.commons.ktx.layoutInflater
 import com.paulrybitskyi.commons.utils.observeChanges
 import kotlin.reflect.KClass
 
-private inline class ViewType(val type: Int)
+@JvmInline
+private value class ViewType(val type: Int)
 
 abstract class AbstractRecyclerViewAdapter<IT : Item<*, in Dependencies>, Dependencies : ItemDependencies>(
     context: Context,

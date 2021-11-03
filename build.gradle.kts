@@ -74,17 +74,17 @@ allprojects {
 
 subprojects {
 
-    tasks.withType(KotlinCompile::class.java).all {
+    tasks.withType<KotlinCompile>().all {
         sourceCompatibility = appConfig.javaCompatibilityVersion.toString()
         targetCompatibility = appConfig.javaCompatibilityVersion.toString()
 
         kotlinOptions {
             freeCompilerArgs += listOf(
-                "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
-                "-Xuse-experimental=kotlin.time.ExperimentalTime",
-                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xuse-experimental=kotlinx.coroutines.FlowPreview",
-                "-Xuse-experimental=kotlinx.serialization.ExperimentalSerializationApi"
+                "-Xopt-in=kotlin.ExperimentalStdlibApi",
+                "-Xopt-in=kotlin.time.ExperimentalTime",
+                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xopt-in=kotlinx.coroutines.FlowPreview",
+                "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
             )
 
             jvmTarget = appConfig.kotlinCompatibilityVersion.toString()
