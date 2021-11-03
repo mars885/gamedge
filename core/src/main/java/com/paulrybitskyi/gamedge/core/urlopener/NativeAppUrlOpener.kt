@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core.urlopener
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -38,6 +39,7 @@ internal class NativeAppUrlOpener @Inject constructor() : UrlOpener {
         }
     }
 
+    @SuppressLint("InlinedApi")
     private fun openUrlInNewWay(url: String, context: Context): Boolean {
         val intent = createIntent(url, context).apply {
             addFlags(Intent.FLAG_ACTIVITY_REQUIRE_NON_BROWSER)

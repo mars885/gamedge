@@ -76,7 +76,7 @@ internal class DashboardFragment : BaseFragment<
             unselectedStateColor = getColor(R.color.bottom_navigation_item_color_state_unselected),
             selectedStateColor = getColor(R.color.bottom_navigation_item_color_state_selected)
         )
-        setOnNavigationItemSelectedListener(::onNavigationItemSelected)
+        setOnItemSelectedListener(::onNavigationItemSelected)
     }
 
     private fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
