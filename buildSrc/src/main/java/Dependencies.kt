@@ -27,8 +27,8 @@ object appConfig {
     const val versionCode = 1
     const val versionName = "1.0.0"
 
-    val javaCompatibilityVersion = JavaVersion.VERSION_1_8
-    val kotlinCompatibilityVersion = JavaVersion.VERSION_1_8
+    val javaCompatibilityVersion = JavaVersion.VERSION_11
+    val kotlinCompatibilityVersion = JavaVersion.VERSION_11
 }
 
 object versions {
