@@ -74,6 +74,8 @@ The aim of this project is to showcase the latest trends in Android development 
 - [Hilt Binder](https://github.com/mars885/hilt-binder) - An annotating processing library that automatically generates Dagger Hilt's `@Binds` methods.
 - [Kotlin Result](https://github.com/michaelbull/kotlin-result) - A multiplatform Result monad for modelling success or failure operations.
 - [PhotoView](https://github.com/Baseflow/PhotoView) - A library that allows to zoom Android images.
+- [Detekt](https://github.com/detekt/detekt) - A static code analysis library for Kotlin.
+- [Ktlint](https://github.com/pinterest/ktlint) - A library for formatting code according to official guidelines.
 - [Testing](https://developer.android.com/training/testing) - The app is currently covered with unit tests and instrumentation tests.
   - [JUnit](https://junit.org/junit5) - JUnit is a unit testing framework for the Java programming language.
   - [AssertJ](https://assertj.github.io/doc) - AssertJ is a java library providing a rich set of assertions.
