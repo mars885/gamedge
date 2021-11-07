@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.articles.usecases
+package com.paulrybitskyi.gamedge.feature.news.widgets
 
-import com.paulrybitskyi.gamedge.domain.articles.entities.Article
-import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
-import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
+data class GamingNewsState(
+    val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
+    val news: List<GamingNewsItemModel> = emptyList(),
+)
 
-interface ObserveArticlesUseCase : ObservableUseCase<ObserveArticlesUseCase.Params, List<Article>> {
+val GamingNewsState.isInEmptyState: Boolean
+    get() = (!isLoading && news.isEmpty())
 
-    data class Params(
-        val pagination: Pagination = Pagination()
-    )
-}
+val GamingNewsState.isInSuccessState: Boolean
+    get() = news.isNotEmpty()

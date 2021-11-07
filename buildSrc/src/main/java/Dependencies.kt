@@ -132,7 +132,7 @@ object deps {
 
     object compose {
 
-        private const val coilCompose = "1.3.0"
+        private const val coilCompose = "1.4.0"
 
         const val ui = "androidx.compose.ui:ui:${versions.compose}"
         const val tooling = "androidx.compose.ui:ui-tooling:${versions.compose}"
@@ -147,7 +147,7 @@ object deps {
 
         object accompanist {
 
-            const val version = "0.14.0"
+            const val version = "0.20.2"
 
             const val insets = "com.google.accompanist:accompanist-insets:$version"
             const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"

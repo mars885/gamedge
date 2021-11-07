@@ -19,11 +19,13 @@ package com.paulrybitskyi.gamedge.feature.news.widgets
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -41,86 +43,100 @@ import com.paulrybitskyi.gamedge.feature.news.R
 
 @Composable
 internal fun GamingNews(
-    uiState: GamingNewsUiState,
+    uiState: GamingNewsState,
     onNewsItemClicked: ((GamingNewsItemModel) -> Unit)? = null,
     onRefreshRequested: (() -> Unit)? = null
 ) {
-    /*
-        7. AnimateVisibility fade.
-        6. SwipeRefresh.
-        7. SwipeRefresh for Info.
-        5. Dump GamingNewsFragment?
-        6. Toolbar bottom-elevation.
-     */
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(R.color.colorContentContainer))
     ) {
-        when (uiState) {
-            is GamingNewsUiState.Empty -> GamingNewsEmptyState()
-            is GamingNewsUiState.Loading -> GamingNewsLoadingState()
-            is GamingNewsUiState.Result -> GamingNewsResultState(
-                news = uiState.items,
-                onNewsItemClicked = onNewsItemClicked,
-                onRefreshRequested = onRefreshRequested
-            )
+        if (uiState.isLoading) {
+            GamingNewsLoadingState(Modifier.align(Alignment.Center))
+        } else {
+            RefreshableContent(
+                isRefreshing = uiState.isRefreshing,
+                modifier = Modifier.matchParentSize(),
+                onRefreshRequested = onRefreshRequested,
+            ) {
+                when {
+                    uiState.isInEmptyState -> GamingNewsEmptyState(Modifier.matchParentSize())
+                    uiState.isInSuccessState -> GamingNewsSuccessState(
+                        news = uiState.news,
+                        onNewsItemClicked = onNewsItemClicked,
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun BoxScope.GamingNewsEmptyState() {
-    Info(
-        icon = painterResource(R.drawable.newspaper_variant_outline),
-        title = stringResource(R.string.gaming_news_info_view_title),
-        modifier = Modifier
-            .align(Alignment.Center)
-            .padding(horizontal = dimensionResource(R.dimen.gaming_news_info_view_horizontal_margin)),
-        iconColor = colorResource(R.color.colorInfoView),
-        titleTextColor = colorResource(R.color.colorInfoView)
-    )
-}
-
-@Composable
-private fun BoxScope.GamingNewsLoadingState() {
+private fun GamingNewsLoadingState(modifier: Modifier) {
     CircularProgressIndicator(
-        modifier = Modifier.align(Alignment.Center),
+        modifier = modifier,
         color = colorResource(R.color.colorProgressBar)
     )
 }
 
 @Composable
-private fun BoxScope.GamingNewsResultState(
-    news: List<GamingNewsItemModel>,
-    onNewsItemClicked: ((GamingNewsItemModel) -> Unit)? = null,
-    onRefreshRequested: (() -> Unit)? = null
+private fun GamingNewsEmptyState(modifier: Modifier) {
+    Column(
+        modifier = modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Info(
+            icon = painterResource(R.drawable.newspaper_variant_outline),
+            title = stringResource(R.string.gaming_news_info_view_title),
+            modifier = Modifier.padding(
+                horizontal = dimensionResource(R.dimen.gaming_news_info_view_horizontal_margin)
+            ),
+            iconColor = colorResource(R.color.colorInfoView),
+            titleTextColor = colorResource(R.color.colorInfoView)
+        )
+    }
+}
+
+@Composable
+private fun RefreshableContent(
+    isRefreshing: Boolean,
+    modifier: Modifier,
+    onRefreshRequested: (() -> Unit)?,
+    content: @Composable () -> Unit,
 ) {
     SwipeRefresh(
-        state = rememberSwipeRefreshState(false),
+        state = rememberSwipeRefreshState(isRefreshing),
         onRefresh = { onRefreshRequested?.invoke() },
-        modifier = Modifier.matchParentSize(),
+        modifier = modifier,
         indicator = { state, refreshTrigger ->
             SwipeRefreshIndicator(
                 state = state,
                 refreshTriggerDistance = refreshTrigger,
                 contentColor = colorResource(R.color.gaming_news_swipe_refresh_color)
             )
-        }
+        },
+        content = content,
+    )
+}
+
+@Composable
+private fun GamingNewsSuccessState(
+    news: List<GamingNewsItemModel>,
+    onNewsItemClicked: ((GamingNewsItemModel) -> Unit)? = null,
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.gaming_news_decorator_spacing))
     ) {
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.gaming_news_decorator_spacing))
-        ) {
-            items(news, key = GamingNewsItemModel::id) {
-                GamingNewsItem(
-                    imageUrl = it.imageUrl,
-                    title = it.title,
-                    lede = it.lede,
-                    publicationDate = it.publicationDate,
-                    onClick = { onNewsItemClicked?.invoke(it) }
-                )
-            }
+        items(news, key = GamingNewsItemModel::id) { newItemModel ->
+            GamingNewsItem(
+                imageUrl = newItemModel.imageUrl,
+                title = newItemModel.title,
+                lede = newItemModel.lede,
+                publicationDate = newItemModel.publicationDate,
+                onClick = { onNewsItemClicked?.invoke(newItemModel) }
+            )
         }
     }
 }
@@ -128,21 +144,21 @@ private fun BoxScope.GamingNewsResultState(
 @Preview
 @Composable
 internal fun GamingNewsEmptyStatePreview() {
-    GamingNews(uiState = GamingNewsUiState.Empty)
+    GamingNews(uiState = GamingNewsState())
 }
 
 @Preview
 @Composable
 internal fun GamingNewsLoadingStatePreview() {
-    GamingNews(uiState = GamingNewsUiState.Loading)
+    GamingNews(uiState = GamingNewsState(isLoading = true))
 }
 
 @Preview
 @Composable
-internal fun GamingNewsResultStatePreview() {
+internal fun GamingNewsSuccessStatePreview() {
     GamingNews(
-        uiState = GamingNewsUiState.Result(
-            items = listOf(
+        uiState = GamingNewsState(
+            news = listOf(
                 GamingNewsItemModel(
                     id = 5,
                     imageUrl = null,
