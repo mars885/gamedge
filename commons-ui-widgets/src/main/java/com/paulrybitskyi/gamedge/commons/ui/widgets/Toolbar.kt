@@ -17,8 +17,14 @@
 package com.paulrybitskyi.gamedge.commons.ui.widgets
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,7 +40,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import com.paulrybitskyi.gamedge.commons.ui.extensions.textSizeResource
-
 
 @Composable
 fun Toolbar(
@@ -60,7 +65,7 @@ fun Toolbar(
             .height(dimensionResource(R.dimen.toolbar_height)),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if(leftButtonIcon != null) {
+        if (leftButtonIcon != null) {
             ToolbarButton(
                 icon = leftButtonIcon,
                 iconColor = iconColor,
@@ -81,7 +86,7 @@ fun Toolbar(
             maxLines = 1
         )
 
-        if(rightButtonIcon != null) {
+        if (rightButtonIcon != null) {
             ToolbarButton(
                 icon = rightButtonIcon,
                 iconColor = iconColor,
@@ -91,18 +96,16 @@ fun Toolbar(
     }
 }
 
-
 @Composable
 private fun getTitleHorizontalPadding(icon: Painter?): Dp {
     return dimensionResource(
-        if(icon != null) {
+        if (icon != null) {
             R.dimen.toolbar_title_horizontal_padding_with_icon
         } else {
             R.dimen.toolbar_title_horizontal_padding_without_icon
         }
     )
 }
-
 
 @Composable
 private fun ToolbarButton(
@@ -122,28 +125,25 @@ private fun ToolbarButton(
     }
 }
 
-
 @Preview
 @Composable
-private fun ToolbarPreviewWithTitle() {
+internal fun ToolbarPreviewWithTitle() {
     Toolbar(
         title = "Toolbar"
     )
 }
 
-
 @Preview
 @Composable
-private fun ToolbarPreviewWithLongTitle() {
+internal fun ToolbarPreviewWithLongTitle() {
     Toolbar(
         title = "Toolbar toolbar toolbar toolbar toolbar toolbar toolbar toolbar"
     )
 }
 
-
 @Preview
 @Composable
-private fun ToolbarPreviewWithBothIcons() {
+internal fun ToolbarPreviewWithBothIcons() {
     Toolbar(
         title = "Toolbar",
         leftButtonIcon = painterResource(R.drawable.arrow_left),
@@ -151,20 +151,18 @@ private fun ToolbarPreviewWithBothIcons() {
     )
 }
 
-
 @Preview
 @Composable
-private fun ToolbarPreviewWithLeftIcon() {
+internal fun ToolbarPreviewWithLeftIcon() {
     Toolbar(
         title = "Toolbar",
         leftButtonIcon = painterResource(R.drawable.arrow_left),
     )
 }
 
-
 @Preview
 @Composable
-private fun ToolbarPreviewWithRightIcon() {
+internal fun ToolbarPreviewWithRightIcon() {
     Toolbar(
         title = "Toolbar",
         rightButtonIcon = painterResource(R.drawable.magnify)

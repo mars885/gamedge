@@ -17,11 +17,15 @@
 package com.paulrybitskyi.gamedge.feature.news.widgets
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -34,7 +38,6 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.feature.news.R
-
 
 @Composable
 internal fun GamingNews(
@@ -55,7 +58,7 @@ internal fun GamingNews(
             .fillMaxSize()
             .background(colorResource(R.color.colorContentContainer))
     ) {
-        when(uiState) {
+        when (uiState) {
             is GamingNewsUiState.Empty -> GamingNewsEmptyState()
             is GamingNewsUiState.Loading -> GamingNewsLoadingState()
             is GamingNewsUiState.Result -> GamingNewsResultState(
@@ -66,7 +69,6 @@ internal fun GamingNews(
         }
     }
 }
-
 
 @Composable
 private fun BoxScope.GamingNewsEmptyState() {
@@ -81,7 +83,6 @@ private fun BoxScope.GamingNewsEmptyState() {
     )
 }
 
-
 @Composable
 private fun BoxScope.GamingNewsLoadingState() {
     CircularProgressIndicator(
@@ -89,7 +90,6 @@ private fun BoxScope.GamingNewsLoadingState() {
         color = colorResource(R.color.colorProgressBar)
     )
 }
-
 
 @Composable
 private fun BoxScope.GamingNewsResultState(
@@ -109,7 +109,9 @@ private fun BoxScope.GamingNewsResultState(
             )
         }
     ) {
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.gaming_news_decorator_spacing))) {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.gaming_news_decorator_spacing))
+        ) {
             items(news, key = GamingNewsItemModel::id) {
                 GamingNewsItem(
                     imageUrl = it.imageUrl,
@@ -123,24 +125,21 @@ private fun BoxScope.GamingNewsResultState(
     }
 }
 
-
 @Preview
 @Composable
-private fun GamingNewsEmptyStatePreview() {
+internal fun GamingNewsEmptyStatePreview() {
     GamingNews(uiState = GamingNewsUiState.Empty)
 }
 
-
 @Preview
 @Composable
-private fun GamingNewsLoadingStatePreview() {
+internal fun GamingNewsLoadingStatePreview() {
     GamingNews(uiState = GamingNewsUiState.Loading)
 }
 
-
 @Preview
 @Composable
-private fun GamingNewsResultStatePreview() {
+internal fun GamingNewsResultStatePreview() {
     GamingNews(
         uiState = GamingNewsUiState.Result(
             items = listOf(

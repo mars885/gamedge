@@ -27,22 +27,19 @@ import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNews
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class GamingNewsFragment : BaseComposeFragment<GamingNewsViewModel, StubNavigator>() {
 
-    override val viewBinding by viewBinding(FragmentGamingNewsBinding::bind)
     override val viewModel by viewModels<GamingNewsViewModel>()
 
     @Inject lateinit var urlOpener: UrlOpener
 
-    @Composable
-    override fun InitUi() {
+    override fun getContent() = @Composable {
         GamingNews(
             uiState = viewModel.uiState.collectAsState().value,
             onNewsItemClicked = viewModel::onNewsItemClicked,
-            onRefreshRequested = viewModel::onRefreshRequested
+            onRefreshRequested = viewModel::onRefreshRequested,
         )
     }
 

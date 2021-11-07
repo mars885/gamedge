@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.feature.dashboard.fragment
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.MenuItem
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource

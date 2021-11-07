@@ -19,7 +19,11 @@ package com.paulrybitskyi.gamedge.feature.news.widgets
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -62,7 +66,7 @@ internal fun GamingNewsItem(
         elevation = dimensionResource(R.dimen.gaming_news_item_card_elevation)
     ) {
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.gaming_news_item_padding))) {
-            if(imageUrl != null) {
+            if (imageUrl != null) {
                 GamingNewsItemImage(
                     imageUrl = imageUrl,
                     modifier = Modifier
@@ -89,24 +93,7 @@ internal fun GamingNewsItem(
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Medium
             )
-            Row(
-                modifier = Modifier.padding(top = dimensionResource(R.dimen.gaming_news_item_publication_date_margin_top)),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.clock_outline_16dp),
-                    contentDescription = null,
-                    modifier = Modifier.padding(end = dimensionResource(R.dimen.gaming_news_item_publication_date_icon_padding)),
-                    tint = colorResource(R.color.gaming_news_item_publication_date_text_color)
-                )
-                Text(
-                    text = publicationDate,
-                    color = colorResource(R.color.gaming_news_item_publication_date_text_color),
-                    fontSize = textSizeResource(R.dimen.gaming_news_item_publication_date_text_size),
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Medium
-                )
-            }
+            GamingNewsItemTimestamp(publicationDate = publicationDate)
         }
     }
 }
@@ -135,6 +122,32 @@ private fun GamingNewsItemImage(
             ),
             contentDescription = null,
             contentScale = ContentScale.Crop
+        )
+    }
+}
+
+@Composable
+private fun GamingNewsItemTimestamp(publicationDate: String) {
+    Row(
+        modifier = Modifier.padding(
+            top = dimensionResource(R.dimen.gaming_news_item_publication_date_margin_top)
+        ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.clock_outline_16dp),
+            contentDescription = null,
+            modifier = Modifier.padding(
+                end = dimensionResource(R.dimen.gaming_news_item_publication_date_icon_padding)
+            ),
+            tint = colorResource(R.color.gaming_news_item_publication_date_text_color)
+        )
+        Text(
+            text = publicationDate,
+            color = colorResource(R.color.gaming_news_item_publication_date_text_color),
+            fontSize = textSizeResource(R.dimen.gaming_news_item_publication_date_text_size),
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Medium
         )
     }
 }

@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import com.paulrybitskyi.gamedge.commons.ui.extensions.textSizeResource
 
-
 @Composable
 fun Info(
     icon: Painter,
@@ -71,13 +70,12 @@ fun Info(
     }
 }
 
-
 @Preview(
     widthDp = 300,
     showBackground = true
 )
 @Composable
-private fun InfoPreview() {
+internal fun InfoPreview() {
     Info(
         icon = painterResource(R.drawable.heart),
         title = "Lorem ipsum dolor sit amet"

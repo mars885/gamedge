@@ -34,7 +34,7 @@ object appConfig {
 object versions {
 
     const val kotlin = "1.5.31" // also in buildSrc build.gradle.kts file
-    const val compose = "1.0.0-rc02"
+    const val compose = "1.0.5"
     const val gradleVersionsPlugin = "0.39.0"
     const val kspPlugin = "1.5.31-1.0.0"
     const val navigation = "2.3.5"
