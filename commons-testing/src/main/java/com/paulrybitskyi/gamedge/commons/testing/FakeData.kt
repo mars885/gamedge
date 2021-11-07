@@ -187,7 +187,7 @@ val API_ERROR_HTTP = ApiError.HttpError(code = 10, message = "message")
 val API_ERROR_NETWORK = ApiError.NetworkError(Exception("message"))
 val API_ERROR_UNKNOWN = ApiError.UnknownError(Exception("message"))
 
-val OBSERVE_ARTICLES_USE_CASE_PARAMS = ObserveArticlesUseCase.Params(true, DOMAIN_PAGINATION)
+val OBSERVE_ARTICLES_USE_CASE_PARAMS = ObserveArticlesUseCase.Params(DOMAIN_PAGINATION)
 val REFRESH_ARTICLES_USE_CASE_PARAMS = RefreshArticlesUseCase.Params()
 val OBSERVE_GAMES_USE_CASE_PARAMS = ObserveGamesUseCaseParams()
 val REFRESH_GAMES_USE_CASE_PARAMS = RefreshGamesUseCaseParams()
