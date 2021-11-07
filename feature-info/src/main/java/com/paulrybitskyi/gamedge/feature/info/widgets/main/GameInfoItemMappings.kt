@@ -27,16 +27,14 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoVideoMo
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGameModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameVideoModel
 
-
 internal fun List<GameHeaderImageModel>.mapToGameArtworkModels(): List<GameArtworkModel> {
     return map { imageModel ->
-        when(imageModel) {
+        when (imageModel) {
             is GameHeaderImageModel.DefaultImage -> GameArtworkModel.DefaultImage
             is GameHeaderImageModel.UrlImage -> GameArtworkModel.UrlImage(imageModel.url)
         }
     }
 }
-
 
 internal fun List<GameInfoVideoModel>.mapToVideoModels(): List<GameVideoModel> {
     return map {
@@ -48,7 +46,6 @@ internal fun List<GameInfoVideoModel>.mapToVideoModels(): List<GameVideoModel> {
     }
 }
 
-
 internal fun GameVideoModel.mapToInfoVideoModel(): GameInfoVideoModel {
     return GameInfoVideoModel(
         thumbnailUrl = thumbnailUrl,
@@ -56,7 +53,6 @@ internal fun GameVideoModel.mapToInfoVideoModel(): GameInfoVideoModel {
         title = title
     )
 }
-
 
 internal fun List<GameInfoCompanyModel>.mapToCompanyModels(): List<GameCompanyModel> {
     return map {
@@ -71,7 +67,6 @@ internal fun List<GameInfoCompanyModel>.mapToCompanyModels(): List<GameCompanyMo
     }
 }
 
-
 internal fun GameCompanyModel.mapToInfoCompanyModel(): GameInfoCompanyModel {
     return GameInfoCompanyModel(
         logoViewSize = logoViewSize,
@@ -82,7 +77,6 @@ internal fun GameCompanyModel.mapToInfoCompanyModel(): GameInfoCompanyModel {
         roles = roles
     )
 }
-
 
 internal fun List<GameInfoLinkModel>.mapToLinkModels(): List<GameLinkItemModel> {
     return map {
@@ -95,7 +89,6 @@ internal fun List<GameInfoLinkModel>.mapToLinkModels(): List<GameLinkItemModel> 
     }
 }
 
-
 internal fun GameLinkItemModel.mapToInfoLinkModel(): GameInfoLinkModel {
     return GameInfoLinkModel(
         id = id,
@@ -104,7 +97,6 @@ internal fun GameLinkItemModel.mapToInfoLinkModel(): GameInfoLinkModel {
         payload = payload
     )
 }
-
 
 internal fun List<GameInfoRelatedGameModel>.mapToCategoryModels(): List<GamesCategoryPreviewItemModel> {
     return map {
@@ -115,7 +107,6 @@ internal fun List<GameInfoRelatedGameModel>.mapToCategoryModels(): List<GamesCat
         )
     }
 }
-
 
 internal fun GamesCategoryPreviewItemModel.mapToInfoRelatedGameModel(): GameInfoRelatedGameModel {
     return GameInfoRelatedGameModel(

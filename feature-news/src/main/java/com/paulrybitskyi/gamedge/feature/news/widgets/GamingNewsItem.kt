@@ -41,7 +41,6 @@ import coil.compose.rememberImagePainter
 import com.paulrybitskyi.gamedge.commons.ui.extensions.textSizeResource
 import com.paulrybitskyi.gamedge.feature.news.R
 
-
 @Composable
 internal fun GamingNewsItem(
     imageUrl: String?,
@@ -112,7 +111,6 @@ internal fun GamingNewsItem(
     }
 }
 
-
 @Composable
 private fun GamingNewsItemImage(
     imageUrl: String,
@@ -140,7 +138,6 @@ private fun GamingNewsItemImage(
         )
     }
 }
-
 
 @Preview
 @Composable

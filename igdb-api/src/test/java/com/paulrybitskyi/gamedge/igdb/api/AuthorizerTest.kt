@@ -31,11 +31,9 @@ import org.junit.Test
 
 internal class AuthorizerTest {
 
-
     @MockK private lateinit var authLocalDataStore: AuthLocalDataStore
 
     private lateinit var SUT: Authorizer
-
 
     @Before
     fun setup() {
@@ -43,7 +41,6 @@ internal class AuthorizerTest {
 
         SUT = Authorizer(authLocalDataStore)
     }
-
 
     @Test
     fun `Builds basic authorization header successfully`() {
@@ -55,7 +52,6 @@ internal class AuthorizerTest {
         }
     }
 
-
     @Test
     fun `Builds bearer authorization header successfully`() {
         runBlockingTest {
@@ -65,7 +61,6 @@ internal class AuthorizerTest {
                 .isEqualTo("Bearer access_token")
         }
     }
-
 
     @Test
     fun `Throws exception if no oauth credentials are present`() {
@@ -78,6 +73,4 @@ internal class AuthorizerTest {
                 }
             }
     }
-
-
 }

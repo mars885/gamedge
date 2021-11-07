@@ -42,6 +42,7 @@ dependencies {
 
     implementation(deps.kotlin.coroutines)
 
+    implementation(deps.androidX.appCompat)
     implementation(deps.androidX.constraintLayout)
     implementation(deps.androidX.viewPager2)
     implementation(deps.androidX.fragmentKtx)

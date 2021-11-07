@@ -29,10 +29,7 @@ import javax.inject.Qualifier
 internal annotation class ErrorMessageExtractorKey(val type: Type) {
 
     enum class Type {
-
         TWITCH,
         IGDB
-
     }
-
 }

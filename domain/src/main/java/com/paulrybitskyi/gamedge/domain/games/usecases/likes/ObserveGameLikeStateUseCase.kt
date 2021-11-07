@@ -22,5 +22,4 @@ import kotlinx.coroutines.flow.Flow
 interface ObserveGameLikeStateUseCase : UseCase<ObserveGameLikeStateUseCase.Params, Flow<Boolean>> {
 
     data class Params(val gameId: Int)
-
 }

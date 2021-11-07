@@ -19,9 +19,6 @@ package com.paulrybitskyi.gamedge.feature.search
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface GamesSearchNavigator : Navigator {
-
     fun goToInfo(gameId: Int)
-
     fun goBack()
-
 }

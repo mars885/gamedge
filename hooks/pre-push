@@ -1,0 +1,37 @@
+#!/bin/bash
+
+echo "Running Git Pre-Push Hook"
+
+######################################
+
+echo "Running Android Lint"
+./gradlew lint
+RESULT_LINT=$?
+if [ $RESULT_LINT -ne 0 ]
+then
+  exit 1
+fi
+
+######################################
+
+echo "Running Detekt"
+./gradlew detekt --continue
+RESULT_DETEKT=$?
+if [ $RESULT_DETEKT -ne 0 ]
+then
+  exit 1
+fi
+
+######################################
+
+echo "Running Ktlint"
+./gradlew ktlintCheck --continue
+RESULT_KTLINT=$?
+if [ $RESULT_KTLINT -ne 0 ]
+then
+  exit 1
+fi
+
+######################################
+
+echo "Static Analysis Checks Completed Successfully"

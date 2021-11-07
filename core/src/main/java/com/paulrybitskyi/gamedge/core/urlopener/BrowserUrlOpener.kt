@@ -28,11 +28,10 @@ import javax.inject.Inject
 @UrlOpenerKey(UrlOpenerKey.Type.BROWSER)
 internal class BrowserUrlOpener @Inject constructor() : UrlOpener {
 
-
     override fun openUrl(url: String, context: Context): Boolean {
         val intent = createIntent(url, context)
 
-        return if(context.canIntentBeHandled(intent)) {
+        return if (context.canIntentBeHandled(intent)) {
             context.startActivity(intent)
             true
         } else {
@@ -40,13 +39,10 @@ internal class BrowserUrlOpener @Inject constructor() : UrlOpener {
         }
     }
 
-
     private fun createIntent(url: String, context: Context): Intent {
         return Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(url)
             attachNewTaskFlagIfNeeded(context)
         }
     }
-
-
 }

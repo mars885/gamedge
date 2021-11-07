@@ -32,7 +32,6 @@ internal class GameDetailsView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val binding = ViewGameDetailsBinding.inflate(context.layoutInflater, this)
 
     var genresText: CharSequence?
@@ -70,16 +69,12 @@ internal class GameDetailsView @JvmOverloads constructor(
         }
         get() = binding.themesTv.text
 
-
     init {
         initCard()
     }
-
 
     private fun initCard() {
         setBackgroundColor(getColor(R.color.game_details_card_background_color))
         cardElevation = getDimension(R.dimen.game_details_card_elevation)
     }
-
-
 }

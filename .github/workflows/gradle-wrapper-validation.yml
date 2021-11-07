@@ -1,4 +1,4 @@
-name: Validate Gradle Wrapper
+name: Gradle Wrapper Validation
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   validation:
+    name: Gradle Wrapper Validation
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.head_commit.message, '[ci skip]') }}
 

@@ -23,19 +23,14 @@ import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GameCategoryModelMapper {
-
     fun mapToGameCategoryModel(game: Game): GameCategoryModel
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameCategoryModelMapperImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
 ) : GameCategoryModelMapper {
-
 
     override fun mapToGameCategoryModel(game: Game): GameCategoryModel {
         return GameCategoryModel(
@@ -46,6 +41,4 @@ internal class GameCategoryModelMapperImpl @Inject constructor(
             }
         )
     }
-
-
 }

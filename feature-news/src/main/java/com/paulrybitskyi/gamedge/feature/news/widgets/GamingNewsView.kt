@@ -24,7 +24,12 @@ import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.commons.ktx.layoutInflater
+import com.paulrybitskyi.commons.ktx.makeGone
+import com.paulrybitskyi.commons.ktx.makeInvisible
+import com.paulrybitskyi.commons.ktx.makeVisible
 import com.paulrybitskyi.commons.recyclerview.decorators.spacing.SpacingItemDecorator
 import com.paulrybitskyi.commons.recyclerview.decorators.spacing.policies.LastItemExclusionPolicy
 import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
@@ -39,8 +44,7 @@ internal class GamingNewsView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): FrameLayout(context, attrs, defStyleAttr) {
-
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val binding = ViewGamingNewsBinding.inflate(context.layoutInflater, this)
 
@@ -63,19 +67,16 @@ internal class GamingNewsView @JvmOverloads constructor(
     var onNewsItemClicked: ((GamingNewsItemModel) -> Unit)? = null
     var onRefreshRequested: (() -> Unit)? = null
 
-
     init {
         initSwipeRefreshLayout()
         initRecyclerView(context)
         initDefaults()
     }
 
-
     private fun initSwipeRefreshLayout() = with(binding.swipeRefreshLayout) {
         setColorSchemeColors(getColor(R.color.gaming_news_swipe_refresh_color))
         setOnRefreshListener { onRefreshRequested?.invoke() }
     }
-
 
     private fun initRecyclerView(context: Context) = with(binding.recyclerView) {
         disableChangeAnimations()
@@ -84,17 +85,14 @@ internal class GamingNewsView @JvmOverloads constructor(
         addItemDecoration(initItemDecorator())
     }
 
-
     private fun initLayoutManager(context: Context): LinearLayoutManager {
         return object : LinearLayoutManager(context) {
 
             override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
                 return RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             }
-
         }
     }
-
 
     private fun initAdapter(context: Context): GamingNewsAdapter {
         return GamingNewsAdapter(context)
@@ -102,13 +100,11 @@ internal class GamingNewsView @JvmOverloads constructor(
             .also { adapter = it }
     }
 
-
     private fun bindListener(item: GamingNewsItem, viewHolder: RecyclerView.ViewHolder) {
-        if(viewHolder is GamingNewsItem.ViewHolder) {
+        if (viewHolder is GamingNewsItem.ViewHolder) {
             viewHolder.setOnNewsItemClickListener { onNewsItemClicked?.invoke(item.model) }
         }
     }
-
 
     private fun initItemDecorator(): SpacingItemDecorator {
         return SpacingItemDecorator(
@@ -118,25 +114,21 @@ internal class GamingNewsView @JvmOverloads constructor(
         )
     }
 
-
     private fun initDefaults() {
         uiState = uiState
     }
-
 
     private fun List<GamingNewsItemModel>.toAdapterItems(): List<GamingNewsItem> {
         return map(::GamingNewsItem)
     }
 
-
     private fun handleUiStateChange(newState: GamingNewsUiState) {
-        when(newState) {
+        when (newState) {
             is GamingNewsUiState.Empty -> onEmptyUiStateSelected()
             is GamingNewsUiState.Loading -> onLoadingStateSelected()
             is GamingNewsUiState.Result -> onResultUiStateSelected(newState)
         }
     }
-
 
     private fun onEmptyUiStateSelected() {
         showInfoView()
@@ -144,11 +136,10 @@ internal class GamingNewsView @JvmOverloads constructor(
         hideRecyclerView()
     }
 
-
     private fun onLoadingStateSelected() {
-        if(isSwipeRefreshVisible) return
+        if (isSwipeRefreshVisible) return
 
-        if(adapterItems.isNotEmpty()) {
+        if (adapterItems.isNotEmpty()) {
             showSwipeRefresh()
         } else {
             showProgressBar()
@@ -156,7 +147,6 @@ internal class GamingNewsView @JvmOverloads constructor(
             hideRecyclerView()
         }
     }
-
 
     private fun onResultUiStateSelected(uiState: GamingNewsUiState.Result) {
         adapterItems = uiState.items.toAdapterItems()
@@ -166,61 +156,50 @@ internal class GamingNewsView @JvmOverloads constructor(
         hideLoadingIndicators()
     }
 
-
     private fun showInfoView() = with(binding.infoView) {
-        if(isVisible) return
+        if (isVisible) return
 
         makeVisible()
         fadeIn()
     }
-
 
     private fun hideInfoView() = with(binding.infoView) {
         makeGone()
         resetAnimation()
     }
 
-
     private fun showProgressBar() = with(binding.progressBar) {
         makeVisible()
         fadeIn()
     }
-
 
     private fun hideProgressBar() = with(binding.progressBar) {
         makeGone()
         resetAnimation()
     }
 
-
     private fun showSwipeRefresh() {
         isSwipeRefreshVisible = true
     }
 
-
     private fun hideSwipeRefresh() {
         isSwipeRefreshVisible = false
     }
-
 
     private fun hideLoadingIndicators() {
         hideProgressBar()
         hideSwipeRefresh()
     }
 
-
     private fun showRecyclerView() = with(binding.recyclerView) {
-        if(isVisible) return
+        if (isVisible) return
 
         makeVisible()
         fadeIn()
     }
 
-
     private fun hideRecyclerView() = with(binding.recyclerView) {
         makeInvisible()
         resetAnimation()
     }
-
-
 }

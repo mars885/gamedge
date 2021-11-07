@@ -34,9 +34,7 @@ internal class GameInfoVideosItem(model: List<GameInfoVideoModel>) : AbstractIte
     NoDependencies
 >(model) {
 
-
     override val itemId = GameInfoAdapterItem.VIDEOS.id
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -46,15 +44,13 @@ internal class GameInfoVideosItem(model: List<GameInfoVideoModel>) : AbstractIte
         return ViewHolder(GameVideosView(parent.context))
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameVideosView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: List<GameInfoVideoModel>) {
             view.items = model.mapToVideoModels()
@@ -63,8 +59,5 @@ internal class GameInfoVideosItem(model: List<GameInfoVideoModel>) : AbstractIte
         fun setOnVideoClickListener(onClick: (GameInfoVideoModel) -> Unit) {
             view.onVideoClicked = { onClick(it.mapToInfoVideoModel()) }
         }
-
     }
-
-
 }

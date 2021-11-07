@@ -16,8 +16,25 @@
 
 package com.paulrybitskyi.gamedge.database.games
 
-import com.paulrybitskyi.gamedge.database.games.entities.*
-
+import com.paulrybitskyi.gamedge.database.games.entities.AgeRating
+import com.paulrybitskyi.gamedge.database.games.entities.AgeRatingCategory
+import com.paulrybitskyi.gamedge.database.games.entities.AgeRatingType
+import com.paulrybitskyi.gamedge.database.games.entities.Category
+import com.paulrybitskyi.gamedge.database.games.entities.Company
+import com.paulrybitskyi.gamedge.database.games.entities.Game
+import com.paulrybitskyi.gamedge.database.games.entities.Genre
+import com.paulrybitskyi.gamedge.database.games.entities.Image
+import com.paulrybitskyi.gamedge.database.games.entities.InvolvedCompany
+import com.paulrybitskyi.gamedge.database.games.entities.Keyword
+import com.paulrybitskyi.gamedge.database.games.entities.Mode
+import com.paulrybitskyi.gamedge.database.games.entities.Platform
+import com.paulrybitskyi.gamedge.database.games.entities.PlayerPerspective
+import com.paulrybitskyi.gamedge.database.games.entities.ReleaseDate
+import com.paulrybitskyi.gamedge.database.games.entities.ReleaseDateCategory
+import com.paulrybitskyi.gamedge.database.games.entities.Theme
+import com.paulrybitskyi.gamedge.database.games.entities.Video
+import com.paulrybitskyi.gamedge.database.games.entities.Website
+import com.paulrybitskyi.gamedge.database.games.entities.WebsiteCategory
 
 internal typealias DatabaseGame = Game
 internal typealias DatabaseCategory = Category

@@ -28,5 +28,4 @@ interface SearchGamesUseCase : UseCase<Params, Flow<List<Game>>> {
         val searchQuery: String,
         val pagination: Pagination = Pagination()
     )
-
 }

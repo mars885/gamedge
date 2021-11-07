@@ -16,12 +16,47 @@
 
 package com.paulrybitskyi.gamedge.database.games.datastores
 
-import com.paulrybitskyi.gamedge.data.games.*
-import com.paulrybitskyi.gamedge.database.games.*
+import com.paulrybitskyi.gamedge.data.games.DataAgeRating
+import com.paulrybitskyi.gamedge.data.games.DataAgeRatingCategory
+import com.paulrybitskyi.gamedge.data.games.DataAgeRatingType
+import com.paulrybitskyi.gamedge.data.games.DataCategory
+import com.paulrybitskyi.gamedge.data.games.DataCompany
+import com.paulrybitskyi.gamedge.data.games.DataGame
+import com.paulrybitskyi.gamedge.data.games.DataGenre
+import com.paulrybitskyi.gamedge.data.games.DataImage
+import com.paulrybitskyi.gamedge.data.games.DataInvolvedCompany
+import com.paulrybitskyi.gamedge.data.games.DataKeyword
+import com.paulrybitskyi.gamedge.data.games.DataMode
+import com.paulrybitskyi.gamedge.data.games.DataPlatform
+import com.paulrybitskyi.gamedge.data.games.DataPlayerPerspective
+import com.paulrybitskyi.gamedge.data.games.DataReleaseDate
+import com.paulrybitskyi.gamedge.data.games.DataReleaseDateCategory
+import com.paulrybitskyi.gamedge.data.games.DataTheme
+import com.paulrybitskyi.gamedge.data.games.DataVideo
+import com.paulrybitskyi.gamedge.data.games.DataWebsite
+import com.paulrybitskyi.gamedge.data.games.DataWebsiteCategory
+import com.paulrybitskyi.gamedge.database.games.DatabaseAgeRating
+import com.paulrybitskyi.gamedge.database.games.DatabaseAgeRatingCategory
+import com.paulrybitskyi.gamedge.database.games.DatabaseAgeRatingType
+import com.paulrybitskyi.gamedge.database.games.DatabaseCategory
+import com.paulrybitskyi.gamedge.database.games.DatabaseCompany
+import com.paulrybitskyi.gamedge.database.games.DatabaseGame
+import com.paulrybitskyi.gamedge.database.games.DatabaseGenre
+import com.paulrybitskyi.gamedge.database.games.DatabaseImage
+import com.paulrybitskyi.gamedge.database.games.DatabaseInvolvedCompany
+import com.paulrybitskyi.gamedge.database.games.DatabaseKeyword
+import com.paulrybitskyi.gamedge.database.games.DatabaseMode
+import com.paulrybitskyi.gamedge.database.games.DatabasePlatform
+import com.paulrybitskyi.gamedge.database.games.DatabasePlayerPerspective
+import com.paulrybitskyi.gamedge.database.games.DatabaseReleaseDate
+import com.paulrybitskyi.gamedge.database.games.DatabaseReleaseDateCategory
+import com.paulrybitskyi.gamedge.database.games.DatabaseTheme
+import com.paulrybitskyi.gamedge.database.games.DatabaseVideo
+import com.paulrybitskyi.gamedge.database.games.DatabaseWebsite
+import com.paulrybitskyi.gamedge.database.games.DatabaseWebsiteCategory
 import javax.inject.Inject
 
 internal class GameMapper @Inject constructor() {
-
 
     fun mapToDatabaseGame(dataGame: DataGame): DatabaseGame {
         return DatabaseGame(
@@ -54,11 +89,9 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun DataCategory.toDatabaseCategory(): DatabaseCategory {
         return DatabaseCategory.valueOf(name)
     }
-
 
     private fun DataImage.toDatabaseImage(): DatabaseImage {
         return DatabaseImage(
@@ -68,11 +101,9 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun List<DataImage>.toDatabaseImages(): List<DatabaseImage> {
         return map { it.toDatabaseImage() }
     }
-
 
     private fun List<DataReleaseDate>.toDatabaseReleaseDates(): List<DatabaseReleaseDate> {
         return map {
@@ -84,7 +115,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DataAgeRating>.toDatabaseAgeRatings(): List<DatabaseAgeRating> {
         return map {
             DatabaseAgeRating(
@@ -93,7 +123,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DataVideo>.toDatabaseVideos(): List<DatabaseVideo> {
         return map {
@@ -104,7 +133,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DataGenre>.toDatabaseGenres(): List<DatabaseGenre> {
         return map {
             DatabaseGenre(
@@ -112,7 +140,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DataPlatform>.toDatabasePlatforms(): List<DatabasePlatform> {
         return map {
@@ -123,7 +150,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DataPlayerPerspective>.toDatabasePlayerPerspectives(): List<DatabasePlayerPerspective> {
         return map {
             DatabasePlayerPerspective(
@@ -131,7 +157,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DataTheme>.toDatabaseThemes(): List<DatabaseTheme> {
         return map {
@@ -141,7 +166,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DataMode>.toDatabaseModes(): List<DatabaseMode> {
         return map {
             DatabaseMode(
@@ -150,7 +174,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DataKeyword>.toDatabaseKeywords(): List<DatabaseKeyword> {
         return map {
             DatabaseKeyword(
@@ -158,7 +181,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DataInvolvedCompany>.toDatabaseInvolvedCompanies(): List<DatabaseInvolvedCompany> {
         return map {
@@ -172,7 +194,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun DataCompany.toDatabaseCompany(): DatabaseCompany {
         return DatabaseCompany(
             id = id,
@@ -183,7 +204,6 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun List<DataWebsite>.toDatabaseWebsites(): List<DatabaseWebsite> {
         return map {
             DatabaseWebsite(
@@ -193,7 +213,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     fun mapToDataGame(databaseGame: DatabaseGame): DataGame {
         return DataGame(
@@ -226,11 +245,9 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun DatabaseCategory.toDataCategory(): DataCategory {
         return DataCategory.valueOf(name)
     }
-
 
     private fun DatabaseImage.toDataImage(): DataImage {
         return DataImage(
@@ -240,11 +257,9 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun List<DatabaseImage>.toDataImages(): List<DataImage> {
         return map { it.toDataImage() }
     }
-
 
     private fun List<DatabaseReleaseDate>.toDataReleaseDates(): List<DataReleaseDate> {
         return map {
@@ -256,7 +271,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DatabaseAgeRating>.toDataAgeRatings(): List<DataAgeRating> {
         return map {
             DataAgeRating(
@@ -265,7 +279,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DatabaseVideo>.toDataVideos(): List<DataVideo> {
         return map {
@@ -276,7 +289,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DatabaseGenre>.toDataGenres(): List<DataGenre> {
         return map {
             DataGenre(
@@ -284,7 +296,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DatabasePlatform>.toDataPlatforms(): List<DataPlatform> {
         return map {
@@ -295,7 +306,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DatabasePlayerPerspective>.toDataPlayerPerspectives(): List<DataPlayerPerspective> {
         return map {
             DataPlayerPerspective(
@@ -303,7 +313,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DatabaseTheme>.toDataThemes(): List<DataTheme> {
         return map {
@@ -313,7 +322,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DatabaseMode>.toDataModes(): List<DataMode> {
         return map {
             DataMode(
@@ -322,7 +330,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<DatabaseKeyword>.toDataKeywords(): List<DataKeyword> {
         return map {
             DataKeyword(
@@ -330,7 +337,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<DatabaseInvolvedCompany>.toDataInvolvedCompanies(): List<DataInvolvedCompany> {
         return map {
@@ -344,7 +350,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     fun mapToDataCompany(company: DatabaseCompany): DataCompany {
         return DataCompany(
             id = company.id,
@@ -355,7 +360,6 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun List<DatabaseWebsite>.toDataWebsites(): List<DataWebsite> {
         return map {
             DataWebsite(
@@ -365,15 +369,11 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
-
 }
-
 
 internal fun GameMapper.mapToDatabaseGames(dataGames: List<DataGame>): List<DatabaseGame> {
     return dataGames.map(::mapToDatabaseGame)
 }
-
 
 internal fun GameMapper.mapToDataGames(databaseGames: List<DatabaseGame>): List<DataGame> {
     return databaseGames.map(::mapToDataGame)

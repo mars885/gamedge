@@ -20,7 +20,12 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getDimension
+import com.paulrybitskyi.commons.ktx.getDrawable
+import com.paulrybitskyi.commons.ktx.layoutInflater
+import com.paulrybitskyi.commons.ktx.layoutParamsHeight
+import com.paulrybitskyi.commons.ktx.onClick
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.databinding.ViewGameVideoBinding
@@ -35,7 +40,6 @@ internal class GameVideoView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
-
 
     private val defaultImage = checkNotNull(getDrawable(R.drawable.game_landscape_placeholder))
 
@@ -60,11 +64,9 @@ internal class GameVideoView @JvmOverloads constructor(
 
     var onVideoClicked: (() -> Unit)? = null
 
-
     init {
         initCard()
     }
-
 
     private fun initCard() {
         setCardBackgroundColor(getColor(R.color.game_video_card_background_color))
@@ -72,7 +74,6 @@ internal class GameVideoView @JvmOverloads constructor(
         radius = getDimension(R.dimen.game_video_card_corner_radius)
         onClick { onVideoClicked?.invoke() }
     }
-
 
     private fun loadThumbnail(url: String) {
         imageLoader.loadImage(
@@ -85,6 +86,4 @@ internal class GameVideoView @JvmOverloads constructor(
                 .build()
         )
     }
-
-
 }

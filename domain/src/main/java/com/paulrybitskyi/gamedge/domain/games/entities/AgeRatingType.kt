@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.domain.games.entities
 
 enum class AgeRatingType(val title: String) {
-
     UNKNOWN(title = ""),
     THREE(title = "3"),
     SEVEN(title = "7"),
@@ -31,5 +30,4 @@ enum class AgeRatingType(val title: String) {
     T(title = "T"),
     M(title = "M"),
     AO(title = "AO"),
-
 }

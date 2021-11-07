@@ -27,15 +27,11 @@ internal class GamesDiscoveryNavigatorImpl @Inject constructor(
     private val navController: NavController
 ) : GamesDiscoveryNavigator {
 
-
     override fun goToCategory(category: String) {
         navController.navigate(DashboardFragmentDirections.actionCategoryFragment(category))
     }
 
-
     override fun goToInfo(gameId: Int) {
         navController.navigate(DashboardFragmentDirections.actionInfoFragment(gameId))
     }
-
-
 }

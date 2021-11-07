@@ -35,14 +35,9 @@ internal data class Image(
     val height: Int?,
 ) {
 
-
     object Schema {
-
         const val ID = "image_id"
         const val WIDTH = "width"
         const val HEIGHT = "height"
-
     }
-
-
 }

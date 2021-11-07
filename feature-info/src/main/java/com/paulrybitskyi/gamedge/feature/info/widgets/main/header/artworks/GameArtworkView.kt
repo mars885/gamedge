@@ -34,7 +34,6 @@ internal class GameArtworkView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
-
     private var defaultBackgroundDrawable = checkNotNull(getDrawable(R.drawable.game_background_placeholder))
 
     var model by observeChanges<GameArtworkModel?>(null) { _, newModel ->
@@ -43,24 +42,20 @@ internal class GameArtworkView @JvmOverloads constructor(
 
     @Inject lateinit var imageLoader: ImageLoader
 
-
     init {
         scaleType = ScaleType.CENTER_CROP
     }
 
-
     private fun onModelChanged(newModel: GameArtworkModel) {
-        when(newModel) {
+        when (newModel) {
             is GameArtworkModel.DefaultImage -> loadDefaultImage()
             is GameArtworkModel.UrlImage -> loadUrlImage(newModel.url)
         }
     }
 
-
     private fun loadDefaultImage() {
         setImageDrawable(defaultBackgroundDrawable)
     }
-
 
     private fun loadUrlImage(url: String) {
         imageLoader.loadImage(
@@ -74,6 +69,4 @@ internal class GameArtworkView @JvmOverloads constructor(
                 .build()
         )
     }
-
-
 }

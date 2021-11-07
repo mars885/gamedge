@@ -29,12 +29,7 @@ internal data class Genre(
     val name: String,
 ) {
 
-
     object Schema {
-
         const val NAME = "name"
-
     }
-
-
 }

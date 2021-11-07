@@ -28,17 +28,16 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Inject
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(DatabaseModule::class)
 internal class ArticlesTableTest {
-
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
@@ -48,17 +47,14 @@ internal class ArticlesTableTest {
 
     @Inject lateinit var SUT: ArticlesTable
 
-
     @Module(includes = [TestDatabaseModule::class])
     @InstallIn(SingletonComponent::class)
     class TestModule
-
 
     @Before
     fun setup() {
         hiltRule.inject()
     }
-
 
     @Test
     fun saves_and_observes_sorted_articles() {
@@ -68,10 +64,8 @@ internal class ArticlesTableTest {
             val expectedArticles = DATABASE_ARTICLES.sortedByDescending(DatabaseArticle::publicationDate)
 
             SUT.observeArticles(offset = 0, limit = DATABASE_ARTICLES.size).test {
-                assertThat(expectItem()).isEqualTo(expectedArticles)
+                assertThat(awaitItem()).isEqualTo(expectedArticles)
             }
         }
     }
-
-
 }

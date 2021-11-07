@@ -27,15 +27,11 @@ internal class GamesSearchNavigatorImpl @Inject constructor(
     private val navController: NavController
 ) : GamesSearchNavigator {
 
-
     override fun goToInfo(gameId: Int) {
         navController.navigate(DashboardFragmentDirections.actionInfoFragment(gameId))
     }
 
-
     override fun goBack() {
         navController.popBackStack()
     }
-
-
 }

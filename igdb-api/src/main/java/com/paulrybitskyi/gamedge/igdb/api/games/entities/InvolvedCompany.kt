@@ -41,16 +41,11 @@ internal data class InvolvedCompany(
     val isSupporting: Boolean,
 ) {
 
-
     object Schema {
-
         const val COMPANY = "company"
         const val IS_DEVELOPER = "developer"
         const val IS_PUBLISHER = "publisher"
         const val IS_PORTER = "porting"
         const val IS_SUPPORTING = "supporting"
-
     }
-
-
 }

@@ -21,7 +21,5 @@ import com.paulrybitskyi.gamedge.data.commons.DataResult
 import com.paulrybitskyi.gamedge.data.commons.Pagination
 
 interface ArticlesRemoteDataStore {
-
     suspend fun getArticles(pagination: Pagination): DataResult<List<DataArticle>>
-
 }

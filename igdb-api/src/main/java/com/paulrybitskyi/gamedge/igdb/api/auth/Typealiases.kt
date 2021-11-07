@@ -18,5 +18,4 @@ package com.paulrybitskyi.gamedge.igdb.api.auth
 
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
 
-
 internal typealias ApiOauthCredentials = OauthCredentials

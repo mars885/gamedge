@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.commons.api
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 
-
 fun OkHttpClient.Builder.addInterceptorAsFirstInChain(
     interceptor: Interceptor
 ): OkHttpClient.Builder = apply {

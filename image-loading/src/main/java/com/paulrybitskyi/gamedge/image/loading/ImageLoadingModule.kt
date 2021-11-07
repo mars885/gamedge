@@ -33,19 +33,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object ImageLoadingModule {
 
-
     @Provides
     @Singleton
     fun providePicasso(@ApplicationContext context: Context): Picasso {
         val activityManager = context.getSystemService<ActivityManager>()
-        // ~50% of the available heap
-        val cacheSizeInBytes = (1024 * 1024 * activityManager.memoryClass / 2)
+        val cacheSizeInMegabytes = (activityManager.memoryClass / 2) // ~50% of the available heap
+
+        @Suppress("MagicNumber")
+        val cacheSizeInBytes = (1024 * 1024 * cacheSizeInMegabytes)
 
         return Picasso.Builder(context)
             .defaultBitmapConfig(Bitmap.Config.ARGB_8888)
             .memoryCache(LruCache(cacheSizeInBytes))
             .build()
     }
-
-
 }

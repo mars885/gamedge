@@ -21,41 +21,30 @@ import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GamesCategoryUiStateFactory {
-
     fun createWithEmptyState(): GamesCategoryUiState
-
     fun createWithLoadingState(): GamesCategoryUiState
-
     fun createWithResultState(games: List<Game>): GamesCategoryUiState
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GamesCategoryUiStateFactoryImpl @Inject constructor(
     private val gameCategoryModelMapper: GameCategoryModelMapper
 ) : GamesCategoryUiStateFactory {
 
-
     override fun createWithEmptyState(): GamesCategoryUiState {
         return GamesCategoryUiState.Empty
     }
-
 
     override fun createWithLoadingState(): GamesCategoryUiState {
         return GamesCategoryUiState.Loading
     }
 
-
     override fun createWithResultState(games: List<Game>): GamesCategoryUiState {
-        if(games.isEmpty()) return createWithEmptyState()
+        if (games.isEmpty()) return createWithEmptyState()
 
         return GamesCategoryUiState.Result(
             games.map(gameCategoryModelMapper::mapToGameCategoryModel)
         )
     }
-
-
 }

@@ -18,5 +18,4 @@ package com.paulrybitskyi.gamedge.data.auth
 
 import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 
-
 typealias DataOauthCredentials = OauthCredentials

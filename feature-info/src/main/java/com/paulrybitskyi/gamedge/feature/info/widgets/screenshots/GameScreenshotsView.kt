@@ -36,7 +36,6 @@ internal class GameScreenshotsView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val binding = ViewGameScreenshotsBinding.inflate(context.layoutInflater, this)
 
     private lateinit var adapter: GameScreenshotsAdapter
@@ -51,18 +50,15 @@ internal class GameScreenshotsView @JvmOverloads constructor(
 
     var onScreenshotClicked: ((Int) -> Unit)? = null
 
-
     init {
         initCard()
         initRecyclerView(context)
     }
 
-
     private fun initCard() {
         setBackgroundColor(getColor(R.color.game_screenshots_card_background_color))
         cardElevation = getDimension(R.dimen.game_screenshots_card_elevation)
     }
-
 
     private fun initRecyclerView(context: Context) = with(binding.recyclerView) {
         disableAnimations()
@@ -71,11 +67,9 @@ internal class GameScreenshotsView @JvmOverloads constructor(
         adapter = initAdapter(context)
     }
 
-
     private fun initLayoutManager(context: Context): LinearLayoutManager {
         return LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
-
 
     private fun initAdapter(context: Context): GameScreenshotsAdapter {
         return GameScreenshotsAdapter(context)
@@ -83,9 +77,8 @@ internal class GameScreenshotsView @JvmOverloads constructor(
             .also { adapter = it }
     }
 
-
     private fun bindListener(item: GameScreenshotItem, viewHolder: RecyclerView.ViewHolder) {
-        if(viewHolder is GameScreenshotItem.ViewHolder) {
+        if (viewHolder is GameScreenshotItem.ViewHolder) {
             viewHolder.setOnScreenshotClickListener {
                 val position = items
                     .indexOfFirstOrNull { it == item.model }
@@ -96,10 +89,7 @@ internal class GameScreenshotsView @JvmOverloads constructor(
         }
     }
 
-
     private fun List<String>.toAdapterItems(): List<GameScreenshotItem> {
         return map(::GameScreenshotItem)
     }
-
-
 }

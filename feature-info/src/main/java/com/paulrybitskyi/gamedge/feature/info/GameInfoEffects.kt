@@ -19,24 +19,18 @@ package com.paulrybitskyi.gamedge.feature.info
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 
-
 internal sealed class GameInfoCommand : Command {
-
-    data class OpenUrl(val url: String): GameInfoCommand()
-
+    data class OpenUrl(val url: String) : GameInfoCommand()
 }
 
-
 internal sealed class GameInfoRoute : Route {
-
-    data class Info(val gameId: Int): GameInfoRoute()
+    data class Info(val gameId: Int) : GameInfoRoute()
 
     data class ImageViewer(
         val title: String?,
         val initialPosition: Int,
         val imageUrls: List<String>
-    ): GameInfoRoute()
+    ) : GameInfoRoute()
 
     object Back : GameInfoRoute()
-
 }

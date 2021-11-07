@@ -29,11 +29,11 @@ import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase.Params
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.hiltbinder.BindType
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 @BindType
@@ -44,12 +44,11 @@ internal class RefreshArticlesUseCaseImpl @Inject constructor(
     private val mappers: RefreshArticlesUseCaseMappers
 ) : RefreshArticlesUseCase {
 
-
     override suspend fun execute(params: Params): Flow<DomainResult<List<Article>>> {
         val throttlerKey = throttlerTools.keyProvider.provideArticlesKey(params.pagination)
 
         return flow {
-            if(throttlerTools.throttler.canRefreshArticles(throttlerKey)) {
+            if (throttlerTools.throttler.canRefreshArticles(throttlerKey)) {
                 emit(articlesDataStores.remote.getArticles(params.pagination.toDataPagination()))
             }
         }
@@ -61,6 +60,4 @@ internal class RefreshArticlesUseCaseImpl @Inject constructor(
         .mapResult(mappers.article::mapToDomainArticles, mappers.error::mapToDomainError)
         .flowOn(dispatcherProvider.computation)
     }
-
-
 }

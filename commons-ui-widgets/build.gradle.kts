@@ -33,10 +33,6 @@ android {
     }
 }
 
-hilt {
-    enableAggregatingTask = true
-}
-
 dependencies {
     implementation(project(deps.local.domain))
     implementation(project(deps.local.core))

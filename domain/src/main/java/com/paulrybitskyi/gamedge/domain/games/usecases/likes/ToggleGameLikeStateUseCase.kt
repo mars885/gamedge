@@ -21,5 +21,4 @@ import com.paulrybitskyi.gamedge.domain.commons.usecases.UseCase
 interface ToggleGameLikeStateUseCase : UseCase<ToggleGameLikeStateUseCase.Params, Unit> {
 
     data class Params(val gameId: Int)
-
 }

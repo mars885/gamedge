@@ -18,7 +18,11 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
 import androidx.fragment.app.viewModels
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.addOnBackPressCallback
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.navigationBarColor
+import com.paulrybitskyi.commons.ktx.statusBarColor
+import com.paulrybitskyi.commons.ktx.window
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
@@ -27,8 +31,8 @@ import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.core.sharers.TextSharer
 import com.paulrybitskyi.gamedge.feature.image.viewer.databinding.FragmentImageViewerBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 internal class ImageViewerFragment : BaseFragment<
@@ -37,14 +41,12 @@ internal class ImageViewerFragment : BaseFragment<
     ImageViewerNavigator
 >(R.layout.fragment_image_viewer) {
 
-
     override val viewBinding by viewBinding(FragmentImageViewerBinding::bind)
     override val viewModel by viewModels<ImageViewerViewModel>()
 
     private var originalStatusBarColor: Int = 0
 
     @Inject lateinit var textSharer: TextSharer
-
 
     override fun onInit() {
         super.onInit()
@@ -53,7 +55,6 @@ internal class ImageViewerFragment : BaseFragment<
         initOnBackPress()
         initImageViewerView()
     }
-
 
     private fun initSystemWindows() {
         originalStatusBarColor = window.statusBarColor
@@ -68,18 +69,15 @@ internal class ImageViewerFragment : BaseFragment<
         navigationBarColor = getColor(R.color.image_viewer_bar_background_color)
     }
 
-
     private fun initOnBackPress() {
         addOnBackPressCallback { onBackPressed() }
     }
-
 
     private fun initImageViewerView() = with(viewBinding.imageViewerView) {
         onToolbarLeftBtnClicked = ::onBackPressed
         onToolbarRightBtnClicked = viewModel::onToolbarRightButtonClicked
         onPageChanged = viewModel::onPageChanged
     }
-
 
     override fun onBindViewModel() {
         super.onBindViewModel()
@@ -89,13 +87,11 @@ internal class ImageViewerFragment : BaseFragment<
         observeToolbarTitle()
     }
 
-
     private fun observeSelectedPosition() {
         viewModel.selectedPosition
             .onEach { viewBinding.imageViewerView.selectedPosition = it }
             .observeIn(this)
     }
-
 
     private fun observeImageUrls() {
         viewModel.imageUrls
@@ -103,37 +99,32 @@ internal class ImageViewerFragment : BaseFragment<
             .observeIn(this)
     }
 
-
     private fun observeToolbarTitle() {
         viewModel.toolbarTitle
             .onEach { viewBinding.imageViewerView.toolbarTitle = it }
             .observeIn(this)
     }
 
-
     private fun onBackPressed() {
-        if(viewBinding.imageViewerView.isCurrentImageScaled()) {
+        if (viewBinding.imageViewerView.isCurrentImageScaled()) {
             viewBinding.imageViewerView.resetCurrentImageScale()
         } else {
             viewModel.onBackPressed()
         }
     }
 
-
     override fun onHandleCommand(command: Command) {
         super.onHandleCommand(command)
 
-        when(command) {
+        when (command) {
             is ImageViewerCommand.ShareText -> shareText(command.text)
             is ImageViewerCommand.ResetSystemWindows -> resetSystemWindows()
         }
     }
 
-
     private fun shareText(text: String) {
         textSharer.share(requireActivity(), text)
     }
-
 
     private fun resetSystemWindows() {
         @Suppress("DEPRECATION")
@@ -143,14 +134,11 @@ internal class ImageViewerFragment : BaseFragment<
         navigationBarColor = getColor(R.color.colorNavigationBar)
     }
 
-
     override fun onRoute(route: Route) {
         super.onRoute(route)
 
-        when(route) {
+        when (route) {
             is ImageViewerRoute.Back -> navigator.goBack()
         }
     }
-
-
 }

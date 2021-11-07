@@ -21,9 +21,7 @@ import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 private const val UNKNOWN_ERROR_TEMPLATE = "Unknown Error: %s"
-
 
 @BindType(withQualifier = true)
 @IgdbApi
@@ -31,14 +29,13 @@ internal class CompositeErrorMessageExtractor @Inject constructor(
     private val errorMessageExtractors: Set<@JvmSuppressWildcards ErrorMessageExtractor>
 ) : ErrorMessageExtractor {
 
-
     override fun extract(responseBody: String): String {
-        for(errorMessageExtractor in errorMessageExtractors) {
+        for (errorMessageExtractor in errorMessageExtractors) {
             try {
                 val message = errorMessageExtractor.extract(responseBody)
 
-                if(message.isNotBlank()) return message
-            } catch(error: Throwable) {
+                if (message.isNotBlank()) return message
+            } catch (ignore: Throwable) {
                 continue
             }
         }
@@ -48,6 +45,4 @@ internal class CompositeErrorMessageExtractor @Inject constructor(
             responseBody
         )
     }
-
-
 }

@@ -27,9 +27,14 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.GetCompanyDevelopedGamesU
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetCompanyDevelopedGamesUseCase.Params
 import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshCompanyDevelopedGamesUseCase
 import com.paulrybitskyi.hiltbinder.BindType
-import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEmpty
 
 @Singleton
 @BindType
@@ -39,7 +44,6 @@ internal class GetCompanyDevelopedGamesUseCaseImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val gameMapper: GameMapper
 ) : GetCompanyDevelopedGamesUseCase {
-
 
     override suspend fun execute(params: Params): Flow<List<Game>> {
         return refreshCompanyDevelopedGamesUseCase
@@ -59,6 +63,4 @@ internal class GetCompanyDevelopedGamesUseCaseImpl @Inject constructor(
                 emitAll(localCompanyDevelopedGamesFlow)
             }
     }
-
-
 }

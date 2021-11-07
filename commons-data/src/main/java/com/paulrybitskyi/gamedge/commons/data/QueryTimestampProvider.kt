@@ -21,10 +21,8 @@ import com.paulrybitskyi.hiltbinder.BindType
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
-private val POPULAR_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(90L)
-private val RECENTLY_RELEASED_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(30L)
-
+private val POPULAR_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(@Suppress("MagicNumber") 90L)
+private val RECENTLY_RELEASED_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(@Suppress("MagicNumber") 30L)
 
 interface QueryTimestampProvider {
 
@@ -37,14 +35,12 @@ interface QueryTimestampProvider {
     fun getComingSoonGamesMinReleaseDate(): Long
 
     fun getMostAnticipatedGamesMinReleaseDate(): Long
-
 }
 
 @BindType
 internal class QueryTimestampProviderImpl @Inject constructor(
     private val timestampProvider: TimestampProvider
 ) : QueryTimestampProvider {
-
 
     override fun getPopularGamesMinReleaseDate(): Long {
         val currentUnixTimestamp = getUnixTimestamp()
@@ -53,7 +49,6 @@ internal class QueryTimestampProviderImpl @Inject constructor(
         return minReleaseDateTimestamp
     }
 
-
     override fun getRecentlyReleasedGamesMinReleaseDate(): Long {
         val maxReleaseDateTimestamp = getRecentlyReleasedGamesMaxReleaseDate()
         val minReleaseDateTimestamp = (maxReleaseDateTimestamp - RECENTLY_RELEASED_GAMES_MIN_RELEASE_DATE_DURATION)
@@ -61,25 +56,19 @@ internal class QueryTimestampProviderImpl @Inject constructor(
         return minReleaseDateTimestamp
     }
 
-
     override fun getRecentlyReleasedGamesMaxReleaseDate(): Long {
         return getUnixTimestamp()
     }
-
 
     override fun getComingSoonGamesMinReleaseDate(): Long {
         return getUnixTimestamp()
     }
 
-
     override fun getMostAnticipatedGamesMinReleaseDate(): Long {
         return getUnixTimestamp()
     }
 
-
     private fun getUnixTimestamp(): Long {
         return timestampProvider.getUnixTimestamp(TimeUnit.SECONDS)
     }
-
-
 }

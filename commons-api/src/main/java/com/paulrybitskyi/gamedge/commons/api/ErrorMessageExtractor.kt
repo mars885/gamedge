@@ -17,7 +17,5 @@
 package com.paulrybitskyi.gamedge.commons.api
 
 interface ErrorMessageExtractor {
-
     fun extract(responseBody: String): String
-
 }

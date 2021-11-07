@@ -37,7 +37,6 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : SwipeRefreshLayout(context, attrs) {
 
-
     private lateinit var discoveryAdapter: GamesDiscoveryAdapter
 
     private var adapterItems by observeChanges<List<GamesDiscoveryItem>>(emptyList()) { _, newItems ->
@@ -52,12 +51,10 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
     var onCategoryGameClicked: ((GamesDiscoveryItemGameModel) -> Unit)? = null
     var onRefreshRequested: (() -> Unit)? = null
 
-
     init {
         initSwipeRefreshLayout()
         initRecyclerView(context)
     }
-
 
     private fun initSwipeRefreshLayout() {
         setColorSchemeColors(getColor(R.color.games_discovery_swipe_refresh_color))
@@ -66,7 +63,6 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
             onRefreshRequested?.invoke()
         }
     }
-
 
     private fun initRecyclerView(context: Context) {
         RecyclerView(context)
@@ -82,17 +78,14 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
             .also(::addView)
     }
 
-
     private fun initLayoutManager(context: Context): LinearLayoutManager {
         return object : LinearLayoutManager(context) {
 
             override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
                 return RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             }
-
         }
     }
-
 
     private fun initAdapter(context: Context): GamesDiscoveryAdapter {
         return GamesDiscoveryAdapter(context)
@@ -100,16 +93,14 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
             .also { discoveryAdapter = it }
     }
 
-
     private fun bindListener(item: GamesDiscoveryItem, viewHolder: RecyclerView.ViewHolder) {
-        if(viewHolder is GamesDiscoveryItem.ViewHolder) {
+        if (viewHolder is GamesDiscoveryItem.ViewHolder) {
             with(viewHolder) {
                 setOnMoreButtonClickListener { onCategoryMoreButtonClicked?.invoke(item.model.category) }
                 setOnGameClickListener { onCategoryGameClicked?.invoke(it) }
             }
         }
     }
-
 
     private fun initItemDecorator(): SpacingItemDecorator {
         return SpacingItemDecorator(
@@ -119,10 +110,7 @@ internal class GamesDiscoveryView @JvmOverloads constructor(
         )
     }
 
-
     private fun List<GamesDiscoveryItemModel>.toAdapterItems(): List<GamesDiscoveryItem> {
         return map(::GamesDiscoveryItem)
     }
-
-
 }

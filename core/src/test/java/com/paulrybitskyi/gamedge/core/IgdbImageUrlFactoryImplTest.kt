@@ -16,37 +16,36 @@
 
 package com.paulrybitskyi.gamedge.core
 
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_IMAGE
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageExtension
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactoryImpl
-import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_IMAGE
-import org.assertj.core.api.Assertions.*
+import java.util.Locale
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
 internal class IgdbImageUrlFactoryImplTest {
 
-
     private lateinit var SUT: IgdbImageUrlFactoryImpl
-
 
     @Before
     fun setup() {
         SUT = IgdbImageUrlFactoryImpl()
     }
 
-
     @Test
     fun `Creates image urls without retina size correctly`() {
-        for(imageExtension in IgdbImageExtension.values()) {
-            for(igdbImageSize in IgdbImageSize.values()) {
+        for (imageExtension in IgdbImageExtension.values()) {
+            for (igdbImageSize in IgdbImageSize.values()) {
                 val config = IgdbImageUrlFactory.Config(
                     size = igdbImageSize,
                     extension = imageExtension
                 )
 
                 val expectedUrl = String.format(
+                    Locale.US,
                     "https://images.igdb.com/igdb/image/upload/t_%s/%s.%s",
                     config.size.rawSize,
                     DOMAIN_IMAGE.id,
@@ -58,11 +57,10 @@ internal class IgdbImageUrlFactoryImplTest {
         }
     }
 
-
     @Test
     fun `Creates image urls with retina size correctly`() {
-        for(imageExtension in IgdbImageExtension.values()) {
-            for(igdbImageSize in IgdbImageSize.values()) {
+        for (imageExtension in IgdbImageExtension.values()) {
+            for (igdbImageSize in IgdbImageSize.values()) {
                 val config = IgdbImageUrlFactory.Config(
                     size = igdbImageSize,
                     extension = imageExtension,
@@ -70,6 +68,7 @@ internal class IgdbImageUrlFactoryImplTest {
                 )
 
                 val expectedUrl = String.format(
+                    Locale.US,
                     "https://images.igdb.com/igdb/image/upload/t_%s/%s.%s",
                     (config.size.rawSize + "_2x"),
                     DOMAIN_IMAGE.id,
@@ -81,7 +80,6 @@ internal class IgdbImageUrlFactoryImplTest {
         }
     }
 
-
     @Test
     fun `Returns null when image id is blank while creating image url`() {
         val config = IgdbImageUrlFactory.Config(
@@ -90,6 +88,4 @@ internal class IgdbImageUrlFactoryImplTest {
 
         assertThat(SUT.createUrl(DOMAIN_IMAGE.copy(id = "   "), config)).isNull()
     }
-
-
 }

@@ -28,18 +28,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-
 private const val INITIAL_POSITION = 0
 
-
 internal class ImageViewerViewModelTest {
-
 
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var SUT: ImageViewerViewModel
-
 
     @Before
     fun setup() {
@@ -48,7 +44,6 @@ internal class ImageViewerViewModelTest {
             savedStateHandle = setupSavedStateHandle()
         )
     }
-
 
     private fun setupSavedStateHandle(): SavedStateHandle {
         return mockk(relaxed = true) {
@@ -59,18 +54,16 @@ internal class ImageViewerViewModelTest {
         }
     }
 
-
     @Test
     fun `Dispatches text sharing command when toolbar right button is clicked`() {
         mainCoroutineRule.runBlockingTest {
             SUT.commandFlow.test {
                 SUT.onToolbarRightButtonClicked()
 
-                assertThat(expectItem() is ImageViewerCommand.ShareText).isTrue
+                assertThat(awaitItem() is ImageViewerCommand.ShareText).isTrue
             }
         }
     }
-
 
     @Test
     fun `Emits selected position when page is changed`() {
@@ -78,12 +71,11 @@ internal class ImageViewerViewModelTest {
             SUT.selectedPosition.test {
                 SUT.onPageChanged(10)
 
-                assertThat(expectItem() == INITIAL_POSITION).isTrue
-                assertThat(expectItem() == 10).isTrue
+                assertThat(awaitItem() == INITIAL_POSITION).isTrue
+                assertThat(awaitItem() == 10).isTrue
             }
         }
     }
-
 
     @Test
     fun `Emits toolbar title when page is changed`() {
@@ -91,11 +83,10 @@ internal class ImageViewerViewModelTest {
             SUT.toolbarTitle.test {
                 SUT.onPageChanged(10)
 
-                assertThat(expectItem()).isNotEmpty
+                assertThat(awaitItem()).isNotEmpty
             }
         }
     }
-
 
     @Test
     fun `Dispatches system windows reset command when back button is clicked`() {
@@ -103,11 +94,10 @@ internal class ImageViewerViewModelTest {
             SUT.commandFlow.test {
                 SUT.onBackPressed()
 
-                assertThat(expectItem() is ImageViewerCommand.ResetSystemWindows).isTrue
+                assertThat(awaitItem() is ImageViewerCommand.ResetSystemWindows).isTrue
             }
         }
     }
-
 
     @Test
     fun `Routes to previous screen when back button is clicked`() {
@@ -115,10 +105,8 @@ internal class ImageViewerViewModelTest {
             SUT.routeFlow.test {
                 SUT.onBackPressed()
 
-                assertThat(expectItem() is ImageViewerRoute.Back).isTrue
+                assertThat(awaitItem() is ImageViewerRoute.Back).isTrue
             }
         }
     }
-
-
 }

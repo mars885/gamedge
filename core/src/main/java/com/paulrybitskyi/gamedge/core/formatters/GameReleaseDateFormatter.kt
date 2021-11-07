@@ -28,13 +28,9 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-
 interface GameReleaseDateFormatter {
-
     fun formatReleaseDate(game: Game): String
-
 }
-
 
 @BindType
 internal class GameReleaseDateFormatterImpl @Inject constructor(
@@ -42,20 +38,16 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
     private val relativeDateFormatter: RelativeDateFormatter
 ) : GameReleaseDateFormatter {
 
-
     private companion object {
-
         private const val COMPLETE_DATE_FORMATTING_PATTERN = "MMM dd, yyyy"
         private const val DAYLESS_DATE_FORMATTING_PATTERN = "MMMM yyyy"
-
     }
-
 
     override fun formatReleaseDate(game: Game): String {
         val date = game.findFirstReleaseDate()
             ?: return stringProvider.getString(R.string.unknown)
 
-        return when(val category = date.category) {
+        return when (val category = date.category) {
             ReleaseDateCategory.YYYY_MMMM_DD -> date.formatCompleteDate()
             ReleaseDateCategory.YYYY_MMMM -> date.formatDaylessDate()
             ReleaseDateCategory.YYYY -> date.formatDateWithYearOnly()
@@ -69,7 +61,6 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
         }
     }
 
-
     private fun Game.findFirstReleaseDate(): ReleaseDate? {
         return releaseDates
             .filter {
@@ -80,7 +71,6 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
             }
             .minByOrNull { it.date!! }
     }
-
 
     private fun ReleaseDate.formatCompleteDate(): String {
         val releaseLocalDateTime = toLocalDateTime()
@@ -96,13 +86,11 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
         }
     }
 
-
     private fun ReleaseDate.formatDaylessDate(): String {
         return DateTimeFormatter
             .ofPattern(DAYLESS_DATE_FORMATTING_PATTERN)
             .format(toLocalDateTime())
     }
-
 
     private fun ReleaseDate.toLocalDateTime(): LocalDateTime {
         return LocalDateTime.ofInstant(
@@ -111,11 +99,9 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
         )
     }
 
-
     private fun ReleaseDate.formatDateWithYearOnly(): String {
         return checkNotNull(year).toString()
     }
-
 
     private fun ReleaseDate.formatDateWithYearAndQuarter(): String {
         return stringProvider.getString(
@@ -125,10 +111,9 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
         )
     }
 
-
     private fun ReleaseDateCategory.getQuarterString(): String {
         return stringProvider.getString(
-            when(this) {
+            when (this) {
                 ReleaseDateCategory.YYYYQ1 -> R.string.year_quarter_first
                 ReleaseDateCategory.YYYYQ2 -> R.string.year_quarter_second
                 ReleaseDateCategory.YYYYQ3 -> R.string.year_quarter_third
@@ -138,6 +123,4 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
             }
         )
     }
-
-
 }

@@ -23,32 +23,26 @@ import PLUGIN_ANDROID_APPLICATION
 import PLUGIN_KOTLIN_ANDROID
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.kotlin.dsl.findByType
-import java.io.File
 
 class GamedgeAndroidPlugin : Plugin<Project> {
-
 
     override fun apply(project: Project) = with(project) {
         configurePlugins()
         configureAndroid()
     }
 
-
     private fun Project.configurePlugins() {
         plugins.apply(PLUGIN_KOTLIN_ANDROID)
     }
-
 
     private fun Project.configureAndroid() {
         configureAndroidCommonInfo()
         configureAndroidApplicationId()
     }
 
-
     private fun Project.configureAndroidCommonInfo() {
         extensions.findByType<BaseExtension>()?.run {
             compileSdkVersion(appConfig.compileSdkVersion)
-            buildToolsVersion(appConfig.buildToolsVersion)
 
             defaultConfig {
                 minSdk = appConfig.minSdkVersion
@@ -94,7 +88,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
         }
     }
 
-
     private fun Project.configureAndroidApplicationId() {
         plugins.withId(PLUGIN_ANDROID_APPLICATION) {
             extensions.findByType<BaseAppModuleExtension>()?.run {
@@ -104,6 +97,4 @@ class GamedgeAndroidPlugin : Plugin<Project> {
             }
         }
     }
-
-
 }

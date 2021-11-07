@@ -23,12 +23,9 @@ import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
 internal class GameInfoAdapter(
     context: Context
-): AbstractRecyclerViewAdapter<Item<*, NoDependencies>, NoDependencies>(context) {
-
+) : AbstractRecyclerViewAdapter<Item<*, NoDependencies>, NoDependencies>(context) {
 
     init {
         setHasStableIds(true)
     }
-
-
 }

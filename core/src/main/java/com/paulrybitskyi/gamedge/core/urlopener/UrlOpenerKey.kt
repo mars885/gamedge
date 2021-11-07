@@ -29,11 +29,8 @@ import javax.inject.Qualifier
 internal annotation class UrlOpenerKey(val type: Type) {
 
     enum class Type {
-
         NATIVE_APP,
         CUSTOM_TAB,
         BROWSER
-
     }
-
 }

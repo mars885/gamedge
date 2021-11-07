@@ -20,7 +20,6 @@ import android.widget.ImageView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.RequestCreator
 
-
 internal fun RequestCreator.into(
     target: ImageView,
     onSuccess: (() -> Unit)? = null,
@@ -35,7 +34,6 @@ internal fun RequestCreator.into(
         override fun onError(error: java.lang.Exception) {
             onFailure?.invoke(error)
         }
-
     }
 
     into(target, callback)

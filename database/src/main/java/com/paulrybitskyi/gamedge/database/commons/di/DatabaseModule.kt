@@ -34,9 +34,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object DatabaseModule {
 
-
     @Provides
     @Singleton
+    @Suppress("SpreadOperator")
     fun provideGamedgeDatabase(
         @ApplicationContext context: Context,
         typeConverters: Set<@JvmSuppressWildcards RoomTypeConverter>
@@ -50,6 +50,4 @@ internal object DatabaseModule {
         .addMigrations(*MIGRATIONS)
         .build()
     }
-
-
 }

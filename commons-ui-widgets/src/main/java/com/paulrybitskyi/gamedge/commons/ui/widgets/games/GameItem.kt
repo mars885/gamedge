@@ -30,10 +30,8 @@ internal class GameItem(model: GameModel) : AbstractItem<
     NoDependencies
 >(model), HasUniqueIdentifier<Int> {
 
-
     override val uniqueIdentifier: Int
         get() = model.id
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -43,15 +41,13 @@ internal class GameItem(model: GameModel) : AbstractItem<
         return ViewHolder(GameView(parent.context))
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: GameModel) = with(view) {
             coverImageUrl = model.coverImageUrl
@@ -64,8 +60,5 @@ internal class GameItem(model: GameModel) : AbstractItem<
         fun setOnGameClickListener(onClick: () -> Unit) {
             view.onGameClicked = onClick
         }
-
     }
-
-
 }

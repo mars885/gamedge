@@ -25,10 +25,10 @@ import com.paulrybitskyi.gamedge.domain.auth.entities.OauthCredentials
 import com.paulrybitskyi.gamedge.domain.auth.usecases.RefreshAuthUseCase
 import com.paulrybitskyi.gamedge.domain.commons.DomainResult
 import com.paulrybitskyi.hiltbinder.BindType
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 @Singleton
 @BindType
@@ -38,16 +38,13 @@ internal class RefreshAuthUseCaseImpl @Inject constructor(
     private val errorMapper: ErrorMapper
 ) : RefreshAuthUseCase {
 
-
     override suspend fun execute(params: Unit): Flow<DomainResult<OauthCredentials>> {
         return flow {
-            if(authDataStores.local.isExpired()) {
+            if (authDataStores.local.isExpired()) {
                 emit(authDataStores.remote.getOauthCredentials())
             }
         }
         .onEachSuccess(authDataStores.local::saveOauthCredentials)
         .mapResult(authMapper::mapToDomainOauthCredentials, errorMapper::mapToDomainError)
     }
-
-
 }

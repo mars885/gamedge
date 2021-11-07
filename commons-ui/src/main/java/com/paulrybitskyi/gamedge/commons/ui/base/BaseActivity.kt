@@ -28,8 +28,8 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 import com.paulrybitskyi.gamedge.commons.ui.observeIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+import kotlinx.coroutines.flow.onEach
 
 abstract class BaseActivity<
     VB : ViewBinding,
@@ -37,12 +37,10 @@ abstract class BaseActivity<
     NA : Navigator
 > : AppCompatActivity() {
 
-
     protected abstract val viewBinding: VB
     protected abstract val viewModel: VM
 
     @Inject lateinit var navigator: NA
-
 
     // Cannot be made final due to Dagger Hilt
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,18 +53,15 @@ abstract class BaseActivity<
         onPostInit()
     }
 
-
     @CallSuper
     protected open fun onPreInit() {
         // Stub
     }
 
-
     @CallSuper
     protected open fun onInit() {
         onBindViewModel()
     }
-
 
     @CallSuper
     protected open fun onBindViewModel() {
@@ -74,13 +69,11 @@ abstract class BaseActivity<
         bindViewModelRoutes()
     }
 
-
     private fun bindViewModelCommands() {
         viewModel.commandFlow
             .onEach(::onHandleCommand)
             .observeIn(this)
     }
-
 
     private fun bindViewModelRoutes() {
         viewModel.routeFlow
@@ -88,12 +81,10 @@ abstract class BaseActivity<
             .observeIn(this)
     }
 
-
     @CallSuper
     protected open fun onPostInit() {
         loadData()
     }
-
 
     private fun loadData() {
         lifecycleScope.launchWhenResumed {
@@ -101,26 +92,22 @@ abstract class BaseActivity<
         }
     }
 
-
     protected open fun onLoadData() {
         // Stub
     }
 
-
     @CallSuper
     protected open fun onHandleCommand(command: Command) {
-        when(command) {
+        when (command) {
             is GeneralCommand.ShowShortToast -> showShortToast(command.message)
             is GeneralCommand.ShowLongToast -> showLongToast(command.message)
         }
     }
 
-
     @CallSuper
     protected open fun onRoute(route: Route) {
         // Stub
     }
-
 
     final override fun onRestoreInstanceState(state: Bundle) {
         super.onRestoreInstanceState(state)
@@ -128,12 +115,10 @@ abstract class BaseActivity<
         onRestoreState(state)
     }
 
-
     @CallSuper
     protected open fun onRestoreState(state: Bundle) {
         // Stub
     }
-
 
     final override fun onSaveInstanceState(state: Bundle) {
         onSaveState(state)
@@ -141,11 +126,8 @@ abstract class BaseActivity<
         super.onSaveInstanceState(state)
     }
 
-
     @CallSuper
     protected open fun onSaveState(state: Bundle) {
         // Stub
     }
-
-
 }

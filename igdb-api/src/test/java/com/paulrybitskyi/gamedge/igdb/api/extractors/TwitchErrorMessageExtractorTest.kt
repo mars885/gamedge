@@ -25,15 +25,12 @@ import org.junit.Test
 
 internal class TwitchErrorMessageExtractorTest {
 
-
     private lateinit var SUT: TwitchErrorMessageExtractor
-
 
     @Before
     fun setup() {
         SUT = TwitchErrorMessageExtractor(Json)
     }
-
 
     @Test
     fun `Extracts twitch error message successfully`() {
@@ -47,13 +44,11 @@ internal class TwitchErrorMessageExtractorTest {
         assertThat(SUT.extract(responseBody)).isEqualTo("invalid client secret")
     }
 
-
     @Test
     fun `Throws exception when twitch response body is not json`() {
         assertThatExceptionOfType(IllegalStateException::class.java)
             .isThrownBy { SUT.extract("hello there") }
     }
-
 
     @Test
     fun `Throws exception when twitch response body does not have message field`() {
@@ -67,6 +62,4 @@ internal class TwitchErrorMessageExtractorTest {
         assertThatExceptionOfType(IllegalStateException::class.java)
             .isThrownBy { SUT.extract(responseBody) }
     }
-
-
 }

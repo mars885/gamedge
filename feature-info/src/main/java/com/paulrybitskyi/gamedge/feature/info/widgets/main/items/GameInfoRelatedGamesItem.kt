@@ -40,13 +40,11 @@ internal class GameInfoRelatedGamesItem(model: GameInfoRelatedGamesModel) : Abst
     NoDependencies
 >(model) {
 
-
     override val itemId: Long
-        get() = when(model.type) {
+        get() = when (model.type) {
             GameInfoRelatedGamesType.OTHER_COMPANY_GAMES -> GameInfoAdapterItem.OTHER_COMPANY_GAMES.id
             GameInfoRelatedGamesType.SIMILAR_GAMES -> GameInfoAdapterItem.SIMILAR_GAMES.id
         }
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -62,15 +60,13 @@ internal class GameInfoRelatedGamesItem(model: GameInfoRelatedGamesModel) : Abst
         )
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GamesCategoryPreviewView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: GameInfoRelatedGamesModel) = with(view) {
             title = model.title
@@ -80,8 +76,5 @@ internal class GameInfoRelatedGamesItem(model: GameInfoRelatedGamesModel) : Abst
         fun setOnGameClickListener(onClick: (GameInfoRelatedGameModel) -> Unit) {
             view.onGameClicked = { onClick(it.mapToInfoRelatedGameModel()) }
         }
-
     }
-
-
 }

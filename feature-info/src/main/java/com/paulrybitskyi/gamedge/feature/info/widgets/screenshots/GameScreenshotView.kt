@@ -38,26 +38,22 @@ internal class GameScreenshotView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val defaultImage = checkNotNull(getDrawable(R.drawable.game_landscape_placeholder))
 
     private lateinit var imageView: AppCompatImageView
 
     @Inject lateinit var imageLoader: ImageLoader
 
-
     init {
         initCard()
         initImageView(context)
     }
-
 
     private fun initCard() {
         setCardBackgroundColor(getColor(R.color.game_screenshot_card_background_color))
         cardElevation = getDimension(R.dimen.game_screenshot_card_elevation)
         radius = getDimension(R.dimen.game_screenshot_card_corner_radius)
     }
-
 
     private fun initImageView(context: Context) {
         imageView = AppCompatImageView(context)
@@ -67,7 +63,6 @@ internal class GameScreenshotView @JvmOverloads constructor(
             }
             .also(::addView)
     }
-
 
     fun loadImage(url: String) {
         imageLoader.loadImage(
@@ -80,6 +75,4 @@ internal class GameScreenshotView @JvmOverloads constructor(
                 .build()
         )
     }
-
-
 }

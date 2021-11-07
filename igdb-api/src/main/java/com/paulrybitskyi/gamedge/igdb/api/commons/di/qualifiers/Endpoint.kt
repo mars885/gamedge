@@ -28,13 +28,8 @@ import javax.inject.Qualifier
 )
 internal annotation class Endpoint(val type: Type) {
 
-
     enum class Type {
-
         AUTH,
         GAMES
-
     }
-
-
 }

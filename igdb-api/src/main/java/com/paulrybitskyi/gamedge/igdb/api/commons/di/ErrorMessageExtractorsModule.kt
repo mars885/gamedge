@@ -28,7 +28,6 @@ import dagger.multibindings.IntoSet
 @InstallIn(SingletonComponent::class)
 internal interface ErrorMessageExtractorsModule {
 
-
     @Binds
     @IntoSet
     fun bindTwitchErrorMessageExtractorToSet(
@@ -36,13 +35,10 @@ internal interface ErrorMessageExtractorsModule {
         errorMessageExtractor: ErrorMessageExtractor
     ): ErrorMessageExtractor
 
-
     @Binds
     @IntoSet
     fun bindIgdbErrorMessageExtractorToSet(
         @ErrorMessageExtractorKey(ErrorMessageExtractorKey.Type.IGDB)
         errorMessageExtractor: ErrorMessageExtractor
     ): ErrorMessageExtractor
-
-
 }

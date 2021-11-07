@@ -23,12 +23,11 @@ import androidx.recyclerview.widget.RecyclerView.LayoutParams.MATCH_PARENT
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractItem
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
-internal class ImageViewerItem(model: String): AbstractItem<
+internal class ImageViewerItem(model: String) : AbstractItem<
     String,
     ImageViewerItem.ViewHolder,
     NoDependencies
 >(model) {
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -42,21 +41,16 @@ internal class ImageViewerItem(model: String): AbstractItem<
         )
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: ImageViewerItemView
-    ): RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(view) {
 
         fun bind(model: String) {
             view.imageUrl = model
         }
-
     }
-
-
 }

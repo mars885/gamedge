@@ -18,7 +18,14 @@ package com.paulrybitskyi.gamedge.feature.discovery.di
 
 import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.*
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveComingSoonGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveMostAnticipatedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveRecentlyReleasedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshComingSoonGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshMostAnticipatedGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
+import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshRecentlyReleasedGamesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +36,6 @@ import dagger.multibindings.IntoMap
 @InstallIn(ActivityRetainedComponent::class)
 internal object GamesDiscoveryModule {
 
-
     @Provides
     @IntoMap
     @GamesDiscoveryKey(GamesDiscoveryKey.Type.POPULAR)
@@ -38,7 +44,6 @@ internal object GamesDiscoveryModule {
     ): ObservableGamesUseCase {
         return observePopularGamesUseCase
     }
-
 
     @Provides
     @IntoMap
@@ -49,7 +54,6 @@ internal object GamesDiscoveryModule {
         return refreshPopularGamesUseCase
     }
 
-
     @Provides
     @IntoMap
     @GamesDiscoveryKey(GamesDiscoveryKey.Type.RECENTLY_RELEASED)
@@ -58,7 +62,6 @@ internal object GamesDiscoveryModule {
     ): ObservableGamesUseCase {
         return observeRecentlyReleasedGamesUseCase
     }
-
 
     @Provides
     @IntoMap
@@ -69,7 +72,6 @@ internal object GamesDiscoveryModule {
         return refreshRecentlyReleasedGamesUseCase
     }
 
-
     @Provides
     @IntoMap
     @GamesDiscoveryKey(GamesDiscoveryKey.Type.COMING_SOON)
@@ -78,7 +80,6 @@ internal object GamesDiscoveryModule {
     ): ObservableGamesUseCase {
         return observeComingSoonGamesUseCase
     }
-
 
     @Provides
     @IntoMap
@@ -89,7 +90,6 @@ internal object GamesDiscoveryModule {
         return refreshComingSoonGamesUseCase
     }
 
-
     @Provides
     @IntoMap
     @GamesDiscoveryKey(GamesDiscoveryKey.Type.MOST_ANTICIPATED)
@@ -99,7 +99,6 @@ internal object GamesDiscoveryModule {
         return observeMostAnticipatedGamesUseCase
     }
 
-
     @Provides
     @IntoMap
     @GamesDiscoveryKey(GamesDiscoveryKey.Type.MOST_ANTICIPATED)
@@ -108,6 +107,4 @@ internal object GamesDiscoveryModule {
     ): RefreshableGamesUseCase {
         return refreshMostAnticipatedGamesUseCase
     }
-
-
 }

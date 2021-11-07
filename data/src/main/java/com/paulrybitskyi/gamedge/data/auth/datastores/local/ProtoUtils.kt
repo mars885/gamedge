@@ -21,9 +21,7 @@ import com.paulrybitskyi.gamedge.OauthCredentials
 import java.io.InputStream
 import java.io.OutputStream
 
-
 internal typealias ProtoOauthCredentials = OauthCredentials
-
 
 internal fun ProtoOauthCredentials.isNotEmpty(): Boolean {
     return (
@@ -33,7 +31,6 @@ internal fun ProtoOauthCredentials.isNotEmpty(): Boolean {
         (expirationTime != 0L)
     )
 }
-
 
 @Suppress("BlockingMethodInNonBlockingContext")
 internal object ProtoOauthCredentialsSerializer : Serializer<ProtoOauthCredentials> {
@@ -48,5 +45,4 @@ internal object ProtoOauthCredentialsSerializer : Serializer<ProtoOauthCredentia
 
     override suspend fun writeTo(t: ProtoOauthCredentials, output: OutputStream) = t.writeTo(output)
     override suspend fun readFrom(input: InputStream): ProtoOauthCredentials = ProtoOauthCredentials.parseFrom(input)
-
 }

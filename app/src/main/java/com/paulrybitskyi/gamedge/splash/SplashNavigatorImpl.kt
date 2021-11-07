@@ -28,16 +28,12 @@ internal class SplashNavigatorImpl @Inject constructor(
     private val activity: Activity
 ) : SplashNavigator {
 
-
     override fun goToDashboard(context: Context) {
         activity.startActivity(DashboardActivity.newIntent(context))
         activity.finish()
     }
 
-
     override fun exitApp() {
         activity.finish()
     }
-
-
 }

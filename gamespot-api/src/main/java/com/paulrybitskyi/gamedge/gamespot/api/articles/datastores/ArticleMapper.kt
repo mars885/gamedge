@@ -6,11 +6,9 @@ import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiImageType
 import javax.inject.Inject
 
-
 internal class ArticleMapper @Inject constructor(
     private val publicationDateMapper: ArticlePublicationDateMapper
 ) {
-
 
     fun mapToDataArticle(apiArticle: ApiArticle): DataArticle {
         return DataArticle(
@@ -23,16 +21,12 @@ internal class ArticleMapper @Inject constructor(
         )
     }
 
-
     private fun Map<ApiImageType, String>.toDataImageUrls(): Map<DataImageType, String> {
         return mapKeys {
             DataImageType.valueOf(it.key.name)
         }
     }
-
-
 }
-
 
 internal fun ArticleMapper.mapToDataArticles(apiArticles: List<ApiArticle>): List<DataArticle> {
     return apiArticles.map(::mapToDataArticle)

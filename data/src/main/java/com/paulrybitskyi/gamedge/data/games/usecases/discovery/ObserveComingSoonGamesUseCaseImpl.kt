@@ -25,11 +25,11 @@ import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveComingSoonGamesUseCase
 import com.paulrybitskyi.hiltbinder.BindType
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 @BindType
@@ -39,13 +39,10 @@ internal class ObserveComingSoonGamesUseCaseImpl @Inject constructor(
     private val gameMapper: GameMapper
 ) : ObserveComingSoonGamesUseCase {
 
-
     override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
         return gamesLocalDataStore
             .observeComingSoonGames(params.pagination.toDataPagination())
             .map(gameMapper::mapToDomainGames)
             .flowOn(dispatcherProvider.computation)
     }
-
-
 }

@@ -18,19 +18,17 @@ package com.paulrybitskyi.gamedge.gamespot.api.commons
 
 import com.paulrybitskyi.gamedge.commons.api.HttpHeaders
 import com.paulrybitskyi.gamedge.commons.api.UserAgentProvider
+import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
 internal class UserAgentInterceptor @Inject constructor(
     private val userAgentProvider: UserAgentProvider
 ) : Interceptor {
 
-
     private val userAgent by lazy {
         userAgentProvider.getUserAgent()
     }
-
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val modifiedRequest = chain.request()
@@ -40,6 +38,4 @@ internal class UserAgentInterceptor @Inject constructor(
 
         return chain.proceed(modifiedRequest)
     }
-
-
 }

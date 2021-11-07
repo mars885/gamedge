@@ -23,22 +23,18 @@ import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthExpiryTimeCalcul
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import org.assertj.core.api.Assertions.*
+import java.util.concurrent.TimeUnit
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
-import java.util.concurrent.TimeUnit
-
 
 private const val CURRENT_TIMESTAMP = 10_000L
 
-
 internal class AuthExpiryTimeCalculatorTest {
-
 
     @MockK private lateinit var timestampProvider: TimestampProvider
 
     private lateinit var SUT: AuthExpiryTimeCalculator
-
 
     @Before
     fun setup() {
@@ -49,7 +45,6 @@ internal class AuthExpiryTimeCalculatorTest {
         every { timestampProvider.getUnixTimestamp(any()) } returns CURRENT_TIMESTAMP
     }
 
-
     @Test
     fun `Calculates expiry time successfully`() {
         val credentials = DATA_OAUTH_CREDENTIALS
@@ -58,6 +53,4 @@ internal class AuthExpiryTimeCalculatorTest {
 
         assertThat(expiryTime).isEqualTo(expected)
     }
-
-
 }

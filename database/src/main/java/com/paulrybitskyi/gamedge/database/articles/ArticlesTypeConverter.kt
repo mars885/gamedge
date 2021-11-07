@@ -30,17 +30,13 @@ internal class ArticlesTypeConverter @Inject constructor(
     private val jsonConverter: JsonConverter
 ) : RoomTypeConverter {
 
-
     @TypeConverter
     fun fromImageUrls(imageUrls: Map<ImageType, String>): String {
         return jsonConverter.toJson(imageUrls)
     }
 
-
     @TypeConverter
     fun toImageUrls(json: String): Map<ImageType, String> {
         return (jsonConverter.fromJson(json) ?: emptyMap())
     }
-
-
 }

@@ -18,7 +18,6 @@ package com.paulrybitskyi.gamedge.domain.commons.extensions
 
 import com.paulrybitskyi.gamedge.domain.commons.usecases.UseCase
 
-
 suspend fun <Out> UseCase<Unit, Out>.execute(): Out {
     return execute(Unit)
 }

@@ -34,15 +34,10 @@ internal data class LikedGame(
     @ColumnInfo(name = Schema.LIKE_TIMESTAMP) val likeTimestamp: Long
 ) {
 
-
     object Schema {
-
         const val TABLE_NAME = "liked_games"
         const val ID = "id"
         const val GAME_ID = "game_id"
         const val LIKE_TIMESTAMP = "like_timestamp"
-
     }
-
-
 }

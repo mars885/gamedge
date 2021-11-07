@@ -33,10 +33,6 @@ android {
     }
 }
 
-hilt {
-    enableAggregatingTask = true
-}
-
 dependencies {
     implementation(project(deps.local.commonsUi))
     implementation(project(deps.local.igdbApi))
@@ -67,3 +63,12 @@ dependencies {
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)
 }
+
+val installGitHook by tasks.registering(Copy::class) {
+    from(File(rootProject.rootDir, "hooks/pre-push"))
+    into(File(rootProject.rootDir, ".git/hooks/"))
+    // https://github.com/gradle/kotlin-dsl-samples/issues/1412
+    fileMode = 0b111101101 // -rwxr-xr-x
+}
+
+tasks.getByPath(":app:preBuild").dependsOn(installGitHook)

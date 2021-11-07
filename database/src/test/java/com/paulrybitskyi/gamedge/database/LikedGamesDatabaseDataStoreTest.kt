@@ -34,18 +34,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
-
 private const val GAME_ID = 100
 private const val ANOTHER_GAME_ID = 110
 
-
 internal class LikedGamesDatabaseDataStoreTest {
-
 
     private lateinit var likedGamesTable: FakeLikedGamesTable
     private lateinit var gameMapper: GameMapper
     private lateinit var SUT: LikedGamesDatabaseDataStore
-
 
     @Before
     fun setup() {
@@ -59,7 +55,6 @@ internal class LikedGamesDatabaseDataStoreTest {
         )
     }
 
-
     @Test
     fun `Likes game successfully`() {
         runBlockingTest {
@@ -68,7 +63,6 @@ internal class LikedGamesDatabaseDataStoreTest {
             assertThat(SUT.isGameLiked(GAME_ID)).isTrue
         }
     }
-
 
     @Test
     fun `Unlikes game successfully`() {
@@ -80,7 +74,6 @@ internal class LikedGamesDatabaseDataStoreTest {
         }
     }
 
-
     @Test
     fun `Validates that unliked game is unliked`() {
         runBlockingTest {
@@ -88,24 +81,22 @@ internal class LikedGamesDatabaseDataStoreTest {
         }
     }
 
-
     @Test
     fun `Observes game like state successfully`() {
         runBlockingTest {
             SUT.likeGame(GAME_ID)
 
             SUT.observeGameLikeState(GAME_ID).test {
-                assertThat(expectItem()).isTrue
-                expectComplete()
+                assertThat(awaitItem()).isTrue
+                awaitComplete()
             }
 
             SUT.observeGameLikeState(ANOTHER_GAME_ID).test {
-                assertThat(expectItem()).isFalse
-                expectComplete()
+                assertThat(awaitItem()).isFalse
+                awaitComplete()
             }
         }
     }
-
 
     @Test
     fun `Observes liked games successfully`() {
@@ -115,12 +106,11 @@ internal class LikedGamesDatabaseDataStoreTest {
             likedGamesTable.dbGamesToObserve = dbGames
 
             SUT.observeLikedGames(DATA_PAGINATION).test {
-                assertThat(expectItem()).isEqualTo(DATA_GAMES)
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(DATA_GAMES)
+                awaitComplete()
             }
         }
     }
-
 
     private class FakeLikedGamesTable : LikedGamesTable {
 
@@ -146,9 +136,7 @@ internal class LikedGamesDatabaseDataStoreTest {
         override fun observeLikedGames(offset: Int, limit: Int): Flow<List<DatabaseGame>> {
             return flowOf(dbGamesToObserve)
         }
-
     }
-
 
     private class FakeLikedGameFactory : LikedGameFactory {
 
@@ -159,8 +147,5 @@ internal class LikedGamesDatabaseDataStoreTest {
                 likeTimestamp = 500L
             )
         }
-
     }
-
-
 }

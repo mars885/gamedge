@@ -20,9 +20,6 @@ import android.content.Context
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 
 interface SplashNavigator : Navigator {
-
     fun goToDashboard(context: Context)
-
     fun exitApp()
-
 }

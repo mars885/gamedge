@@ -24,7 +24,6 @@ import javax.inject.Inject
 
 internal class ArticleMapper @Inject constructor() {
 
-
     fun mapToDatabaseArticle(dataArticle: DataArticle): DatabaseArticle {
         return DatabaseArticle(
             id = dataArticle.id,
@@ -36,13 +35,11 @@ internal class ArticleMapper @Inject constructor() {
         )
     }
 
-
     private fun Map<DataImageType, String>.toDatabaseImageUrls(): Map<DatabaseImageType, String> {
         return mapKeys {
             DatabaseImageType.valueOf(it.key.name)
         }
     }
-
 
     fun mapToDataArticle(databaseArticle: DatabaseArticle): DataArticle {
         return DataArticle(
@@ -55,21 +52,16 @@ internal class ArticleMapper @Inject constructor() {
         )
     }
 
-
     private fun Map<DatabaseImageType, String>.toDataImageUrls(): Map<DataImageType, String> {
         return mapKeys {
             DataImageType.valueOf(it.key.name)
         }
     }
-
-
 }
-
 
 internal fun ArticleMapper.mapToDatabaseArticles(dataArticles: List<DataArticle>): List<DatabaseArticle> {
     return dataArticles.map(::mapToDatabaseArticle)
 }
-
 
 internal fun ArticleMapper.mapToDataArticles(databaseArticles: List<DatabaseArticle>): List<DataArticle> {
     return databaseArticles.map(::mapToDataArticle)

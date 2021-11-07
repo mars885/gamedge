@@ -20,12 +20,9 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.WhereC
 
 object ApicalypseQueryBuilderFactory {
 
-
     fun create(): ApicalypseQueryBuilder {
         return ApicalypseQueryBuilderImpl(
             whereClauseBuilderFactory = WhereClauseBuilderFactory
         )
     }
-
-
 }

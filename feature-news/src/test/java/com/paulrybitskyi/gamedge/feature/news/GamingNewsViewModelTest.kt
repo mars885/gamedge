@@ -17,7 +17,11 @@
 package com.paulrybitskyi.gamedge.feature.news
 
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_ARTICLES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
@@ -37,7 +41,6 @@ import org.junit.Test
 
 internal class GamingNewsViewModelTest {
 
-
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
@@ -45,7 +48,6 @@ internal class GamingNewsViewModelTest {
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamingNewsViewModel
-
 
     @Before
     fun setup() {
@@ -61,7 +63,6 @@ internal class GamingNewsViewModelTest {
         )
     }
 
-
     @Test
     fun `Emits correct ui states when loading data`() {
         mainCoroutineRule.runBlockingTest {
@@ -70,9 +71,9 @@ internal class GamingNewsViewModelTest {
             SUT.uiState.test {
                 SUT.loadData()
 
-                val emptyState = expectItem()
-                val loadingState = expectItem()
-                val resultState = expectItem()
+                val emptyState = awaitItem()
+                val loadingState = awaitItem()
+                val resultState = awaitItem()
 
                 assertThat(emptyState is GamingNewsUiState.Empty).isTrue
                 assertThat(loadingState is GamingNewsUiState.Loading).isTrue
@@ -82,11 +83,10 @@ internal class GamingNewsViewModelTest {
         }
     }
 
-
     @Test
     fun `Logs error when articles observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.loadData()
 
@@ -94,20 +94,18 @@ internal class GamingNewsViewModelTest {
         }
     }
 
-
     @Test
     fun `Dispatches toast showing command when articles observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 SUT.loadData()
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
-
 
     @Test
     fun `Dispatches url opening command when clicking on news item`() {
@@ -124,14 +122,13 @@ internal class GamingNewsViewModelTest {
             SUT.commandFlow.test {
                 SUT.onNewsItemClicked(itemModel)
 
-                val command = expectItem()
+                val command = awaitItem()
 
                 assertThat(command is GamingNewsCommand.OpenUrl).isTrue
                 assertThat((command as GamingNewsCommand.OpenUrl).url).isEqualTo(itemModel.siteDetailUrl)
             }
         }
     }
-
 
     @Test
     fun `Emits correct ui states when refreshing data`() {
@@ -141,9 +138,9 @@ internal class GamingNewsViewModelTest {
             SUT.uiState.test {
                 SUT.onRefreshRequested()
 
-                val emptyState = expectItem()
-                val loadingState = expectItem()
-                val resultState = expectItem()
+                val emptyState = awaitItem()
+                val loadingState = awaitItem()
+                val resultState = awaitItem()
 
                 assertThat(emptyState is GamingNewsUiState.Empty).isTrue
                 assertThat(loadingState is GamingNewsUiState.Loading).isTrue
@@ -152,7 +149,6 @@ internal class GamingNewsViewModelTest {
             }
         }
     }
-
 
     private class FakeGamingNewsUiStateFactory : GamingNewsUiStateFactory {
 
@@ -178,8 +174,5 @@ internal class GamingNewsViewModelTest {
                 }
             )
         }
-
     }
-
-
 }

@@ -31,16 +31,13 @@ import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.feature.image.viewer.R
 import com.paulrybitskyi.gamedge.feature.image.viewer.databinding.ViewImageViewerBinding
 
-
 private const val VIEW_PAGER_OFFSCREEN_LIMIT = 1
-
 
 internal class ImageViewerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
-
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val binding = ViewImageViewerBinding.inflate(context.layoutInflater, this)
 
@@ -68,12 +65,10 @@ internal class ImageViewerView @JvmOverloads constructor(
     var onToolbarRightBtnClicked: (() -> Unit)? = null
     var onPageChanged: ((Int) -> Unit)? = null
 
-
     init {
         initToolbar()
         initViewPager(context)
     }
-
 
     private fun initToolbar() = with(binding.toolbar) {
         removeElevation()
@@ -81,7 +76,6 @@ internal class ImageViewerView @JvmOverloads constructor(
         onLeftButtonClickListener = { onToolbarLeftBtnClicked?.invoke() }
         onRightButtonClickListener = { onToolbarRightBtnClicked?.invoke() }
     }
-
 
     @SuppressLint("WrongConstant")
     private fun initViewPager(context: Context) = with(binding.viewPager) {
@@ -92,19 +86,16 @@ internal class ImageViewerView @JvmOverloads constructor(
         adapter = initAdapter(context)
     }
 
-
     private fun initAdapter(context: Context): ImageViewerAdapter {
         return ImageViewerAdapter(context)
             .also { adapter = it }
     }
 
-
     private fun onSelectedPositionChanged(newPosition: Int) {
-        if(binding.viewPager.currentItem == newPosition) return
+        if (binding.viewPager.currentItem == newPosition) return
 
         binding.viewPager.setCurrentItem(newPosition, false)
     }
-
 
     fun isCurrentImageScaled(): Boolean {
         val imageViewerItemView = getCurrentImageViewerItemView()
@@ -113,15 +104,13 @@ internal class ImageViewerView @JvmOverloads constructor(
         return isScaled
     }
 
-
     fun resetCurrentImageScale() {
         getCurrentImageViewerItemView()?.resetScale(animate = true)
     }
 
-
     private fun getCurrentImageViewerItemView(): ImageViewerItemView? {
-        if(binding.viewPager.adapter == null) return null
-        if(binding.viewPager.adapter!!.itemCount == 0) return null
+        if (binding.viewPager.adapter == null) return null
+        if (binding.viewPager.adapter!!.itemCount == 0) return null
 
         val recyclerView = binding.viewPager.recyclerView
         val viewHolder = recyclerView?.findViewHolderForAdapterPosition(selectedPosition)
@@ -129,6 +118,4 @@ internal class ImageViewerView @JvmOverloads constructor(
 
         return imageViewerItemView
     }
-
-
 }

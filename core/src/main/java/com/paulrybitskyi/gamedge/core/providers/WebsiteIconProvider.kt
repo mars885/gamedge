@@ -22,20 +22,16 @@ import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 interface WebsiteIconProvider {
 
     fun provideIconIdForWebsite(website: Website): Int
-
 }
-
 
 @BindType
 internal class WebsiteIconProviderImpl @Inject constructor() : WebsiteIconProvider {
 
-
     override fun provideIconIdForWebsite(website: Website): Int {
-        return when(website.category) {
+        return when (website.category) {
             WebsiteCategory.WIKIPEDIA -> R.drawable.wikipedia
             WebsiteCategory.FACEBOOK -> R.drawable.facebook
             WebsiteCategory.TWITTER -> R.drawable.twitter
@@ -55,6 +51,4 @@ internal class WebsiteIconProviderImpl @Inject constructor() : WebsiteIconProvid
             WebsiteCategory.EPIC_GAMES -> R.drawable.web
         }
     }
-
-
 }

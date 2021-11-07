@@ -19,21 +19,18 @@ package com.paulrybitskyi.gamedge.gamespot.api.commons
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.gamespot.api.commons.di.GamespotApi
 import com.paulrybitskyi.hiltbinder.BindType
+import javax.inject.Inject
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import javax.inject.Inject
-
 
 private const val ERROR_MESSAGE_NAME = "error"
-
 
 @BindType(withQualifier = true)
 @GamespotApi
 internal class GamespotErrorMessageExtractor @Inject constructor(
     private val json: Json
 ) : ErrorMessageExtractor {
-
 
     override fun extract(responseBody: String): String = try {
         val rootElement = json.parseToJsonElement(responseBody)
@@ -43,9 +40,7 @@ internal class GamespotErrorMessageExtractor @Inject constructor(
         val errorMessage = errorPrimitive.content
 
         errorMessage
-    } catch(error: Throwable) {
-        (error.message ?: error.javaClass.simpleName)
+    } catch (expected: Throwable) {
+        (expected.message ?: expected.javaClass.simpleName)
     }
-
-
 }

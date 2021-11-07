@@ -31,13 +31,17 @@ import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffsetPage
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
-
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 
 private const val KEY_SEARCH_QUERY = "search_query"
-
 
 @HiltViewModel
 internal class GamesSearchViewModel @Inject constructor(
@@ -47,8 +51,7 @@ internal class GamesSearchViewModel @Inject constructor(
     private val errorMapper: ErrorMapper,
     private val logger: Logger,
     private val savedStateHandle: SavedStateHandle
-): BaseViewModel() {
-
+) : BaseViewModel() {
 
     private var hasMoreGamesToLoad = false
 
@@ -72,24 +75,20 @@ internal class GamesSearchViewModel @Inject constructor(
     val uiState: StateFlow<GamesUiState>
         get() = _uiState
 
-
     init {
         onSearchActionRequested(savedStateHandle.get(KEY_SEARCH_QUERY) ?: "")
     }
-
 
     private fun createEmptyGamesUiState(): GamesUiState {
         return uiStateFactory.createWithEmptyState(searchQuery)
     }
 
-
     fun onToolbarBackButtonClicked() {
         route(GamesSearchRoute.Back)
     }
 
-
     fun onSearchActionRequested(query: String) {
-        if(query.isEmpty() || (searchQuery == query)) return
+        if (query.isEmpty() || (searchQuery == query)) return
 
         searchQuery = query
 
@@ -97,15 +96,13 @@ internal class GamesSearchViewModel @Inject constructor(
         searchGames()
     }
 
-
     private fun resetPagination() {
         pagination = Pagination()
         totalGamesResult = null
     }
 
-
     private fun searchGames() = viewModelScope.launch {
-        if(searchQuery.isBlank()) {
+        if (searchQuery.isBlank()) {
             flowOf(createEmptyGamesUiState())
         } else {
             searchGamesUseCase.execute(useCaseParams)
@@ -117,7 +114,7 @@ internal class GamesSearchViewModel @Inject constructor(
                     emit(createEmptyGamesUiState())
                 }
                 .onStart {
-                    if(isPerformingNewSearch()) {
+                    if (isPerformingNewSearch()) {
                         dispatchCommand(GamesSearchCommand.ClearItems)
                     }
 
@@ -132,23 +129,20 @@ internal class GamesSearchViewModel @Inject constructor(
         }
     }
 
-
     private fun mapToUiState(games: List<Game>): GamesUiState {
-        return if(games.isEmpty()) {
+        return if (games.isEmpty()) {
             createEmptyGamesUiState()
         } else {
             uiStateFactory.createWithResultState(games)
         }
     }
 
-
     private fun isPerformingNewSearch(): Boolean {
         return (totalGamesResult == null)
     }
 
-
     private fun aggregateResults(uiState: GamesUiState): GamesUiState {
-        if((uiState !is GamesUiState.Result) || (totalGamesResult == null)) {
+        if ((uiState !is GamesUiState.Result) || (totalGamesResult == null)) {
             return uiState
         }
 
@@ -158,9 +152,8 @@ internal class GamesSearchViewModel @Inject constructor(
         return GamesUiState.Result(oldItems + newItems)
     }
 
-
     private fun configureNextLoad(uiState: GamesUiState) {
-        if(uiState !is GamesUiState.Result) return
+        if (uiState !is GamesUiState.Result) return
 
         val paginationLimit = useCaseParams.pagination.limit
         val itemCount = uiState.items.size
@@ -168,30 +161,24 @@ internal class GamesSearchViewModel @Inject constructor(
         hasMoreGamesToLoad = ((itemCount % paginationLimit) == 0)
     }
 
-
     private fun updateTotalGamesResult(uiState: GamesUiState) {
-        if(uiState !is GamesUiState.Result) return
+        if (uiState !is GamesUiState.Result) return
 
         totalGamesResult = uiState
     }
-
 
     fun onGameClicked(game: GameModel) {
         route(GamesSearchRoute.Info(game.id))
     }
 
-
     fun onBottomReached() {
         loadMoreGames()
     }
 
-
     private fun loadMoreGames() {
-        if(!hasMoreGamesToLoad) return
+        if (!hasMoreGamesToLoad) return
 
         pagination = pagination.nextOffsetPage()
         searchGames()
     }
-
-
 }

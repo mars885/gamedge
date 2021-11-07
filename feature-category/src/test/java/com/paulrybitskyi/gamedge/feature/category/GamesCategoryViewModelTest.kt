@@ -19,7 +19,12 @@ package com.paulrybitskyi.gamedge.feature.category
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
@@ -33,6 +38,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import javax.inject.Provider
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
@@ -40,10 +46,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Provider
 
 internal class GamesCategoryViewModelTest {
-
 
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
@@ -53,7 +57,6 @@ internal class GamesCategoryViewModelTest {
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamesCategoryViewModel
-
 
     @Before
     fun setup() {
@@ -70,7 +73,6 @@ internal class GamesCategoryViewModelTest {
             savedStateHandle = setupSavedStateHandle()
         )
     }
-
 
     private fun setupUseCases(): GamesCategoryUseCases {
         coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
@@ -92,23 +94,20 @@ internal class GamesCategoryViewModelTest {
         )
     }
 
-
     private fun setupSavedStateHandle(): SavedStateHandle {
         return mockk(relaxed = true) {
             every { get<String>(any()) } returns GamesCategory.POPULAR.name
         }
     }
 
-
     @Test
     fun `Emits toolbar title when initialized`() {
         mainCoroutineRule.runBlockingTest {
             SUT.toolbarTitle.test {
-                assertThat(expectItem()).isNotEmpty
+                assertThat(awaitItem()).isNotEmpty
             }
         }
     }
-
 
     @Test
     fun `Emits correct ui states when observing games`() {
@@ -119,20 +118,19 @@ internal class GamesCategoryViewModelTest {
             SUT.uiState.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
-                assertThat(expectItem() is GamesCategoryUiState.Empty).isTrue
-                assertThat(expectItem() is GamesCategoryUiState.Loading).isTrue
-                assertThat(expectItem() is GamesCategoryUiState.Result).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Empty).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Loading).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Result).isTrue
 
                 cancelAndIgnoreRemainingEvents()
             }
         }
     }
 
-
     @Test
     fun `Logs error when games observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.loadData(resultEmissionDelay = 0L)
@@ -141,21 +139,19 @@ internal class GamesCategoryViewModelTest {
         }
     }
 
-
     @Test
     fun `Dispatches toast showing command when games observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.commandFlow.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
-
 
     @Test
     fun `Emits correct ui states when refreshing games`() {
@@ -166,22 +162,21 @@ internal class GamesCategoryViewModelTest {
             SUT.uiState.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
-                assertThat(expectItem() is GamesCategoryUiState.Empty).isTrue
-                assertThat(expectItem() is GamesCategoryUiState.Loading).isTrue
-                assertThat(expectItem() is GamesCategoryUiState.Result).isTrue
-                assertThat(expectItem() is GamesCategoryUiState.Loading).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Empty).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Loading).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Result).isTrue
+                assertThat(awaitItem() is GamesCategoryUiState.Loading).isTrue
 
                 cancelAndIgnoreRemainingEvents()
             }
         }
     }
 
-
     @Test
     fun `Logs error when games refreshing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.loadData(resultEmissionDelay = 0L)
 
@@ -189,21 +184,19 @@ internal class GamesCategoryViewModelTest {
         }
     }
 
-
     @Test
     fun `Dispatches toast showing command when games refreshing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
-
 
     @Test
     fun `Routes to previous screen when toolbar left button is clicked`() {
@@ -211,11 +204,10 @@ internal class GamesCategoryViewModelTest {
             SUT.routeFlow.test {
                 SUT.onToolbarLeftButtonClicked()
 
-                assertThat(expectItem() is GamesCategoryRoute.Back).isTrue
+                assertThat(awaitItem() is GamesCategoryRoute.Back).isTrue
             }
         }
     }
-
 
     @Test
     fun `Routes to game info screen when game is clicked`() {
@@ -229,14 +221,13 @@ internal class GamesCategoryViewModelTest {
             SUT.routeFlow.test {
                 SUT.onGameClicked(game)
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is GamesCategoryRoute.Info).isTrue
                 assertThat((route as GamesCategoryRoute.Info).gameId).isEqualTo(game.id)
             }
         }
     }
-
 
     private class FakeGamesCategoryUiStateFactory : GamesCategoryUiStateFactory {
 
@@ -259,8 +250,5 @@ internal class GamesCategoryViewModelTest {
                 }
             )
         }
-
     }
-
-
 }

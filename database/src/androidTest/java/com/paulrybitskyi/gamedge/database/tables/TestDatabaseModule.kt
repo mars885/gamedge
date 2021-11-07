@@ -31,7 +31,6 @@ import javax.inject.Singleton
 @DisableInstallInCheck
 internal object TestDatabaseModule {
 
-
     @Provides
     @Singleton
     fun provideGamedgeDatabase(
@@ -45,6 +44,4 @@ internal object TestDatabaseModule {
         .addMigrations(*MIGRATIONS)
         .build()
     }
-
-
 }

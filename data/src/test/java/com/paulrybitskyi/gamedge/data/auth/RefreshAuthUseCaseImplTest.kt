@@ -21,6 +21,8 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.paulrybitskyi.gamedge.commons.testing.DATA_ERROR_NOT_FOUND
+import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
+import com.paulrybitskyi.gamedge.commons.testing.utils.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.data.auth.datastores.AuthRemoteDataStore
 import com.paulrybitskyi.gamedge.data.auth.datastores.commons.AuthDataStores
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
@@ -28,27 +30,23 @@ import com.paulrybitskyi.gamedge.data.auth.usecases.RefreshAuthUseCaseImpl
 import com.paulrybitskyi.gamedge.data.auth.usecases.mappers.AuthMapper
 import com.paulrybitskyi.gamedge.data.commons.ErrorMapper
 import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
-import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
-import com.paulrybitskyi.gamedge.commons.testing.utils.coVerifyNotCalled
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
 internal class RefreshAuthUseCaseImplTest {
-
 
     @MockK private lateinit var authLocalDataStore: AuthLocalDataStore
     @MockK private lateinit var authRemoteDataStore: AuthRemoteDataStore
 
     private lateinit var authMapper: AuthMapper
     private lateinit var SUT: RefreshAuthUseCaseImpl
-
 
     @Before
     fun setup() {
@@ -65,7 +63,6 @@ internal class RefreshAuthUseCaseImplTest {
         )
     }
 
-
     @Test
     fun `Emits remote credentials when current credentials are expired`() {
         runBlockingTest {
@@ -73,14 +70,13 @@ internal class RefreshAuthUseCaseImplTest {
             coEvery { authRemoteDataStore.getOauthCredentials() } returns Ok(DATA_OAUTH_CREDENTIALS)
 
             SUT.execute().test {
-                assertThat(expectItem().get())
+                assertThat(awaitItem().get())
                     .isEqualTo(authMapper.mapToDomainOauthCredentials(DATA_OAUTH_CREDENTIALS))
 
-                expectComplete()
+                awaitComplete()
             }
         }
     }
-
 
     @Test
     fun `Does not emit remote credentials when current credentials are not expired`() {
@@ -88,11 +84,10 @@ internal class RefreshAuthUseCaseImplTest {
             coEvery { authLocalDataStore.isExpired() } returns false
 
             SUT.execute().test {
-                expectComplete()
+                awaitComplete()
             }
         }
     }
-
 
     @Test
     fun `Saves remote credentials into local data store when refresh is successful`() {
@@ -106,7 +101,6 @@ internal class RefreshAuthUseCaseImplTest {
         }
     }
 
-
     @Test
     fun `Does not save remote credentials into local data store when current credentials are not expired`() {
         runBlockingTest {
@@ -117,7 +111,6 @@ internal class RefreshAuthUseCaseImplTest {
             coVerifyNotCalled { authLocalDataStore.saveOauthCredentials(any()) }
         }
     }
-
 
     @Test
     fun `Does not save remote credentials into local data store when refresh is unsuccessful`() {
@@ -130,6 +123,4 @@ internal class RefreshAuthUseCaseImplTest {
             coVerifyNotCalled { authLocalDataStore.saveOauthCredentials(any()) }
         }
     }
-
-
 }

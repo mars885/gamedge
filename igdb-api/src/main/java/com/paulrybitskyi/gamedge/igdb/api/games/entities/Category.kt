@@ -24,11 +24,8 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-
 @Serializable(with = CategorySerializer::class)
 internal enum class Category(val rawValue: Int) {
-
-
     UNKNOWN(rawValue = -1),
     MAIN_GAME(rawValue = 0),
     DLC(rawValue = 1),
@@ -39,36 +36,26 @@ internal enum class Category(val rawValue: Int) {
     EPISODE(rawValue = 6),
     SEASON(rawValue = 7);
 
-
     internal companion object {
 
         fun Int.asCategory(): Category {
             return values().find { it.rawValue == this } ?: UNKNOWN
         }
-
     }
-
-
 }
 
-
 internal object CategorySerializer : KSerializer<Category> {
-
 
     override val descriptor = PrimitiveSerialDescriptor(
         checkNotNull(CategorySerializer::class.qualifiedName),
         PrimitiveKind.INT
     )
 
-
     override fun serialize(encoder: Encoder, value: Category) {
         encoder.encodeInt(value.rawValue)
     }
 
-
     override fun deserialize(decoder: Decoder): Category {
         return decoder.decodeInt().asCategory()
     }
-
-
 }

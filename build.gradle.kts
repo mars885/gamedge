@@ -19,6 +19,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     gradleVersions()
+    detekt()
+    ktlint()
 }
 
 buildscript {
@@ -37,11 +39,29 @@ buildscript {
     }
 }
 
+detekt {
+    parallel = true
+    buildUponDefaultConfig = true
+    config = files("config/detekt/detekt.yml")
+    reports.html.enabled = true
+}
+
 allprojects {
+    apply(plugin = PLUGIN_DETEKT)
+    apply(plugin = PLUGIN_KTLINT)
+
     repositories {
         mavenCentral()
         google()
         maven { setUrl("https://jitpack.io") }
+    }
+
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        android.set(true)
+        outputToConsole.set(true)
+        reporters {
+            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
+        }
     }
 
     // Without the below block, a build failure was happening when
@@ -60,13 +80,13 @@ subprojects {
 
         kotlinOptions {
             freeCompilerArgs += listOf(
-                "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
-                "-Xuse-experimental=kotlin.time.ExperimentalTime",
-                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xuse-experimental=kotlinx.coroutines.FlowPreview",
-                "-Xuse-experimental=kotlinx.serialization.ExperimentalSerializationApi",
-                "-Xuse-experimental=androidx.compose.material.ExperimentalMaterialApi",
-                "-Xuse-experimental=androidx.compose.animation.ExperimentalAnimationApi"
+                "-Xopt-in=kotlin.ExperimentalStdlibApi",
+                "-Xopt-in=kotlin.time.ExperimentalTime",
+                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xopt-in=kotlinx.coroutines.FlowPreview",
+                "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
+                "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
+                "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
             )
 
             jvmTarget = appConfig.kotlinCompatibilityVersion.toString()
@@ -78,7 +98,6 @@ subprojects {
             correctErrorTypes = true
         }
     }
-
 }
 
 tasks {

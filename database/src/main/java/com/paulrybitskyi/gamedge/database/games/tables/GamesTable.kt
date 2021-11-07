@@ -110,5 +110,4 @@ internal interface GamesTable {
         """
     )
     fun observeMostAnticipatedGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<Game>>
-
 }

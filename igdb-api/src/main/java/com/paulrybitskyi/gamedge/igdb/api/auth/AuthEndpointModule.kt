@@ -25,15 +25,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object AuthEndpointModule {
-
 
     @Provides
     @Singleton
@@ -48,12 +47,10 @@ internal object AuthEndpointModule {
         )
     }
 
-
     @Provides
     fun provideAuthService(@Endpoint(Endpoint.Type.AUTH) retrofit: Retrofit): AuthService {
         return retrofit.create(AuthService::class.java)
     }
-
 
     @Provides
     @Endpoint(Endpoint.Type.AUTH)
@@ -70,6 +67,4 @@ internal object AuthEndpointModule {
             .baseUrl(twitchConstantsProvider.apiBaseUrl)
             .build()
     }
-
-
 }

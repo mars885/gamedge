@@ -26,7 +26,12 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.getColor
+import com.paulrybitskyi.commons.ktx.getDimension
+import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.commons.ktx.getDrawable
+import com.paulrybitskyi.commons.ktx.getString
+import com.paulrybitskyi.commons.ktx.setHorizontalPadding
 import com.paulrybitskyi.commons.ktx.views.setFontFamily
 import com.paulrybitskyi.commons.ktx.views.setTextSizeInPx
 import com.paulrybitskyi.commons.utils.observeChanges
@@ -42,7 +47,6 @@ class GameCoverView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     var isTitleVisible: Boolean = true
         set(value) {
             field = value
@@ -54,7 +58,7 @@ class GameCoverView @JvmOverloads constructor(
         get() = titleTv.text
 
     var imageUrl by observeChanges<String?>(null) { oldValue, newValue ->
-        if((coverIv.drawable == null) || (oldValue != newValue)) loadImage(newValue)
+        if ((coverIv.drawable == null) || (oldValue != newValue)) loadImage(newValue)
     }
 
     private var defaultDrawable = checkNotNull(getDrawable(R.drawable.game_cover_placeholder))
@@ -64,12 +68,10 @@ class GameCoverView @JvmOverloads constructor(
 
     @Inject lateinit var imageLoader: ImageLoader
 
-
     init {
         initCard()
         initUi(context)
     }
-
 
     private fun initCard() {
         setCardBackgroundColor(getColor(R.color.game_cover_card_background_color))
@@ -77,12 +79,10 @@ class GameCoverView @JvmOverloads constructor(
         radius = getDimension(R.dimen.game_cover_card_corner_radius)
     }
 
-
     private fun initUi(context: Context) {
         initCoverImageView(context)
         initTitleTextView(context)
     }
-
 
     private fun initTitleTextView(context: Context) {
         titleTv = AppCompatTextView(context)
@@ -97,7 +97,6 @@ class GameCoverView @JvmOverloads constructor(
             .also(::addView)
     }
 
-
     private fun initCoverImageView(context: Context) {
         coverIv = AppCompatImageView(context)
             .apply {
@@ -107,9 +106,8 @@ class GameCoverView @JvmOverloads constructor(
             .also(::addView)
     }
 
-
     private fun loadImage(url: String?) {
-        if(url == null) {
+        if (url == null) {
             showDefaultImage()
             return
         }
@@ -129,46 +127,37 @@ class GameCoverView @JvmOverloads constructor(
         )
     }
 
-
     private fun showDefaultImage() {
         showTitle()
         coverIv.setImageDrawable(defaultDrawable)
     }
 
-
     private fun onImageLoadingStarted() {
         showTitle()
     }
 
-
     private fun onImageLoadingSucceeded() {
         hideTitle()
     }
-
 
     @Suppress("UNUSED_PARAMETER")
     private fun onImageLoadingFailed(error: Exception) {
         showTitle()
     }
 
-
     private fun showTitle() {
-        if(!isTitleVisible) return
+        if (!isTitleVisible) return
 
         titleTv.isVisible = true
     }
 
-
     private fun hideTitle() {
-        if(!isTitleVisible) return
+        if (!isTitleVisible) return
 
         titleTv.isVisible = false
     }
 
-
     fun disableRoundCorners() {
         radius = 0f
     }
-
-
 }

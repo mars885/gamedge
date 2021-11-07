@@ -24,15 +24,10 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkMod
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GameInfoLinkModelFactory {
-
     fun createLinkModels(websites: List<Website>): List<GameInfoLinkModel>
-
     fun createLinkModel(website: Website): GameInfoLinkModel?
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoLinkModelFactoryImpl @Inject constructor(
@@ -40,18 +35,16 @@ internal class GameInfoLinkModelFactoryImpl @Inject constructor(
     private val websiteIconProvider: WebsiteIconProvider
 ) : GameInfoLinkModelFactory {
 
-
     override fun createLinkModels(websites: List<Website>): List<GameInfoLinkModel> {
-        if(websites.isEmpty()) return emptyList()
+        if (websites.isEmpty()) return emptyList()
 
         return websites
             .sortedBy { it.category.orderPosition }
             .mapNotNull(::createLinkModel)
     }
 
-
     override fun createLinkModel(website: Website): GameInfoLinkModel? {
-        if(website.category == WebsiteCategory.UNKNOWN) return null
+        if (website.category == WebsiteCategory.UNKNOWN) return null
 
         return GameInfoLinkModel(
             id = website.id,
@@ -61,11 +54,11 @@ internal class GameInfoLinkModelFactoryImpl @Inject constructor(
         )
     }
 
-
+    @Suppress("MagicNumber")
     private val WebsiteCategory.orderPosition: Int
-        get() = when(this) {
+        get() = when (this) {
             WebsiteCategory.UNKNOWN -> -1
-            WebsiteCategory.STEAM -> -0
+            WebsiteCategory.STEAM -> 0
             WebsiteCategory.GOG -> 1
             WebsiteCategory.EPIC_GAMES -> 2
             WebsiteCategory.GOOGLE_PLAY -> 3
@@ -81,6 +74,4 @@ internal class GameInfoLinkModelFactoryImpl @Inject constructor(
             WebsiteCategory.WIKIA -> 13
             WebsiteCategory.DISCORD -> 14
         }
-
-
 }

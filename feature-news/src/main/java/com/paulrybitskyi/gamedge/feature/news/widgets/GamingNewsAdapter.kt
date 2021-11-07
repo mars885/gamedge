@@ -23,4 +23,4 @@ import com.paulrybitskyi.gamedge.feature.news.GamingNewsItem
 
 internal class GamingNewsAdapter(
     context: Context
-): AbstractRecyclerViewAdapter<GamingNewsItem, NoDependencies>(context)
+) : AbstractRecyclerViewAdapter<GamingNewsItem, NoDependencies>(context)

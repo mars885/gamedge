@@ -22,4 +22,4 @@ import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 
 internal class GameVideosAdapter(
     context: Context
-): AbstractRecyclerViewAdapter<GameVideoItem, NoDependencies>(context)
+) : AbstractRecyclerViewAdapter<GameVideoItem, NoDependencies>(context)

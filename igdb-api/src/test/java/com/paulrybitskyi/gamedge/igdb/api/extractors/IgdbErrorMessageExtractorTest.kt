@@ -25,15 +25,12 @@ import org.junit.Test
 
 internal class IgdbErrorMessageExtractorTest {
 
-
     private lateinit var SUT: IgdbErrorMessageExtractor
-
 
     @Before
     fun setup() {
         SUT = IgdbErrorMessageExtractor(Json)
     }
-
 
     @Test
     fun `Extracts igdb error message successfully`() {
@@ -50,13 +47,11 @@ internal class IgdbErrorMessageExtractorTest {
         assertThat(SUT.extract(responseBody)).isEqualTo("Syntax Error")
     }
 
-
     @Test
     fun `Throws exception when igdb response body is not json`() {
         assertThatExceptionOfType(IllegalStateException::class.java)
             .isThrownBy { SUT.extract("hello there") }
     }
-
 
     @Test
     fun `Throws exception when igdb response body does not have message field`() {
@@ -72,6 +67,4 @@ internal class IgdbErrorMessageExtractorTest {
         assertThatExceptionOfType(IllegalStateException::class.java)
             .isThrownBy { SUT.extract(responseBody) }
     }
-
-
 }

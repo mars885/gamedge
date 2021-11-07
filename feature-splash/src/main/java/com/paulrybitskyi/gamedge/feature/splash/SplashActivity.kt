@@ -30,13 +30,10 @@ import com.paulrybitskyi.gamedge.commons.ui.base.BaseComposeActivity
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 internal class SplashActivity : BaseComposeActivity<SplashViewModel, SplashNavigator>() {
 
-
     override val viewModel by viewModels<SplashViewModel>()
-
 
     override fun onInitUi() {
         setContent {
@@ -44,24 +41,20 @@ internal class SplashActivity : BaseComposeActivity<SplashViewModel, SplashNavig
         }
     }
 
-
     override fun onLoadData() {
         super.onLoadData()
 
         viewModel.init()
     }
 
-
     override fun onRoute(route: Route) {
         super.onRoute(route)
 
-        when(route) {
+        when (route) {
             is SplashRoute.Dashboard -> navigator.goToDashboard(this)
             is SplashRoute.Exit -> navigator.exitApp()
         }
     }
-
-
 }
 
 

@@ -24,7 +24,11 @@ import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.paulrybitskyi.commons.ktx.*
+import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
+import com.paulrybitskyi.commons.ktx.layoutInflater
+import com.paulrybitskyi.commons.ktx.makeGone
+import com.paulrybitskyi.commons.ktx.makeInvisible
+import com.paulrybitskyi.commons.ktx.makeVisible
 import com.paulrybitskyi.commons.recyclerview.decorators.spacing.SpacingItemDecorator
 import com.paulrybitskyi.commons.recyclerview.utils.disableChangeAnimations
 import com.paulrybitskyi.commons.utils.observeChanges
@@ -36,8 +40,17 @@ import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.databinding.ViewGameInfoBinding
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.header.GameHeaderController
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.*
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.*
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoCompaniesItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoDetailsItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoLinksItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoRelatedGamesItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoScreenshotsItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoSummaryItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.items.GameInfoVideosItem
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoCompanyModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGameModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -48,7 +61,6 @@ internal class GameInfoView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
-
 
     private val binding = ViewGameInfoBinding.inflate(context.layoutInflater, this)
 
@@ -75,13 +87,11 @@ internal class GameInfoView @JvmOverloads constructor(
     var onCompanyClicked: ((GameInfoCompanyModel) -> Unit)? = null
     var onRelatedGameClicked: ((GameInfoRelatedGameModel) -> Unit)? = null
 
-
     init {
         initGameHeaderController(context)
         initRecyclerView(context)
         initDefaults()
     }
-
 
     private fun initGameHeaderController(context: Context) {
         GameHeaderController(context, binding, stringProvider)
@@ -105,7 +115,6 @@ internal class GameInfoView @JvmOverloads constructor(
             .also { headerController = it }
     }
 
-
     private fun initRecyclerView(context: Context) = with(binding.recyclerView) {
         disableChangeAnimations()
         layoutManager = initLayoutManager(context)
@@ -113,17 +122,14 @@ internal class GameInfoView @JvmOverloads constructor(
         addItemDecoration(initItemDecorator())
     }
 
-
     private fun initLayoutManager(context: Context): LinearLayoutManager {
         return object : LinearLayoutManager(context) {
 
             override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
                 return RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             }
-
         }
     }
-
 
     private fun initAdapter(context: Context): GameInfoAdapter {
         return GameInfoAdapter(context)
@@ -131,10 +137,9 @@ internal class GameInfoView @JvmOverloads constructor(
             .also { infoAdapter = it }
     }
 
-
     @Suppress("UNUSED_PARAMETER")
     private fun bindListener(item: Item<*, NoDependencies>, viewHolder: RecyclerView.ViewHolder) {
-        when(viewHolder) {
+        when (viewHolder) {
 
             is GameInfoVideosItem.ViewHolder -> with(viewHolder) {
                 setOnVideoClickListener { onVideoClicked?.invoke(it) }
@@ -155,10 +160,8 @@ internal class GameInfoView @JvmOverloads constructor(
             is GameInfoRelatedGamesItem.ViewHolder -> with(viewHolder) {
                 setOnGameClickListener { onRelatedGameClicked?.invoke(it) }
             }
-
         }
     }
-
 
     private fun initItemDecorator(): SpacingItemDecorator {
         return SpacingItemDecorator(
@@ -167,20 +170,17 @@ internal class GameInfoView @JvmOverloads constructor(
         )
     }
 
-
     private fun initDefaults() {
         uiState = uiState
     }
 
-
     private fun handleUiStateChange(newState: GameInfoUiState) {
-        when(newState) {
+        when (newState) {
             is GameInfoUiState.Empty -> onEmptyStateSelected()
             is GameInfoUiState.Loading -> onLoadingStateSelected()
             is GameInfoUiState.Result -> onResultStateSelected(newState)
         }
     }
-
 
     private fun onEmptyStateSelected() {
         showInfoView()
@@ -188,13 +188,11 @@ internal class GameInfoView @JvmOverloads constructor(
         hideMainView()
     }
 
-
     private fun onLoadingStateSelected() {
         showProgressBar()
         hideInfoView()
         hideMainView()
     }
-
 
     private fun onResultStateSelected(uiState: GameInfoUiState.Result) {
         bindModel(uiState.model)
@@ -204,70 +202,59 @@ internal class GameInfoView @JvmOverloads constructor(
         hideProgressBar()
     }
 
-
     private fun bindModel(model: GameInfoModel) {
         headerController.bindModel(model.headerModel)
         adapterItems = model.toAdapterItems()
     }
 
-
     private fun showInfoView() = with(binding.infoView) {
-        if(isVisible) return
+        if (isVisible) return
 
         makeVisible()
         fadeIn()
     }
-
 
     private fun hideInfoView() = with(binding.infoView) {
         makeGone()
         resetAnimation()
     }
 
-
     private fun showProgressBar() = with(binding.progressBar) {
         makeVisible()
     }
-
 
     private fun hideProgressBar() = with(binding.progressBar) {
         makeGone()
     }
 
-
     private fun showMainView() = with(binding.mainView) {
-        if(isVisible) return
+        if (isVisible) return
 
         makeVisible()
         fadeIn()
     }
-
 
     private fun hideMainView() = with(binding.mainView) {
         makeInvisible()
         resetAnimation()
     }
 
-
     private fun GameInfoModel.toAdapterItems(): List<Item<*, NoDependencies>> {
         return buildList {
-            if(hasVideoModels) add(GameInfoVideosItem(videoModels))
-            if(hasScreenshotUrls) add(GameInfoScreenshotsItem(screenshotUrls))
-            if(hasSummary) add(GameInfoSummaryItem(checkNotNull(summary)))
-            if(hasDetailsModel) add(GameInfoDetailsItem(checkNotNull(detailsModel)))
-            if(hasLinkModels) add(GameInfoLinksItem(linkModels))
-            if(hasCompanyModels) add(GameInfoCompaniesItem(companyModels))
-            if(hasOtherCompanyGames) add(GameInfoRelatedGamesItem(checkNotNull(otherCompanyGames)))
-            if(hasSimilarGames) add(GameInfoRelatedGamesItem(checkNotNull(similarGames)))
+            if (hasVideoModels) add(GameInfoVideosItem(videoModels))
+            if (hasScreenshotUrls) add(GameInfoScreenshotsItem(screenshotUrls))
+            if (hasSummary) add(GameInfoSummaryItem(checkNotNull(summary)))
+            if (hasDetailsModel) add(GameInfoDetailsItem(checkNotNull(detailsModel)))
+            if (hasLinkModels) add(GameInfoLinksItem(linkModels))
+            if (hasCompanyModels) add(GameInfoCompaniesItem(companyModels))
+            if (hasOtherCompanyGames) add(GameInfoRelatedGamesItem(checkNotNull(otherCompanyGames)))
+            if (hasSimilarGames) add(GameInfoRelatedGamesItem(checkNotNull(similarGames)))
         }
     }
-
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
         headerController.onAttachedToWindow()
     }
-
-
 }

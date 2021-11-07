@@ -27,23 +27,19 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoR
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GameInfoOtherCompanyGamesModelFactory {
 
     fun createOtherCompanyGamesModel(
         companyGames: List<Game>,
         currentGame: Game
     ): GameInfoRelatedGamesModel?
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider,
     private val igdbImageUrlFactory: IgdbImageUrlFactory
 ) : GameInfoOtherCompanyGamesModelFactory {
-
 
     override fun createOtherCompanyGamesModel(
         companyGames: List<Game>,
@@ -61,7 +57,6 @@ internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
             }
     }
 
-
     private fun Game.createOtherCompanyGamesModelTitle(): String {
         val developerName = developerCompany?.name
             ?: stringProvider.getString(R.string.game_info_other_company_games_title_default_arg)
@@ -74,7 +69,6 @@ internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
         return title
     }
 
-
     private fun List<Game>.toRelatedGameModels(): List<GameInfoRelatedGameModel> {
         return map {
             GameInfoRelatedGameModel(
@@ -86,6 +80,4 @@ internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
             )
         }
     }
-
-
 }

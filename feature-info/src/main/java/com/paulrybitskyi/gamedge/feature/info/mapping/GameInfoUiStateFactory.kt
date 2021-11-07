@@ -21,38 +21,30 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiState
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GameInfoUiStateFactory {
 
     fun createWithEmptyState(): GameInfoUiState
-
     fun createWithLoadingState(): GameInfoUiState
-
     fun createWithResultState(
         game: Game,
         isLiked: Boolean,
         companyGames: List<Game>,
         similarGames: List<Game>
     ): GameInfoUiState
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoUiStateFactoryImpl @Inject constructor(
     private val modelFactory: GameInfoModelFactory
 ) : GameInfoUiStateFactory {
 
-
     override fun createWithEmptyState(): GameInfoUiState {
         return GameInfoUiState.Empty
     }
 
-
     override fun createWithLoadingState(): GameInfoUiState {
         return GameInfoUiState.Loading
     }
-
 
     override fun createWithResultState(
         game: Game,
@@ -64,6 +56,4 @@ internal class GameInfoUiStateFactoryImpl @Inject constructor(
             modelFactory.createInfoModel(game, isLiked, companyGames, similarGames)
         )
     }
-
-
 }

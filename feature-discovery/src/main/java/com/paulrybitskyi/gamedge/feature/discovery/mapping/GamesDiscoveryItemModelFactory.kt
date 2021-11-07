@@ -25,30 +25,21 @@ import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemUiS
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 interface GamesDiscoveryItemModelFactory {
-
     fun createDefault(category: GamesDiscoveryCategory): GamesDiscoveryItemModel
-
     fun createCopyWithVisibleProgressBar(item: GamesDiscoveryItemModel): GamesDiscoveryItemModel
-
     fun createCopyWithHiddenProgressBar(item: GamesDiscoveryItemModel): GamesDiscoveryItemModel
-
     fun createCopyWithEmptyState(item: GamesDiscoveryItemModel): GamesDiscoveryItemModel
-
     fun createCopyWithResultState(
         item: GamesDiscoveryItemModel,
         games: List<GamesDiscoveryItemGameModel>
     ): GamesDiscoveryItemModel
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GamesDiscoveryItemModelFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : GamesDiscoveryItemModelFactory {
-
 
     override fun createDefault(category: GamesDiscoveryCategory): GamesDiscoveryItemModel {
         return GamesDiscoveryItemModel(
@@ -59,30 +50,24 @@ internal class GamesDiscoveryItemModelFactoryImpl @Inject constructor(
         )
     }
 
-
     override fun createCopyWithVisibleProgressBar(item: GamesDiscoveryItemModel): GamesDiscoveryItemModel {
         return item.copy(isProgressBarVisible = true)
     }
-
 
     override fun createCopyWithHiddenProgressBar(item: GamesDiscoveryItemModel): GamesDiscoveryItemModel {
         return item.copy(isProgressBarVisible = false)
     }
 
-
     override fun createCopyWithEmptyState(item: GamesDiscoveryItemModel): GamesDiscoveryItemModel {
         return item.copy(uiState = GamesDiscoveryItemUiState.Empty)
     }
-
 
     override fun createCopyWithResultState(
         item: GamesDiscoveryItemModel,
         games: List<GamesDiscoveryItemGameModel>
     ): GamesDiscoveryItemModel {
-        if(games.isEmpty()) return createCopyWithEmptyState(item)
+        if (games.isEmpty()) return createCopyWithEmptyState(item)
 
         return item.copy(uiState = GamesDiscoveryItemUiState.Result(games))
     }
-
-
 }

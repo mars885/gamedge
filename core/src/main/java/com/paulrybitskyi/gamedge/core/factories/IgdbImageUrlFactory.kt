@@ -20,9 +20,7 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Image
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 enum class IgdbImageSize(internal val rawSize: String) {
-
     SMALL_COVER("cover_small"),
     BIG_COVER("cover_big"),
 
@@ -37,17 +35,12 @@ enum class IgdbImageSize(internal val rawSize: String) {
 
     HD("720p"),
     FULL_HD("1080p")
-
 }
-
 
 enum class IgdbImageExtension(internal val rawExtension: String) {
-
     JPG("jpg"),
     PNG("png")
-
 }
-
 
 interface IgdbImageUrlFactory {
 
@@ -58,36 +51,29 @@ interface IgdbImageUrlFactory {
     )
 
     fun createUrl(image: Image, config: Config): String?
-
 }
-
 
 fun IgdbImageUrlFactory.createUrls(
     images: List<Image>,
     config: IgdbImageUrlFactory.Config
 ): List<String> {
-    if(images.isEmpty()) return emptyList()
+    if (images.isEmpty()) return emptyList()
 
     return images.mapNotNull { image ->
         createUrl(image, config)
     }
 }
 
-
 @BindType
 internal class IgdbImageUrlFactoryImpl @Inject constructor() : IgdbImageUrlFactory {
 
-
     private companion object {
-
         private const val IMAGE_URL_TEMPLATE = "https://images.igdb.com/igdb/image/upload/t_%s/%s.%s"
         private const val IMAGE_TYPE_RETINA_EXTENSION = "_2x"
-
     }
 
-
     override fun createUrl(image: Image, config: IgdbImageUrlFactory.Config): String? {
-        if(image.id.isBlank()) return null
+        if (image.id.isBlank()) return null
 
         return String.format(
             IMAGE_URL_TEMPLATE,
@@ -97,16 +83,13 @@ internal class IgdbImageUrlFactoryImpl @Inject constructor() : IgdbImageUrlFacto
         )
     }
 
-
     private fun constructType(config: IgdbImageUrlFactory.Config): String {
         return buildString {
             append(config.size.rawSize)
 
-            if(config.withRetinaSize) {
+            if (config.withRetinaSize) {
                 append(IMAGE_TYPE_RETINA_EXTENSION)
             }
         }
     }
-
-
 }

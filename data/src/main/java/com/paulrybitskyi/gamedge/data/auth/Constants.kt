@@ -17,7 +17,5 @@
 package com.paulrybitskyi.gamedge.data.auth
 
 internal object Constants {
-
     const val AUTH_PREFERENCES_DATA_STORE_NAME = "auth.pb"
-
 }

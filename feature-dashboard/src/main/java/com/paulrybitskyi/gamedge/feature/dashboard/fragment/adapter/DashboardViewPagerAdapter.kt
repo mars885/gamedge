@@ -26,19 +26,15 @@ internal class DashboardViewPagerAdapter(
     private val fragmentFactory: DashboardAdapterFragmentFactory
 ) : FragmentStateAdapter(fragment) {
 
-
     override fun createFragment(position: Int): Fragment {
-        return when(position.toDashboardPageFromPosition()) {
+        return when (position.toDashboardPageFromPosition()) {
             DashboardPage.NEWS -> fragmentFactory.createNewsFragment()
             DashboardPage.DISCOVER -> fragmentFactory.createDiscoveryFragment()
             DashboardPage.LIKES -> fragmentFactory.createLikesFragment()
         }
     }
 
-
     override fun getItemCount(): Int {
         return DashboardPage.values().size
     }
-
-
 }

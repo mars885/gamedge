@@ -17,8 +17,6 @@
 package com.paulrybitskyi.gamedge.gamespot.api.commons
 
 internal enum class SortOrder(val rawOrder: String) {
-
     ASC("asc"),
     DESC("desc")
-
 }

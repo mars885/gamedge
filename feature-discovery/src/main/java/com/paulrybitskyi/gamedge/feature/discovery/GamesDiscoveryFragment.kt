@@ -32,10 +32,8 @@ class GamesDiscoveryFragment : BaseFragment<
     GamesDiscoveryNavigator
 >(R.layout.fragment_games_discovery) {
 
-
     override val viewBinding by viewBinding(FragmentGamesDiscoveryBinding::bind)
     override val viewModel by viewModels<GamesDiscoveryViewModel>()
-
 
     override fun onInit() {
         super.onInit()
@@ -43,13 +41,11 @@ class GamesDiscoveryFragment : BaseFragment<
         initDiscoveryView()
     }
 
-
     private fun initDiscoveryView() = with(viewBinding.discoveryView) {
         onCategoryMoreButtonClicked = viewModel::onCategoryMoreButtonClicked
         onCategoryGameClicked = viewModel::onCategoryGameClicked
         onRefreshRequested = viewModel::onRefreshRequested
     }
-
 
     override fun onBindViewModel() {
         super.onBindViewModel()
@@ -57,13 +53,11 @@ class GamesDiscoveryFragment : BaseFragment<
         observeItems()
     }
 
-
     private fun observeItems() {
         viewModel.items
             .onEach { viewBinding.discoveryView.items = it }
             .observeIn(this)
     }
-
 
     override fun onLoadData() {
         super.onLoadData()
@@ -71,15 +65,12 @@ class GamesDiscoveryFragment : BaseFragment<
         viewModel.loadData()
     }
 
-
     override fun onRoute(route: Route) {
         super.onRoute(route)
 
-        when(route) {
+        when (route) {
             is GamesDiscoveryRoute.Category -> navigator.goToCategory(route.category)
             is GamesDiscoveryRoute.Info -> navigator.goToInfo(route.gameId)
         }
     }
-
-
 }

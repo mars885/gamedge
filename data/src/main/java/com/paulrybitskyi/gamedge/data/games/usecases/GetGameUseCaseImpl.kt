@@ -27,9 +27,13 @@ import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
 import com.paulrybitskyi.hiltbinder.BindType
-import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEmpty
 
 @Singleton
 @BindType
@@ -39,7 +43,6 @@ internal class GetGameUseCaseImpl @Inject constructor(
     private val gameMapper: GameMapper
 ) : GetGameUseCase {
 
-
     override suspend fun execute(params: GetGameUseCase.Params): Flow<DomainResult<Game>> {
         return flow { gamesLocalDataStore.getGame(params.gameId)?.let { emit(it) } }
             .flowOn(dispatcherProvider.main)
@@ -48,6 +51,4 @@ internal class GetGameUseCaseImpl @Inject constructor(
             .map<DomainGame, DomainResult<Game>>(::Ok)
             .onEmpty { emit(Err(Error.NotFound("Could not find the game with ID = ${params.gameId}"))) }
     }
-
-
 }

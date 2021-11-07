@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.database.games.entities
 
 internal enum class WebsiteCategory {
-
     UNKNOWN,
     OFFICIAL,
     WIKIA,
@@ -34,5 +33,4 @@ internal enum class WebsiteCategory {
     EPIC_GAMES,
     GOG,
     DISCORD,
-
 }

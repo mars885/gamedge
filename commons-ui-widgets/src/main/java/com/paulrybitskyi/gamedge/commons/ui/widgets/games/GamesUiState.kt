@@ -17,11 +17,7 @@
 package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
 sealed class GamesUiState {
-
     data class Empty(val iconId: Int, val title: String) : GamesUiState()
-
     object Loading : GamesUiState()
-
     data class Result(val items: List<GameModel>) : GamesUiState()
-
 }

@@ -18,7 +18,12 @@ package com.paulrybitskyi.gamedge.feature.discovery
 
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
@@ -41,7 +46,6 @@ import org.junit.Test
 
 internal class GamesDiscoveryViewModelTest {
 
-
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
@@ -50,7 +54,6 @@ internal class GamesDiscoveryViewModelTest {
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamesDiscoveryViewModel
-
 
     @Before
     fun setup() {
@@ -66,7 +69,6 @@ internal class GamesDiscoveryViewModelTest {
             logger = logger
         )
     }
-
 
     private fun setupUseCases(): GamesDiscoveryUseCases {
         return GamesDiscoveryUseCases(
@@ -97,11 +99,10 @@ internal class GamesDiscoveryViewModelTest {
         )
     }
 
-
     @Test
     fun `Logs error when games observing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.loadData()
@@ -110,12 +111,11 @@ internal class GamesDiscoveryViewModelTest {
         }
     }
 
-
     @Test
     fun `Logs error when games refreshing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.loadData()
 
@@ -123,23 +123,21 @@ internal class GamesDiscoveryViewModelTest {
         }
     }
 
-
     @Test
     fun `Dispatches toast showing command when games refreshing use case throws error`() {
         mainCoroutineRule.runBlockingTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 SUT.loadData()
 
-                val command = expectItem()
+                val command = awaitItem()
 
                 assertThat(command is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
-
 
     @Test
     fun `Routes to games category screen when more button is clicked`() {
@@ -147,14 +145,13 @@ internal class GamesDiscoveryViewModelTest {
             SUT.routeFlow.test {
                 SUT.onCategoryMoreButtonClicked("popular")
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is GamesDiscoveryRoute.Category).isTrue
                 assertThat((route as GamesDiscoveryRoute.Category).category).isEqualTo("popular")
             }
         }
     }
-
 
     @Test
     fun `Routes to game info screen when game is clicked`() {
@@ -168,14 +165,13 @@ internal class GamesDiscoveryViewModelTest {
             SUT.routeFlow.test {
                 SUT.onCategoryGameClicked(item)
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is GamesDiscoveryRoute.Info).isTrue
                 assertThat((route as GamesDiscoveryRoute.Info).gameId).isEqualTo(item.id)
             }
         }
     }
-
 
     private class FakeGamesDiscoveryItemGameModelMapper : GamesDiscoveryItemGameModelMapper {
 
@@ -186,8 +182,5 @@ internal class GamesDiscoveryViewModelTest {
                 coverUrl = null
             )
         }
-
     }
-
-
 }

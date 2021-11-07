@@ -34,19 +34,15 @@ internal class GameSummaryView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     var contentText: CharSequence
         set(value) { onContentTextChanged(value) }
         get() = binding.contentTv.text
 
-
     private val binding = ViewGameSummaryBinding.inflate(context.layoutInflater, this)
-
 
     init {
         initCard()
     }
-
 
     private fun initCard() {
         setBackgroundColor(getColor(R.color.game_summary_card_background_color))
@@ -54,11 +50,8 @@ internal class GameSummaryView @JvmOverloads constructor(
         onClick { binding.contentTv.toggle() }
     }
 
-
     private fun onContentTextChanged(newText: CharSequence) = with(binding.contentTv) {
         text = newText
         doOnLayout { this@GameSummaryView.isClickable = isTextEllipsized() }
     }
-
-
 }

@@ -17,28 +17,28 @@
 package com.paulrybitskyi.gamedge.feature.likes
 
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
-import com.paulrybitskyi.gamedge.core.ErrorMapper
-import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
-import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 internal class LikedGamesViewModelTest {
-
 
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
@@ -47,7 +47,6 @@ internal class LikedGamesViewModelTest {
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: LikedGamesViewModel
-
 
     @Before
     fun setup() {
@@ -63,7 +62,6 @@ internal class LikedGamesViewModelTest {
         )
     }
 
-
     @Test
     fun `Emits correct ui states when loading data`() {
         mainCoroutineRule.runBlockingTest {
@@ -72,9 +70,9 @@ internal class LikedGamesViewModelTest {
             SUT.uiState.test {
                 SUT.loadData()
 
-                val emptyState = expectItem()
-                val loadingState = expectItem()
-                val resultState = expectItem()
+                val emptyState = awaitItem()
+                val loadingState = awaitItem()
+                val resultState = awaitItem()
 
                 assertThat(emptyState is GamesUiState.Empty).isTrue
                 assertThat(loadingState is GamesUiState.Loading).isTrue
@@ -84,11 +82,10 @@ internal class LikedGamesViewModelTest {
         }
     }
 
-
     @Test
     fun `Logs error when liked games loading fails`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.loadData()
 
@@ -96,20 +93,18 @@ internal class LikedGamesViewModelTest {
         }
     }
 
-
     @Test
     fun `Dispatches toast showing command when liked games loading fails`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 SUT.loadData()
 
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
-
 
     @Test
     fun `Routes to info screen when game is clicked`() {
@@ -126,14 +121,13 @@ internal class LikedGamesViewModelTest {
             SUT.routeFlow.test {
                 SUT.onGameClicked(gameModel)
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is LikedGamesRoute.Info).isTrue
                 assertThat((route as LikedGamesRoute.Info).gameId).isEqualTo(gameModel.id)
             }
         }
     }
-
 
     private class FakeUiStateFactory : LikedGamesUiStateFactory {
 
@@ -159,8 +153,5 @@ internal class LikedGamesViewModelTest {
                 }
             )
         }
-
     }
-
-
 }

@@ -30,13 +30,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object TablesModule {
 
-
     @Provides
     @Singleton
     fun provideGamesTable(gamedgeDatabase: GamedgeDatabase): GamesTable {
         return gamedgeDatabase.gamesTable
     }
-
 
     @Provides
     @Singleton
@@ -44,12 +42,9 @@ internal object TablesModule {
         return gamedgeDatabase.likedGamesTable
     }
 
-
     @Provides
     @Singleton
     fun provideArticlesTable(gamedgeDatabase: GamedgeDatabase): ArticlesTable {
         return gamedgeDatabase.articlesTable
     }
-
-
 }

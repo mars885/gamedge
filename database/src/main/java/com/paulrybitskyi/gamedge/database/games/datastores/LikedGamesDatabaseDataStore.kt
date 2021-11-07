@@ -24,12 +24,12 @@ import com.paulrybitskyi.gamedge.data.games.entities.Game
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 import com.paulrybitskyi.hiltbinder.BindType
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 @BindType
@@ -40,26 +40,21 @@ internal class LikedGamesDatabaseDataStore @Inject constructor(
     private val gameMapper: GameMapper
 ) : LikedGamesLocalDataStore {
 
-
     override suspend fun likeGame(gameId: Int) {
         likedGamesTable.saveLikedGame(likedGameFactory.createLikedGame(gameId))
     }
-
 
     override suspend fun unlikeGame(gameId: Int) {
         likedGamesTable.deleteLikedGame(gameId)
     }
 
-
     override suspend fun isGameLiked(gameId: Int): Boolean {
         return likedGamesTable.isGameLiked(gameId)
     }
 
-
     override suspend fun observeGameLikeState(gameId: Int): Flow<Boolean> {
         return likedGamesTable.observeGameLikeState(gameId)
     }
-
 
     override suspend fun observeLikedGames(pagination: Pagination): Flow<List<Game>> {
          return likedGamesTable.observeLikedGames(
@@ -69,12 +64,9 @@ internal class LikedGamesDatabaseDataStore @Inject constructor(
          .toDataGamesFlow()
     }
 
-
     private fun Flow<List<DatabaseGame>>.toDataGamesFlow(): Flow<List<DataGame>> {
         return distinctUntilChanged()
             .map(gameMapper::mapToDataGames)
             .flowOn(dispatcherProvider.computation)
     }
-
-
 }

@@ -23,19 +23,14 @@ import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-
 internal interface GamingNewsItemModelMapper {
-
     fun mapToGamingNewsItemModel(article: Article): GamingNewsItemModel
-
 }
-
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GamingNewsItemModelMapperImpl @Inject constructor(
     private val publicationDateFormatter: ArticlePublicationDateFormatter
-): GamingNewsItemModelMapper {
-
+) : GamingNewsItemModelMapper {
 
     override fun mapToGamingNewsItemModel(article: Article): GamingNewsItemModel {
         return GamingNewsItemModel(
@@ -48,10 +43,7 @@ internal class GamingNewsItemModelMapperImpl @Inject constructor(
         )
     }
 
-
     private fun Article.formatPublicationDate(): String {
         return publicationDateFormatter.formatPublicationDate(publicationDate)
     }
-
-
 }

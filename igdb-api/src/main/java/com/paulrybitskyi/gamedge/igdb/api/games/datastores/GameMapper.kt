@@ -16,13 +16,43 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games.datastores
 
-import com.paulrybitskyi.gamedge.data.games.*
-import com.paulrybitskyi.gamedge.igdb.api.games.*
+import com.paulrybitskyi.gamedge.data.games.DataAgeRating
+import com.paulrybitskyi.gamedge.data.games.DataAgeRatingCategory
+import com.paulrybitskyi.gamedge.data.games.DataAgeRatingType
+import com.paulrybitskyi.gamedge.data.games.DataCategory
+import com.paulrybitskyi.gamedge.data.games.DataCompany
+import com.paulrybitskyi.gamedge.data.games.DataGame
+import com.paulrybitskyi.gamedge.data.games.DataGenre
+import com.paulrybitskyi.gamedge.data.games.DataImage
+import com.paulrybitskyi.gamedge.data.games.DataInvolvedCompany
+import com.paulrybitskyi.gamedge.data.games.DataKeyword
+import com.paulrybitskyi.gamedge.data.games.DataMode
+import com.paulrybitskyi.gamedge.data.games.DataPlatform
+import com.paulrybitskyi.gamedge.data.games.DataPlayerPerspective
+import com.paulrybitskyi.gamedge.data.games.DataReleaseDate
+import com.paulrybitskyi.gamedge.data.games.DataReleaseDateCategory
+import com.paulrybitskyi.gamedge.data.games.DataTheme
+import com.paulrybitskyi.gamedge.data.games.DataVideo
+import com.paulrybitskyi.gamedge.data.games.DataWebsite
+import com.paulrybitskyi.gamedge.data.games.DataWebsiteCategory
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiAgeRating
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiCategory
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiCompany
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiGenre
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiImage
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiInvolvedCompany
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiKeyword
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiMode
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiPlatform
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiPlayerPerspective
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiReleaseDate
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiTheme
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiVideo
+import com.paulrybitskyi.gamedge.igdb.api.games.ApiWebsite
 import javax.inject.Inject
 
-
 internal class GameMapper @Inject constructor() {
-
 
     fun mapToDataGame(apiGame: ApiGame): DataGame {
         return DataGame(
@@ -55,11 +85,9 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun ApiCategory.toDataCategory(): DataCategory {
         return DataCategory.valueOf(name)
     }
-
 
     private fun ApiImage.toDataImage(): DataImage {
         return DataImage(
@@ -69,11 +97,9 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun List<ApiImage>.toDataImages(): List<DataImage> {
         return map { it.toDataImage() }
     }
-
 
     private fun List<ApiVideo>.toDataVideos(): List<DataVideo> {
         return map {
@@ -83,7 +109,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<ApiReleaseDate>.toDataReleaseDates(): List<DataReleaseDate> {
         return map {
@@ -95,7 +120,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<ApiAgeRating>.toDataAgeRatings(): List<DataAgeRating> {
         return map {
             DataAgeRating(
@@ -105,7 +129,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<ApiGenre>.toDataGenres(): List<DataGenre> {
         return map {
             DataGenre(
@@ -113,7 +136,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<ApiPlatform>.toDataPlatforms(): List<DataPlatform> {
         return map {
@@ -124,7 +146,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<ApiPlayerPerspective>.toDataPlayerPerspectives(): List<DataPlayerPerspective> {
         return map {
             DataPlayerPerspective(
@@ -132,7 +153,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<ApiTheme>.toDataThemes(): List<DataTheme> {
         return map {
@@ -142,7 +162,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<ApiMode>.toDataModes(): List<DataMode> {
         return map {
             DataMode(
@@ -151,7 +170,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun List<ApiKeyword>.toDataKeywords(): List<DataKeyword> {
         return map {
             DataKeyword(
@@ -159,7 +177,6 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
 
     private fun List<ApiInvolvedCompany>.toDataInvolvedCompanies(): List<DataInvolvedCompany> {
         return map {
@@ -173,7 +190,6 @@ internal class GameMapper @Inject constructor() {
         }
     }
 
-
     private fun ApiCompany.toDataCompany(): DataCompany {
         return DataCompany(
             id = id,
@@ -184,7 +200,6 @@ internal class GameMapper @Inject constructor() {
         )
     }
 
-
     private fun List<ApiWebsite>.toDataWebsites(): List<DataWebsite> {
         return map {
             DataWebsite(
@@ -194,10 +209,7 @@ internal class GameMapper @Inject constructor() {
             )
         }
     }
-
-
 }
-
 
 internal fun GameMapper.mapToDataGames(apiGames: List<ApiGame>): List<DataGame> {
     return apiGames.map(::mapToDataGame)

@@ -42,17 +42,12 @@ internal data class Article(
     val siteDetailUrl: String = ""
 ) {
 
-
     object Schema {
-
         const val ID = "id"
         const val TITLE = "title"
         const val LEDE = "lede"
         const val IMAGE_URLS = "image"
         const val PUBLICATION_DATE = "publish_date"
         const val SITE_DETAIL_URL = "site_detail_url"
-
     }
-
-
 }

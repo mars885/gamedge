@@ -25,15 +25,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 interface CustomTabsProvider {
-
     fun getCustomTabsPackageName(): String?
-
     fun areCustomTabsSupported(): Boolean
-
 }
-
 
 @Singleton
 @BindType
@@ -41,30 +36,25 @@ internal class CustomTabsProviderImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : CustomTabsProvider {
 
-
     private companion object {
-
         private const val STABLE_PACKAGE = "com.android.chrome"
         private const val BETA_PACKAGE = "com.chrome.beta"
         private const val DEV_PACKAGE = "com.chrome.dev"
         private const val LOCAL_PACKAGE = "com.google.android.apps.chrome"
-
     }
-
 
     private var customTabsPackageName: String? = null
 
-
     override fun getCustomTabsPackageName(): String? {
-        if(customTabsPackageName != null) return checkNotNull(customTabsPackageName)
+        if (customTabsPackageName != null) return checkNotNull(customTabsPackageName)
 
         val packageManager = context.packageManager
         val viewIntentResolveInfoList = getViewIntentResolveInfoList()
         val packagesSupportingCustomTabs = buildList {
-            for(resolveInfo in viewIntentResolveInfoList) {
+            for (resolveInfo in viewIntentResolveInfoList) {
                 val serviceIntent = composeServiceIntent(resolveInfo)
 
-                if(packageManager.resolveService(serviceIntent, 0) != null) {
+                if (packageManager.resolveService(serviceIntent, 0) != null) {
                     add(resolveInfo.activityInfo.packageName)
                 }
             }
@@ -74,7 +64,6 @@ internal class CustomTabsProviderImpl @Inject constructor(
             .also { customTabsPackageName = it }
     }
 
-
     private fun getViewIntentResolveInfoList(): List<ResolveInfo> {
         val packageManager = context.packageManager
         val viewIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"))
@@ -82,13 +71,11 @@ internal class CustomTabsProviderImpl @Inject constructor(
         return packageManager.queryIntentActivities(viewIntent, 0)
     }
 
-
     private fun composeServiceIntent(resolveInfo: ResolveInfo): Intent {
         return Intent().apply {
             `package` = resolveInfo.activityInfo.packageName
         }
     }
-
 
     private fun findPackageNameToUse(packagesSupportingCustomTabs: List<String>): String? {
         return when {
@@ -102,10 +89,7 @@ internal class CustomTabsProviderImpl @Inject constructor(
         }
     }
 
-
     override fun areCustomTabsSupported(): Boolean {
         return (getCustomTabsPackageName() != null)
     }
-
-
 }

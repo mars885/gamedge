@@ -20,13 +20,10 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.WhereC
 
 internal object ConditionBuilderFactory {
 
-
     fun newBuilder(conditionType: ConditionType): ConditionBuilder {
         return ConditionBuilderImpl(
             conditionType = conditionType,
             whereClauseBuilderFactory = WhereClauseBuilderFactory
         )
     }
-
-
 }

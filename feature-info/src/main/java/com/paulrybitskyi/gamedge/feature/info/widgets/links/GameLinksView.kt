@@ -32,7 +32,6 @@ internal class GameLinksView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
 
-
     private val binding = ViewGameLinksBinding.inflate(context.layoutInflater, this)
 
     var links by observeChanges<List<GameLinkItemModel>>(emptyList()) { _, newItems ->
@@ -41,18 +40,15 @@ internal class GameLinksView @JvmOverloads constructor(
 
     var onLinkClicked: ((GameLinkItemModel) -> Unit)? = null
 
-
     init {
         initCard()
         initChipFlowView()
     }
 
-
     private fun initCard() {
         setBackgroundColor(getColor(R.color.game_links_card_background_color))
         cardElevation = getDimension(R.dimen.game_links_card_elevation)
     }
-
 
     private fun initChipFlowView() = with(binding.linksCfv) {
         itemBackgroundColor = getColor(R.color.game_links_chip_background_color)
@@ -60,6 +56,4 @@ internal class GameLinksView @JvmOverloads constructor(
         itemTextAppearanceResource = R.style.Gamedge_GameInfo_Links_ChipFlow_TextAppearance
         onItemClicked = { onLinkClicked?.invoke(it.mapToLinkItemModel()) }
     }
-
-
 }

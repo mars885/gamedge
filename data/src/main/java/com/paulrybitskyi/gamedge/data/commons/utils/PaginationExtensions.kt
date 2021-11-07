@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.data.commons.utils
 import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
 
-
 internal fun DomainPagination.toDataPagination(): DataPagination {
     return DataPagination(
         offset = offset,

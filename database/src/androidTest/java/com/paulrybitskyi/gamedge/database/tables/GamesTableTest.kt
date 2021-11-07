@@ -28,17 +28,16 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Inject
 import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(DatabaseModule::class)
 internal class GamesTableTest {
-
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
@@ -48,17 +47,14 @@ internal class GamesTableTest {
 
     @Inject lateinit var SUT: GamesTable
 
-
     @Module(includes = [TestDatabaseModule::class])
     @InstallIn(SingletonComponent::class)
     class TestModule
-
 
     @Before
     fun setup() {
         hiltRule.inject()
     }
-
 
     @Test
     fun saves_games_and_gets_game_by_ID() {
@@ -71,7 +67,6 @@ internal class GamesTableTest {
         }
     }
 
-
     @Test
     fun saves_games_and_gets_null_for_non_existent_game_ID() {
         runBlockingTest {
@@ -80,7 +75,6 @@ internal class GamesTableTest {
             assertThat(SUT.getGame(id = 500)).isNull()
         }
     }
-
 
     @Test
     fun saves_games_and_gets_games_by_IDs() {
@@ -97,7 +91,6 @@ internal class GamesTableTest {
         }
     }
 
-
     @Test
     fun saves_games_and_gets_empty_game_list_for_non_existent_game_IDs() {
         runBlockingTest {
@@ -112,7 +105,6 @@ internal class GamesTableTest {
             ).isEqualTo(emptyList<DatabaseGame>())
         }
     }
-
 
     @Test
     fun saves_games_and_gets_some_games_for_some_game_IDs() {
@@ -130,7 +122,6 @@ internal class GamesTableTest {
             ).isEqualTo(expectedGames)
         }
     }
-
 
     @Test
     fun saves_games_and_gets_sorted_games_by_searching_with_upper_case_game_name() {
@@ -150,7 +141,6 @@ internal class GamesTableTest {
         }
     }
 
-
     @Test
     fun saves_games_and_gets_sorted_games_by_searching_with_lower_case_game_name() {
         runBlockingTest {
@@ -169,7 +159,6 @@ internal class GamesTableTest {
         }
     }
 
-
     @Test
     fun saves_games_and_gets_empty_game_list_by_searching_with_not_available_game_name() {
         runBlockingTest {
@@ -185,7 +174,6 @@ internal class GamesTableTest {
         }
     }
 
-
     @Test
     fun saves_games_and_gets_empty_game_list_by_searching_with_word_that_ends_with_target_game_name() {
         runBlockingTest {
@@ -200,7 +188,6 @@ internal class GamesTableTest {
             ).isEqualTo(emptyList<DatabaseGame>())
         }
     }
-
 
     @Test
     fun saves_specific_games_and_gets_properly_sorted_games_by_searching_with_existing_game_name() {
@@ -230,7 +217,6 @@ internal class GamesTableTest {
         }
     }
 
-
     @Test
     fun saves_popular_games_and_observes_popular_games() {
         runBlockingTest {
@@ -244,11 +230,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = DATABASE_GAMES.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_popular_games_and_observes_only_games_that_have_users_rating() {
@@ -269,11 +254,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_popular_games_and_observes_only_games_that_have_release_date() {
@@ -296,11 +280,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_popular_games_and_observes_only_games_that_have_min_release_date() {
@@ -325,11 +308,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_recently_released_games_and_observes_recently_released_games() {
@@ -345,11 +327,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = DATABASE_GAMES.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_recently_released_games_and_observes_recently_released_games_that_have_release_date() {
@@ -371,11 +352,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_recently_released_games_and_observes_recently_released_games_that_have_min_release_date() {
@@ -399,11 +379,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_recently_released_games_and_observes_recently_released_games_that_have_max_release_date() {
@@ -429,11 +408,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_coming_soon_games_and_observes_coming_soon_games() {
@@ -447,11 +425,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = DATABASE_GAMES.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_coming_soon_games_and_observes_coming_soon_games_that_have_release_date() {
@@ -472,11 +449,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_coming_soon_games_and_observes_coming_soon_games_that_have_min_release_date() {
@@ -499,11 +475,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_most_anticipated_games_and_observes_most_anticipated_games() {
@@ -518,11 +493,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = DATABASE_GAMES.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_most_anticipated_games_and_observes_most_anticipated_games_that_have_release_date() {
@@ -543,11 +517,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_most_anticipated_games_and_observes_most_anticipated_games_that_have_min_release_date() {
@@ -570,11 +543,10 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
 
     @Test
     fun saves_most_anticipated_games_and_observes_most_anticipated_games_that_have_hype_count() {
@@ -599,10 +571,8 @@ internal class GamesTableTest {
                 offset = 0,
                 limit = gamesToSave.size
             ).test {
-                assertThat(expectItem()).isEqualTo(expectedGames)
+                assertThat(awaitItem()).isEqualTo(expectedGames)
             }
         }
     }
-
-
 }

@@ -35,16 +35,20 @@ import com.paulrybitskyi.gamedge.feature.category.mapping.GamesCategoryUiStateFa
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-
 
 private const val PARAM_GAMES_CATEGORY = "games_category"
-
 
 @HiltViewModel
 internal class GamesCategoryViewModel @Inject constructor(
@@ -55,8 +59,7 @@ internal class GamesCategoryViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
-): BaseViewModel() {
-
+) : BaseViewModel() {
 
     private var isObservingGames = false
     private var isRefreshingGames = false
@@ -80,7 +83,6 @@ internal class GamesCategoryViewModel @Inject constructor(
     val uiState: StateFlow<GamesCategoryUiState>
         get() = _uiState
 
-
     init {
         gamesCategory = GamesCategory.valueOf(checkNotNull(savedStateHandle.get<String>(PARAM_GAMES_CATEGORY)))
         gamesCategoryKeyType = gamesCategory.toKeyType()
@@ -88,15 +90,13 @@ internal class GamesCategoryViewModel @Inject constructor(
         _toolbarTitle.value = stringProvider.getString(gamesCategory.titleId)
     }
 
-
     fun loadData(resultEmissionDelay: Long) {
         observeGames(resultEmissionDelay)
         refreshGames()
     }
 
-
     private fun observeGames(resultEmissionDelay: Long = 0L) {
-        if(isObservingGames) return
+        if (isObservingGames) return
 
         gamesObservingJob = viewModelScope.launch {
             useCases.getObservableUseCase(gamesCategoryKeyType)
@@ -121,9 +121,8 @@ internal class GamesCategoryViewModel @Inject constructor(
         }
     }
 
-
     private fun configureNextLoad(uiState: GamesCategoryUiState) {
-        if(uiState !is GamesCategoryUiState.Result) return
+        if (uiState !is GamesCategoryUiState.Result) return
 
         val paginationLimit = observeGamesUseCaseParams.pagination.limit
         val itemCount = uiState.items.size
@@ -131,9 +130,8 @@ internal class GamesCategoryViewModel @Inject constructor(
         hasMoreGamesToLoad = (paginationLimit == itemCount)
     }
 
-
     private fun refreshGames() {
-        if(isRefreshingGames) return
+        if (isRefreshingGames) return
 
         gamesRefreshingJob = viewModelScope.launch {
             useCases.getRefreshableUseCase(gamesCategoryKeyType)
@@ -152,31 +150,26 @@ internal class GamesCategoryViewModel @Inject constructor(
         }
     }
 
-
     fun onToolbarLeftButtonClicked() {
         route(GamesCategoryRoute.Back)
     }
-
 
     fun onGameClicked(game: GameCategoryModel) {
         route(GamesCategoryRoute.Info(game.id))
     }
 
-
     fun onBottomReached() {
         loadMoreGames()
     }
 
-
     private fun loadMoreGames() {
-        if(!hasMoreGamesToLoad) return
+        if (!hasMoreGamesToLoad) return
 
         viewModelScope.launch {
             fetchNextGamesBatch()
             observeNewGamesBatch()
         }
     }
-
 
     private suspend fun fetchNextGamesBatch() {
         refreshGamesUseCaseParams = refreshGamesUseCaseParams.copy(
@@ -188,7 +181,6 @@ internal class GamesCategoryViewModel @Inject constructor(
         gamesRefreshingJob?.join()
     }
 
-
     private suspend fun observeNewGamesBatch() {
         observeGamesUseCaseParams = observeGamesUseCaseParams.copy(
             observeGamesUseCaseParams.pagination.nextLimitPage()
@@ -197,6 +189,4 @@ internal class GamesCategoryViewModel @Inject constructor(
         gamesObservingJob?.cancelAndJoin()
         observeGames()
     }
-
-
 }

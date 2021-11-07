@@ -36,12 +36,10 @@ import org.junit.Test
 
 internal class ArticlesDatabaseDataStoreTest {
 
-
     @MockK private lateinit var articlesTable: ArticlesTable
 
     private lateinit var articleMapper: ArticleMapper
     private lateinit var SUT: ArticlesDatabaseDataStore
-
 
     @Before
     fun setup() {
@@ -55,7 +53,6 @@ internal class ArticlesDatabaseDataStoreTest {
         )
     }
 
-
     @Test
     fun `Saves articles to table successfully`() {
         runBlockingTest {
@@ -67,7 +64,6 @@ internal class ArticlesDatabaseDataStoreTest {
         }
     }
 
-
     @Test
     fun `Emits articles successfully`() {
         runBlockingTest {
@@ -76,11 +72,9 @@ internal class ArticlesDatabaseDataStoreTest {
             coEvery { articlesTable.observeArticles(any(), any()) } returns flowOf(databaseArticles)
 
             SUT.observeArticles(DATA_PAGINATION).test {
-                assertThat(expectItem()).isEqualTo(DATA_ARTICLES)
-                expectComplete()
+                assertThat(awaitItem()).isEqualTo(DATA_ARTICLES)
+                awaitComplete()
             }
         }
     }
-
-
 }

@@ -18,7 +18,6 @@ package com.paulrybitskyi.gamedge.commons.ui
 
 import android.content.Context
 
-
-fun Context.defaultWindowAnimationDuration() : Long {
+fun Context.defaultWindowAnimationDuration(): Long {
     return resources.getInteger(R.integer.default_window_animation_duration).toLong()
 }

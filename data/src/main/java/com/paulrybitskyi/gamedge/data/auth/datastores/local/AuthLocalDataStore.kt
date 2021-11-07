@@ -20,21 +20,15 @@ import androidx.datastore.core.DataStore
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.entities.OauthCredentials
 import com.paulrybitskyi.hiltbinder.BindType
-import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 import javax.inject.Singleton
-
+import kotlinx.coroutines.flow.firstOrNull
 
 interface AuthLocalDataStore {
-
     suspend fun saveOauthCredentials(oauthCredentials: OauthCredentials)
-
     suspend fun getOauthCredentials(): OauthCredentials?
-
     suspend fun isExpired(): Boolean
-
 }
-
 
 @Singleton
 @BindType
@@ -44,13 +38,11 @@ internal class AuthFileDataStore @Inject constructor(
     private val mapper: AuthMapper
 ) : AuthLocalDataStore {
 
-
     override suspend fun saveOauthCredentials(oauthCredentials: OauthCredentials) {
         protoDataStore.updateData {
             mapper.mapToProtoOauthCredentials(oauthCredentials)
         }
     }
-
 
     override suspend fun getOauthCredentials(): OauthCredentials? {
         // Using Kotlin's takeIf and let because Flow's filter with
@@ -65,7 +57,6 @@ internal class AuthFileDataStore @Inject constructor(
             ?.let(mapper::mapToDataOauthCredentials)
     }
 
-
     override suspend fun isExpired(): Boolean {
         // Same with Kotlin's takeIf and let.
 
@@ -75,6 +66,4 @@ internal class AuthFileDataStore @Inject constructor(
             ?.let { timestampProvider.getUnixTimestamp() >= it.expirationTime }
             ?: true
     }
-
-
 }

@@ -24,15 +24,12 @@ import org.junit.Test
 
 internal class ApicalypseQueryBuilderImplTest {
 
-
     private lateinit var SUT: ApicalypseQueryBuilderImpl
-
 
     @Before
     fun setup() {
         SUT = ApicalypseQueryBuilderImpl(WhereClauseBuilderFactory)
     }
-
 
     @Test
     fun `Builds search query successfully`() {
@@ -47,7 +44,6 @@ internal class ApicalypseQueryBuilderImplTest {
             .isEqualTo("search \"Shadow of the Colossus\";fields id, title;offset 10;limit 20;sort id desc;")
     }
 
-
     @Test
     fun `Builds select query successfully`() {
         val query = SUT.select("id, title")
@@ -60,7 +56,6 @@ internal class ApicalypseQueryBuilderImplTest {
             .isEqualTo("fields id, title;offset 100;limit 500;sort title asc;")
     }
 
-
     @Test
     fun `Builds select all query successfully`() {
         val query = SUT.selectAll()
@@ -72,7 +67,6 @@ internal class ApicalypseQueryBuilderImplTest {
         assertThat(query)
             .isEqualTo("fields *;offset 100;limit 500;sort title asc;")
     }
-
 
     @Test
     fun `Builds select all query with excluded fields successfully`() {
@@ -87,7 +81,6 @@ internal class ApicalypseQueryBuilderImplTest {
             .isEqualTo("fields *;exclude date, likes;offset 100;limit 500;sort title asc;")
     }
 
-
     @Test
     fun `Builds select query where some condition is true`() {
         val query = SUT.select("id, title, isLiked")
@@ -100,7 +93,6 @@ internal class ApicalypseQueryBuilderImplTest {
         assertThat(query)
             .isEqualTo("fields id, title, isLiked;where isLiked = true;offset 100;limit 500;sort title asc;")
     }
-
 
     @Test
     fun `Builds select query where some condition is false`() {
@@ -115,7 +107,6 @@ internal class ApicalypseQueryBuilderImplTest {
             .isEqualTo("fields id, title, isLiked;where isLiked = false;offset 100;limit 500;sort title asc;")
     }
 
-
     @Test
     fun `Builds select query where some condition is null`() {
         val query = SUT.select("id, title, date")
@@ -128,7 +119,6 @@ internal class ApicalypseQueryBuilderImplTest {
         assertThat(query)
             .isEqualTo("fields id, title, date;where date = null;offset 100;limit 500;sort title asc;")
     }
-
 
     @Test
     fun `Builds select query where some condition is not null`() {
@@ -143,7 +133,6 @@ internal class ApicalypseQueryBuilderImplTest {
             .isEqualTo("fields id, title, date;where date != null;offset 100;limit 500;sort title asc;")
     }
 
-
     @Test
     fun `Builds select query where some field is equal to value`() {
         val query = SUT.select("id, title, date")
@@ -156,7 +145,6 @@ internal class ApicalypseQueryBuilderImplTest {
         assertThat(query)
             .isEqualTo("fields id, title, date;where date = 2020-03-01;offset 100;limit 500;sort title asc;")
     }
-
 
     @Test
     fun `Builds select query where some field is not equal to value`() {
@@ -171,7 +159,6 @@ internal class ApicalypseQueryBuilderImplTest {
             .isEqualTo("fields id, title, date;where date != 2020-03-01;offset 100;limit 500;sort title asc;")
     }
 
-
     @Test
     fun `Builds select query where some field is larger than value`() {
         val query = SUT.select("id, title, likes")
@@ -184,7 +171,6 @@ internal class ApicalypseQueryBuilderImplTest {
         assertThat(query)
             .isEqualTo("fields id, title, likes;where likes > 20;offset 100;limit 500;sort title asc;")
     }
-
 
     @Test
     fun `Builds select query where some field is larger than or equal to value`() {
@@ -199,7 +185,6 @@ internal class ApicalypseQueryBuilderImplTest {
             .isEqualTo("fields id, title, likes;where likes >= 20;offset 100;limit 500;sort title asc;")
     }
 
-
     @Test
     fun `Builds select query where some field is smaller than value`() {
         val query = SUT.select("id, title, likes")
@@ -212,7 +197,6 @@ internal class ApicalypseQueryBuilderImplTest {
         assertThat(query)
             .isEqualTo("fields id, title, likes;where likes < 20;offset 100;limit 500;sort title asc;")
     }
-
 
     @Test
     fun `Builds select query where some field is smaller than or equal to value`() {
@@ -227,7 +211,6 @@ internal class ApicalypseQueryBuilderImplTest {
             .isEqualTo("fields id, title, likes;where likes <= 20;offset 100;limit 500;sort title asc;")
     }
 
-
     @Test
     fun `Builds select query where some field contains all of values`() {
         val query = SUT.select("id, title, genres")
@@ -240,7 +223,6 @@ internal class ApicalypseQueryBuilderImplTest {
         assertThat(query)
             .isEqualTo("fields id, title, genres;where genres = [20, 30, 40];offset 100;limit 500;sort title asc;")
     }
-
 
     @Test
     fun `Builds select query where some field does not contain all of values`() {
@@ -255,7 +237,6 @@ internal class ApicalypseQueryBuilderImplTest {
             .isEqualTo("fields id, title, genres;where genres = ![20, 30, 40];offset 100;limit 500;sort title asc;")
     }
 
-
     @Test
     fun `Builds select query where some field contains any of values`() {
         val query = SUT.select("id, title, genres")
@@ -268,7 +249,6 @@ internal class ApicalypseQueryBuilderImplTest {
         assertThat(query)
             .isEqualTo("fields id, title, genres;where genres = (20, 30, 40);offset 100;limit 500;sort title asc;")
     }
-
 
     @Test
     fun `Builds select query where some field does not contain any of values`() {
@@ -283,7 +263,6 @@ internal class ApicalypseQueryBuilderImplTest {
             .isEqualTo("fields id, title, genres;where genres = !(20, 30, 40);offset 100;limit 500;sort title asc;")
     }
 
-
     @Test
     fun `Builds select query where some field contains exclusively all of values`() {
         val query = SUT.select("id, title, genres")
@@ -294,9 +273,11 @@ internal class ApicalypseQueryBuilderImplTest {
             .build()
 
         assertThat(query)
-            .isEqualTo("fields id, title, genres;where genres = {20, 30, 40};offset 100;limit 500;sort title asc;")
+            .isEqualTo(
+                "fields id, title, genres;where genres = {20, 30, 40};offset 100;" +
+                "limit 500;sort title asc;"
+            )
     }
-
 
     @Test
     fun `Builds select query with two conditions combined with logical and operator`() {
@@ -311,9 +292,11 @@ internal class ApicalypseQueryBuilderImplTest {
             .build()
 
         assertThat(query)
-            .isEqualTo("fields id, title, genres, likes;where genres = (20, 30, 40) & likes > 20;offset 100;limit 500;sort title asc;")
+            .isEqualTo(
+                "fields id, title, genres, likes;where genres = (20, 30, 40) & likes > 20;offset 100;" +
+                "limit 500;sort title asc;"
+            )
     }
-
 
     @Test
     fun `Builds select query with two conditions combined with logical or operator`() {
@@ -328,9 +311,11 @@ internal class ApicalypseQueryBuilderImplTest {
             .build()
 
         assertThat(query)
-            .isEqualTo("fields id, title, genres, likes;where genres = (20, 30, 40) | likes > 20;offset 100;limit 500;sort title asc;")
+            .isEqualTo(
+                "fields id, title, genres, likes;where genres = (20, 30, 40) | likes > 20;" +
+                "offset 100;limit 500;sort title asc;"
+            )
     }
-
 
     @Test
     fun `Builds a complex select query with lots of conditions`() {
@@ -339,7 +324,7 @@ internal class ApicalypseQueryBuilderImplTest {
             .where {
                 "id".containsAnyOf(listOf("1", "2", "3")) and
                 { "title".isNotNull } and
-                { "genres".containsAnyOf(listOf("20", "30", "40"))  } and
+                { "genres".containsAnyOf(listOf("20", "30", "40")) } and
                 { "likes".isLargerThan("20") } or
                 { "rating".isLargerThanOrEqualTo("80") } or
                 { "release_date".isEqual("2020-03-01") }
@@ -356,6 +341,4 @@ internal class ApicalypseQueryBuilderImplTest {
                 "sort id asc;"
             )
     }
-
-
 }

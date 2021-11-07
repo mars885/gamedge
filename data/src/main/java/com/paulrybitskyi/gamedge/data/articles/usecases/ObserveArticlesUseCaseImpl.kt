@@ -27,9 +27,14 @@ import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase.Params
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.hiltbinder.BindType
-import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEmpty
 
 @Singleton
 @BindType
@@ -40,9 +45,8 @@ internal class ObserveArticlesUseCaseImpl @Inject constructor(
     private val articleMapper: ArticleMapper
 ) : ObserveArticlesUseCase {
 
-
     override suspend fun execute(params: Params): Flow<List<Article>> {
-        return if(params.refreshArticles) {
+        return if (params.refreshArticles) {
             refreshArticles(params)
                 .flatMapConcat { observeArticles(params) }
                 .onEmpty { emitAll(observeArticles(params)) }
@@ -51,7 +55,6 @@ internal class ObserveArticlesUseCaseImpl @Inject constructor(
         }
     }
 
-
     private suspend fun refreshArticles(params: Params): Flow<List<Article>> {
         val refreshUseCaseParams = RefreshArticlesUseCase.Params(params.pagination)
 
@@ -59,13 +62,10 @@ internal class ObserveArticlesUseCaseImpl @Inject constructor(
             .resultOrError()
     }
 
-
     private suspend fun observeArticles(params: Params): Flow<List<Article>> {
         return articlesLocalDataStore
             .observeArticles(params.pagination.toDataPagination())
             .map(articleMapper::mapToDomainArticles)
             .flowOn(dispatcherProvider.computation)
     }
-
-
 }

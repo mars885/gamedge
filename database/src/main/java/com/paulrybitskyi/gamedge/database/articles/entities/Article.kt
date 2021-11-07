@@ -36,9 +36,7 @@ internal data class Article(
     @ColumnInfo(name = Schema.SITE_DETAIL_URL) val siteDetailUrl: String
 ) {
 
-
     object Schema {
-
         const val TABLE_NAME = "articles"
         const val ID = "id"
         const val TITLE = "title"
@@ -46,8 +44,5 @@ internal data class Article(
         const val IMAGE_URLS = "image_urls"
         const val PUBLICATION_DATE = "publication_date"
         const val SITE_DETAIL_URL = "site_detail_url"
-
     }
-
-
 }

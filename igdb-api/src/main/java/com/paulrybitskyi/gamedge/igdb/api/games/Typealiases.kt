@@ -16,8 +16,24 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games
 
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.*
-
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.AgeRating
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.AgeRatingCategory
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.AgeRatingType
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Category
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Company
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Genre
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Image
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.InvolvedCompany
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Keyword
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Mode
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Platform
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.PlayerPerspective
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ReleaseDate
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Theme
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Video
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.Website
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.WebsiteCategory
 
 internal typealias ApiAgeRating = AgeRating
 internal typealias ApiAgeRatingCategory = AgeRatingCategory

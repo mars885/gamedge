@@ -54,5 +54,4 @@ internal data class GameInfoModel(
 
     val hasSimilarGames: Boolean
         get() = ((similarGames != null) && similarGames.hasItems)
-
 }

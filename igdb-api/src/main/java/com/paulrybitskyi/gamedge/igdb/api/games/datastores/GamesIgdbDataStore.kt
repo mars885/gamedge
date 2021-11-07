@@ -28,9 +28,9 @@ import com.paulrybitskyi.gamedge.data.games.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
 import com.paulrybitskyi.hiltbinder.BindType
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.withContext
 
 @Singleton
 @BindType
@@ -41,13 +41,11 @@ internal class GamesIgdbDataStore @Inject constructor(
     private val errorMapper: ErrorMapper
 ) : GamesRemoteDataStore {
 
-
     override suspend fun searchGames(searchQuery: String, pagination: Pagination): DataResult<List<DataGame>> {
         return gamesEndpoint
             .searchGames(searchQuery, pagination.offset, pagination.limit)
             .toDataStoreResult()
     }
-
 
     override suspend fun getPopularGames(pagination: Pagination): DataResult<List<DataGame>> {
         return gamesEndpoint
@@ -55,13 +53,11 @@ internal class GamesIgdbDataStore @Inject constructor(
             .toDataStoreResult()
     }
 
-
     override suspend fun getRecentlyReleasedGames(pagination: Pagination): DataResult<List<DataGame>> {
         return gamesEndpoint
             .getRecentlyReleasedGames(pagination.offset, pagination.limit)
             .toDataStoreResult()
     }
-
 
     override suspend fun getComingSoonGames(pagination: Pagination): DataResult<List<DataGame>> {
         return gamesEndpoint
@@ -69,20 +65,20 @@ internal class GamesIgdbDataStore @Inject constructor(
             .toDataStoreResult()
     }
 
-
     override suspend fun getMostAnticipatedGames(pagination: Pagination): DataResult<List<DataGame>> {
         return gamesEndpoint
             .getMostAnticipatedGames(pagination.offset, pagination.limit)
             .toDataStoreResult()
     }
 
-
-    override suspend fun getCompanyDevelopedGames(company: DataCompany, pagination: Pagination): DataResult<List<DataGame>> {
+    override suspend fun getCompanyDevelopedGames(
+        company: DataCompany,
+        pagination: Pagination
+    ): DataResult<List<DataGame>> {
         return gamesEndpoint
             .getGames(company.developedGames, pagination.offset, pagination.limit)
             .toDataStoreResult()
     }
-
 
     override suspend fun getSimilarGames(game: DataGame, pagination: Pagination): DataResult<List<DataGame>> {
         return gamesEndpoint
@@ -90,12 +86,9 @@ internal class GamesIgdbDataStore @Inject constructor(
             .toDataStoreResult()
     }
 
-
     private suspend fun ApiResult<List<ApiGame>>.toDataStoreResult(): DataResult<List<DataGame>> {
         return withContext(dispatcherProvider.computation) {
             mapEither(gameMapper::mapToDataGames, errorMapper::mapToDataError)
         }
     }
-
-
 }

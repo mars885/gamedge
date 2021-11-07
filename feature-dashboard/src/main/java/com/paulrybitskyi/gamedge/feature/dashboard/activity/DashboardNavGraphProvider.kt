@@ -22,5 +22,4 @@ interface DashboardNavGraphProvider {
 
     @NavigationRes
     fun getNavGraphId(): Int
-
 }

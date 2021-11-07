@@ -20,20 +20,15 @@ import com.paulrybitskyi.gamedge.commons.api.ApiResult
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.GrantType
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
 
-
 internal interface AuthEndpoint {
-
     suspend fun getOauthCredentials(): ApiResult<OauthCredentials>
-
 }
-
 
 internal class AuthEndpointImpl(
     private val authService: AuthService,
     private val clientId: String,
     private val clientSecret: String
 ) : AuthEndpoint {
-
 
     override suspend fun getOauthCredentials(): ApiResult<OauthCredentials> {
         return authService.getOauthCredentials(
@@ -42,6 +37,4 @@ internal class AuthEndpointImpl(
             grantType = GrantType.CLIENT_CREDENTIALS.rawType
         )
     }
-
-
 }

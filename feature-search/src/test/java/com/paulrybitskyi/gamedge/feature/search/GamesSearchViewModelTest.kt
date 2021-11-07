@@ -18,7 +18,11 @@ package com.paulrybitskyi.gamedge.feature.search
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
+import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
@@ -39,7 +43,6 @@ import org.junit.Test
 
 internal class GamesSearchViewModelTest {
 
-
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
@@ -47,7 +50,6 @@ internal class GamesSearchViewModelTest {
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamesSearchViewModel
-
 
     @Before
     fun setup() {
@@ -64,13 +66,11 @@ internal class GamesSearchViewModelTest {
         )
     }
 
-
     private fun setupSavedStateHandle(): SavedStateHandle {
         return mockk(relaxed = true) {
             every { get<String>(any()) } returns ""
         }
     }
-
 
     @Test
     fun `Routes to previous screen when toolbar back button is clicked`() {
@@ -78,11 +78,10 @@ internal class GamesSearchViewModelTest {
             SUT.routeFlow.test {
                 SUT.onToolbarBackButtonClicked()
 
-                assertThat(expectItem() is GamesSearchRoute.Back).isTrue
+                assertThat(awaitItem() is GamesSearchRoute.Back).isTrue
             }
         }
     }
-
 
     @Test
     fun `Emits correct ui states when searching for games`() {
@@ -92,9 +91,9 @@ internal class GamesSearchViewModelTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("god of war")
 
-                val emptyState = expectItem()
-                val loadingState = expectItem()
-                val resultState = expectItem()
+                val emptyState = awaitItem()
+                val loadingState = awaitItem()
+                val resultState = awaitItem()
 
                 assertThat(emptyState is GamesUiState.Empty).isTrue
                 assertThat(loadingState is GamesUiState.Loading).isTrue
@@ -104,19 +103,17 @@ internal class GamesSearchViewModelTest {
         }
     }
 
-
     @Test
     fun `Does not emit ui states when search query is empty`() {
         mainCoroutineRule.runBlockingTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("")
 
-                assertThat(expectItem() is GamesUiState.Empty).isTrue
+                assertThat(awaitItem() is GamesUiState.Empty).isTrue
                 expectNoEvents()
             }
         }
     }
-
 
     @Test
     fun `Does not emit ui states when the current search query is provided`() {
@@ -128,12 +125,11 @@ internal class GamesSearchViewModelTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("god of war")
 
-                assertThat(expectItem() is GamesUiState.Result).isTrue
+                assertThat(awaitItem() is GamesUiState.Result).isTrue
                 expectNoEvents()
             }
         }
     }
-
 
     @Test
     fun `Emits empty ui state when blank search query is provided`() {
@@ -141,12 +137,11 @@ internal class GamesSearchViewModelTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("   ")
 
-                assertThat(expectItem() is GamesUiState.Empty).isTrue
+                assertThat(awaitItem() is GamesUiState.Empty).isTrue
                 expectNoEvents()
             }
         }
     }
-
 
     @Test
     fun `Dispatches items clearing command when performing new search`() {
@@ -156,16 +151,15 @@ internal class GamesSearchViewModelTest {
             SUT.commandFlow.test {
                 SUT.onSearchActionRequested("god of war")
 
-                assertThat(expectItem() is GamesSearchCommand.ClearItems).isTrue
+                assertThat(awaitItem() is GamesSearchCommand.ClearItems).isTrue
             }
         }
     }
 
-
     @Test
     fun `Logs error when searching games use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.onSearchActionRequested("god of war")
 
@@ -173,21 +167,19 @@ internal class GamesSearchViewModelTest {
         }
     }
 
-
     @Test
     fun `Dispatches toast showing command when searching games use case throws error`() {
         mainCoroutineRule.runBlockingTest {
-            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw Exception("error") }
+            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 SUT.onSearchActionRequested("god of war")
 
-                assertThat(expectItem() is GamesSearchCommand.ClearItems).isTrue
-                assertThat(expectItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem() is GamesSearchCommand.ClearItems).isTrue
+                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
             }
         }
     }
-
 
     @Test
     fun `Routes to info screen when game is clicked`() {
@@ -204,14 +196,13 @@ internal class GamesSearchViewModelTest {
             SUT.routeFlow.test {
                 SUT.onGameClicked(gameModel)
 
-                val route = expectItem()
+                val route = awaitItem()
 
                 assertThat(route is GamesSearchRoute.Info).isTrue
                 assertThat((route as GamesSearchRoute.Info).gameId).isEqualTo(gameModel.id)
             }
         }
     }
-
 
     private class FakeGamesSearchUiStateFactory : GamesSearchUiStateFactory {
 
@@ -237,8 +228,5 @@ internal class GamesSearchViewModelTest {
                 }
             )
         }
-
     }
-
-
 }

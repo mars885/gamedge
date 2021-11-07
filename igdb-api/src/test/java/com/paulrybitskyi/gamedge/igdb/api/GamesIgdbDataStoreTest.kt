@@ -21,7 +21,13 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
 import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
-import com.paulrybitskyi.gamedge.commons.testing.*
+import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_HTTP
+import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_NETWORK
+import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_UNKNOWN
+import com.paulrybitskyi.gamedge.commons.testing.DATA_COMPANY
+import com.paulrybitskyi.gamedge.commons.testing.DATA_GAME
+import com.paulrybitskyi.gamedge.commons.testing.DATA_PAGINATION
+import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.games.datastores.GameMapper
@@ -35,23 +41,19 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
-
 private val API_GAMES = listOf(
     ApiGame(id = 1),
     ApiGame(id = 2),
     ApiGame(id = 3)
 )
 
-
 internal class GamesIgdbDataStoreTest {
-
 
     @MockK private lateinit var gamesEndpoint: GamesEndpoint
 
     private lateinit var gameMapper: GameMapper
     private lateinit var errorMapper: ErrorMapper
     private lateinit var SUT: GamesIgdbDataStore
-
 
     @Before
     fun setup() {
@@ -67,7 +69,6 @@ internal class GamesIgdbDataStoreTest {
         )
     }
 
-
     @Test
     fun `Returns searched games successfully`() {
         runBlockingTest {
@@ -79,7 +80,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
-
 
     @Test
     fun `Returns http error when searching games`() {
@@ -93,7 +93,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns network error when searching games`() {
         runBlockingTest {
@@ -105,7 +104,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(errorMapper.mapToDataError(API_ERROR_NETWORK))
         }
     }
-
 
     @Test
     fun `Returns unknown error when searching games`() {
@@ -119,7 +117,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns popular games successfully`() {
         runBlockingTest {
@@ -131,7 +128,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
-
 
     @Test
     fun `Returns http error when fetching popular games`() {
@@ -145,7 +141,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns network error when fetching popular games`() {
         runBlockingTest {
@@ -157,7 +152,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(errorMapper.mapToDataError(API_ERROR_NETWORK))
         }
     }
-
 
     @Test
     fun `Returns unknown error when fetching popular games`() {
@@ -171,7 +165,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns recently released games successfully`() {
         runBlockingTest {
@@ -183,7 +176,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
-
 
     @Test
     fun `Returns http error when fetching recently released games`() {
@@ -197,7 +189,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns network error when fetching recently released games`() {
         runBlockingTest {
@@ -209,7 +200,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(errorMapper.mapToDataError(API_ERROR_NETWORK))
         }
     }
-
 
     @Test
     fun `Returns unknown error when fetching recently released games`() {
@@ -223,7 +213,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns coming soon games successfully`() {
         runBlockingTest {
@@ -235,7 +224,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
-
 
     @Test
     fun `Returns http error when fetching coming soon games`() {
@@ -249,7 +237,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns network error when fetching coming soon games`() {
         runBlockingTest {
@@ -261,7 +248,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(errorMapper.mapToDataError(API_ERROR_NETWORK))
         }
     }
-
 
     @Test
     fun `Returns unknown error when fetching coming soon games`() {
@@ -275,7 +261,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns most anticipated games successfully`() {
         runBlockingTest {
@@ -287,7 +272,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
-
 
     @Test
     fun `Returns http error when fetching most anticipated games`() {
@@ -301,7 +285,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns network error when fetching most anticipated games`() {
         runBlockingTest {
@@ -313,7 +296,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(errorMapper.mapToDataError(API_ERROR_NETWORK))
         }
     }
-
 
     @Test
     fun `Returns unknown error when fetching most anticipated games`() {
@@ -327,7 +309,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns company developed games successfully`() {
         runBlockingTest {
@@ -339,7 +320,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
-
 
     @Test
     fun `Returns http error when fetching company developed games`() {
@@ -353,7 +333,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns network error when fetching company developed games`() {
         runBlockingTest {
@@ -365,7 +344,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(errorMapper.mapToDataError(API_ERROR_NETWORK))
         }
     }
-
 
     @Test
     fun `Returns unknown error when fetching company developed games`() {
@@ -379,7 +357,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns similar games successfully`() {
         runBlockingTest {
@@ -391,7 +368,6 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(gameMapper.mapToDataGames(API_GAMES))
         }
     }
-
 
     @Test
     fun `Returns http error when fetching similar games`() {
@@ -405,7 +381,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns network error when fetching similar games`() {
         runBlockingTest {
@@ -418,7 +393,6 @@ internal class GamesIgdbDataStoreTest {
         }
     }
 
-
     @Test
     fun `Returns unknown error when fetching similar games`() {
         runBlockingTest {
@@ -430,6 +404,4 @@ internal class GamesIgdbDataStoreTest {
                 .isEqualTo(errorMapper.mapToDataError(API_ERROR_UNKNOWN))
         }
     }
-
-
 }

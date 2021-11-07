@@ -28,5 +28,4 @@ interface GetCompanyDevelopedGamesUseCase : UseCase<GetCompanyDevelopedGamesUseC
         val company: Company,
         val pagination: Pagination
     )
-
 }

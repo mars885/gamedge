@@ -26,15 +26,11 @@ class GamesDiscoveryUseCases @Inject constructor(
     private val refreshGamesUseCasesMap: Map<Type, @JvmSuppressWildcards RefreshableGamesUseCase>
 ) {
 
-
     fun getObservableUseCase(keyType: Type): ObservableGamesUseCase {
         return observeGamesUseCasesMap.getValue(keyType)
     }
 
-
     fun getRefreshableUseCase(keyType: Type): RefreshableGamesUseCase {
         return refreshGamesUseCasesMap.getValue(keyType)
     }
-
-
 }

@@ -31,9 +31,6 @@ import dagger.hilt.testing.TestInstallIn
 )
 internal interface FakeGamespotConstantsModule {
 
-
     @Binds
     fun bindGamespotConstantsProvider(binding: FakeGamespotConstantsProvider): GamespotConstantsProvider
-
-
 }

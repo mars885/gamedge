@@ -25,7 +25,6 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 internal object UrlOpenersModule {
 
-
     @Provides
     fun provideUrlOpeners(
         @UrlOpenerKey(UrlOpenerKey.Type.NATIVE_APP) nativeAppUrlOpener: UrlOpener,
@@ -34,6 +33,4 @@ internal object UrlOpenersModule {
     ): List<UrlOpener> {
         return listOf(nativeAppUrlOpener, customTabUrlOpener, browserUrlOpener)
     }
-
-
 }

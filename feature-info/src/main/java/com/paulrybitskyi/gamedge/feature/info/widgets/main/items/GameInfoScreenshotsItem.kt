@@ -25,15 +25,13 @@ import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoAdapterItem
 import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameScreenshotsView
 
-internal class GameInfoScreenshotsItem(model: List<String>): AbstractItem<
+internal class GameInfoScreenshotsItem(model: List<String>) : AbstractItem<
     List<String>,
     GameInfoScreenshotsItem.ViewHolder,
     NoDependencies
 >(model) {
 
-
     override val itemId = GameInfoAdapterItem.SCREENSHOTS.id
-
 
     override fun createViewHolder(
         inflater: LayoutInflater,
@@ -43,15 +41,13 @@ internal class GameInfoScreenshotsItem(model: List<String>): AbstractItem<
         return ViewHolder(GameScreenshotsView(parent.context))
     }
 
-
     override fun performBinding(viewHolder: ViewHolder, dependencies: NoDependencies) {
         viewHolder.bind(model)
     }
 
-
     internal class ViewHolder(
         private val view: GameScreenshotsView
-    ): RecyclerView.ViewHolder(view), HasListeners {
+    ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(items: List<String>) {
             view.items = items
@@ -60,8 +56,5 @@ internal class GameInfoScreenshotsItem(model: List<String>): AbstractItem<
         fun setOnScreenshotClickListener(onClick: (Int) -> Unit) {
             view.onScreenshotClicked = { onClick(it) }
         }
-
     }
-
-
 }

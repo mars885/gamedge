@@ -38,10 +38,6 @@ android {
     }
 }
 
-hilt {
-    enableAggregatingTask = true
-}
-
 dependencies {
     implementation(project(deps.local.data))
     implementation(project(deps.local.commonsApi))

@@ -21,7 +21,6 @@ import com.paulrybitskyi.gamedge.database.games.DatabaseCategory
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.entities.LikedGame
 
-
 internal val DATABASE_ARTICLE = DatabaseArticle(
     id = 1,
     title = "title",
@@ -37,7 +36,6 @@ internal val DATABASE_ARTICLES = listOf(
     DATABASE_ARTICLE.copy(id = 4, publicationDate = 40L, title = "Article4"),
     DATABASE_ARTICLE.copy(id = 5, publicationDate = 50L, title = "Article5"),
 )
-
 
 internal val DATABASE_GAME = DatabaseGame(
     id = 1,
@@ -109,7 +107,6 @@ internal val DATABASE_GAMES = listOf(
         totalRating = 50.0
     )
 )
-
 
 internal val LIKED_GAME = LikedGame(id = 1, gameId = DATABASE_GAME.id, likeTimestamp = 0L)
 internal val LIKED_GAMES = listOf(

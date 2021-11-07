@@ -24,6 +24,7 @@ import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesService
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -33,11 +34,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
 
 @HiltAndroidTest
 internal class ArticlesServiceTest {
-
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -45,13 +44,11 @@ internal class ArticlesServiceTest {
     @Inject lateinit var mockWebServer: MockWebServer
     @Inject lateinit var articlesService: ArticlesService
 
-
     @Before
     fun setup() {
         hiltRule.inject()
         mockWebServer.startSafe()
     }
-
 
     @Test
     fun http_error_is_returned_when_articles_endpoint_returns_bad_request_response() {
@@ -64,7 +61,6 @@ internal class ArticlesServiceTest {
         }
     }
 
-
     @Test
     fun http_error_with_400_code_is_returned_when_articles_endpoint_returns_bad_request_response() {
         runBlocking {
@@ -76,7 +72,6 @@ internal class ArticlesServiceTest {
             assertThat((error as Error.HttpError).code).isEqualTo(400)
         }
     }
-
 
     @Test
     fun http_error_with_proper_error_message_is_returned_when_articles_endpoint_returns_bad_request_response() {
@@ -93,7 +88,6 @@ internal class ArticlesServiceTest {
             assertThat((error as Error.HttpError).message).isEqualTo("Invalid API Key")
         }
     }
-
 
     @Test
     fun http_error_with_unknown_error_message_is_returned_when_articles_endpoint_returns_bad_request_response() {
@@ -112,7 +106,6 @@ internal class ArticlesServiceTest {
             assertThat((error as Error.HttpError).message).isNotEmpty
         }
     }
-
 
     @Test
     fun parsed_articles_are_returned_when_articles_endpoint_returns_successful_response() {
@@ -166,7 +159,6 @@ internal class ArticlesServiceTest {
         }
     }
 
-
     @Test
     fun unknown_error_is_returned_when_articles_endpoint_returns_successful_response_with_no_body() {
         runBlocking {
@@ -177,7 +169,6 @@ internal class ArticlesServiceTest {
             assertThat(error is Error.UnknownError).isTrue
         }
     }
-
 
     @Test
     fun unknown_error_is_returned_when_articles_endpoint_returns_successful_response_with_bad_json() {
@@ -200,7 +191,6 @@ internal class ArticlesServiceTest {
         }
     }
 
-
     @Test
     fun network_error_is_returned_when_network_is_disconnected_while_fetching_articles() {
         runBlocking {
@@ -215,11 +205,8 @@ internal class ArticlesServiceTest {
         }
     }
 
-
     @After
     fun cleanup() {
         mockWebServer.shutdown()
     }
-
-
 }

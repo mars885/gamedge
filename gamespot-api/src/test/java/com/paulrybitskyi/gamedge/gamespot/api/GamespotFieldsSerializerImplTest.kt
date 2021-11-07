@@ -26,15 +26,12 @@ import org.junit.Test
 
 internal class GamespotFieldsSerializerImplTest {
 
-
     private lateinit var SUT: GamespotFieldsSerializer
-
 
     @Before
     fun setup() {
         SUT = GamespotFieldsSerializerImpl()
     }
-
 
     @Test
     fun `Serializes simple entity successfully`() {
@@ -57,7 +54,6 @@ internal class GamespotFieldsSerializerImplTest {
             .isEqualTo("field1,field2,field3,field4,field5,field6")
     }
 
-
     @Test
     fun `Serializes entity with no annotated fields successfully`() {
         data class Entity(
@@ -68,7 +64,6 @@ internal class GamespotFieldsSerializerImplTest {
 
         assertThat(SUT.serializeFields(Entity::class.java)).isEmpty()
     }
-
 
     @Test
     fun `Throws exception if name of field is empty`() {
@@ -81,7 +76,6 @@ internal class GamespotFieldsSerializerImplTest {
             .isThrownBy { SUT.serializeFields(Entity::class.java) }
     }
 
-
     @Test
     fun `Throws exception if name of field is blank`() {
         data class Entity(
@@ -92,6 +86,4 @@ internal class GamespotFieldsSerializerImplTest {
         assertThatExceptionOfType(IllegalArgumentException::class.java)
             .isThrownBy { SUT.serializeFields(Entity::class.java) }
     }
-
-
 }

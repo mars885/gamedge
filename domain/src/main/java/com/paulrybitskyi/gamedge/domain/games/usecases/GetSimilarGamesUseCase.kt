@@ -27,5 +27,4 @@ interface GetSimilarGamesUseCase : UseCase<GetSimilarGamesUseCase.Params, Flow<L
         val game: Game,
         val pagination: Pagination
     )
-
 }
