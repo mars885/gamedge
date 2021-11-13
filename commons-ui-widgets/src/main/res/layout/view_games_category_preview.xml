@@ -55,7 +55,7 @@
             app:layout_constraintTop_toTopOf="@+id/moreBtn"
             app:layout_constraintBottom_toBottomOf="@+id/moreBtn"
             app:layout_constraintEnd_toStartOf="@+id/moreBtn"/>
-        
+
         <TextView
             android:id="@+id/moreBtn"
             android:layout_width="wrap_content"

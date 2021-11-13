@@ -17,14 +17,6 @@
 package com.paulrybitskyi.gamedge.feature.discovery.widgets
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewItemModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewUiState
-
-internal fun GamesDiscoveryItemUiState.mapToCategoryUiState(): GamesCategoryPreviewUiState {
-    return when (this) {
-        is GamesDiscoveryItemUiState.Empty -> GamesCategoryPreviewUiState.Empty
-        is GamesDiscoveryItemUiState.Result -> GamesCategoryPreviewUiState.Result(items.mapToCategoryItems())
-    }
-}
 
 internal fun List<GamesDiscoveryItemGameModel>.mapToCategoryItems(): List<GamesCategoryPreviewItemModel> {
     return map {

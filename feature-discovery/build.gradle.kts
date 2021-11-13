@@ -50,6 +50,10 @@ dependencies {
     implementation(deps.compose.foundation)
     implementation(deps.compose.material)
     implementation(deps.compose.runtime)
+    implementation(deps.compose.constraintLayout)
+    implementation(deps.compose.coil)
+
+    implementation(deps.compose.accompanist.swipeRefresh)
 
     implementation(deps.google.materialComponents)
 

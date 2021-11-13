@@ -16,47 +16,29 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
-import com.paulrybitskyi.commons.utils.viewBinding
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.commons.ui.base.BaseComposeFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
-import com.paulrybitskyi.gamedge.commons.ui.observeIn
-import com.paulrybitskyi.gamedge.feature.discovery.databinding.FragmentGamesDiscoveryBinding
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscovery
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class GamesDiscoveryFragment : BaseFragment<
-    FragmentGamesDiscoveryBinding,
+class GamesDiscoveryFragment : BaseComposeFragment<
     GamesDiscoveryViewModel,
     GamesDiscoveryNavigator
->(R.layout.fragment_games_discovery) {
+>() {
 
-    override val viewBinding by viewBinding(FragmentGamesDiscoveryBinding::bind)
     override val viewModel by viewModels<GamesDiscoveryViewModel>()
 
-    override fun onInit() {
-        super.onInit()
-
-        initDiscoveryView()
-    }
-
-    private fun initDiscoveryView() = with(viewBinding.discoveryView) {
-        onCategoryMoreButtonClicked = viewModel::onCategoryMoreButtonClicked
-        onCategoryGameClicked = viewModel::onCategoryGameClicked
-        onRefreshRequested = viewModel::onRefreshRequested
-    }
-
-    override fun onBindViewModel() {
-        super.onBindViewModel()
-
-        observeItems()
-    }
-
-    private fun observeItems() {
-        viewModel.items
-            .onEach { viewBinding.discoveryView.items = it }
-            .observeIn(this)
+    override fun getContent() = @Composable {
+        GamesDiscovery(
+            items = viewModel.items.collectAsState().value,
+            onCategoryMoreButtonClicked = viewModel::onCategoryMoreButtonClicked,
+            onCategoryGameClicked = viewModel::onCategoryGameClicked,
+            onRefreshRequested = viewModel::onRefreshRequested
+        )
     }
 
     override fun onLoadData() {

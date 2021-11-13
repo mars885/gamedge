@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.discovery.widgets
+package com.paulrybitskyi.gamedge.commons.ui
 
-import android.content.Context
-import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractRecyclerViewAdapter
-import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies
-
-internal class GamesDiscoveryAdapter(
-    context: Context
-) : AbstractRecyclerViewAdapter<GamesDiscoveryItem, NoDependencies>(context)
+const val CROSSFADE_ANIMATION_DURATION = 200

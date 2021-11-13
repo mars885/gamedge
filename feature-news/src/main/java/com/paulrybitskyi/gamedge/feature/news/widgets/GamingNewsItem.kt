@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.rememberImagePainter
+import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.extensions.textSizeResource
 import com.paulrybitskyi.gamedge.feature.news.R
 
@@ -51,7 +52,7 @@ internal fun GamingNewsItem(
     title: String,
     lede: String,
     publicationDate: String,
-    onClick: (() -> Unit)? = null
+    onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -59,7 +60,7 @@ internal fun GamingNewsItem(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
-                onClick = { onClick?.invoke() }
+                onClick = onClick
             ),
         shape = RectangleShape,
         backgroundColor = colorResource(R.color.gaming_news_item_card_background_color),
@@ -117,7 +118,7 @@ private fun GamingNewsItemImage(
                 builder = {
                     placeholder(R.drawable.game_landscape_placeholder)
                     error(R.drawable.game_landscape_placeholder)
-                    crossfade(durationMillis = 200)
+                    crossfade(CROSSFADE_ANIMATION_DURATION)
                 }
             ),
             contentDescription = null,
@@ -154,11 +155,24 @@ private fun GamingNewsItemTimestamp(publicationDate: String) {
 
 @Preview
 @Composable
-internal fun GamingNewsItemPreview() {
+internal fun GamingNewsItemWithImagePreview() {
     GamingNewsItem(
         imageUrl = "url",
         title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
         lede = "However, the record for those actively in a game has not been broken yet.",
-        publicationDate = "3 mins ago"
+        publicationDate = "3 mins ago",
+        onClick = {}
+    )
+}
+
+@Preview
+@Composable
+internal fun GamingNewsItemWithoutImagePreview() {
+    GamingNewsItem(
+        imageUrl = null,
+        title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
+        lede = "However, the record for those actively in a game has not been broken yet.",
+        publicationDate = "3 mins ago",
+        onClick = {}
     )
 }

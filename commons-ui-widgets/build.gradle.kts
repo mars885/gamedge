@@ -51,6 +51,7 @@ dependencies {
     implementation(deps.compose.material)
     implementation(deps.compose.iconsCore)
     implementation(deps.compose.runtime)
+    implementation(deps.compose.coil)
 
     implementation(deps.google.materialComponents)
 

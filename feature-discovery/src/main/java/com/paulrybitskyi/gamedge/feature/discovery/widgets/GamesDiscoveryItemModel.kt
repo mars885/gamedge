@@ -20,5 +20,5 @@ data class GamesDiscoveryItemModel(
     val category: String,
     val title: String,
     val isProgressBarVisible: Boolean,
-    val uiState: GamesDiscoveryItemUiState
+    val games: List<GamesDiscoveryItemGameModel>,
 )

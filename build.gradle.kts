@@ -87,6 +87,7 @@ subprojects {
                 "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
                 "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
                 "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                "-Xopt-in=coil.annotation.ExperimentalCoilApi"
             )
 
             jvmTarget = appConfig.kotlinCompatibilityVersion.toString()

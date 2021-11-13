@@ -56,7 +56,8 @@
     <dimen name="games_category_preview_card_elevation">2dp</dimen>
     <dimen name="games_category_preview_title_margin">15dp</dimen>
     <dimen name="games_category_preview_title_text_size">18sp</dimen>
-    <dimen name="games_category_preview_progress_bar_size">20dp</dimen>
+    <dimen name="games_category_preview_progress_bar_size">16dp</dimen>
+    <dimen name="games_category_preview_progress_bar_stroke_width">2dp</dimen>
     <dimen name="games_category_preview_progress_bar_margin_end">7dp</dimen>
     <dimen name="games_category_preview_more_button_horizontal_margin">7dp</dimen>
     <dimen name="games_category_preview_more_button_padding">8dp</dimen>
@@ -71,6 +72,7 @@
     <dimen name="games_category_preview_cover_item_width">112dp</dimen>
     <dimen name="games_category_preview_cover_item_height">153dp</dimen>
     <dimen name="games_category_preview_cover_item_margin">3dp</dimen>
+    <dimen name="games_category_preview_cover_horizontal_arrangement">6dp</dimen>
 
     <!-- GameView -->
     <dimen name="game_card_elevation">2dp</dimen>

@@ -63,7 +63,7 @@ class GamingNewsViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(GamingNewsState())
 
-    private val currentState: GamingNewsState
+    private val currentUiState: GamingNewsState
         get() = _uiState.value
 
     val uiState: StateFlow<GamingNewsState>
@@ -88,15 +88,15 @@ class GamingNewsViewModel @Inject constructor(
             observeArticlesUseCase.execute(observerUseCaseParams)
                 .map(gamingNewsItemModelMapper::mapToGamingNewsItemModels)
                 .flowOn(dispatcherProvider.computation)
-                .map { news -> currentState.copy(isLoading = false, news = news) }
+                .map { news -> currentUiState.copy(isLoading = false, news = news) }
                 .onError {
                     logger.error(logTag, "Failed to load articles.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(currentState.copy(isLoading = false, news = emptyList()))
+                    emit(currentUiState.copy(isLoading = false, news = emptyList()))
                 }
                 .onStart {
                     isObservingArticles = true
-                    emit(currentState.copy(isLoading = true))
+                    emit(currentUiState.copy(isLoading = true))
                 }
                 .onCompletion { isObservingArticles = false }
                 .collect { _uiState.value = it }
@@ -108,7 +108,7 @@ class GamingNewsViewModel @Inject constructor(
     }
 
     fun onRefreshRequested() {
-        if (!currentState.isRefreshing) {
+        if (!currentUiState.isRefreshing) {
             refreshArticles()
         }
     }
@@ -117,18 +117,18 @@ class GamingNewsViewModel @Inject constructor(
         viewModelScope.launch {
             refreshArticlesUseCase.execute(refresherUseCaseParams)
                 .resultOrError()
-                .map { currentState }
+                .map { currentUiState }
                 .onError {
                     logger.error(logTag, "Failed to refresh articles.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
                 }
                 .onStart {
-                    emit(currentState.copy(isRefreshing = true))
+                    emit(currentUiState.copy(isRefreshing = true))
                     // Adding a delay to prevent the SwipeRefresh from quick disappearing
                     delay(ARTICLES_REFRESH_DELAY)
                 }
                 .onCompletion {
-                    emit(currentState.copy(isRefreshing = false))
+                    emit(currentUiState.copy(isRefreshing = false))
                 }
                 .collect { _uiState.value = it }
         }

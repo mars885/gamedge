@@ -44,8 +44,8 @@ import com.paulrybitskyi.gamedge.feature.news.R
 @Composable
 internal fun GamingNews(
     uiState: GamingNewsState,
-    onNewsItemClicked: ((GamingNewsItemModel) -> Unit)? = null,
-    onRefreshRequested: (() -> Unit)? = null
+    onNewsItemClicked: (GamingNewsItemModel) -> Unit,
+    onRefreshRequested: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -103,12 +103,12 @@ private fun GamingNewsEmptyState(modifier: Modifier) {
 private fun RefreshableContent(
     isRefreshing: Boolean,
     modifier: Modifier,
-    onRefreshRequested: (() -> Unit)?,
+    onRefreshRequested: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing),
-        onRefresh = { onRefreshRequested?.invoke() },
+        onRefresh = onRefreshRequested,
         modifier = modifier,
         indicator = { state, refreshTrigger ->
             SwipeRefreshIndicator(
@@ -124,7 +124,7 @@ private fun RefreshableContent(
 @Composable
 private fun GamingNewsSuccessState(
     news: List<GamingNewsItemModel>,
-    onNewsItemClicked: ((GamingNewsItemModel) -> Unit)? = null,
+    onNewsItemClicked: (GamingNewsItemModel) -> Unit,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.gaming_news_decorator_spacing))
@@ -135,7 +135,7 @@ private fun GamingNewsSuccessState(
                 title = newItemModel.title,
                 lede = newItemModel.lede,
                 publicationDate = newItemModel.publicationDate,
-                onClick = { onNewsItemClicked?.invoke(newItemModel) }
+                onClick = { onNewsItemClicked(newItemModel) }
             )
         }
     }
@@ -144,30 +144,61 @@ private fun GamingNewsSuccessState(
 @Preview
 @Composable
 internal fun GamingNewsEmptyStatePreview() {
-    GamingNews(uiState = GamingNewsState())
+    GamingNews(
+        uiState = GamingNewsState(),
+        onNewsItemClicked = {},
+        onRefreshRequested = {}
+    )
 }
 
 @Preview
 @Composable
 internal fun GamingNewsLoadingStatePreview() {
-    GamingNews(uiState = GamingNewsState(isLoading = true))
+    GamingNews(
+        uiState = GamingNewsState(isLoading = true),
+        onNewsItemClicked = {},
+        onRefreshRequested = {}
+    )
 }
 
 @Preview
 @Composable
 internal fun GamingNewsSuccessStatePreview() {
+    val news = listOf(
+        GamingNewsItemModel(
+            id = 1,
+            imageUrl = "",
+            title = "Halo Infinite Season 1 Will Run Until May 2022",
+            lede = "Season 1 has been extended until May 2020, which " +
+                    "might mean campaign co-op and Forge are coming even later than expected.",
+            publicationDate = "3 mins ago",
+            siteDetailUrl = "url",
+        ),
+        GamingNewsItemModel(
+            id = 2,
+            imageUrl = "",
+            title = "Call of Duty: Vanguard's UK Launch Sales are Down 40% From Last Year",
+            lede = "Call of Duty: Vanguard's launch sales are down about 40% compared to last year's " +
+                "Call of Duty: Black Ops Cold War in the UK.",
+            publicationDate = "an hour ago",
+            siteDetailUrl = "url",
+        ),
+        GamingNewsItemModel(
+            id = 3,
+            imageUrl = null,
+            title = "WoW Classic Season of Mastery: Full List of Changes",
+            lede = "World of Warcraft Classic's first season is nearly here, and Blizzard has " +
+                "detailed all the changes players can expect.",
+            publicationDate = "2 hours ago",
+            siteDetailUrl = "url",
+        ),
+    )
+
     GamingNews(
         uiState = GamingNewsState(
-            news = listOf(
-                GamingNewsItemModel(
-                    id = 5,
-                    imageUrl = null,
-                    title = "Title",
-                    lede = "Lede",
-                    publicationDate = "3 mins ago",
-                    siteDetailUrl = "url"
-                )
-            )
-        )
+            news = news,
+        ),
+        onNewsItemClicked = {},
+        onRefreshRequested = {}
     )
 }
