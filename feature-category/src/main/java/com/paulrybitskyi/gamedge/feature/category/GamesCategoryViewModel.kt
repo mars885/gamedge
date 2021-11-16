@@ -26,8 +26,8 @@ import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
-import com.paulrybitskyi.gamedge.domain.commons.entities.nextLimitPage
-import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffsetPage
+import com.paulrybitskyi.gamedge.domain.commons.entities.nextLimit
+import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffset
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
@@ -173,7 +173,7 @@ internal class GamesCategoryViewModel @Inject constructor(
 
     private suspend fun fetchNextGamesBatch() {
         refreshGamesUseCaseParams = refreshGamesUseCaseParams.copy(
-            refreshGamesUseCaseParams.pagination.nextOffsetPage()
+            refreshGamesUseCaseParams.pagination.nextOffset()
         )
 
         gamesRefreshingJob?.cancelAndJoin()
@@ -183,7 +183,7 @@ internal class GamesCategoryViewModel @Inject constructor(
 
     private suspend fun observeNewGamesBatch() {
         observeGamesUseCaseParams = observeGamesUseCaseParams.copy(
-            observeGamesUseCaseParams.pagination.nextLimitPage()
+            observeGamesUseCaseParams.pagination.nextLimit()
         )
 
         gamesObservingJob?.cancelAndJoin()

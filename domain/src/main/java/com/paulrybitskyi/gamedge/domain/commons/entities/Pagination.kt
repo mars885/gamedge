@@ -27,10 +27,10 @@ fun Pagination.hasDefaultLimit(): Boolean {
     return (limit == DEFAULT_PAGE_SIZE)
 }
 
-fun Pagination.nextOffsetPage(): Pagination {
+fun Pagination.nextOffset(): Pagination {
     return copy(offset = (offset + DEFAULT_PAGE_SIZE))
 }
 
-fun Pagination.nextLimitPage(): Pagination {
+fun Pagination.nextLimit(): Pagination {
     return copy(limit = (limit + DEFAULT_PAGE_SIZE))
 }

@@ -16,46 +16,25 @@
 
 package com.paulrybitskyi.gamedge.feature.likes
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
-import com.paulrybitskyi.commons.utils.viewBinding
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.commons.ui.base.BaseComposeFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
-import com.paulrybitskyi.gamedge.commons.ui.observeIn
-import com.paulrybitskyi.gamedge.feature.likes.databinding.FragmentLikedGamesBinding
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.Games
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class LikedGamesFragment : BaseFragment<
-    FragmentLikedGamesBinding,
-    LikedGamesViewModel,
-    LikedGamesNavigator
->(R.layout.fragment_liked_games) {
+class LikedGamesFragment : BaseComposeFragment<LikedGamesViewModel, LikedGamesNavigator>() {
 
-    override val viewBinding by viewBinding(FragmentLikedGamesBinding::bind)
     override val viewModel by viewModels<LikedGamesViewModel>()
 
-    override fun onInit() {
-        super.onInit()
-
-        initGamesView()
-    }
-
-    private fun initGamesView() = with(viewBinding.gamesView) {
-        onGameClicked = viewModel::onGameClicked
-        onBottomReached = viewModel::onBottomReached
-    }
-
-    override fun onBindViewModel() {
-        super.onBindViewModel()
-
-        observeUiState()
-    }
-
-    private fun observeUiState() {
-        viewModel.uiState
-            .onEach { viewBinding.gamesView.uiState = it }
-            .observeIn(this)
+    override fun getContent() = @Composable {
+        Games(
+            viewState = viewModel.uiState.collectAsState().value,
+            onGameClicked = viewModel::onGameClicked,
+            onBottomReached = viewModel::onBottomReached,
+        )
     }
 
     override fun onLoadData() {

@@ -52,6 +52,7 @@ dependencies {
     implementation(deps.compose.iconsCore)
     implementation(deps.compose.runtime)
     implementation(deps.compose.coil)
+    implementation(deps.compose.accompanist.swipeRefresh)
 
     implementation(deps.google.materialComponents)
 

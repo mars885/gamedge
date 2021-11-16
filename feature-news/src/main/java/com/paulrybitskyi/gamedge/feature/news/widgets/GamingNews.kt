@@ -83,6 +83,8 @@ private fun GamingNewsLoadingState(modifier: Modifier) {
 @Composable
 private fun GamingNewsEmptyState(modifier: Modifier) {
     Column(
+        // verticalScroll is to enable SwipeRefresh to work
+        // when the screen is in empty state
         modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,

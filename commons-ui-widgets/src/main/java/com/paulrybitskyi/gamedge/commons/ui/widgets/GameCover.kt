@@ -44,7 +44,7 @@ import com.paulrybitskyi.gamedge.commons.ui.extensions.textSizeResource
 
 @Composable
 fun GameCover(
-    title: String,
+    title: String?,
     imageUrl: String?,
     modifier: Modifier,
     onCoverClicked: () -> Unit
@@ -70,7 +70,10 @@ fun GameCover(
                     crossfade(CROSSFADE_ANIMATION_DURATION)
                 }
             )
-            val isTitleVisible = (imagePainter.state !is State.Success)
+            val shouldDisplayTitle = (
+                (title != null) &&
+                (imagePainter.state !is State.Success)
+            )
 
             Image(
                 painter = imagePainter,
@@ -79,9 +82,9 @@ fun GameCover(
                 contentScale = ContentScale.Crop,
             )
 
-            if (isTitleVisible) {
+            if (shouldDisplayTitle) {
                 Text(
-                    text = title,
+                    text = checkNotNull(title),
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(
@@ -100,9 +103,23 @@ fun GameCover(
 
 @Preview
 @Composable
-internal fun GameCoverPreview() {
+internal fun GameCoverWithTitlePreview() {
     GameCover(
         title = "Ghost of Tsushima: Director's Cut",
+        imageUrl = null,
+        modifier = Modifier.size(
+            width = dimensionResource(R.dimen.games_category_preview_cover_item_width),
+            height = dimensionResource(R.dimen.games_category_preview_cover_item_height)
+        ),
+        onCoverClicked = {},
+    )
+}
+
+@Preview
+@Composable
+internal fun GameCoverWithoutTitlePreview() {
+    GameCover(
+        title = null,
         imageUrl = null,
         modifier = Modifier.size(
             width = dimensionResource(R.dimen.games_category_preview_cover_item_width),

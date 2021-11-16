@@ -27,7 +27,7 @@ import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
-import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffsetPage
+import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffset
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -178,7 +178,7 @@ internal class GamesSearchViewModel @Inject constructor(
     private fun loadMoreGames() {
         if (!hasMoreGamesToLoad) return
 
-        pagination = pagination.nextOffsetPage()
+        pagination = pagination.nextOffset()
         searchGames()
     }
 }

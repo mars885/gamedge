@@ -21,3 +21,22 @@ sealed class GamesUiState {
     object Loading : GamesUiState()
     data class Result(val items: List<GameModel>) : GamesUiState()
 }
+
+data class GamesViewState(
+    val isLoading: Boolean,
+    val infoIconId: Int,
+    val infoTitle: String,
+    val games: List<GameModel>,
+)
+
+val GamesViewState.isInEmptyState: Boolean
+    get() = (!isLoading && games.isEmpty())
+
+val GamesViewState.isInLoadingState: Boolean
+    get() = (isLoading && games.isEmpty())
+
+val GamesViewState.isInRefreshingState: Boolean
+    get() = (isLoading && games.isNotEmpty())
+
+val GamesViewState.isInSuccessState: Boolean
+    get() = games.isNotEmpty()
