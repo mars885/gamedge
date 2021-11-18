@@ -16,84 +16,28 @@
 
 package com.paulrybitskyi.gamedge.feature.search
 
-import android.text.InputType
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
-import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
-import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
-import com.paulrybitskyi.commons.utils.viewBinding
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
-import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
+import com.paulrybitskyi.gamedge.commons.ui.base.BaseComposeFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
-import com.paulrybitskyi.gamedge.commons.ui.observeIn
-import com.paulrybitskyi.gamedge.feature.search.databinding.FragmentGamesSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-internal class GamesSearchFragment : BaseFragment<
-    FragmentGamesSearchBinding,
-    GamesSearchViewModel,
-    GamesSearchNavigator
->(R.layout.fragment_games_search) {
+internal class GamesSearchFragment : BaseComposeFragment<GamesSearchViewModel, GamesSearchNavigator>() {
 
-    override val viewBinding by viewBinding(FragmentGamesSearchBinding::bind)
     override val viewModel by viewModels<GamesSearchViewModel>()
 
-    override fun onInit() {
-        super.onInit()
-
-        initSearchToolbar()
-        initGamesView()
-    }
-
-    private fun initSearchToolbar() = with(viewBinding.searchToolbar) {
-        applyWindowTopInsetAsPadding()
-
-        inputType = (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-        hintText = getString(R.string.games_search_fragment_search_hint)
-        onSearchActionRequested = viewModel::onSearchActionRequested
-        onBackButtonClicked = { viewModel.onToolbarBackButtonClicked() }
-    }
-
-    private fun initGamesView() = with(viewBinding.gamesView) {
-        applyWindowBottomInsetAsMargin()
-
-        onGameClicked = viewModel::onGameClicked
-        onBottomReached = viewModel::onBottomReached
-    }
-
-    override fun onBindViewModel() {
-        super.onBindViewModel()
-
-        observeUiState()
-    }
-
-    private fun observeUiState() {
-        viewModel.uiState
-            .onEach { viewBinding.gamesView.uiState = it }
-            .observeIn(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        if (viewBinding.searchToolbar.searchQuery.isEmpty()) {
-            viewBinding.searchToolbar.showKeyboard(true)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        viewBinding.searchToolbar.hideKeyboard()
-    }
-
-    override fun onHandleCommand(command: Command) {
-        super.onHandleCommand(command)
-
-        when (command) {
-            is GamesSearchCommand.ClearItems -> viewBinding.gamesView.clearItems()
-        }
+    override fun getContent() = @Composable {
+        GamesSearch(
+            viewState = viewModel.uiState.collectAsState().value,
+            onSearchActionRequested = viewModel::onSearchActionRequested,
+            onBackButtonClicked = viewModel::onToolbarBackButtonClicked,
+            onClearButtonClicked = viewModel::onToolbarClearButtonClicked,
+            onQueryChanged = viewModel::onQueryChanged,
+            onGameClicked = viewModel::onGameClicked,
+            onBottomReached = viewModel::onBottomReached,
+        )
     }
 
     override fun onRoute(route: Route) {

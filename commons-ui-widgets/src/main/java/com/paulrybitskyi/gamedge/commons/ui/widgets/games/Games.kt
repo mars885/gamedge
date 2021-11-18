@@ -49,21 +49,18 @@ fun Games(
             .fillMaxSize()
             .background(colorResource(R.color.colorContentContainer))
     ) {
-        if (viewState.isInLoadingState) {
-            GamesLoadingState(Modifier.align(Alignment.Center))
-        } else {
-            when {
-                viewState.isInEmptyState -> GamesEmptyState(
-                    viewState = viewState,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-                viewState.isInSuccessState -> GamesSuccessState(
-                    viewState = viewState,
-                    modifier = Modifier.matchParentSize(),
-                    onGameClicked = onGameClicked,
-                    onBottomReached = onBottomReached,
-                )
-            }
+        when {
+            viewState.isInLoadingState -> GamesLoadingState(Modifier.align(Alignment.Center))
+            viewState.isInEmptyState -> GamesEmptyState(
+                viewState = viewState,
+                modifier = Modifier.align(Alignment.Center)
+            )
+            viewState.isInSuccessState -> GamesSuccessState(
+                viewState = viewState,
+                modifier = Modifier.matchParentSize(),
+                onGameClicked = onGameClicked,
+                onBottomReached = onBottomReached,
+            )
         }
     }
 }
@@ -113,7 +110,6 @@ private fun GamesSuccessState(
                 items = games,
                 key = { _, game -> game.id }
             ) { index, game ->
-                // todo double-check in the future
                 if (index == lastIndex) {
                     LaunchedEffect(lastIndex) {
                         onBottomReached()

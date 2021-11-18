@@ -41,9 +41,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.paulrybitskyi.gamedge.commons.ui.extensions.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
+import kotlin.math.roundToInt
 
 @Composable
 fun Game(
@@ -171,7 +172,7 @@ private fun GameDetailsDescription(description: String) {
                 val textHeight = textLayoutResult.size.height
                 val firstLineHeight = textLayoutResult.multiParagraph.getLineHeight(0)
 
-                maxLines = (textHeight / firstLineHeight).toInt()
+                maxLines = (textHeight / firstLineHeight).roundToInt()
             }
         }
     )

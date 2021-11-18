@@ -39,7 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import com.paulrybitskyi.gamedge.commons.ui.extensions.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 
 @Composable
 fun Toolbar(
@@ -63,7 +63,7 @@ fun Toolbar(
             .fillMaxWidth()
             .then(modifier)
             .height(dimensionResource(R.dimen.toolbar_height)),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         if (leftButtonIcon != null) {
             ToolbarButton(
@@ -76,7 +76,7 @@ fun Toolbar(
         Text(
             text = title,
             modifier = Modifier
-                .weight(1F)
+                .weight(1f)
                 .padding(start = titleLeftPadding, end = titleRightPadding),
             color = titleTextColor,
             fontSize = titleTextSize,
