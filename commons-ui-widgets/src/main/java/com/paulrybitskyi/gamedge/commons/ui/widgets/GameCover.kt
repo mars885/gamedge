@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.ImagePainter.State
 import coil.compose.rememberImagePainter
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
@@ -47,6 +48,7 @@ fun GameCover(
     title: String?,
     imageUrl: String?,
     modifier: Modifier,
+    hasRoundedShape: Boolean = true,
     onCoverClicked: () -> Unit
 ) {
     Card(
@@ -56,7 +58,9 @@ fun GameCover(
                 indication = rememberRipple(),
                 onClick = onCoverClicked,
             ),
-        shape = RoundedCornerShape(dimensionResource(R.dimen.game_cover_card_corner_radius)),
+        shape = RoundedCornerShape(
+            if (hasRoundedShape) dimensionResource(R.dimen.game_cover_card_corner_radius) else 0.dp,
+        ),
         backgroundColor = colorResource(R.color.game_cover_card_background_color),
         elevation = dimensionResource(R.dimen.game_cover_card_elevation),
     ) {

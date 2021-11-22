@@ -42,3 +42,9 @@ internal class GameCategoryModelMapperImpl @Inject constructor(
         )
     }
 }
+
+internal fun GameCategoryModelMapper.mapToGameCategoryModels(
+    games: List<Game>
+): List<GameCategoryModel> {
+    return games.map(::mapToGameCategoryModel)
+}

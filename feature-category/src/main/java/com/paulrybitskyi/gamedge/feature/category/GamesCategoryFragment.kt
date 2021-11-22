@@ -16,36 +16,31 @@
 
 package com.paulrybitskyi.gamedge.feature.category
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
-import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
-import com.paulrybitskyi.commons.ktx.applyWindowTopInsetAsPadding
-import com.paulrybitskyi.commons.utils.viewBinding
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.commons.ui.base.BaseComposeFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.defaultWindowAnimationDuration
-import com.paulrybitskyi.gamedge.commons.ui.observeIn
-import com.paulrybitskyi.gamedge.feature.category.databinding.FragmentGamesCategoryBinding
+import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategory
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-internal class GamesCategoryFragment : BaseFragment<
-    FragmentGamesCategoryBinding,
-    GamesCategoryViewModel,
-    GamesCategoryNavigator
->(R.layout.fragment_games_category) {
+internal class GamesCategoryFragment : BaseComposeFragment<GamesCategoryViewModel, GamesCategoryNavigator>() {
 
-    override val viewBinding by viewBinding(FragmentGamesCategoryBinding::bind)
     override val viewModel by viewModels<GamesCategoryViewModel>()
 
-    override fun onInit() {
-        super.onInit()
-
-        initToolbar()
-        initGamesCategoryView()
+    override fun getContent() = @Composable {
+        GamesCategory(
+            viewState = viewModel.viewState.collectAsState().value,
+            onBackButtonClicked = viewModel::onToolbarLeftButtonClicked,
+            onGameClicked = viewModel::onGameClicked,
+            onBottomReached = viewModel::onBottomReached,
+        )
     }
 
-    private fun initToolbar() = with(viewBinding.toolbar) {
+
+/*    private fun initToolbar() = with(viewBinding.toolbar) {
         applyWindowTopInsetAsPadding()
         onLeftButtonClickListener = { viewModel.onToolbarLeftButtonClicked() }
     }
@@ -54,9 +49,9 @@ internal class GamesCategoryFragment : BaseFragment<
         applyWindowBottomInsetAsMargin()
         onGameClicked = viewModel::onGameClicked
         onBottomReached = viewModel::onBottomReached
-    }
+    }*/
 
-    override fun onBindViewModel() {
+/*    override fun onBindViewModel() {
         super.onBindViewModel()
 
         observeToolbarTitle()
@@ -73,7 +68,7 @@ internal class GamesCategoryFragment : BaseFragment<
         viewModel.uiState
             .onEach { viewBinding.gamesCategoryView.uiState = it }
             .observeIn(this)
-    }
+    }*/
 
     override fun onLoadData() {
         super.onLoadData()

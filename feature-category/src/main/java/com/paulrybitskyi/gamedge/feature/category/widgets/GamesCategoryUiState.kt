@@ -21,3 +21,21 @@ internal sealed class GamesCategoryUiState {
     object Loading : GamesCategoryUiState()
     data class Result(val items: List<GameCategoryModel>) : GamesCategoryUiState()
 }
+
+internal data class GamesCategoryViewState(
+    val isLoading: Boolean,
+    val title: String,
+    val games: List<GameCategoryModel>,
+)
+
+internal val GamesCategoryViewState.isInLoadingState: Boolean
+    get() = (isLoading && games.isEmpty())
+
+internal val GamesCategoryViewState.isInRefreshingState: Boolean
+    get() = (isLoading && games.isNotEmpty())
+
+internal val GamesCategoryViewState.isInEmptyState: Boolean
+    get() = (!isLoading && games.isEmpty())
+
+internal val GamesCategoryViewState.isInSuccessState: Boolean
+    get() = games.isNotEmpty()
