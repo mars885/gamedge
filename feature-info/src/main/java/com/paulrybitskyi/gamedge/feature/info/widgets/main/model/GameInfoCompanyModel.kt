@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.main.model
 
 internal data class GameInfoCompanyModel(
-    val logoViewSize: Pair<Int, Int>,
+    val logoContainerSize: Pair<Int, Int>,
     val logoImageSize: Pair<Int, Int>,
     val logoUrl: String?,
     val websiteUrl: String,

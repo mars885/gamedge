@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.main.items
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.recyclerview.widget.RecyclerView
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.AbstractItem
 import com.paulrybitskyi.gamedge.commons.ui.base.rv.NoDependencies

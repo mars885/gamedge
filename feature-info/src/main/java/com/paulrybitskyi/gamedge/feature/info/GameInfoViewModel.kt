@@ -36,12 +36,12 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
-import com.paulrybitskyi.gamedge.feature.info.mapping.GameInfoUiStateFactory
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiState
+import com.paulrybitskyi.gamedge.feature.info.mapping.GameInfoModelFactory
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoCompanyModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets2.GameInfoViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
@@ -65,7 +65,7 @@ private const val PARAM_GAME_ID = "game_id"
 internal class GameInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val useCases: GameInfoUseCases,
-    private val uiStateFactory: GameInfoUiStateFactory,
+    private val modelFactory: GameInfoModelFactory,
     private val gameUrlFactory: ImageViewerGameUrlFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
@@ -79,10 +79,13 @@ internal class GameInfoViewModel @Inject constructor(
 
     private val relatedGamesUseCasePagination = Pagination()
 
-    private val _uiState = MutableStateFlow<GameInfoUiState>(GameInfoUiState.Empty)
+    private val _viewState = MutableStateFlow(GameInfoViewState(isLoading = false, game = null))
 
-    val uiState: StateFlow<GameInfoUiState>
-        get() = _uiState
+    private val currentViewState: GameInfoViewState
+        get() = _viewState.value
+
+    val viewState: StateFlow<GameInfoViewState>
+        get() = _viewState
 
     fun loadData(resultEmissionDelay: Long) {
         observeGameData(resultEmissionDelay)
@@ -107,7 +110,7 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .map { (game, isGameLiked, companyGames, similarGames) ->
-                uiStateFactory.createWithResultState(
+                modelFactory.createInfoModel(
                     game,
                     isGameLiked,
                     companyGames,
@@ -115,18 +118,19 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .flowOn(dispatcherProvider.computation)
+            .map { game -> currentViewState.copy(isLoading = false, game = game) }
             .onError {
                 logger.error(logTag, "Failed to load game info data.", it)
                 dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                emit(uiStateFactory.createWithEmptyState())
+                emit(currentViewState.copy(isLoading = false, game = null))
             }
             .onStart {
                 isObservingGameData = true
-                emit(uiStateFactory.createWithLoadingState())
+                emit(currentViewState.copy(isLoading = true))
                 delay(resultEmissionDelay)
             }
             .onCompletion { isObservingGameData = false }
-            .collect { _uiState.value = it }
+            .collect { _viewState.value = it }
     }
 
     private suspend fun getGame(): Flow<Game> {

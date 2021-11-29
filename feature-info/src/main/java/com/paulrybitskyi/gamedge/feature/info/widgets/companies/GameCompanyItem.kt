@@ -60,8 +60,8 @@ internal class GameCompanyItem(model: GameCompanyModel) : AbstractItem<
     ) : RecyclerView.ViewHolder(view), HasListeners {
 
         fun bind(model: GameCompanyModel) = with(view) {
-            logoViewWidth = model.logoViewSize.width
-            logoViewHeight = model.logoViewSize.height
+            logoViewWidth = model.logoContainerSize.width
+            logoViewHeight = model.logoContainerSize.height
             logoImageWidth = model.logoImageSize.width
             logoImageHeight = model.logoImageSize.height
             logoUrl = model.logoUrl

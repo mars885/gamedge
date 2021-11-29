@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.core.utils
 
-val <T : Number> Pair<T, T>.width: T
+inline val <T> Pair<T, T>.width: T
     get() = first
 
-val <T : Number> Pair<T, T>.height: T
+inline val <T> Pair<T, T>.height: T
     get() = second

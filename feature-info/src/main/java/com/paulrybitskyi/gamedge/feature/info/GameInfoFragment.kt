@@ -16,34 +16,42 @@
 
 package com.paulrybitskyi.gamedge.feature.info
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
-import com.paulrybitskyi.commons.ktx.applyWindowBottomInsetAsMargin
 import com.paulrybitskyi.commons.ktx.showShortToast
-import com.paulrybitskyi.commons.utils.viewBinding
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.commons.ui.base.BaseComposeFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.defaultWindowAnimationDuration
-import com.paulrybitskyi.gamedge.commons.ui.observeIn
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
-import com.paulrybitskyi.gamedge.feature.info.databinding.FragmentGameInfoBinding
+import com.paulrybitskyi.gamedge.feature.info.widgets2.GameInfo
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-internal class GameInfoFragment : BaseFragment<
-    FragmentGameInfoBinding,
-    GameInfoViewModel,
-    GameInfoNavigator
->(R.layout.fragment_game_info) {
+internal class GameInfoFragment : BaseComposeFragment<GameInfoViewModel, GameInfoNavigator>() {
 
-    override val viewBinding by viewBinding(FragmentGameInfoBinding::bind)
     override val viewModel by viewModels<GameInfoViewModel>()
 
     @Inject lateinit var urlOpener: UrlOpener
 
-    override fun onInit() {
+    override fun getContent() = @Composable {
+        GameInfo(
+            viewState = viewModel.viewState.collectAsState().value,
+            onArtworkClicked = viewModel::onArtworkClicked,
+            onBackButtonClicked = viewModel::onBackButtonClicked,
+            onCoverClicked = viewModel::onCoverClicked,
+            onLikeButtonClicked = viewModel::onLikeButtonClicked,
+            onVideoClicked = viewModel::onVideoClicked,
+            onScreenshotClicked = viewModel::onScreenshotClicked,
+            onLinkClicked = viewModel::onLinkClicked,
+            onCompanyClicked = viewModel::onCompanyClicked,
+            onRelatedGameClicked = viewModel::onRelatedGameClicked,
+        )
+    }
+
+    /*override fun onInit() {
         super.onInit()
 
         initGameInfoView()
@@ -73,7 +81,7 @@ internal class GameInfoFragment : BaseFragment<
         viewModel.uiState
             .onEach { viewBinding.gameInfoView.uiState = it }
             .observeIn(this)
-    }
+    }*/
 
     override fun onLoadData() {
         super.onLoadData()

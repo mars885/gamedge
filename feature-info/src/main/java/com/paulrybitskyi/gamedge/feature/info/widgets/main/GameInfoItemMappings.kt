@@ -57,7 +57,7 @@ internal fun GameVideoModel.mapToInfoVideoModel(): GameInfoVideoModel {
 internal fun List<GameInfoCompanyModel>.mapToCompanyModels(): List<GameCompanyModel> {
     return map {
         GameCompanyModel(
-            logoViewSize = it.logoViewSize,
+            logoContainerSize = it.logoContainerSize,
             logoImageSize = it.logoImageSize,
             logoUrl = it.logoUrl,
             websiteUrl = it.websiteUrl,
@@ -69,7 +69,7 @@ internal fun List<GameInfoCompanyModel>.mapToCompanyModels(): List<GameCompanyMo
 
 internal fun GameCompanyModel.mapToInfoCompanyModel(): GameInfoCompanyModel {
     return GameInfoCompanyModel(
-        logoViewSize = logoViewSize,
+        logoContainerSize = logoContainerSize,
         logoImageSize = logoImageSize,
         logoUrl = logoUrl,
         websiteUrl = websiteUrl,
@@ -93,7 +93,7 @@ internal fun GameLinkItemModel.mapToInfoLinkModel(): GameInfoLinkModel {
     return GameInfoLinkModel(
         id = id,
         text = text,
-        iconId = iconId,
+        iconId = iconId ?: 0,
         payload = payload
     )
 }

@@ -63,11 +63,11 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
 
     override fun createCompanyModel(company: InvolvedCompany): GameInfoCompanyModel {
         val logoImageSize = company.calculateLogoImageSize()
-        val logoViewHeight = context.getDimensionPixelSize(R.dimen.game_info_company_logo_view_height)
-        val logoViewSize = (logoImageSize.width to logoViewHeight)
+        val logoContainerHeight = context.getDimensionPixelSize(R.dimen.game_info_company_logo_view_height)
+        val logoContainerSize = (logoImageSize.width to logoContainerHeight)
 
         return GameInfoCompanyModel(
-            logoViewSize = logoViewSize,
+            logoContainerSize = logoContainerSize,
             logoImageSize = logoImageSize,
             logoUrl = company.createLogoUrl(),
             websiteUrl = company.company.websiteUrl,

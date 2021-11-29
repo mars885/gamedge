@@ -101,7 +101,7 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
-            SUT.uiState.test {
+            SUT.viewState.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
                 assertThat(awaitItem() is GameInfoUiState.Empty).isTrue
@@ -230,7 +230,7 @@ internal class GameInfoViewModelTest {
     fun `Dispatches url opening command when company is clicked`() {
         mainCoroutineRule.runBlockingTest {
             val company = GameInfoCompanyModel(
-                logoViewSize = (0 to 0),
+                logoContainerSize = (0 to 0),
                 logoImageSize = (0 to 0),
                 logoUrl = null,
                 websiteUrl = "url",

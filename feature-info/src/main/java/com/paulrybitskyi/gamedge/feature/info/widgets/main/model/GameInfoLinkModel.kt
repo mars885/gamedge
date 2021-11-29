@@ -19,6 +19,6 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.main.model
 internal data class GameInfoLinkModel(
     val id: Int,
     val text: String,
-    val iconId: Int? = null,
+    val iconId: Int,
     val payload: Any? = null
 )

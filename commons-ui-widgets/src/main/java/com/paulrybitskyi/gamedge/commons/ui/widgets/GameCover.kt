@@ -49,7 +49,7 @@ fun GameCover(
     imageUrl: String?,
     modifier: Modifier,
     hasRoundedShape: Boolean = true,
-    onCoverClicked: () -> Unit
+    onCoverClicked: () -> Unit,
 ) {
     Card(
         modifier = modifier

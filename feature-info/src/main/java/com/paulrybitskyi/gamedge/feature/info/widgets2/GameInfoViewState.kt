@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.main.model
+package com.paulrybitskyi.gamedge.feature.info.widgets2
 
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.header.GameHeaderImageModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoModel
 
-internal data class GameInfoHeaderModel(
-    val backgroundImageModels: List<GameHeaderImageModel>,
-    val isLiked: Boolean,
-    val coverImageUrl: String?,
-    val title: String,
-    val releaseDate: String,
-    val developerName: String?,
-    val rating: String,
-    val likeCount: String,
-    val ageRating: String,
-    val gameCategory: String
-) {
+internal data class GameInfoViewState(
+    val isLoading: Boolean,
+    val game: GameInfoModel?,
+)
 
-    val hasDeveloperName: Boolean
-        get() = (developerName != null)
-}
+internal val GameInfoViewState.isInEmptyState: Boolean
+    get() = (!isLoading && (game == null))
+
+internal val GameInfoViewState.isInLoadingState: Boolean
+    get() = (isLoading && (game == null))
+
+internal val GameInfoViewState.isInSuccessState: Boolean
+    get() = (game != null)
