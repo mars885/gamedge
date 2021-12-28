@@ -52,6 +52,9 @@ dependencies {
     implementation(deps.compose.foundation)
     implementation(deps.compose.material)
     implementation(deps.compose.runtime)
+    implementation(deps.compose.coil)
+    implementation(deps.compose.accompanist.insets)
+    implementation(deps.compose.accompanist.pager)
 
     implementation(deps.commons.core)
     implementation(deps.commons.ktx)

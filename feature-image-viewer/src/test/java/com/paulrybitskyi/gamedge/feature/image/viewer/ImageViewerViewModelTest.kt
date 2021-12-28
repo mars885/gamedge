@@ -69,7 +69,7 @@ internal class ImageViewerViewModelTest {
     fun `Emits selected position when page is changed`() {
         mainCoroutineRule.runBlockingTest {
             SUT.selectedPosition.test {
-                SUT.onPageChanged(10)
+                SUT.onImageChanged(10)
 
                 assertThat(awaitItem() == INITIAL_POSITION).isTrue
                 assertThat(awaitItem() == 10).isTrue
@@ -81,7 +81,7 @@ internal class ImageViewerViewModelTest {
     fun `Emits toolbar title when page is changed`() {
         mainCoroutineRule.runBlockingTest {
             SUT.toolbarTitle.test {
-                SUT.onPageChanged(10)
+                SUT.onImageChanged(10)
 
                 assertThat(awaitItem()).isNotEmpty
             }

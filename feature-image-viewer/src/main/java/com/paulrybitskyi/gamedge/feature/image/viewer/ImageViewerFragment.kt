@@ -17,43 +17,51 @@
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.paulrybitskyi.commons.ktx.addOnBackPressCallback
 import com.paulrybitskyi.commons.ktx.getColor
 import com.paulrybitskyi.commons.ktx.navigationBarColor
 import com.paulrybitskyi.commons.ktx.statusBarColor
 import com.paulrybitskyi.commons.ktx.window
-import com.paulrybitskyi.commons.utils.viewBinding
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
+import com.paulrybitskyi.gamedge.commons.ui.base.BaseComposeFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
-import com.paulrybitskyi.gamedge.commons.ui.observeIn
+import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.sharers.TextSharer
-import com.paulrybitskyi.gamedge.feature.image.viewer.databinding.FragmentImageViewerBinding
+import com.paulrybitskyi.gamedge.feature.image.viewer.widgets.ImageViewer
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-internal class ImageViewerFragment : BaseFragment<
-    FragmentImageViewerBinding,
+internal class ImageViewerFragment : BaseComposeFragment<
     ImageViewerViewModel,
     ImageViewerNavigator
->(R.layout.fragment_image_viewer) {
+>() {
 
-    override val viewBinding by viewBinding(FragmentImageViewerBinding::bind)
     override val viewModel by viewModels<ImageViewerViewModel>()
 
     private var originalStatusBarColor: Int = 0
 
+    @Inject lateinit var networkStateProvider: NetworkStateProvider
     @Inject lateinit var textSharer: TextSharer
+
+    override fun getContent() = @Composable {
+        ImageViewer(
+            uiState = viewModel.uiState.collectAsState().value,
+            networkStateProvider = networkStateProvider,
+            onToolbarLeftBtnClicked = ::onBackPressed,
+            onToolbarRightBtnClicked = viewModel::onToolbarRightButtonClicked,
+            onImageChanged = viewModel::onImageChanged,
+        )
+    }
 
     override fun onInit() {
         super.onInit()
 
         initSystemWindows()
         initOnBackPress()
-        initImageViewerView()
     }
 
     private fun initSystemWindows() {
@@ -73,44 +81,20 @@ internal class ImageViewerFragment : BaseFragment<
         addOnBackPressCallback { onBackPressed() }
     }
 
-    private fun initImageViewerView() = with(viewBinding.imageViewerView) {
+/*    private fun initImageViewerView() = with(viewBinding.imageViewerView) {
         onToolbarLeftBtnClicked = ::onBackPressed
         onToolbarRightBtnClicked = viewModel::onToolbarRightButtonClicked
         onPageChanged = viewModel::onPageChanged
-    }
-
-    override fun onBindViewModel() {
-        super.onBindViewModel()
-
-        observeSelectedPosition()
-        observeImageUrls()
-        observeToolbarTitle()
-    }
-
-    private fun observeSelectedPosition() {
-        viewModel.selectedPosition
-            .onEach { viewBinding.imageViewerView.selectedPosition = it }
-            .observeIn(this)
-    }
-
-    private fun observeImageUrls() {
-        viewModel.imageUrls
-            .onEach { viewBinding.imageViewerView.imageUrls = it }
-            .observeIn(this)
-    }
-
-    private fun observeToolbarTitle() {
-        viewModel.toolbarTitle
-            .onEach { viewBinding.imageViewerView.toolbarTitle = it }
-            .observeIn(this)
-    }
+    }*/
 
     private fun onBackPressed() {
-        if (viewBinding.imageViewerView.isCurrentImageScaled()) {
+/*        if (viewBinding.imageViewerView.isCurrentImageScaled()) {
             viewBinding.imageViewerView.resetCurrentImageScale()
         } else {
             viewModel.onBackPressed()
-        }
+        }*/
+
+        viewModel.onBackPressed()
     }
 
     override fun onHandleCommand(command: Command) {

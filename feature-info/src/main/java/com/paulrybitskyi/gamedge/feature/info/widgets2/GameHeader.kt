@@ -475,7 +475,7 @@ private fun GameArtworks(
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }
-            .collect { page ->  onArtworkChanged(page) }
+            .collect { page -> onArtworkChanged(page) }
     }
 
     HorizontalPager(
