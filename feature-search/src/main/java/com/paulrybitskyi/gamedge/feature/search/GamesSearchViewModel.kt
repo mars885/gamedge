@@ -93,7 +93,16 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
     private fun createGamesEmptyUiState(): GamesUiState {
-        val title = if (searchQuery.isBlank()) {
+        return GamesUiState(
+            isLoading = false,
+            infoIconId = R.drawable.magnify,
+            infoTitle = getUiStateInfoTitle(),
+            games = emptyList(),
+        )
+    }
+
+    private fun getUiStateInfoTitle(): String {
+        return if (searchQuery.isBlank()) {
             stringProvider.getString(R.string.games_search_info_title_default)
         } else {
             stringProvider.getString(
@@ -101,13 +110,6 @@ internal class GamesSearchViewModel @Inject constructor(
                 searchQuery
             )
         }
-
-        return GamesUiState(
-            isLoading = false,
-            infoIconId = R.drawable.magnify,
-            infoTitle = title,
-            games = emptyList(),
-        )
     }
 
     fun onToolbarBackButtonClicked() {
@@ -143,7 +145,13 @@ internal class GamesSearchViewModel @Inject constructor(
             searchGamesUseCase.execute(useCaseParams)
                 .map(gameModelMapper::mapToGameModels)
                 .flowOn(dispatcherProvider.computation)
-                .map { games -> currentUiState.gamesUiState.copy(isLoading = false, games = games) }
+                .map { games ->
+                    currentUiState.gamesUiState.copy(
+                        isLoading = false,
+                        infoTitle = getUiStateInfoTitle(),
+                        games = games
+                    )
+                }
                 .onError {
                     logger.error(logTag, "Failed to search games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
