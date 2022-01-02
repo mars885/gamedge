@@ -18,11 +18,9 @@
 
 <resources>
 
-    <!-- GamingNewsItemImageView -->
     <dimen name="gaming_news_item_image_card_elevation">2dp</dimen>
     <dimen name="gaming_news_item_image_card_radius">4dp</dimen>
 
-    <!-- GamingNewsItemView -->
     <dimen name="gaming_news_item_card_elevation">2dp</dimen>
     <dimen name="gaming_news_item_padding">15dp</dimen>
     <dimen name="gaming_news_item_image_height">168dp</dimen>
@@ -34,8 +32,7 @@
     <dimen name="gaming_news_item_publication_date_text_size">14sp</dimen>
     <dimen name="gaming_news_item_publication_date_icon_padding">5dp</dimen>
 
-    <!-- GamingNewsView -->
-    <dimen name="gaming_news_decorator_spacing">15dp</dimen>
+    <dimen name="gaming_news_arrangement_spacing">15dp</dimen>
     <dimen name="gaming_news_info_view_horizontal_margin">30dp</dimen>
     <dimen name="gaming_news_info_view_title_text_size">17sp</dimen>
 

@@ -94,10 +94,10 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private fun createGamesEmptyUiState(): GamesViewState {
         val title = if (searchQuery.isBlank()) {
-            stringProvider.getString(R.string.games_search_fragment_info_title_default)
+            stringProvider.getString(R.string.games_search_info_title_default)
         } else {
             stringProvider.getString(
-                R.string.games_search_fragment_info_title_empty,
+                R.string.games_search_info_title_empty,
                 searchQuery
             )
         }

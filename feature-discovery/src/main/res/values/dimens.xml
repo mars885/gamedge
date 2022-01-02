@@ -18,7 +18,6 @@
 
 <resources>
 
-    <!-- GamesDiscoveryView -->
-    <dimen name="games_discovery_decorator_spacing">15dp</dimen>
+    <dimen name="games_discovery_arrangement_spacing">15dp</dimen>
 
 </resources>

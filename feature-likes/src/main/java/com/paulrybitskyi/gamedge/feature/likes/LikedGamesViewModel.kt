@@ -77,7 +77,7 @@ class LikedGamesViewModel @Inject constructor(
         return GamesViewState(
             isLoading = false,
             infoIconId = R.drawable.account_heart_outline,
-            infoTitle = stringProvider.getString(R.string.liked_games_fragment_info_title),
+            infoTitle = stringProvider.getString(R.string.liked_games_info_title),
             games = emptyList(),
         )
     }

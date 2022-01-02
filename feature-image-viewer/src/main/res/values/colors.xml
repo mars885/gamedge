@@ -18,7 +18,6 @@
 
 <resources>
 
-    <!-- ImageViewerView -->
     <color name="image_viewer_background_color">#000000</color>
     <color name="image_viewer_bar_background_color">#7F000000</color>
 

@@ -29,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import com.paulrybitskyi.gamedge.commons.ui.OnLifecycleEvent
-import com.paulrybitskyi.gamedge.commons.ui.widgets.NewSearchToolbar
+import com.paulrybitskyi.gamedge.commons.ui.widgets.SearchToolbar
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.Games
 import kotlinx.coroutines.delay
@@ -54,9 +54,9 @@ internal fun GamesSearch(
 
     Column(modifier = Modifier.fillMaxSize()) {
         ProvideWindowInsets {
-            NewSearchToolbar(
+            SearchToolbar(
                 queryText = viewState.queryText,
-                placeholderText = stringResource(R.string.games_search_fragment_search_hint),
+                placeholderText = stringResource(R.string.games_search_toolbar_hint),
                 modifier = Modifier.statusBarsPadding(),
                 focusRequester = focusRequester,
                 onQueryChanged = onQueryChanged,

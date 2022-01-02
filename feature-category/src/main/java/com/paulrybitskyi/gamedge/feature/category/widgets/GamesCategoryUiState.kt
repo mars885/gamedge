@@ -16,16 +16,16 @@
 
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
-internal sealed class GamesCategoryUiState {
-    object Empty : GamesCategoryUiState()
-    object Loading : GamesCategoryUiState()
-    data class Result(val items: List<GameCategoryModel>) : GamesCategoryUiState()
-}
-
 internal data class GamesCategoryViewState(
     val isLoading: Boolean,
     val title: String,
     val games: List<GameCategoryModel>,
+)
+
+internal data class GameCategoryModel(
+    val id: Int,
+    val title: String,
+    val coverUrl: String?
 )
 
 internal val GamesCategoryViewState.isInLoadingState: Boolean

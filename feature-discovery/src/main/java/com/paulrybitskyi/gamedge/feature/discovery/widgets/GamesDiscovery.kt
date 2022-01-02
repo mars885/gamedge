@@ -96,7 +96,7 @@ private fun GamesDiscoveryItems(
     onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,
 ) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.games_discovery_decorator_spacing)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.games_discovery_arrangement_spacing)),
     ) {
         items(items, key = GamesDiscoveryItemModel::title) { item ->
             GamesCategoryPreview(

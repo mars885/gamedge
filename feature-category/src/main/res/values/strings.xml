@@ -18,7 +18,6 @@
 
 <resources>
 
-    <!-- GamesCategoryView -->
     <string name="games_category_info_view_title">No Games Available</string>
 
 </resources>

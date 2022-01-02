@@ -30,7 +30,6 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.sharers.TextSharer
-import com.paulrybitskyi.gamedge.feature.image.viewer.widgets.ImageViewer
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -80,12 +79,6 @@ internal class ImageViewerFragment : BaseComposeFragment<
     private fun initOnBackPress() {
         addOnBackPressCallback { onBackPressed() }
     }
-
-/*    private fun initImageViewerView() = with(viewBinding.imageViewerView) {
-        onToolbarLeftBtnClicked = ::onBackPressed
-        onToolbarRightBtnClicked = viewModel::onToolbarRightButtonClicked
-        onPageChanged = viewModel::onPageChanged
-    }*/
 
     private fun onBackPressed() {
 /*        if (viewBinding.imageViewerView.isCurrentImageScaled()) {

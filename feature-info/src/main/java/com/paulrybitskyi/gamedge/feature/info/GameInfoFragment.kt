@@ -25,7 +25,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.defaultWindowAnimationDuration
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
-import com.paulrybitskyi.gamedge.feature.info.widgets2.GameInfo
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfo
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -50,38 +50,6 @@ internal class GameInfoFragment : BaseComposeFragment<GameInfoViewModel, GameInf
             onRelatedGameClicked = viewModel::onRelatedGameClicked,
         )
     }
-
-    /*override fun onInit() {
-        super.onInit()
-
-        initGameInfoView()
-    }
-
-    private fun initGameInfoView() = with(viewBinding.gameInfoView) {
-        applyWindowBottomInsetAsMargin()
-
-        onArtworkClicked = viewModel::onArtworkClicked
-        onBackButtonClicked = viewModel::onBackButtonClicked
-        onCoverClicked = viewModel::onCoverClicked
-        onLikeButtonClicked = viewModel::onLikeButtonClicked
-        onVideoClicked = viewModel::onVideoClicked
-        onScreenshotClicked = viewModel::onScreenshotClicked
-        onLinkClicked = viewModel::onLinkClicked
-        onCompanyClicked = viewModel::onCompanyClicked
-        onRelatedGameClicked = viewModel::onRelatedGameClicked
-    }
-
-    override fun onBindViewModel() {
-        super.onBindViewModel()
-
-        observeUiState()
-    }
-
-    private fun observeUiState() {
-        viewModel.uiState
-            .onEach { viewBinding.gameInfoView.uiState = it }
-            .observeIn(this)
-    }*/
 
     override fun onLoadData() {
         super.onLoadData()

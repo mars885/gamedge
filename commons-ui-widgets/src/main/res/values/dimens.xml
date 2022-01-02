@@ -34,7 +34,7 @@
     <dimen name="info_view_title_text_size">17sp</dimen>
     <dimen name="info_view_title_text_line_spacing_extra">4dp</dimen>
 
-    <!-- ChipFlowView -->
+    <!-- ChipFlow -->
     <dimen name="chip_flow_item_background_shadow_dx">1dp</dimen>
     <dimen name="chip_flow_item_background_shadow_dy">2dp</dimen>
     <dimen name="chip_flow_item_icon_start_padding">4dp</dimen>
@@ -46,13 +46,13 @@
     <dimen name="chip_flow_default_item_vertical_spacing">8dp</dimen>
     <dimen name="chip_flow_default_item_text_size">14sp</dimen>
 
-    <!-- GameCoverView -->
+    <!-- GameCover -->
     <dimen name="game_cover_card_elevation">2dp</dimen>
     <dimen name="game_cover_card_corner_radius">4dp</dimen>
     <dimen name="game_cover_title_horizontal_padding">16dp</dimen>
     <dimen name="game_cover_title_text_size">14sp</dimen>
 
-    <!-- GamesCategoryPreviewView -->
+    <!-- GamesCategoryPreview -->
     <dimen name="games_category_preview_card_elevation">2dp</dimen>
     <dimen name="games_category_preview_title_margin">15dp</dimen>
     <dimen name="games_category_preview_title_text_size">18sp</dimen>
@@ -74,7 +74,7 @@
     <dimen name="games_category_preview_cover_item_margin">3dp</dimen>
     <dimen name="games_category_preview_cover_horizontal_arrangement">6dp</dimen>
 
-    <!-- GameView -->
+    <!-- Game -->
     <dimen name="game_card_elevation">2dp</dimen>
     <dimen name="game_padding">15dp</dimen>
     <dimen name="game_cover_width">112dp</dimen>
@@ -85,7 +85,7 @@
     <dimen name="game_details_margin_start">12dp</dimen>
     <dimen name="game_details_text_size">14sp</dimen>
 
-    <!-- GamesView -->
+    <!-- Games -->
     <dimen name="games_decorator_spacing">15dp</dimen>
     <dimen name="games_info_view_horizontal_margin">30dp</dimen>
     <dimen name="games_info_view_title_text_size">17sp</dimen>

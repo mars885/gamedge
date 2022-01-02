@@ -18,16 +18,16 @@
 
 <resources>
 
-    <!-- GameVideosView -->
+    <!-- GameVideos -->
     <string name="game_videos_title">Videos</string>
 
-    <!-- GameScreenshotsView -->
+    <!-- GameScreenshots -->
     <string name="game_screenshots_title">Screenshots</string>
 
-    <!-- GameSummaryView -->
+    <!-- GameSummary -->
     <string name="game_summary_title">Summary</string>
 
-    <!-- GameDetailsView -->
+    <!-- GameDetails -->
     <string name="game_details_title">Details</string>
     <string name="game_details_genres_title">Genres</string>
     <string name="game_details_platforms_title">Platforms</string>
@@ -35,13 +35,13 @@
     <string name="game_details_player_perspectives_title">Player Perspectives</string>
     <string name="game_details_themes_title">Themes</string>
 
-    <!-- GameLinksView -->
+    <!-- GameLinks -->
     <string name="game_links_title">Links</string>
 
-    <!-- GameCompaniesView -->
+    <!-- GameCompanies -->
     <string name="game_companies_title">Involved Companies</string>
 
-    <!-- GameInfoView -->
+    <!-- GameInfo -->
     <string name="game_info_header_page_indicator_template">%1$d/%2$d</string>
     <string name="game_info_info_view_title">No Data Available</string>
 

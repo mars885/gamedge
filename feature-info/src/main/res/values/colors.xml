@@ -18,11 +18,11 @@
 
 <resources>
 
-    <!-- GameVideosView -->
+    <!-- GameVideos -->
     <color name="game_videos_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_videos_title_text_color">@color/colorPrimaryText</color>
 
-    <!-- GameVideoView -->
+    <!-- GameVideo -->
     <color name="game_video_card_background_color">@android:color/transparent</color>
     <color name="game_video_play_btn_background_stroke_color">@color/colorPrimaryText</color>
     <color name="game_video_play_btn_background_solid_color">#55000000</color>
@@ -30,39 +30,39 @@
     <color name="game_video_title_background_color">#1D212B</color>
     <color name="game_video_title_text_color">@color/colorSecondaryText</color>
 
-    <!-- GameScreenshotView -->
+    <!-- GameScreenshot -->
     <color name="game_screenshot_card_background_color">@android:color/transparent</color>
 
-    <!-- GameScreenshotsView -->
+    <!-- GameScreenshots -->
     <color name="game_screenshots_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_screenshots_title_text_color">@color/colorPrimaryText</color>
 
-    <!-- GameSummaryView -->
+    <!-- GameSummary -->
     <color name="game_summary_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_summary_title_text_color">@color/colorPrimaryText</color>
     <color name="game_summary_content_text_color">@color/colorSecondaryText</color>
 
-    <!-- GameDetailsView -->
+    <!-- GameDetails -->
     <color name="game_details_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_details_title_text_color">@color/colorPrimaryText</color>
     <color name="game_details_category_title_text_color">@color/colorSecondaryText</color>
 
-    <!-- GameLinksView -->
+    <!-- GameLinks -->
     <color name="game_links_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_links_title_text_color">@color/colorPrimaryText</color>
     <color name="game_links_chip_background_color">#1D212B</color>
     <color name="game_links_chip_content_color">@color/colorSecondaryText</color>
 
-    <!-- GameCompanyView -->
+    <!-- GameCompany -->
     <color name="game_company_card_background_color">@android:color/transparent</color>
     <color name="game_company_info_label_background_color">#1D212B</color>
     <color name="game_company_info_label_text_color">@color/colorSecondaryText</color>
 
-    <!-- GameCompaniesView -->
+    <!-- GameCompanies -->
     <color name="game_companies_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_companies_title_text_color">@color/colorPrimaryText</color>
 
-    <!-- GameInfoView -->
+    <!-- GameInfo -->
     <color name="game_info_header_artworks_scrim_bg_color_expanded">@android:color/transparent</color>
     <color name="game_info_header_artworks_scrim_bg_color_collapsed">#66000000</color>
     <color name="game_info_header_back_button_icon_color">@color/colorPrimaryText</color>

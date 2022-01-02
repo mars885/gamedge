@@ -129,7 +129,7 @@ private fun GamingNewsSuccessState(
     onNewsItemClicked: (GamingNewsItemModel) -> Unit,
 ) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.gaming_news_decorator_spacing))
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.gaming_news_arrangement_spacing))
     ) {
         items(news, key = GamingNewsItemModel::id) { newItemModel ->
             GamingNewsItem(

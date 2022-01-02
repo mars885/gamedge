@@ -21,9 +21,9 @@ import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.R
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGameModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGamesModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGamesType
+import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGamesModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGamesType
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 

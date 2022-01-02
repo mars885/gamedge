@@ -27,28 +27,21 @@
     <color name="info_view_icon_color">#000000</color>
     <color name="info_view_title_text_color">#000000</color>
 
-    <!-- ChipFlowView -->
-    <color name="chip_flow_item_background_shadow_color">#30000000</color>
-
-    <color name="chip_flow_default_item_background_color">@android:color/white</color>
-    <color name="chip_flow_default_item_icon_color">@android:color/black</color>
-    <color name="chip_flow_default_item_text_color">@android:color/black</color>
-
-    <!-- GameCoverView -->
+    <!-- GameCover -->
     <color name="game_cover_card_background_color">@android:color/transparent</color>
     <color name="game_cover_title_text_color">@color/colorPrimaryText</color>
 
-    <!-- GamesCategoryPreviewView -->
+    <!-- GamesCategoryPreview -->
     <color name="games_category_preview_card_background_color">@color/colorPrimaryDark</color>
     <color name="games_category_preview_title_text_color">@color/colorPrimaryText</color>
     <color name="games_category_preview_more_button_text_color">@color/colorAccent</color>
 
-    <!-- GameView -->
+    <!-- Game -->
     <color name="game_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_name_text_color">@color/colorPrimaryText</color>
     <color name="game_details_text_color">@color/colorSecondaryText</color>
 
-    <!-- GamesView -->
+    <!-- Games -->
     <color name="games_swipe_refresh_color">@color/colorAccent</color>
 
 </resources>

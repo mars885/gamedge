@@ -39,37 +39,6 @@ internal class GamesCategoryFragment : BaseComposeFragment<GamesCategoryViewMode
         )
     }
 
-
-/*    private fun initToolbar() = with(viewBinding.toolbar) {
-        applyWindowTopInsetAsPadding()
-        onLeftButtonClickListener = { viewModel.onToolbarLeftButtonClicked() }
-    }
-
-    private fun initGamesCategoryView() = with(viewBinding.gamesCategoryView) {
-        applyWindowBottomInsetAsMargin()
-        onGameClicked = viewModel::onGameClicked
-        onBottomReached = viewModel::onBottomReached
-    }*/
-
-/*    override fun onBindViewModel() {
-        super.onBindViewModel()
-
-        observeToolbarTitle()
-        observeUiState()
-    }
-
-    private fun observeToolbarTitle() {
-        viewModel.toolbarTitle
-            .onEach { viewBinding.toolbar.titleText = it }
-            .observeIn(this)
-    }
-
-    private fun observeUiState() {
-        viewModel.uiState
-            .onEach { viewBinding.gamesCategoryView.uiState = it }
-            .observeIn(this)
-    }*/
-
     override fun onLoadData() {
         super.onLoadData()
 
