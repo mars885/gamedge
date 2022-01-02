@@ -33,7 +33,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
@@ -77,28 +76,26 @@ internal fun GameInfo(
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
-    ProvideWindowInsets {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(colorResource(R.color.colorContentContainer))
-        ) {
-            when {
-                uiState.isInLoadingState -> GameInfoLoadingState(Modifier.align(Alignment.Center))
-                uiState.isInEmptyState -> GameInfoEmptyState(Modifier.align(Alignment.Center))
-                uiState.isInSuccessState -> GameInfoSuccessState(
-                    gameInfo = checkNotNull(uiState.game),
-                    onArtworkClicked = onArtworkClicked,
-                    onBackButtonClicked = onBackButtonClicked,
-                    onCoverClicked = onCoverClicked,
-                    onLikeButtonClicked = onLikeButtonClicked,
-                    onVideoClicked = onVideoClicked,
-                    onScreenshotClicked = onScreenshotClicked,
-                    onLinkClicked = onLinkClicked,
-                    onCompanyClicked = onCompanyClicked,
-                    onRelatedGameClicked = onRelatedGameClicked,
-                )
-            }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(R.color.colorContentContainer))
+    ) {
+        when {
+            uiState.isInLoadingState -> GameInfoLoadingState(Modifier.align(Alignment.Center))
+            uiState.isInEmptyState -> GameInfoEmptyState(Modifier.align(Alignment.Center))
+            uiState.isInSuccessState -> GameInfoSuccessState(
+                gameInfo = checkNotNull(uiState.game),
+                onArtworkClicked = onArtworkClicked,
+                onBackButtonClicked = onBackButtonClicked,
+                onCoverClicked = onCoverClicked,
+                onLikeButtonClicked = onLikeButtonClicked,
+                onVideoClicked = onVideoClicked,
+                onScreenshotClicked = onScreenshotClicked,
+                onLinkClicked = onLinkClicked,
+                onCompanyClicked = onCompanyClicked,
+                onRelatedGameClicked = onRelatedGameClicked,
+            )
         }
     }
 }

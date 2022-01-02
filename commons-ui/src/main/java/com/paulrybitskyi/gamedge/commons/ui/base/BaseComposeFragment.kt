@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.paulrybitskyi.commons.ktx.showLongToast
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
@@ -52,7 +53,9 @@ abstract class BaseComposeFragment<
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
-            setContent(getContent())
+            setContent {
+                ProvideWindowInsets(content = getContent())
+            }
         }
     }
 

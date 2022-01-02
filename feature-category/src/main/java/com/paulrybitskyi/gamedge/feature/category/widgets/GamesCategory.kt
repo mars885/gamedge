@@ -40,7 +40,6 @@ import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -61,14 +60,12 @@ internal fun GamesCategory(
     onBottomReached: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        ProvideWindowInsets {
-            Toolbar(
-                title = uiState.title,
-                modifier = Modifier.statusBarsPadding(),
-                leftButtonIcon = painterResource(R.drawable.arrow_left),
-                onLeftButtonClick = onBackButtonClicked,
-            )
-        }
+        Toolbar(
+            title = uiState.title,
+            modifier = Modifier.statusBarsPadding(),
+            leftButtonIcon = painterResource(R.drawable.arrow_left),
+            onLeftButtonClick = onBackButtonClicked,
+        )
 
         Box(
             modifier = Modifier

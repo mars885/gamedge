@@ -33,7 +33,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -63,19 +62,17 @@ internal fun ImageViewer(
             onImageChanged = onImageChanged,
         )
 
-        ProvideWindowInsets {
-            Toolbar(
-                title = uiState.toolbarTitle,
-                modifier = Modifier
-                    .statusBarsPadding()
-                    .align(Alignment.TopCenter),
-                backgroundColor = colorResource(R.color.image_viewer_bar_background_color),
-                leftButtonIcon = painterResource(R.drawable.arrow_left),
-                rightButtonIcon = painterResource(R.drawable.share_variant),
-                onLeftButtonClick = onToolbarLeftBtnClicked,
-                onRightButtonClick = onToolbarRightBtnClicked,
-            )
-        }
+        Toolbar(
+            title = uiState.toolbarTitle,
+            modifier = Modifier
+                .statusBarsPadding()
+                .align(Alignment.TopCenter),
+            backgroundColor = colorResource(R.color.image_viewer_bar_background_color),
+            leftButtonIcon = painterResource(R.drawable.arrow_left),
+            rightButtonIcon = painterResource(R.drawable.share_variant),
+            onLeftButtonClick = onToolbarLeftBtnClicked,
+            onRightButtonClick = onToolbarRightBtnClicked,
+        )
     }
 }
 

@@ -26,7 +26,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import com.paulrybitskyi.gamedge.commons.ui.OnLifecycleEvent
 import com.paulrybitskyi.gamedge.commons.ui.widgets.SearchToolbar
@@ -53,21 +52,19 @@ internal fun GamesSearch(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(modifier = Modifier.fillMaxSize()) {
-        ProvideWindowInsets {
-            SearchToolbar(
-                queryText = uiState.queryText,
-                placeholderText = stringResource(R.string.games_search_toolbar_hint),
-                modifier = Modifier.statusBarsPadding(),
-                focusRequester = focusRequester,
-                onQueryChanged = onQueryChanged,
-                onSearchActionRequested = { query ->
-                    focusManager.clearFocus(force = true)
-                    onSearchActionRequested(query)
-                },
-                onBackButtonClicked = onBackButtonClicked,
-                onClearButtonClicked = onClearButtonClicked,
-            )
-        }
+        SearchToolbar(
+            queryText = uiState.queryText,
+            placeholderText = stringResource(R.string.games_search_toolbar_hint),
+            modifier = Modifier.statusBarsPadding(),
+            focusRequester = focusRequester,
+            onQueryChanged = onQueryChanged,
+            onSearchActionRequested = { query ->
+                focusManager.clearFocus(force = true)
+                onSearchActionRequested(query)
+            },
+            onBackButtonClicked = onBackButtonClicked,
+            onClearButtonClicked = onClearButtonClicked,
+        )
 
         Games(
             uiState = uiState.gamesUiState,

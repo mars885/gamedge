@@ -48,6 +48,7 @@ dependencies {
     implementation(deps.compose.foundation)
     implementation(deps.compose.activity)
     implementation(deps.compose.runtime)
+    implementation(deps.compose.accompanist.insets)
 
     implementation(deps.google.materialComponents)
 
