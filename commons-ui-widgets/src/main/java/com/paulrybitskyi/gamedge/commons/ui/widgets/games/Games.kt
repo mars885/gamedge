@@ -201,8 +201,8 @@ internal fun GamesEmptyStatePreview() {
     Games(
         uiState = GamesUiState(
             isLoading = false,
-            infoIconId = 0,
-            infoTitle = "No Liked Games",
+            infoIconId = R.drawable.gamepad_variant_outline,
+            infoTitle = "No Games\nNo Games",
             games = emptyList(),
         ),
         onGameClicked = {},

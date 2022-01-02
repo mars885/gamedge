@@ -32,7 +32,7 @@
     <dimen name="info_view_icon_size">100dp</dimen>
     <dimen name="info_view_vertical_spacing">5dp</dimen>
     <dimen name="info_view_title_text_size">17sp</dimen>
-    <dimen name="info_view_title_text_line_spacing_extra">4dp</dimen>
+    <dimen name="info_view_title_line_height">24sp</dimen>
 
     <!-- GameCover -->
     <dimen name="game_cover_card_elevation">2dp</dimen>

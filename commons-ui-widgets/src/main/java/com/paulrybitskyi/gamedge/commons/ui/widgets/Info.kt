@@ -36,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 
 @Composable
@@ -46,6 +47,7 @@ fun Info(
     iconSize: Dp = dimensionResource(R.dimen.info_view_icon_size),
     iconColor: Color = colorResource(R.color.info_view_icon_color),
     titleTextSize: TextUnit = textSizeResource(R.dimen.info_view_title_text_size),
+    titleLineHeight: TextUnit = textSizeResource(R.dimen.info_view_title_line_height),
     titleTextColor: Color = colorResource(R.color.info_view_title_text_color)
 ) {
     Column(
@@ -56,7 +58,7 @@ fun Info(
             painter = icon,
             modifier = Modifier.size(iconSize),
             contentDescription = null,
-            tint = iconColor
+            tint = iconColor,
         )
         Spacer(Modifier.height(dimensionResource(R.dimen.info_view_vertical_spacing)))
         Text(
@@ -65,9 +67,22 @@ fun Info(
             fontSize = titleTextSize,
             fontFamily = FontFamily.SansSerif,
             fontWeight = FontWeight.Medium,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            lineHeight = titleLineHeight,
         )
     }
+}
+
+@Preview(
+    widthDp = 300,
+    showBackground = true,
+)
+@Composable
+internal fun InfoWithSingleLineTitlePreview() {
+    Info(
+        icon = painterResource(R.drawable.heart),
+        title = "Lorem ipsum dolor sit amet",
+    )
 }
 
 @Preview(
@@ -75,9 +90,9 @@ fun Info(
     showBackground = true
 )
 @Composable
-internal fun InfoPreview() {
+internal fun InfoWithMultiLineTitlePreview() {
     Info(
         icon = painterResource(R.drawable.heart),
-        title = "Lorem ipsum dolor sit amet"
+        title = "Lorem ipsum dolor sit amet\nLorem ipsum dolor sit amet",
     )
 }
