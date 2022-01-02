@@ -42,6 +42,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.rememberImagePainter
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
@@ -131,4 +132,13 @@ private fun GameScreenshot(
             )
         }
     }
+}
+
+@Preview
+@Composable
+internal fun GameScreenshotsPreview() {
+    GameScreenshots(
+        screenshotUrls = listOf("1", "2", "3"),
+        onScreenshotClicked = {},
+    )
 }

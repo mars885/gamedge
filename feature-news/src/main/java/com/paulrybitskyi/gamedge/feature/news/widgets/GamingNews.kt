@@ -145,26 +145,6 @@ private fun GamingNewsSuccessState(
 
 @Preview
 @Composable
-internal fun GamingNewsEmptyStatePreview() {
-    GamingNews(
-        uiState = GamingNewsState(),
-        onNewsItemClicked = {},
-        onRefreshRequested = {}
-    )
-}
-
-@Preview
-@Composable
-internal fun GamingNewsLoadingStatePreview() {
-    GamingNews(
-        uiState = GamingNewsState(isLoading = true),
-        onNewsItemClicked = {},
-        onRefreshRequested = {}
-    )
-}
-
-@Preview
-@Composable
 internal fun GamingNewsSuccessStatePreview() {
     val news = listOf(
         GamingNewsItemModel(
@@ -200,6 +180,26 @@ internal fun GamingNewsSuccessStatePreview() {
         uiState = GamingNewsState(
             news = news,
         ),
+        onNewsItemClicked = {},
+        onRefreshRequested = {}
+    )
+}
+
+@Preview
+@Composable
+internal fun GamingNewsEmptyStatePreview() {
+    GamingNews(
+        uiState = GamingNewsState(),
+        onNewsItemClicked = {},
+        onRefreshRequested = {}
+    )
+}
+
+@Preview
+@Composable
+internal fun GamingNewsLoadingStatePreview() {
+    GamingNews(
+        uiState = GamingNewsState(isLoading = true),
         onNewsItemClicked = {},
         onRefreshRequested = {}
     )

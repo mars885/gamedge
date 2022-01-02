@@ -260,18 +260,6 @@ private fun GamesCategoryPreviewSuccessState(
 
 @Composable
 @Preview
-internal fun GamesCategoryPreviewEmptyStatePreview() {
-    GamesCategoryPreview(
-        title = "Popular",
-        isProgressBarVisible = false,
-        games = emptyList(),
-        onCategoryMoreButtonClicked = {},
-        onCategoryGameClicked = {},
-    )
-}
-
-@Composable
-@Preview
 internal fun GamesCategoryPreviewSuccessStateWithMoreButtonPreview() {
     GamesCategoryPreview(
         title = "Popular",
@@ -332,6 +320,18 @@ internal fun GamesCategoryPreviewSuccessStateWithoutMoreButtonPreview() {
                 coverUrl = null,
             ),
         ),
+        onCategoryMoreButtonClicked = {},
+        onCategoryGameClicked = {},
+    )
+}
+
+@Composable
+@Preview
+internal fun GamesCategoryPreviewEmptyStatePreview() {
+    GamesCategoryPreview(
+        title = "Popular",
+        isProgressBarVisible = false,
+        games = emptyList(),
         onCategoryMoreButtonClicked = {},
         onCategoryGameClicked = {},
     )

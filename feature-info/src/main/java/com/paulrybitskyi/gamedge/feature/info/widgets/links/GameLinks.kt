@@ -36,10 +36,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.flowlayout.FlowRow
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoLinkModel
+import java.util.*
 
 @Composable
 internal fun GameLinks(
@@ -124,4 +127,28 @@ private fun GameLink(
             )
         }
     }
+}
+
+@Preview
+@Composable
+internal fun GameLinksPreview() {
+    val links = WebsiteCategory.values()
+        .filterNot { it == WebsiteCategory.UNKNOWN }
+        .mapIndexed { index, websiteCategory ->
+            GameInfoLinkModel(
+                id = index,
+                text = websiteCategory.name
+                    .replace("_", " ")
+                    .lowercase()
+                    .replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                    },
+                iconId = R.drawable.web,
+            )
+    }
+
+    GameLinks(
+        links = links,
+        onLinkClicked = {},
+    )
 }

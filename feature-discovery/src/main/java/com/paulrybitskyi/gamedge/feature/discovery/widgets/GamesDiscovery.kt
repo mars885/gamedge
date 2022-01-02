@@ -31,12 +31,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
+import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.feature.discovery.R
+import com.paulrybitskyi.gamedge.feature.discovery.titleId
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -103,8 +106,8 @@ private fun GamesDiscoveryItems(
                 title = item.title,
                 isProgressBarVisible = item.isProgressBarVisible,
                 games = item.games.mapToCategoryItems(),
-                onCategoryMoreButtonClicked = { onCategoryMoreButtonClicked(item.category) },
                 onCategoryGameClicked = { onCategoryGameClicked(it.mapToDiscoveryItemGameModel()) },
+                onCategoryMoreButtonClicked = { onCategoryMoreButtonClicked(item.category) },
             )
         }
     }
@@ -112,34 +115,28 @@ private fun GamesDiscoveryItems(
 
 @Preview
 @Composable
-internal fun GamesDiscoveryEmptyStatePreview() {
+internal fun GamesDiscoverySuccessStatePreview() {
+    val games = listOf(
+        "Ghost of Tsushima: Director's Cut",
+        "Outer Wilds: Echoes of the Eye",
+        "Kena: Bridge of Spirits",
+        "Forza Horizon 5",
+    )
+        .mapIndexed { index, gameTitle ->
+            GamesDiscoveryItemGameModel(id = index, title = gameTitle, coverUrl = null)
+        }
+
+    val items = GamesDiscoveryCategory.values().map { category ->
+        GamesDiscoveryItemModel(
+            category = category.name,
+            title = stringResource(category.titleId),
+            isProgressBarVisible = true,
+            games = games,
+        )
+    }
+
     GamesDiscovery(
-        items = listOf(
-            GamesDiscoveryItemModel(
-                category = "Popular",
-                title = "Popular",
-                isProgressBarVisible = true,
-                games = emptyList(),
-            ),
-            GamesDiscoveryItemModel(
-                category = "Recently Released",
-                title = "Recently Released",
-                isProgressBarVisible = true,
-                games = emptyList(),
-            ),
-            GamesDiscoveryItemModel(
-                category = "Coming Soon",
-                title = "Coming Soon",
-                isProgressBarVisible = true,
-                games = emptyList(),
-            ),
-            GamesDiscoveryItemModel(
-                category = "Most Anticipated",
-                title = "Most Anticipated",
-                isProgressBarVisible = true,
-                games = emptyList(),
-            ),
-        ),
+        items = items,
         onCategoryMoreButtonClicked = {},
         onCategoryGameClicked = {},
         onRefreshRequested = {},
@@ -148,57 +145,18 @@ internal fun GamesDiscoveryEmptyStatePreview() {
 
 @Preview
 @Composable
-internal fun GamesDiscoverySuccessStatePreview() {
-    val games = listOf(
-        GamesDiscoveryItemGameModel(
-            id = 1,
-            title = "Ghost of Tsushima: Director's Cut",
-            coverUrl = null,
-        ),
-        GamesDiscoveryItemGameModel(
-            id = 2,
-            title = "Outer Wilds: Echoes of the Eye",
-            coverUrl = null,
-        ),
-        GamesDiscoveryItemGameModel(
-            id = 3,
-            title = "Kena: Bridge of Spirits",
-            coverUrl = null,
-        ),
-        GamesDiscoveryItemGameModel(
-            id = 4,
-            title = "Forza Horizon 5",
-            coverUrl = null,
-        ),
-    )
+internal fun GamesDiscoveryEmptyStatePreview() {
+    val items = GamesDiscoveryCategory.values().map { category ->
+        GamesDiscoveryItemModel(
+            category = category.name,
+            title = stringResource(category.titleId),
+            isProgressBarVisible = true,
+            games = emptyList(),
+        )
+    }
 
     GamesDiscovery(
-        items = listOf(
-            GamesDiscoveryItemModel(
-                category = "Popular",
-                title = "Popular",
-                isProgressBarVisible = true,
-                games = games,
-            ),
-            GamesDiscoveryItemModel(
-                category = "Recently Released",
-                title = "Recently Released",
-                isProgressBarVisible = true,
-                games = games,
-            ),
-            GamesDiscoveryItemModel(
-                category = "Coming Soon",
-                title = "Coming Soon",
-                isProgressBarVisible = true,
-                games = games,
-            ),
-            GamesDiscoveryItemModel(
-                category = "Most Anticipated",
-                title = "Most Anticipated",
-                isProgressBarVisible = true,
-                games = games,
-            ),
-        ),
+        items = items,
         onCategoryMoreButtonClicked = {},
         onCategoryGameClicked = {},
         onRefreshRequested = {},

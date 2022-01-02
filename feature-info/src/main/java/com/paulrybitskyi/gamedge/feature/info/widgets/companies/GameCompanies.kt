@@ -49,6 +49,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import coil.bitmap.BitmapPool
 import coil.compose.rememberImagePainter
@@ -282,4 +283,30 @@ private class LogoImageTransformation(
 
         return Color.WHITE
     }
+}
+
+@Preview
+@Composable
+internal fun GameCompaniesPreview() {
+    GameCompanies(
+        companies = listOf(
+            GameCompanyModel(
+                logoContainerSize = 750 to 400,
+                logoImageSize = 0 to 0,
+                logoUrl = null,
+                websiteUrl = "",
+                name = "FromSoftware",
+                roles = "Main Developer",
+            ),
+            GameCompanyModel(
+                logoContainerSize = 500 to 400,
+                logoImageSize = 0 to 0,
+                logoUrl = null,
+                websiteUrl = "",
+                name = "Bandai Namco Entertainment",
+                roles = "Publisher",
+            ),
+        ),
+        onCompanyClicked = {},
+    )
 }

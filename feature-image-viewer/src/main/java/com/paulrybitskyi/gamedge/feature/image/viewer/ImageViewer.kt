@@ -31,6 +31,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
@@ -141,4 +142,22 @@ private fun ImageViewerItem(
             contentScale = ContentScale.Fit,
         )
     }
+}
+
+@Preview
+@Composable
+internal fun ImageViewerPreview() {
+    ImageViewer(
+        uiState = ImageViewerUiState(
+            toolbarTitle = "Image",
+            imageUrls = emptyList(),
+            selectedImageUrlIndex = 0,
+        ),
+        networkStateProvider = object : NetworkStateProvider {
+            override val isNetworkAvailable = true
+        },
+        onToolbarLeftBtnClicked = {},
+        onToolbarRightBtnClicked = {},
+        onImageChanged = {},
+    )
 }

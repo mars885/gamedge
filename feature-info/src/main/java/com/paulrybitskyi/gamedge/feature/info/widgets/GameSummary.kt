@@ -40,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.feature.info.R
 
@@ -103,4 +104,13 @@ internal fun GameSummary(summary: String) {
             )
         }
     }
+}
+
+@Preview
+@Composable
+internal fun GameSummaryCollapsedPreview() {
+    GameSummary(
+        summary = "Elden Ring is an action-RPG open world game with RPG " +
+            "elements such as stats, weapons and spells.",
+    )
 }

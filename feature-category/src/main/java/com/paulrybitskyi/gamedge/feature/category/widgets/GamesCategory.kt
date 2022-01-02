@@ -193,12 +193,11 @@ private fun GamesVerticalGrid(
 private fun RefreshableContent(
     isRefreshing: Boolean,
     modifier: Modifier,
-    onRefreshRequested: (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing),
-        onRefresh = onRefreshRequested ?: {},
+        onRefresh = {},
         modifier = modifier,
         swipeEnabled = false,
         indicator = { state, refreshTrigger ->
@@ -209,6 +208,33 @@ private fun RefreshableContent(
             )
         },
         content = content,
+    )
+}
+
+@Preview
+@Composable
+internal fun GamesCategorySuccessStatePreview() {
+    val games = buildList {
+        repeat(15) { index ->
+            add(
+                GameCategoryModel(
+                    id = index + 1,
+                    title = "Popular Game",
+                    coverUrl = null,
+                )
+            )
+        }
+    }
+
+    GamesCategory(
+        uiState = GamesCategoryUiState(
+            isLoading = false,
+            title = "Popular",
+            games = games,
+        ),
+        onBackButtonClicked = {},
+        onGameClicked = {},
+        onBottomReached = {},
     )
 }
 
@@ -235,33 +261,6 @@ internal fun GamesCategoryLoadingStatePreview() {
             isLoading = true,
             title = "Popular",
             games = emptyList(),
-        ),
-        onBackButtonClicked = {},
-        onGameClicked = {},
-        onBottomReached = {},
-    )
-}
-
-@Preview
-@Composable
-internal fun GamesCategorySuccessStatePreview() {
-    val games = buildList {
-        repeat(15) { index ->
-            add(
-                GameCategoryModel(
-                    id = index + 1,
-                    title = "Popular Game",
-                    coverUrl = null,
-                )
-            )
-        }
-    }
-
-    GamesCategory(
-        uiState = GamesCategoryUiState(
-            isLoading = false,
-            title = "Popular",
-            games = games,
         ),
         onBackButtonClicked = {},
         onGameClicked = {},

@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.model.games
 internal data class GameInfoRelatedGamesModel(
     val type: GameInfoRelatedGamesType,
     val title: String,
-    val items: List<GameInfoRelatedGameModel>
+    val items: List<GameInfoRelatedGameModel>,
 ) {
 
     val hasItems: Boolean

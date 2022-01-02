@@ -33,6 +33,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.navigationBarsPadding
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
@@ -51,6 +52,7 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelate
 import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGamesModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameCompanies
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameHeader
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameHeaderImageModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.isInEmptyState
 import com.paulrybitskyi.gamedge.feature.info.widgets.isInLoadingState
 import com.paulrybitskyi.gamedge.feature.info.widgets.isInSuccessState
@@ -61,6 +63,7 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.mapToInfoCompanyModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.mapToInfoRelatedGameModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.mapToInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.mapToVideoModels
+import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGamesType
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameVideos
 
 @Composable
@@ -321,12 +324,257 @@ private fun LazyListScope.GameRelatedGamesItem(
         GamesCategoryPreview(
             title = model.title,
             isProgressBarVisible = false,
-            isMoreButtonVisible = false,
-            topBarMargin = dimensionResource(R.dimen.game_info_related_games_top_bar_margin),
             games = model.items.mapToCategoryModels(),
             onCategoryGameClicked = {
                 onGameClicked(it.mapToInfoRelatedGameModel())
             },
+            topBarMargin = dimensionResource(R.dimen.game_info_related_games_top_bar_margin),
+            isMoreButtonVisible = false,
         )
     }
+}
+
+// TODO (02.01.2022): Currently, preview height is limited to 2k DP.
+// Try to increase this value in the future to showcase all the UI.
+@Preview(heightDp = 2000)
+@Composable
+internal fun GameInfoSuccessStateWithMaxUiElementsPreview() {
+    GameInfo(
+        uiState = GameInfoUiState(
+            isLoading = false,
+            game = buildFakeGameModel(),
+        ),
+        onArtworkClicked = {},
+        onBackButtonClicked = {},
+        onCoverClicked = {},
+        onLikeButtonClicked = {},
+        onVideoClicked = {},
+        onScreenshotClicked = {},
+        onLinkClicked = {},
+        onCompanyClicked = {},
+        onRelatedGameClicked = {},
+    )
+}
+
+@Preview
+@Composable
+internal fun GameInfoSuccessStateWithMinUiElementsPreview() {
+    val game = buildFakeGameModel()
+    val strippedGame = game.copy(
+        headerModel = game.headerModel.copy(
+            developerName = null,
+            likeCount = "0",
+            gameCategory = "N/A",
+        ),
+        videoModels = emptyList(),
+        screenshotUrls = emptyList(),
+        summary = null,
+        detailsModel = null,
+        linkModels = emptyList(),
+        companyModels = emptyList(),
+        otherCompanyGames = null,
+        similarGames = null,
+    )
+
+    GameInfo(
+        uiState = GameInfoUiState(
+            isLoading = false,
+            game = strippedGame,
+        ),
+        onArtworkClicked = {},
+        onBackButtonClicked = {},
+        onCoverClicked = {},
+        onLikeButtonClicked = {},
+        onVideoClicked = {},
+        onScreenshotClicked = {},
+        onLinkClicked = {},
+        onCompanyClicked = {},
+        onRelatedGameClicked = {},
+    )
+}
+
+@Preview
+@Composable
+internal fun GameInfoEmptyStatePreview() {
+    GameInfo(
+        uiState = GameInfoUiState(
+            isLoading = false,
+            game = null,
+        ),
+        onArtworkClicked = {},
+        onBackButtonClicked = {},
+        onCoverClicked = {},
+        onLikeButtonClicked = {},
+        onVideoClicked = {},
+        onScreenshotClicked = {},
+        onLinkClicked = {},
+        onCompanyClicked = {},
+        onRelatedGameClicked = {},
+    )
+}
+
+@Preview
+@Composable
+internal fun GameInfoLoadingStatePreview() {
+    GameInfo(
+        uiState = GameInfoUiState(
+            isLoading = true,
+            game = null,
+        ),
+        onArtworkClicked = {},
+        onBackButtonClicked = {},
+        onCoverClicked = {},
+        onLikeButtonClicked = {},
+        onVideoClicked = {},
+        onScreenshotClicked = {},
+        onLinkClicked = {},
+        onCompanyClicked = {},
+        onRelatedGameClicked = {},
+    )
+}
+
+private fun buildFakeGameModel(): GameInfoModel {
+    return GameInfoModel(
+        id = 1,
+        headerModel = GameInfoHeaderModel(
+            backgroundImageModels = listOf(GameHeaderImageModel.DefaultImage),
+            isLiked = true,
+            coverImageUrl = null,
+            title = "Elden Ring",
+            releaseDate = "Feb 25, 2022 (in a month)",
+            developerName = "FromSoftware",
+            rating = "N/A",
+            likeCount = "92",
+            ageRating = "N/A",
+            gameCategory = "Main",
+        ),
+        videoModels = listOf(
+            GameInfoVideoModel(
+                thumbnailUrl = "",
+                videoUrl = "",
+                title = "Announcement Trailer",
+            ),
+            GameInfoVideoModel(
+                thumbnailUrl = "",
+                videoUrl = "",
+                title = "Gameplay Trailer",
+            ),
+        ),
+        screenshotUrls = listOf(
+            "screenshot_url_1",
+            "screenshot_url_2",
+        ),
+        summary = "Elden Ring is an action-RPG open world game with RPG " +
+            "elements such as stats, weapons and spells.",
+        detailsModel = GameInfoDetailsModel(
+            genresText = "Role-playing (RPG)",
+            platformsText = "PC (Microsoft Windows) • PlayStation 4 • " +
+                "Xbox One • PlayStation 5 • Xbox Series X|S",
+            modesText = "Single player • Multiplayer • Co-operative",
+            playerPerspectivesText = "Third person",
+            themesText = "Action",
+        ),
+        linkModels = listOf(
+            GameInfoLinkModel(
+                id = 1,
+                text = "Steam",
+                iconId = R.drawable.steam,
+            ),
+            GameInfoLinkModel(
+                id = 2,
+                text = "Official",
+                iconId = R.drawable.web,
+            ),
+            GameInfoLinkModel(
+                id = 3,
+                text = "Twitter",
+                iconId = R.drawable.twitter,
+            ),
+            GameInfoLinkModel(
+                id = 4,
+                text = "Subreddit",
+                iconId = R.drawable.reddit,
+            ),
+            GameInfoLinkModel(
+                id = 5,
+                text = "YouTube",
+                iconId = R.drawable.youtube,
+            ),
+            GameInfoLinkModel(
+                id = 6,
+                text = "Twitch",
+                iconId = R.drawable.twitch,
+            ),
+        ),
+        companyModels = listOf(
+            GameInfoCompanyModel(
+                logoContainerSize = 750 to 400,
+                logoImageSize = 0 to 0,
+                logoUrl = null,
+                websiteUrl = "",
+                name = "FromSoftware",
+                roles = "Main Developer",
+            ),
+            GameInfoCompanyModel(
+                logoContainerSize = 500 to 400,
+                logoImageSize = 0 to 0,
+                logoUrl = null,
+                websiteUrl = "",
+                name = "Bandai Namco Entertainment",
+                roles = "Publisher",
+            ),
+        ),
+        otherCompanyGames = GameInfoRelatedGamesModel(
+            type = GameInfoRelatedGamesType.OTHER_COMPANY_GAMES,
+            title = "More games by FromSoftware",
+            items = listOf(
+                GameInfoRelatedGameModel(
+                    id = 1,
+                    title = "Dark Souls",
+                    coverUrl = null,
+                ),
+                GameInfoRelatedGameModel(
+                    id = 2,
+                    title = "Dark Souls II",
+                    coverUrl = null,
+                ),
+                GameInfoRelatedGameModel(
+                    id = 3,
+                    title = "Lost Kingdoms",
+                    coverUrl = null,
+                ),
+                GameInfoRelatedGameModel(
+                    id = 4,
+                    title = "Lost Kingdoms II",
+                    coverUrl = null,
+                ),
+            ),
+        ),
+        similarGames = GameInfoRelatedGamesModel(
+            type = GameInfoRelatedGamesType.SIMILAR_GAMES,
+            title = "Similar Games",
+            items = listOf(
+                GameInfoRelatedGameModel(
+                    id = 1,
+                    title = "Nights of Azure 2: Bride of the New Moon",
+                    coverUrl = null,
+                ),
+                GameInfoRelatedGameModel(
+                    id = 2,
+                    title = "God Eater 3",
+                    coverUrl = null,
+                ),
+                GameInfoRelatedGameModel(
+                    id = 3,
+                    title = "Shadows: Awakening",
+                    coverUrl = null,
+                ),
+                GameInfoRelatedGameModel(
+                    id = 3,
+                    title = "SoulWorker",
+                    coverUrl = null,
+                ),
+            ),
+        ),
+    )
 }

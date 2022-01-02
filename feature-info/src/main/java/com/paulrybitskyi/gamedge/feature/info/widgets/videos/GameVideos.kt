@@ -51,6 +51,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import coil.compose.rememberImagePainter
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
@@ -180,4 +181,24 @@ private fun GameVideo(
             )
         }
     }
+}
+
+@Preview
+@Composable
+internal fun GameVideosPreview() {
+    GameVideos(
+        videos = listOf(
+            GameVideoModel(
+                thumbnailUrl = "",
+                videoUrl = "",
+                title = "Announcement Trailer",
+            ),
+            GameVideoModel(
+                thumbnailUrl = "",
+                videoUrl = "",
+                title = "Gameplay Trailer",
+            ),
+        ),
+        onVideClicked = {},
+    )
 }

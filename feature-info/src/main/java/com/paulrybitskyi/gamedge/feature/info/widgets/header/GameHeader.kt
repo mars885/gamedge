@@ -56,6 +56,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
@@ -523,5 +524,28 @@ private fun GameArtwork(
                 onClick = onArtworkClicked,
             ),
         contentScale = contentScale,
+    )
+}
+
+@Preview
+@Composable
+internal fun GameHeaderPreview() {
+    GameHeader(
+        headerInfo = GameInfoHeaderModel(
+            backgroundImageModels = listOf(GameHeaderImageModel.DefaultImage),
+            isLiked = true,
+            coverImageUrl = null,
+            title = "Elden Ring",
+            releaseDate = "Feb 25, 2022 (in a month)",
+            developerName = "FromSoftware",
+            rating = "N/A",
+            likeCount = "92",
+            ageRating = "N/A",
+            gameCategory = "Main",
+        ),
+        onArtworkClicked = {},
+        onBackButtonClicked = {},
+        onCoverClicked = {},
+        onLikeButtonClicked = {},
     )
 }

@@ -22,5 +22,5 @@ internal data class GameInfoCompanyModel(
     val logoUrl: String?,
     val websiteUrl: String,
     val name: String,
-    val roles: String
+    val roles: String,
 )

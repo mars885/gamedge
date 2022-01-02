@@ -135,12 +135,11 @@ private fun GamesSuccessState(
 private fun RefreshableContent(
     isRefreshing: Boolean,
     modifier: Modifier,
-    onRefreshRequested: (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing),
-        onRefresh = onRefreshRequested ?: {},
+        onRefresh = {},
         modifier = modifier,
         swipeEnabled = false,
         indicator = { state, refreshTrigger ->
@@ -151,36 +150,6 @@ private fun RefreshableContent(
             )
         },
         content = content,
-    )
-}
-
-@Preview
-@Composable
-internal fun GamesEmptyStatePreview() {
-    Games(
-        uiState = GamesUiState(
-            isLoading = false,
-            infoIconId = 0,
-            infoTitle = "No Liked Games",
-            games = emptyList(),
-        ),
-        onGameClicked = {},
-        onBottomReached = {},
-    )
-}
-
-@Preview
-@Composable
-internal fun GamesLoadingStatePreview() {
-    Games(
-        uiState = GamesUiState(
-            isLoading = true,
-            infoIconId = 0,
-            infoTitle = "",
-            games = emptyList(),
-        ),
-        onGameClicked = {},
-        onBottomReached = {},
     )
 }
 
@@ -220,6 +189,36 @@ internal fun GamesSuccessStatePreview() {
             infoIconId = 0,
             infoTitle = "",
             games = games,
+        ),
+        onGameClicked = {},
+        onBottomReached = {},
+    )
+}
+
+@Preview
+@Composable
+internal fun GamesEmptyStatePreview() {
+    Games(
+        uiState = GamesUiState(
+            isLoading = false,
+            infoIconId = 0,
+            infoTitle = "No Liked Games",
+            games = emptyList(),
+        ),
+        onGameClicked = {},
+        onBottomReached = {},
+    )
+}
+
+@Preview
+@Composable
+internal fun GamesLoadingStatePreview() {
+    Games(
+        uiState = GamesUiState(
+            isLoading = true,
+            infoIconId = 0,
+            infoTitle = "",
+            games = emptyList(),
         ),
         onGameClicked = {},
         onBottomReached = {},

@@ -50,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 
@@ -203,4 +204,22 @@ private fun SearchToolbarClearButton(
             onClick = onClearButtonClicked,
         )
     }
+}
+
+@Preview
+@Composable
+internal fun SearchToolbarWithQueryPreview() {
+    SearchToolbar(
+        queryText = "God of War",
+        placeholderText = "Search games",
+    )
+}
+
+@Preview
+@Composable
+internal fun SearchToolbarWithoutQueryPreview() {
+    SearchToolbar(
+        queryText = "",
+        placeholderText = "Search games",
+    )
 }

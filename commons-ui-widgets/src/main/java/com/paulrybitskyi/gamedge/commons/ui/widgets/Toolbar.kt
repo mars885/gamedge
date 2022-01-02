@@ -111,7 +111,7 @@ private fun getTitleHorizontalPadding(icon: Painter?): Dp {
 private fun ToolbarButton(
     icon: Painter,
     iconColor: Color = colorResource(R.color.toolbar_button_icon_color),
-    onClick: (() -> Unit)? = null
+    onClick: () -> Unit,
 ) {
     IconButton(
         modifier = Modifier.size(dimensionResource(R.dimen.toolbar_height)),
