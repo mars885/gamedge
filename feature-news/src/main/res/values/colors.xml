@@ -18,13 +18,16 @@
 
 <resources>
 
+    <!-- GamingNewsItemImage -->
     <color name="gaming_news_item_image_card_background_color">@android:color/transparent</color>
 
+    <!-- GamingNewsItem -->
     <color name="gaming_news_item_card_background_color">@color/colorPrimaryDark</color>
     <color name="gaming_news_item_title_text_color">@color/colorPrimaryText</color>
     <color name="gaming_news_item_lede_text_color">@color/colorSecondaryText</color>
     <color name="gaming_news_item_publication_date_text_color">@color/colorSecondaryText</color>
 
-    <color name="gaming_news_swipe_refresh_color">@color/colorAccent</color>
+    <!-- GamingNews -->
+    <color name="gaming_news_swipe_indicator_color">@color/colorAccent</color>
 
 </resources>

@@ -85,8 +85,8 @@ internal fun GameCompanies(
             Text(
                 text = stringResource(R.string.game_companies_title),
                 modifier = Modifier
-                    .padding(bottom = dimensionResource(R.dimen.game_companies_title_margin_bottom))
-                    .padding(horizontal = dimensionResource(R.dimen.game_companies_title_margin)),
+                    .padding(bottom = dimensionResource(R.dimen.game_companies_title_padding_bottom))
+                    .padding(horizontal = dimensionResource(R.dimen.game_companies_title_padding)),
                 color = colorResource(R.color.game_companies_title_text_color),
                 fontSize = textSizeResource(R.dimen.game_companies_title_text_size),
                 fontFamily = FontFamily.SansSerif,
@@ -95,7 +95,7 @@ internal fun GameCompanies(
 
             LazyRow(
                 contentPadding = PaddingValues(
-                    horizontal = dimensionResource(R.dimen.game_companies_recycler_view_horizontal_content_padding),
+                    horizontal = dimensionResource(R.dimen.game_companies_horizontal_content_padding),
                 ),
                 horizontalArrangement = Arrangement.spacedBy(
                     dimensionResource(R.dimen.game_companies_horizontal_arrangement),

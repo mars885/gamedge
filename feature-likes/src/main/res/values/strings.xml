@@ -18,6 +18,7 @@
 
 <resources>
 
+    <!-- LikedGames -->
     <string name="liked_games_info_title">You haven\'t liked any games yet</string>
 
 </resources>

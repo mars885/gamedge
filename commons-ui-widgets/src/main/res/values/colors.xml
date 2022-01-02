@@ -42,6 +42,6 @@
     <color name="game_details_text_color">@color/colorSecondaryText</color>
 
     <!-- Games -->
-    <color name="games_swipe_refresh_color">@color/colorAccent</color>
+    <color name="games_swipe_indicator_color">@color/colorAccent</color>
 
 </resources>

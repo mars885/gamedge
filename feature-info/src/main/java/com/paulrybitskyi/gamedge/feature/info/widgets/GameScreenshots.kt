@@ -66,8 +66,8 @@ internal fun GameScreenshots(
             Text(
                 text = stringResource(R.string.game_screenshots_title),
                 modifier = Modifier
-                    .padding(bottom = dimensionResource(R.dimen.game_screenshots_title_margin_bottom))
-                    .padding(horizontal = dimensionResource(R.dimen.game_screenshots_title_margin)),
+                    .padding(bottom = dimensionResource(R.dimen.game_screenshots_title_padding_bottom))
+                    .padding(horizontal = dimensionResource(R.dimen.game_screenshots_title_padding)),
                 color = colorResource(R.color.game_screenshots_title_text_color),
                 fontSize = textSizeResource(R.dimen.game_screenshots_title_text_size),
                 fontFamily = FontFamily.SansSerif,
@@ -76,7 +76,7 @@ internal fun GameScreenshots(
 
             LazyRow(
                 contentPadding = PaddingValues(
-                    horizontal = dimensionResource(R.dimen.game_screenshots_recycler_view_horizontal_content_padding),
+                    horizontal = dimensionResource(R.dimen.game_screenshots_horizontal_content_padding),
                 ),
                 horizontalArrangement = Arrangement.spacedBy(
                     dimensionResource(R.dimen.game_screenshots_horizontal_arrangement),

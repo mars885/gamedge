@@ -114,7 +114,7 @@ private fun GameInfoEmptyState(modifier: Modifier) {
         icon = painterResource(R.drawable.gamepad_variant_outline),
         title = stringResource(R.string.game_info_info_view_title),
         modifier = modifier.padding(
-            horizontal = dimensionResource(R.dimen.game_info_info_view_horizontal_margin)
+            horizontal = dimensionResource(R.dimen.game_info_info_view_horizontal_padding)
         ),
         iconColor = colorResource(R.color.colorInfoView),
         titleTextColor = colorResource(R.color.colorInfoView),
@@ -163,11 +163,11 @@ private fun GameInfoContent(
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
-    val decoratorSpacing = dimensionResource(R.dimen.game_info_decorator_spacing)
+    val arrangementSpacing = dimensionResource(R.dimen.game_info_vertical_arrangement_spacing)
 
     LazyColumn(
         modifier = Modifier.navigationBarsPadding(),
-        verticalArrangement = Arrangement.spacedBy(decoratorSpacing),
+        verticalArrangement = Arrangement.spacedBy(arrangementSpacing),
     ) {
         GameHeaderItem(
             model = gameInfo.headerModel,

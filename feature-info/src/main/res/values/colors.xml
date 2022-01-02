@@ -50,8 +50,8 @@
     <!-- GameLinks -->
     <color name="game_links_card_background_color">@color/colorPrimaryDark</color>
     <color name="game_links_title_text_color">@color/colorPrimaryText</color>
-    <color name="game_links_chip_background_color">#1D212B</color>
-    <color name="game_links_chip_content_color">@color/colorSecondaryText</color>
+    <color name="game_links_item_background_color">#1D212B</color>
+    <color name="game_links_item_content_color">@color/colorSecondaryText</color>
 
     <!-- GameCompany -->
     <color name="game_company_card_background_color">@android:color/transparent</color>

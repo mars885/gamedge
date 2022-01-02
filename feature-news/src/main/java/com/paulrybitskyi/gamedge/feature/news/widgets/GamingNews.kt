@@ -93,7 +93,7 @@ private fun GamingNewsEmptyState(modifier: Modifier) {
             icon = painterResource(R.drawable.newspaper_variant_outline),
             title = stringResource(R.string.gaming_news_info_view_title),
             modifier = Modifier.padding(
-                horizontal = dimensionResource(R.dimen.gaming_news_info_view_horizontal_margin)
+                horizontal = dimensionResource(R.dimen.gaming_news_info_view_horizontal_padding)
             ),
             iconColor = colorResource(R.color.colorInfoView),
             titleTextColor = colorResource(R.color.colorInfoView)
@@ -116,7 +116,7 @@ private fun RefreshableContent(
             SwipeRefreshIndicator(
                 state = state,
                 refreshTriggerDistance = refreshTrigger,
-                contentColor = colorResource(R.color.gaming_news_swipe_refresh_color)
+                contentColor = colorResource(R.color.gaming_news_swipe_indicator_color)
             )
         },
         content = content,

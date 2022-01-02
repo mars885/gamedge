@@ -102,7 +102,7 @@ private fun GamesEmptyState(modifier: Modifier) {
         icon = painterResource(R.drawable.gamepad_variant_outline),
         title = stringResource(R.string.games_category_info_view_title),
         modifier = modifier.padding(
-            horizontal = dimensionResource(R.dimen.games_category_info_view_horizontal_margin),
+            horizontal = dimensionResource(R.dimen.games_category_info_view_horizontal_padding),
         ),
         iconColor = colorResource(R.color.colorInfoView),
         titleTextColor = colorResource(R.color.colorInfoView)
@@ -205,7 +205,7 @@ private fun RefreshableContent(
             SwipeRefreshIndicator(
                 state = state,
                 refreshTriggerDistance = refreshTrigger,
-                contentColor = colorResource(R.color.games_category_swipe_refresh_color)
+                contentColor = colorResource(R.color.games_category_swipe_indicator_color)
             )
         },
         content = content,

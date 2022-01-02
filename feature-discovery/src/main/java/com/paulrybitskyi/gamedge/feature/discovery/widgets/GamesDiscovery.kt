@@ -75,7 +75,7 @@ internal fun GamesDiscovery(
                 SwipeRefreshIndicator(
                     state = state,
                     refreshTriggerDistance = refreshTrigger,
-                    contentColor = colorResource(R.color.games_discovery_swipe_refresh_color),
+                    contentColor = colorResource(R.color.games_discovery_swipe_indicator_color),
                 )
             },
             content = {

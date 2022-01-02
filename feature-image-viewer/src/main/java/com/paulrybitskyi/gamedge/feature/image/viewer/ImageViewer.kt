@@ -128,7 +128,7 @@ private fun ImageViewerItem(
                 ),
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(horizontal = dimensionResource(R.dimen.image_viewer_item_info_view_horizontal_margin)),
+                    .padding(horizontal = dimensionResource(R.dimen.image_viewer_item_info_view_horizontal_padding)),
                 iconColor = colorResource(R.color.colorInfoView),
                 titleTextColor = colorResource(R.color.colorInfoView),
             )

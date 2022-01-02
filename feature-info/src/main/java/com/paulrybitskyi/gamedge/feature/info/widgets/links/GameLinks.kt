@@ -55,12 +55,12 @@ internal fun GameLinks(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.game_links_container_margin)),
+                .padding(dimensionResource(R.dimen.game_links_container_padding)),
         ) {
             Text(
                 text = stringResource(R.string.game_links_title),
                 modifier = Modifier.padding(
-                    bottom = dimensionResource(R.dimen.game_links_title_margin),
+                    bottom = dimensionResource(R.dimen.game_links_title_padding),
                 ),
                 color = colorResource(R.color.game_links_title_text_color),
                 fontSize = textSizeResource(R.dimen.game_links_title_text_size),
@@ -91,18 +91,18 @@ private fun GameLink(
     Card(
         onClick = onLinkClicked,
         shape = RoundedCornerShape(
-            dimensionResource(R.dimen.chip_flow_default_item_background_corner_radius)
+            dimensionResource(R.dimen.game_links_item_corner_radius)
         ),
-        backgroundColor = colorResource(R.color.game_links_chip_background_color),
-        elevation = dimensionResource(R.dimen.chip_flow_item_background_shadow_dy),
+        backgroundColor = colorResource(R.color.game_links_item_background_color),
+        elevation = dimensionResource(R.dimen.game_links_item_elevation),
         indication = rememberRipple(),
     ) {
         Row(
             modifier = Modifier
-                .padding(vertical = dimensionResource(R.dimen.game_links_chip_padding_vertical))
+                .padding(vertical = dimensionResource(R.dimen.game_links_item_padding_vertical))
                 .padding(
-                    start = dimensionResource(R.dimen.game_links_chip_padding_start),
-                    end = dimensionResource(R.dimen.game_links_chip_padding_end),
+                    start = dimensionResource(R.dimen.game_links_item_padding_start),
+                    end = dimensionResource(R.dimen.game_links_item_padding_end),
                 ),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -110,17 +110,17 @@ private fun GameLink(
                 painter = painterResource(link.iconId),
                 contentDescription = null,
                 modifier = Modifier.size(
-                    dimensionResource(R.dimen.chip_flow_default_item_icon_size)
+                    dimensionResource(R.dimen.game_links_item_icon_size)
                 ),
-                tint = colorResource(R.color.game_links_chip_content_color),
+                tint = colorResource(R.color.game_links_item_content_color),
             )
             Text(
                 text = link.text,
                 modifier = Modifier.padding(
-                    start = dimensionResource(R.dimen.game_links_chip_text_padding_start),
+                    start = dimensionResource(R.dimen.game_links_item_text_padding_start),
                 ),
-                color = colorResource(R.color.game_links_chip_content_color),
-                fontSize = textSizeResource(R.dimen.game_links_chip_text_size),
+                color = colorResource(R.color.game_links_item_content_color),
+                fontSize = textSizeResource(R.dimen.game_links_item_text_size),
             )
         }
     }

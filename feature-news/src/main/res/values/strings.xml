@@ -18,6 +18,7 @@
 
 <resources>
 
+    <!-- GamingNews -->
     <string name="gaming_news_info_view_title">No News Available</string>
 
 </resources>

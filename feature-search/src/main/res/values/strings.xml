@@ -18,6 +18,7 @@
 
 <resources>
 
+    <!-- GamesSearch -->
     <string name="games_search_toolbar_hint">Search games</string>
     <string name="games_search_info_title_default">Search for specific games</string>
     <string name="games_search_info_title_empty">No games found for\n\"%s\"</string>

@@ -107,7 +107,7 @@ private fun GameDetailsContent(
         Text(
             text = name,
             modifier = Modifier.padding(
-                start = dimensionResource(R.dimen.game_name_margin_left),
+                start = dimensionResource(R.dimen.game_name_padding_start),
             ),
             color = colorResource(R.color.game_name_text_color),
             fontSize = textSizeResource(R.dimen.game_name_text_size),
@@ -121,8 +121,8 @@ private fun GameDetailsContent(
             text = releaseDate,
             modifier = Modifier
                 .padding(
-                    top = dimensionResource(R.dimen.game_details_margin_top),
-                    start = dimensionResource(R.dimen.game_details_margin_start),
+                    top = dimensionResource(R.dimen.game_details_padding_top),
+                    start = dimensionResource(R.dimen.game_details_padding_start),
                 ),
             color = colorResource(R.color.game_details_text_color),
             fontSize = textSizeResource(R.dimen.game_details_text_size),
@@ -134,7 +134,7 @@ private fun GameDetailsContent(
             Text(
                 text = developerName,
                 modifier = Modifier.padding(
-                    start = dimensionResource(R.dimen.game_details_margin_start)
+                    start = dimensionResource(R.dimen.game_details_padding_start)
                 ),
                 color = colorResource(R.color.game_details_text_color),
                 fontSize = textSizeResource(R.dimen.game_details_text_size),
@@ -158,8 +158,8 @@ private fun GameDetailsDescription(description: String) {
         modifier = Modifier
             .fillMaxHeight()
             .padding(
-                top = dimensionResource(R.dimen.game_details_margin_top),
-                start = dimensionResource(R.dimen.game_details_margin_start),
+                top = dimensionResource(R.dimen.game_details_padding_top),
+                start = dimensionResource(R.dimen.game_details_padding_start),
             ),
         color = colorResource(R.color.game_details_text_color),
         fontSize = textSizeResource(R.dimen.game_details_text_size),

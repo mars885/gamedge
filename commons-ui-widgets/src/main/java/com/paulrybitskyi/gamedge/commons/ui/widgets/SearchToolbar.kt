@@ -145,7 +145,7 @@ private fun SearchToolbarInput(
         value = queryText,
         onValueChange = onQueryChanged,
         modifier = modifier
-            .padding(horizontal = dimensionResource(R.dimen.search_toolbar_query_input_horizontal_margin))
+            .padding(horizontal = dimensionResource(R.dimen.search_toolbar_query_input_horizontal_padding))
             .focusRequester(focusRequester),
         textStyle = LocalTextStyle.current.copy(
             color = titleTextColor,

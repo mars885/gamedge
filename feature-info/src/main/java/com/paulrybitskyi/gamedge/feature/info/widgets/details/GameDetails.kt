@@ -50,11 +50,11 @@ internal fun GameDetails(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.game_details_container_margin)),
+                .padding(dimensionResource(R.dimen.game_details_container_padding)),
         ) {
             GameDetailsTitle(
                 modifier = Modifier.padding(
-                    bottom = dimensionResource(R.dimen.game_details_title_margin_bottom)
+                    bottom = dimensionResource(R.dimen.game_details_title_padding_bottom)
                 ),
             )
 
@@ -97,7 +97,7 @@ private fun GameDetailsTitle(modifier: Modifier) {
 private fun GameDetailsGenresSection(genres: String) {
     Text(
         text = stringResource(R.string.game_details_genres_title),
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_margin_top)),
+        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
         color = colorResource(R.color.game_details_title_text_color),
         fontSize = textSizeResource(R.dimen.game_details_category_title_text_size),
         fontFamily = FontFamily.SansSerif,
@@ -105,7 +105,7 @@ private fun GameDetailsGenresSection(genres: String) {
     )
     Text(
         text = genres,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_margin_top)),
+        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
         color = colorResource(R.color.game_details_category_title_text_color),
         fontSize = textSizeResource(R.dimen.game_details_category_value_text_size),
         lineHeight = textSizeResource(R.dimen.game_details_category_value_line_height),
@@ -116,7 +116,7 @@ private fun GameDetailsGenresSection(genres: String) {
 private fun GameDetailsPlatformsSection(platforms: String) {
     Text(
         text = stringResource(R.string.game_details_platforms_title),
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_margin_top)),
+        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
         color = colorResource(R.color.game_details_title_text_color),
         fontSize = textSizeResource(R.dimen.game_details_category_title_text_size),
         fontFamily = FontFamily.SansSerif,
@@ -124,7 +124,7 @@ private fun GameDetailsPlatformsSection(platforms: String) {
     )
     Text(
         text = platforms,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_margin_top)),
+        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
         color = colorResource(R.color.game_details_category_title_text_color),
         fontSize = textSizeResource(R.dimen.game_details_category_value_text_size),
         lineHeight = textSizeResource(R.dimen.game_details_category_value_line_height),
@@ -135,7 +135,7 @@ private fun GameDetailsPlatformsSection(platforms: String) {
 private fun GameDetailsModesSection(modes: String) {
     Text(
         text = stringResource(R.string.game_details_modes_title),
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_margin_top)),
+        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
         color = colorResource(R.color.game_details_title_text_color),
         fontSize = textSizeResource(R.dimen.game_details_category_title_text_size),
         fontFamily = FontFamily.SansSerif,
@@ -143,7 +143,7 @@ private fun GameDetailsModesSection(modes: String) {
     )
     Text(
         text = modes,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_margin_top)),
+        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
         color = colorResource(R.color.game_details_category_title_text_color),
         fontSize = textSizeResource(R.dimen.game_details_category_value_text_size),
         lineHeight = textSizeResource(R.dimen.game_details_category_value_line_height),
@@ -154,7 +154,7 @@ private fun GameDetailsModesSection(modes: String) {
 private fun GameDetailsPlayerPerspectivesSection(playerPerspectives: String) {
     Text(
         text = stringResource(R.string.game_details_player_perspectives_title),
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_margin_top)),
+        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
         color = colorResource(R.color.game_details_title_text_color),
         fontSize = textSizeResource(R.dimen.game_details_category_title_text_size),
         fontFamily = FontFamily.SansSerif,
@@ -162,7 +162,7 @@ private fun GameDetailsPlayerPerspectivesSection(playerPerspectives: String) {
     )
     Text(
         text = playerPerspectives,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_margin_top)),
+        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
         color = colorResource(R.color.game_details_category_title_text_color),
         fontSize = textSizeResource(R.dimen.game_details_category_value_text_size),
         lineHeight = textSizeResource(R.dimen.game_details_category_value_line_height),
@@ -173,7 +173,7 @@ private fun GameDetailsPlayerPerspectivesSection(playerPerspectives: String) {
 private fun GameDetailsThemesSection(themes: String) {
     Text(
         text = stringResource(R.string.game_details_themes_title),
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_margin_top)),
+        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
         color = colorResource(R.color.game_details_title_text_color),
         fontSize = textSizeResource(R.dimen.game_details_category_title_text_size),
         fontFamily = FontFamily.SansSerif,
@@ -181,7 +181,7 @@ private fun GameDetailsThemesSection(themes: String) {
     )
     Text(
         text = themes,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_margin_top)),
+        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
         color = colorResource(R.color.game_details_category_title_text_color),
         fontSize = textSizeResource(R.dimen.game_details_category_value_text_size),
         lineHeight = textSizeResource(R.dimen.game_details_category_value_line_height),

@@ -72,10 +72,10 @@ internal fun GameSummary(summary: String) {
                 text = stringResource(R.string.game_summary_title),
                 modifier = Modifier
                     .padding(
-                        top = dimensionResource(R.dimen.game_summary_title_margin),
-                        bottom = dimensionResource(R.dimen.game_summary_title_margin_bottom)
+                        top = dimensionResource(R.dimen.game_summary_title_padding),
+                        bottom = dimensionResource(R.dimen.game_summary_title_padding_bottom)
                     )
-                    .padding(horizontal = dimensionResource(R.dimen.game_summary_title_margin)),
+                    .padding(horizontal = dimensionResource(R.dimen.game_summary_title_padding)),
                 color = colorResource(R.color.game_summary_title_text_color),
                 fontSize = textSizeResource(R.dimen.game_summary_title_text_size),
                 fontFamily = FontFamily.SansSerif,
@@ -85,8 +85,8 @@ internal fun GameSummary(summary: String) {
                 text = summary,
                 modifier = Modifier
                     .animateContentSize(animationSpec = tween(durationMillis = ANIMATION_DURATION))
-                    .padding(horizontal = dimensionResource(R.dimen.game_summary_content_margin))
-                    .padding(bottom = dimensionResource(R.dimen.game_summary_content_margin)),
+                    .padding(horizontal = dimensionResource(R.dimen.game_summary_content_padding))
+                    .padding(bottom = dimensionResource(R.dimen.game_summary_content_padding)),
                 color = colorResource(R.color.game_summary_content_text_color),
                 fontSize = textSizeResource(R.dimen.game_summary_content_text_size),
                 fontFamily = FontFamily.SansSerif,

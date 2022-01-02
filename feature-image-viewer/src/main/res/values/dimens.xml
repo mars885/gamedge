@@ -18,7 +18,7 @@
 
 <resources>
 
-    <dimen name="image_viewer_item_info_view_horizontal_margin">30dp</dimen>
+    <dimen name="image_viewer_item_info_view_horizontal_padding">30dp</dimen>
     <dimen name="image_viewer_pager_item_spacing">8dp</dimen>
 
 </resources>

@@ -230,8 +230,8 @@ private fun GamesCategoryPreviewSuccessState(
     modifier: Modifier,
     onCategoryGameClicked: (GamesCategoryPreviewItemModel) -> Unit,
 ) {
-    val horizontalPadding = dimensionResource(R.dimen.games_category_preview_recycler_view_horizontal_padding)
-    val bottomPadding = dimensionResource(R.dimen.games_category_preview_recycler_view_bottom_padding)
+    val horizontalPadding = dimensionResource(R.dimen.games_category_preview_padding_horizontal)
+    val bottomPadding = dimensionResource(R.dimen.games_category_preview_padding_bottom)
 
     LazyRow(
         modifier = modifier,

@@ -58,7 +58,7 @@ fun Info(
             contentDescription = null,
             tint = iconColor
         )
-        Spacer(Modifier.height(dimensionResource(R.dimen.info_view_title_margin_top)))
+        Spacer(Modifier.height(dimensionResource(R.dimen.info_view_vertical_spacing)))
         Text(
             text = title,
             color = titleTextColor,

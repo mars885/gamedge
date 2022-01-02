@@ -18,6 +18,6 @@
 
 <resources>
 
-    <color name="games_discovery_swipe_refresh_color">@color/colorAccent</color>
+    <color name="games_discovery_swipe_indicator_color">@color/colorAccent</color>
 
 </resources>

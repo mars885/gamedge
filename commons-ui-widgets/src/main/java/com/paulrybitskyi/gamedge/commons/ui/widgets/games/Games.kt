@@ -82,7 +82,7 @@ private fun GamesEmptyState(
         icon = painterResource(uiState.infoIconId),
         title = uiState.infoTitle,
         modifier = modifier.padding(
-            horizontal = dimensionResource(R.dimen.games_info_view_horizontal_margin)
+            horizontal = dimensionResource(R.dimen.games_info_view_horizontal_padding)
         ),
         iconColor = colorResource(R.color.colorInfoView),
         titleTextColor = colorResource(R.color.colorInfoView)
@@ -104,7 +104,9 @@ private fun GamesSuccessState(
         val lastIndex = games.lastIndex
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.games_decorator_spacing))
+            verticalArrangement = Arrangement.spacedBy(
+                dimensionResource(R.dimen.games_vertical_arrangement_spacing)
+            )
         ) {
             itemsIndexed(
                 items = games,
@@ -145,7 +147,7 @@ private fun RefreshableContent(
             SwipeRefreshIndicator(
                 state = state,
                 refreshTriggerDistance = refreshTrigger,
-                contentColor = colorResource(R.color.games_swipe_refresh_color)
+                contentColor = colorResource(R.color.games_swipe_indicator_color)
             )
         },
         content = content,

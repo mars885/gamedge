@@ -72,7 +72,7 @@ internal fun GamingNewsItem(
                     imageUrl = imageUrl,
                     modifier = Modifier
                         .height(dimensionResource(R.dimen.gaming_news_item_image_height))
-                        .padding(bottom = dimensionResource(R.dimen.gaming_news_item_image_margin_bottom))
+                        .padding(bottom = dimensionResource(R.dimen.gaming_news_item_image_padding_bottom))
                 )
             }
 
@@ -88,7 +88,7 @@ internal fun GamingNewsItem(
                 text = lede,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = dimensionResource(R.dimen.gaming_news_item_lede_margin_top)),
+                    .padding(top = dimensionResource(R.dimen.gaming_news_item_lede_padding_top)),
                 color = colorResource(R.color.gaming_news_item_lede_text_color),
                 fontSize = textSizeResource(R.dimen.gaming_news_item_lede_text_size),
                 fontFamily = FontFamily.SansSerif,
@@ -131,7 +131,7 @@ private fun GamingNewsItemImage(
 private fun GamingNewsItemTimestamp(publicationDate: String) {
     Row(
         modifier = Modifier.padding(
-            top = dimensionResource(R.dimen.gaming_news_item_publication_date_margin_top)
+            top = dimensionResource(R.dimen.gaming_news_item_publication_date_padding_top)
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
