@@ -55,7 +55,7 @@ import com.paulrybitskyi.gamedge.feature.category.R
 
 @Composable
 internal fun GamesCategory(
-    viewState: GamesCategoryViewState,
+    uiState: GamesCategoryUiState,
     onBackButtonClicked: () -> Unit,
     onGameClicked: (GameCategoryModel) -> Unit,
     onBottomReached: () -> Unit,
@@ -63,7 +63,7 @@ internal fun GamesCategory(
     Column(modifier = Modifier.fillMaxSize()) {
         ProvideWindowInsets {
             Toolbar(
-                title = viewState.title,
+                title = uiState.title,
                 modifier = Modifier.statusBarsPadding(),
                 leftButtonIcon = painterResource(R.drawable.arrow_left),
                 onLeftButtonClick = onBackButtonClicked,
@@ -76,10 +76,10 @@ internal fun GamesCategory(
                 .background(colorResource(R.color.colorContentContainer))
         ) {
             when {
-                viewState.isInLoadingState -> GamesLoadingState(Modifier.align(Alignment.Center))
-                viewState.isInEmptyState -> GamesEmptyState(Modifier.align(Alignment.Center))
-                viewState.isInSuccessState -> GamesSuccessState(
-                    viewState = viewState,
+                uiState.isInLoadingState -> GamesLoadingState(Modifier.align(Alignment.Center))
+                uiState.isInEmptyState -> GamesEmptyState(Modifier.align(Alignment.Center))
+                uiState.isInSuccessState -> GamesSuccessState(
+                    uiState = uiState,
                     modifier = Modifier
                         .matchParentSize()
                         .navigationBarsPadding(),
@@ -114,17 +114,17 @@ private fun GamesEmptyState(modifier: Modifier) {
 
 @Composable
 private fun GamesSuccessState(
-    viewState: GamesCategoryViewState,
+    uiState: GamesCategoryUiState,
     modifier: Modifier,
     onGameClicked: (GameCategoryModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
     RefreshableContent(
-        isRefreshing = viewState.isInRefreshingState,
+        isRefreshing = uiState.isInRefreshingState,
         modifier = modifier,
     ) {
         GamesVerticalGrid(
-            games = viewState.games,
+            games = uiState.games,
             onGameClicked = onGameClicked,
             onBottomReached = onBottomReached,
         )
@@ -219,7 +219,7 @@ private fun RefreshableContent(
 @Composable
 internal fun GamesCategoryEmptyStatePreview() {
     GamesCategory(
-        viewState = GamesCategoryViewState(
+        uiState = GamesCategoryUiState(
             isLoading = false,
             title = "Popular",
             games = emptyList(),
@@ -234,7 +234,7 @@ internal fun GamesCategoryEmptyStatePreview() {
 @Composable
 internal fun GamesCategoryLoadingStatePreview() {
     GamesCategory(
-        viewState = GamesCategoryViewState(
+        uiState = GamesCategoryUiState(
             isLoading = true,
             title = "Popular",
             games = emptyList(),
@@ -261,7 +261,7 @@ internal fun GamesCategorySuccessStatePreview() {
     }
 
     GamesCategory(
-        viewState = GamesCategoryViewState(
+        uiState = GamesCategoryUiState(
             isLoading = false,
             title = "Popular",
             games = games,

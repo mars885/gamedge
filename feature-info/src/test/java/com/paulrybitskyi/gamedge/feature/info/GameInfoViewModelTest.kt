@@ -101,7 +101,7 @@ internal class GameInfoViewModelTest {
         mainCoroutineRule.runBlockingTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
-            SUT.viewState.test {
+            SUT.uiState.test {
                 SUT.loadData(resultEmissionDelay = 0L)
 
                 assertThat(awaitItem() is GameInfoUiState.Empty).isTrue

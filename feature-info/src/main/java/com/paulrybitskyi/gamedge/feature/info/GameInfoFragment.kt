@@ -38,7 +38,7 @@ internal class GameInfoFragment : BaseComposeFragment<GameInfoViewModel, GameInf
 
     override fun getContent() = @Composable {
         GameInfo(
-            viewState = viewModel.viewState.collectAsState().value,
+            uiState = viewModel.uiState.collectAsState().value,
             onArtworkClicked = viewModel::onArtworkClicked,
             onBackButtonClicked = viewModel::onBackButtonClicked,
             onCoverClicked = viewModel::onCoverClicked,

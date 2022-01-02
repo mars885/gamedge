@@ -30,7 +30,7 @@ internal class GamesSearchFragment : BaseComposeFragment<GamesSearchViewModel, G
 
     override fun getContent() = @Composable {
         GamesSearch(
-            viewState = viewModel.uiState.collectAsState().value,
+            uiState = viewModel.uiState.collectAsState().value,
             onSearchActionRequested = viewModel::onSearchActionRequested,
             onBackButtonClicked = viewModel::onToolbarBackButtonClicked,
             onClearButtonClicked = viewModel::onToolbarClearButtonClicked,

@@ -16,21 +16,21 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
-data class GamesViewState(
+data class GamesUiState(
     val isLoading: Boolean,
     val infoIconId: Int,
     val infoTitle: String,
     val games: List<GameModel>,
 )
 
-val GamesViewState.isInEmptyState: Boolean
+val GamesUiState.isInEmptyState: Boolean
     get() = (!isLoading && games.isEmpty())
 
-val GamesViewState.isInLoadingState: Boolean
+val GamesUiState.isInLoadingState: Boolean
     get() = (isLoading && games.isEmpty())
 
-val GamesViewState.isInRefreshingState: Boolean
+val GamesUiState.isInRefreshingState: Boolean
     get() = (isLoading && games.isNotEmpty())
 
-val GamesViewState.isInSuccessState: Boolean
+val GamesUiState.isInSuccessState: Boolean
     get() = games.isNotEmpty()

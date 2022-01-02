@@ -41,7 +41,7 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoCompanyModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoLinkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGameModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.GameInfoViewState
+import com.paulrybitskyi.gamedge.feature.info.widgets.GameInfoUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
@@ -79,13 +79,13 @@ internal class GameInfoViewModel @Inject constructor(
 
     private val relatedGamesUseCasePagination = Pagination()
 
-    private val _viewState = MutableStateFlow(GameInfoViewState(isLoading = false, game = null))
+    private val _uiState = MutableStateFlow(GameInfoUiState(isLoading = false, game = null))
 
-    private val currentViewState: GameInfoViewState
-        get() = _viewState.value
+    private val currentUiState: GameInfoUiState
+        get() = _uiState.value
 
-    val viewState: StateFlow<GameInfoViewState>
-        get() = _viewState
+    val uiState: StateFlow<GameInfoUiState>
+        get() = _uiState
 
     fun loadData(resultEmissionDelay: Long) {
         observeGameData(resultEmissionDelay)
@@ -118,19 +118,19 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .flowOn(dispatcherProvider.computation)
-            .map { game -> currentViewState.copy(isLoading = false, game = game) }
+            .map { game -> currentUiState.copy(isLoading = false, game = game) }
             .onError {
                 logger.error(logTag, "Failed to load game info data.", it)
                 dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                emit(currentViewState.copy(isLoading = false, game = null))
+                emit(currentUiState.copy(isLoading = false, game = null))
             }
             .onStart {
                 isObservingGameData = true
-                emit(currentViewState.copy(isLoading = true))
+                emit(currentUiState.copy(isLoading = true))
                 delay(resultEmissionDelay)
             }
             .onCompletion { isObservingGameData = false }
-            .collect { _viewState.value = it }
+            .collect { _uiState.value = it }
     }
 
     private suspend fun getGame(): Flow<Game> {

@@ -40,7 +40,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 
 @Composable
 fun Games(
-    viewState: GamesViewState,
+    uiState: GamesUiState,
     onGameClicked: (GameModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
@@ -50,13 +50,13 @@ fun Games(
             .background(colorResource(R.color.colorContentContainer))
     ) {
         when {
-            viewState.isInLoadingState -> GamesLoadingState(Modifier.align(Alignment.Center))
-            viewState.isInEmptyState -> GamesEmptyState(
-                viewState = viewState,
+            uiState.isInLoadingState -> GamesLoadingState(Modifier.align(Alignment.Center))
+            uiState.isInEmptyState -> GamesEmptyState(
+                uiState = uiState,
                 modifier = Modifier.align(Alignment.Center)
             )
-            viewState.isInSuccessState -> GamesSuccessState(
-                viewState = viewState,
+            uiState.isInSuccessState -> GamesSuccessState(
+                uiState = uiState,
                 modifier = Modifier.matchParentSize(),
                 onGameClicked = onGameClicked,
                 onBottomReached = onBottomReached,
@@ -75,12 +75,12 @@ private fun GamesLoadingState(modifier: Modifier) {
 
 @Composable
 private fun GamesEmptyState(
-    viewState: GamesViewState,
+    uiState: GamesUiState,
     modifier: Modifier,
 ) {
     Info(
-        icon = painterResource(viewState.infoIconId),
-        title = viewState.infoTitle,
+        icon = painterResource(uiState.infoIconId),
+        title = uiState.infoTitle,
         modifier = modifier.padding(
             horizontal = dimensionResource(R.dimen.games_info_view_horizontal_margin)
         ),
@@ -91,16 +91,16 @@ private fun GamesEmptyState(
 
 @Composable
 private fun GamesSuccessState(
-    viewState: GamesViewState,
+    uiState: GamesUiState,
     modifier: Modifier,
     onGameClicked: (GameModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
     RefreshableContent(
-        isRefreshing = viewState.isInRefreshingState,
+        isRefreshing = uiState.isInRefreshingState,
         modifier = modifier,
     ) {
-        val games = viewState.games
+        val games = uiState.games
         val lastIndex = games.lastIndex
 
         LazyColumn(
@@ -156,7 +156,7 @@ private fun RefreshableContent(
 @Composable
 internal fun GamesEmptyStatePreview() {
     Games(
-        viewState = GamesViewState(
+        uiState = GamesUiState(
             isLoading = false,
             infoIconId = 0,
             infoTitle = "No Liked Games",
@@ -171,7 +171,7 @@ internal fun GamesEmptyStatePreview() {
 @Composable
 internal fun GamesLoadingStatePreview() {
     Games(
-        viewState = GamesViewState(
+        uiState = GamesUiState(
             isLoading = true,
             infoIconId = 0,
             infoTitle = "",
@@ -213,7 +213,7 @@ internal fun GamesSuccessStatePreview() {
     )
 
     Games(
-        viewState = GamesViewState(
+        uiState = GamesUiState(
             isLoading = false,
             infoIconId = 0,
             infoTitle = "",

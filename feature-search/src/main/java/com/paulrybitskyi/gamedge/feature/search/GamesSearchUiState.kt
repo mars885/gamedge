@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets
+package com.paulrybitskyi.gamedge.feature.search
 
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 
-internal data class GameInfoViewState(
-    val isLoading: Boolean,
-    val game: GameInfoModel?,
+internal data class GamesSearchUiState(
+    val queryText: String,
+    val gamesUiState: GamesUiState,
 )
-
-internal val GameInfoViewState.isInEmptyState: Boolean
-    get() = (!isLoading && (game == null))
-
-internal val GameInfoViewState.isInLoadingState: Boolean
-    get() = (isLoading && (game == null))
-
-internal val GameInfoViewState.isInSuccessState: Boolean
-    get() = (game != null)

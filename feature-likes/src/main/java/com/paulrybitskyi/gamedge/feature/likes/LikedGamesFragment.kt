@@ -31,7 +31,7 @@ class LikedGamesFragment : BaseComposeFragment<LikedGamesViewModel, LikedGamesNa
 
     override fun getContent() = @Composable {
         Games(
-            viewState = viewModel.uiState.collectAsState().value,
+            uiState = viewModel.uiState.collectAsState().value,
             onGameClicked = viewModel::onGameClicked,
             onBottomReached = viewModel::onBottomReached,
         )

@@ -32,7 +32,7 @@ import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
-import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryViewState
+import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Job
@@ -73,25 +73,25 @@ internal class GamesCategoryViewModel @Inject constructor(
     private var gamesObservingJob: Job? = null
     private var gamesRefreshingJob: Job? = null
 
-    private val _viewState = MutableStateFlow(createEmptyViewState())
+    private val _uiState = MutableStateFlow(createEmptyUiState())
 
-    private val currentViewState: GamesCategoryViewState
-        get() = _viewState.value
+    private val currentUiState: GamesCategoryUiState
+        get() = _uiState.value
 
-    val viewState: StateFlow<GamesCategoryViewState>
-        get() = _viewState
+    val uiState: StateFlow<GamesCategoryUiState>
+        get() = _uiState
 
     init {
         gamesCategory = GamesCategory.valueOf(checkNotNull(savedStateHandle.get<String>(PARAM_GAMES_CATEGORY)))
         gamesCategoryKeyType = gamesCategory.toKeyType()
 
-        _viewState.value = currentViewState.copy(
+        _uiState.value = currentUiState.copy(
             title = stringProvider.getString(gamesCategory.titleId)
         )
     }
 
-    private fun createEmptyViewState(): GamesCategoryViewState {
-        return GamesCategoryViewState(
+    private fun createEmptyUiState(): GamesCategoryUiState {
+        return GamesCategoryUiState(
             isLoading = false,
             title = "",
             games = emptyList(),
@@ -111,35 +111,35 @@ internal class GamesCategoryViewModel @Inject constructor(
                 .execute(observeGamesUseCaseParams)
                 .map(gameCategoryModelMapper::mapToGameCategoryModels)
                 .flowOn(dispatcherProvider.computation)
-                .map { games -> currentViewState.copy(isLoading = false, games = games) }
+                .map { games -> currentUiState.copy(isLoading = false, games = games) }
                 .onError {
                     logger.error(logTag, "Failed to observe ${gamesCategory.name} games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(currentViewState.copy(isLoading = false, games = emptyList()))
+                    emit(currentUiState.copy(isLoading = false, games = emptyList()))
                 }
                 .onStart {
                     isObservingGames = true
-                    emit(currentViewState.copy(isLoading = true))
+                    emit(currentUiState.copy(isLoading = true))
                     delay(resultEmissionDelay)
                 }
                 .onCompletion { isObservingGames = false }
                 .collect {
                     configureNextLoad(it)
-                    _viewState.value = it
+                    _uiState.value = it
                 }
         }
     }
 
-    private fun configureNextLoad(viewState: GamesCategoryViewState) {
-        if (!viewState.hasLoadedNewGames()) return
+    private fun configureNextLoad(uiState: GamesCategoryUiState) {
+        if (!uiState.hasLoadedNewGames()) return
 
         val paginationLimit = observeGamesUseCaseParams.pagination.limit
-        val gameCount = viewState.games.size
+        val gameCount = uiState.games.size
 
         hasMoreGamesToLoad = (paginationLimit == gameCount)
     }
 
-    private fun GamesCategoryViewState.hasLoadedNewGames(): Boolean {
+    private fun GamesCategoryUiState.hasLoadedNewGames(): Boolean {
         return (!isLoading && games.isNotEmpty())
     }
 
@@ -150,17 +150,17 @@ internal class GamesCategoryViewModel @Inject constructor(
             useCases.getRefreshableUseCase(gamesCategoryKeyType)
                 .execute(refreshGamesUseCaseParams)
                 .resultOrError()
-                .map { currentViewState }
+                .map { currentUiState }
                 .onError {
                     logger.error(logTag, "Failed to refresh ${gamesCategory.name} games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
                 }
                 .onStart {
                     isRefreshingGames = true
-                    emit(currentViewState.copy(isLoading = true))
+                    emit(currentUiState.copy(isLoading = true))
                 }
                 .onCompletion { isRefreshingGames = false }
-                .collect { _viewState.value = it }
+                .collect { _uiState.value = it }
         }
     }
 

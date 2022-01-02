@@ -22,7 +22,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesViewState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToGameModels
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
@@ -75,24 +75,24 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(createGamesSearchEmptyUiState())
 
-    private val currentUiState: GamesSearchViewState
+    private val currentUiState: GamesSearchUiState
         get() = _uiState.value
 
-    val uiState: StateFlow<GamesSearchViewState>
+    val uiState: StateFlow<GamesSearchUiState>
         get() = _uiState
 
     init {
         onSearchActionRequested(savedStateHandle.get(KEY_SEARCH_QUERY) ?: "")
     }
 
-    private fun createGamesSearchEmptyUiState(): GamesSearchViewState {
-        return GamesSearchViewState(
+    private fun createGamesSearchEmptyUiState(): GamesSearchUiState {
+        return GamesSearchUiState(
             queryText = searchQuery,
-            gamesViewState = createGamesEmptyUiState(),
+            gamesUiState = createGamesEmptyUiState(),
         )
     }
 
-    private fun createGamesEmptyUiState(): GamesViewState {
+    private fun createGamesEmptyUiState(): GamesUiState {
         val title = if (searchQuery.isBlank()) {
             stringProvider.getString(R.string.games_search_info_title_default)
         } else {
@@ -102,7 +102,7 @@ internal class GamesSearchViewModel @Inject constructor(
             )
         }
 
-        return GamesViewState(
+        return GamesUiState(
             isLoading = false,
             infoIconId = R.drawable.magnify,
             infoTitle = title,
@@ -143,7 +143,7 @@ internal class GamesSearchViewModel @Inject constructor(
             searchGamesUseCase.execute(useCaseParams)
                 .map(gameModelMapper::mapToGameModels)
                 .flowOn(dispatcherProvider.computation)
-                .map { games -> currentUiState.gamesViewState.copy(isLoading = false, games = games) }
+                .map { games -> currentUiState.gamesUiState.copy(isLoading = false, games = games) }
                 .onError {
                     logger.error(logTag, "Failed to search games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
@@ -153,17 +153,17 @@ internal class GamesSearchViewModel @Inject constructor(
                     val games = if (isPerformingNewSearch()) {
                         emptyList()
                     } else {
-                        currentUiState.gamesViewState.games
+                        currentUiState.gamesUiState.games
                     }
 
-                    emit(currentUiState.gamesViewState.copy(isLoading = true, games = games))
+                    emit(currentUiState.gamesUiState.copy(isLoading = true, games = games))
                 }
                 .map(::combineWithAlreadyLoadedGames)
         }
         .collect {
             configureNextLoad(it)
             updateTotalGamesResult(it)
-            _uiState.value = currentUiState.copy(gamesViewState = it)
+            _uiState.value = currentUiState.copy(gamesUiState = it)
         }
     }
 
@@ -171,13 +171,13 @@ internal class GamesSearchViewModel @Inject constructor(
         return allLoadedGames.isEmpty()
     }
 
-    private fun combineWithAlreadyLoadedGames(gamesViewState: GamesViewState): GamesViewState {
-        if (!gamesViewState.hasLoadedNewGames() || allLoadedGames.isEmpty()) {
-            return gamesViewState
+    private fun combineWithAlreadyLoadedGames(gamesUiState: GamesUiState): GamesUiState {
+        if (!gamesUiState.hasLoadedNewGames() || allLoadedGames.isEmpty()) {
+            return gamesUiState
         }
 
         val oldGames = allLoadedGames
-        val newGames = gamesViewState.games
+        val newGames = gamesUiState.games
 
         // The reason for distinctBy is because IGDB API, unfortunately, returns sometimes
         // duplicate entries. This causes Compose to throw the following error:
@@ -188,26 +188,26 @@ internal class GamesSearchViewModel @Inject constructor(
         // duplicate entries using .distinctBy extension.
         val totalGames = (oldGames + newGames).distinctBy(GameModel::id)
 
-        return gamesViewState.copy(games = totalGames)
+        return gamesUiState.copy(games = totalGames)
     }
 
-    private fun GamesViewState.hasLoadedNewGames(): Boolean {
+    private fun GamesUiState.hasLoadedNewGames(): Boolean {
         return (!isLoading && games.isNotEmpty())
     }
 
-    private fun configureNextLoad(gamesViewState: GamesViewState) {
-        if (!gamesViewState.hasLoadedNewGames()) return
+    private fun configureNextLoad(gamesUiState: GamesUiState) {
+        if (!gamesUiState.hasLoadedNewGames()) return
 
         val paginationLimit = useCaseParams.pagination.limit
-        val gameCount = gamesViewState.games.size
+        val gameCount = gamesUiState.games.size
 
         hasMoreGamesToLoad = ((gameCount % paginationLimit) == 0)
     }
 
-    private fun updateTotalGamesResult(gamesViewState: GamesViewState) {
-        if (!gamesViewState.hasLoadedNewGames()) return
+    private fun updateTotalGamesResult(gamesUiState: GamesUiState) {
+        if (!gamesUiState.hasLoadedNewGames()) return
 
-        allLoadedGames = gamesViewState.games
+        allLoadedGames = gamesUiState.games
     }
 
     fun onGameClicked(game: GameModel) {

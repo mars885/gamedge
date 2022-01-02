@@ -21,7 +21,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesViewState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToGameModels
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
@@ -67,14 +67,14 @@ class LikedGamesViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(createDefaultUiState())
 
-    private val currentUiState: GamesViewState
+    private val currentUiState: GamesUiState
         get() = _uiState.value
 
-    val uiState: StateFlow<GamesViewState>
+    val uiState: StateFlow<GamesUiState>
         get() = _uiState
 
-    private fun createDefaultUiState(): GamesViewState {
-        return GamesViewState(
+    private fun createDefaultUiState(): GamesUiState {
+        return GamesUiState(
             isLoading = false,
             infoIconId = R.drawable.account_heart_outline,
             infoTitle = stringProvider.getString(R.string.liked_games_info_title),
@@ -119,7 +119,7 @@ class LikedGamesViewModel @Inject constructor(
         return !observeGamesUseCaseParams.pagination.hasDefaultLimit()
     }
 
-    private fun configureNextLoad(uiState: GamesViewState) {
+    private fun configureNextLoad(uiState: GamesUiState) {
         if (!uiState.hasLoadedNewGames()) return
 
         val paginationLimit = observeGamesUseCaseParams.pagination.limit
@@ -128,7 +128,7 @@ class LikedGamesViewModel @Inject constructor(
         hasMoreGamesToLoad = (paginationLimit == itemCount)
     }
 
-    private fun GamesViewState.hasLoadedNewGames(): Boolean {
+    private fun GamesUiState.hasLoadedNewGames(): Boolean {
         return (!isLoading && games.isNotEmpty())
     }
 

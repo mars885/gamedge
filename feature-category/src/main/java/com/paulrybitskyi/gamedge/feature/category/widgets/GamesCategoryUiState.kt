@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
-internal data class GamesCategoryViewState(
+internal data class GamesCategoryUiState(
     val isLoading: Boolean,
     val title: String,
     val games: List<GameCategoryModel>,
@@ -28,14 +28,14 @@ internal data class GameCategoryModel(
     val coverUrl: String?
 )
 
-internal val GamesCategoryViewState.isInLoadingState: Boolean
+internal val GamesCategoryUiState.isInLoadingState: Boolean
     get() = (isLoading && games.isEmpty())
 
-internal val GamesCategoryViewState.isInRefreshingState: Boolean
+internal val GamesCategoryUiState.isInRefreshingState: Boolean
     get() = (isLoading && games.isNotEmpty())
 
-internal val GamesCategoryViewState.isInEmptyState: Boolean
+internal val GamesCategoryUiState.isInEmptyState: Boolean
     get() = (!isLoading && games.isEmpty())
 
-internal val GamesCategoryViewState.isInSuccessState: Boolean
+internal val GamesCategoryUiState.isInSuccessState: Boolean
     get() = games.isNotEmpty()

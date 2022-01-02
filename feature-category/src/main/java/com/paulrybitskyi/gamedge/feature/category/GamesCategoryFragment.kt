@@ -32,7 +32,7 @@ internal class GamesCategoryFragment : BaseComposeFragment<GamesCategoryViewMode
 
     override fun getContent() = @Composable {
         GamesCategory(
-            viewState = viewModel.viewState.collectAsState().value,
+            uiState = viewModel.uiState.collectAsState().value,
             onBackButtonClicked = viewModel::onToolbarLeftButtonClicked,
             onGameClicked = viewModel::onGameClicked,
             onBottomReached = viewModel::onBottomReached,

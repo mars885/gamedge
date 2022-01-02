@@ -39,7 +39,7 @@ private const val KEYBOARD_POPUP_INTENTIONAL_DELAY = 300L
 
 @Composable
 internal fun GamesSearch(
-    viewState: GamesSearchViewState,
+    uiState: GamesSearchUiState,
     onSearchActionRequested: (String) -> Unit,
     onBackButtonClicked: () -> Unit,
     onClearButtonClicked: () -> Unit,
@@ -55,7 +55,7 @@ internal fun GamesSearch(
     Column(modifier = Modifier.fillMaxSize()) {
         ProvideWindowInsets {
             SearchToolbar(
-                queryText = viewState.queryText,
+                queryText = uiState.queryText,
                 placeholderText = stringResource(R.string.games_search_toolbar_hint),
                 modifier = Modifier.statusBarsPadding(),
                 focusRequester = focusRequester,
@@ -70,14 +70,14 @@ internal fun GamesSearch(
         }
 
         Games(
-            viewState = viewState.gamesViewState,
+            uiState = uiState.gamesUiState,
             onGameClicked = onGameClicked,
             onBottomReached = onBottomReached,
         )
 
         OnLifecycleEvent(
             onResume = {
-                if (viewState.queryText.isEmpty()) {
+                if (uiState.queryText.isEmpty()) {
                     // On subsequent openings of this screen from the background, simply calling
                     // focusRequester.requestFocus() does not make the keyboard visible. The
                     // workaround is to add small delay and call keyboardController.show() as well.

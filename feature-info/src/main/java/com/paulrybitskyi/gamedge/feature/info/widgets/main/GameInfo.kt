@@ -39,7 +39,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameDetails
-import com.paulrybitskyi.gamedge.feature.info.widgets.GameInfoViewState
+import com.paulrybitskyi.gamedge.feature.info.widgets.GameInfoUiState
 import com.paulrybitskyi.gamedge.feature.info.widgets.GameScreenshots
 import com.paulrybitskyi.gamedge.feature.info.widgets.GameSummary
 import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoCompanyModel
@@ -66,7 +66,7 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameVideos
 
 @Composable
 internal fun GameInfo(
-    viewState: GameInfoViewState,
+    uiState: GameInfoUiState,
     onArtworkClicked: (Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
@@ -84,10 +84,10 @@ internal fun GameInfo(
                 .background(colorResource(R.color.colorContentContainer))
         ) {
             when {
-                viewState.isInLoadingState -> GameInfoLoadingState(Modifier.align(Alignment.Center))
-                viewState.isInEmptyState -> GameInfoEmptyState(Modifier.align(Alignment.Center))
-                viewState.isInSuccessState -> GameInfoSuccessState(
-                    gameInfo = checkNotNull(viewState.game),
+                uiState.isInLoadingState -> GameInfoLoadingState(Modifier.align(Alignment.Center))
+                uiState.isInEmptyState -> GameInfoEmptyState(Modifier.align(Alignment.Center))
+                uiState.isInSuccessState -> GameInfoSuccessState(
+                    gameInfo = checkNotNull(uiState.game),
                     onArtworkClicked = onArtworkClicked,
                     onBackButtonClicked = onBackButtonClicked,
                     onCoverClicked = onCoverClicked,
