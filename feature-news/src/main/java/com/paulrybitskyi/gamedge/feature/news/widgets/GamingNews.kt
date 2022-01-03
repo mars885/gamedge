@@ -35,10 +35,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
+import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.feature.news.R
 
 @Composable
@@ -99,28 +97,6 @@ private fun GamingNewsEmptyState(modifier: Modifier) {
             titleTextColor = colorResource(R.color.colorInfoView)
         )
     }
-}
-
-@Composable
-private fun RefreshableContent(
-    isRefreshing: Boolean,
-    modifier: Modifier,
-    onRefreshRequested: () -> Unit,
-    content: @Composable () -> Unit,
-) {
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing),
-        onRefresh = onRefreshRequested,
-        modifier = modifier,
-        indicator = { state, refreshTrigger ->
-            SwipeRefreshIndicator(
-                state = state,
-                refreshTriggerDistance = refreshTrigger,
-                contentColor = colorResource(R.color.gaming_news_swipe_indicator_color)
-            )
-        },
-        content = content,
-    )
 }
 
 @Composable

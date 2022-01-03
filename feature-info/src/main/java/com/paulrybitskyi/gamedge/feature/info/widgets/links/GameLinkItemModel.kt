@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.links
 
-internal data class GameLinkItemModel(
+internal data class GameLinkItemModel constructor(
     val id: Int,
     val text: String,
     val iconId: Int? = null,

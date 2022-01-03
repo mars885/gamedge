@@ -52,8 +52,6 @@ dependencies {
     implementation(deps.compose.runtime)
     implementation(deps.compose.coil)
 
-    implementation(deps.compose.accompanist.swipeRefresh)
-
     implementation(deps.google.materialComponents)
 
     implementation(deps.commons.core)

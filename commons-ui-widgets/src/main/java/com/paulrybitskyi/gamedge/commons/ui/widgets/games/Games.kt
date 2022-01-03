@@ -32,11 +32,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
+import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 
 @Composable
 fun Games(
@@ -99,6 +97,7 @@ private fun GamesSuccessState(
     RefreshableContent(
         isRefreshing = uiState.isInRefreshingState,
         modifier = modifier,
+        isSwipeEnabled = false,
     ) {
         val games = uiState.games
         val lastIndex = games.lastIndex
@@ -129,28 +128,6 @@ private fun GamesSuccessState(
             }
         }
     }
-}
-
-@Composable
-private fun RefreshableContent(
-    isRefreshing: Boolean,
-    modifier: Modifier,
-    content: @Composable () -> Unit,
-) {
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing),
-        onRefresh = {},
-        modifier = modifier,
-        swipeEnabled = false,
-        indicator = { state, refreshTrigger ->
-            SwipeRefreshIndicator(
-                state = state,
-                refreshTriggerDistance = refreshTrigger,
-                contentColor = colorResource(R.color.games_swipe_indicator_color)
-            )
-        },
-        content = content,
-    )
 }
 
 @Preview

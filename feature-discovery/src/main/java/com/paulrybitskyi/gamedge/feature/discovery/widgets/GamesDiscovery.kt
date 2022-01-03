@@ -33,9 +33,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.feature.discovery.R
@@ -62,9 +60,10 @@ internal fun GamesDiscovery(
         var isRefreshing by remember { mutableStateOf(false) }
         val coroutineScope = rememberCoroutineScope()
 
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(isRefreshing),
-            onRefresh = {
+        RefreshableContent(
+            isRefreshing = isRefreshing,
+            modifier = Modifier.matchParentSize(),
+            onRefreshRequested = {
                 isRefreshing = true
 
                 coroutineScope.launch {
@@ -73,22 +72,13 @@ internal fun GamesDiscovery(
                     isRefreshing = false
                 }
             },
-            modifier = Modifier.matchParentSize(),
-            indicator = { state, refreshTrigger ->
-                SwipeRefreshIndicator(
-                    state = state,
-                    refreshTriggerDistance = refreshTrigger,
-                    contentColor = colorResource(R.color.games_discovery_swipe_indicator_color),
-                )
-            },
-            content = {
-                GamesDiscoveryItems(
-                    items = items,
-                    onCategoryMoreButtonClicked = onCategoryMoreButtonClicked,
-                    onCategoryGameClicked = onCategoryGameClicked,
-                )
-            },
-        )
+        ) {
+            GamesDiscoveryItems(
+                items = items,
+                onCategoryMoreButtonClicked = onCategoryMoreButtonClicked,
+                onCategoryGameClicked = onCategoryGameClicked,
+            )
+        }
     }
 }
 

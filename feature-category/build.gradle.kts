@@ -51,7 +51,6 @@ dependencies {
     implementation(deps.compose.material)
     implementation(deps.compose.runtime)
     implementation(deps.compose.accompanist.insets)
-    implementation(deps.compose.accompanist.swipeRefresh)
 
     implementation(deps.google.materialComponents)
 

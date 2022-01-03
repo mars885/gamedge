@@ -27,7 +27,4 @@
     <color name="gaming_news_item_lede_text_color">@color/colorSecondaryText</color>
     <color name="gaming_news_item_publication_date_text_color">@color/colorSecondaryText</color>
 
-    <!-- GamingNews -->
-    <color name="gaming_news_swipe_indicator_color">@color/colorAccent</color>
-
 </resources>

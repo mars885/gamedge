@@ -42,13 +42,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.paulrybitskyi.commons.device.info.screenMetrics
 import com.paulrybitskyi.commons.ktx.getFloat
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
+import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Toolbar
 import com.paulrybitskyi.gamedge.feature.category.R
 
@@ -119,6 +117,7 @@ private fun GamesSuccessState(
     RefreshableContent(
         isRefreshing = uiState.isInRefreshingState,
         modifier = modifier,
+        isSwipeEnabled = false,
     ) {
         GamesVerticalGrid(
             games = uiState.games,
@@ -187,28 +186,6 @@ private fun GamesVerticalGrid(
             )
         }
     }
-}
-
-@Composable
-private fun RefreshableContent(
-    isRefreshing: Boolean,
-    modifier: Modifier,
-    content: @Composable () -> Unit,
-) {
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing),
-        onRefresh = {},
-        modifier = modifier,
-        swipeEnabled = false,
-        indicator = { state, refreshTrigger ->
-            SwipeRefreshIndicator(
-                state = state,
-                refreshTriggerDistance = refreshTrigger,
-                contentColor = colorResource(R.color.games_category_swipe_indicator_color)
-            )
-        },
-        content = content,
-    )
 }
 
 @Preview
