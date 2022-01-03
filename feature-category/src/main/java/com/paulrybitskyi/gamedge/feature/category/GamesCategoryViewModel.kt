@@ -33,6 +33,9 @@ import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
+import com.paulrybitskyi.gamedge.feature.category.widgets.toEmptyState
+import com.paulrybitskyi.gamedge.feature.category.widgets.toLoadingState
+import com.paulrybitskyi.gamedge.feature.category.widgets.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Job
@@ -111,15 +114,15 @@ internal class GamesCategoryViewModel @Inject constructor(
                 .execute(observeGamesUseCaseParams)
                 .map(gameCategoryModelMapper::mapToGameCategoryModels)
                 .flowOn(dispatcherProvider.computation)
-                .map { games -> currentUiState.copy(isLoading = false, games = games) }
+                .map(currentUiState::toSuccessState)
                 .onError {
                     logger.error(logTag, "Failed to observe ${gamesCategory.name} games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(currentUiState.copy(isLoading = false, games = emptyList()))
+                    emit(currentUiState.toEmptyState())
                 }
                 .onStart {
                     isObservingGames = true
-                    emit(currentUiState.copy(isLoading = true))
+                    emit(currentUiState.toLoadingState())
                     delay(resultEmissionDelay)
                 }
                 .onCompletion { isObservingGames = false }
@@ -157,7 +160,7 @@ internal class GamesCategoryViewModel @Inject constructor(
                 }
                 .onStart {
                     isRefreshingGames = true
-                    emit(currentUiState.copy(isLoading = true))
+                    emit(currentUiState.toLoadingState())
                 }
                 .onCompletion { isRefreshingGames = false }
                 .collect { _uiState.value = it }

@@ -23,14 +23,26 @@ data class GamesUiState(
     val games: List<GameModel>,
 )
 
-val GamesUiState.isInEmptyState: Boolean
-    get() = (!isLoading && games.isEmpty())
-
 val GamesUiState.isInLoadingState: Boolean
     get() = (isLoading && games.isEmpty())
 
 val GamesUiState.isInRefreshingState: Boolean
     get() = (isLoading && games.isNotEmpty())
 
+val GamesUiState.isInEmptyState: Boolean
+    get() = (!isLoading && games.isEmpty())
+
 val GamesUiState.isInSuccessState: Boolean
     get() = games.isNotEmpty()
+
+fun GamesUiState.toLoadingState(): GamesUiState {
+    return copy(isLoading = true)
+}
+
+fun GamesUiState.toEmptyState(): GamesUiState {
+    return copy(isLoading = false, games = emptyList())
+}
+
+fun GamesUiState.toSuccessState(games: List<GameModel>): GamesUiState {
+    return copy(isLoading = false, games = games)
+}

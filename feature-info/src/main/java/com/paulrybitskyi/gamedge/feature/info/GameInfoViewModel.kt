@@ -42,6 +42,9 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiState
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.toEmptyState
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.toLoadingState
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
@@ -118,15 +121,15 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .flowOn(dispatcherProvider.computation)
-            .map { game -> currentUiState.copy(isLoading = false, game = game) }
+            .map(currentUiState::toSuccessState)
             .onError {
                 logger.error(logTag, "Failed to load game info data.", it)
                 dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                emit(currentUiState.copy(isLoading = false, game = null))
+                emit(currentUiState.toEmptyState())
             }
             .onStart {
                 isObservingGameData = true
-                emit(currentUiState.copy(isLoading = true))
+                emit(currentUiState.toLoadingState())
                 delay(resultEmissionDelay)
             }
             .onCompletion { isObservingGameData = false }

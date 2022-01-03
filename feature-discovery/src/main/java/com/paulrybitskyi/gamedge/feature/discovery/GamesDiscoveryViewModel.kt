@@ -32,6 +32,9 @@ import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGam
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.mapToGameModels
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameModel
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemModel
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.hideProgressBar
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.showProgressBar
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -97,7 +100,7 @@ class GamesDiscoveryViewModel @Inject constructor(
                 flows = GamesDiscoveryCategory.values().map { observeGames(it) },
                 transform = { it.toList() }
             )
-            .map { currentItems.withResultState(it) }
+            .map(currentItems::toSuccessState)
             .onError { logger.error(logTag, "Failed to observe games.", it) }
             .onStart { isObservingGames = true }
             .onCompletion { isObservingGames = false }
@@ -110,14 +113,6 @@ class GamesDiscoveryViewModel @Inject constructor(
             .execute(observeGamesUseCaseParams)
             .map(itemGameModelMapper::mapToGameModels)
             .flowOn(dispatcherProvider.computation)
-    }
-
-    private fun List<GamesDiscoveryItemModel>.withResultState(
-        games: List<List<GamesDiscoveryItemGameModel>>
-    ): List<GamesDiscoveryItemModel> {
-        return mapIndexed { index, itemModel ->
-            itemModel.copy(games = games[index])
-        }
     }
 
     private fun refreshGames() {
@@ -135,11 +130,11 @@ class GamesDiscoveryViewModel @Inject constructor(
             }
             .onStart {
                 isRefreshingGames = true
-                emit(currentItems.withVisibleProgressBar())
+                emit(currentItems.showProgressBar())
             }
             .onCompletion {
                 isRefreshingGames = false
-                emit(currentItems.withHiddenProgressBar())
+                emit(currentItems.hideProgressBar())
             }
             .collect { _items.value = it }
         }
@@ -149,14 +144,6 @@ class GamesDiscoveryViewModel @Inject constructor(
         return useCases.getRefreshableUseCase(category.toKeyType())
             .execute(refreshGamesUseCaseParams)
             .resultOrError()
-    }
-
-    private fun List<GamesDiscoveryItemModel>.withVisibleProgressBar(): List<GamesDiscoveryItemModel> {
-        return map { itemModel -> itemModel.copy(isProgressBarVisible = true) }
-    }
-
-    private fun List<GamesDiscoveryItemModel>.withHiddenProgressBar(): List<GamesDiscoveryItemModel> {
-        return map { itemModel -> itemModel.copy(isProgressBarVisible = false) }
     }
 
     fun onCategoryMoreButtonClicked(category: String) {

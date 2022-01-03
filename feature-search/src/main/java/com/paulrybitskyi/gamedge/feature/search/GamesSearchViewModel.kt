@@ -24,6 +24,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToGameModels
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toSuccessState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
@@ -41,6 +42,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val KEY_SEARCH_QUERY = "search_query"
@@ -117,11 +119,11 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
     fun onToolbarClearButtonClicked() {
-        _uiState.value = currentUiState.copy(queryText = "")
+        _uiState.update { it.copy(queryText = "") }
     }
 
     fun onQueryChanged(newQueryText: String) {
-        _uiState.value = currentUiState.copy(queryText = newQueryText)
+        _uiState.update { it.copy(queryText = newQueryText) }
     }
 
     fun onSearchActionRequested(query: String) {
@@ -146,10 +148,9 @@ internal class GamesSearchViewModel @Inject constructor(
                 .map(gameModelMapper::mapToGameModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { games ->
-                    currentUiState.gamesUiState.copy(
-                        isLoading = false,
+                    currentUiState.gamesUiState.toSuccessState(
                         infoTitle = getUiStateInfoTitle(),
-                        games = games
+                        games = games,
                     )
                 }
                 .onError {
@@ -164,14 +165,14 @@ internal class GamesSearchViewModel @Inject constructor(
                         currentUiState.gamesUiState.games
                     }
 
-                    emit(currentUiState.gamesUiState.copy(isLoading = true, games = games))
+                    emit(currentUiState.gamesUiState.toLoadingState(games))
                 }
                 .map(::combineWithAlreadyLoadedGames)
         }
         .collect {
             configureNextLoad(it)
             updateTotalGamesResult(it)
-            _uiState.value = currentUiState.copy(gamesUiState = it)
+            _uiState.update { uiState -> uiState.copy(gamesUiState = it) }
         }
     }
 
@@ -196,7 +197,7 @@ internal class GamesSearchViewModel @Inject constructor(
         // duplicate entries using .distinctBy extension.
         val totalGames = (oldGames + newGames).distinctBy(GameModel::id)
 
-        return gamesUiState.copy(games = totalGames)
+        return gamesUiState.toSuccessState(totalGames)
     }
 
     private fun GamesUiState.hasLoadedNewGames(): Boolean {

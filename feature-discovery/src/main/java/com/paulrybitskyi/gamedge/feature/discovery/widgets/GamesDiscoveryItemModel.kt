@@ -22,3 +22,19 @@ data class GamesDiscoveryItemModel(
     val isProgressBarVisible: Boolean,
     val games: List<GamesDiscoveryItemGameModel>,
 )
+
+internal fun List<GamesDiscoveryItemModel>.toSuccessState(
+    games: List<List<GamesDiscoveryItemGameModel>>
+): List<GamesDiscoveryItemModel> {
+    return mapIndexed { index, itemModel ->
+        itemModel.copy(games = games[index])
+    }
+}
+
+internal fun List<GamesDiscoveryItemModel>.showProgressBar(): List<GamesDiscoveryItemModel> {
+    return map { itemModel -> itemModel.copy(isProgressBarVisible = true) }
+}
+
+internal fun List<GamesDiscoveryItemModel>.hideProgressBar(): List<GamesDiscoveryItemModel> {
+    return map { itemModel -> itemModel.copy(isProgressBarVisible = false) }
+}

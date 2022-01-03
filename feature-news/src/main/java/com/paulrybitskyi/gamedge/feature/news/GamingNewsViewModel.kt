@@ -31,6 +31,11 @@ import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemModelMapper
 import com.paulrybitskyi.gamedge.feature.news.mapping.mapToGamingNewsItemModels
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsState
+import com.paulrybitskyi.gamedge.feature.news.widgets.disableRefreshing
+import com.paulrybitskyi.gamedge.feature.news.widgets.enableRefreshing
+import com.paulrybitskyi.gamedge.feature.news.widgets.toEmptyState
+import com.paulrybitskyi.gamedge.feature.news.widgets.toLoadingState
+import com.paulrybitskyi.gamedge.feature.news.widgets.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
@@ -88,15 +93,15 @@ class GamingNewsViewModel @Inject constructor(
             observeArticlesUseCase.execute(observerUseCaseParams)
                 .map(gamingNewsItemModelMapper::mapToGamingNewsItemModels)
                 .flowOn(dispatcherProvider.computation)
-                .map { news -> currentUiState.copy(isLoading = false, news = news) }
+                .map(currentUiState::toSuccessState)
                 .onError {
                     logger.error(logTag, "Failed to load articles.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(currentUiState.copy(isLoading = false, news = emptyList()))
+                    emit(currentUiState.toEmptyState())
                 }
                 .onStart {
                     isObservingArticles = true
-                    emit(currentUiState.copy(isLoading = true))
+                    emit(currentUiState.toLoadingState())
                 }
                 .onCompletion { isObservingArticles = false }
                 .collect { _uiState.value = it }
@@ -123,12 +128,12 @@ class GamingNewsViewModel @Inject constructor(
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
                 }
                 .onStart {
-                    emit(currentUiState.copy(isRefreshing = true))
+                    emit(currentUiState.enableRefreshing())
                     // Adding a delay to prevent the SwipeRefresh from quick disappearing
                     delay(ARTICLES_REFRESH_DELAY)
                 }
                 .onCompletion {
-                    emit(currentUiState.copy(isRefreshing = false))
+                    emit(currentUiState.disableRefreshing())
                 }
                 .collect { _uiState.value = it }
         }

@@ -39,3 +39,17 @@ internal val GamesCategoryUiState.isInEmptyState: Boolean
 
 internal val GamesCategoryUiState.isInSuccessState: Boolean
     get() = games.isNotEmpty()
+
+internal fun GamesCategoryUiState.toLoadingState(): GamesCategoryUiState {
+    return copy(isLoading = true)
+}
+
+internal fun GamesCategoryUiState.toEmptyState(): GamesCategoryUiState {
+    return copy(isLoading = false, games = emptyList())
+}
+
+internal fun GamesCategoryUiState.toSuccessState(
+    games: List<GameCategoryModel>
+): GamesCategoryUiState {
+    return copy(isLoading = false, games = games)
+}

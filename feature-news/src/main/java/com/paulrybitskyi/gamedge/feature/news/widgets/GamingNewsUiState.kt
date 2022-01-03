@@ -22,8 +22,30 @@ data class GamingNewsState(
     val news: List<GamingNewsItemModel> = emptyList(),
 )
 
-val GamingNewsState.isInEmptyState: Boolean
+internal val GamingNewsState.isInEmptyState: Boolean
     get() = (!isLoading && news.isEmpty())
 
-val GamingNewsState.isInSuccessState: Boolean
+internal val GamingNewsState.isInSuccessState: Boolean
     get() = news.isNotEmpty()
+
+internal fun GamingNewsState.toLoadingState(): GamingNewsState {
+    return copy(isLoading = true)
+}
+
+internal fun GamingNewsState.toEmptyState(): GamingNewsState {
+    return copy(isLoading = false, news = emptyList())
+}
+
+internal fun GamingNewsState.toSuccessState(
+    news: List<GamingNewsItemModel>
+): GamingNewsState {
+    return copy(isLoading = false, news = news)
+}
+
+internal fun GamingNewsState.enableRefreshing(): GamingNewsState {
+    return copy(isRefreshing = true)
+}
+
+internal fun GamingNewsState.disableRefreshing(): GamingNewsState {
+    return copy(isRefreshing = false)
+}

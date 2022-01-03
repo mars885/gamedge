@@ -21,11 +21,23 @@ internal data class GameInfoUiState(
     val game: GameInfoModel?,
 )
 
-internal val GameInfoUiState.isInEmptyState: Boolean
-    get() = (!isLoading && (game == null))
-
 internal val GameInfoUiState.isInLoadingState: Boolean
     get() = (isLoading && (game == null))
 
+internal val GameInfoUiState.isInEmptyState: Boolean
+    get() = (!isLoading && (game == null))
+
 internal val GameInfoUiState.isInSuccessState: Boolean
     get() = (game != null)
+
+internal fun GameInfoUiState.toLoadingState(): GameInfoUiState {
+    return copy(isLoading = true)
+}
+
+internal fun GameInfoUiState.toEmptyState(): GameInfoUiState {
+    return copy(isLoading = false, game = null)
+}
+
+internal fun GameInfoUiState.toSuccessState(game: GameInfoModel): GameInfoUiState {
+    return copy(isLoading = false, game = game)
+}

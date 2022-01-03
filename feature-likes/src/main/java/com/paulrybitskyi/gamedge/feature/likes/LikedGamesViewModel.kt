@@ -23,6 +23,9 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToGameModels
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toEmptyState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toLoadingState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toSuccessState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
@@ -93,15 +96,15 @@ class LikedGamesViewModel @Inject constructor(
             observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
                 .map(likedGameModelMapper::mapToGameModels)
                 .flowOn(dispatcherProvider.computation)
-                .map { games -> currentUiState.copy(isLoading = false, games = games) }
+                .map(currentUiState::toSuccessState)
                 .onError {
                     logger.error(logTag, "Failed to load liked games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(currentUiState.copy(isLoading = false, games = emptyList()))
+                    emit(currentUiState.toEmptyState())
                 }
                 .onStart {
                     isObservingGames = true
-                    emit(currentUiState.copy(isLoading = true))
+                    emit(currentUiState.toLoadingState())
 
                     // Delaying to give a sense of "loading" since progress indicators
                     // do not have the time to fully show themselves

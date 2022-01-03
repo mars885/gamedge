@@ -16,9 +16,28 @@
 
 package com.paulrybitskyi.gamedge.feature.search
 
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 
 internal data class GamesSearchUiState(
     val queryText: String,
     val gamesUiState: GamesUiState,
 )
+
+internal fun GamesUiState.toLoadingState(games: List<GameModel>): GamesUiState {
+    return copy(
+        isLoading = true,
+        games = games,
+    )
+}
+
+internal fun GamesUiState.toSuccessState(
+    infoTitle: String,
+    games: List<GameModel>,
+): GamesUiState {
+    return copy(
+        isLoading = false,
+        infoTitle = infoTitle,
+        games = games
+    )
+}

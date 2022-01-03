@@ -59,10 +59,12 @@ internal class ImageViewerViewModel @Inject constructor(
         val selectedPosition = getSelectedPosition()
         val imageUrls = checkNotNull(savedStateHandle.get<Array<String>>(PARAM_IMAGE_URLS))
 
-        _uiState.value = _uiState.value.copy(
-            selectedImageUrlIndex = selectedPosition,
-            imageUrls = imageUrls.toList(),
-        )
+        _uiState.update {
+            it.copy(
+                selectedImageUrlIndex = selectedPosition,
+                imageUrls = imageUrls.toList(),
+            )
+        }
 
         observeSelectedPositionChanges()
     }
