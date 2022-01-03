@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.model.games
+package com.paulrybitskyi.gamedge.feature.info.widgets.companies
 
-internal data class GameInfoRelatedGameModel(
-    val id: Int,
-    val title: String,
-    val coverUrl: String?
+internal data class GameInfoCompanyModel(
+    val logoContainerSize: Pair<Int, Int>,
+    val logoImageSize: Pair<Int, Int>,
+    val logoUrl: String?,
+    val websiteUrl: String,
+    val name: String,
+    val roles: String,
 )

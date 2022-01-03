@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.model.games
+package com.paulrybitskyi.gamedge.feature.info.widgets.links
 
-internal data class GameInfoRelatedGamesModel(
-    val type: GameInfoRelatedGamesType,
-    val title: String,
-    val items: List<GameInfoRelatedGameModel>,
-) {
-
-    val hasItems: Boolean
-        get() = items.isNotEmpty()
-}
+internal data class GameInfoLinkModel(
+    val id: Int,
+    val text: String,
+    val iconId: Int,
+    val payload: Any? = null
+)

@@ -25,7 +25,6 @@ import com.paulrybitskyi.gamedge.core.formatters.GameCategoryFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoHeaderModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -45,7 +44,7 @@ internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
 
     override fun createHeaderModel(game: Game, isLiked: Boolean): GameInfoHeaderModel {
         return GameInfoHeaderModel(
-            backgroundImageModels = game.createBackgroundImageModels(),
+            artworks = game.createArtworks(),
             isLiked = isLiked,
             coverImageUrl = game.createCoverImageUrl(),
             title = game.name,
@@ -58,12 +57,12 @@ internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
         )
     }
 
-    private fun Game.createBackgroundImageModels(): List<GameHeaderImageModel> {
-        if (artworks.isEmpty()) return listOf(GameHeaderImageModel.DefaultImage)
+    private fun Game.createArtworks(): List<GameArtworkModel> {
+        if (artworks.isEmpty()) return listOf(GameArtworkModel.DefaultImage)
 
         return igdbImageUrlFactory
             .createUrls(artworks, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_SCREENSHOT))
-            .map(GameHeaderImageModel::UrlImage)
+            .map(GameArtworkModel::UrlImage)
     }
 
     private fun Game.createCoverImageUrl(): String? {

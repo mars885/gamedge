@@ -21,13 +21,12 @@ import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.createUrls
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsModelFactory
-import com.paulrybitskyi.gamedge.feature.info.mapping.GameInfoOtherCompanyGamesModelFactory
-import com.paulrybitskyi.gamedge.feature.info.mapping.GameInfoSimilarGamesModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.factories.GameInfoOtherCompanyGamesModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.factories.GameInfoSimilarGamesModelFactory
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModelFactory
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderModelFactory
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModelFactory
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGamesModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModelFactory
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
@@ -59,7 +58,7 @@ internal class GameInfoModelFactoryImpl @Inject constructor(
         game: Game,
         isLiked: Boolean,
         companyGames: List<Game>,
-        similarGames: List<Game>
+        similarGames: List<Game>,
     ): GameInfoModel {
         return GameInfoModel(
             id = game.id,
@@ -71,14 +70,14 @@ internal class GameInfoModelFactoryImpl @Inject constructor(
             linkModels = linkModelFactory.createLinkModels(game.websites),
             companyModels = companyModelFactory.createCompanyModels(game.involvedCompanies),
             otherCompanyGames = game.createOtherCompanyGamesModel(companyGames),
-            similarGames = similarGamesModelFactory.createSimilarGamesModel(similarGames)
+            similarGames = similarGamesModelFactory.createSimilarGamesModel(similarGames),
         )
     }
 
     private fun Game.createScreenshotUrls(): List<String> {
         return igdbImageUrlFactory.createUrls(
             screenshots,
-            IgdbImageUrlFactory.Config(IgdbImageSize.MEDIUM_SCREENSHOT)
+            IgdbImageUrlFactory.Config(IgdbImageSize.MEDIUM_SCREENSHOT),
         )
     }
 

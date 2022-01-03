@@ -20,7 +20,6 @@ import com.paulrybitskyi.gamedge.core.providers.WebsiteIconProvider
 import com.paulrybitskyi.gamedge.core.providers.WebsiteNameProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoLinkModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 

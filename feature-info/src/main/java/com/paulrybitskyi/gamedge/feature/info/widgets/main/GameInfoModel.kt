@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.model
+package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGamesModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
 
 internal data class GameInfoModel(
     val id: Int,

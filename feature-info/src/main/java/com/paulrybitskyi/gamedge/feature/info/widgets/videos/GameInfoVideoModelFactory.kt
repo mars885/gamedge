@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.videos
 import com.paulrybitskyi.gamedge.core.factories.YoutubeMediaUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.YoutubeThumbnailSize
 import com.paulrybitskyi.gamedge.domain.games.entities.Video
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoVideoModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 

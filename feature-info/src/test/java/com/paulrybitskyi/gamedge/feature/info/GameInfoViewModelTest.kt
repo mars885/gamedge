@@ -33,12 +33,12 @@ import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.feature.info.mapping.GameInfoUiStateFactory
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiState
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoCompanyModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoHeaderModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoLinkModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoVideoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -289,7 +289,7 @@ internal class GameInfoViewModelTest {
                 GameInfoModel(
                     id = 1,
                     headerModel = GameInfoHeaderModel(
-                        backgroundImageModels = emptyList(),
+                        artworks = emptyList(),
                         isLiked = true,
                         coverImageUrl = null,
                         title = "title",

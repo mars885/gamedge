@@ -67,8 +67,8 @@ import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
 internal fun GameCompanies(
-    companies: List<GameCompanyModel>,
-    onCompanyClicked: (GameCompanyModel) -> Unit,
+    companies: List<GameInfoCompanyModel>,
+    onCompanyClicked: (GameInfoCompanyModel) -> Unit,
 ) {
     val density = LocalDensity.current
 
@@ -290,7 +290,7 @@ private class LogoImageTransformation(
 internal fun GameCompaniesPreview() {
     GameCompanies(
         companies = listOf(
-            GameCompanyModel(
+            GameInfoCompanyModel(
                 logoContainerSize = 750 to 400,
                 logoImageSize = 0 to 0,
                 logoUrl = null,
@@ -298,7 +298,7 @@ internal fun GameCompaniesPreview() {
                 name = "FromSoftware",
                 roles = "Main Developer",
             ),
-            GameCompanyModel(
+            GameInfoCompanyModel(
                 logoContainerSize = 500 to 400,
                 logoImageSize = 0 to 0,
                 logoUrl = null,

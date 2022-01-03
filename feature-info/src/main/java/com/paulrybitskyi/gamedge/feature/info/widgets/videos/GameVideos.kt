@@ -60,8 +60,8 @@ import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
 internal fun GameVideos(
-    videos: List<GameVideoModel>,
-    onVideClicked: (GameVideoModel) -> Unit,
+    videos: List<GameInfoVideoModel>,
+    onVideClicked: (GameInfoVideoModel) -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -188,12 +188,12 @@ private fun GameVideo(
 internal fun GameVideosPreview() {
     GameVideos(
         videos = listOf(
-            GameVideoModel(
+            GameInfoVideoModel(
                 thumbnailUrl = "",
                 videoUrl = "",
                 title = "Announcement Trailer",
             ),
-            GameVideoModel(
+            GameInfoVideoModel(
                 thumbnailUrl = "",
                 videoUrl = "",
                 title = "Gameplay Trailer",

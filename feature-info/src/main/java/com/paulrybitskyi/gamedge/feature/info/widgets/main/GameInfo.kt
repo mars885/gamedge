@@ -39,31 +39,22 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameDetails
-import com.paulrybitskyi.gamedge.feature.info.widgets.GameInfoUiState
 import com.paulrybitskyi.gamedge.feature.info.widgets.GameScreenshots
 import com.paulrybitskyi.gamedge.feature.info.widgets.GameSummary
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoCompanyModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoDetailsModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoHeaderModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoLinkModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoVideoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGameModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGamesModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameCompanies
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameArtworkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameHeader
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameHeaderImageModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.isInEmptyState
-import com.paulrybitskyi.gamedge.feature.info.widgets.isInLoadingState
-import com.paulrybitskyi.gamedge.feature.info.widgets.isInSuccessState
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameLinks
-import com.paulrybitskyi.gamedge.feature.info.widgets.mapToCategoryModels
-import com.paulrybitskyi.gamedge.feature.info.widgets.mapToCompanyModels
-import com.paulrybitskyi.gamedge.feature.info.widgets.mapToInfoCompanyModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.mapToInfoRelatedGameModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.mapToInfoVideoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.mapToVideoModels
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGamesType
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToCategoryModels
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesType
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameVideos
 
 @Composable
@@ -256,8 +247,8 @@ private fun LazyListScope.GameVideosItem(
 ) {
     item {
         GameVideos(
-            videos = videos.mapToVideoModels(),
-            onVideClicked = { onVideoClicked(it.mapToInfoVideoModel()) },
+            videos = videos,
+            onVideClicked = onVideoClicked,
         )
     }
 }
@@ -282,13 +273,7 @@ private fun LazyListScope.GameSummaryItem(model: String) {
 
 private fun LazyListScope.GameDetailsItem(model: GameInfoDetailsModel) {
     item {
-        GameDetails(
-            genres = model.genresText,
-            platforms = model.platformsText,
-            modes = model.modesText,
-            playerPerspectives = model.playerPerspectivesText,
-            themes = model.themesText,
-        )
+        GameDetails(details = model)
     }
 }
 
@@ -310,8 +295,8 @@ private fun LazyListScope.GameCompaniesItem(
 ) {
     item {
         GameCompanies(
-            companies = model.mapToCompanyModels(),
-            onCompanyClicked = { onCompanyClicked(it.mapToInfoCompanyModel()) },
+            companies = model,
+            onCompanyClicked = onCompanyClicked,
         )
     }
 }
@@ -437,7 +422,7 @@ private fun buildFakeGameModel(): GameInfoModel {
     return GameInfoModel(
         id = 1,
         headerModel = GameInfoHeaderModel(
-            backgroundImageModels = listOf(GameHeaderImageModel.DefaultImage),
+            artworks = listOf(GameArtworkModel.DefaultImage),
             isLiked = true,
             coverImageUrl = null,
             title = "Elden Ring",

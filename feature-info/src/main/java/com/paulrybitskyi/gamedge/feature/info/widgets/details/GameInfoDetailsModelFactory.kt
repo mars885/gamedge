@@ -22,7 +22,6 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Mode
 import com.paulrybitskyi.gamedge.domain.games.entities.Platform
 import com.paulrybitskyi.gamedge.domain.games.entities.PlayerPerspective
 import com.paulrybitskyi.gamedge.domain.games.entities.Theme
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoDetailsModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 

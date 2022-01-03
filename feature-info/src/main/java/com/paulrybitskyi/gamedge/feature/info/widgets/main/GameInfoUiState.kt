@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,18 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.model
+package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
-internal data class GameInfoLinkModel(
-    val id: Int,
-    val text: String,
-    val iconId: Int,
-    val payload: Any? = null
+internal data class GameInfoUiState(
+    val isLoading: Boolean,
+    val game: GameInfoModel?,
 )
+
+internal val GameInfoUiState.isInEmptyState: Boolean
+    get() = (!isLoading && (game == null))
+
+internal val GameInfoUiState.isInLoadingState: Boolean
+    get() = (isLoading && (game == null))
+
+internal val GameInfoUiState.isInSuccessState: Boolean
+    get() = (game != null)

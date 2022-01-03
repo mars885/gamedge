@@ -71,8 +71,6 @@ import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.feature.info.R
-import com.paulrybitskyi.gamedge.feature.info.widgets.mapToGameArtworkModels
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoHeaderModel
 import kotlinx.coroutines.flow.collect
 
 private const val CONSTRAINT_ID_ARTWORKS = "artworks"
@@ -101,9 +99,7 @@ internal fun GameHeader(
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
 ) {
-    val artworks by remember(headerInfo) {
-        mutableStateOf(headerInfo.backgroundImageModels.mapToGameArtworkModels())
-    }
+    val artworks = headerInfo.artworks
     val isPageIndicatorVisible by remember(artworks) {
         // DerivedStateOf?
         mutableStateOf(artworks.size > 1)
@@ -167,7 +163,7 @@ internal fun GameHeader(
                 text = stringResource(
                     R.string.game_info_header_page_indicator_template,
                     selectedArtworkPage + 1,
-                    headerInfo.backgroundImageModels.size,
+                    headerInfo.artworks.size,
                 ),
                 modifier = Modifier
                     .layoutId(CONSTRAINT_ID_PAGE_INDICATOR)
@@ -532,7 +528,7 @@ private fun GameArtwork(
 internal fun GameHeaderPreview() {
     GameHeader(
         headerInfo = GameInfoHeaderModel(
-            backgroundImageModels = listOf(GameHeaderImageModel.DefaultImage),
+            artworks = listOf(GameArtworkModel.DefaultImage),
             isLiked = true,
             coverImageUrl = null,
             title = "Elden Ring",

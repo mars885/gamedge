@@ -37,11 +37,11 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoModelFactory
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoCompanyModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoLinkModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoVideoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.games.GameInfoRelatedGameModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.GameInfoUiState
+import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay

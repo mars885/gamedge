@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.header
+package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames
 
-internal sealed class GameHeaderImageModel {
-    object DefaultImage : GameHeaderImageModel()
-    data class UrlImage(val url: String) : GameHeaderImageModel()
+internal enum class GameInfoRelatedGamesType {
+    OTHER_COMPANY_GAMES,
+    SIMILAR_GAMES
 }

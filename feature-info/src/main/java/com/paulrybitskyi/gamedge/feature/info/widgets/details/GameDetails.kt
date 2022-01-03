@@ -34,13 +34,7 @@ import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
-internal fun GameDetails(
-    genres: String?,
-    platforms: String?,
-    modes: String?,
-    playerPerspectives: String?,
-    themes: String?,
-) {
+internal fun GameDetails(details: GameInfoDetailsModel) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
@@ -58,24 +52,24 @@ internal fun GameDetails(
                 ),
             )
 
-            if (genres != null) {
-                GameDetailsGenresSection(genres)
+            if (details.hasGenresText) {
+                GameDetailsGenresSection(checkNotNull(details.genresText))
             }
 
-            if (platforms != null) {
-                GameDetailsPlatformsSection(platforms)
+            if (details.hasPlatformsText) {
+                GameDetailsPlatformsSection(checkNotNull(details.platformsText))
             }
 
-            if (modes != null) {
-                GameDetailsModesSection(modes)
+            if (details.hasModesText) {
+                GameDetailsModesSection(checkNotNull(details.modesText))
             }
 
-            if (playerPerspectives != null) {
-                GameDetailsPlayerPerspectivesSection(playerPerspectives)
+            if (details.hasPlayerPerspectivesText) {
+                GameDetailsPlayerPerspectivesSection(checkNotNull(details.playerPerspectivesText))
             }
 
-            if (themes != null) {
-                GameDetailsThemesSection(themes)
+            if (details.hasThemesText) {
+                GameDetailsThemesSection(checkNotNull(details.themesText))
             }
         }
     }
@@ -192,10 +186,12 @@ private fun GameDetailsThemesSection(themes: String) {
 @Preview
 internal fun GameDetailsPreview() {
     GameDetails(
-        genres = "Adventure • Shooter • Role-playing (RPG)",
-        platforms = "PC • PS4 • XONE • PS5 • Series X • Stadia",
-        modes = "Single Player • Multiplayer",
-        playerPerspectives = "First person • Third person",
-        themes = "Action • Science Fiction • Horror • Survival",
+        details = GameInfoDetailsModel(
+            genresText = "Adventure • Shooter • Role-playing (RPG)",
+            platformsText = "PC • PS4 • XONE • PS5 • Series X • Stadia",
+            modesText = "Single Player • Multiplayer",
+            playerPerspectivesText = "First person • Third person",
+            themesText = "Action • Science Fiction • Horror • Survival",
+        ),
     )
 }

@@ -41,7 +41,6 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.gamedge.feature.info.R
-import com.paulrybitskyi.gamedge.feature.info.widgets.model.GameInfoLinkModel
 import java.util.*
 
 @Composable

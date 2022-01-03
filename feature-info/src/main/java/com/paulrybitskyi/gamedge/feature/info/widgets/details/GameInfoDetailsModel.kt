@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.model
+package com.paulrybitskyi.gamedge.feature.info.widgets.details
 
 internal data class GameInfoDetailsModel(
     val genresText: String?,
@@ -22,4 +22,20 @@ internal data class GameInfoDetailsModel(
     val modesText: String?,
     val playerPerspectivesText: String?,
     val themesText: String?
-)
+)  {
+
+    val hasGenresText: Boolean
+        get() = (genresText != null)
+
+    val hasPlatformsText: Boolean
+        get() = (platformsText != null)
+
+    val hasModesText: Boolean
+        get() = (modesText != null)
+
+    val hasPlayerPerspectivesText: Boolean
+        get() = (playerPerspectivesText != null)
+
+    val hasThemesText: Boolean
+        get() = (themesText != null)
+}

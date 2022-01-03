@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.links
+package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames
 
-internal data class GameLinkItemModel constructor(
+internal data class GameInfoRelatedGameModel(
     val id: Int,
-    val text: String,
-    val iconId: Int? = null,
-    val payload: Any? = null
+    val title: String,
+    val coverUrl: String?
 )
