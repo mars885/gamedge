@@ -43,7 +43,7 @@ import com.paulrybitskyi.gamedge.feature.news.R
 internal fun GamingNews(
     uiState: GamingNewsState,
     onNewsItemClicked: (GamingNewsItemModel) -> Unit,
-    onRefreshRequested: () -> Unit
+    onRefreshRequested: () -> Unit,
 ) {
     Box(
         modifier = Modifier

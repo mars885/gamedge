@@ -115,8 +115,8 @@ internal class ImageViewerViewModel @Inject constructor(
         dispatchCommand(ImageViewerCommand.ShareText(textToShare))
     }
 
-    fun onImageChanged(position: Int) {
-        _uiState.update { it.copy(selectedImageUrlIndex = position) }
+    fun onImageChanged(imageIndex: Int) {
+        _uiState.update { it.copy(selectedImageUrlIndex = imageIndex) }
     }
 
     fun onBackPressed() {

@@ -94,7 +94,7 @@ private const val CONSTRAINT_ID_GAME_CATEGORY = "game_category"
 @Composable
 internal fun GameHeader(
     headerInfo: GameInfoHeaderModel,
-    onArtworkClicked: (Int) -> Unit,
+    onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
@@ -464,8 +464,8 @@ private fun GameArtworks(
     artworks: List<GameArtworkModel>,
     isScrollingEnabled: Boolean, // todo
     modifier: Modifier,
-    onArtworkChanged: (Int) -> Unit,
-    onArtworkClicked: (Int) -> Unit,
+    onArtworkChanged: (artworkIndex: Int) -> Unit,
+    onArtworkClicked: (artworkIndex: Int) -> Unit,
 ) {
     val pagerState = rememberPagerState()
 

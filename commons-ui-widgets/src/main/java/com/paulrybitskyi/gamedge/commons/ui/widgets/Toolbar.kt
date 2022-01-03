@@ -115,7 +115,7 @@ private fun ToolbarButton(
 ) {
     IconButton(
         modifier = Modifier.size(dimensionResource(R.dimen.toolbar_height)),
-        onClick = { onClick?.invoke() }
+        onClick = onClick,
     ) {
         Icon(
             painter = icon,

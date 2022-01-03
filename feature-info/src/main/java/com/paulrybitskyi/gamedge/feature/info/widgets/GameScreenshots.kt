@@ -51,7 +51,7 @@ import com.paulrybitskyi.gamedge.feature.info.R
 @Composable
 internal fun GameScreenshots(
     screenshotUrls: List<String>,
-    onScreenshotClicked: (Int) -> Unit,
+    onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),

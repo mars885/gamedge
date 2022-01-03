@@ -49,7 +49,7 @@ internal fun ImageViewer(
     networkStateProvider: NetworkStateProvider,
     onToolbarLeftBtnClicked: () -> Unit,
     onToolbarRightBtnClicked: () -> Unit,
-    onImageChanged: (Int) -> Unit,
+    onImageChanged: (imageIndex: Int) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -82,7 +82,7 @@ private fun ImageViewerPager(
     uiState: ImageViewerUiState,
     networkStateProvider: NetworkStateProvider,
     modifier: Modifier,
-    onImageChanged: (Int) -> Unit,
+    onImageChanged: (imageIndex: Int) -> Unit,
 ) {
     val pagerState = rememberPagerState(initialPage = uiState.selectedImageUrlIndex)
 

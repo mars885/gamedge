@@ -60,12 +60,12 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameVideos
 @Composable
 internal fun GameInfo(
     uiState: GameInfoUiState,
-    onArtworkClicked: (Int) -> Unit,
+    onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
     onVideoClicked: (GameInfoVideoModel) -> Unit,
-    onScreenshotClicked: (Int) -> Unit,
+    onScreenshotClicked: (screenshotIndex: Int) -> Unit,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
@@ -118,12 +118,12 @@ private fun GameInfoEmptyState(modifier: Modifier) {
 @Composable
 private fun GameInfoSuccessState(
     gameInfo: GameInfoModel,
-    onArtworkClicked: (Int) -> Unit,
+    onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
     onVideoClicked: (GameInfoVideoModel) -> Unit,
-    onScreenshotClicked: (Int) -> Unit,
+    onScreenshotClicked: (screenshotIndex: Int) -> Unit,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
@@ -147,12 +147,12 @@ private fun GameInfoSuccessState(
 @Composable
 private fun GameInfoContent(
     gameInfo: GameInfoModel,
-    onArtworkClicked: (Int) -> Unit,
+    onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
     onVideoClicked: (GameInfoVideoModel) -> Unit,
-    onScreenshotClicked: (Int) -> Unit,
+    onScreenshotClicked: (screenshotIndex: Int) -> Unit,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
@@ -225,7 +225,7 @@ private fun GameInfoContent(
 
 private fun LazyListScope.GameHeaderItem(
     model: GameInfoHeaderModel,
-    onArtworkClicked: (Int) -> Unit,
+    onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
@@ -255,7 +255,7 @@ private fun LazyListScope.GameVideosItem(
 
 private fun LazyListScope.GameScreenshotsItem(
     model: List<String>,
-    onScreenshotClicked: (Int) -> Unit,
+    onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
     item {
         GameScreenshots(

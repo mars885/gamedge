@@ -163,10 +163,10 @@ internal class GameInfoViewModel @Inject constructor(
             .execute(GetSimilarGamesUseCase.Params(game, relatedGamesUseCasePagination))
     }
 
-    fun onArtworkClicked(position: Int) {
+    fun onArtworkClicked(artworkIndex: Int) {
         navigateToImageViewer(
             title = stringProvider.getString(R.string.artwork),
-            initialPosition = position,
+            initialPosition = artworkIndex,
             gameImageUrlsProvider = gameUrlFactory::createArtworkImageUrls
         )
     }
@@ -219,10 +219,10 @@ internal class GameInfoViewModel @Inject constructor(
         openUrl(video.videoUrl)
     }
 
-    fun onScreenshotClicked(position: Int) {
+    fun onScreenshotClicked(screenshotIndex: Int) {
         navigateToImageViewer(
             title = stringProvider.getString(R.string.screenshot),
-            initialPosition = position,
+            initialPosition = screenshotIndex,
             gameImageUrlsProvider = gameUrlFactory::createScreenshotImageUrls
         )
     }

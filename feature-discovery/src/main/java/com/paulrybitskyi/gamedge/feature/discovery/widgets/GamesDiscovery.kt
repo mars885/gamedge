@@ -48,7 +48,7 @@ private const val SWIPE_REFRESH_INTENTIONAL_DELAY = 300L
 @Composable
 internal fun GamesDiscovery(
     items: List<GamesDiscoveryItemModel>,
-    onCategoryMoreButtonClicked: (String) -> Unit,
+    onCategoryMoreButtonClicked: (category: String) -> Unit,
     onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,
     onRefreshRequested: () -> Unit,
 ) {
@@ -85,7 +85,7 @@ internal fun GamesDiscovery(
 @Composable
 private fun GamesDiscoveryItems(
     items: List<GamesDiscoveryItemModel>,
-    onCategoryMoreButtonClicked: (String) -> Unit,
+    onCategoryMoreButtonClicked: (category: String) -> Unit,
     onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,
 ) {
     LazyColumn(

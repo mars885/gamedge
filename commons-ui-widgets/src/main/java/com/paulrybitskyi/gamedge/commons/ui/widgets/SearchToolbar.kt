@@ -67,8 +67,8 @@ fun SearchToolbar(
     cursorColor: Color = colorResource(R.color.colorAccent),
     titleTextSize: TextUnit = textSizeResource(R.dimen.search_toolbar_query_input_text_size),
     focusRequester: FocusRequester = remember { FocusRequester() },
-    onQueryChanged: ((String) -> Unit)? = null,
-    onSearchActionRequested: ((String) -> Unit)? = null,
+    onQueryChanged: ((query: String) -> Unit)? = null,
+    onSearchActionRequested: ((query: String) -> Unit)? = null,
     onBackButtonClicked: (() -> Unit)? = null,
     onClearButtonClicked: (() -> Unit)? = null,
 ) {
@@ -136,8 +136,8 @@ private fun SearchToolbarInput(
     titleTextColor: Color,
     cursorColor: Color,
     titleTextSize: TextUnit,
-    onQueryChanged: (String) -> Unit,
-    onSearchActionRequested: ((String) -> Unit)?,
+    onQueryChanged: (query: String) -> Unit,
+    onSearchActionRequested: ((query: String) -> Unit)?,
 ) {
     // TextField has a preset height and some characters from the font
     // that is used are clipped. Therefore, using BasicTextField.

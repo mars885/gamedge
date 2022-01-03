@@ -41,10 +41,10 @@ private const val KEYBOARD_POPUP_INTENTIONAL_DELAY = 300L
 @Composable
 internal fun GamesSearch(
     uiState: GamesSearchUiState,
-    onSearchActionRequested: (String) -> Unit,
+    onSearchActionRequested: (query: String) -> Unit,
     onBackButtonClicked: () -> Unit,
     onClearButtonClicked: () -> Unit,
-    onQueryChanged: (String) -> Unit,
+    onQueryChanged: (query: String) -> Unit,
     onGameClicked: (GameModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
