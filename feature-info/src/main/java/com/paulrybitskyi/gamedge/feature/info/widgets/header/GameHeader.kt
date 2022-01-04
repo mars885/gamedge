@@ -67,6 +67,7 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
+import com.paulrybitskyi.gamedge.commons.ui.clickable
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
@@ -140,7 +141,6 @@ internal fun GameHeader(
                 .statusBarsPadding()
                 .size(dimensionResource(R.dimen.game_info_header_back_button_size))
                 .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
                     indication = rememberRipple(
                         bounded = false,
                         radius = dimensionResource(R.dimen.game_info_header_back_button_ripple_radius),

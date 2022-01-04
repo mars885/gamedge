@@ -19,13 +19,11 @@ package com.paulrybitskyi.gamedge.feature.info.widgets
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,11 +49,7 @@ internal fun GameSummary(summary: String) {
     var isExpanded by remember { mutableStateOf(false) }
     var isExpandable by remember { mutableStateOf(true) }
     val cardClickableModifier = if (isExpandable || isExpanded) {
-        Modifier.clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = rememberRipple(),
-            onClick = { isExpanded = !isExpanded },
-        )
+        Modifier.clickable(onClick = { isExpanded = !isExpanded })
     } else {
         Modifier
     }

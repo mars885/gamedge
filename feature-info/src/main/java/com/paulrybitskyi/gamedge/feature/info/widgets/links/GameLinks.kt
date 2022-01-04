@@ -25,7 +25,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -97,7 +96,6 @@ private fun GameLink(
         ),
         backgroundColor = colorResource(R.color.game_links_item_background_color),
         elevation = dimensionResource(R.dimen.game_links_item_elevation),
-        indication = rememberRipple(),
     ) {
         Row(
             modifier = Modifier

@@ -16,11 +16,19 @@
 
 package com.paulrybitskyi.gamedge.commons.ui
 
+import android.annotation.SuppressLint
 import androidx.annotation.DimenRes
+import androidx.compose.foundation.Indication
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.dimensionResource
@@ -72,4 +80,16 @@ fun OnLifecycleEvent(
         lifecycle.addObserver(lifecycleObserver)
         onDispose { lifecycle.removeObserver(lifecycleObserver) }
     }
+}
+
+@SuppressLint("UnnecessaryComposedModifier")
+fun Modifier.clickable(
+    indication: Indication?,
+    onClick: () -> Unit,
+) = composed {
+    clickable(
+        interactionSource = remember { MutableInteractionSource() },
+        indication = indication,
+        onClick = onClick,
+    )
 }

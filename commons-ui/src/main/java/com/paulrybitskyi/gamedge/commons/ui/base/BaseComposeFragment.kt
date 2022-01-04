@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.paulrybitskyi.commons.ktx.showLongToast
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
@@ -33,6 +32,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 import com.paulrybitskyi.gamedge.commons.ui.observeIn
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import javax.inject.Inject
 import kotlinx.coroutines.flow.onEach
 
@@ -54,7 +54,7 @@ abstract class BaseComposeFragment<
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ProvideWindowInsets(content = getContent())
+                GamedgeTheme(content = getContent())
             }
         }
     }
