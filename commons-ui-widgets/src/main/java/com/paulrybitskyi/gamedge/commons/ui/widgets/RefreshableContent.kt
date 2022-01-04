@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.commons.ui.widgets
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -40,7 +41,8 @@ fun RefreshableContent(
             SwipeRefreshIndicator(
                 state = state,
                 refreshTriggerDistance = refreshTrigger,
-                contentColor = colorResource(R.color.swipe_refresh_indicator_color)
+                contentColor = colorResource(R.color.swipe_refresh_indicator_color),
+                refreshingOffset = dimensionResource(R.dimen.swipe_refresh_refreshing_offset),
             )
         },
         content = content,

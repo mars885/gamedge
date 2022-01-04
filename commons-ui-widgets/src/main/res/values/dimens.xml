@@ -34,6 +34,9 @@
     <dimen name="info_view_title_text_size">17sp</dimen>
     <dimen name="info_view_title_line_height">24sp</dimen>
 
+    <!-- SwipeRefresh -->
+    <dimen name="swipe_refresh_refreshing_offset">24dp</dimen>
+
     <!-- GameCover -->
     <dimen name="game_cover_card_elevation">2dp</dimen>
     <dimen name="game_cover_card_corner_radius">4dp</dimen>

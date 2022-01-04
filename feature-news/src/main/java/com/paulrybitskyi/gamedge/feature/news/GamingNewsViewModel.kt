@@ -129,7 +129,7 @@ class GamingNewsViewModel @Inject constructor(
                 }
                 .onStart {
                     emit(currentUiState.enableRefreshing())
-                    // Adding a delay to prevent the SwipeRefresh from quick disappearing
+                    // Adding a delay to prevent the SwipeRefresh from disappearing quickly
                     delay(ARTICLES_REFRESH_DELAY)
                 }
                 .onCompletion {
