@@ -100,7 +100,7 @@ class GamesDiscoveryViewModel @Inject constructor(
                 flows = GamesDiscoveryCategory.values().map { observeGames(it) },
                 transform = { it.toList() }
             )
-            .map(currentItems::toSuccessState)
+            .map { games -> currentItems.toSuccessState(games) }
             .onError { logger.error(logTag, "Failed to observe games.", it) }
             .onStart { isObservingGames = true }
             .onCompletion { isObservingGames = false }

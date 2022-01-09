@@ -96,7 +96,7 @@ class LikedGamesViewModel @Inject constructor(
             observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
                 .map(likedGameModelMapper::mapToGameModels)
                 .flowOn(dispatcherProvider.computation)
-                .map(currentUiState::toSuccessState)
+                .map { games -> currentUiState.toSuccessState(games) }
                 .onError {
                     logger.error(logTag, "Failed to load liked games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))

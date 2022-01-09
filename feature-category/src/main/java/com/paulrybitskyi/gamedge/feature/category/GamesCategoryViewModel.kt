@@ -114,7 +114,7 @@ internal class GamesCategoryViewModel @Inject constructor(
                 .execute(observeGamesUseCaseParams)
                 .map(gameCategoryModelMapper::mapToGameCategoryModels)
                 .flowOn(dispatcherProvider.computation)
-                .map(currentUiState::toSuccessState)
+                .map { games -> currentUiState.toSuccessState(games) }
                 .onError {
                     logger.error(logTag, "Failed to observe ${gamesCategory.name} games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))

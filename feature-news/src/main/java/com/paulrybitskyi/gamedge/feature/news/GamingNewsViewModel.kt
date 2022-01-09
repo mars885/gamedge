@@ -93,7 +93,7 @@ class GamingNewsViewModel @Inject constructor(
             observeArticlesUseCase.execute(observerUseCaseParams)
                 .map(gamingNewsItemModelMapper::mapToGamingNewsItemModels)
                 .flowOn(dispatcherProvider.computation)
-                .map(currentUiState::toSuccessState)
+                .map { news -> currentUiState.toSuccessState(news) }
                 .onError {
                     logger.error(logTag, "Failed to load articles.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))

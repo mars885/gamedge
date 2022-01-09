@@ -121,7 +121,7 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .flowOn(dispatcherProvider.computation)
-            .map(currentUiState::toSuccessState)
+            .map { game -> currentUiState.toSuccessState(game) }
             .onError {
                 logger.error(logTag, "Failed to load game info data.", it)
                 dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
