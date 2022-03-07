@@ -40,7 +40,7 @@ object versions {
     const val daggerHilt = "2.41"
     const val detektPlugin = "1.19.0"
     const val ktlintPlugin = "10.2.1"
-    const val coroutines = "1.5.2"
+    const val coroutines = "1.6.0"
     const val room = "2.3.0"
 }
 
