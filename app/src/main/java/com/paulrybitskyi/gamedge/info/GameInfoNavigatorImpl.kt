@@ -34,9 +34,9 @@ internal class GameInfoNavigatorImpl @Inject constructor(
     ) {
         navController.navigate(
             GameInfoFragmentDirections.actionImageViewerFragment(
-                title,
-                initialPosition,
-                imageUrls.toTypedArray()
+                title = title,
+                initialPosition = initialPosition,
+                imageUrls = imageUrls.toTypedArray(),
             )
         )
     }
