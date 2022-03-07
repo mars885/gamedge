@@ -56,7 +56,6 @@ object deps {
         const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
         const val daggerHiltGradle = "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}"
         const val protobuf = "com.google.protobuf:protobuf-gradle-plugin:$protobufPluginVersion"
-        const val detekt = ""
         const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${versions.gradleVersionsPlugin}"
     }
 
@@ -89,7 +88,7 @@ object deps {
 
     object kotlin {
 
-        private const val serializationVersion = "1.3.0"
+        private const val serializationVersion = "1.3.2"
 
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
