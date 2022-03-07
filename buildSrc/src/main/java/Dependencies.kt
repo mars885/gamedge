@@ -105,7 +105,7 @@ object deps {
         private const val lifecycleVersion = "2.4.1"
         private const val browserVersion = "1.4.0"
         private const val coreKtxVersion = "1.7.0"
-        private const val fragmentKtxVersion = "1.3.6"
+        private const val fragmentKtxVersion = "1.4.1"
         private const val dataStoreVersion = "1.0.0"
 
         const val appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
