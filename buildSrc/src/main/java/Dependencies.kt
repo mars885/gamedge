@@ -180,7 +180,7 @@ object deps {
     object misc {
 
         private const val desugaredLibsVersion = "1.1.5"
-        private const val kotlinResultVersion = "1.1.12"
+        private const val kotlinResultVersion = "1.1.14"
         private const val expandableTextViewVersion = "1.0.5"
         private const val hiltBinderVersion = "1.1.2"
         private const val photoViewVersion = "2.3.0"
