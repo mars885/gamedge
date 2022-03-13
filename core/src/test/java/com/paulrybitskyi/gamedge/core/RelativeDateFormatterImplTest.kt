@@ -22,11 +22,11 @@ import com.paulrybitskyi.gamedge.core.providers.TimeProvider
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import java.time.LocalDateTime
-import java.time.Month
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDateTime
+import java.time.Month
 
 internal class RelativeDateFormatterImplTest {
 
