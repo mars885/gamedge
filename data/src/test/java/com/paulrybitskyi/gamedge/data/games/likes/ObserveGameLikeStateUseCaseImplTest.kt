@@ -24,7 +24,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -44,7 +44,7 @@ internal class ObserveGameLikeStateUseCaseImplTest {
 
     @Test
     fun `Emits game like state successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(true)
             SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).test {
                 assertThat(awaitItem()).isTrue
