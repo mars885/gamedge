@@ -29,7 +29,7 @@ import com.paulrybitskyi.gamedge.domain.commons.entities.Error
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -55,7 +55,7 @@ internal class GetGameUseCaseImplTest {
 
     @Test
     fun `Emits game successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesLocalDataStore.getGame(any()) } returns DATA_GAME
 
             SUT.execute(GET_GAME_USE_CASE_PARAMS).test {
@@ -67,7 +67,7 @@ internal class GetGameUseCaseImplTest {
 
     @Test
     fun `Emits not found error if game ID does not reference existing game`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesLocalDataStore.getGame(any()) } returns null
 
             SUT.execute(GET_GAME_USE_CASE_PARAMS).test {

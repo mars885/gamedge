@@ -28,7 +28,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -60,7 +60,7 @@ internal class AuthFileDataStoreTest {
 
     @Test
     fun `Saves credentials successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { protoDataStore.updateData(any()) } returns PROTO_OAUTH_CREDENTIALS
 
             SUT.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
@@ -71,7 +71,7 @@ internal class AuthFileDataStoreTest {
 
     @Test
     fun `Retrieves credentials successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
 
             assertThat(SUT.getOauthCredentials()).isEqualTo(DATA_OAUTH_CREDENTIALS)
@@ -80,7 +80,7 @@ internal class AuthFileDataStoreTest {
 
     @Test
     fun `Retrieves null credentials successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { protoDataStore.data } returns flowOf()
 
             assertThat(SUT.getOauthCredentials()).isNull()
@@ -89,7 +89,7 @@ internal class AuthFileDataStoreTest {
 
     @Test
     fun `Credentials should not be expired`() {
-        runBlockingTest {
+        runTest {
             coEvery { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
             coEvery { timestampProvider.getUnixTimestamp(any()) } returns 0L
 
@@ -99,7 +99,7 @@ internal class AuthFileDataStoreTest {
 
     @Test
     fun `Credentials should be expired`() {
-        runBlockingTest {
+        runTest {
             coEvery { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
             coEvery {
                 timestampProvider.getUnixTimestamp(any())
@@ -111,7 +111,7 @@ internal class AuthFileDataStoreTest {
 
     @Test
     fun `Credentials are expired if data store is empty`() {
-        runBlockingTest {
+        runTest {
             coEvery { protoDataStore.data } returns flowOf()
 
             assertThat(SUT.isExpired()).isTrue

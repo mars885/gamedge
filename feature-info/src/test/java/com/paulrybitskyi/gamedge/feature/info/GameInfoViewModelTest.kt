@@ -43,7 +43,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -98,7 +98,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Emits correct ui states when loading data`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
             SUT.uiState.test {
@@ -113,7 +113,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Logs error when game fetching use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_API))
 
             SUT.loadData(resultEmissionDelay = 0L)
@@ -124,7 +124,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Dispatches toast showing command when game fetching use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_NOT_FOUND))
 
             SUT.commandFlow.test {
@@ -137,7 +137,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Routes to image viewer screen when artwork is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
             SUT.routeFlow.test {
@@ -150,7 +150,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Routes to previous screen when back button is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.routeFlow.test {
                 SUT.onBackButtonClicked()
 
@@ -161,7 +161,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Routes to image viewer screen when cover is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
             SUT.routeFlow.test {
@@ -174,7 +174,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Dispatches url opening command when video is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             val video = GameInfoVideoModel(
                 thumbnailUrl = "thumbnail_url",
                 videoUrl = "video_url",
@@ -194,7 +194,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Routes to image viewer screen when screenshot is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
             SUT.routeFlow.test {
@@ -207,7 +207,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Dispatches url opening command when game link is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             val link = GameInfoLinkModel(
                 id = 1,
                 text = "text",
@@ -228,7 +228,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Dispatches url opening command when company is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             val company = GameInfoCompanyModel(
                 logoContainerSize = (0 to 0),
                 logoImageSize = (0 to 0),
@@ -251,7 +251,7 @@ internal class GameInfoViewModelTest {
 
     @Test
     fun `Routes to game info when related game is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             val relatedGame = GameInfoRelatedGameModel(
                 id = 1,
                 title = "title",

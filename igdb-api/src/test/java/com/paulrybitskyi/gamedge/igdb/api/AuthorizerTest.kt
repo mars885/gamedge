@@ -23,7 +23,7 @@ import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.Before
@@ -44,7 +44,7 @@ internal class AuthorizerTest {
 
     @Test
     fun `Builds basic authorization header successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { authLocalDataStore.getOauthCredentials() } returns DATA_OAUTH_CREDENTIALS
 
             assertThat(SUT.buildAuthorizationHeader(AuthorizationType.BASIC))
@@ -54,7 +54,7 @@ internal class AuthorizerTest {
 
     @Test
     fun `Builds bearer authorization header successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { authLocalDataStore.getOauthCredentials() } returns DATA_OAUTH_CREDENTIALS
 
             assertThat(SUT.buildAuthorizationHeader(AuthorizationType.BEARER))
@@ -66,7 +66,7 @@ internal class AuthorizerTest {
     fun `Throws exception if no oauth credentials are present`() {
         assertThatExceptionOfType(IllegalStateException::class.java)
             .isThrownBy {
-                runBlockingTest {
+                runTest {
                     coEvery { authLocalDataStore.getOauthCredentials() } returns null
 
                     SUT.buildAuthorizationHeader(AuthorizationType.BEARER)

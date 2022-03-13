@@ -35,7 +35,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -65,7 +65,7 @@ internal class RefreshAuthUseCaseImplTest {
 
     @Test
     fun `Emits remote credentials when current credentials are expired`() {
-        runBlockingTest {
+        runTest {
             coEvery { authLocalDataStore.isExpired() } returns true
             coEvery { authRemoteDataStore.getOauthCredentials() } returns Ok(DATA_OAUTH_CREDENTIALS)
 
@@ -80,7 +80,7 @@ internal class RefreshAuthUseCaseImplTest {
 
     @Test
     fun `Does not emit remote credentials when current credentials are not expired`() {
-        runBlockingTest {
+        runTest {
             coEvery { authLocalDataStore.isExpired() } returns false
 
             SUT.execute().test {
@@ -91,7 +91,7 @@ internal class RefreshAuthUseCaseImplTest {
 
     @Test
     fun `Saves remote credentials into local data store when refresh is successful`() {
-        runBlockingTest {
+        runTest {
             coEvery { authLocalDataStore.isExpired() } returns true
             coEvery { authRemoteDataStore.getOauthCredentials() } returns Ok(DATA_OAUTH_CREDENTIALS)
 
@@ -103,7 +103,7 @@ internal class RefreshAuthUseCaseImplTest {
 
     @Test
     fun `Does not save remote credentials into local data store when current credentials are not expired`() {
-        runBlockingTest {
+        runTest {
             coEvery { authLocalDataStore.isExpired() } returns false
 
             SUT.execute().firstOrNull()
@@ -114,7 +114,7 @@ internal class RefreshAuthUseCaseImplTest {
 
     @Test
     fun `Does not save remote credentials into local data store when refresh is unsuccessful`() {
-        runBlockingTest {
+        runTest {
             coEvery { authLocalDataStore.isExpired() } returns false
             coEvery { authRemoteDataStore.getOauthCredentials() } returns Err(DATA_ERROR_NOT_FOUND)
 

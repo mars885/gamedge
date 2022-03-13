@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.gamespot.api.utils
 
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotConstantsProvider
-import javax.inject.Inject
 import okhttp3.mockwebserver.MockWebServer
+import javax.inject.Inject
 
 internal class FakeGamespotConstantsProvider @Inject constructor(
     mockWebServer: MockWebServer

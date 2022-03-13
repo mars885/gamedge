@@ -33,31 +33,30 @@ object appConfig {
 
 object versions {
 
-    const val kotlin = "1.5.31" // also in buildSrc build.gradle.kts file
+    const val kotlin = "1.6.10" // also in buildSrc build.gradle.kts file
     const val compose = "1.0.5"
-    const val gradleVersionsPlugin = "0.39.0"
-    const val kspPlugin = "1.5.31-1.0.0"
-    const val navigation = "2.3.5"
-    const val daggerHilt = "2.40"
-    const val detektPlugin = "1.18.1"
-    const val ktlintPlugin = "10.2.0"
-    const val coroutines = "1.5.2"
-    const val room = "2.3.0"
+    const val gradleVersionsPlugin = "0.42.0"
+    const val kspPlugin = "1.6.10-1.0.4"
+    const val navigation = "2.4.1"
+    const val daggerHilt = "2.41"
+    const val detektPlugin = "1.19.0"
+    const val ktlintPlugin = "10.2.1"
+    const val coroutines = "1.6.0"
+    const val room = "2.4.2"
 }
 
 object deps {
 
     object plugins {
 
-        private const val gradlePluginVersion = "7.0.3" // also in buildSrc build.gradle.kts file
-        private const val protobufPluginVersion = "0.8.17"
+        private const val gradlePluginVersion = "7.1.2" // also in buildSrc build.gradle.kts file
+        private const val protobufPluginVersion = "0.8.18"
 
         const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
         const val daggerHiltGradle = "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}"
         const val protobuf = "com.google.protobuf:protobuf-gradle-plugin:$protobufPluginVersion"
-        const val detekt = ""
         const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${versions.gradleVersionsPlugin}"
     }
 
@@ -90,7 +89,7 @@ object deps {
 
     object kotlin {
 
-        private const val serializationVersion = "1.3.0"
+        private const val serializationVersion = "1.3.2"
 
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
@@ -99,15 +98,15 @@ object deps {
 
     object androidX {
 
-        private const val appCompatVersion = "1.3.1"
-        private const val constraintLayoutVersion = "2.1.1"
+        private const val appCompatVersion = "1.4.1"
+        private const val constraintLayoutVersion = "2.1.3"
         private const val recyclerViewVersion = "1.2.1"
         private const val viewPager2Version = "1.0.0"
         private const val swipeRefreshLayoutVersion = "1.1.0"
-        private const val lifecycleVersion = "2.4.0"
-        private const val browserVersion = "1.3.0"
+        private const val lifecycleVersion = "2.4.1"
+        private const val browserVersion = "1.4.0"
         private const val coreKtxVersion = "1.7.0"
-        private const val fragmentKtxVersion = "1.3.6"
+        private const val fragmentKtxVersion = "1.4.1"
         private const val dataStoreVersion = "1.0.0"
 
         const val appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
@@ -161,8 +160,8 @@ object deps {
 
     object google {
 
-        private const val materialComponentsVersion = "1.4.0"
-        private const val protobufVersion = "3.19.1"
+        private const val materialComponentsVersion = "1.5.0"
+        private const val protobufVersion = "3.19.4"
 
         const val daggerHilt = "com.google.dagger:hilt-android:${versions.daggerHilt}"
         const val daggerHiltCompiler = "com.google.dagger:hilt-android-compiler:${versions.daggerHilt}"
@@ -173,7 +172,7 @@ object deps {
 
     object square {
 
-        private const val okHttpVersion = "4.9.2"
+        private const val okHttpVersion = "4.9.3"
         private const val retrofitVersion = "2.9.0"
         private const val retrofitKotlinxSerializationConverterVersion = "0.8.0"
         private const val picassoVersion = "2.8"
@@ -211,7 +210,7 @@ object deps {
     object misc {
 
         private const val desugaredLibsVersion = "1.1.5"
-        private const val kotlinResultVersion = "1.1.12"
+        private const val kotlinResultVersion = "1.1.14"
         private const val expandableTextViewVersion = "1.0.5"
         private const val hiltBinderVersion = "1.1.2"
         private const val photoViewVersion = "2.3.0"
@@ -228,8 +227,8 @@ object deps {
 
         private const val jUnitVersion = "4.13.2"
         private const val jUnitExtVersion = "1.1.3"
-        private const val assertJVersion = "3.21.0"
-        private const val mockkVersion = "1.12.0"
+        private const val assertJVersion = "3.22.0"
+        private const val mockkVersion = "1.12.3"
         private const val turbineVersion = "0.7.0"
         private const val testRunnerVersion = "1.4.0"
         private const val archCoreVersion = "2.1.0"

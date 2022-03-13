@@ -36,7 +36,7 @@ import com.paulrybitskyi.gamedge.igdb.api.games.datastores.mapToDataGames
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -71,7 +71,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns searched games successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.searchGames(any(), any(), any()) } returns Ok(API_GAMES)
 
             val result = SUT.searchGames("query", DATA_PAGINATION)
@@ -83,7 +83,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns http error when searching games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.searchGames(any(), any(), any()) } returns Err(API_ERROR_HTTP)
 
             val result = SUT.searchGames("query", DATA_PAGINATION)
@@ -95,7 +95,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns network error when searching games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.searchGames(any(), any(), any()) } returns Err(API_ERROR_NETWORK)
 
             val result = SUT.searchGames("query", DATA_PAGINATION)
@@ -107,7 +107,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns unknown error when searching games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.searchGames(any(), any(), any()) } returns Err(API_ERROR_UNKNOWN)
 
             val result = SUT.searchGames("query", DATA_PAGINATION)
@@ -119,7 +119,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns popular games successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getPopularGames(any(), any()) } returns Ok(API_GAMES)
 
             val result = SUT.getPopularGames(DATA_PAGINATION)
@@ -131,7 +131,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns http error when fetching popular games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getPopularGames(any(), any()) } returns Err(API_ERROR_HTTP)
 
             val result = SUT.getPopularGames(DATA_PAGINATION)
@@ -143,7 +143,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns network error when fetching popular games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getPopularGames(any(), any()) } returns Err(API_ERROR_NETWORK)
 
             val result = SUT.getPopularGames(DATA_PAGINATION)
@@ -155,7 +155,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns unknown error when fetching popular games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getPopularGames(any(), any()) } returns Err(API_ERROR_UNKNOWN)
 
             val result = SUT.getPopularGames(DATA_PAGINATION)
@@ -167,7 +167,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns recently released games successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getRecentlyReleasedGames(any(), any()) } returns Ok(API_GAMES)
 
             val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
@@ -179,7 +179,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns http error when fetching recently released games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getRecentlyReleasedGames(any(), any()) } returns Err(API_ERROR_HTTP)
 
             val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
@@ -191,7 +191,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns network error when fetching recently released games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getRecentlyReleasedGames(any(), any()) } returns Err(API_ERROR_NETWORK)
 
             val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
@@ -203,7 +203,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns unknown error when fetching recently released games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getRecentlyReleasedGames(any(), any()) } returns Err(API_ERROR_UNKNOWN)
 
             val result = SUT.getRecentlyReleasedGames(DATA_PAGINATION)
@@ -215,7 +215,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns coming soon games successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getComingSoonGames(any(), any()) } returns Ok(API_GAMES)
 
             val result = SUT.getComingSoonGames(DATA_PAGINATION)
@@ -227,7 +227,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns http error when fetching coming soon games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getComingSoonGames(any(), any()) } returns Err(API_ERROR_HTTP)
 
             val result = SUT.getComingSoonGames(DATA_PAGINATION)
@@ -239,7 +239,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns network error when fetching coming soon games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getComingSoonGames(any(), any()) } returns Err(API_ERROR_NETWORK)
 
             val result = SUT.getComingSoonGames(DATA_PAGINATION)
@@ -251,7 +251,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns unknown error when fetching coming soon games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getComingSoonGames(any(), any()) } returns Err(API_ERROR_UNKNOWN)
 
             val result = SUT.getComingSoonGames(DATA_PAGINATION)
@@ -263,7 +263,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns most anticipated games successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getMostAnticipatedGames(any(), any()) } returns Ok(API_GAMES)
 
             val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
@@ -275,7 +275,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns http error when fetching most anticipated games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getMostAnticipatedGames(any(), any()) } returns Err(API_ERROR_HTTP)
 
             val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
@@ -287,7 +287,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns network error when fetching most anticipated games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getMostAnticipatedGames(any(), any()) } returns Err(API_ERROR_NETWORK)
 
             val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
@@ -299,7 +299,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns unknown error when fetching most anticipated games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getMostAnticipatedGames(any(), any()) } returns Err(API_ERROR_UNKNOWN)
 
             val result = SUT.getMostAnticipatedGames(DATA_PAGINATION)
@@ -311,7 +311,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns company developed games successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getGames(any(), any(), any()) } returns Ok(API_GAMES)
 
             val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
@@ -323,7 +323,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns http error when fetching company developed games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getGames(any(), any(), any()) } returns Err(API_ERROR_HTTP)
 
             val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
@@ -335,7 +335,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns network error when fetching company developed games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getGames(any(), any(), any()) } returns Err(API_ERROR_NETWORK)
 
             val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
@@ -347,7 +347,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns unknown error when fetching company developed games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getGames(any(), any(), any()) } returns Err(API_ERROR_UNKNOWN)
 
             val result = SUT.getCompanyDevelopedGames(DATA_COMPANY, DATA_PAGINATION)
@@ -359,7 +359,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns similar games successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getGames(any(), any(), any()) } returns Ok(API_GAMES)
 
             val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
@@ -371,7 +371,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns http error when fetching similar games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getGames(any(), any(), any()) } returns Err(API_ERROR_HTTP)
 
             val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
@@ -383,7 +383,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns network error when fetching similar games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getGames(any(), any(), any()) } returns Err(API_ERROR_NETWORK)
 
             val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)
@@ -395,7 +395,7 @@ internal class GamesIgdbDataStoreTest {
 
     @Test
     fun `Returns unknown error when fetching similar games`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesEndpoint.getGames(any(), any(), any()) } returns Err(API_ERROR_UNKNOWN)
 
             val result = SUT.getSimilarGames(DATA_GAME, DATA_PAGINATION)

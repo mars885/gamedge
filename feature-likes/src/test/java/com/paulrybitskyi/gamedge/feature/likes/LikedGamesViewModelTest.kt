@@ -32,7 +32,7 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -64,7 +64,7 @@ internal class LikedGamesViewModelTest {
 
     @Test
     fun `Emits correct ui states when loading data`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observeLikedGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.uiState.test {
@@ -84,7 +84,7 @@ internal class LikedGamesViewModelTest {
 
     @Test
     fun `Logs error when liked games loading fails`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.loadData()
@@ -95,7 +95,7 @@ internal class LikedGamesViewModelTest {
 
     @Test
     fun `Dispatches toast showing command when liked games loading fails`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
@@ -108,7 +108,7 @@ internal class LikedGamesViewModelTest {
 
     @Test
     fun `Routes to info screen when game is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             val gameModel = GameModel(
                 id = 1,
                 coverImageUrl = null,

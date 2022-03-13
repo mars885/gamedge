@@ -38,7 +38,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -101,7 +101,7 @@ internal class GamesDiscoveryViewModelTest {
 
     @Test
     fun `Logs error when games observing use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
@@ -113,7 +113,7 @@ internal class GamesDiscoveryViewModelTest {
 
     @Test
     fun `Logs error when games refreshing use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
@@ -125,7 +125,7 @@ internal class GamesDiscoveryViewModelTest {
 
     @Test
     fun `Dispatches toast showing command when games refreshing use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
@@ -141,7 +141,7 @@ internal class GamesDiscoveryViewModelTest {
 
     @Test
     fun `Routes to games category screen when more button is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.routeFlow.test {
                 SUT.onCategoryMoreButtonClicked("popular")
 
@@ -155,7 +155,7 @@ internal class GamesDiscoveryViewModelTest {
 
     @Test
     fun `Routes to game info screen when game is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             val item = GamesDiscoveryItemGameModel(
                 id = 1,
                 title = "title",

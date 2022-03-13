@@ -23,10 +23,10 @@ import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthExpiryTimeCalcul
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import java.util.concurrent.TimeUnit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 private const val CURRENT_TIMESTAMP = 10_000L
 

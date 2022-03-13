@@ -30,12 +30,12 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Inject
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(DatabaseModule::class)
@@ -61,7 +61,7 @@ internal class LikedGamesTableTest {
 
     @Test
     fun likes_game_and_verifies_that_it_is_liked() {
-        runBlockingTest {
+        runTest {
             SUT.saveLikedGame(LIKED_GAME)
 
             assertThat(SUT.isGameLiked(LIKED_GAME.gameId)).isTrue
@@ -70,7 +70,7 @@ internal class LikedGamesTableTest {
 
     @Test
     fun likes_game_unlikes_it_and_verifies_that_it_is_unliked_by_checking() {
-        runBlockingTest {
+        runTest {
             SUT.saveLikedGame(LIKED_GAME)
             SUT.deleteLikedGame(LIKED_GAME.gameId)
 
@@ -80,14 +80,14 @@ internal class LikedGamesTableTest {
 
     @Test
     fun verifies_that_unliked_game_is_unliked() {
-        runBlockingTest {
+        runTest {
             assertThat(SUT.isGameLiked(100)).isFalse
         }
     }
 
     @Test
     fun likes_game_and_observes_that_it_is_liked() {
-        runBlockingTest {
+        runTest {
             SUT.saveLikedGame(LIKED_GAME)
 
             SUT.observeGameLikeState(LIKED_GAME.gameId).test {
@@ -98,7 +98,7 @@ internal class LikedGamesTableTest {
 
     @Test
     fun likes_game_unlikes_it_and_verifies_that_it_is_unliked_by_observing() {
-        runBlockingTest {
+        runTest {
             SUT.saveLikedGame(LIKED_GAME)
             SUT.deleteLikedGame(LIKED_GAME.gameId)
 
@@ -110,7 +110,7 @@ internal class LikedGamesTableTest {
 
     @Test
     fun likes_games_and_observes_liked_games() {
-        runBlockingTest {
+        runTest {
             LIKED_GAMES.forEach { SUT.saveLikedGame(it) }
             gamesTable.saveGames(DATABASE_GAMES)
 

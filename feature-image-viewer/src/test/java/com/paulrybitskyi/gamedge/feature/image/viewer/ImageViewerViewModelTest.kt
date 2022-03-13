@@ -22,7 +22,7 @@ import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -56,7 +56,7 @@ internal class ImageViewerViewModelTest {
 
     @Test
     fun `Dispatches text sharing command when toolbar right button is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.commandFlow.test {
                 SUT.onToolbarRightButtonClicked()
 
@@ -67,7 +67,7 @@ internal class ImageViewerViewModelTest {
 
     @Test
     fun `Emits selected position when page is changed`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.selectedPosition.test {
                 SUT.onImageChanged(10)
 
@@ -79,7 +79,7 @@ internal class ImageViewerViewModelTest {
 
     @Test
     fun `Emits toolbar title when page is changed`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.toolbarTitle.test {
                 SUT.onImageChanged(10)
 
@@ -90,7 +90,7 @@ internal class ImageViewerViewModelTest {
 
     @Test
     fun `Dispatches system windows reset command when back button is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.commandFlow.test {
                 SUT.onBackPressed()
 
@@ -101,7 +101,7 @@ internal class ImageViewerViewModelTest {
 
     @Test
     fun `Routes to previous screen when back button is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.routeFlow.test {
                 SUT.onBackPressed()
 

@@ -33,7 +33,7 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -65,7 +65,7 @@ internal class GamingNewsViewModelTest {
 
     @Test
     fun `Emits correct ui states when loading data`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observeArticlesUseCase.execute(any()) } returns flowOf(DOMAIN_ARTICLES)
 
             SUT.uiState.test {
@@ -85,7 +85,7 @@ internal class GamingNewsViewModelTest {
 
     @Test
     fun `Logs error when articles observing use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.loadData()
@@ -96,7 +96,7 @@ internal class GamingNewsViewModelTest {
 
     @Test
     fun `Dispatches toast showing command when articles observing use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
@@ -109,7 +109,7 @@ internal class GamingNewsViewModelTest {
 
     @Test
     fun `Dispatches url opening command when clicking on news item`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             val itemModel = GamingNewsItemModel(
                 id = 1,
                 imageUrl = null,
@@ -132,7 +132,7 @@ internal class GamingNewsViewModelTest {
 
     @Test
     fun `Emits correct ui states when refreshing data`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observeArticlesUseCase.execute(any()) } returns flowOf(DOMAIN_ARTICLES)
 
             SUT.uiState.test {

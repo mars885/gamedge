@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -43,7 +44,10 @@ detekt {
     parallel = true
     buildUponDefaultConfig = true
     config = files("config/detekt/detekt.yml")
-    reports.html.enabled = true
+}
+
+tasks.withType<Detekt>().configureEach {
+    reports.html.required.set(true)
 }
 
 allprojects {
@@ -80,7 +84,6 @@ subprojects {
 
         kotlinOptions {
             freeCompilerArgs += listOf(
-                "-Xopt-in=kotlin.ExperimentalStdlibApi",
                 "-Xopt-in=kotlin.time.ExperimentalTime",
                 "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-Xopt-in=kotlinx.coroutines.FlowPreview",
