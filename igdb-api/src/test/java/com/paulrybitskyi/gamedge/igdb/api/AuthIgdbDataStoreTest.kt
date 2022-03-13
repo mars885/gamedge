@@ -31,7 +31,7 @@ import com.paulrybitskyi.gamedge.igdb.api.auth.datastores.AuthMapper
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -65,7 +65,7 @@ internal class AuthIgdbDataStoreTest {
 
     @Test
     fun `Returns oauth credentials successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { authEndpoint.getOauthCredentials() } returns Ok(API_OAUTH_CREDENTIALS)
 
             val result = SUT.getOauthCredentials()
@@ -77,7 +77,7 @@ internal class AuthIgdbDataStoreTest {
 
     @Test
     fun `Returns http error successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { authEndpoint.getOauthCredentials() } returns Err(API_ERROR_HTTP)
 
             val result = SUT.getOauthCredentials()
@@ -89,7 +89,7 @@ internal class AuthIgdbDataStoreTest {
 
     @Test
     fun `Returns network error successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { authEndpoint.getOauthCredentials() } returns Err(API_ERROR_NETWORK)
 
             val result = SUT.getOauthCredentials()
@@ -101,7 +101,7 @@ internal class AuthIgdbDataStoreTest {
 
     @Test
     fun `Returns unknown error successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { authEndpoint.getOauthCredentials() } returns Err(API_ERROR_UNKNOWN)
 
             val result = SUT.getOauthCredentials()

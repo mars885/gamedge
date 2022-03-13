@@ -38,14 +38,14 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import javax.inject.Provider
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Provider
 
 internal class GamesCategoryViewModelTest {
 
@@ -102,7 +102,7 @@ internal class GamesCategoryViewModelTest {
 
     @Test
     fun `Emits toolbar title when initialized`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.toolbarTitle.test {
                 assertThat(awaitItem()).isNotEmpty
             }
@@ -111,7 +111,7 @@ internal class GamesCategoryViewModelTest {
 
     @Test
     fun `Emits correct ui states when observing games`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
@@ -129,7 +129,7 @@ internal class GamesCategoryViewModelTest {
 
     @Test
     fun `Logs error when games observing use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
@@ -141,7 +141,7 @@ internal class GamesCategoryViewModelTest {
 
     @Test
     fun `Dispatches toast showing command when games observing use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
@@ -155,7 +155,7 @@ internal class GamesCategoryViewModelTest {
 
     @Test
     fun `Emits correct ui states when refreshing games`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
@@ -174,7 +174,7 @@ internal class GamesCategoryViewModelTest {
 
     @Test
     fun `Logs error when games refreshing use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
@@ -186,7 +186,7 @@ internal class GamesCategoryViewModelTest {
 
     @Test
     fun `Dispatches toast showing command when games refreshing use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
@@ -200,7 +200,7 @@ internal class GamesCategoryViewModelTest {
 
     @Test
     fun `Routes to previous screen when toolbar left button is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.routeFlow.test {
                 SUT.onToolbarLeftButtonClicked()
 
@@ -211,7 +211,7 @@ internal class GamesCategoryViewModelTest {
 
     @Test
     fun `Routes to game info screen when game is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             val game = GameCategoryModel(
                 id = 1,
                 title = "title",

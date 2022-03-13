@@ -35,7 +35,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -74,7 +74,7 @@ internal class GamesSearchViewModelTest {
 
     @Test
     fun `Routes to previous screen when toolbar back button is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.routeFlow.test {
                 SUT.onToolbarBackButtonClicked()
 
@@ -85,7 +85,7 @@ internal class GamesSearchViewModelTest {
 
     @Test
     fun `Emits correct ui states when searching for games`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.uiState.test {
@@ -105,7 +105,7 @@ internal class GamesSearchViewModelTest {
 
     @Test
     fun `Does not emit ui states when search query is empty`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("")
 
@@ -117,7 +117,7 @@ internal class GamesSearchViewModelTest {
 
     @Test
     fun `Does not emit ui states when the current search query is provided`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.onSearchActionRequested("god of war")
@@ -133,7 +133,7 @@ internal class GamesSearchViewModelTest {
 
     @Test
     fun `Emits empty ui state when blank search query is provided`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.uiState.test {
                 SUT.onSearchActionRequested("   ")
 
@@ -145,7 +145,7 @@ internal class GamesSearchViewModelTest {
 
     @Test
     fun `Dispatches items clearing command when performing new search`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.commandFlow.test {
@@ -158,7 +158,7 @@ internal class GamesSearchViewModelTest {
 
     @Test
     fun `Logs error when searching games use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.onSearchActionRequested("god of war")
@@ -169,7 +169,7 @@ internal class GamesSearchViewModelTest {
 
     @Test
     fun `Dispatches toast showing command when searching games use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
@@ -183,7 +183,7 @@ internal class GamesSearchViewModelTest {
 
     @Test
     fun `Routes to info screen when game is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             val gameModel = GameModel(
                 id = 1,
                 coverImageUrl = null,

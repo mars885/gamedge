@@ -28,7 +28,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -54,7 +54,7 @@ internal class ObserveMostAnticipatedGamesUseCaseImplTest {
 
     @Test
     fun `Emits games successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { gamesLocalDataStore.observeMostAnticipatedGames(any()) } returns flowOf(DATA_GAMES)
 
             SUT.execute(ObserveGamesUseCaseParams()).test {

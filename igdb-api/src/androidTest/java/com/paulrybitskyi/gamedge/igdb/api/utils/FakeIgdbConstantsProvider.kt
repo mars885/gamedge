@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.igdb.api.utils
 
 import com.paulrybitskyi.gamedge.igdb.api.commons.IgdbConstantsProvider
-import javax.inject.Inject
 import okhttp3.mockwebserver.MockWebServer
+import javax.inject.Inject
 
 internal class FakeIgdbConstantsProvider @Inject constructor(
     mockWebServer: MockWebServer

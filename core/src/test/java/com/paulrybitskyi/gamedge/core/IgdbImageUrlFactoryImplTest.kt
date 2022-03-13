@@ -21,10 +21,10 @@ import com.paulrybitskyi.gamedge.core.factories.IgdbImageExtension
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactoryImpl
-import java.util.Locale
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import java.util.Locale
 
 internal class IgdbImageUrlFactoryImplTest {
 

@@ -35,7 +35,6 @@ import com.paulrybitskyi.gamedge.feature.category.mapping.GamesCategoryUiStateFa
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
@@ -47,6 +46,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val PARAM_GAMES_CATEGORY = "games_category"
 

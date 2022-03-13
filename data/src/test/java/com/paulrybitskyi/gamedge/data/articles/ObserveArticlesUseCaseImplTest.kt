@@ -32,9 +32,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.any
 import org.junit.Before
 import org.junit.Test
 
@@ -61,7 +60,7 @@ internal class ObserveArticlesUseCaseImplTest {
 
     @Test
     fun `Verify that articles are refreshed when refresh is requested`() {
-        runBlockingTest {
+        runTest {
             coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_ARTICLES))
 
             SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS)
@@ -72,7 +71,7 @@ internal class ObserveArticlesUseCaseImplTest {
 
     @Test
     fun `Emits articles from local data store when refresh is requested`() {
-        runBlockingTest {
+        runTest {
             coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_ARTICLES))
             coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
@@ -85,7 +84,7 @@ internal class ObserveArticlesUseCaseImplTest {
 
     @Test
     fun `Emits articles from local data store when refresh use cases emits empty flow`() {
-        runBlockingTest {
+        runTest {
             coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf()
             coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
@@ -98,7 +97,7 @@ internal class ObserveArticlesUseCaseImplTest {
 
     @Test
     fun `Emits articles from local data store when refresh is not requested`() {
-        runBlockingTest {
+        runTest {
             coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
             SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS.copy(refreshArticles = false)).test {

@@ -35,7 +35,7 @@ import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.mapToDataArtic
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -70,7 +70,7 @@ internal class ArticlesGamespotDataStoreTest {
 
     @Test
     fun `Returns articles successfully`() {
-        runBlockingTest {
+        runTest {
             coEvery { articlesEndpoint.getArticles(any(), any()) } returns Ok(API_ARTICLES)
 
             val result = SUT.getArticles(DATA_PAGINATION)
@@ -82,7 +82,7 @@ internal class ArticlesGamespotDataStoreTest {
 
     @Test
     fun `Returns http error when fetching articles`() {
-        runBlockingTest {
+        runTest {
             coEvery { articlesEndpoint.getArticles(any(), any()) } returns Err(API_ERROR_HTTP)
 
             val result = SUT.getArticles(DATA_PAGINATION)
@@ -94,7 +94,7 @@ internal class ArticlesGamespotDataStoreTest {
 
     @Test
     fun `Returns network error when fetching articles`() {
-        runBlockingTest {
+        runTest {
             coEvery { articlesEndpoint.getArticles(any(), any()) } returns Err(API_ERROR_NETWORK)
 
             val result = SUT.getArticles(DATA_PAGINATION)
@@ -106,7 +106,7 @@ internal class ArticlesGamespotDataStoreTest {
 
     @Test
     fun `Returns unknown error when fetching articles`() {
-        runBlockingTest {
+        runTest {
             coEvery { articlesEndpoint.getArticles(any(), any()) } returns Err(API_ERROR_UNKNOWN)
 
             val result = SUT.getArticles(DATA_PAGINATION)

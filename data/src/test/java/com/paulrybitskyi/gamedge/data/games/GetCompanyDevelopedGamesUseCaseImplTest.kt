@@ -31,7 +31,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -59,7 +59,7 @@ internal class GetCompanyDevelopedGamesUseCaseImplTest {
 
     @Test
     fun `Emits games that refresh use case successfully emits`() {
-        runBlockingTest {
+        runTest {
             coEvery { refreshCompanyDevelopedGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.execute(GET_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS).test {
@@ -71,7 +71,7 @@ internal class GetCompanyDevelopedGamesUseCaseImplTest {
 
     @Test
     fun `Emits games from local data store if refresh use case does not emit`() {
-        runBlockingTest {
+        runTest {
             coEvery { refreshCompanyDevelopedGamesUseCase.execute(any()) } returns flowOf()
             coEvery { gamesLocalDataStore.getCompanyDevelopedGames(any(), any()) } returns DATA_GAMES
 

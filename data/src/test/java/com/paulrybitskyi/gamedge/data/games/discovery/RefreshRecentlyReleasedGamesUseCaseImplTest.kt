@@ -41,7 +41,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -79,7 +79,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
     @Test
     fun `Emits remote games when refresh is possible`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshGames(any()) } returns true
             coEvery { gamesRemoteDataStore.getRecentlyReleasedGames(any()) } returns Ok(DATA_GAMES)
 
@@ -92,7 +92,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
     @Test
     fun `Does not emit remote games when refresh is not possible`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshGames(any()) } returns false
 
             SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).test {
@@ -103,7 +103,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
     @Test
     fun `Saves remote games into local data store when refresh is successful`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshGames(any()) } returns true
             coEvery { gamesRemoteDataStore.getRecentlyReleasedGames(any()) } returns Ok(DATA_GAMES)
 
@@ -115,7 +115,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
     @Test
     fun `Does not save remote games into local data store when refresh is not possible`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshGames(any()) } returns false
 
             SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).firstOrNull()
@@ -126,7 +126,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
     @Test
     fun `Does not save remote games into local data store when refresh is unsuccessful`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshGames(any()) } returns false
             coEvery { gamesRemoteDataStore.getRecentlyReleasedGames(any()) } returns Err(DATA_ERROR_UNKNOWN)
 
@@ -138,7 +138,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
     @Test
     fun `Updates games last refresh time when refresh is successful`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshGames(any()) } returns true
             coEvery { gamesRemoteDataStore.getRecentlyReleasedGames(any()) } returns Ok(DATA_GAMES)
 
@@ -150,7 +150,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
     @Test
     fun `Does not update games last refresh time when refresh is not possible`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshGames(any()) } returns false
 
             SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).firstOrNull()
@@ -161,7 +161,7 @@ internal class RefreshRecentlyReleasedGamesUseCaseImplTest {
 
     @Test
     fun `Does not update games last refresh time when refresh is unsuccessful`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshGames(any()) } returns false
             coEvery { gamesRemoteDataStore.getRecentlyReleasedGames(any()) } returns Err(DATA_ERROR_UNKNOWN)
 

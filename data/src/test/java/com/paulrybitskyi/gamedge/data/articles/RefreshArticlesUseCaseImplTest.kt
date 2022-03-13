@@ -42,7 +42,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -83,7 +83,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
     @Test
     fun `Emits remote articles when refresh is possible`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshArticles(any()) } returns true
             coEvery { articlesRemoteDataStore.getArticles(any()) } returns Ok(DATA_ARTICLES)
 
@@ -96,7 +96,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
     @Test
     fun `Does not emit remote articles when refresh is not possible`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshArticles(any()) } returns false
 
             SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).test {
@@ -107,7 +107,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
     @Test
     fun `Saves remote articles into local data store when refresh is successful`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshArticles(any()) } returns true
             coEvery { articlesRemoteDataStore.getArticles(any()) } returns Ok(DATA_ARTICLES)
 
@@ -119,7 +119,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
     @Test
     fun `Does not save remote articles into local data store when refresh is not possible`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshArticles(any()) } returns false
 
             SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).firstOrNull()
@@ -130,7 +130,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
     @Test
     fun `Does not save remote articles into local data store when refresh is unsuccessful`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshArticles(any()) } returns false
             coEvery { articlesRemoteDataStore.getArticles(any()) } returns Err(DATA_ERROR_UNKNOWN)
 
@@ -142,7 +142,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
     @Test
     fun `Updates articles last refresh time when refresh is successful`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshArticles(any()) } returns true
             coEvery { articlesRemoteDataStore.getArticles(any()) } returns Ok(DATA_ARTICLES)
 
@@ -154,7 +154,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
     @Test
     fun `Does not update articles last refresh time when refresh is not possible`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshArticles(any()) } returns false
 
             SUT.execute(REFRESH_ARTICLES_USE_CASE_PARAMS).firstOrNull()
@@ -165,7 +165,7 @@ internal class RefreshArticlesUseCaseImplTest {
 
     @Test
     fun `Does not update articles last refresh time when refresh is unsuccessful`() {
-        runBlockingTest {
+        runTest {
             coEvery { throttler.canRefreshArticles(any()) } returns false
             coEvery { articlesRemoteDataStore.getArticles(any()) } returns Err(DATA_ERROR_UNKNOWN)
 

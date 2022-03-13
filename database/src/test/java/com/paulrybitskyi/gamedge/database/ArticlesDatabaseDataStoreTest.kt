@@ -29,7 +29,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -55,7 +55,7 @@ internal class ArticlesDatabaseDataStoreTest {
 
     @Test
     fun `Saves articles to table successfully`() {
-        runBlockingTest {
+        runTest {
             SUT.saveArticles(DATA_ARTICLES)
 
             coVerify {
@@ -66,7 +66,7 @@ internal class ArticlesDatabaseDataStoreTest {
 
     @Test
     fun `Emits articles successfully`() {
-        runBlockingTest {
+        runTest {
             val databaseArticles = articleMapper.mapToDatabaseArticles(DATA_ARTICLES)
 
             coEvery { articlesTable.observeArticles(any(), any()) } returns flowOf(databaseArticles)

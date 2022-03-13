@@ -32,7 +32,7 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -62,7 +62,7 @@ internal class SplashViewModelTest {
 
     @Test
     fun `Routes to dashboard when auth refresh use case emits credentials`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { refreshAuthUseCase.execute() } returns flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
 
             SUT.routeFlow.test {
@@ -75,7 +75,7 @@ internal class SplashViewModelTest {
 
     @Test
     fun `Logs error when auth refresh use case emits error result`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { refreshAuthUseCase.execute() } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.init()
@@ -86,7 +86,7 @@ internal class SplashViewModelTest {
 
     @Test
     fun `Logs error when auth refresh use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { refreshAuthUseCase.execute() } returns flow { throw IllegalStateException("error") }
 
             SUT.init()
@@ -97,7 +97,7 @@ internal class SplashViewModelTest {
 
     @Test
     fun `Dispatches toast showing command when auth refresh use case emits error result`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { refreshAuthUseCase.execute() } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.commandFlow.test {
@@ -110,7 +110,7 @@ internal class SplashViewModelTest {
 
     @Test
     fun `Dispatches toast showing command when auth refresh use cae throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { refreshAuthUseCase.execute() } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
@@ -123,7 +123,7 @@ internal class SplashViewModelTest {
 
     @Test
     fun `Routes to application exit when auth refresh use case emits error result`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { refreshAuthUseCase.execute() } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.routeFlow.test {
@@ -136,7 +136,7 @@ internal class SplashViewModelTest {
 
     @Test
     fun `Routes to application exit when auth refresh use case throws error`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             coEvery { refreshAuthUseCase.execute() } returns flow { throw IllegalStateException("error") }
 
             SUT.routeFlow.test {
