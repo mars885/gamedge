@@ -24,7 +24,6 @@ import com.paulrybitskyi.gamedge.igdb.api.auth.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthService
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -34,6 +33,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
 
 @HiltAndroidTest
 internal class AuthServiceTest {
