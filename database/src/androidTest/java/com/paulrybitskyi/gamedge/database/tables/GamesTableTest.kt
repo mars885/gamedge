@@ -28,12 +28,12 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Inject
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(DatabaseModule::class)
@@ -58,7 +58,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_games_and_gets_game_by_ID() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             val expectedGame = DATABASE_GAMES.first()
@@ -69,7 +69,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_games_and_gets_null_for_non_existent_game_ID() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             assertThat(SUT.getGame(id = 500)).isNull()
@@ -78,7 +78,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_games_and_gets_games_by_IDs() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             assertThat(
@@ -93,7 +93,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_games_and_gets_empty_game_list_for_non_existent_game_IDs() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             assertThat(
@@ -108,7 +108,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_games_and_gets_some_games_for_some_game_IDs() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             val expectedGames = listOf(DATABASE_GAMES.first(), DATABASE_GAMES.last())
@@ -125,7 +125,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_games_and_gets_sorted_games_by_searching_with_upper_case_game_name() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             val expectedGames = DATABASE_GAMES
@@ -143,7 +143,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_games_and_gets_sorted_games_by_searching_with_lower_case_game_name() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             val expectedGames = DATABASE_GAMES
@@ -161,7 +161,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_games_and_gets_empty_game_list_by_searching_with_not_available_game_name() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             assertThat(
@@ -176,7 +176,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_games_and_gets_empty_game_list_by_searching_with_word_that_ends_with_target_game_name() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             assertThat(
@@ -191,7 +191,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_specific_games_and_gets_properly_sorted_games_by_searching_with_existing_game_name() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = listOf(
                 DATABASE_GAMES[0].copy(totalRating = null),
                 DATABASE_GAMES[1].copy(totalRating = 20.0),
@@ -219,7 +219,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_popular_games_and_observes_popular_games() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             val expectedGames = DATABASE_GAMES
@@ -237,7 +237,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_popular_games_and_observes_only_games_that_have_users_rating() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(usersRating = null))
                 addAll(DATABASE_GAMES.drop(1))
@@ -261,7 +261,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_popular_games_and_observes_only_games_that_have_release_date() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(usersRating = null))
                 add(DATABASE_GAMES[1].copy(releaseDate = null))
@@ -287,7 +287,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_popular_games_and_observes_only_games_that_have_min_release_date() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(usersRating = null))
                 add(DATABASE_GAMES[1].copy(releaseDate = null))
@@ -315,7 +315,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_recently_released_games_and_observes_recently_released_games() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             val expectedGames = DATABASE_GAMES
@@ -334,7 +334,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_recently_released_games_and_observes_recently_released_games_that_have_release_date() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(releaseDate = null))
                 addAll(DATABASE_GAMES.drop(1))
@@ -359,7 +359,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_recently_released_games_and_observes_recently_released_games_that_have_min_release_date() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(releaseDate = null))
                 addAll(DATABASE_GAMES.drop(1))
@@ -386,7 +386,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_recently_released_games_and_observes_recently_released_games_that_have_max_release_date() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(releaseDate = null))
                 addAll(DATABASE_GAMES.drop(1))
@@ -415,7 +415,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_coming_soon_games_and_observes_coming_soon_games() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             val expectedGames = DATABASE_GAMES.sortedBy(DatabaseGame::releaseDate)
@@ -432,7 +432,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_coming_soon_games_and_observes_coming_soon_games_that_have_release_date() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(releaseDate = null))
                 addAll(DATABASE_GAMES.drop(1))
@@ -456,7 +456,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_coming_soon_games_and_observes_coming_soon_games_that_have_min_release_date() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(releaseDate = null))
                 addAll(DATABASE_GAMES.drop(1))
@@ -482,7 +482,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_most_anticipated_games_and_observes_most_anticipated_games() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATABASE_GAMES)
 
             val expectedGames = DATABASE_GAMES
@@ -500,7 +500,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_most_anticipated_games_and_observes_most_anticipated_games_that_have_release_date() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(releaseDate = null))
                 addAll(DATABASE_GAMES.drop(1))
@@ -524,7 +524,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_most_anticipated_games_and_observes_most_anticipated_games_that_have_min_release_date() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(releaseDate = null))
                 addAll(DATABASE_GAMES.drop(1))
@@ -550,7 +550,7 @@ internal class GamesTableTest {
 
     @Test
     fun saves_most_anticipated_games_and_observes_most_anticipated_games_that_have_hype_count() {
-        runBlockingTest {
+        runTest {
             val gamesToSave = buildList {
                 add(DATABASE_GAMES[0].copy(releaseDate = null))
                 add(DATABASE_GAMES[1].copy(hypeCount = null))

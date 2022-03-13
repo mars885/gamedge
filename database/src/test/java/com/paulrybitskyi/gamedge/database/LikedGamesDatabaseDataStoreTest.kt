@@ -29,7 +29,7 @@ import com.paulrybitskyi.gamedge.database.games.entities.LikedGame
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -57,7 +57,7 @@ internal class LikedGamesDatabaseDataStoreTest {
 
     @Test
     fun `Likes game successfully`() {
-        runBlockingTest {
+        runTest {
             SUT.likeGame(GAME_ID)
 
             assertThat(SUT.isGameLiked(GAME_ID)).isTrue
@@ -66,7 +66,7 @@ internal class LikedGamesDatabaseDataStoreTest {
 
     @Test
     fun `Unlikes game successfully`() {
-        runBlockingTest {
+        runTest {
             SUT.likeGame(GAME_ID)
             SUT.unlikeGame(GAME_ID)
 
@@ -76,14 +76,14 @@ internal class LikedGamesDatabaseDataStoreTest {
 
     @Test
     fun `Validates that unliked game is unliked`() {
-        runBlockingTest {
+        runTest {
             assertThat(SUT.isGameLiked(gameId = ANOTHER_GAME_ID)).isFalse
         }
     }
 
     @Test
     fun `Observes game like state successfully`() {
-        runBlockingTest {
+        runTest {
             SUT.likeGame(GAME_ID)
 
             SUT.observeGameLikeState(GAME_ID).test {
@@ -100,7 +100,7 @@ internal class LikedGamesDatabaseDataStoreTest {
 
     @Test
     fun `Observes liked games successfully`() {
-        runBlockingTest {
+        runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
             likedGamesTable.dbGamesToObserve = dbGames

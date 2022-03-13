@@ -32,7 +32,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -59,7 +59,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @Test
     fun `Saves games to table successfully`() {
-        runBlockingTest {
+        runTest {
             SUT.saveGames(DATA_GAMES)
 
             coVerify { gamesTable.saveGames(gameMapper.mapToDatabaseGames(DATA_GAMES)) }
@@ -68,7 +68,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @Test
     fun `Retrieves game successfully`() {
-        runBlockingTest {
+        runTest {
             val dbGame = gameMapper.mapToDatabaseGame(DATA_GAME)
 
             coEvery { gamesTable.getGame(any()) } returns dbGame
@@ -79,7 +79,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @Test
     fun `Retrieves null instead of game`() {
-        runBlockingTest {
+        runTest {
             val gameId = DATA_GAME.id
 
             coEvery { gamesTable.getGame(gameId) } returns null
@@ -90,7 +90,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @Test
     fun `Retrieves company developed games successfully`() {
-        runBlockingTest {
+        runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
             coEvery { gamesTable.getGames(any(), any(), any()) } returns dbGames
@@ -102,7 +102,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @Test
     fun `Retrieves similar games successfully`() {
-        runBlockingTest {
+        runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
             coEvery { gamesTable.getGames(any(), any(), any()) } returns dbGames
@@ -114,7 +114,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @Test
     fun `Searches games successfully`() {
-        runBlockingTest {
+        runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
             coEvery { gamesTable.searchGames(any(), any(), any()) } returns dbGames
@@ -125,7 +125,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @Test
     fun `Observes popular games successfully`() {
-        runBlockingTest {
+        runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
             coEvery { gamesTable.observePopularGames(any(), any(), any()) } returns flowOf(dbGames)
@@ -139,7 +139,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @Test
     fun `Observes recently released games successfully`() {
-        runBlockingTest {
+        runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
             coEvery { gamesTable.observeRecentlyReleasedGames(any(), any(), any(), any()) } returns flowOf(dbGames)
@@ -153,7 +153,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @Test
     fun `Observes coming soon games successfully`() {
-        runBlockingTest {
+        runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
             coEvery { gamesTable.observeComingSoonGames(any(), any(), any()) } returns flowOf(dbGames)
@@ -167,7 +167,7 @@ internal class GamesDatabaseDataStoreTest {
 
     @Test
     fun `Observes most anticipated games successfully`() {
-        runBlockingTest {
+        runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
             coEvery { gamesTable.observeMostAnticipatedGames(any(), any(), any()) } returns flowOf(dbGames)

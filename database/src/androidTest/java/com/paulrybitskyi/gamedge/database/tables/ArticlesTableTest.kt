@@ -28,12 +28,12 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Inject
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(DatabaseModule::class)
@@ -58,7 +58,7 @@ internal class ArticlesTableTest {
 
     @Test
     fun saves_and_observes_sorted_articles() {
-        runBlockingTest {
+        runTest {
             SUT.saveArticles(DATABASE_ARTICLES)
 
             val expectedArticles = DATABASE_ARTICLES.sortedByDescending(DatabaseArticle::publicationDate)
