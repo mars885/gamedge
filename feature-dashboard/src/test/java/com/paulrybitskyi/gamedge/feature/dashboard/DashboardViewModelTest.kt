@@ -20,7 +20,7 @@ import app.cash.turbine.test
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardRoute
 import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardViewModel
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -40,7 +40,7 @@ internal class DashboardViewModelTest {
 
     @Test
     fun `Routes to search screen when toolbar right button is clicked`() {
-        mainCoroutineRule.runBlockingTest {
+        runTest {
             SUT.routeFlow.test {
                 SUT.onToolbarRightButtonClicked()
 
