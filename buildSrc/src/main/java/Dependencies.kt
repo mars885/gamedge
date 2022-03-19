@@ -148,7 +148,7 @@ object deps {
 
         object accompanist {
 
-            const val version = "0.20.2"
+            const val version = "0.23.1"
 
             const val insets = "com.google.accompanist:accompanist-insets:$version"
             const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
