@@ -131,7 +131,7 @@ object deps {
 
     object compose {
 
-        private const val coilCompose = "1.4.0"
+        private const val coilCompose = "2.0.0-rc01"
         private const val constraintLayoutCompose = "1.0.0-rc01"
 
         const val ui = "androidx.compose.ui:ui:${versions.compose}"

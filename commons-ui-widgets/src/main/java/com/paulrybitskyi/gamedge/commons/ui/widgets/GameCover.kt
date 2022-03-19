@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontFamily
@@ -34,8 +35,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.ImagePainter.State
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImagePainter.State
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 
@@ -57,14 +59,16 @@ fun GameCover(
         elevation = dimensionResource(R.dimen.game_cover_card_elevation),
     ) {
         Box {
-            val imagePainter = rememberImagePainter(
-                data = imageUrl,
-                builder = {
-                    fallback(R.drawable.game_cover_placeholder)
-                    placeholder(R.drawable.game_cover_placeholder)
-                    error(R.drawable.game_cover_placeholder)
-                    crossfade(CROSSFADE_ANIMATION_DURATION)
-                }
+            val contentScale = ContentScale.Crop
+            val imagePainter = rememberAsyncImagePainter(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imageUrl)
+                    .fallback(R.drawable.game_cover_placeholder)
+                    .placeholder(R.drawable.game_cover_placeholder)
+                    .error(R.drawable.game_cover_placeholder)
+                    .crossfade(CROSSFADE_ANIMATION_DURATION)
+                    .build(),
+                contentScale = contentScale,
             )
             val shouldDisplayTitle = (
                 (title != null) &&
@@ -75,7 +79,7 @@ fun GameCover(
                 painter = imagePainter,
                 contentDescription = null,
                 modifier = Modifier.matchParentSize(),
-                contentScale = ContentScale.Crop,
+                contentScale = contentScale,
             )
 
             if (shouldDisplayTitle) {

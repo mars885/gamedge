@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.news.widgets
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,13 +30,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.feature.news.R
@@ -103,17 +104,16 @@ private fun GamingNewsItemImage(
         backgroundColor = colorResource(R.color.gaming_news_item_image_card_background_color),
         elevation = dimensionResource(R.dimen.gaming_news_item_image_card_elevation)
     ) {
-        Image(
-            painter = rememberImagePainter(
-                data = imageUrl,
-                builder = {
-                    placeholder(R.drawable.game_landscape_placeholder)
-                    error(R.drawable.game_landscape_placeholder)
-                    crossfade(CROSSFADE_ANIMATION_DURATION)
-                }
-            ),
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageUrl)
+                .fallback(R.drawable.game_landscape_placeholder)
+                .placeholder(R.drawable.game_landscape_placeholder)
+                .error(R.drawable.game_landscape_placeholder)
+                .crossfade(CROSSFADE_ANIMATION_DURATION)
+                .build(),
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
         )
     }
 }

@@ -27,13 +27,15 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -41,7 +43,6 @@ import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Toolbar
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
-import kotlinx.coroutines.flow.collect
 
 @Composable
 internal fun ImageViewer(
@@ -110,14 +111,16 @@ private fun ImageViewerItem(
     networkStateProvider: NetworkStateProvider,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        val imagePainter = rememberImagePainter(
-            data = imageUrl,
-            builder = {
-                crossfade(CROSSFADE_ANIMATION_DURATION)
-            },
+        val contentScale = ContentScale.Fit
+        val imagePainter = rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageUrl)
+                .crossfade(CROSSFADE_ANIMATION_DURATION)
+                .build(),
+            contentScale = contentScale,
         )
 
-        if (imagePainter.state is ImagePainter.State.Error) {
+        if (imagePainter.state is AsyncImagePainter.State.Error) {
             Info(
                 icon = painterResource(R.drawable.alert_circle_outline),
                 title = stringResource(
@@ -139,7 +142,7 @@ private fun ImageViewerItem(
             painter = imagePainter,
             contentDescription = null,
             modifier = Modifier.matchParentSize(),
-            contentScale = ContentScale.Fit,
+            contentScale = contentScale,
         )
     }
 }

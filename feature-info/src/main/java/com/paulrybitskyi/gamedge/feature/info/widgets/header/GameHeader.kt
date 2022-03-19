@@ -60,8 +60,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
-import coil.compose.rememberImagePainter
-import coil.size.Scale
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.HorizontalPager
@@ -72,7 +72,6 @@ import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.feature.info.R
-import kotlinx.coroutines.flow.collect
 
 private const val CONSTRAINT_ID_ARTWORKS = "artworks"
 private const val CONSTRAINT_ID_ARTWORKS_SCRIM = "artworks_scrim"
@@ -491,21 +490,18 @@ private fun GameArtwork(
     artwork: GameArtworkModel,
     onArtworkClicked: () -> Unit,
 ) {
-    val contentScale = when (artwork) {
-        is GameArtworkModel.DefaultImage -> ContentScale.Crop
-        is GameArtworkModel.UrlImage -> ContentScale.FillBounds
-    }
+    val contentScale = ContentScale.Crop
     val painter = when (artwork) {
         is GameArtworkModel.DefaultImage -> painterResource(R.drawable.game_background_placeholder)
-        is GameArtworkModel.UrlImage -> rememberImagePainter(
-            data = artwork.url,
-            builder = {
-                fallback(R.drawable.game_background_placeholder)
-                placeholder(R.drawable.game_background_placeholder)
-                error(R.drawable.game_background_placeholder)
-                scale(Scale.FILL)
-                crossfade(CROSSFADE_ANIMATION_DURATION)
-            },
+        is GameArtworkModel.UrlImage -> rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(artwork.url)
+                .fallback(R.drawable.game_background_placeholder)
+                .placeholder(R.drawable.game_background_placeholder)
+                .error(R.drawable.game_background_placeholder)
+                .crossfade(CROSSFADE_ANIMATION_DURATION)
+                .build(),
+            contentScale = contentScale,
         )
     }
 

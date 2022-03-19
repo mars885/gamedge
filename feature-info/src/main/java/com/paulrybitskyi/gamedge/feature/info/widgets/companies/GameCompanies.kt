@@ -37,18 +37,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import coil.bitmap.BitmapPool
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import coil.size.Size
 import coil.transform.Transformation
 import com.paulrybitskyi.commons.ktx.centerX
@@ -153,30 +153,25 @@ private fun GameCompanyLogoImage(
     logoContainerSize: Pair<Dp, Dp>,
     logoImageSize: Pair<Int, Int>,
 ) {
-    val painter = if (logoImageUrl == null) {
-        painterResource(R.drawable.game_landscape_placeholder)
-    } else {
-        val density = LocalDensity.current
-        val logoContainerWidthInPx = with(density) { logoContainerSize.width.roundToPx() }
-        val logoContainerHeightInPx = with(density) { logoContainerSize.height.roundToPx() }
-
-        rememberImagePainter(
-            data = logoImageUrl,
-            builder = {
-                fallback(R.drawable.game_landscape_placeholder)
-                placeholder(R.drawable.game_landscape_placeholder)
-                error(R.drawable.game_landscape_placeholder)
-                size(logoImageSize.width, logoImageSize.height)
-                transformations(
-                    LogoImageTransformation(
-                        logoContainerWidth = logoContainerWidthInPx,
-                        logoContainerHeight = logoContainerHeightInPx,
-                    )
+    val density = LocalDensity.current
+    val logoContainerWidthInPx = with(density) { logoContainerSize.width.roundToPx() }
+    val logoContainerHeightInPx = with(density) { logoContainerSize.height.roundToPx() }
+    val painter = rememberAsyncImagePainter(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(logoImageUrl)
+            .fallback(R.drawable.game_landscape_placeholder)
+            .placeholder(R.drawable.game_landscape_placeholder)
+            .error(R.drawable.game_landscape_placeholder)
+            .size(logoImageSize.width, logoImageSize.height)
+            .transformations(
+                LogoImageTransformation(
+                    logoContainerWidth = logoContainerWidthInPx,
+                    logoContainerHeight = logoContainerHeightInPx,
                 )
-                crossfade(CROSSFADE_ANIMATION_DURATION)
-            },
-        )
-    }
+            )
+            .crossfade(CROSSFADE_ANIMATION_DURATION)
+            .build(),
+    )
 
     Image(
         painter = painter,
@@ -232,9 +227,9 @@ private class LogoImageTransformation(
         private const val TARGET_BITMAP_SCALE_FACTOR = 0.85f
     }
 
-    override fun key() = "logo: w - $logoContainerWidth, h - $logoContainerHeight"
+    override val cacheKey = "logo: w - $logoContainerWidth, h - $logoContainerHeight"
 
-    override suspend fun transform(pool: BitmapPool, input: Bitmap, size: Size): Bitmap {
+    override suspend fun transform(input: Bitmap, size: Size): Bitmap {
         val targetBitmap = Bitmap
             .createBitmap(logoContainerWidth, logoContainerHeight, input.config)
             .apply { eraseColor(input.calculateFillColor()) }

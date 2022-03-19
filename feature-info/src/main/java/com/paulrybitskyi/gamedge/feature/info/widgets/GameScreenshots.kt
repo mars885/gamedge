@@ -33,13 +33,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.feature.info.R
@@ -109,14 +111,14 @@ private fun GameScreenshot(
     ) {
         Box {
             Image(
-                painter = rememberImagePainter(
-                    data = screenshotUrl,
-                    builder = {
-                        fallback(R.drawable.game_landscape_placeholder)
-                        placeholder(R.drawable.game_landscape_placeholder)
-                        error(R.drawable.game_landscape_placeholder)
-                        crossfade(CROSSFADE_ANIMATION_DURATION)
-                    }
+                painter = rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(screenshotUrl)
+                        .fallback(R.drawable.game_landscape_placeholder)
+                        .placeholder(R.drawable.game_landscape_placeholder)
+                        .error(R.drawable.game_landscape_placeholder)
+                        .crossfade(CROSSFADE_ANIMATION_DURATION)
+                        .build(),
                 ),
                 contentDescription = null,
                 modifier = Modifier.matchParentSize(),
