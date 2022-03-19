@@ -132,7 +132,7 @@ object deps {
     object compose {
 
         private const val coilCompose = "2.0.0-rc01"
-        private const val constraintLayoutCompose = "1.0.0-rc01"
+        private const val constraintLayoutCompose = "1.0.0"
 
         const val ui = "androidx.compose.ui:ui:${versions.compose}"
         const val tooling = "androidx.compose.ui:ui-tooling:${versions.compose}"
@@ -143,8 +143,8 @@ object deps {
         const val extendedIcons = "androidx.compose.material:material-icons-extended:${versions.compose}"
         const val runtime = "androidx.compose.runtime:runtime:${versions.compose}"
 
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:$constraintLayoutCompose"
         const val coil = "io.coil-kt:coil-compose:$coilCompose"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:$constraintLayoutCompose"
 
         object accompanist {
 
