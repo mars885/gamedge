@@ -277,15 +277,16 @@ internal fun GameHeader(
             fontWeight = FontWeight.Medium,
         )
 
-        if (headerInfo.hasDeveloperName) {
-            Text(
-                text = checkNotNull(headerInfo.developerName),
-                modifier = Modifier.layoutId(CONSTRAINT_ID_DEVELOPER_NAME),
-                color = colorResource(R.color.game_info_header_developer_name_text_color),
-                fontSize = textSizeResource(R.dimen.game_info_header_developer_name_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
-            )
+        Box(Modifier.layoutId(CONSTRAINT_ID_DEVELOPER_NAME)) {
+            if (headerInfo.hasDeveloperName) {
+                Text(
+                    text = checkNotNull(headerInfo.developerName),
+                    color = colorResource(R.color.game_info_header_developer_name_text_color),
+                    fontSize = textSizeResource(R.dimen.game_info_header_developer_name_text_size),
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Medium,
+                )
+            }
         }
 
         Info(
