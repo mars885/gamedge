@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.commons.ui.theme
 
 import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -26,7 +27,9 @@ import com.google.accompanist.insets.ProvideWindowInsets
 fun GamedgeTheme(content: @Composable () -> Unit) {
     ProvideWindowInsets {
         CompositionLocalProvider(LocalIndication provides rememberRipple()) {
-            content()
+            CompositionLocalProvider(LocalOverScrollConfiguration provides null) {
+                content()
+            }
         }
     }
 }
