@@ -24,8 +24,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalMinimumTouchTargetEnforcement
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -40,7 +42,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.gamedge.feature.info.R
-import java.util.*
+import java.util.Locale
 
 @Composable
 internal fun GameLinks(
@@ -89,39 +91,41 @@ private fun GameLink(
     link: GameInfoLinkModel,
     onLinkClicked: () -> Unit,
 ) {
-    Card(
-        onClick = onLinkClicked,
-        shape = RoundedCornerShape(
-            dimensionResource(R.dimen.game_links_item_corner_radius)
-        ),
-        backgroundColor = colorResource(R.color.game_links_item_background_color),
-        elevation = dimensionResource(R.dimen.game_links_item_elevation),
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(vertical = dimensionResource(R.dimen.game_links_item_padding_vertical))
-                .padding(
-                    start = dimensionResource(R.dimen.game_links_item_padding_start),
-                    end = dimensionResource(R.dimen.game_links_item_padding_end),
-                ),
-            verticalAlignment = Alignment.CenterVertically
+    CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+        Card(
+            onClick = onLinkClicked,
+            shape = RoundedCornerShape(
+                dimensionResource(R.dimen.game_links_item_corner_radius)
+            ),
+            backgroundColor = colorResource(R.color.game_links_item_background_color),
+            elevation = dimensionResource(R.dimen.game_links_item_elevation),
         ) {
-            Icon(
-                painter = painterResource(link.iconId),
-                contentDescription = null,
-                modifier = Modifier.size(
-                    dimensionResource(R.dimen.game_links_item_icon_size)
-                ),
-                tint = colorResource(R.color.game_links_item_content_color),
-            )
-            Text(
-                text = link.text,
-                modifier = Modifier.padding(
-                    start = dimensionResource(R.dimen.game_links_item_text_padding_start),
-                ),
-                color = colorResource(R.color.game_links_item_content_color),
-                fontSize = textSizeResource(R.dimen.game_links_item_text_size),
-            )
+            Row(
+                modifier = Modifier
+                    .padding(vertical = dimensionResource(R.dimen.game_links_item_padding_vertical))
+                    .padding(
+                        start = dimensionResource(R.dimen.game_links_item_padding_start),
+                        end = dimensionResource(R.dimen.game_links_item_padding_end),
+                    ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(link.iconId),
+                    contentDescription = null,
+                    modifier = Modifier.size(
+                        dimensionResource(R.dimen.game_links_item_icon_size)
+                    ),
+                    tint = colorResource(R.color.game_links_item_content_color),
+                )
+                Text(
+                    text = link.text,
+                    modifier = Modifier.padding(
+                        start = dimensionResource(R.dimen.game_links_item_text_padding_start),
+                    ),
+                    color = colorResource(R.color.game_links_item_content_color),
+                    fontSize = textSizeResource(R.dimen.game_links_item_text_size),
+                )
+            }
         }
     }
 }
