@@ -92,6 +92,7 @@ subprojects {
                 "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
                 "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
                 "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                "-Xopt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
                 "-Xopt-in=coil.annotation.ExperimentalCoilApi",
                 "-Xopt-in=com.google.accompanist.pager.ExperimentalPagerApi",
             )

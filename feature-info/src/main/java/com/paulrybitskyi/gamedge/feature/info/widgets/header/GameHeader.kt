@@ -16,7 +16,9 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.header
 
-import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -62,7 +64,7 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.google.accompanist.drawablepainter.rememberDrawablePainter
+import coil.size.Scale
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -215,13 +217,17 @@ internal fun GameHeader(
             modifier = Modifier.layoutId(CONSTRAINT_ID_LIKE_BUTTON),
             backgroundColor = colorResource(R.color.game_info_header_like_btn_color),
         ) {
-            val drawable = AppCompatResources.getDrawable(
-                LocalContext.current,
-                R.drawable.heart_animated_selector
-            )
+            // Animated selector drawables are not currently supported by the Jetpack Compose.
+            // https://issuetracker.google.com/issues/212418566
+            // Consider to use the R.drawable.heart_animated_selector when the support arrives.
 
             Icon(
-                painter = rememberDrawablePainter(drawable),
+                painter = rememberAnimatedVectorPainter(
+                    animatedImageVector = AnimatedImageVector.animatedVectorResource(
+                        R.drawable.heart_animated_fill
+                    ),
+                    atEnd = headerInfo.isLiked,
+                ),
                 contentDescription = null,
                 modifier = Modifier.size(
                     dimensionResource(R.dimen.game_info_header_like_btn_max_image_size),

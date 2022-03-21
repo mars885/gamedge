@@ -136,6 +136,7 @@ object deps {
 
         const val ui = "androidx.compose.ui:ui:${versions.compose}"
         const val tooling = "androidx.compose.ui:ui-tooling:${versions.compose}"
+        const val animation = "androidx.compose.animation:animation-graphics:${versions.compose}"
         const val foundation = "androidx.compose.foundation:foundation:${versions.compose}"
         const val activity = "androidx.activity:activity-compose:${versions.compose}"
         const val material = "androidx.compose.material:material:${versions.compose}"
@@ -154,7 +155,6 @@ object deps {
             const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
             const val flowLayout = "com.google.accompanist:accompanist-flowlayout:$version"
             const val pager = "com.google.accompanist:accompanist-pager:$version"
-            const val drawablePainter = "com.google.accompanist:accompanist-drawablepainter:$version"
         }
     }
 

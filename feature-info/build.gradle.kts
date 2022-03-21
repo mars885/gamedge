@@ -49,6 +49,7 @@ dependencies {
 
     implementation(deps.compose.ui)
     implementation(deps.compose.tooling)
+    implementation(deps.compose.animation)
     implementation(deps.compose.foundation)
     implementation(deps.compose.material)
     implementation(deps.compose.runtime)
@@ -57,7 +58,6 @@ dependencies {
     implementation(deps.compose.accompanist.insets)
     implementation(deps.compose.accompanist.flowLayout)
     implementation(deps.compose.accompanist.pager)
-    implementation(deps.compose.accompanist.drawablePainter)
 
     implementation(deps.google.materialComponents)
 
