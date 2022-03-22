@@ -64,7 +64,6 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import coil.size.Scale
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -497,7 +496,6 @@ private fun GameArtwork(
     artwork: GameArtworkModel,
     onArtworkClicked: () -> Unit,
 ) {
-    val contentScale = ContentScale.Crop
     val painter = when (artwork) {
         is GameArtworkModel.DefaultImage -> painterResource(R.drawable.game_background_placeholder)
         is GameArtworkModel.UrlImage -> rememberAsyncImagePainter(
@@ -508,7 +506,7 @@ private fun GameArtwork(
                 .error(R.drawable.game_background_placeholder)
                 .crossfade(CROSSFADE_ANIMATION_DURATION)
                 .build(),
-            contentScale = contentScale,
+            contentScale = ContentScale.Crop,
         )
     }
 
@@ -522,7 +520,10 @@ private fun GameArtwork(
                 indication = null,
                 onClick = onArtworkClicked,
             ),
-        contentScale = contentScale,
+        contentScale = when (artwork) {
+            is GameArtworkModel.DefaultImage -> ContentScale.Crop
+            is GameArtworkModel.UrlImage -> ContentScale.FillBounds
+        },
     )
 }
 
