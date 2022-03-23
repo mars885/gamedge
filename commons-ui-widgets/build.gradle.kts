@@ -49,7 +49,6 @@ dependencies {
     implementation(deps.compose.foundation)
     implementation(deps.compose.activity)
     implementation(deps.compose.material)
-    implementation(deps.compose.iconsCore)
     implementation(deps.compose.runtime)
     implementation(deps.compose.constraintLayout)
     implementation(deps.compose.coil)
