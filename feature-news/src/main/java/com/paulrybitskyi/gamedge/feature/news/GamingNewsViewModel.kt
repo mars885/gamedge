@@ -30,7 +30,7 @@ import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
 import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemModelMapper
 import com.paulrybitskyi.gamedge.feature.news.mapping.mapToGamingNewsItemModels
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
-import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsState
+import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsUiState
 import com.paulrybitskyi.gamedge.feature.news.widgets.disableRefreshing
 import com.paulrybitskyi.gamedge.feature.news.widgets.enableRefreshing
 import com.paulrybitskyi.gamedge.feature.news.widgets.toEmptyState
@@ -41,7 +41,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
@@ -66,12 +65,12 @@ class GamingNewsViewModel @Inject constructor(
     private var observerUseCaseParams: ObserveArticlesUseCase.Params
     private var refresherUseCaseParams: RefreshArticlesUseCase.Params
 
-    private val _uiState = MutableStateFlow(GamingNewsState())
+    private val _uiState = MutableStateFlow(GamingNewsUiState())
 
-    private val currentUiState: GamingNewsState
+    private val currentUiState: GamingNewsUiState
         get() = _uiState.value
 
-    val uiState: StateFlow<GamingNewsState>
+    val uiState: StateFlow<GamingNewsUiState>
         get() = _uiState
 
     init {

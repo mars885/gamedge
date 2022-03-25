@@ -16,10 +16,7 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -32,6 +29,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
@@ -42,18 +41,14 @@ fun Games(
     onGameClicked: (GameModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(R.color.colorContentContainer))
-    ) {
-        when {
-            uiState.isInLoadingState -> GamesLoadingState(Modifier.align(Alignment.Center))
-            uiState.isInEmptyState -> GamesEmptyState(
+    AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
+        when (finiteUiState) {
+            FiniteUiState.EMPTY -> GamesEmptyState(
                 uiState = uiState,
                 modifier = Modifier.align(Alignment.Center)
             )
-            uiState.isInSuccessState -> GamesSuccessState(
+            FiniteUiState.LOADING -> GamesLoadingState(Modifier.align(Alignment.Center))
+            FiniteUiState.SUCCESS -> GamesSuccessState(
                 uiState = uiState,
                 modifier = Modifier.matchParentSize(),
                 onGameClicked = onGameClicked,
@@ -95,7 +90,7 @@ private fun GamesSuccessState(
     onBottomReached: () -> Unit,
 ) {
     RefreshableContent(
-        isRefreshing = uiState.isInRefreshingState,
+        isRefreshing = uiState.isRefreshing,
         modifier = modifier,
         isSwipeEnabled = false,
     ) {

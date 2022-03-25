@@ -16,26 +16,36 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
+
 internal data class GameInfoUiState(
     val isLoading: Boolean,
     val game: GameInfoModel?,
 )
 
-internal val GameInfoUiState.isInLoadingState: Boolean
-    get() = (isLoading && (game == null))
+internal val GameInfoUiState.finiteUiState: FiniteUiState
+    get() = when {
+        isInEmptyState -> FiniteUiState.EMPTY
+        isInLoadingState -> FiniteUiState.LOADING
+        isInSuccessState -> FiniteUiState.SUCCESS
+        else -> error("Unknown game info UI state.")
+    }
 
-internal val GameInfoUiState.isInEmptyState: Boolean
+private val GameInfoUiState.isInEmptyState: Boolean
     get() = (!isLoading && (game == null))
 
-internal val GameInfoUiState.isInSuccessState: Boolean
-    get() = (game != null)
+private val GameInfoUiState.isInLoadingState: Boolean
+    get() = (isLoading && (game == null))
 
-internal fun GameInfoUiState.toLoadingState(): GameInfoUiState {
-    return copy(isLoading = true)
-}
+private val GameInfoUiState.isInSuccessState: Boolean
+    get() = (game != null)
 
 internal fun GameInfoUiState.toEmptyState(): GameInfoUiState {
     return copy(isLoading = false, game = null)
+}
+
+internal fun GameInfoUiState.toLoadingState(): GameInfoUiState {
+    return copy(isLoading = true)
 }
 
 internal fun GameInfoUiState.toSuccessState(game: GameInfoModel): GameInfoUiState {

@@ -16,36 +16,46 @@
 
 package com.paulrybitskyi.gamedge.feature.news.widgets
 
-data class GamingNewsState(
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
+
+data class GamingNewsUiState(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val news: List<GamingNewsItemModel> = emptyList(),
 )
 
-internal val GamingNewsState.isInEmptyState: Boolean
+val GamingNewsUiState.finiteUiState: FiniteUiState
+    get() = when {
+        isInEmptyState -> FiniteUiState.EMPTY
+        isLoading -> FiniteUiState.LOADING
+        isInSuccessState -> FiniteUiState.SUCCESS
+        else -> error("Unknown gaming news UI state.")
+    }
+
+private val GamingNewsUiState.isInEmptyState: Boolean
     get() = (!isLoading && news.isEmpty())
 
-internal val GamingNewsState.isInSuccessState: Boolean
+private val GamingNewsUiState.isInSuccessState: Boolean
     get() = news.isNotEmpty()
 
-internal fun GamingNewsState.toLoadingState(): GamingNewsState {
-    return copy(isLoading = true)
-}
-
-internal fun GamingNewsState.toEmptyState(): GamingNewsState {
+internal fun GamingNewsUiState.toEmptyState(): GamingNewsUiState {
     return copy(isLoading = false, news = emptyList())
 }
 
-internal fun GamingNewsState.toSuccessState(
+internal fun GamingNewsUiState.toLoadingState(): GamingNewsUiState {
+    return copy(isLoading = true)
+}
+
+internal fun GamingNewsUiState.toSuccessState(
     news: List<GamingNewsItemModel>
-): GamingNewsState {
+): GamingNewsUiState {
     return copy(isLoading = false, news = news)
 }
 
-internal fun GamingNewsState.enableRefreshing(): GamingNewsState {
+internal fun GamingNewsUiState.enableRefreshing(): GamingNewsUiState {
     return copy(isRefreshing = true)
 }
 
-internal fun GamingNewsState.disableRefreshing(): GamingNewsState {
+internal fun GamingNewsUiState.disableRefreshing(): GamingNewsUiState {
     return copy(isRefreshing = false)
 }

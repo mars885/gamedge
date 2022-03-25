@@ -16,6 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
+
 internal data class GamesCategoryUiState(
     val isLoading: Boolean,
     val title: String,
@@ -28,17 +30,25 @@ internal data class GameCategoryModel(
     val coverUrl: String?
 )
 
-internal val GamesCategoryUiState.isInLoadingState: Boolean
-    get() = (isLoading && games.isEmpty())
+internal val GamesCategoryUiState.finiteUiState: FiniteUiState
+    get() = when {
+        isInEmptyState -> FiniteUiState.EMPTY
+        isInLoadingState -> FiniteUiState.LOADING
+        isInSuccessState -> FiniteUiState.SUCCESS
+        else -> error("Unknown games category UI state.")
+    }
 
-internal val GamesCategoryUiState.isInRefreshingState: Boolean
-    get() = (isLoading && games.isNotEmpty())
-
-internal val GamesCategoryUiState.isInEmptyState: Boolean
+private val GamesCategoryUiState.isInEmptyState: Boolean
     get() = (!isLoading && games.isEmpty())
 
-internal val GamesCategoryUiState.isInSuccessState: Boolean
+private val GamesCategoryUiState.isInLoadingState: Boolean
+    get() = (isLoading && games.isEmpty())
+
+private val GamesCategoryUiState.isInSuccessState: Boolean
     get() = games.isNotEmpty()
+
+internal val GamesCategoryUiState.isRefreshing: Boolean
+    get() = (isLoading && games.isNotEmpty())
 
 internal fun GamesCategoryUiState.toLoadingState(): GamesCategoryUiState {
     return copy(isLoading = true)

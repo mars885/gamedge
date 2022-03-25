@@ -16,6 +16,8 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
+
 data class GamesUiState(
     val isLoading: Boolean,
     val infoIconId: Int,
@@ -23,24 +25,32 @@ data class GamesUiState(
     val games: List<GameModel>,
 )
 
-val GamesUiState.isInLoadingState: Boolean
-    get() = (isLoading && games.isEmpty())
+val GamesUiState.finiteUiState: FiniteUiState
+    get() = when {
+        isInEmptyState -> FiniteUiState.EMPTY
+        isInLoadingState -> FiniteUiState.LOADING
+        isInSuccessState -> FiniteUiState.SUCCESS
+        else -> error("Unknown games UI state.")
+    }
 
-val GamesUiState.isInRefreshingState: Boolean
-    get() = (isLoading && games.isNotEmpty())
-
-val GamesUiState.isInEmptyState: Boolean
+private val GamesUiState.isInEmptyState: Boolean
     get() = (!isLoading && games.isEmpty())
 
-val GamesUiState.isInSuccessState: Boolean
+private val GamesUiState.isInLoadingState: Boolean
+    get() = (isLoading && games.isEmpty())
+
+private val GamesUiState.isInSuccessState: Boolean
     get() = games.isNotEmpty()
 
-fun GamesUiState.toLoadingState(): GamesUiState {
-    return copy(isLoading = true)
-}
+val GamesUiState.isRefreshing: Boolean
+    get() = (isLoading && games.isNotEmpty())
 
 fun GamesUiState.toEmptyState(): GamesUiState {
     return copy(isLoading = false, games = emptyList())
+}
+
+fun GamesUiState.toLoadingState(): GamesUiState {
+    return copy(isLoading = true)
 }
 
 fun GamesUiState.toSuccessState(games: List<GameModel>): GamesUiState {

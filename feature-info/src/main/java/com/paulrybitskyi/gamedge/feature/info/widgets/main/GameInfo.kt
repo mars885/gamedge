@@ -16,11 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -35,6 +32,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.navigationBarsPadding
+import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.feature.info.R
@@ -70,15 +69,11 @@ internal fun GameInfo(
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(R.color.colorContentContainer))
-    ) {
-        when {
-            uiState.isInLoadingState -> GameInfoLoadingState(Modifier.align(Alignment.Center))
-            uiState.isInEmptyState -> GameInfoEmptyState(Modifier.align(Alignment.Center))
-            uiState.isInSuccessState -> GameInfoSuccessState(
+    AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
+        when (finiteUiState) {
+            FiniteUiState.EMPTY -> GameInfoEmptyState(Modifier.align(Alignment.Center))
+            FiniteUiState.LOADING -> GameInfoLoadingState(Modifier.align(Alignment.Center))
+            FiniteUiState.SUCCESS -> GameInfoSuccessState(
                 gameInfo = checkNotNull(uiState.game),
                 onArtworkClicked = onArtworkClicked,
                 onBackButtonClicked = onBackButtonClicked,

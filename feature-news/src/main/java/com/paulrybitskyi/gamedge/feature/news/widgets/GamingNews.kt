@@ -16,11 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.news.widgets
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -35,35 +32,35 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.feature.news.R
 
 @Composable
 internal fun GamingNews(
-    uiState: GamingNewsState,
+    uiState: GamingNewsUiState,
     onNewsItemClicked: (GamingNewsItemModel) -> Unit,
     onRefreshRequested: () -> Unit,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(R.color.colorContentContainer))
-    ) {
-        if (uiState.isLoading) {
-            GamingNewsLoadingState(Modifier.align(Alignment.Center))
-        } else {
-            RefreshableContent(
-                isRefreshing = uiState.isRefreshing,
-                modifier = Modifier.matchParentSize(),
-                onRefreshRequested = onRefreshRequested,
-            ) {
-                when {
-                    uiState.isInEmptyState -> GamingNewsEmptyState(Modifier.matchParentSize())
-                    uiState.isInSuccessState -> GamingNewsSuccessState(
-                        news = uiState.news,
-                        onNewsItemClicked = onNewsItemClicked,
-                    )
+    AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
+        when (finiteUiState) {
+            FiniteUiState.LOADING -> GamingNewsLoadingState(Modifier.align(Alignment.Center))
+            else -> {
+                RefreshableContent(
+                    isRefreshing = uiState.isRefreshing,
+                    modifier = Modifier.matchParentSize(),
+                    onRefreshRequested = onRefreshRequested,
+                ) {
+                    if (finiteUiState == FiniteUiState.EMPTY) {
+                        GamingNewsEmptyState(Modifier.matchParentSize())
+                    } else {
+                        GamingNewsSuccessState(
+                            news = uiState.news,
+                            onNewsItemClicked = onNewsItemClicked,
+                        )
+                    }
                 }
             }
         }
@@ -153,7 +150,7 @@ internal fun GamingNewsSuccessStatePreview() {
     )
 
     GamingNews(
-        uiState = GamingNewsState(
+        uiState = GamingNewsUiState(
             news = news,
         ),
         onNewsItemClicked = {},
@@ -165,7 +162,7 @@ internal fun GamingNewsSuccessStatePreview() {
 @Composable
 internal fun GamingNewsEmptyStatePreview() {
     GamingNews(
-        uiState = GamingNewsState(),
+        uiState = GamingNewsUiState(),
         onNewsItemClicked = {},
         onRefreshRequested = {}
     )
@@ -175,7 +172,7 @@ internal fun GamingNewsEmptyStatePreview() {
 @Composable
 internal fun GamingNewsLoadingStatePreview() {
     GamingNews(
-        uiState = GamingNewsState(isLoading = true),
+        uiState = GamingNewsUiState(isLoading = true),
         onNewsItemClicked = {},
         onRefreshRequested = {}
     )

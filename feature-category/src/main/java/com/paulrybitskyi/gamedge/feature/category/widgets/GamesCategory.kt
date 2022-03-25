@@ -16,8 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,6 +42,8 @@ import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.paulrybitskyi.commons.device.info.screenMetrics
 import com.paulrybitskyi.commons.ktx.getFloat
+import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
@@ -65,22 +65,20 @@ internal fun GamesCategory(
             onLeftButtonClick = onBackButtonClicked,
         )
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(colorResource(R.color.colorContentContainer))
-        ) {
-            when {
-                uiState.isInLoadingState -> GamesLoadingState(Modifier.align(Alignment.Center))
-                uiState.isInEmptyState -> GamesEmptyState(Modifier.align(Alignment.Center))
-                uiState.isInSuccessState -> GamesSuccessState(
-                    uiState = uiState,
-                    modifier = Modifier
-                        .matchParentSize()
-                        .navigationBarsPadding(),
-                    onGameClicked = onGameClicked,
-                    onBottomReached = onBottomReached,
-                )
+        AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
+            when (finiteUiState) {
+                FiniteUiState.EMPTY -> GamesEmptyState(Modifier.align(Alignment.Center))
+                FiniteUiState.LOADING -> GamesLoadingState(Modifier.align(Alignment.Center))
+                FiniteUiState.SUCCESS -> {
+                    GamesSuccessState(
+                        uiState = uiState,
+                        modifier = Modifier
+                            .matchParentSize()
+                            .navigationBarsPadding(),
+                        onGameClicked = onGameClicked,
+                        onBottomReached = onBottomReached,
+                    )
+                }
             }
         }
     }
@@ -115,7 +113,7 @@ private fun GamesSuccessState(
     onBottomReached: () -> Unit,
 ) {
     RefreshableContent(
-        isRefreshing = uiState.isInRefreshingState,
+        isRefreshing = uiState.isRefreshing,
         modifier = modifier,
         isSwipeEnabled = false,
     ) {
