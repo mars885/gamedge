@@ -28,7 +28,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-internal fun SplashScreen() {
+internal fun Splash() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = BiasAlignment(
@@ -47,5 +47,5 @@ internal fun SplashScreen() {
 @Preview(showBackground = true)
 @Composable
 internal fun SplashScreenPreview() {
-    SplashScreen()
+    Splash()
 }

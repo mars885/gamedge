@@ -28,7 +28,7 @@ internal class SplashActivity : BaseComposeActivity<SplashViewModel, SplashNavig
     override val viewModel by viewModels<SplashViewModel>()
 
     override fun getContent() = @Composable {
-        SplashScreen()
+        Splash()
     }
 
     override fun onLoadData() {
