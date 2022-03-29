@@ -16,7 +16,11 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.companies
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 internal data class GameInfoCompanyModel(
+    val id: Int,
     val logoContainerSize: Pair<Int, Int>,
     val logoImageSize: Pair<Int, Int>,
     val logoUrl: String?,

@@ -16,18 +16,21 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
+import androidx.compose.runtime.Immutable
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreenshotModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
 
+@Immutable
 internal data class GameInfoModel(
     val id: Int,
     val headerModel: GameInfoHeaderModel,
     val videoModels: List<GameInfoVideoModel>,
-    val screenshotUrls: List<String>,
+    val screenshotModels: List<GameInfoScreenshotModel>,
     val summary: String?,
     val detailsModel: GameInfoDetailsModel?,
     val linkModels: List<GameInfoLinkModel>,
@@ -39,8 +42,8 @@ internal data class GameInfoModel(
     val hasVideoModels: Boolean
         get() = videoModels.isNotEmpty()
 
-    val hasScreenshotUrls: Boolean
-        get() = screenshotUrls.isNotEmpty()
+    val hasScreenshotModels: Boolean
+        get() = screenshotModels.isNotEmpty()
 
     val hasSummary: Boolean
         get() = ((summary != null) && summary.isNotBlank())

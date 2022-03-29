@@ -91,13 +91,13 @@ private fun GamesDiscoveryItems(
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.games_discovery_arrangement_spacing)),
     ) {
-        items(items, key = GamesDiscoveryItemModel::title) { item ->
+        items(items, key = GamesDiscoveryItemModel::id) { item ->
             GamesCategoryPreview(
                 title = item.title,
                 isProgressBarVisible = item.isProgressBarVisible,
                 games = item.games.mapToCategoryItems(),
                 onCategoryGameClicked = { onCategoryGameClicked(it.mapToDiscoveryItemGameModel()) },
-                onCategoryMoreButtonClicked = { onCategoryMoreButtonClicked(item.category) },
+                onCategoryMoreButtonClicked = { onCategoryMoreButtonClicked(item.categoryName) },
             )
         }
     }
@@ -118,7 +118,8 @@ internal fun GamesDiscoverySuccessStatePreview() {
 
     val items = GamesDiscoveryCategory.values().map { category ->
         GamesDiscoveryItemModel(
-            category = category.name,
+            id = category.id,
+            categoryName = category.name,
             title = stringResource(category.titleId),
             isProgressBarVisible = true,
             games = games,
@@ -138,7 +139,8 @@ internal fun GamesDiscoverySuccessStatePreview() {
 internal fun GamesDiscoveryEmptyStatePreview() {
     val items = GamesDiscoveryCategory.values().map { category ->
         GamesDiscoveryItemModel(
-            category = category.name,
+            id = category.id,
+            categoryName = category.name,
             title = stringResource(category.titleId),
             isProgressBarVisible = true,
             games = emptyList(),

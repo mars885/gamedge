@@ -16,6 +16,10 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.header
 
+import androidx.compose.runtime.Immutable
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameArtworkModel
+
+@Immutable
 internal data class GameInfoHeaderModel(
     val artworks: List<GameArtworkModel>,
     val isLiked: Boolean,

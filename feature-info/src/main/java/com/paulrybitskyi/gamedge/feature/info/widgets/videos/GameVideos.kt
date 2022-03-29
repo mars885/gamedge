@@ -91,7 +91,7 @@ internal fun GameVideos(
                     dimensionResource(R.dimen.game_videos_horizontal_arrangement),
                 )
             ) {
-                items(videos) { video ->
+                items(videos, key = GameInfoVideoModel::id) { video ->
                     GameVideo(
                         thumbnailUrl = video.thumbnailUrl,
                         title = video.title,
@@ -183,11 +183,13 @@ internal fun GameVideosPreview() {
     GameVideos(
         videos = listOf(
             GameInfoVideoModel(
+                id = "1",
                 thumbnailUrl = "",
                 videoUrl = "",
                 title = "Announcement Trailer",
             ),
             GameInfoVideoModel(
+                id = "2",
                 thumbnailUrl = "",
                 videoUrl = "",
                 title = "Gameplay Trailer",

@@ -16,6 +16,9 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 internal data class GameInfoRelatedGameModel(
     val id: Int,
     val title: String,

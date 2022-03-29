@@ -16,8 +16,10 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
+import androidx.compose.runtime.Immutable
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 
+@Immutable
 data class GamesUiState(
     val isLoading: Boolean,
     val infoIconId: Int,

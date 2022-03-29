@@ -73,6 +73,8 @@ import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.feature.info.R
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameArtworkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.id
 
 private const val CONSTRAINT_ID_ARTWORKS = "artworks"
 private const val CONSTRAINT_ID_ARTWORKS_SCRIM = "artworks_scrim"
@@ -483,6 +485,7 @@ private fun GameArtworks(
         count = artworks.size,
         modifier = modifier,
         state = pagerState,
+        key = { page -> artworks[page].id },
     ) { page ->
         GameArtwork(
             artwork = artworks[page],

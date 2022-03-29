@@ -16,8 +16,10 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
+import androidx.compose.runtime.Immutable
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 
+@Immutable
 internal data class GameInfoUiState(
     val isLoading: Boolean,
     val game: GameInfoModel?,

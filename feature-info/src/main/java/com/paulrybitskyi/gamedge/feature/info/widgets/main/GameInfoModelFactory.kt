@@ -16,9 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
-import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
-import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
-import com.paulrybitskyi.gamedge.core.factories.createUrls
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsModelFactory
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.factories.GameInfoOtherCompanyGamesModelFactory
@@ -27,6 +24,7 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyM
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderModelFactory
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModelFactory
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreenshotModelFactory
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModelFactory
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
@@ -46,12 +44,12 @@ internal interface GameInfoModelFactory {
 internal class GameInfoModelFactoryImpl @Inject constructor(
     private val headerModelFactory: GameInfoHeaderModelFactory,
     private val videoModelFactory: GameInfoVideoModelFactory,
+    private val screenshotModelFactory: GameInfoScreenshotModelFactory,
     private val detailsModelFactory: GameInfoDetailsModelFactory,
     private val linkModelFactory: GameInfoLinkModelFactory,
     private val companyModelFactory: GameInfoCompanyModelFactory,
     private val otherCompanyGamesModelFactory: GameInfoOtherCompanyGamesModelFactory,
     private val similarGamesModelFactory: GameInfoSimilarGamesModelFactory,
-    private val igdbImageUrlFactory: IgdbImageUrlFactory
 ) : GameInfoModelFactory {
 
     override fun createInfoModel(
@@ -64,20 +62,13 @@ internal class GameInfoModelFactoryImpl @Inject constructor(
             id = game.id,
             headerModel = headerModelFactory.createHeaderModel(game, isLiked),
             videoModels = videoModelFactory.createVideoModels(game.videos),
-            screenshotUrls = game.createScreenshotUrls(),
+            screenshotModels = screenshotModelFactory.createScreenshotModels(game.screenshots),
             summary = game.summary,
             detailsModel = detailsModelFactory.createDetailsModel(game),
             linkModels = linkModelFactory.createLinkModels(game.websites),
             companyModels = companyModelFactory.createCompanyModels(game.involvedCompanies),
             otherCompanyGames = game.createOtherCompanyGamesModel(companyGames),
             similarGames = similarGamesModelFactory.createSimilarGamesModel(similarGames),
-        )
-    }
-
-    private fun Game.createScreenshotUrls(): List<String> {
-        return igdbImageUrlFactory.createUrls(
-            screenshots,
-            IgdbImageUrlFactory.Config(IgdbImageSize.MEDIUM_SCREENSHOT),
         )
     }
 

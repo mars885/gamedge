@@ -176,6 +176,7 @@ internal class GameInfoViewModelTest {
     fun `Dispatches url opening command when video is clicked`() {
         runTest {
             val video = GameInfoVideoModel(
+                id = "1",
                 thumbnailUrl = "thumbnail_url",
                 videoUrl = "video_url",
                 title = "title"
@@ -230,6 +231,7 @@ internal class GameInfoViewModelTest {
     fun `Dispatches url opening command when company is clicked`() {
         runTest {
             val company = GameInfoCompanyModel(
+                id = 1,
                 logoContainerSize = (0 to 0),
                 logoImageSize = (0 to 0),
                 logoUrl = null,
@@ -301,7 +303,7 @@ internal class GameInfoViewModelTest {
                         gameCategory = "game_category"
                     ),
                     videoModels = emptyList(),
-                    screenshotUrls = emptyList(),
+                    screenshotModels = emptyList(),
                     summary = null,
                     detailsModel = null,
                     linkModels = emptyList(),

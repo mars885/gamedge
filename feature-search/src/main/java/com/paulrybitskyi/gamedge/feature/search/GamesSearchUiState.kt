@@ -16,9 +16,11 @@
 
 package com.paulrybitskyi.gamedge.feature.search
 
+import androidx.compose.runtime.Immutable
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 
+@Immutable
 internal data class GamesSearchUiState(
     val queryText: String,
     val gamesUiState: GamesUiState,

@@ -48,6 +48,7 @@ internal class GameInfoVideoModelFactoryImpl @Inject constructor(
         if ((thumbnailUrl == null) && (videoUrl == null)) return null
 
         return GameInfoVideoModel(
+            id = video.id,
             thumbnailUrl = checkNotNull(thumbnailUrl),
             videoUrl = checkNotNull(videoUrl),
             title = video.name

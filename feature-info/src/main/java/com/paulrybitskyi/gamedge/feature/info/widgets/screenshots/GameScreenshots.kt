@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets
+package com.paulrybitskyi.gamedge.feature.info.widgets.screenshots
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -48,7 +48,7 @@ import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
 internal fun GameScreenshots(
-    screenshotUrls: List<String>,
+    screenshots: List<GameInfoScreenshotModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
     Card(
@@ -81,9 +81,12 @@ internal fun GameScreenshots(
                     dimensionResource(R.dimen.game_screenshots_horizontal_arrangement),
                 )
             ) {
-                itemsIndexed(screenshotUrls) { index, screenshotUrl ->
+                itemsIndexed(
+                    items = screenshots,
+                    key = { _, screenshot -> screenshot.id },
+                ) { index, screenshot ->
                     GameScreenshot(
-                        screenshotUrl = screenshotUrl,
+                        screenshotUrl = screenshot.url,
                         modifier = Modifier.size(
                             width = dimensionResource(R.dimen.game_screenshots_item_width),
                             height = dimensionResource(R.dimen.game_screenshots_item_height),
@@ -132,7 +135,20 @@ private fun GameScreenshot(
 @Composable
 internal fun GameScreenshotsPreview() {
     GameScreenshots(
-        screenshotUrls = listOf("1", "2", "3"),
+        screenshots = listOf(
+            GameInfoScreenshotModel(
+                id = "1",
+                url = "",
+            ),
+            GameInfoScreenshotModel(
+                id = "2",
+                url = "",
+            ),
+            GameInfoScreenshotModel(
+                id = "3",
+                url = "",
+            ),
+        ),
         onScreenshotClicked = {},
     )
 }

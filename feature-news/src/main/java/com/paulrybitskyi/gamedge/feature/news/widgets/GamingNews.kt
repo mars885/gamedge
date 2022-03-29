@@ -104,13 +104,13 @@ private fun GamingNewsSuccessState(
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.gaming_news_arrangement_spacing))
     ) {
-        items(news, key = GamingNewsItemModel::id) { newItemModel ->
+        items(news, key = GamingNewsItemModel::id) { itemModel ->
             GamingNewsItem(
-                imageUrl = newItemModel.imageUrl,
-                title = newItemModel.title,
-                lede = newItemModel.lede,
-                publicationDate = newItemModel.publicationDate,
-                onClick = { onNewsItemClicked(newItemModel) }
+                imageUrl = itemModel.imageUrl,
+                title = itemModel.title,
+                lede = itemModel.lede,
+                publicationDate = itemModel.publicationDate,
+                onClick = { onNewsItemClicked(itemModel) }
             )
         }
     }

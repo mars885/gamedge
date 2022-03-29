@@ -14,31 +14,20 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.details
+package com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks
 
 import androidx.compose.runtime.Immutable
 
+private const val DEFAULT_IMAGE_ID = "default_image_id"
+
 @Immutable
-internal data class GameInfoDetailsModel(
-    val genresText: String?,
-    val platformsText: String?,
-    val modesText: String?,
-    val playerPerspectivesText: String?,
-    val themesText: String?
-)  {
-
-    val hasGenresText: Boolean
-        get() = (genresText != null)
-
-    val hasPlatformsText: Boolean
-        get() = (platformsText != null)
-
-    val hasModesText: Boolean
-        get() = (modesText != null)
-
-    val hasPlayerPerspectivesText: Boolean
-        get() = (playerPerspectivesText != null)
-
-    val hasThemesText: Boolean
-        get() = (themesText != null)
+internal sealed class GameArtworkModel {
+    object DefaultImage : GameArtworkModel()
+    data class UrlImage(val id: String, val url: String) : GameArtworkModel()
 }
+
+internal val GameArtworkModel.id: String
+    get() = when (this) {
+        is GameArtworkModel.DefaultImage -> DEFAULT_IMAGE_ID
+        is GameArtworkModel.UrlImage -> id
+    }

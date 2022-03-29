@@ -16,8 +16,12 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery.widgets
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class GamesDiscoveryItemModel(
-    val category: String,
+    val id: Int,
+    val categoryName: String,
     val title: String,
     val isProgressBarVisible: Boolean,
     val games: List<GamesDiscoveryItemGameModel>,

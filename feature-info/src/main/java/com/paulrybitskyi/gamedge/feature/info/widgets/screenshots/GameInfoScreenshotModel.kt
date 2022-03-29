@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.header
+package com.paulrybitskyi.gamedge.feature.info.widgets.screenshots
 
-internal sealed class GameArtworkModel {
-    object DefaultImage : GameArtworkModel()
-    data class UrlImage(val url: String) : GameArtworkModel()
-}
+import androidx.compose.runtime.Immutable
+
+@Immutable
+internal data class GameInfoScreenshotModel(
+    val id: String,
+    val url: String,
+)

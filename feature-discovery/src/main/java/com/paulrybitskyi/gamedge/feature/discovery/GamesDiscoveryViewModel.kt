@@ -40,7 +40,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -79,7 +78,8 @@ class GamesDiscoveryViewModel @Inject constructor(
     private fun initDiscoveryItemsData() {
         _items.value = GamesDiscoveryCategory.values().map { category ->
             GamesDiscoveryItemModel(
-                category = category.name,
+                id = category.id,
+                categoryName = category.name,
                 title = stringProvider.getString(category.titleId),
                 isProgressBarVisible = false,
                 games = emptyList(),

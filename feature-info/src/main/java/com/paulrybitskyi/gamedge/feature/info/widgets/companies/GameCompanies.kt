@@ -98,7 +98,7 @@ internal fun GameCompanies(
                     dimensionResource(R.dimen.game_companies_horizontal_arrangement),
                 )
             ) {
-                items(companies) { company ->
+                items(companies, key = GameInfoCompanyModel::id) { company ->
                     GameCompany(
                         logoImageUrl = company.logoUrl,
                         logoContainerSize = Pair(
@@ -277,6 +277,7 @@ internal fun GameCompaniesPreview() {
     GameCompanies(
         companies = listOf(
             GameInfoCompanyModel(
+                id = 1,
                 logoContainerSize = 750 to 400,
                 logoImageSize = 0 to 0,
                 logoUrl = null,
@@ -285,6 +286,7 @@ internal fun GameCompaniesPreview() {
                 roles = "Main Developer",
             ),
             GameInfoCompanyModel(
+                id = 2,
                 logoContainerSize = 500 to 400,
                 logoImageSize = 0 to 0,
                 logoUrl = null,

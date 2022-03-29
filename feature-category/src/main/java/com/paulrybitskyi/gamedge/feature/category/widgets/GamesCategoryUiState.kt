@@ -16,14 +16,17 @@
 
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
+import androidx.compose.runtime.Immutable
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 
+@Immutable
 internal data class GamesCategoryUiState(
     val isLoading: Boolean,
     val title: String,
     val games: List<GameCategoryModel>,
 )
 
+@Immutable
 internal data class GameCategoryModel(
     val id: Int,
     val title: String,

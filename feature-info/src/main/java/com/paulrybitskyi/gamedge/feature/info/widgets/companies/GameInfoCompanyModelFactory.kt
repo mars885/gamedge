@@ -66,6 +66,7 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
         val logoContainerSize = (logoImageSize.width to logoContainerHeight)
 
         return GameInfoCompanyModel(
+            id = company.company.id,
             logoContainerSize = logoContainerSize,
             logoImageSize = logoImageSize,
             logoUrl = company.createLogoUrl(),

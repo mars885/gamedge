@@ -38,7 +38,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameDetails
-import com.paulrybitskyi.gamedge.feature.info.widgets.GameScreenshots
+import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameScreenshots
 import com.paulrybitskyi.gamedge.feature.info.widgets.GameSummary
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsModel
@@ -48,12 +48,13 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameCompanies
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameArtworkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameArtworkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameHeader
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameLinks
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToCategoryModels
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToInfoRelatedGameModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesType
+import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreenshotModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameVideos
 
 @Composable
@@ -173,9 +174,9 @@ private fun GameInfoContent(
             )
         }
 
-        if (gameInfo.hasScreenshotUrls) {
+        if (gameInfo.hasScreenshotModels) {
             GameScreenshotsItem(
-                model = gameInfo.screenshotUrls,
+                screenshots = gameInfo.screenshotModels,
                 onScreenshotClicked = onScreenshotClicked,
             )
         }
@@ -225,7 +226,7 @@ private fun LazyListScope.GameHeaderItem(
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
 ) {
-    item {
+    item(key = GameInfoSection.HEADER.id) {
         GameHeader(
             headerInfo = model,
             onArtworkClicked = onArtworkClicked,
@@ -240,7 +241,7 @@ private fun LazyListScope.GameVideosItem(
     videos: List<GameInfoVideoModel>,
     onVideoClicked: (GameInfoVideoModel) -> Unit,
 ) {
-    item {
+    item(key = GameInfoSection.VIDEOS.id) {
         GameVideos(
             videos = videos,
             onVideClicked = onVideoClicked,
@@ -249,25 +250,25 @@ private fun LazyListScope.GameVideosItem(
 }
 
 private fun LazyListScope.GameScreenshotsItem(
-    model: List<String>,
+    screenshots: List<GameInfoScreenshotModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
-    item {
+    item(key = GameInfoSection.SCREENSHOTS.id) {
         GameScreenshots(
-            screenshotUrls = model,
+            screenshots = screenshots,
             onScreenshotClicked = onScreenshotClicked,
         )
     }
 }
 
 private fun LazyListScope.GameSummaryItem(model: String) {
-    item {
+    item(key = GameInfoSection.SUMMARY.id) {
         GameSummary(summary = model)
     }
 }
 
 private fun LazyListScope.GameDetailsItem(model: GameInfoDetailsModel) {
-    item {
+    item(key = GameInfoSection.DETAILS.id) {
         GameDetails(details = model)
     }
 }
@@ -276,7 +277,7 @@ private fun LazyListScope.GameLinksItem(
     model: List<GameInfoLinkModel>,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
 ) {
-    item {
+    item(key = GameInfoSection.LINKS.id) {
         GameLinks(
             links = model,
             onLinkClicked = onLinkClicked,
@@ -288,7 +289,7 @@ private fun LazyListScope.GameCompaniesItem(
     model: List<GameInfoCompanyModel>,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
 ) {
-    item {
+    item(key = GameInfoSection.COMPANIES.id) {
         GameCompanies(
             companies = model,
             onCompanyClicked = onCompanyClicked,
@@ -300,7 +301,12 @@ private fun LazyListScope.GameRelatedGamesItem(
     model: GameInfoRelatedGamesModel,
     onGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
-    item {
+    item(
+        key = when (model.type) {
+            GameInfoRelatedGamesType.OTHER_COMPANY_GAMES -> GameInfoSection.OTHER_COMPANY_GAMES.id
+            GameInfoRelatedGamesType.SIMILAR_GAMES -> GameInfoSection.SIMILAR_GAMES.id
+        }
+    ) {
         GamesCategoryPreview(
             title = model.title,
             isProgressBarVisible = false,
@@ -347,7 +353,7 @@ internal fun GameInfoSuccessStateWithMinUiElementsPreview() {
             gameCategory = "N/A",
         ),
         videoModels = emptyList(),
-        screenshotUrls = emptyList(),
+        screenshotModels = emptyList(),
         summary = null,
         detailsModel = null,
         linkModels = emptyList(),
@@ -430,19 +436,27 @@ private fun buildFakeGameModel(): GameInfoModel {
         ),
         videoModels = listOf(
             GameInfoVideoModel(
+                id = "1",
                 thumbnailUrl = "",
                 videoUrl = "",
                 title = "Announcement Trailer",
             ),
             GameInfoVideoModel(
+                id = "2",
                 thumbnailUrl = "",
                 videoUrl = "",
                 title = "Gameplay Trailer",
             ),
         ),
-        screenshotUrls = listOf(
-            "screenshot_url_1",
-            "screenshot_url_2",
+        screenshotModels = listOf(
+            GameInfoScreenshotModel(
+                id = "1",
+                url = "",
+            ),
+            GameInfoScreenshotModel(
+                id = "2",
+                url = "",
+            ),
         ),
         summary = "Elden Ring is an action-RPG open world game with RPG " +
             "elements such as stats, weapons and spells.",
@@ -488,6 +502,7 @@ private fun buildFakeGameModel(): GameInfoModel {
         ),
         companyModels = listOf(
             GameInfoCompanyModel(
+                id = 1,
                 logoContainerSize = 750 to 400,
                 logoImageSize = 0 to 0,
                 logoUrl = null,
@@ -496,6 +511,7 @@ private fun buildFakeGameModel(): GameInfoModel {
                 roles = "Main Developer",
             ),
             GameInfoCompanyModel(
+                id = 2,
                 logoContainerSize = 500 to 400,
                 logoImageSize = 0 to 0,
                 logoUrl = null,

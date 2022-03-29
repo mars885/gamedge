@@ -19,12 +19,13 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.header
 import com.paulrybitskyi.gamedge.core.GameLikeCountCalculator
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
-import com.paulrybitskyi.gamedge.core.factories.createUrls
 import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameCategoryFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameArtworkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameArtworkModelFactory
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -35,6 +36,7 @@ internal interface GameInfoHeaderModelFactory {
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
+    private val artworkModelFactory: GameArtworkModelFactory,
     private val releaseDateFormatter: GameReleaseDateFormatter,
     private val ratingFormatter: GameRatingFormatter,
     private val likeCountCalculator: GameLikeCountCalculator,
@@ -58,11 +60,7 @@ internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
     }
 
     private fun Game.createArtworks(): List<GameArtworkModel> {
-        if (artworks.isEmpty()) return listOf(GameArtworkModel.DefaultImage)
-
-        return igdbImageUrlFactory
-            .createUrls(artworks, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_SCREENSHOT))
-            .map(GameArtworkModel::UrlImage)
+        return artworkModelFactory.createArtworkModels(artworks)
     }
 
     private fun Game.createCoverImageUrl(): String? {
