@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,10 +49,14 @@ private const val ANIMATION_DURATION = 300
 internal fun GameSummary(summary: String) {
     var isExpanded by remember { mutableStateOf(false) }
     var isExpandable by remember { mutableStateOf(true) }
-    val cardClickableModifier = if (isExpandable || isExpanded) {
-        Modifier.clickable(onClick = { isExpanded = !isExpanded })
-    } else {
-        Modifier
+    val cardClickableModifier by remember {
+        derivedStateOf {
+            if (isExpandable || isExpanded) {
+                Modifier.clickable(onClick = { isExpanded = !isExpanded })
+            } else {
+                Modifier
+            }
+        }
     }
 
     Card(

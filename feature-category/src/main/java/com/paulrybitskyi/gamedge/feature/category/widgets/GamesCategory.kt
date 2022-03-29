@@ -27,21 +27,16 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
-import com.paulrybitskyi.commons.device.info.screenMetrics
-import com.paulrybitskyi.commons.ktx.getFloat
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
@@ -131,31 +126,12 @@ private fun GamesVerticalGrid(
     onGameClicked: (GameCategoryModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
-    val context = LocalContext.current
-    val density = LocalDensity.current
-    val gridSpanCount = integerResource(R.integer.games_category_grid_span_count)
-    val gridItemSpacingInDp = dimensionResource(R.dimen.games_category_grid_item_spacing)
-    val gridItemSpacingInPx = remember {
-        with(density) { gridItemSpacingInDp.toPx() }
-    }
-    val itemWidth = remember {
-        val horizontalTotalSpacing = (gridItemSpacingInPx * (gridSpanCount + 1))
-        val screenWidth = (context.screenMetrics.width.sizeInPixels - horizontalTotalSpacing)
-
-        (screenWidth / gridSpanCount.toFloat())
-    }
-    val itemWidthInDp = remember {
-        with(density) { itemWidth.toDp() }
-    }
-    val itemHeightInDp = remember {
-        val itemHeightToWidthRatio = context.getFloat(R.integer.games_category_item_height_to_width_ratio)
-        val itemHeight = (itemWidth * itemHeightToWidthRatio)
-
-        with(density) { itemHeight.toDp() }
-    }
+    val gridConfig = rememberGamesGridConfig()
+    val gridItemSpacingInPx = gridConfig.itemSpacingInPx
+    val gridSpanCount = gridConfig.spanCount
     val lastIndex = games.lastIndex
 
-    LazyVerticalGrid(cells = GridCells.Fixed(gridSpanCount)) {
+    LazyVerticalGrid(cells = GridCells.Fixed(gridConfig.spanCount)) {
         itemsIndexed(games) { index, game ->
             if (index == lastIndex) {
                 LaunchedEffect(lastIndex) {
@@ -163,8 +139,8 @@ private fun GamesVerticalGrid(
                 }
             }
 
-            val column = (index % gridSpanCount)
-            val paddingValues = with(density) {
+            val column = (index % gridConfig.spanCount)
+            val paddingValues = with(LocalDensity.current) {
                 PaddingValues(
                     top = (if (index < gridSpanCount) gridItemSpacingInPx else 0f).toDp(),
                     bottom = gridItemSpacingInPx.toDp(),
@@ -177,7 +153,10 @@ private fun GamesVerticalGrid(
                 title = game.title,
                 imageUrl = game.coverUrl,
                 modifier = Modifier
-                    .size(width = itemWidthInDp, height = itemHeightInDp)
+                    .size(
+                        width = gridConfig.itemWidthInDp,
+                        height = gridConfig.itemHeightInDp
+                    )
                     .padding(paddingValues),
                 hasRoundedShape = false,
                 onCoverClicked = { onGameClicked(game) },

@@ -92,10 +92,14 @@ private fun GamesDiscoveryItems(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.games_discovery_arrangement_spacing)),
     ) {
         items(items, key = GamesDiscoveryItemModel::id) { item ->
+            val categoryGames = remember(item.games) {
+                item.games.mapToCategoryItems()
+            }
+
             GamesCategoryPreview(
                 title = item.title,
                 isProgressBarVisible = item.isProgressBarVisible,
-                games = item.games.mapToCategoryItems(),
+                games = categoryGames,
                 onCategoryGameClicked = { onCategoryGameClicked(it.mapToDiscoveryItemGameModel()) },
                 onCategoryMoreButtonClicked = { onCategoryMoreButtonClicked(item.categoryName) },
             )
