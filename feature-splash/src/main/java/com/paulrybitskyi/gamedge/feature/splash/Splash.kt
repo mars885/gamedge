@@ -23,9 +23,9 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
 @Composable
 internal fun Splash() {
@@ -38,7 +38,7 @@ internal fun Splash() {
     ) {
         CircularProgressIndicator(
             modifier = Modifier.size(dimensionResource(R.dimen.splash_progress_bar_size)),
-            color = colorResource(R.color.colorAccent),
+            color = GamedgeTheme.colors.secondary,
             strokeWidth = dimensionResource(R.dimen.progress_bar_stroke_width)
         )
     }
@@ -47,5 +47,7 @@ internal fun Splash() {
 @Preview(showBackground = true)
 @Composable
 internal fun SplashScreenPreview() {
-    Splash()
+    GamedgeTheme {
+        Splash()
+    }
 }

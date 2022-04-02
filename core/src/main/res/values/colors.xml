@@ -26,7 +26,9 @@
     <color name="colorSecondaryText">#809aaf</color>
     <color name="colorNavigationBar">#282d38</color>
 
-    <color name="colorProgressBar">@color/colorAccent</color>
-    <color name="colorInfoView">@color/colorSecondaryText</color>
+    <color name="colorPrimaryVariant">#1D212B</color>
+    <color name="colorOnSecondary">#611d12</color>
+    <color name="colorLightScrim">#35000000</color>
+    <color name="colorDarkScrim">#66000000</color>
 
 </resources>

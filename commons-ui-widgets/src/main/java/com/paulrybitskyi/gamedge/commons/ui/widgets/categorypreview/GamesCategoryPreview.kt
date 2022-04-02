@@ -30,12 +30,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,7 +42,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutBaseScope
 import androidx.constraintlayout.compose.ConstraintLayoutScope
 import androidx.constraintlayout.compose.Dimension
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
@@ -63,7 +60,6 @@ fun GamesCategoryPreview(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
-        backgroundColor = colorResource(R.color.games_category_preview_card_background_color),
         elevation = dimensionResource(R.dimen.games_category_preview_card_elevation),
     ) {
         ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
@@ -124,13 +120,11 @@ private fun GamesCategoryPreviewTitle(
     Text(
         text = title,
         modifier = modifier,
-        color = colorResource(R.color.games_category_preview_title_text_color),
-        fontSize = textSizeResource(R.dimen.games_category_preview_title_text_size),
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Medium,
+        color = GamedgeTheme.colors.onPrimary,
         textAlign = TextAlign.Start,
         overflow = TextOverflow.Ellipsis,
         maxLines = 1,
+        style = GamedgeTheme.typography.h6,
     )
 }
 
@@ -138,7 +132,7 @@ private fun GamesCategoryPreviewTitle(
 private fun GamesCategoryPreviewProgressBar(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier.size(dimensionResource(R.dimen.games_category_preview_progress_bar_size)),
-        color = colorResource(R.color.colorProgressBar),
+        color = GamedgeTheme.colors.secondary,
         strokeWidth = dimensionResource(R.dimen.games_category_preview_progress_bar_stroke_width),
     )
 }
@@ -159,10 +153,8 @@ private fun GamesCategoryPreviewMoreButton(
         modifier = modifier
             .then(clickableModifier)
             .padding(dimensionResource(R.dimen.games_category_preview_more_button_padding)),
-        color = colorResource(R.color.games_category_preview_more_button_text_color),
-        fontSize = textSizeResource(R.dimen.games_category_preview_more_button_text_size),
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Medium,
+        color = GamedgeTheme.colors.secondary,
+        style = GamedgeTheme.typography.button,
     )
 }
 
@@ -211,9 +203,6 @@ private fun GamesCategoryPreviewEmptyState(modifier: Modifier) {
         title = stringResource(R.string.games_category_preview_info_view_title),
         modifier = modifier,
         iconSize = dimensionResource(R.dimen.games_category_preview_info_view_icon_size),
-        iconColor = colorResource(R.color.colorInfoView),
-        titleTextSize = textSizeResource(R.dimen.games_category_preview_info_view_title_text_size),
-        titleTextColor = colorResource(R.color.colorInfoView),
     )
 }
 
@@ -254,78 +243,84 @@ private fun GamesCategoryPreviewSuccessState(
 @Composable
 @Preview
 internal fun GamesCategoryPreviewSuccessStateWithMoreButtonPreview() {
-    GamesCategoryPreview(
-        title = "Popular",
-        isProgressBarVisible = false,
-        games = listOf(
-            GamesCategoryPreviewItemModel(
-                id = 1,
-                title = "Ghost of Tsushima: Director's Cut",
-                coverUrl = null,
+    GamedgeTheme {
+        GamesCategoryPreview(
+            title = "Popular",
+            isProgressBarVisible = false,
+            games = listOf(
+                GamesCategoryPreviewItemModel(
+                    id = 1,
+                    title = "Ghost of Tsushima: Director's Cut",
+                    coverUrl = null,
+                ),
+                GamesCategoryPreviewItemModel(
+                    id = 2,
+                    title = "Outer Wilds: Echoes of the Eye",
+                    coverUrl = null,
+                ),
+                GamesCategoryPreviewItemModel(
+                    id = 3,
+                    title = "Kena: Bridge of Spirits",
+                    coverUrl = null,
+                ),
+                GamesCategoryPreviewItemModel(
+                    id = 4,
+                    title = "Forza Horizon 5",
+                    coverUrl = null,
+                ),
             ),
-            GamesCategoryPreviewItemModel(
-                id = 2,
-                title = "Outer Wilds: Echoes of the Eye",
-                coverUrl = null,
-            ),
-            GamesCategoryPreviewItemModel(
-                id = 3,
-                title = "Kena: Bridge of Spirits",
-                coverUrl = null,
-            ),
-            GamesCategoryPreviewItemModel(
-                id = 4,
-                title = "Forza Horizon 5",
-                coverUrl = null,
-            ),
-        ),
-        onCategoryMoreButtonClicked = {},
-        onCategoryGameClicked = {},
-    )
+            onCategoryMoreButtonClicked = {},
+            onCategoryGameClicked = {},
+        )
+    }
 }
 
 @Composable
 @Preview
 internal fun GamesCategoryPreviewSuccessStateWithoutMoreButtonPreview() {
-    GamesCategoryPreview(
-        title = "Popular",
-        isProgressBarVisible = false,
-        isMoreButtonVisible = false,
-        games = listOf(
-            GamesCategoryPreviewItemModel(
-                id = 1,
-                title = "Ghost of Tsushima: Director's Cut",
-                coverUrl = null,
+    GamedgeTheme {
+        GamesCategoryPreview(
+            title = "Popular",
+            isProgressBarVisible = false,
+            isMoreButtonVisible = false,
+            games = listOf(
+                GamesCategoryPreviewItemModel(
+                    id = 1,
+                    title = "Ghost of Tsushima: Director's Cut",
+                    coverUrl = null,
+                ),
+                GamesCategoryPreviewItemModel(
+                    id = 2,
+                    title = "Outer Wilds: Echoes of the Eye",
+                    coverUrl = null,
+                ),
+                GamesCategoryPreviewItemModel(
+                    id = 3,
+                    title = "Kena: Bridge of Spirits",
+                    coverUrl = null,
+                ),
+                GamesCategoryPreviewItemModel(
+                    id = 4,
+                    title = "Forza Horizon 5",
+                    coverUrl = null,
+                ),
             ),
-            GamesCategoryPreviewItemModel(
-                id = 2,
-                title = "Outer Wilds: Echoes of the Eye",
-                coverUrl = null,
-            ),
-            GamesCategoryPreviewItemModel(
-                id = 3,
-                title = "Kena: Bridge of Spirits",
-                coverUrl = null,
-            ),
-            GamesCategoryPreviewItemModel(
-                id = 4,
-                title = "Forza Horizon 5",
-                coverUrl = null,
-            ),
-        ),
-        onCategoryMoreButtonClicked = {},
-        onCategoryGameClicked = {},
-    )
+            onCategoryMoreButtonClicked = {},
+            onCategoryGameClicked = {},
+        )
+    }
 }
 
 @Composable
 @Preview
 internal fun GamesCategoryPreviewEmptyStatePreview() {
-    GamesCategoryPreview(
-        title = "Popular",
-        isProgressBarVisible = false,
-        games = emptyList(),
-        onCategoryMoreButtonClicked = {},
-        onCategoryGameClicked = {},
-    )
+    GamedgeTheme {
+        GamesCategoryPreview(
+            title = "Popular",
+            isProgressBarVisible = false,
+            games = emptyList(),
+            onCategoryMoreButtonClicked = {},
+            onCategoryGameClicked = {},
+        )
+    }
 }

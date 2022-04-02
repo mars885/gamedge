@@ -27,11 +27,11 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
@@ -71,7 +71,7 @@ internal fun GamingNews(
 private fun GamingNewsLoadingState(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier,
-        color = colorResource(R.color.colorProgressBar)
+        color = GamedgeTheme.colors.secondary,
     )
 }
 
@@ -90,8 +90,6 @@ private fun GamingNewsEmptyState(modifier: Modifier) {
             modifier = Modifier.padding(
                 horizontal = dimensionResource(R.dimen.gaming_news_info_view_horizontal_padding)
             ),
-            iconColor = colorResource(R.color.colorInfoView),
-            titleTextColor = colorResource(R.color.colorInfoView)
         )
     }
 }
@@ -149,31 +147,37 @@ internal fun GamingNewsSuccessStatePreview() {
         ),
     )
 
-    GamingNews(
-        uiState = GamingNewsUiState(
-            news = news,
-        ),
-        onNewsItemClicked = {},
-        onRefreshRequested = {}
-    )
+    GamedgeTheme {
+        GamingNews(
+            uiState = GamingNewsUiState(
+                news = news,
+            ),
+            onNewsItemClicked = {},
+            onRefreshRequested = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GamingNewsEmptyStatePreview() {
-    GamingNews(
-        uiState = GamingNewsUiState(),
-        onNewsItemClicked = {},
-        onRefreshRequested = {}
-    )
+    GamedgeTheme {
+        GamingNews(
+            uiState = GamingNewsUiState(),
+            onNewsItemClicked = {},
+            onRefreshRequested = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GamingNewsLoadingStatePreview() {
-    GamingNews(
-        uiState = GamingNewsUiState(isLoading = true),
-        onNewsItemClicked = {},
-        onRefreshRequested = {}
-    )
+    GamedgeTheme {
+        GamingNews(
+            uiState = GamingNewsUiState(isLoading = true),
+            onNewsItemClicked = {},
+            onRefreshRequested = {},
+        )
+    }
 }

@@ -31,15 +31,12 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.flowlayout.FlowRow
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.gamedge.feature.info.R
 import java.util.Locale
@@ -52,7 +49,6 @@ internal fun GameLinks(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
-        backgroundColor = colorResource(R.color.game_links_card_background_color),
         elevation = dimensionResource(R.dimen.game_links_card_elevation),
     ) {
         Column(
@@ -65,10 +61,8 @@ internal fun GameLinks(
                 modifier = Modifier.padding(
                     bottom = dimensionResource(R.dimen.game_links_title_padding),
                 ),
-                color = colorResource(R.color.game_links_title_text_color),
-                fontSize = textSizeResource(R.dimen.game_links_title_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
+                color = GamedgeTheme.colors.onPrimary,
+                style = GamedgeTheme.typography.h6,
             )
 
             FlowRow(
@@ -97,7 +91,8 @@ private fun GameLink(
             shape = RoundedCornerShape(
                 dimensionResource(R.dimen.game_links_item_corner_radius)
             ),
-            backgroundColor = colorResource(R.color.game_links_item_background_color),
+            backgroundColor = GamedgeTheme.colors.primaryVariant,
+            contentColor = GamedgeTheme.colors.onSurface,
             elevation = dimensionResource(R.dimen.game_links_item_elevation),
         ) {
             Row(
@@ -115,15 +110,13 @@ private fun GameLink(
                     modifier = Modifier.size(
                         dimensionResource(R.dimen.game_links_item_icon_size)
                     ),
-                    tint = colorResource(R.color.game_links_item_content_color),
                 )
                 Text(
                     text = link.text,
                     modifier = Modifier.padding(
                         start = dimensionResource(R.dimen.game_links_item_text_padding_start),
                     ),
-                    color = colorResource(R.color.game_links_item_content_color),
-                    fontSize = textSizeResource(R.dimen.game_links_item_text_size),
+                    style = GamedgeTheme.typography.button,
                 )
             }
         }
@@ -148,8 +141,10 @@ internal fun GameLinksPreview() {
             )
     }
 
-    GameLinks(
-        links = links,
-        onLinkClicked = {},
-    )
+    GamedgeTheme {
+        GameLinks(
+            links = links,
+            onLinkClicked = {},
+        )
+    }
 }

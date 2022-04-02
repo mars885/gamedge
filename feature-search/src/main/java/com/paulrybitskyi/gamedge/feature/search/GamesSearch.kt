@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.statusBarsPadding
 import com.paulrybitskyi.gamedge.commons.ui.OnLifecycleEvent
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.SearchToolbar
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.Games
@@ -94,93 +95,99 @@ internal fun GamesSearch(
 @Preview
 @Composable
 internal fun GamesSearchSuccessStatePreview() {
-    GamesSearch(
-        uiState = GamesSearchUiState(
-            queryText = "God of War",
-            gamesUiState = GamesUiState(
-                isLoading = false,
-                infoIconId = R.drawable.magnify,
-                infoTitle = "",
-                games = listOf(
-                    GameModel(
-                        id = 1,
-                        coverImageUrl = null,
-                        name = "God of War",
-                        releaseDate = "Apr 20, 2018 (3 years ago)",
-                        developerName = "SIE Santa Monica Studio",
-                        description = "Very very very very very very very very very " +
-                            "very very very very very very very very long description",
+    GamedgeTheme {
+        GamesSearch(
+            uiState = GamesSearchUiState(
+                queryText = "God of War",
+                gamesUiState = GamesUiState(
+                    isLoading = false,
+                    infoIconId = R.drawable.magnify,
+                    infoTitle = "",
+                    games = listOf(
+                        GameModel(
+                            id = 1,
+                            coverImageUrl = null,
+                            name = "God of War",
+                            releaseDate = "Apr 20, 2018 (3 years ago)",
+                            developerName = "SIE Santa Monica Studio",
+                            description = "Very very very very very very very very very " +
+                                    "very very very very very very very very long description",
+                        ),
+                        GameModel(
+                            id = 2,
+                            coverImageUrl = null,
+                            name = "God of War II",
+                            releaseDate = "Mar 13, 2007 (14 years ago)",
+                            developerName = "SIE Santa Monica Studio",
+                            description = "Very very very very very very very very very " +
+                                    "very very very very very very very very long description",
+                        ),
+                        GameModel(
+                            id = 3,
+                            coverImageUrl = null,
+                            name = "God of War II HD",
+                            releaseDate = "Oct 02, 2010 (11 years ago)",
+                            developerName = "Bluepoint Games",
+                            description = "Very very very very very very very very very " +
+                                    "very very very very very very very very long description",
+                        ),
                     ),
-                    GameModel(
-                        id = 2,
-                        coverImageUrl = null,
-                        name = "God of War II",
-                        releaseDate = "Mar 13, 2007 (14 years ago)",
-                        developerName = "SIE Santa Monica Studio",
-                        description = "Very very very very very very very very very " +
-                            "very very very very very very very very long description",
-                    ),
-                    GameModel(
-                        id = 3,
-                        coverImageUrl = null,
-                        name = "God of War II HD",
-                        releaseDate = "Oct 02, 2010 (11 years ago)",
-                        developerName = "Bluepoint Games",
-                        description = "Very very very very very very very very very " +
-                            "very very very very very very very very long description",
-                    ),
-                ),
-            )
-        ),
-        onSearchActionRequested = {},
-        onBackButtonClicked = {},
-        onClearButtonClicked = {},
-        onQueryChanged = {},
-        onGameClicked = {},
-        onBottomReached = {},
-    )
+                )
+            ),
+            onSearchActionRequested = {},
+            onBackButtonClicked = {},
+            onClearButtonClicked = {},
+            onQueryChanged = {},
+            onGameClicked = {},
+            onBottomReached = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GamesSearchEmptyStatePreview() {
-    GamesSearch(
-        uiState = GamesSearchUiState(
-            queryText = "God of War",
-            gamesUiState = GamesUiState(
-                isLoading = false,
-                infoIconId = R.drawable.magnify,
-                infoTitle = "No games found for \n\"God of War\"",
-                games = emptyList(),
-            )
-        ),
-        onSearchActionRequested = {},
-        onBackButtonClicked = {},
-        onClearButtonClicked = {},
-        onQueryChanged = {},
-        onGameClicked = {},
-        onBottomReached = {},
-    )
+    GamedgeTheme {
+        GamesSearch(
+            uiState = GamesSearchUiState(
+                queryText = "God of War",
+                gamesUiState = GamesUiState(
+                    isLoading = false,
+                    infoIconId = R.drawable.magnify,
+                    infoTitle = "No games found for \n\"God of War\"",
+                    games = emptyList(),
+                )
+            ),
+            onSearchActionRequested = {},
+            onBackButtonClicked = {},
+            onClearButtonClicked = {},
+            onQueryChanged = {},
+            onGameClicked = {},
+            onBottomReached = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GamesSearchLoadingStatePreview() {
-    GamesSearch(
-        uiState = GamesSearchUiState(
-            queryText = "God of War",
-            gamesUiState = GamesUiState(
-                isLoading = true,
-                infoIconId = R.drawable.magnify,
-                infoTitle = "",
-                games = emptyList(),
-            )
-        ),
-        onSearchActionRequested = {},
-        onBackButtonClicked = {},
-        onClearButtonClicked = {},
-        onQueryChanged = {},
-        onGameClicked = {},
-        onBottomReached = {},
-    )
+    GamedgeTheme {
+        GamesSearch(
+            uiState = GamesSearchUiState(
+                queryText = "God of War",
+                gamesUiState = GamesUiState(
+                    isLoading = true,
+                    infoIconId = R.drawable.magnify,
+                    infoTitle = "",
+                    games = emptyList(),
+                )
+            ),
+            onSearchActionRequested = {},
+            onBackButtonClicked = {},
+            onClearButtonClicked = {},
+            onQueryChanged = {},
+            onGameClicked = {},
+            onBottomReached = {},
+        )
+    }
 }

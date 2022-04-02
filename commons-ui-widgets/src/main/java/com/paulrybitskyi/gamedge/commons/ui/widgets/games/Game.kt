@@ -32,13 +32,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import androidx.compose.ui.unit.TextUnit
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import kotlin.math.roundToInt
@@ -56,7 +54,6 @@ fun Game(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
-        backgroundColor = colorResource(R.color.game_card_background_color),
         elevation = dimensionResource(R.dimen.game_card_elevation)
     ) {
         Row(
@@ -101,12 +98,10 @@ private fun GameDetailsContent(
             modifier = Modifier.padding(
                 start = dimensionResource(R.dimen.game_name_padding_start),
             ),
-            color = colorResource(R.color.game_name_text_color),
-            fontSize = textSizeResource(R.dimen.game_name_text_size),
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Medium,
+            color = GamedgeTheme.colors.onPrimary,
             overflow = TextOverflow.Ellipsis,
             maxLines = 3,
+            style = GamedgeTheme.typography.subtitle2,
         )
 
         Text(
@@ -116,10 +111,7 @@ private fun GameDetailsContent(
                     top = dimensionResource(R.dimen.game_details_padding_top),
                     start = dimensionResource(R.dimen.game_details_padding_start),
                 ),
-            color = colorResource(R.color.game_details_text_color),
-            fontSize = textSizeResource(R.dimen.game_details_text_size),
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Medium,
+            style = GamedgeTheme.typography.caption,
         )
 
         if (developerName != null) {
@@ -128,10 +120,7 @@ private fun GameDetailsContent(
                 modifier = Modifier.padding(
                     start = dimensionResource(R.dimen.game_details_padding_start)
                 ),
-                color = colorResource(R.color.game_details_text_color),
-                fontSize = textSizeResource(R.dimen.game_details_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
+                style = GamedgeTheme.typography.caption,
             )
         }
 
@@ -153,10 +142,6 @@ private fun GameDetailsDescription(description: String) {
                 top = dimensionResource(R.dimen.game_details_padding_top),
                 start = dimensionResource(R.dimen.game_details_padding_start),
             ),
-        color = colorResource(R.color.game_details_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_text_size),
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Medium,
         overflow = TextOverflow.Ellipsis,
         maxLines = maxLines,
         onTextLayout = { textLayoutResult ->
@@ -166,60 +151,71 @@ private fun GameDetailsDescription(description: String) {
 
                 maxLines = (textHeight / firstLineHeight).roundToInt()
             }
-        }
+        },
+        style = GamedgeTheme.typography.body2.copy(
+            lineHeight = TextUnit.Unspecified,
+        ),
     )
 }
 
 @Preview
 @Composable
 internal fun GameFullPreview() {
-    Game(
-        coverImageUrl = null,
-        name = "Forza Horizon 5",
-        releaseDate = "Nov 09, 2021 (7 days ago)",
-        developerName = "Playground Games",
-        description = "Your Ultimate Horizon Adventure awaits! Explore the vibrant " +
-            "and ever-evolving open-world landscapes of Mexico.",
-        onClick = {},
-    )
+    GamedgeTheme {
+        Game(
+            coverImageUrl = null,
+            name = "Forza Horizon 5",
+            releaseDate = "Nov 09, 2021 (7 days ago)",
+            developerName = "Playground Games",
+            description = "Your Ultimate Horizon Adventure awaits! Explore the vibrant " +
+                    "and ever-evolving open-world landscapes of Mexico.",
+            onClick = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GameWithoutDeveloperPreview() {
-    Game(
-        coverImageUrl = null,
-        name = "Forza Horizon 5",
-        releaseDate = "Nov 09, 2021 (7 days ago)",
-        developerName = null,
-        description = "Your Ultimate Horizon Adventure awaits! Explore the vibrant " +
-                "and ever-evolving open-world landscapes of Mexico.",
-        onClick = {},
-    )
+    GamedgeTheme {
+        Game(
+            coverImageUrl = null,
+            name = "Forza Horizon 5",
+            releaseDate = "Nov 09, 2021 (7 days ago)",
+            developerName = null,
+            description = "Your Ultimate Horizon Adventure awaits! Explore the vibrant " +
+                    "and ever-evolving open-world landscapes of Mexico.",
+            onClick = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GameWithoutDescriptionPreview() {
-    Game(
-        coverImageUrl = null,
-        name = "Forza Horizon 5",
-        releaseDate = "Nov 09, 2021 (7 days ago)",
-        developerName = "Playground Games",
-        description = null,
-        onClick = {},
-    )
+    GamedgeTheme {
+        Game(
+            coverImageUrl = null,
+            name = "Forza Horizon 5",
+            releaseDate = "Nov 09, 2021 (7 days ago)",
+            developerName = "Playground Games",
+            description = null,
+            onClick = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GameMinimalPreview() {
-    Game(
-        coverImageUrl = null,
-        name = "Forza Horizon 5",
-        releaseDate = "Nov 09, 2021 (7 days ago)",
-        developerName = null,
-        description = null,
-        onClick = {},
-    )
+    GamedgeTheme {
+        Game(
+            coverImageUrl = null,
+            name = "Forza Horizon 5",
+            releaseDate = "Nov 09, 2021 (7 days ago)",
+            developerName = null,
+            description = null,
+            onClick = {},
+        )
+    }
 }

@@ -55,6 +55,7 @@ dependencies {
     implementation(deps.compose.coil)
     implementation(deps.compose.accompanist.insets)
     implementation(deps.compose.accompanist.pager)
+    implementation(deps.compose.accompanist.systemUi)
 
     implementation(deps.commons.core)
     implementation(deps.commons.ktx)

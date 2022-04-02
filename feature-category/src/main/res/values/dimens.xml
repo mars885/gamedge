@@ -20,6 +20,5 @@
 
     <dimen name="games_category_grid_item_spacing">2dp</dimen>
     <dimen name="games_category_info_view_horizontal_padding">30dp</dimen>
-    <dimen name="games_category_info_view_title_text_size">17sp</dimen>
 
 </resources>

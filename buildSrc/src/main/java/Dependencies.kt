@@ -153,6 +153,7 @@ object deps {
             const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
             const val flowLayout = "com.google.accompanist:accompanist-flowlayout:$version"
             const val pager = "com.google.accompanist:accompanist-pager:$version"
+            const val systemUi = "com.google.accompanist:accompanist-systemuicontroller:$version"
         }
     }
 

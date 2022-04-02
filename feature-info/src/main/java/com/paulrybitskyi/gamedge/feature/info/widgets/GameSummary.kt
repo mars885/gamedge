@@ -32,15 +32,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.feature.info.R
 
 private const val ANIMATION_DURATION = 300
@@ -64,7 +61,6 @@ internal fun GameSummary(summary: String) {
             .fillMaxWidth()
             .then(cardClickableModifier),
         shape = RectangleShape,
-        backgroundColor = colorResource(R.color.game_summary_card_background_color),
         elevation = dimensionResource(R.dimen.game_summary_card_elevation),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -76,10 +72,8 @@ internal fun GameSummary(summary: String) {
                         bottom = dimensionResource(R.dimen.game_summary_title_padding_bottom)
                     )
                     .padding(horizontal = dimensionResource(R.dimen.game_summary_title_padding)),
-                color = colorResource(R.color.game_summary_title_text_color),
-                fontSize = textSizeResource(R.dimen.game_summary_title_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
+                color = GamedgeTheme.colors.onPrimary,
+                style = GamedgeTheme.typography.h6,
             )
             Text(
                 text = summary,
@@ -87,10 +81,6 @@ internal fun GameSummary(summary: String) {
                     .animateContentSize(animationSpec = tween(durationMillis = ANIMATION_DURATION))
                     .padding(horizontal = dimensionResource(R.dimen.game_summary_content_padding))
                     .padding(bottom = dimensionResource(R.dimen.game_summary_content_padding)),
-                color = colorResource(R.color.game_summary_content_text_color),
-                fontSize = textSizeResource(R.dimen.game_summary_content_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = if (isExpanded) {
                     Integer.MAX_VALUE
@@ -99,7 +89,8 @@ internal fun GameSummary(summary: String) {
                 },
                 onTextLayout = { textLayoutResult ->
                     isExpandable = textLayoutResult.didOverflowHeight
-                }
+                },
+                style = GamedgeTheme.typography.body1,
             )
         }
     }
@@ -108,8 +99,10 @@ internal fun GameSummary(summary: String) {
 @Preview
 @Composable
 internal fun GameSummaryCollapsedPreview() {
-    GameSummary(
-        summary = "Elden Ring is an action-RPG open world game with RPG " +
-            "elements such as stats, weapons and spells.",
-    )
+    GamedgeTheme {
+        GameSummary(
+            summary = "Elden Ring is an action-RPG open world game with RPG " +
+                    "elements such as stats, weapons and spells.",
+        )
+    }
 }

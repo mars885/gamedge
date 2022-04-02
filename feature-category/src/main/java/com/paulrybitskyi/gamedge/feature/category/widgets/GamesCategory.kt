@@ -30,13 +30,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
@@ -83,7 +83,7 @@ internal fun GamesCategory(
 private fun GamesLoadingState(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier,
-        color = colorResource(R.color.colorProgressBar)
+        color = GamedgeTheme.colors.secondary,
     )
 }
 
@@ -95,8 +95,6 @@ private fun GamesEmptyState(modifier: Modifier) {
         modifier = modifier.padding(
             horizontal = dimensionResource(R.dimen.games_category_info_view_horizontal_padding),
         ),
-        iconColor = colorResource(R.color.colorInfoView),
-        titleTextColor = colorResource(R.color.colorInfoView)
     )
 }
 
@@ -180,44 +178,50 @@ internal fun GamesCategorySuccessStatePreview() {
         }
     }
 
-    GamesCategory(
-        uiState = GamesCategoryUiState(
-            isLoading = false,
-            title = "Popular",
-            games = games,
-        ),
-        onBackButtonClicked = {},
-        onGameClicked = {},
-        onBottomReached = {},
-    )
+    GamedgeTheme {
+        GamesCategory(
+            uiState = GamesCategoryUiState(
+                isLoading = false,
+                title = "Popular",
+                games = games,
+            ),
+            onBackButtonClicked = {},
+            onGameClicked = {},
+            onBottomReached = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GamesCategoryEmptyStatePreview() {
-    GamesCategory(
-        uiState = GamesCategoryUiState(
-            isLoading = false,
-            title = "Popular",
-            games = emptyList(),
-        ),
-        onBackButtonClicked = {},
-        onGameClicked = {},
-        onBottomReached = {},
-    )
+    GamedgeTheme {
+        GamesCategory(
+            uiState = GamesCategoryUiState(
+                isLoading = false,
+                title = "Popular",
+                games = emptyList(),
+            ),
+            onBackButtonClicked = {},
+            onGameClicked = {},
+            onBottomReached = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GamesCategoryLoadingStatePreview() {
-    GamesCategory(
-        uiState = GamesCategoryUiState(
-            isLoading = true,
-            title = "Popular",
-            games = emptyList(),
-        ),
-        onBackButtonClicked = {},
-        onGameClicked = {},
-        onBottomReached = {},
-    )
+    GamedgeTheme {
+        GamesCategory(
+            uiState = GamesCategoryUiState(
+                isLoading = true,
+                title = "Popular",
+                games = emptyList(),
+            ),
+            onBackButtonClicked = {},
+            onGameClicked = {},
+            onBottomReached = {},
+        )
+    }
 }

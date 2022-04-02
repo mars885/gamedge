@@ -17,18 +17,19 @@
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.LocalContentColor
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -40,6 +41,8 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.theme.darkScrim
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Toolbar
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
@@ -52,29 +55,32 @@ internal fun ImageViewer(
     onToolbarRightBtnClicked: () -> Unit,
     onImageChanged: (imageIndex: Int) -> Unit,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = colorResource(R.color.image_viewer_background_color)),
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.Black,
+        contentColor = Color.White,
     ) {
-        ImageViewerPager(
-            uiState = uiState,
-            networkStateProvider = networkStateProvider,
-            modifier = Modifier.matchParentSize(),
-            onImageChanged = onImageChanged,
-        )
+        Box(Modifier.fillMaxSize()) {
+            ImageViewerPager(
+                uiState = uiState,
+                networkStateProvider = networkStateProvider,
+                modifier = Modifier.matchParentSize(),
+                onImageChanged = onImageChanged,
+            )
 
-        Toolbar(
-            title = uiState.toolbarTitle,
-            modifier = Modifier
-                .statusBarsPadding()
-                .align(Alignment.TopCenter),
-            backgroundColor = colorResource(R.color.image_viewer_bar_background_color),
-            leftButtonIcon = painterResource(R.drawable.arrow_left),
-            rightButtonIcon = painterResource(R.drawable.share_variant),
-            onLeftButtonClick = onToolbarLeftBtnClicked,
-            onRightButtonClick = onToolbarRightBtnClicked,
-        )
+            Toolbar(
+                title = uiState.toolbarTitle,
+                modifier = Modifier
+                    .statusBarsPadding()
+                    .align(Alignment.TopCenter),
+                backgroundColor = GamedgeTheme.colors.darkScrim,
+                contentColor = LocalContentColor.current,
+                leftButtonIcon = painterResource(R.drawable.arrow_left),
+                rightButtonIcon = painterResource(R.drawable.share_variant),
+                onLeftButtonClick = onToolbarLeftBtnClicked,
+                onRightButtonClick = onToolbarRightBtnClicked,
+            )
+        }
     }
 }
 
@@ -133,8 +139,6 @@ private fun ImageViewerItem(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .padding(horizontal = dimensionResource(R.dimen.image_viewer_item_info_view_horizontal_padding)),
-                iconColor = colorResource(R.color.colorInfoView),
-                titleTextColor = colorResource(R.color.colorInfoView),
             )
         }
 
@@ -150,17 +154,19 @@ private fun ImageViewerItem(
 @Preview
 @Composable
 internal fun ImageViewerPreview() {
-    ImageViewer(
-        uiState = ImageViewerUiState(
-            toolbarTitle = "Image",
-            imageUrls = emptyList(),
-            selectedImageUrlIndex = 0,
-        ),
-        networkStateProvider = object : NetworkStateProvider {
-            override val isNetworkAvailable = true
-        },
-        onToolbarLeftBtnClicked = {},
-        onToolbarRightBtnClicked = {},
-        onImageChanged = {},
-    )
+    GamedgeTheme {
+        ImageViewer(
+            uiState = ImageViewerUiState(
+                toolbarTitle = "Image",
+                imageUrls = emptyList(),
+                selectedImageUrlIndex = 0,
+            ),
+            networkStateProvider = object : NetworkStateProvider {
+                override val isNetworkAvailable = true
+            },
+            onToolbarLeftBtnClicked = {},
+            onToolbarRightBtnClicked = {},
+            onImageChanged = {},
+        )
+    }
 }

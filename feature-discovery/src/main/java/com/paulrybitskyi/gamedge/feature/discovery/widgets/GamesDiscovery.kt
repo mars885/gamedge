@@ -16,12 +16,12 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery.widgets
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,10 +29,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryCategory
@@ -52,32 +52,33 @@ internal fun GamesDiscovery(
     onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,
     onRefreshRequested: () -> Unit,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(R.color.colorContentContainer)),
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = GamedgeTheme.colors.background,
     ) {
-        var isRefreshing by remember { mutableStateOf(false) }
-        val coroutineScope = rememberCoroutineScope()
+        Box(Modifier.fillMaxSize()) {
+            var isRefreshing by remember { mutableStateOf(false) }
+            val coroutineScope = rememberCoroutineScope()
 
-        RefreshableContent(
-            isRefreshing = isRefreshing,
-            modifier = Modifier.matchParentSize(),
-            onRefreshRequested = {
-                isRefreshing = true
+            RefreshableContent(
+                isRefreshing = isRefreshing,
+                modifier = Modifier.matchParentSize(),
+                onRefreshRequested = {
+                    isRefreshing = true
 
-                coroutineScope.launch {
-                    delay(SWIPE_REFRESH_INTENTIONAL_DELAY)
-                    onRefreshRequested()
-                    isRefreshing = false
-                }
-            },
-        ) {
-            GamesDiscoveryItems(
-                items = items,
-                onCategoryMoreButtonClicked = onCategoryMoreButtonClicked,
-                onCategoryGameClicked = onCategoryGameClicked,
-            )
+                    coroutineScope.launch {
+                        delay(SWIPE_REFRESH_INTENTIONAL_DELAY)
+                        onRefreshRequested()
+                        isRefreshing = false
+                    }
+                },
+            ) {
+                GamesDiscoveryItems(
+                    items = items,
+                    onCategoryMoreButtonClicked = onCategoryMoreButtonClicked,
+                    onCategoryGameClicked = onCategoryGameClicked,
+                )
+            }
         }
     }
 }
@@ -116,9 +117,9 @@ internal fun GamesDiscoverySuccessStatePreview() {
         "Kena: Bridge of Spirits",
         "Forza Horizon 5",
     )
-        .mapIndexed { index, gameTitle ->
-            GamesDiscoveryItemGameModel(id = index, title = gameTitle, coverUrl = null)
-        }
+    .mapIndexed { index, gameTitle ->
+        GamesDiscoveryItemGameModel(id = index, title = gameTitle, coverUrl = null)
+    }
 
     val items = GamesDiscoveryCategory.values().map { category ->
         GamesDiscoveryItemModel(
@@ -130,12 +131,14 @@ internal fun GamesDiscoverySuccessStatePreview() {
         )
     }
 
-    GamesDiscovery(
-        items = items,
-        onCategoryMoreButtonClicked = {},
-        onCategoryGameClicked = {},
-        onRefreshRequested = {},
-    )
+    GamedgeTheme {
+        GamesDiscovery(
+            items = items,
+            onCategoryMoreButtonClicked = {},
+            onCategoryGameClicked = {},
+            onRefreshRequested = {},
+        )
+    }
 }
 
 @Preview
@@ -151,10 +154,12 @@ internal fun GamesDiscoveryEmptyStatePreview() {
         )
     }
 
-    GamesDiscovery(
-        items = items,
-        onCategoryMoreButtonClicked = {},
-        onCategoryGameClicked = {},
-        onRefreshRequested = {},
-    )
+    GamedgeTheme {
+        GamesDiscovery(
+            items = items,
+            onCategoryMoreButtonClicked = {},
+            onCategoryGameClicked = {},
+            onRefreshRequested = {},
+        )
+    }
 }

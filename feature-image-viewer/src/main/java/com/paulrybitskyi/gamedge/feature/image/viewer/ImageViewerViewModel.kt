@@ -120,7 +120,6 @@ internal class ImageViewerViewModel @Inject constructor(
     }
 
     fun onBackPressed() {
-        dispatchCommand(ImageViewerCommand.ResetSystemWindows)
         route(ImageViewerRoute.Back)
     }
 }

@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,74 +23,72 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
 @Composable
 fun Toolbar(
     title: String,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = colorResource(R.color.toolbar_background_color),
-    titleTextColor: Color = colorResource(R.color.toolbar_title_text_color),
-    iconColor: Color = colorResource(R.color.toolbar_button_icon_color),
-    titleTextSize: TextUnit = textSizeResource(R.dimen.toolbar_title_text_size),
+    backgroundColor: Color = GamedgeTheme.colors.primary,
+    contentColor: Color = contentColorFor(backgroundColor),
+    titleTextStyle: TextStyle = GamedgeTheme.typography.h5,
     leftButtonIcon: Painter? = null,
     rightButtonIcon: Painter? = null,
     onLeftButtonClick: (() -> Unit)? = null,
     onRightButtonClick: (() -> Unit)? = null
 ) {
-    val titleLeftPadding = getTitleHorizontalPadding(leftButtonIcon)
-    val titleRightPadding = getTitleHorizontalPadding(rightButtonIcon)
-
-    Row(
+    Surface(
         modifier = Modifier
-            .background(backgroundColor)
             .fillMaxWidth()
             .then(modifier)
             .height(dimensionResource(R.dimen.toolbar_height)),
-        verticalAlignment = Alignment.CenterVertically,
+        color = backgroundColor,
+        contentColor = contentColor,
     ) {
-        if (leftButtonIcon != null) {
-            ToolbarButton(
-                icon = leftButtonIcon,
-                iconColor = iconColor,
-                onClick = { onLeftButtonClick?.invoke() }
-            )
-        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            val titleLeftPadding = getTitleHorizontalPadding(leftButtonIcon)
+            val titleRightPadding = getTitleHorizontalPadding(rightButtonIcon)
 
-        Text(
-            text = title,
-            modifier = Modifier
-                .weight(1f)
-                .padding(start = titleLeftPadding, end = titleRightPadding),
-            color = titleTextColor,
-            fontSize = titleTextSize,
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Medium,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1
-        )
+            if (leftButtonIcon != null) {
+                ToolbarButton(
+                    icon = leftButtonIcon,
+                    onClick = { onLeftButtonClick?.invoke() }
+                )
+            }
 
-        if (rightButtonIcon != null) {
-            ToolbarButton(
-                icon = rightButtonIcon,
-                iconColor = iconColor,
-                onClick = { onRightButtonClick?.invoke() }
+            Text(
+                text = title,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = titleLeftPadding, end = titleRightPadding),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                style = titleTextStyle,
             )
+
+            if (rightButtonIcon != null) {
+                ToolbarButton(
+                    icon = rightButtonIcon,
+                    onClick = { onRightButtonClick?.invoke() }
+                )
+            }
         }
     }
 }
@@ -110,7 +107,6 @@ private fun getTitleHorizontalPadding(icon: Painter?): Dp {
 @Composable
 private fun ToolbarButton(
     icon: Painter,
-    iconColor: Color = colorResource(R.color.toolbar_button_icon_color),
     onClick: () -> Unit,
 ) {
     IconButton(
@@ -120,7 +116,6 @@ private fun ToolbarButton(
         Icon(
             painter = icon,
             contentDescription = null,
-            tint = iconColor
         )
     }
 }
@@ -128,43 +123,53 @@ private fun ToolbarButton(
 @Preview
 @Composable
 internal fun ToolbarPreviewWithTitle() {
-    Toolbar(
-        title = "Toolbar"
-    )
+    GamedgeTheme {
+        Toolbar(
+            title = "Toolbar"
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun ToolbarPreviewWithLongTitle() {
-    Toolbar(
-        title = "Toolbar toolbar toolbar toolbar toolbar toolbar toolbar toolbar"
-    )
+    GamedgeTheme {
+        Toolbar(
+            title = "Toolbar toolbar toolbar toolbar toolbar toolbar toolbar toolbar"
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun ToolbarPreviewWithBothIcons() {
-    Toolbar(
-        title = "Toolbar",
-        leftButtonIcon = painterResource(R.drawable.arrow_left),
-        rightButtonIcon = painterResource(R.drawable.magnify)
-    )
+    GamedgeTheme {
+        Toolbar(
+            title = "Toolbar",
+            leftButtonIcon = painterResource(R.drawable.arrow_left),
+            rightButtonIcon = painterResource(R.drawable.magnify)
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun ToolbarPreviewWithLeftIcon() {
-    Toolbar(
-        title = "Toolbar",
-        leftButtonIcon = painterResource(R.drawable.arrow_left),
-    )
+    GamedgeTheme {
+        Toolbar(
+            title = "Toolbar",
+            leftButtonIcon = painterResource(R.drawable.arrow_left),
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun ToolbarPreviewWithRightIcon() {
-    Toolbar(
-        title = "Toolbar",
-        rightButtonIcon = painterResource(R.drawable.magnify)
-    )
+    GamedgeTheme {
+        Toolbar(
+            title = "Toolbar",
+            rightButtonIcon = painterResource(R.drawable.magnify)
+        )
+    }
 }

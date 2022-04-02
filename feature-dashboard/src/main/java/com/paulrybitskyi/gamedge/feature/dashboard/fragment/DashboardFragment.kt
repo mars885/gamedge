@@ -31,6 +31,7 @@ import com.paulrybitskyi.commons.material.utils.setItemColors
 import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Toolbar
 import com.paulrybitskyi.gamedge.feature.dashboard.R
 import com.paulrybitskyi.gamedge.feature.dashboard.databinding.FragmentDashboardBinding
@@ -71,13 +72,15 @@ internal class DashboardFragment : BaseFragment<
 
     private fun initToolbar() = with(viewBinding.toolbar) {
         setContent {
-            ProvideWindowInsets {
-                Toolbar(
-                    title = getString(R.string.dashboard_toolbar_title),
-                    modifier = Modifier.statusBarsPadding(),
-                    rightButtonIcon = painterResource(R.drawable.magnify),
-                    onRightButtonClick = viewModel::onToolbarRightButtonClicked
-                )
+            GamedgeTheme {
+                ProvideWindowInsets {
+                    Toolbar(
+                        title = getString(R.string.dashboard_toolbar_title),
+                        modifier = Modifier.statusBarsPadding(),
+                        rightButtonIcon = painterResource(R.drawable.magnify),
+                        onRightButtonClick = viewModel::onToolbarRightButtonClicked
+                    )
+                }
             }
         }
     }

@@ -27,17 +27,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.sp
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
 @Composable
 fun Info(
@@ -45,10 +41,9 @@ fun Info(
     title: String,
     modifier: Modifier = Modifier,
     iconSize: Dp = dimensionResource(R.dimen.info_view_icon_size),
-    iconColor: Color = colorResource(R.color.info_view_icon_color),
-    titleTextSize: TextUnit = textSizeResource(R.dimen.info_view_title_text_size),
-    titleLineHeight: TextUnit = textSizeResource(R.dimen.info_view_title_line_height),
-    titleTextColor: Color = colorResource(R.color.info_view_title_text_color)
+    iconColor: Color = GamedgeTheme.colors.onBackground,
+    titleTextColor: Color = GamedgeTheme.colors.onBackground,
+    titleTextStyle: TextStyle = GamedgeTheme.typography.subtitle1,
 ) {
     Column(
         modifier = modifier,
@@ -64,25 +59,24 @@ fun Info(
         Text(
             text = title,
             color = titleTextColor,
-            fontSize = titleTextSize,
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center,
-            lineHeight = titleLineHeight,
+            style = titleTextStyle,
         )
     }
 }
 
 @Preview(
     widthDp = 300,
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 internal fun InfoWithSingleLineTitlePreview() {
-    Info(
-        icon = painterResource(R.drawable.heart),
-        title = "Lorem ipsum dolor sit amet",
-    )
+    GamedgeTheme {
+        Info(
+            icon = painterResource(R.drawable.heart),
+            title = "Lorem ipsum dolor sit amet",
+        )
+    }
 }
 
 @Preview(
@@ -91,8 +85,10 @@ internal fun InfoWithSingleLineTitlePreview() {
 )
 @Composable
 internal fun InfoWithMultiLineTitlePreview() {
-    Info(
-        icon = painterResource(R.drawable.heart),
-        title = "Lorem ipsum dolor sit amet\nLorem ipsum dolor sit amet",
-    )
+    GamedgeTheme {
+        Info(
+            icon = painterResource(R.drawable.heart),
+            title = "Lorem ipsum dolor sit amet\nLorem ipsum dolor sit amet",
+        )
+    }
 }

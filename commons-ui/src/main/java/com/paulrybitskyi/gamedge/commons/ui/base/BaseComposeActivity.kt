@@ -29,6 +29,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.base.navigation.Navigator
 import com.paulrybitskyi.gamedge.commons.ui.observeIn
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import javax.inject.Inject
 import kotlinx.coroutines.flow.onEach
 
@@ -63,7 +64,9 @@ abstract class BaseComposeActivity<
     }
 
     private fun onInitUi() {
-        setContent(content = getContent())
+        setContent {
+            GamedgeTheme(content = getContent())
+        }
     }
 
     protected abstract fun getContent(): @Composable () -> Unit

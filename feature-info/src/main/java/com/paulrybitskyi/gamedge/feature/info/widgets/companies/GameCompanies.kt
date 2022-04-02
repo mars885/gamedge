@@ -18,9 +18,7 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.companies
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,20 +28,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -56,7 +52,7 @@ import com.paulrybitskyi.commons.ktx.centerY
 import com.paulrybitskyi.commons.ktx.hasTransparentPixels
 import com.paulrybitskyi.commons.ktx.isOpaque
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.core.utils.height
 import com.paulrybitskyi.gamedge.core.utils.width
 import com.paulrybitskyi.gamedge.feature.info.R
@@ -71,7 +67,6 @@ internal fun GameCompanies(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
-        backgroundColor = colorResource(R.color.game_companies_card_background_color),
         elevation = dimensionResource(R.dimen.game_companies_card_elevation),
     ) {
         Column(
@@ -84,10 +79,8 @@ internal fun GameCompanies(
                 modifier = Modifier
                     .padding(bottom = dimensionResource(R.dimen.game_companies_title_padding_bottom))
                     .padding(horizontal = dimensionResource(R.dimen.game_companies_title_padding)),
-                color = colorResource(R.color.game_companies_title_text_color),
-                fontSize = textSizeResource(R.dimen.game_companies_title_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
+                color = GamedgeTheme.colors.onPrimary,
+                style = GamedgeTheme.typography.h6,
             )
 
             LazyRow(
@@ -127,8 +120,7 @@ private fun GameCompany(
 ) {
     Card(
         onClick = onCompanyClicked,
-        shape = RoundedCornerShape(dimensionResource(R.dimen.game_company_card_corner_radius)),
-        backgroundColor = colorResource(R.color.game_company_card_background_color),
+        backgroundColor = Color.Transparent,
         elevation = dimensionResource(R.dimen.game_company_card_elevation),
     ) {
         Column {
@@ -190,30 +182,29 @@ private fun GameCompanyDetails(
     roles: String,
     containerWidth: Dp,
 ) {
-    Column(
-        modifier = Modifier
-            .width(containerWidth)
-            .background(color = colorResource(R.color.game_company_info_label_background_color))
-            .padding(dimensionResource(R.dimen.game_company_label_padding))
+    Surface(
+        modifier = Modifier.width(containerWidth),
+        color = GamedgeTheme.colors.primaryVariant,
+        contentColor = GamedgeTheme.colors.onSurface,
     ) {
-        Text(
-            text = name,
-            color = colorResource(R.color.game_company_info_label_text_color),
-            fontSize = textSizeResource(R.dimen.game_company_label_text_size),
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Medium,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1,
-        )
-        Text(
-            text = roles,
-            color = colorResource(R.color.game_company_info_label_text_color),
-            fontSize = textSizeResource(R.dimen.game_company_label_text_size),
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Medium,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1,
-        )
+        Column(
+            modifier = Modifier.padding(
+                dimensionResource(R.dimen.game_company_label_padding)
+            ),
+        ) {
+            Text(
+                text = name,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                style = GamedgeTheme.typography.caption,
+            )
+            Text(
+                text = roles,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                style = GamedgeTheme.typography.caption,
+            )
+        }
     }
 }
 
@@ -255,7 +246,7 @@ private class LogoImageTransformation(
     }
 
     private fun Bitmap.calculateFillColor(): Int {
-        if (hasTransparentPixels()) return Color.WHITE
+        if (hasTransparentPixels()) return android.graphics.Color.WHITE
 
         var pixelColor: Int
 
@@ -267,34 +258,36 @@ private class LogoImageTransformation(
             }
         }
 
-        return Color.WHITE
+        return android.graphics.Color.WHITE
     }
 }
 
 @Preview
 @Composable
 internal fun GameCompaniesPreview() {
-    GameCompanies(
-        companies = listOf(
-            GameInfoCompanyModel(
-                id = 1,
-                logoContainerSize = 750 to 400,
-                logoImageSize = 0 to 0,
-                logoUrl = null,
-                websiteUrl = "",
-                name = "FromSoftware",
-                roles = "Main Developer",
+    GamedgeTheme {
+        GameCompanies(
+            companies = listOf(
+                GameInfoCompanyModel(
+                    id = 1,
+                    logoContainerSize = 750 to 400,
+                    logoImageSize = 0 to 0,
+                    logoUrl = null,
+                    websiteUrl = "",
+                    name = "FromSoftware",
+                    roles = "Main Developer",
+                ),
+                GameInfoCompanyModel(
+                    id = 2,
+                    logoContainerSize = 500 to 400,
+                    logoImageSize = 0 to 0,
+                    logoUrl = null,
+                    websiteUrl = "",
+                    name = "Bandai Namco Entertainment",
+                    roles = "Publisher",
+                ),
             ),
-            GameInfoCompanyModel(
-                id = 2,
-                logoContainerSize = 500 to 400,
-                logoImageSize = 0 to 0,
-                logoUrl = null,
-                websiteUrl = "",
-                name = "Bandai Namco Entertainment",
-                roles = "Publisher",
-            ),
-        ),
-        onCompanyClicked = {},
-    )
+            onCompanyClicked = {},
+        )
+    }
 }

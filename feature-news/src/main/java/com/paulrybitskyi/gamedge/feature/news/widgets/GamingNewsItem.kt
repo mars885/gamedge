@@ -21,26 +21,24 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.feature.news.R
 
 @Composable
@@ -55,8 +53,7 @@ internal fun GamingNewsItem(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
-        backgroundColor = colorResource(R.color.gaming_news_item_card_background_color),
-        elevation = dimensionResource(R.dimen.gaming_news_item_card_elevation)
+        elevation = dimensionResource(R.dimen.gaming_news_item_card_elevation),
     ) {
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.gaming_news_item_padding))) {
             if (imageUrl != null) {
@@ -71,20 +68,17 @@ internal fun GamingNewsItem(
             Text(
                 text = title,
                 modifier = Modifier.fillMaxWidth(),
-                color = colorResource(R.color.gaming_news_item_title_text_color),
-                fontSize = textSizeResource(R.dimen.gaming_news_item_title_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium
+                color = GamedgeTheme.colors.onPrimary,
+                style = GamedgeTheme.typography.subtitle2,
             )
             Text(
                 text = lede,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = dimensionResource(R.dimen.gaming_news_item_lede_padding_top)),
-                color = colorResource(R.color.gaming_news_item_lede_text_color),
-                fontSize = textSizeResource(R.dimen.gaming_news_item_lede_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium
+                style = GamedgeTheme.typography.body2.copy(
+                    lineHeight = TextUnit.Unspecified,
+                ),
             )
             GamingNewsItemTimestamp(publicationDate = publicationDate)
         }
@@ -100,8 +94,7 @@ private fun GamingNewsItemImage(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier),
-        shape = RoundedCornerShape(dimensionResource(R.dimen.gaming_news_item_image_card_radius)),
-        backgroundColor = colorResource(R.color.gaming_news_item_image_card_background_color),
+        backgroundColor = Color.Transparent,
         elevation = dimensionResource(R.dimen.gaming_news_item_image_card_elevation)
     ) {
         AsyncImage(
@@ -132,14 +125,10 @@ private fun GamingNewsItemTimestamp(publicationDate: String) {
             modifier = Modifier.padding(
                 end = dimensionResource(R.dimen.gaming_news_item_publication_date_icon_padding)
             ),
-            tint = colorResource(R.color.gaming_news_item_publication_date_text_color)
         )
         Text(
             text = publicationDate,
-            color = colorResource(R.color.gaming_news_item_publication_date_text_color),
-            fontSize = textSizeResource(R.dimen.gaming_news_item_publication_date_text_size),
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Medium
+            style = GamedgeTheme.typography.caption,
         )
     }
 }
@@ -147,23 +136,27 @@ private fun GamingNewsItemTimestamp(publicationDate: String) {
 @Preview
 @Composable
 internal fun GamingNewsItemWithImagePreview() {
-    GamingNewsItem(
-        imageUrl = "url",
-        title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
-        lede = "However, the record for those actively in a game has not been broken yet.",
-        publicationDate = "3 mins ago",
-        onClick = {}
-    )
+    GamedgeTheme {
+        GamingNewsItem(
+            imageUrl = "url",
+            title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
+            lede = "However, the record for those actively in a game has not been broken yet.",
+            publicationDate = "3 mins ago",
+            onClick = {}
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GamingNewsItemWithoutImagePreview() {
-    GamingNewsItem(
-        imageUrl = null,
-        title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
-        lede = "However, the record for those actively in a game has not been broken yet.",
-        publicationDate = "3 mins ago",
-        onClick = {}
-    )
+    GamedgeTheme {
+        GamingNewsItem(
+            imageUrl = null,
+            title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
+            lede = "However, the record for those actively in a game has not been broken yet.",
+            publicationDate = "3 mins ago",
+            onClick = {}
+        )
+    }
 }

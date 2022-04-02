@@ -26,24 +26,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
@@ -54,7 +51,6 @@ internal fun GameScreenshots(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
-        backgroundColor = colorResource(R.color.game_screenshots_card_background_color),
         elevation = dimensionResource(R.dimen.game_screenshots_card_elevation),
     ) {
         Column(
@@ -67,10 +63,8 @@ internal fun GameScreenshots(
                 modifier = Modifier
                     .padding(bottom = dimensionResource(R.dimen.game_screenshots_title_padding_bottom))
                     .padding(horizontal = dimensionResource(R.dimen.game_screenshots_title_padding)),
-                color = colorResource(R.color.game_screenshots_title_text_color),
-                fontSize = textSizeResource(R.dimen.game_screenshots_title_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
+                color = GamedgeTheme.colors.onPrimary,
+                style = GamedgeTheme.typography.h6,
             )
 
             LazyRow(
@@ -108,8 +102,7 @@ private fun GameScreenshot(
     Card(
         onClick = onScreenshotClicked,
         modifier = modifier,
-        shape = RoundedCornerShape(dimensionResource(R.dimen.game_screenshot_card_corner_radius)),
-        backgroundColor = colorResource(R.color.game_screenshot_card_background_color),
+        backgroundColor = Color.Transparent,
         elevation = dimensionResource(R.dimen.game_screenshot_card_elevation),
     ) {
         Box {
@@ -134,21 +127,23 @@ private fun GameScreenshot(
 @Preview
 @Composable
 internal fun GameScreenshotsPreview() {
-    GameScreenshots(
-        screenshots = listOf(
-            GameInfoScreenshotModel(
-                id = "1",
-                url = "",
+    GamedgeTheme {
+        GameScreenshots(
+            screenshots = listOf(
+                GameInfoScreenshotModel(
+                    id = "1",
+                    url = "",
+                ),
+                GameInfoScreenshotModel(
+                    id = "2",
+                    url = "",
+                ),
+                GameInfoScreenshotModel(
+                    id = "3",
+                    url = "",
+                ),
             ),
-            GameInfoScreenshotModel(
-                id = "2",
-                url = "",
-            ),
-            GameInfoScreenshotModel(
-                id = "3",
-                url = "",
-            ),
-        ),
-        onScreenshotClicked = {},
-    )
+            onScreenshotClicked = {},
+        )
+    }
 }

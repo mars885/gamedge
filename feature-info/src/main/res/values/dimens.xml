@@ -20,19 +20,16 @@
 
     <!-- GameVideo -->
     <dimen name="game_video_card_elevation">2dp</dimen>
-    <dimen name="game_video_card_corner_radius">4dp</dimen>
     <dimen name="game_video_play_btn_size">45dp</dimen>
     <dimen name="game_video_play_btn_padding">8dp</dimen>
     <dimen name="game_video_play_btn_background_stroke_width">2dp</dimen>
     <dimen name="game_video_title_padding">10dp</dimen>
-    <dimen name="game_video_title_text_size">14sp</dimen>
 
     <!-- GameVideos -->
     <dimen name="game_videos_card_vertical_padding">15dp</dimen>
     <dimen name="game_videos_card_elevation">2dp</dimen>
     <dimen name="game_videos_title_padding">15dp</dimen>
     <dimen name="game_videos_title_padding_bottom">10dp</dimen>
-    <dimen name="game_videos_title_text_size">18sp</dimen>
     <dimen name="game_videos_horizontal_content_padding">15dp</dimen>
     <dimen name="game_videos_horizontal_arrangement">6dp</dimen>
     <dimen name="game_videos_item_width">268dp</dimen>
@@ -40,14 +37,12 @@
 
     <!-- GameScreenshot -->
     <dimen name="game_screenshot_card_elevation">2dp</dimen>
-    <dimen name="game_screenshot_card_corner_radius">4dp</dimen>
 
     <!-- GameScreenshots -->
     <dimen name="game_screenshots_card_vertical_padding">15dp</dimen>
     <dimen name="game_screenshots_card_elevation">2dp</dimen>
     <dimen name="game_screenshots_title_padding">15dp</dimen>
     <dimen name="game_screenshots_title_padding_bottom">10dp</dimen>
-    <dimen name="game_screenshots_title_text_size">18sp</dimen>
     <dimen name="game_screenshots_horizontal_content_padding">15dp</dimen>
     <dimen name="game_screenshots_horizontal_arrangement">6dp</dimen>
     <dimen name="game_screenshots_item_width">268dp</dimen>
@@ -57,21 +52,15 @@
     <dimen name="game_summary_card_elevation">2dp</dimen>
     <dimen name="game_summary_title_padding">15dp</dimen>
     <dimen name="game_summary_title_padding_bottom">10dp</dimen>
-    <dimen name="game_summary_title_text_size">18sp</dimen>
     <dimen name="game_summary_content_padding">15dp</dimen>
-    <dimen name="game_summary_content_text_size">15sp</dimen>
 
     <!-- GameDetails -->
     <dimen name="game_details_card_elevation">2dp</dimen>
     <dimen name="game_details_container_padding">15dp</dimen>
     <dimen name="game_details_title_padding_bottom">5dp</dimen>
-    <dimen name="game_details_title_text_size">18sp</dimen>
     <dimen name="game_details_category_title_padding_top">10dp</dimen>
-    <dimen name="game_details_category_title_text_size">15sp</dimen>
     <dimen name="game_details_category_value_padding_top">5dp</dimen>
-    <dimen name="game_details_category_value_text_size">14sp</dimen>
     <dimen name="game_details_category_value_line_spacing_extra">3dp</dimen>
-    <dimen name="game_details_category_value_line_height">20sp</dimen>
 
     <!-- GameLinks -->
     <dimen name="game_links_card_elevation">2dp</dimen>
@@ -79,7 +68,6 @@
     <dimen name="game_links_title_padding">10dp</dimen>
     <dimen name="game_links_flow_row_horizontal_spacing">8dp</dimen>
     <dimen name="game_links_flow_row_vertical_spacing">12dp</dimen>
-    <dimen name="game_links_title_text_size">18sp</dimen>
     <dimen name="game_links_item_corner_radius">16dp</dimen>
     <dimen name="game_links_item_elevation">2dp</dimen>
     <dimen name="game_links_item_padding_vertical">6dp</dimen>
@@ -87,20 +75,16 @@
     <dimen name="game_links_item_padding_end">12dp</dimen>
     <dimen name="game_links_item_icon_size">20dp</dimen>
     <dimen name="game_links_item_text_padding_start">6dp</dimen>
-    <dimen name="game_links_item_text_size">14sp</dimen>
 
     <!-- GameCompany -->
     <dimen name="game_company_card_elevation">2dp</dimen>
-    <dimen name="game_company_card_corner_radius">4dp</dimen>
     <dimen name="game_company_label_padding">10dp</dimen>
-    <dimen name="game_company_label_text_size">14sp</dimen>
 
     <!-- GameCompanies -->
     <dimen name="game_companies_card_vertical_padding">15dp</dimen>
     <dimen name="game_companies_card_elevation">2dp</dimen>
     <dimen name="game_companies_title_padding">15dp</dimen>
     <dimen name="game_companies_title_padding_bottom">10dp</dimen>
-    <dimen name="game_companies_title_text_size">18sp</dimen>
     <dimen name="game_companies_horizontal_content_padding">15dp</dimen>
     <dimen name="game_companies_horizontal_arrangement">6dp</dimen>
 
@@ -118,7 +102,6 @@
     <dimen name="game_info_header_page_indicator_vertical_padding">7dp</dimen>
     <dimen name="game_info_header_page_indicator_horizontal_padding">8dp</dimen>
     <dimen name="game_info_header_page_indicator_background_radius">20dp</dimen>
-    <dimen name="game_info_header_page_indicator_text_size">15sp</dimen>
     <dimen name="game_info_header_page_indicator_transition_delta_x">60dp</dimen>
     <dimen name="game_info_header_backdrop_elevation_expanded">2dp</dimen>
     <dimen name="game_info_header_backdrop_elevation_collapsed">4dp</dimen>
@@ -138,19 +121,14 @@
     <dimen name="game_info_header_first_title_margin_end_collapsed">25dp</dimen>
     <dimen name="game_info_header_second_title_margin_end">15dp</dimen>
     <dimen name="game_info_header_title_margin_start">15dp</dimen>
-    <dimen name="game_info_header_title_text_size">18sp</dimen>
     <dimen name="game_info_header_release_date_margin_top">10dp</dimen>
     <dimen name="game_info_header_release_date_horizontal_margin">15dp</dimen>
-    <dimen name="game_info_header_release_date_text_size">15sp</dimen>
     <dimen name="game_info_header_developer_name_horizontal_margin">15dp</dimen>
-    <dimen name="game_info_header_developer_name_text_size">15sp</dimen>
     <dimen name="game_info_header_secondary_text_transition_delta_x">-8dp</dimen>
     <dimen name="game_info_header_bottom_barrier_margin">20dp</dimen>
     <dimen name="game_info_header_info_view_vertical_margin">15dp</dimen>
     <dimen name="game_info_header_info_view_icon_size">35dp</dimen>
-    <dimen name="game_info_header_info_view_title_text_size">14sp</dimen>
     <dimen name="game_info_info_view_horizontal_padding">30dp</dimen>
-    <dimen name="game_info_info_view_title_text_size">17sp</dimen>
     <dimen name="game_info_vertical_arrangement_spacing">15dp</dimen>
     <dimen name="game_info_company_logo_view_width">268dp</dimen>
     <dimen name="game_info_company_logo_view_height">150dp</dimen>

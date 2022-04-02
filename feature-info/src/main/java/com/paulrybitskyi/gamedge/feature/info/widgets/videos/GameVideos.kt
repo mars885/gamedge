@@ -31,29 +31,29 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.theme.darkScrim
 import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
@@ -64,7 +64,6 @@ internal fun GameVideos(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
-        backgroundColor = colorResource(R.color.game_videos_card_background_color),
         elevation = dimensionResource(R.dimen.game_videos_card_elevation),
     ) {
         Column(
@@ -77,10 +76,8 @@ internal fun GameVideos(
                 modifier = Modifier
                     .padding(bottom = dimensionResource(R.dimen.game_videos_title_padding_bottom))
                     .padding(horizontal = dimensionResource(R.dimen.game_videos_title_padding)),
-                color = colorResource(R.color.game_videos_title_text_color),
-                fontSize = textSizeResource(R.dimen.game_videos_title_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
+                color = GamedgeTheme.colors.onPrimary,
+                style = GamedgeTheme.typography.h6,
             )
 
             LazyRow(
@@ -116,8 +113,8 @@ private fun GameVideo(
     Card(
         onClick = onVideoClicked,
         modifier = modifier,
-        shape = RoundedCornerShape(dimensionResource(R.dimen.game_video_card_corner_radius)),
-        backgroundColor = colorResource(R.color.game_video_card_background_color),
+        backgroundColor = Color.Transparent,
+        contentColor = GamedgeTheme.colors.onPrimary,
         elevation = dimensionResource(R.dimen.game_video_card_elevation),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -148,31 +145,32 @@ private fun GameVideo(
                         .size(dimensionResource(R.dimen.game_video_play_btn_size))
                         .border(
                             width = dimensionResource(R.dimen.game_video_play_btn_background_stroke_width),
-                            color = colorResource(R.color.game_video_play_btn_background_stroke_color),
+                            color = LocalContentColor.current,
                             shape = CircleShape,
                         )
                         .background(
-                            color = colorResource(R.color.game_video_play_btn_background_solid_color),
+                            color = GamedgeTheme.colors.darkScrim,
                             shape = CircleShape,
                         )
                         .padding(dimensionResource(R.dimen.game_video_play_btn_padding)),
-                    tint = colorResource(R.color.game_video_play_btn_color),
                 )
             }
 
-            Text(
-                text = title,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = colorResource(R.color.game_video_title_background_color))
-                    .padding(dimensionResource(R.dimen.game_video_title_padding)),
-                color = colorResource(R.color.game_video_title_text_color),
-                fontSize = textSizeResource(R.dimen.game_video_title_text_size),
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-            )
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = GamedgeTheme.colors.primaryVariant,
+                contentColor = GamedgeTheme.colors.onSurface,
+            ) {
+                Text(
+                    text = title,
+                    modifier = Modifier.padding(
+                        dimensionResource(R.dimen.game_video_title_padding)
+                    ),
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    style = GamedgeTheme.typography.caption,
+                )
+            }
         }
     }
 }
@@ -180,21 +178,23 @@ private fun GameVideo(
 @Preview
 @Composable
 internal fun GameVideosPreview() {
-    GameVideos(
-        videos = listOf(
-            GameInfoVideoModel(
-                id = "1",
-                thumbnailUrl = "",
-                videoUrl = "",
-                title = "Announcement Trailer",
+    GamedgeTheme {
+        GameVideos(
+            videos = listOf(
+                GameInfoVideoModel(
+                    id = "1",
+                    thumbnailUrl = "",
+                    videoUrl = "",
+                    title = "Announcement Trailer",
+                ),
+                GameInfoVideoModel(
+                    id = "2",
+                    thumbnailUrl = "",
+                    videoUrl = "",
+                    title = "Gameplay Trailer",
+                ),
             ),
-            GameInfoVideoModel(
-                id = "2",
-                thumbnailUrl = "",
-                videoUrl = "",
-                title = "Gameplay Trailer",
-            ),
-        ),
-        onVideClicked = {},
-    )
+            onVideClicked = {},
+        )
+    }
 }

@@ -27,12 +27,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.navigationBarsPadding
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
@@ -95,7 +95,7 @@ internal fun GameInfo(
 private fun GameInfoLoadingState(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier,
-        color = colorResource(R.color.colorProgressBar)
+        color = GamedgeTheme.colors.secondary,
     )
 }
 
@@ -107,8 +107,6 @@ private fun GameInfoEmptyState(modifier: Modifier) {
         modifier = modifier.padding(
             horizontal = dimensionResource(R.dimen.game_info_info_view_horizontal_padding)
         ),
-        iconColor = colorResource(R.color.colorInfoView),
-        titleTextColor = colorResource(R.color.colorInfoView),
     )
 }
 
@@ -330,21 +328,23 @@ private fun LazyListScope.GameRelatedGamesItem(
 @Preview(heightDp = 2000)
 @Composable
 internal fun GameInfoSuccessStateWithMaxUiElementsPreview() {
-    GameInfo(
-        uiState = GameInfoUiState(
-            isLoading = false,
-            game = buildFakeGameModel(),
-        ),
-        onArtworkClicked = {},
-        onBackButtonClicked = {},
-        onCoverClicked = {},
-        onLikeButtonClicked = {},
-        onVideoClicked = {},
-        onScreenshotClicked = {},
-        onLinkClicked = {},
-        onCompanyClicked = {},
-        onRelatedGameClicked = {},
-    )
+    GamedgeTheme {
+        GameInfo(
+            uiState = GameInfoUiState(
+                isLoading = false,
+                game = buildFakeGameModel(),
+            ),
+            onArtworkClicked = {},
+            onBackButtonClicked = {},
+            onCoverClicked = {},
+            onLikeButtonClicked = {},
+            onVideoClicked = {},
+            onScreenshotClicked = {},
+            onLinkClicked = {},
+            onCompanyClicked = {},
+            onRelatedGameClicked = {},
+        )
+    }
 }
 
 @Preview
@@ -367,61 +367,67 @@ internal fun GameInfoSuccessStateWithMinUiElementsPreview() {
         similarGames = null,
     )
 
-    GameInfo(
-        uiState = GameInfoUiState(
-            isLoading = false,
-            game = strippedGame,
-        ),
-        onArtworkClicked = {},
-        onBackButtonClicked = {},
-        onCoverClicked = {},
-        onLikeButtonClicked = {},
-        onVideoClicked = {},
-        onScreenshotClicked = {},
-        onLinkClicked = {},
-        onCompanyClicked = {},
-        onRelatedGameClicked = {},
-    )
+    GamedgeTheme {
+        GameInfo(
+            uiState = GameInfoUiState(
+                isLoading = false,
+                game = strippedGame,
+            ),
+            onArtworkClicked = {},
+            onBackButtonClicked = {},
+            onCoverClicked = {},
+            onLikeButtonClicked = {},
+            onVideoClicked = {},
+            onScreenshotClicked = {},
+            onLinkClicked = {},
+            onCompanyClicked = {},
+            onRelatedGameClicked = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GameInfoEmptyStatePreview() {
-    GameInfo(
-        uiState = GameInfoUiState(
-            isLoading = false,
-            game = null,
-        ),
-        onArtworkClicked = {},
-        onBackButtonClicked = {},
-        onCoverClicked = {},
-        onLikeButtonClicked = {},
-        onVideoClicked = {},
-        onScreenshotClicked = {},
-        onLinkClicked = {},
-        onCompanyClicked = {},
-        onRelatedGameClicked = {},
-    )
+    GamedgeTheme {
+        GameInfo(
+            uiState = GameInfoUiState(
+                isLoading = false,
+                game = null,
+            ),
+            onArtworkClicked = {},
+            onBackButtonClicked = {},
+            onCoverClicked = {},
+            onLikeButtonClicked = {},
+            onVideoClicked = {},
+            onScreenshotClicked = {},
+            onLinkClicked = {},
+            onCompanyClicked = {},
+            onRelatedGameClicked = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GameInfoLoadingStatePreview() {
-    GameInfo(
-        uiState = GameInfoUiState(
-            isLoading = true,
-            game = null,
-        ),
-        onArtworkClicked = {},
-        onBackButtonClicked = {},
-        onCoverClicked = {},
-        onLikeButtonClicked = {},
-        onVideoClicked = {},
-        onScreenshotClicked = {},
-        onLinkClicked = {},
-        onCompanyClicked = {},
-        onRelatedGameClicked = {},
-    )
+    GamedgeTheme {
+        GameInfo(
+            uiState = GameInfoUiState(
+                isLoading = true,
+                game = null,
+            ),
+            onArtworkClicked = {},
+            onBackButtonClicked = {},
+            onCoverClicked = {},
+            onLikeButtonClicked = {},
+            onVideoClicked = {},
+            onScreenshotClicked = {},
+            onLinkClicked = {},
+            onCompanyClicked = {},
+            onRelatedGameClicked = {},
+        )
+    }
 }
 
 private fun buildFakeGameModel(): GameInfoModel {

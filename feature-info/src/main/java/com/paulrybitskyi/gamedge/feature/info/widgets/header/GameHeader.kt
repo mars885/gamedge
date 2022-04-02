@@ -47,16 +47,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -69,7 +67,9 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.clickable
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.theme.lightScrim
+import com.paulrybitskyi.gamedge.commons.ui.theme.subtitle3
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.feature.info.R
@@ -125,11 +125,7 @@ internal fun GameHeader(
         Box(
             Modifier
                 .layoutId(CONSTRAINT_ID_ARTWORKS_SCRIM)
-                .background(
-                    color = colorResource(
-                        R.color.game_info_header_artworks_scrim_bg_color_expanded
-                    ),
-                ),
+                .background(Color.Transparent),
         )
 
         Icon(
@@ -148,13 +144,11 @@ internal fun GameHeader(
                 )
                 .padding(dimensionResource(R.dimen.game_info_header_back_button_drawable_bg_padding))
                 .background(
-                    color = colorResource(
-                        R.color.game_info_header_back_button_drawable_middleground_color
-                    ),
+                    color = GamedgeTheme.colors.lightScrim,
                     shape = CircleShape,
                 )
                 .padding(dimensionResource(R.dimen.game_info_header_back_button_drawable_fog_padding)),
-            tint = colorResource(R.color.game_info_header_back_button_icon_color),
+            tint = GamedgeTheme.colors.onPrimary,
         )
 
         if (isPageIndicatorVisible) {
@@ -168,7 +162,7 @@ internal fun GameHeader(
                     .layoutId(CONSTRAINT_ID_PAGE_INDICATOR)
                     .statusBarsPadding()
                     .background(
-                        color = colorResource(R.color.game_info_header_page_indicator_background_color),
+                        color = GamedgeTheme.colors.lightScrim,
                         shape = RoundedCornerShape(
                             dimensionResource(R.dimen.game_info_header_page_indicator_background_radius),
                         )
@@ -177,8 +171,8 @@ internal fun GameHeader(
                         vertical = dimensionResource(R.dimen.game_info_header_page_indicator_vertical_padding),
                         horizontal = dimensionResource(R.dimen.game_info_header_page_indicator_horizontal_padding),
                     ),
-                color = colorResource(R.color.game_info_header_page_indicator_text_color),
-                fontSize = textSizeResource(R.dimen.game_info_header_page_indicator_text_size),
+                color = GamedgeTheme.colors.onPrimary,
+                style = GamedgeTheme.typography.subtitle3,
             )
         }
 
@@ -191,7 +185,7 @@ internal fun GameHeader(
                     clip = false,
                 )
                 .background(
-                    color = colorResource(R.color.game_info_header_backdrop_background_color),
+                    color = GamedgeTheme.colors.surface,
                     shape = RectangleShape,
                 )
                 .clip(RectangleShape),
@@ -213,7 +207,7 @@ internal fun GameHeader(
         FloatingActionButton(
             onClick = onLikeButtonClicked,
             modifier = Modifier.layoutId(CONSTRAINT_ID_LIKE_BUTTON),
-            backgroundColor = colorResource(R.color.game_info_header_like_btn_color),
+            backgroundColor = GamedgeTheme.colors.secondary,
         ) {
             // Animated selector drawables are not currently supported by the Jetpack Compose.
             // https://issuetracker.google.com/issues/212418566
@@ -230,17 +224,14 @@ internal fun GameHeader(
                 modifier = Modifier.size(
                     dimensionResource(R.dimen.game_info_header_like_btn_max_image_size),
                 ),
-                tint = colorResource(R.color.game_info_header_like_btn_icon_color),
+                tint = GamedgeTheme.colors.onSecondary,
             )
         }
 
         Text(
             text = headerInfo.title,
             modifier = Modifier.layoutId(CONSTRAINT_ID_FIRST_TITLE),
-            color = colorResource(R.color.game_info_header_title_text_color),
-            fontSize = textSizeResource(R.dimen.game_info_header_title_text_size),
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Medium,
+            color = GamedgeTheme.colors.onPrimary,
             maxLines = 1,
             onTextLayout = { textLayoutResult ->
                 if (!textLayoutResult.hasVisualOverflow) {
@@ -254,6 +245,7 @@ internal fun GameHeader(
                     isSecondTitleVisible = true
                 }
             },
+            style = GamedgeTheme.typography.h6,
         )
 
         Box(Modifier.layoutId(CONSTRAINT_ID_SECOND_TITLE)) {
@@ -262,12 +254,10 @@ internal fun GameHeader(
                 // is implemented (includeFontPadding="false" in XML)
                 Text(
                     text = secondTitleText,
-                    color = colorResource(R.color.game_info_header_title_text_color),
-                    fontSize = textSizeResource(R.dimen.game_info_header_title_text_size),
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Medium,
+                    color = GamedgeTheme.colors.onPrimary,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
+                    style = GamedgeTheme.typography.h6,
                 )
             }
         }
@@ -275,20 +265,16 @@ internal fun GameHeader(
         Text(
             text = headerInfo.releaseDate,
             modifier = Modifier.layoutId(CONSTRAINT_ID_RELEASE_DATE),
-            color = colorResource(R.color.game_info_header_release_date_text_color),
-            fontSize = textSizeResource(R.dimen.game_info_header_release_date_text_size),
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Medium,
+            color = GamedgeTheme.colors.onSurface,
+            style = GamedgeTheme.typography.subtitle3,
         )
 
         Box(Modifier.layoutId(CONSTRAINT_ID_DEVELOPER_NAME)) {
             if (headerInfo.hasDeveloperName) {
                 Text(
                     text = checkNotNull(headerInfo.developerName),
-                    color = colorResource(R.color.game_info_header_developer_name_text_color),
-                    fontSize = textSizeResource(R.dimen.game_info_header_developer_name_text_size),
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Medium,
+                    color = GamedgeTheme.colors.onSurface,
+                    style = GamedgeTheme.typography.subtitle3,
                 )
             }
         }
@@ -298,36 +284,28 @@ internal fun GameHeader(
             title = headerInfo.rating,
             modifier = Modifier.layoutId(CONSTRAINT_ID_RATING),
             iconSize = dimensionResource(R.dimen.game_info_header_info_view_icon_size),
-            iconColor = colorResource(R.color.game_info_header_info_view_icon_color),
-            titleTextSize = textSizeResource(R.dimen.game_info_header_info_view_title_text_size),
-            titleTextColor = colorResource(R.color.game_info_header_info_view_title_color),
+            titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.account_heart_outline),
             title = headerInfo.likeCount,
             modifier = Modifier.layoutId(CONSTRAINT_ID_LIKE_COUNT),
             iconSize = dimensionResource(R.dimen.game_info_header_info_view_icon_size),
-            iconColor = colorResource(R.color.game_info_header_info_view_icon_color),
-            titleTextSize = textSizeResource(R.dimen.game_info_header_info_view_title_text_size),
-            titleTextColor = colorResource(R.color.game_info_header_info_view_title_color),
+            titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.age_rating_outline),
             title = headerInfo.ageRating,
             modifier = Modifier.layoutId(CONSTRAINT_ID_AGE_RATING),
             iconSize = dimensionResource(R.dimen.game_info_header_info_view_icon_size),
-            iconColor = colorResource(R.color.game_info_header_info_view_icon_color),
-            titleTextSize = textSizeResource(R.dimen.game_info_header_info_view_title_text_size),
-            titleTextColor = colorResource(R.color.game_info_header_info_view_title_color),
+            titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.shape_outline),
             title = headerInfo.gameCategory,
             modifier = Modifier.layoutId(CONSTRAINT_ID_GAME_CATEGORY),
             iconSize = dimensionResource(R.dimen.game_info_header_info_view_icon_size),
-            iconColor = colorResource(R.color.game_info_header_info_view_icon_color),
-            titleTextSize = textSizeResource(R.dimen.game_info_header_info_view_title_text_size),
-            titleTextColor = colorResource(R.color.game_info_header_info_view_title_color),
+            titleTextStyle = GamedgeTheme.typography.caption,
         )
     }
 }
@@ -530,22 +508,24 @@ private fun GameArtwork(
 @Preview
 @Composable
 internal fun GameHeaderPreview() {
-    GameHeader(
-        headerInfo = GameInfoHeaderModel(
-            artworks = listOf(GameArtworkModel.DefaultImage),
-            isLiked = true,
-            coverImageUrl = null,
-            title = "Elden Ring",
-            releaseDate = "Feb 25, 2022 (in a month)",
-            developerName = "FromSoftware",
-            rating = "N/A",
-            likeCount = "92",
-            ageRating = "N/A",
-            gameCategory = "Main",
-        ),
-        onArtworkClicked = {},
-        onBackButtonClicked = {},
-        onCoverClicked = {},
-        onLikeButtonClicked = {},
-    )
+    GamedgeTheme {
+        GameHeader(
+            headerInfo = GameInfoHeaderModel(
+                artworks = listOf(GameArtworkModel.DefaultImage),
+                isLiked = true,
+                coverImageUrl = null,
+                title = "Elden Ring",
+                releaseDate = "Feb 25, 2022 (in a month)",
+                developerName = "FromSoftware",
+                rating = "N/A",
+                likeCount = "92",
+                ageRating = "N/A",
+                gameCategory = "Main",
+            ),
+            onArtworkClicked = {},
+            onBackButtonClicked = {},
+            onCoverClicked = {},
+            onLikeButtonClicked = {},
+        )
+    }
 }

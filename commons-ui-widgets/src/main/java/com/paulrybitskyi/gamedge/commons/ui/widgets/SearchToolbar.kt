@@ -20,7 +20,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,8 +30,10 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.LocalContentColor
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,17 +43,14 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
 private const val CLEAR_BUTTON_ANIMATION_DURATION = 100
 
@@ -61,58 +59,58 @@ fun SearchToolbar(
     queryText: String,
     placeholderText: String,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = colorResource(R.color.toolbar_background_color),
-    titleTextColor: Color = colorResource(R.color.toolbar_title_text_color),
-    iconColor: Color = colorResource(R.color.toolbar_button_icon_color),
-    cursorColor: Color = colorResource(R.color.colorAccent),
-    titleTextSize: TextUnit = textSizeResource(R.dimen.search_toolbar_query_input_text_size),
+    backgroundColor: Color = GamedgeTheme.colors.primary,
+    contentColor: Color = contentColorFor(backgroundColor),
+    titleTextStyle: TextStyle = GamedgeTheme.typography.h5,
+    cursorColor: Color = GamedgeTheme.colors.secondary,
     focusRequester: FocusRequester = remember { FocusRequester() },
     onQueryChanged: ((query: String) -> Unit)? = null,
     onSearchActionRequested: ((query: String) -> Unit)? = null,
     onBackButtonClicked: (() -> Unit)? = null,
     onClearButtonClicked: (() -> Unit)? = null,
 ) {
-    Row(
+    Surface(
         modifier = Modifier
-            .background(backgroundColor)
             .fillMaxWidth()
             .then(modifier)
             .height(dimensionResource(R.dimen.toolbar_height)),
-        verticalAlignment = Alignment.CenterVertically,
+        color = backgroundColor,
+        contentColor = contentColor,
     ) {
-        SearchToolbarButton(
-            icon = painterResource(R.drawable.arrow_left),
-            iconColor = iconColor,
-            onClick = { onBackButtonClicked?.invoke() },
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            SearchToolbarButton(
+                icon = painterResource(R.drawable.arrow_left),
+                onClick = { onBackButtonClicked?.invoke() },
+            )
 
-        SearchToolbarInput(
-            queryText = queryText,
-            placeholderText = placeholderText,
-            focusRequester = focusRequester,
-            modifier = Modifier.weight(1f),
-            titleTextColor = titleTextColor,
-            cursorColor = cursorColor,
-            titleTextSize = titleTextSize,
-            onQueryChanged = { onQueryChanged?.invoke(it) },
-            onSearchActionRequested = onSearchActionRequested,
-        )
+            SearchToolbarInput(
+                queryText = queryText,
+                placeholderText = placeholderText,
+                focusRequester = focusRequester,
+                modifier = Modifier.weight(1f),
+                titleTextStyle = titleTextStyle,
+                cursorColor = cursorColor,
+                onQueryChanged = { onQueryChanged?.invoke(it) },
+                onSearchActionRequested = onSearchActionRequested,
+            )
 
-        SearchToolbarClearButton(
-            isVisible = queryText.isNotEmpty(),
-            iconColor = iconColor,
-            onClearButtonClicked = {
-                focusRequester.requestFocus()
-                onClearButtonClicked?.invoke()
-            }
-        )
+            SearchToolbarClearButton(
+                isVisible = queryText.isNotEmpty(),
+                onClearButtonClicked = {
+                    focusRequester.requestFocus()
+                    onClearButtonClicked?.invoke()
+                }
+            )
+        }
     }
 }
 
 @Composable
 private fun SearchToolbarButton(
     icon: Painter,
-    iconColor: Color,
     onClick: () -> Unit,
 ) {
     IconButton(
@@ -122,7 +120,6 @@ private fun SearchToolbarButton(
         Icon(
             painter = icon,
             contentDescription = null,
-            tint = iconColor
         )
     }
 }
@@ -133,9 +130,8 @@ private fun SearchToolbarInput(
     placeholderText: String,
     focusRequester: FocusRequester,
     modifier: Modifier,
-    titleTextColor: Color,
+    titleTextStyle: TextStyle,
     cursorColor: Color,
-    titleTextSize: TextUnit,
     onQueryChanged: (query: String) -> Unit,
     onSearchActionRequested: ((query: String) -> Unit)?,
 ) {
@@ -148,12 +144,7 @@ private fun SearchToolbarInput(
         modifier = modifier
             .padding(horizontal = dimensionResource(R.dimen.search_toolbar_query_input_horizontal_padding))
             .focusRequester(focusRequester),
-        textStyle = LocalTextStyle.current.copy(
-            color = titleTextColor,
-            fontSize = titleTextSize,
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Medium,
-        ),
+        textStyle = titleTextStyle.copy(color = LocalContentColor.current),
         keyboardOptions = KeyboardOptions(
             capitalization = KeyboardCapitalization.Words,
             autoCorrect = false,
@@ -168,12 +159,9 @@ private fun SearchToolbarInput(
         if (queryText.isEmpty()) {
             Text(
                 text = placeholderText,
-                color = titleTextColor,
-                fontSize = titleTextSize,
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
+                style = titleTextStyle,
             )
         }
 
@@ -184,7 +172,6 @@ private fun SearchToolbarInput(
 @Composable
 private fun SearchToolbarClearButton(
     isVisible: Boolean,
-    iconColor: Color,
     onClearButtonClicked: () -> Unit,
 ) {
     AnimatedVisibility(
@@ -200,7 +187,6 @@ private fun SearchToolbarClearButton(
     ) {
         SearchToolbarButton(
             icon = painterResource(R.drawable.close),
-            iconColor = iconColor,
             onClick = onClearButtonClicked,
         )
     }
@@ -209,17 +195,21 @@ private fun SearchToolbarClearButton(
 @Preview
 @Composable
 internal fun SearchToolbarWithQueryPreview() {
-    SearchToolbar(
-        queryText = "God of War",
-        placeholderText = "Search games",
-    )
+    GamedgeTheme {
+        SearchToolbar(
+            queryText = "God of War",
+            placeholderText = "Search games",
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun SearchToolbarWithoutQueryPreview() {
-    SearchToolbar(
-        queryText = "",
-        placeholderText = "Search games",
-    )
+    GamedgeTheme {
+        SearchToolbar(
+            queryText = "",
+            placeholderText = "Search games",
+        )
+    }
 }

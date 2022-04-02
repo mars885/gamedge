@@ -25,10 +25,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
@@ -62,7 +62,7 @@ fun Games(
 private fun GamesLoadingState(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier,
-        color = colorResource(R.color.colorProgressBar)
+        color = GamedgeTheme.colors.secondary,
     )
 }
 
@@ -77,8 +77,6 @@ private fun GamesEmptyState(
         modifier = modifier.padding(
             horizontal = dimensionResource(R.dimen.games_info_view_horizontal_padding)
         ),
-        iconColor = colorResource(R.color.colorInfoView),
-        titleTextColor = colorResource(R.color.colorInfoView)
     )
 }
 
@@ -155,44 +153,50 @@ internal fun GamesSuccessStatePreview() {
         )
     )
 
-    Games(
-        uiState = GamesUiState(
-            isLoading = false,
-            infoIconId = 0,
-            infoTitle = "",
-            games = games,
-        ),
-        onGameClicked = {},
-        onBottomReached = {},
-    )
+    GamedgeTheme {
+        Games(
+            uiState = GamesUiState(
+                isLoading = false,
+                infoIconId = 0,
+                infoTitle = "",
+                games = games,
+            ),
+            onGameClicked = {},
+            onBottomReached = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GamesEmptyStatePreview() {
-    Games(
-        uiState = GamesUiState(
-            isLoading = false,
-            infoIconId = R.drawable.gamepad_variant_outline,
-            infoTitle = "No Games\nNo Games",
-            games = emptyList(),
-        ),
-        onGameClicked = {},
-        onBottomReached = {},
-    )
+    GamedgeTheme {
+        Games(
+            uiState = GamesUiState(
+                isLoading = false,
+                infoIconId = R.drawable.gamepad_variant_outline,
+                infoTitle = "No Games\nNo Games",
+                games = emptyList(),
+            ),
+            onGameClicked = {},
+            onBottomReached = {},
+        )
+    }
 }
 
 @Preview
 @Composable
 internal fun GamesLoadingStatePreview() {
-    Games(
-        uiState = GamesUiState(
-            isLoading = true,
-            infoIconId = 0,
-            infoTitle = "",
-            games = emptyList(),
-        ),
-        onGameClicked = {},
-        onBottomReached = {},
-    )
+    GamedgeTheme {
+        Games(
+            uiState = GamesUiState(
+                isLoading = true,
+                infoIconId = 0,
+                infoTitle = "",
+                games = emptyList(),
+            ),
+            onGameClicked = {},
+            onBottomReached = {},
+        )
+    }
 }

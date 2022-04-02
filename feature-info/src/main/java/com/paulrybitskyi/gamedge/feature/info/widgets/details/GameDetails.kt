@@ -24,13 +24,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.paulrybitskyi.gamedge.commons.ui.textSizeResource
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.theme.subtitle3
 import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
@@ -38,7 +36,6 @@ internal fun GameDetails(details: GameInfoDetailsModel) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
-        backgroundColor = colorResource(R.color.game_details_card_background_color),
         elevation = dimensionResource(R.dimen.game_details_card_elevation),
     ) {
         Column(
@@ -80,10 +77,8 @@ private fun GameDetailsTitle(modifier: Modifier) {
     Text(
         text = stringResource(R.string.game_details_title),
         modifier = modifier,
-        color = colorResource(R.color.game_details_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_title_text_size),
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Medium,
+        color = GamedgeTheme.colors.onPrimary,
+        style = GamedgeTheme.typography.h6,
     )
 }
 
@@ -92,17 +87,13 @@ private fun GameDetailsGenresSection(genres: String) {
     Text(
         text = stringResource(R.string.game_details_genres_title),
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
-        color = colorResource(R.color.game_details_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_category_title_text_size),
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Medium,
+        color = GamedgeTheme.colors.onPrimary,
+        style = GamedgeTheme.typography.subtitle3,
     )
     Text(
         text = genres,
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
-        color = colorResource(R.color.game_details_category_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_category_value_text_size),
-        lineHeight = textSizeResource(R.dimen.game_details_category_value_line_height),
+        style = GamedgeTheme.typography.body2,
     )
 }
 
@@ -111,17 +102,13 @@ private fun GameDetailsPlatformsSection(platforms: String) {
     Text(
         text = stringResource(R.string.game_details_platforms_title),
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
-        color = colorResource(R.color.game_details_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_category_title_text_size),
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Medium,
+        color = GamedgeTheme.colors.onPrimary,
+        style = GamedgeTheme.typography.subtitle3,
     )
     Text(
         text = platforms,
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
-        color = colorResource(R.color.game_details_category_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_category_value_text_size),
-        lineHeight = textSizeResource(R.dimen.game_details_category_value_line_height),
+        style = GamedgeTheme.typography.body2,
     )
 }
 
@@ -130,17 +117,13 @@ private fun GameDetailsModesSection(modes: String) {
     Text(
         text = stringResource(R.string.game_details_modes_title),
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
-        color = colorResource(R.color.game_details_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_category_title_text_size),
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Medium,
+        color = GamedgeTheme.colors.onPrimary,
+        style = GamedgeTheme.typography.subtitle3,
     )
     Text(
         text = modes,
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
-        color = colorResource(R.color.game_details_category_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_category_value_text_size),
-        lineHeight = textSizeResource(R.dimen.game_details_category_value_line_height),
+        style = GamedgeTheme.typography.body2,
     )
 }
 
@@ -149,17 +132,13 @@ private fun GameDetailsPlayerPerspectivesSection(playerPerspectives: String) {
     Text(
         text = stringResource(R.string.game_details_player_perspectives_title),
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
-        color = colorResource(R.color.game_details_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_category_title_text_size),
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Medium,
+        color = GamedgeTheme.colors.onPrimary,
+        style = GamedgeTheme.typography.subtitle3,
     )
     Text(
         text = playerPerspectives,
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
-        color = colorResource(R.color.game_details_category_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_category_value_text_size),
-        lineHeight = textSizeResource(R.dimen.game_details_category_value_line_height),
+        style = GamedgeTheme.typography.body2,
     )
 }
 
@@ -168,30 +147,28 @@ private fun GameDetailsThemesSection(themes: String) {
     Text(
         text = stringResource(R.string.game_details_themes_title),
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
-        color = colorResource(R.color.game_details_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_category_title_text_size),
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Medium,
+        color = GamedgeTheme.colors.onPrimary,
+        style = GamedgeTheme.typography.subtitle3,
     )
     Text(
         text = themes,
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
-        color = colorResource(R.color.game_details_category_title_text_color),
-        fontSize = textSizeResource(R.dimen.game_details_category_value_text_size),
-        lineHeight = textSizeResource(R.dimen.game_details_category_value_line_height),
+        style = GamedgeTheme.typography.body2,
     )
 }
 
 @Composable
 @Preview
 internal fun GameDetailsPreview() {
-    GameDetails(
-        details = GameInfoDetailsModel(
-            genresText = "Adventure • Shooter • Role-playing (RPG)",
-            platformsText = "PC • PS4 • XONE • PS5 • Series X • Stadia",
-            modesText = "Single Player • Multiplayer",
-            playerPerspectivesText = "First person • Third person",
-            themesText = "Action • Science Fiction • Horror • Survival",
-        ),
-    )
+    GamedgeTheme {
+        GameDetails(
+            details = GameInfoDetailsModel(
+                genresText = "Adventure • Shooter • Role-playing (RPG)",
+                platformsText = "PC • PS4 • XONE • PS5 • Series X • Stadia",
+                modesText = "Single Player • Multiplayer",
+                playerPerspectivesText = "First person • Third person",
+                themesText = "Action • Science Fiction • Horror • Survival",
+            ),
+        )
+    }
 }
