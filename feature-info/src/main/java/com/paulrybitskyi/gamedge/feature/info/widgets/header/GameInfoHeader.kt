@@ -38,6 +38,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -105,8 +106,12 @@ internal fun GameInfoHeader(
     val artworks = headerInfo.artworks
     val isPageIndicatorVisible by remember(artworks) { mutableStateOf(artworks.size > 1) }
     var selectedArtworkPage by remember { mutableStateOf(0) }
-    var isSecondTitleVisible by remember { mutableStateOf(false) }
     var secondTitleText by remember { mutableStateOf("") }
+    val isSecondTitleVisible by remember {
+        derivedStateOf {
+            secondTitleText.isNotEmpty()
+        }
+    }
 
     ConstraintLayout(
         constraintSet = constructExpandedConstraintSet(),
@@ -234,15 +239,12 @@ internal fun GameInfoHeader(
             color = GamedgeTheme.colors.onPrimary,
             maxLines = 1,
             onTextLayout = { textLayoutResult ->
-                if (!textLayoutResult.hasVisualOverflow) {
-                    isSecondTitleVisible = false
-                } else {
+                if (textLayoutResult.hasVisualOverflow) {
                     val firstTitleWidth = textLayoutResult.size.width.toFloat()
                     val firstTitleOffset = Offset(firstTitleWidth, 0f)
                     val firstTitleVisibleTextEndIndex = textLayoutResult.getOffsetForPosition(firstTitleOffset) + 1
 
                     secondTitleText = headerInfo.title.substring(firstTitleVisibleTextEndIndex)
-                    isSecondTitleVisible = true
                 }
             },
             style = GamedgeTheme.typography.h6,
