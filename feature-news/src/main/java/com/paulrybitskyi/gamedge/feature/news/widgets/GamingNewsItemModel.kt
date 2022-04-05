@@ -26,4 +26,8 @@ data class GamingNewsItemModel(
     val lede: String,
     val publicationDate: String,
     val siteDetailUrl: String
-)
+) {
+
+    val hasImageUrl: Boolean
+        get() = imageUrl != null
+}

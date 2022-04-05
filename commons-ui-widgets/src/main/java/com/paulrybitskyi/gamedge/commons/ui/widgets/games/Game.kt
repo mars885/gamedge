@@ -43,11 +43,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun Game(
-    coverImageUrl: String?,
-    name: String,
-    releaseDate: String,
-    developerName: String?,
-    description: String?,
+    game: GameModel,
     onClick: () -> Unit,
 ) {
     Card(
@@ -65,7 +61,7 @@ fun Game(
 
             GameCover(
                 title = null,
-                imageUrl = coverImageUrl,
+                imageUrl = game.coverImageUrl,
                 modifier = Modifier.size(
                     width = dimensionResource(R.dimen.game_cover_width),
                     height = gameCoverHeight,
@@ -74,10 +70,10 @@ fun Game(
             )
 
             Details(
-                name = name,
-                releaseDate = releaseDate,
-                developerName = developerName,
-                description = description,
+                name = game.name,
+                releaseDate = game.releaseDate,
+                developerName = game.developerName,
+                description = game.description,
                 modifier = Modifier.height(gameCoverHeight),
             )
         }
@@ -163,12 +159,15 @@ private fun DetailsDescription(description: String) {
 internal fun GameFullPreview() {
     GamedgeTheme {
         Game(
-            coverImageUrl = null,
-            name = "Forza Horizon 5",
-            releaseDate = "Nov 09, 2021 (7 days ago)",
-            developerName = "Playground Games",
-            description = "Your Ultimate Horizon Adventure awaits! Explore the vibrant " +
+            game = GameModel(
+                id = 1,
+                coverImageUrl = null,
+                name = "Forza Horizon 5",
+                releaseDate = "Nov 09, 2021 (7 days ago)",
+                developerName = "Playground Games",
+                description = "Your Ultimate Horizon Adventure awaits! Explore the vibrant " +
                     "and ever-evolving open-world landscapes of Mexico.",
+            ),
             onClick = {},
         )
     }
@@ -179,12 +178,15 @@ internal fun GameFullPreview() {
 internal fun GameWithoutDeveloperPreview() {
     GamedgeTheme {
         Game(
-            coverImageUrl = null,
-            name = "Forza Horizon 5",
-            releaseDate = "Nov 09, 2021 (7 days ago)",
-            developerName = null,
-            description = "Your Ultimate Horizon Adventure awaits! Explore the vibrant " +
+            game = GameModel(
+                id = 1,
+                coverImageUrl = null,
+                name = "Forza Horizon 5",
+                releaseDate = "Nov 09, 2021 (7 days ago)",
+                developerName = null,
+                description = "Your Ultimate Horizon Adventure awaits! Explore the vibrant " +
                     "and ever-evolving open-world landscapes of Mexico.",
+            ),
             onClick = {},
         )
     }
@@ -195,11 +197,14 @@ internal fun GameWithoutDeveloperPreview() {
 internal fun GameWithoutDescriptionPreview() {
     GamedgeTheme {
         Game(
-            coverImageUrl = null,
-            name = "Forza Horizon 5",
-            releaseDate = "Nov 09, 2021 (7 days ago)",
-            developerName = "Playground Games",
-            description = null,
+            game = GameModel(
+                id = 1,
+                coverImageUrl = null,
+                name = "Forza Horizon 5",
+                releaseDate = "Nov 09, 2021 (7 days ago)",
+                developerName = "Playground Games",
+                description = null,
+            ),
             onClick = {},
         )
     }
@@ -210,11 +215,14 @@ internal fun GameWithoutDescriptionPreview() {
 internal fun GameMinimalPreview() {
     GamedgeTheme {
         Game(
-            coverImageUrl = null,
-            name = "Forza Horizon 5",
-            releaseDate = "Nov 09, 2021 (7 days ago)",
-            developerName = null,
-            description = null,
+            game = GameModel(
+                id = 1,
+                coverImageUrl = null,
+                name = "Forza Horizon 5",
+                releaseDate = "Nov 09, 2021 (7 days ago)",
+                developerName = null,
+                description = null,
+            ),
             onClick = {},
         )
     }

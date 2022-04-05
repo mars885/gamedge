@@ -43,10 +43,7 @@ import com.paulrybitskyi.gamedge.feature.news.R
 
 @Composable
 internal fun GamingNewsItem(
-    imageUrl: String?,
-    title: String,
-    lede: String,
-    publicationDate: String,
+    model: GamingNewsItemModel,
     onClick: () -> Unit
 ) {
     Card(
@@ -56,9 +53,9 @@ internal fun GamingNewsItem(
         elevation = dimensionResource(R.dimen.gaming_news_item_card_elevation),
     ) {
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.gaming_news_item_padding))) {
-            if (imageUrl != null) {
+            if (model.hasImageUrl) {
                 Image(
-                    imageUrl = imageUrl,
+                    imageUrl = checkNotNull(model.imageUrl),
                     modifier = Modifier
                         .height(dimensionResource(R.dimen.gaming_news_item_image_height))
                         .padding(bottom = dimensionResource(R.dimen.gaming_news_item_image_padding_bottom))
@@ -66,13 +63,13 @@ internal fun GamingNewsItem(
             }
 
             Text(
-                text = title,
+                text = model.title,
                 modifier = Modifier.fillMaxWidth(),
                 color = GamedgeTheme.colors.onPrimary,
                 style = GamedgeTheme.typography.subtitle2,
             )
             Text(
-                text = lede,
+                text = model.lede,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = dimensionResource(R.dimen.gaming_news_item_lede_padding_top)),
@@ -80,7 +77,7 @@ internal fun GamingNewsItem(
                     lineHeight = TextUnit.Unspecified,
                 ),
             )
-            Timestamp(publicationDate = publicationDate)
+            Timestamp(publicationDate = model.publicationDate)
         }
     }
 }
@@ -138,10 +135,14 @@ private fun Timestamp(publicationDate: String) {
 internal fun GamingNewsItemWithImagePreview() {
     GamedgeTheme {
         GamingNewsItem(
-            imageUrl = "url",
-            title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
-            lede = "However, the record for those actively in a game has not been broken yet.",
-            publicationDate = "3 mins ago",
+            model = GamingNewsItemModel(
+                id = 1,
+                imageUrl = "url",
+                title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
+                lede = "However, the record for those actively in a game has not been broken yet.",
+                publicationDate = "3 mins ago",
+                siteDetailUrl = "url",
+            ),
             onClick = {}
         )
     }
@@ -152,10 +153,14 @@ internal fun GamingNewsItemWithImagePreview() {
 internal fun GamingNewsItemWithoutImagePreview() {
     GamedgeTheme {
         GamingNewsItem(
-            imageUrl = null,
-            title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
-            lede = "However, the record for those actively in a game has not been broken yet.",
-            publicationDate = "3 mins ago",
+            model = GamingNewsItemModel(
+                id = 1,
+                imageUrl = null,
+                title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
+                lede = "However, the record for those actively in a game has not been broken yet.",
+                publicationDate = "3 mins ago",
+                siteDetailUrl = "url",
+            ),
             onClick = {}
         )
     }

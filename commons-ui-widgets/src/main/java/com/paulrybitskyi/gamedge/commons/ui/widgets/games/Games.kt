@@ -111,11 +111,7 @@ private fun SuccessState(
                 }
 
                 Game(
-                    coverImageUrl = game.coverImageUrl,
-                    name = game.name,
-                    releaseDate = game.releaseDate,
-                    developerName = game.developerName,
-                    description = game.description,
+                    game = game,
                     onClick = { onGameClicked(game) },
                 )
             }

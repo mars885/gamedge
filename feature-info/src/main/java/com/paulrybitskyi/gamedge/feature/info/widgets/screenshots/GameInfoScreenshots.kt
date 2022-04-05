@@ -80,7 +80,7 @@ internal fun GameInfoScreenshots(
                     key = { _, screenshot -> screenshot.id },
                 ) { index, screenshot ->
                     Screenshot(
-                        screenshotUrl = screenshot.url,
+                        screenshot = screenshot,
                         modifier = Modifier.size(
                             width = dimensionResource(R.dimen.game_screenshots_item_width),
                             height = dimensionResource(R.dimen.game_screenshots_item_height),
@@ -95,7 +95,7 @@ internal fun GameInfoScreenshots(
 
 @Composable
 private fun Screenshot(
-    screenshotUrl: String,
+    screenshot: GameInfoScreenshotModel,
     modifier: Modifier,
     onScreenshotClicked: () -> Unit,
 ) {
@@ -109,7 +109,7 @@ private fun Screenshot(
             Image(
                 painter = rememberAsyncImagePainter(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(screenshotUrl)
+                        .data(screenshot.url)
                         .fallback(R.drawable.game_landscape_placeholder)
                         .placeholder(R.drawable.game_landscape_placeholder)
                         .error(R.drawable.game_landscape_placeholder)

@@ -62,8 +62,6 @@ internal fun GameInfoCompanies(
     companies: List<GameInfoCompanyModel>,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
 ) {
-    val density = LocalDensity.current
-
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
@@ -93,14 +91,7 @@ internal fun GameInfoCompanies(
             ) {
                 items(companies, key = GameInfoCompanyModel::id) { company ->
                     Company(
-                        logoImageUrl = company.logoUrl,
-                        logoContainerSize = Pair(
-                            with(density) { company.logoContainerSize.width.toDp() },
-                            with(density) { company.logoContainerSize.height.toDp() },
-                        ),
-                        logoImageSize = company.logoImageSize,
-                        name = company.name,
-                        roles = company.roles,
+                        company = company,
                         onCompanyClicked = { onCompanyClicked(company) },
                     )
                 }
@@ -111,13 +102,15 @@ internal fun GameInfoCompanies(
 
 @Composable
 private fun Company(
-    logoImageUrl: String?,
-    logoContainerSize: Pair<Dp, Dp>,
-    logoImageSize: Pair<Int, Int>,
-    name: String,
-    roles: String,
+    company: GameInfoCompanyModel,
     onCompanyClicked: () -> Unit,
 ) {
+    val density = LocalDensity.current
+    val logoContainerSizeInDp = Pair(
+        with(density) { company.logoContainerSize.width.toDp() },
+        with(density) { company.logoContainerSize.height.toDp() },
+    )
+
     Card(
         onClick = onCompanyClicked,
         backgroundColor = Color.Transparent,
@@ -125,15 +118,15 @@ private fun Company(
     ) {
         Column {
             CompanyLogoImage(
-                logoImageUrl = logoImageUrl,
-                logoContainerSize = logoContainerSize,
-                logoImageSize = logoImageSize,
+                logoImageUrl = company.logoUrl,
+                logoContainerSize = logoContainerSizeInDp,
+                logoImageSize = company.logoImageSize,
             )
 
             CompanyDetails(
-                name = name,
-                roles = roles,
-                containerWidth = logoContainerSize.width,
+                name = company.name,
+                roles = company.roles,
+                containerWidth = logoContainerSizeInDp.width,
             )
         }
     }

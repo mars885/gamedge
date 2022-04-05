@@ -90,8 +90,7 @@ internal fun GameInfoVideos(
             ) {
                 items(videos, key = GameInfoVideoModel::id) { video ->
                     Video(
-                        thumbnailUrl = video.thumbnailUrl,
-                        title = video.title,
+                        video = video,
                         thumbnailHeight = dimensionResource(R.dimen.game_videos_item_thumbnail_height),
                         modifier = Modifier.width(dimensionResource(R.dimen.game_videos_item_width)),
                         onVideoClicked = { onVideClicked(video) },
@@ -104,8 +103,7 @@ internal fun GameInfoVideos(
 
 @Composable
 private fun Video(
-    thumbnailUrl: String?,
-    title: String,
+    video: GameInfoVideoModel,
     thumbnailHeight: Dp,
     modifier: Modifier,
     onVideoClicked: () -> Unit,
@@ -126,7 +124,7 @@ private fun Video(
                 Image(
                     painter = rememberAsyncImagePainter(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(thumbnailUrl)
+                            .data(video.thumbnailUrl)
                             .fallback(R.drawable.game_landscape_placeholder)
                             .placeholder(R.drawable.game_landscape_placeholder)
                             .error(R.drawable.game_landscape_placeholder)
@@ -162,7 +160,7 @@ private fun Video(
                 contentColor = GamedgeTheme.colors.onSurface,
             ) {
                 Text(
-                    text = title,
+                    text = video.title,
                     modifier = Modifier.padding(
                         dimensionResource(R.dimen.game_video_title_padding)
                     ),

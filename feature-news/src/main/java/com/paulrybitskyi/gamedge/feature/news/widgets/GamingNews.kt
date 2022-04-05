@@ -104,10 +104,7 @@ private fun SuccessState(
     ) {
         items(news, key = GamingNewsItemModel::id) { itemModel ->
             GamingNewsItem(
-                imageUrl = itemModel.imageUrl,
-                title = itemModel.title,
-                lede = itemModel.lede,
-                publicationDate = itemModel.publicationDate,
+                model = itemModel,
                 onClick = { onNewsItemClicked(itemModel) }
             )
         }
