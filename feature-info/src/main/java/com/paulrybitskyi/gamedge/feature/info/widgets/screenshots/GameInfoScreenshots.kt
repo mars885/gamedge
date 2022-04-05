@@ -44,7 +44,7 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
-internal fun GameScreenshots(
+internal fun GameInfoScreenshots(
     screenshots: List<GameInfoScreenshotModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
@@ -79,7 +79,7 @@ internal fun GameScreenshots(
                     items = screenshots,
                     key = { _, screenshot -> screenshot.id },
                 ) { index, screenshot ->
-                    GameScreenshot(
+                    GameInfoScreenshot(
                         screenshotUrl = screenshot.url,
                         modifier = Modifier.size(
                             width = dimensionResource(R.dimen.game_screenshots_item_width),
@@ -94,7 +94,7 @@ internal fun GameScreenshots(
 }
 
 @Composable
-private fun GameScreenshot(
+private fun GameInfoScreenshot(
     screenshotUrl: String,
     modifier: Modifier,
     onScreenshotClicked: () -> Unit,
@@ -126,9 +126,9 @@ private fun GameScreenshot(
 
 @Preview
 @Composable
-internal fun GameScreenshotsPreview() {
+internal fun GameInfoScreenshotsPreview() {
     GamedgeTheme {
-        GameScreenshots(
+        GameInfoScreenshots(
             screenshots = listOf(
                 GameInfoScreenshotModel(
                     id = "1",

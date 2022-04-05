@@ -42,7 +42,7 @@ import com.paulrybitskyi.gamedge.feature.info.R
 import java.util.Locale
 
 @Composable
-internal fun GameLinks(
+internal fun GameInfoLinks(
     links: List<GameInfoLinkModel>,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
 ) {
@@ -70,7 +70,7 @@ internal fun GameLinks(
                 crossAxisSpacing = dimensionResource(R.dimen.game_links_flow_row_vertical_spacing),
             ) {
                 for (link in links) {
-                    GameLink(
+                    GameInfoLink(
                         link = link,
                         onLinkClicked = { onLinkClicked(link) },
                     )
@@ -81,7 +81,7 @@ internal fun GameLinks(
 }
 
 @Composable
-private fun GameLink(
+private fun GameInfoLink(
     link: GameInfoLinkModel,
     onLinkClicked: () -> Unit,
 ) {
@@ -125,7 +125,7 @@ private fun GameLink(
 
 @Preview
 @Composable
-internal fun GameLinksPreview() {
+internal fun GameInfoLinksPreview() {
     val links = WebsiteCategory.values()
         .filterNot { it == WebsiteCategory.UNKNOWN }
         .mapIndexed { index, websiteCategory ->
@@ -142,7 +142,7 @@ internal fun GameLinksPreview() {
     }
 
     GamedgeTheme {
-        GameLinks(
+        GameInfoLinks(
             links = links,
             onLinkClicked = {},
         )

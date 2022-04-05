@@ -32,7 +32,7 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.subtitle3
 import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
-internal fun GameDetails(details: GameInfoDetailsModel) {
+internal fun GameInfoDetails(details: GameInfoDetailsModel) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RectangleShape,
@@ -159,9 +159,9 @@ private fun GameDetailsThemesSection(themes: String) {
 
 @Composable
 @Preview
-internal fun GameDetailsPreview() {
+internal fun GameInfoDetailsPreview() {
     GamedgeTheme {
-        GameDetails(
+        GameInfoDetails(
             details = GameInfoDetailsModel(
                 genresText = "Adventure • Shooter • Role-playing (RPG)",
                 platformsText = "PC • PS4 • XONE • PS5 • Series X • Stadia",

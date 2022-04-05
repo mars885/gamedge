@@ -58,7 +58,7 @@ import com.paulrybitskyi.gamedge.core.utils.width
 import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
-internal fun GameCompanies(
+internal fun GameInfoCompanies(
     companies: List<GameInfoCompanyModel>,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
 ) {
@@ -92,7 +92,7 @@ internal fun GameCompanies(
                 )
             ) {
                 items(companies, key = GameInfoCompanyModel::id) { company ->
-                    GameCompany(
+                    GameInfoCompany(
                         logoImageUrl = company.logoUrl,
                         logoContainerSize = Pair(
                             with(density) { company.logoContainerSize.width.toDp() },
@@ -110,7 +110,7 @@ internal fun GameCompanies(
 }
 
 @Composable
-private fun GameCompany(
+private fun GameInfoCompany(
     logoImageUrl: String?,
     logoContainerSize: Pair<Dp, Dp>,
     logoImageSize: Pair<Int, Int>,
@@ -124,13 +124,13 @@ private fun GameCompany(
         elevation = dimensionResource(R.dimen.game_company_card_elevation),
     ) {
         Column {
-            GameCompanyLogoImage(
+            GameInfoCompanyLogoImage(
                 logoImageUrl = logoImageUrl,
                 logoContainerSize = logoContainerSize,
                 logoImageSize = logoImageSize,
             )
 
-            GameCompanyDetails(
+            GameInfoCompanyDetails(
                 name = name,
                 roles = roles,
                 containerWidth = logoContainerSize.width,
@@ -140,7 +140,7 @@ private fun GameCompany(
 }
 
 @Composable
-private fun GameCompanyLogoImage(
+private fun GameInfoCompanyLogoImage(
     logoImageUrl: String?,
     logoContainerSize: Pair<Dp, Dp>,
     logoImageSize: Pair<Int, Int>,
@@ -177,7 +177,7 @@ private fun GameCompanyLogoImage(
 }
 
 @Composable
-private fun GameCompanyDetails(
+private fun GameInfoCompanyDetails(
     name: String,
     roles: String,
     containerWidth: Dp,
@@ -264,9 +264,9 @@ private class LogoImageTransformation(
 
 @Preview
 @Composable
-internal fun GameCompaniesPreview() {
+internal fun GameInfoCompaniesPreview() {
     GamedgeTheme {
-        GameCompanies(
+        GameInfoCompanies(
             companies = listOf(
                 GameInfoCompanyModel(
                     id = 1,

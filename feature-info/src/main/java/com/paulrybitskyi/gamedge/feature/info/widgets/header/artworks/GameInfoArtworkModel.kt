@@ -21,13 +21,13 @@ import androidx.compose.runtime.Immutable
 private const val DEFAULT_IMAGE_ID = "default_image_id"
 
 @Immutable
-internal sealed class GameArtworkModel {
-    object DefaultImage : GameArtworkModel()
-    data class UrlImage(val id: String, val url: String) : GameArtworkModel()
+internal sealed class GameInfoArtworkModel {
+    object DefaultImage : GameInfoArtworkModel()
+    data class UrlImage(val id: String, val url: String) : GameInfoArtworkModel()
 }
 
-internal val GameArtworkModel.id: String
+internal val GameInfoArtworkModel.id: String
     get() = when (this) {
-        is GameArtworkModel.DefaultImage -> DEFAULT_IMAGE_ID
-        is GameArtworkModel.UrlImage -> id
+        is GameInfoArtworkModel.DefaultImage -> DEFAULT_IMAGE_ID
+        is GameInfoArtworkModel.UrlImage -> id
     }

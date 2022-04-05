@@ -73,7 +73,7 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.subtitle3
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.feature.info.R
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameArtworkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.id
 
 private const val CONSTRAINT_ID_ARTWORKS = "artworks"
@@ -95,7 +95,7 @@ private const val CONSTRAINT_ID_AGE_RATING = "age_rating"
 private const val CONSTRAINT_ID_GAME_CATEGORY = "game_category"
 
 @Composable
-internal fun GameHeader(
+internal fun GameInfoHeader(
     headerInfo: GameInfoHeaderModel,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -443,7 +443,7 @@ private fun constructExpandedConstraintSet(): ConstraintSet {
 
 @Composable
 private fun GameArtworks(
-    artworks: List<GameArtworkModel>,
+    artworks: List<GameInfoArtworkModel>,
     isScrollingEnabled: Boolean, // todo
     modifier: Modifier,
     onArtworkChanged: (artworkIndex: Int) -> Unit,
@@ -471,12 +471,12 @@ private fun GameArtworks(
 
 @Composable
 private fun GameArtwork(
-    artwork: GameArtworkModel,
+    artwork: GameInfoArtworkModel,
     onArtworkClicked: () -> Unit,
 ) {
     val painter = when (artwork) {
-        is GameArtworkModel.DefaultImage -> painterResource(R.drawable.game_background_placeholder)
-        is GameArtworkModel.UrlImage -> rememberAsyncImagePainter(
+        is GameInfoArtworkModel.DefaultImage -> painterResource(R.drawable.game_background_placeholder)
+        is GameInfoArtworkModel.UrlImage -> rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(artwork.url)
                 .fallback(R.drawable.game_background_placeholder)
@@ -499,19 +499,19 @@ private fun GameArtwork(
                 onClick = onArtworkClicked,
             ),
         contentScale = when (artwork) {
-            is GameArtworkModel.DefaultImage -> ContentScale.Crop
-            is GameArtworkModel.UrlImage -> ContentScale.FillBounds
+            is GameInfoArtworkModel.DefaultImage -> ContentScale.Crop
+            is GameInfoArtworkModel.UrlImage -> ContentScale.FillBounds
         },
     )
 }
 
 @Preview
 @Composable
-internal fun GameHeaderPreview() {
+internal fun GameInfoHeaderPreview() {
     GamedgeTheme {
-        GameHeader(
+        GameInfoHeader(
             headerInfo = GameInfoHeaderModel(
-                artworks = listOf(GameArtworkModel.DefaultImage),
+                artworks = listOf(GameInfoArtworkModel.DefaultImage),
                 isLiked = true,
                 coverImageUrl = null,
                 title = "Elden Ring",

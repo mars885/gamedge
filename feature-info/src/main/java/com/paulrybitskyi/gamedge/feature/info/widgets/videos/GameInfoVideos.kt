@@ -57,7 +57,7 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.darkScrim
 import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
-internal fun GameVideos(
+internal fun GameInfoVideos(
     videos: List<GameInfoVideoModel>,
     onVideClicked: (GameInfoVideoModel) -> Unit,
 ) {
@@ -89,7 +89,7 @@ internal fun GameVideos(
                 )
             ) {
                 items(videos, key = GameInfoVideoModel::id) { video ->
-                    GameVideo(
+                    GameInfoVideo(
                         thumbnailUrl = video.thumbnailUrl,
                         title = video.title,
                         thumbnailHeight = dimensionResource(R.dimen.game_videos_item_thumbnail_height),
@@ -103,7 +103,7 @@ internal fun GameVideos(
 }
 
 @Composable
-private fun GameVideo(
+private fun GameInfoVideo(
     thumbnailUrl: String?,
     title: String,
     thumbnailHeight: Dp,
@@ -177,9 +177,9 @@ private fun GameVideo(
 
 @Preview
 @Composable
-internal fun GameVideosPreview() {
+internal fun GameInfoVideosPreview() {
     GamedgeTheme {
-        GameVideos(
+        GameInfoVideos(
             videos = listOf(
                 GameInfoVideoModel(
                     id = "1",

@@ -43,7 +43,7 @@ import com.paulrybitskyi.gamedge.feature.info.R
 private const val ANIMATION_DURATION = 300
 
 @Composable
-internal fun GameSummary(summary: String) {
+internal fun GameInfoSummary(summary: String) {
     var isExpanded by remember { mutableStateOf(false) }
     var isExpandable by remember { mutableStateOf(true) }
     val cardClickableModifier by remember {
@@ -98,9 +98,9 @@ internal fun GameSummary(summary: String) {
 
 @Preview
 @Composable
-internal fun GameSummaryCollapsedPreview() {
+internal fun GameInfoSummaryCollapsedPreview() {
     GamedgeTheme {
-        GameSummary(
+        GameInfoSummary(
             summary = "Elden Ring is an action-RPG open world game with RPG " +
                     "elements such as stats, weapons and spells.",
         )

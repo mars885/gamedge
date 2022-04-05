@@ -22,29 +22,29 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Image
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameArtworkModelFactory {
-    fun createArtworkModels(images: List<Image>): List<GameArtworkModel>
-    fun createArtworkModel(image: Image): GameArtworkModel
+internal interface GameInfoArtworkModelFactory {
+    fun createArtworkModels(images: List<Image>): List<GameInfoArtworkModel>
+    fun createArtworkModel(image: Image): GameInfoArtworkModel
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameArtworkModelFactoryImpl @Inject constructor(
+internal class GameInfoArtworkModelFactoryImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
-) : GameArtworkModelFactory {
+) : GameInfoArtworkModelFactory {
 
-    override fun createArtworkModels(images: List<Image>): List<GameArtworkModel> {
-        if (images.isEmpty()) return listOf(GameArtworkModel.DefaultImage)
+    override fun createArtworkModels(images: List<Image>): List<GameInfoArtworkModel> {
+        if (images.isEmpty()) return listOf(GameInfoArtworkModel.DefaultImage)
 
         return images.map(::createArtworkModel)
-            .filterIsInstance<GameArtworkModel.UrlImage>()
+            .filterIsInstance<GameInfoArtworkModel.UrlImage>()
     }
 
-    override fun createArtworkModel(image: Image): GameArtworkModel {
+    override fun createArtworkModel(image: Image): GameInfoArtworkModel {
         return igdbImageUrlFactory.createUrl(
             image = image,
             config = IgdbImageUrlFactory.Config(IgdbImageSize.BIG_SCREENSHOT),
         )
-        ?.let { url -> GameArtworkModel.UrlImage(id = image.id, url = url) }
-        ?: GameArtworkModel.DefaultImage
+        ?.let { url -> GameInfoArtworkModel.UrlImage(id = image.id, url = url) }
+        ?: GameInfoArtworkModel.DefaultImage
     }
 }

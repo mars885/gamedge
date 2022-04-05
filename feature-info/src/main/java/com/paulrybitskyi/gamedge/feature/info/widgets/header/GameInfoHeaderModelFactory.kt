@@ -24,8 +24,8 @@ import com.paulrybitskyi.gamedge.core.formatters.GameCategoryFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameArtworkModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameArtworkModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModelFactory
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -36,7 +36,7 @@ internal interface GameInfoHeaderModelFactory {
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
-    private val artworkModelFactory: GameArtworkModelFactory,
+    private val artworkModelFactory: GameInfoArtworkModelFactory,
     private val releaseDateFormatter: GameReleaseDateFormatter,
     private val ratingFormatter: GameRatingFormatter,
     private val likeCountCalculator: GameLikeCountCalculator,
@@ -59,7 +59,7 @@ internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
         )
     }
 
-    private fun Game.createArtworks(): List<GameArtworkModel> {
+    private fun Game.createArtworks(): List<GameInfoArtworkModel> {
         return artworkModelFactory.createArtworkModels(artworks)
     }
 
