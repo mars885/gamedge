@@ -81,12 +81,12 @@ fun SearchToolbar(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SearchToolbarButton(
+            Button(
                 icon = painterResource(R.drawable.arrow_left),
                 onClick = { onBackButtonClicked?.invoke() },
             )
 
-            SearchToolbarInput(
+            Input(
                 queryText = queryText,
                 placeholderText = placeholderText,
                 focusRequester = focusRequester,
@@ -97,7 +97,7 @@ fun SearchToolbar(
                 onSearchActionRequested = onSearchActionRequested,
             )
 
-            SearchToolbarClearButton(
+            ClearButton(
                 isVisible = queryText.isNotEmpty(),
                 onClearButtonClicked = {
                     focusRequester.requestFocus()
@@ -109,7 +109,7 @@ fun SearchToolbar(
 }
 
 @Composable
-private fun SearchToolbarButton(
+private fun Button(
     icon: Painter,
     onClick: () -> Unit,
 ) {
@@ -125,7 +125,7 @@ private fun SearchToolbarButton(
 }
 
 @Composable
-private fun SearchToolbarInput(
+private fun Input(
     queryText: String,
     placeholderText: String,
     focusRequester: FocusRequester,
@@ -170,7 +170,7 @@ private fun SearchToolbarInput(
 }
 
 @Composable
-private fun SearchToolbarClearButton(
+private fun ClearButton(
     isVisible: Boolean,
     onClearButtonClicked: () -> Unit,
 ) {
@@ -185,7 +185,7 @@ private fun SearchToolbarClearButton(
             animationSpec = tween(durationMillis = CLEAR_BUTTON_ANIMATION_DURATION),
         ),
     ) {
-        SearchToolbarButton(
+        Button(
             icon = painterResource(R.drawable.close),
             onClick = onClearButtonClicked,
         )

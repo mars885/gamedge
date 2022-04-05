@@ -73,7 +73,7 @@ fun Game(
                 onCoverClicked = onClick,
             )
 
-            GameDetailsContent(
+            Details(
                 name = name,
                 releaseDate = releaseDate,
                 developerName = developerName,
@@ -85,7 +85,7 @@ fun Game(
 }
 
 @Composable
-private fun GameDetailsContent(
+private fun Details(
     name: String,
     releaseDate: String,
     developerName: String?,
@@ -125,13 +125,13 @@ private fun GameDetailsContent(
         }
 
         if (description != null) {
-            GameDetailsDescription(description = description)
+            DetailsDescription(description = description)
         }
     }
 }
 
 @Composable
-private fun GameDetailsDescription(description: String) {
+private fun DetailsDescription(description: String) {
     var maxLines by remember { mutableStateOf(Int.MAX_VALUE) }
 
     Text(

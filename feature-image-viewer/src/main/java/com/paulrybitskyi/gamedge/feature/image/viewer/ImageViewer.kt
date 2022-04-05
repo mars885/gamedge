@@ -61,7 +61,7 @@ internal fun ImageViewer(
         contentColor = Color.White,
     ) {
         Box(Modifier.fillMaxSize()) {
-            ImageViewerPager(
+            Pager(
                 uiState = uiState,
                 networkStateProvider = networkStateProvider,
                 modifier = Modifier.matchParentSize(),
@@ -85,7 +85,7 @@ internal fun ImageViewer(
 }
 
 @Composable
-private fun ImageViewerPager(
+private fun Pager(
     uiState: ImageViewerUiState,
     networkStateProvider: NetworkStateProvider,
     modifier: Modifier,
@@ -104,7 +104,7 @@ private fun ImageViewerPager(
         state = pagerState,
         itemSpacing = dimensionResource(R.dimen.image_viewer_pager_item_spacing),
     ) { pageIndex ->
-        ImageViewerItem(
+        ImageItem(
             imageUrl = uiState.imageUrls[pageIndex],
             networkStateProvider = networkStateProvider,
         )
@@ -112,7 +112,7 @@ private fun ImageViewerPager(
 }
 
 @Composable
-private fun ImageViewerItem(
+private fun ImageItem(
     imageUrl: String,
     networkStateProvider: NetworkStateProvider,
 ) {

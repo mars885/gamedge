@@ -73,9 +73,9 @@ internal fun GameInfo(
 ) {
     AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
         when (finiteUiState) {
-            FiniteUiState.EMPTY -> GameInfoEmptyState(Modifier.align(Alignment.Center))
-            FiniteUiState.LOADING -> GameInfoLoadingState(Modifier.align(Alignment.Center))
-            FiniteUiState.SUCCESS -> GameInfoSuccessState(
+            FiniteUiState.EMPTY -> EmptyState(Modifier.align(Alignment.Center))
+            FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
+            FiniteUiState.SUCCESS -> SuccessState(
                 gameInfo = checkNotNull(uiState.game),
                 onArtworkClicked = onArtworkClicked,
                 onBackButtonClicked = onBackButtonClicked,
@@ -92,7 +92,7 @@ internal fun GameInfo(
 }
 
 @Composable
-private fun GameInfoLoadingState(modifier: Modifier) {
+private fun LoadingState(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier,
         color = GamedgeTheme.colors.secondary,
@@ -100,7 +100,7 @@ private fun GameInfoLoadingState(modifier: Modifier) {
 }
 
 @Composable
-private fun GameInfoEmptyState(modifier: Modifier) {
+private fun EmptyState(modifier: Modifier) {
     Info(
         icon = painterResource(R.drawable.gamepad_variant_outline),
         title = stringResource(R.string.game_info_info_view_title),
@@ -111,7 +111,7 @@ private fun GameInfoEmptyState(modifier: Modifier) {
 }
 
 @Composable
-private fun GameInfoSuccessState(
+private fun SuccessState(
     gameInfo: GameInfoModel,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -124,7 +124,7 @@ private fun GameInfoSuccessState(
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        GameInfoContent(
+        Content(
             gameInfo = gameInfo,
             onArtworkClicked = onArtworkClicked,
             onBackButtonClicked = onBackButtonClicked,
@@ -140,7 +140,7 @@ private fun GameInfoSuccessState(
 }
 
 @Composable
-private fun GameInfoContent(
+private fun Content(
     gameInfo: GameInfoModel,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -158,7 +158,7 @@ private fun GameInfoContent(
         modifier = Modifier.navigationBarsPadding(),
         verticalArrangement = Arrangement.spacedBy(arrangementSpacing),
     ) {
-        GameHeaderItem(
+        HeaderItem(
             model = gameInfo.headerModel,
             onArtworkClicked = onArtworkClicked,
             onBackButtonClicked = onBackButtonClicked,
@@ -167,50 +167,50 @@ private fun GameInfoContent(
         )
 
         if (gameInfo.hasVideoModels) {
-            GameVideosItem(
+            VideosItem(
                 videos = gameInfo.videoModels,
                 onVideoClicked = onVideoClicked,
             )
         }
 
         if (gameInfo.hasScreenshotModels) {
-            GameScreenshotsItem(
+            ScreenshotsItem(
                 screenshots = gameInfo.screenshotModels,
                 onScreenshotClicked = onScreenshotClicked,
             )
         }
 
         if (gameInfo.hasSummary) {
-            GameSummaryItem(model = checkNotNull(gameInfo.summary))
+            SummaryItem(model = checkNotNull(gameInfo.summary))
         }
 
         if (gameInfo.hasDetailsModel) {
-            GameDetailsItem(model = checkNotNull(gameInfo.detailsModel))
+            DetailsItem(model = checkNotNull(gameInfo.detailsModel))
         }
 
         if (gameInfo.hasLinkModels) {
-            GameLinksItem(
+            LinksItem(
                 model = gameInfo.linkModels,
                 onLinkClicked = onLinkClicked,
             )
         }
 
         if (gameInfo.hasCompanyModels) {
-            GameCompaniesItem(
+            CompaniesItem(
                 model = gameInfo.companyModels,
                 onCompanyClicked = onCompanyClicked,
             )
         }
 
         if (gameInfo.hasOtherCompanyGames) {
-            GameRelatedGamesItem(
+            RelatedGamesItem(
                 model = checkNotNull(gameInfo.otherCompanyGames),
                 onGameClicked = onRelatedGameClicked,
             )
         }
 
         if (gameInfo.hasSimilarGames) {
-            GameRelatedGamesItem(
+            RelatedGamesItem(
                 model = checkNotNull(gameInfo.similarGames),
                 onGameClicked = onRelatedGameClicked,
             )
@@ -218,7 +218,7 @@ private fun GameInfoContent(
     }
 }
 
-private fun LazyListScope.GameHeaderItem(
+private fun LazyListScope.HeaderItem(
     model: GameInfoHeaderModel,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -236,7 +236,7 @@ private fun LazyListScope.GameHeaderItem(
     }
 }
 
-private fun LazyListScope.GameVideosItem(
+private fun LazyListScope.VideosItem(
     videos: List<GameInfoVideoModel>,
     onVideoClicked: (GameInfoVideoModel) -> Unit,
 ) {
@@ -248,7 +248,7 @@ private fun LazyListScope.GameVideosItem(
     }
 }
 
-private fun LazyListScope.GameScreenshotsItem(
+private fun LazyListScope.ScreenshotsItem(
     screenshots: List<GameInfoScreenshotModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
@@ -260,19 +260,19 @@ private fun LazyListScope.GameScreenshotsItem(
     }
 }
 
-private fun LazyListScope.GameSummaryItem(model: String) {
+private fun LazyListScope.SummaryItem(model: String) {
     item(key = GameInfoSection.SUMMARY.id) {
         GameInfoSummary(summary = model)
     }
 }
 
-private fun LazyListScope.GameDetailsItem(model: GameInfoDetailsModel) {
+private fun LazyListScope.DetailsItem(model: GameInfoDetailsModel) {
     item(key = GameInfoSection.DETAILS.id) {
         GameInfoDetails(details = model)
     }
 }
 
-private fun LazyListScope.GameLinksItem(
+private fun LazyListScope.LinksItem(
     model: List<GameInfoLinkModel>,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
 ) {
@@ -284,7 +284,7 @@ private fun LazyListScope.GameLinksItem(
     }
 }
 
-private fun LazyListScope.GameCompaniesItem(
+private fun LazyListScope.CompaniesItem(
     model: List<GameInfoCompanyModel>,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
 ) {
@@ -296,7 +296,7 @@ private fun LazyListScope.GameCompaniesItem(
     }
 }
 
-private fun LazyListScope.GameRelatedGamesItem(
+private fun LazyListScope.RelatedGamesItem(
     model: GameInfoRelatedGamesModel,
     onGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {

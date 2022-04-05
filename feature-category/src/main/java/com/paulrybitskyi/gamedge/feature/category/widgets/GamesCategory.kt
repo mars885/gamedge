@@ -62,10 +62,10 @@ internal fun GamesCategory(
 
         AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
             when (finiteUiState) {
-                FiniteUiState.EMPTY -> GamesEmptyState(Modifier.align(Alignment.Center))
-                FiniteUiState.LOADING -> GamesLoadingState(Modifier.align(Alignment.Center))
+                FiniteUiState.EMPTY -> EmptyState(Modifier.align(Alignment.Center))
+                FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
                 FiniteUiState.SUCCESS -> {
-                    GamesSuccessState(
+                    SuccessState(
                         uiState = uiState,
                         modifier = Modifier
                             .matchParentSize()
@@ -80,7 +80,7 @@ internal fun GamesCategory(
 }
 
 @Composable
-private fun GamesLoadingState(modifier: Modifier) {
+private fun LoadingState(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier,
         color = GamedgeTheme.colors.secondary,
@@ -88,7 +88,7 @@ private fun GamesLoadingState(modifier: Modifier) {
 }
 
 @Composable
-private fun GamesEmptyState(modifier: Modifier) {
+private fun EmptyState(modifier: Modifier) {
     Info(
         icon = painterResource(R.drawable.gamepad_variant_outline),
         title = stringResource(R.string.games_category_info_view_title),
@@ -99,7 +99,7 @@ private fun GamesEmptyState(modifier: Modifier) {
 }
 
 @Composable
-private fun GamesSuccessState(
+private fun SuccessState(
     uiState: GamesCategoryUiState,
     modifier: Modifier,
     onGameClicked: (GameCategoryModel) -> Unit,
@@ -110,7 +110,7 @@ private fun GamesSuccessState(
         modifier = modifier,
         isSwipeEnabled = false,
     ) {
-        GamesVerticalGrid(
+        VerticalGrid(
             games = uiState.games,
             onGameClicked = onGameClicked,
             onBottomReached = onBottomReached,
@@ -119,7 +119,7 @@ private fun GamesSuccessState(
 }
 
 @Composable
-private fun GamesVerticalGrid(
+private fun VerticalGrid(
     games: List<GameCategoryModel>,
     onGameClicked: (GameCategoryModel) -> Unit,
     onBottomReached: () -> Unit,

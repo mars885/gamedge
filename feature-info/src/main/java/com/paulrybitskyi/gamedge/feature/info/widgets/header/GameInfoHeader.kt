@@ -117,7 +117,7 @@ internal fun GameInfoHeader(
         constraintSet = constructExpandedConstraintSet(),
         modifier = Modifier.fillMaxWidth(),
     ) {
-        GameArtworks(
+        Artworks(
             artworks = artworks,
             isScrollingEnabled = true,
             modifier = Modifier.layoutId(CONSTRAINT_ID_ARTWORKS),
@@ -444,7 +444,7 @@ private fun constructExpandedConstraintSet(): ConstraintSet {
 }
 
 @Composable
-private fun GameArtworks(
+private fun Artworks(
     artworks: List<GameInfoArtworkModel>,
     isScrollingEnabled: Boolean, // todo
     modifier: Modifier,
@@ -464,7 +464,7 @@ private fun GameArtworks(
         state = pagerState,
         key = { page -> artworks[page].id },
     ) { page ->
-        GameArtwork(
+        Artwork(
             artwork = artworks[page],
             onArtworkClicked = { onArtworkClicked(page) },
         )
@@ -472,7 +472,7 @@ private fun GameArtworks(
 }
 
 @Composable
-private fun GameArtwork(
+private fun Artwork(
     artwork: GameInfoArtworkModel,
     onArtworkClicked: () -> Unit,
 ) {

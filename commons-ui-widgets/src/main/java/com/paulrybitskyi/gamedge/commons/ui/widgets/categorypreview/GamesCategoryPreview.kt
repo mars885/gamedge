@@ -72,7 +72,7 @@ fun GamesCategoryPreview(
             val (titleRef, progressBarRef, moreBtnRef, itemsListRef, infoRef) = refs
             val topBarBarrier = createBottomBarrier(titleRef, progressBarRef, moreBtnRef, margin = topBarMargin)
 
-            GamesCategoryPreviewTitle(
+            Title(
                 title = title,
                 modifier = Modifier.constrainAs(titleRef) {
                     width = Dimension.fillToConstraints
@@ -83,7 +83,7 @@ fun GamesCategoryPreview(
             )
 
             if (isProgressBarVisible) {
-                GamesCategoryPreviewProgressBar(
+                ProgressBar(
                     modifier = Modifier.constrainAs(progressBarRef) {
                         centerVerticallyTo(moreBtnRef)
                         end.linkTo(moreBtnRef.start, progressBarMarginEnd)
@@ -92,7 +92,7 @@ fun GamesCategoryPreview(
             }
 
             if (isMoreButtonVisible) {
-                GamesCategoryPreviewMoreButton(
+                MoreButton(
                     modifier = Modifier.constrainAs(moreBtnRef) {
                         centerVerticallyTo(titleRef)
                         end.linkTo(parent.end, moreBtnHorizontalMargin)
@@ -101,7 +101,7 @@ fun GamesCategoryPreview(
                 )
             }
 
-            GamesCategoryPreviewContent(
+            Content(
                 games = games,
                 topBarBarrier = topBarBarrier,
                 infoRef = infoRef,
@@ -113,7 +113,7 @@ fun GamesCategoryPreview(
 }
 
 @Composable
-private fun GamesCategoryPreviewTitle(
+private fun Title(
     title: String,
     modifier: Modifier,
 ) {
@@ -129,7 +129,7 @@ private fun GamesCategoryPreviewTitle(
 }
 
 @Composable
-private fun GamesCategoryPreviewProgressBar(modifier: Modifier) {
+private fun ProgressBar(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier.size(dimensionResource(R.dimen.games_category_preview_progress_bar_size)),
         color = GamedgeTheme.colors.secondary,
@@ -138,7 +138,7 @@ private fun GamesCategoryPreviewProgressBar(modifier: Modifier) {
 }
 
 @Composable
-private fun GamesCategoryPreviewMoreButton(
+private fun MoreButton(
     modifier: Modifier,
     onCategoryMoreButtonClicked: (() -> Unit)?,
 ) {
@@ -159,7 +159,7 @@ private fun GamesCategoryPreviewMoreButton(
 }
 
 @Composable
-private fun ConstraintLayoutScope.GamesCategoryPreviewContent(
+private fun ConstraintLayoutScope.Content(
     games: List<GamesCategoryPreviewItemModel>,
     topBarBarrier: ConstraintLayoutBaseScope.HorizontalAnchor,
     infoRef: ConstrainedLayoutReference,
@@ -170,7 +170,7 @@ private fun ConstraintLayoutScope.GamesCategoryPreviewContent(
         val infoBottomMargin = dimensionResource(R.dimen.games_category_preview_info_view_margin_bottom)
         val infoHorizontalMargin = dimensionResource(R.dimen.games_category_preview_info_view_horizontal_margin)
 
-        GamesCategoryPreviewEmptyState(
+        EmptyState(
             modifier = Modifier.constrainAs(infoRef) {
                 top.linkTo(topBarBarrier)
                 bottom.linkTo(parent.bottom, infoBottomMargin)
@@ -183,7 +183,7 @@ private fun ConstraintLayoutScope.GamesCategoryPreviewContent(
             },
         )
     } else {
-        GamesCategoryPreviewSuccessState(
+        SuccessState(
             games = games,
             modifier = Modifier.constrainAs(itemsListRef) {
                 width = Dimension.fillToConstraints
@@ -197,7 +197,7 @@ private fun ConstraintLayoutScope.GamesCategoryPreviewContent(
 }
 
 @Composable
-private fun GamesCategoryPreviewEmptyState(modifier: Modifier) {
+private fun EmptyState(modifier: Modifier) {
     Info(
         icon = painterResource(R.drawable.google_controller),
         title = stringResource(R.string.games_category_preview_info_view_title),
@@ -207,7 +207,7 @@ private fun GamesCategoryPreviewEmptyState(modifier: Modifier) {
 }
 
 @Composable
-private fun GamesCategoryPreviewSuccessState(
+private fun SuccessState(
     games: List<GamesCategoryPreviewItemModel>,
     modifier: Modifier,
     onCategoryGameClicked: (GamesCategoryPreviewItemModel) -> Unit,

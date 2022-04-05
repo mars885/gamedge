@@ -46,7 +46,7 @@ internal fun GamingNews(
 ) {
     AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
         when (finiteUiState) {
-            FiniteUiState.LOADING -> GamingNewsLoadingState(Modifier.align(Alignment.Center))
+            FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
             else -> {
                 RefreshableContent(
                     isRefreshing = uiState.isRefreshing,
@@ -54,9 +54,9 @@ internal fun GamingNews(
                     onRefreshRequested = onRefreshRequested,
                 ) {
                     if (finiteUiState == FiniteUiState.EMPTY) {
-                        GamingNewsEmptyState(Modifier.matchParentSize())
+                        EmptyState(Modifier.matchParentSize())
                     } else {
-                        GamingNewsSuccessState(
+                        SuccessState(
                             news = uiState.news,
                             onNewsItemClicked = onNewsItemClicked,
                         )
@@ -68,7 +68,7 @@ internal fun GamingNews(
 }
 
 @Composable
-private fun GamingNewsLoadingState(modifier: Modifier) {
+private fun LoadingState(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier,
         color = GamedgeTheme.colors.secondary,
@@ -76,7 +76,7 @@ private fun GamingNewsLoadingState(modifier: Modifier) {
 }
 
 @Composable
-private fun GamingNewsEmptyState(modifier: Modifier) {
+private fun EmptyState(modifier: Modifier) {
     Column(
         // verticalScroll is to enable SwipeRefresh to work
         // when the screen is in empty state
@@ -95,7 +95,7 @@ private fun GamingNewsEmptyState(modifier: Modifier) {
 }
 
 @Composable
-private fun GamingNewsSuccessState(
+private fun SuccessState(
     news: List<GamingNewsItemModel>,
     onNewsItemClicked: (GamingNewsItemModel) -> Unit,
 ) {

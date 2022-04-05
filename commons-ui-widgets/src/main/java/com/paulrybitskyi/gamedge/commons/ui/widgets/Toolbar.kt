@@ -67,7 +67,7 @@ fun Toolbar(
             val titleRightPadding = getTitleHorizontalPadding(rightButtonIcon)
 
             if (leftButtonIcon != null) {
-                ToolbarButton(
+                Button(
                     icon = leftButtonIcon,
                     onClick = { onLeftButtonClick?.invoke() }
                 )
@@ -84,7 +84,7 @@ fun Toolbar(
             )
 
             if (rightButtonIcon != null) {
-                ToolbarButton(
+                Button(
                     icon = rightButtonIcon,
                     onClick = { onRightButtonClick?.invoke() }
                 )
@@ -105,7 +105,7 @@ private fun getTitleHorizontalPadding(icon: Painter?): Dp {
 }
 
 @Composable
-private fun ToolbarButton(
+private fun Button(
     icon: Painter,
     onClick: () -> Unit,
 ) {

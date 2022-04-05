@@ -43,37 +43,37 @@ internal fun GameInfoDetails(details: GameInfoDetailsModel) {
                 .fillMaxWidth()
                 .padding(dimensionResource(R.dimen.game_details_container_padding)),
         ) {
-            GameDetailsTitle(
+            Title(
                 modifier = Modifier.padding(
                     bottom = dimensionResource(R.dimen.game_details_title_padding_bottom)
                 ),
             )
 
             if (details.hasGenresText) {
-                GameDetailsGenresSection(checkNotNull(details.genresText))
+                GenresSection(checkNotNull(details.genresText))
             }
 
             if (details.hasPlatformsText) {
-                GameDetailsPlatformsSection(checkNotNull(details.platformsText))
+                PlatformsSection(checkNotNull(details.platformsText))
             }
 
             if (details.hasModesText) {
-                GameDetailsModesSection(checkNotNull(details.modesText))
+                ModesSection(checkNotNull(details.modesText))
             }
 
             if (details.hasPlayerPerspectivesText) {
-                GameDetailsPlayerPerspectivesSection(checkNotNull(details.playerPerspectivesText))
+                PlayerPerspectivesSection(checkNotNull(details.playerPerspectivesText))
             }
 
             if (details.hasThemesText) {
-                GameDetailsThemesSection(checkNotNull(details.themesText))
+                ThemesSection(checkNotNull(details.themesText))
             }
         }
     }
 }
 
 @Composable
-private fun GameDetailsTitle(modifier: Modifier) {
+private fun Title(modifier: Modifier) {
     Text(
         text = stringResource(R.string.game_details_title),
         modifier = modifier,
@@ -83,7 +83,7 @@ private fun GameDetailsTitle(modifier: Modifier) {
 }
 
 @Composable
-private fun GameDetailsGenresSection(genres: String) {
+private fun GenresSection(genres: String) {
     Text(
         text = stringResource(R.string.game_details_genres_title),
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
@@ -98,7 +98,7 @@ private fun GameDetailsGenresSection(genres: String) {
 }
 
 @Composable
-private fun GameDetailsPlatformsSection(platforms: String) {
+private fun PlatformsSection(platforms: String) {
     Text(
         text = stringResource(R.string.game_details_platforms_title),
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
@@ -113,7 +113,7 @@ private fun GameDetailsPlatformsSection(platforms: String) {
 }
 
 @Composable
-private fun GameDetailsModesSection(modes: String) {
+private fun ModesSection(modes: String) {
     Text(
         text = stringResource(R.string.game_details_modes_title),
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
@@ -128,7 +128,7 @@ private fun GameDetailsModesSection(modes: String) {
 }
 
 @Composable
-private fun GameDetailsPlayerPerspectivesSection(playerPerspectives: String) {
+private fun PlayerPerspectivesSection(playerPerspectives: String) {
     Text(
         text = stringResource(R.string.game_details_player_perspectives_title),
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
@@ -143,7 +143,7 @@ private fun GameDetailsPlayerPerspectivesSection(playerPerspectives: String) {
 }
 
 @Composable
-private fun GameDetailsThemesSection(themes: String) {
+private fun ThemesSection(themes: String) {
     Text(
         text = stringResource(R.string.game_details_themes_title),
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),

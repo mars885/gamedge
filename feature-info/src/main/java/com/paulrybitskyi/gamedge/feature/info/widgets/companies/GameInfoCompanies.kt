@@ -92,7 +92,7 @@ internal fun GameInfoCompanies(
                 )
             ) {
                 items(companies, key = GameInfoCompanyModel::id) { company ->
-                    GameInfoCompany(
+                    Company(
                         logoImageUrl = company.logoUrl,
                         logoContainerSize = Pair(
                             with(density) { company.logoContainerSize.width.toDp() },
@@ -110,7 +110,7 @@ internal fun GameInfoCompanies(
 }
 
 @Composable
-private fun GameInfoCompany(
+private fun Company(
     logoImageUrl: String?,
     logoContainerSize: Pair<Dp, Dp>,
     logoImageSize: Pair<Int, Int>,
@@ -124,13 +124,13 @@ private fun GameInfoCompany(
         elevation = dimensionResource(R.dimen.game_company_card_elevation),
     ) {
         Column {
-            GameInfoCompanyLogoImage(
+            CompanyLogoImage(
                 logoImageUrl = logoImageUrl,
                 logoContainerSize = logoContainerSize,
                 logoImageSize = logoImageSize,
             )
 
-            GameInfoCompanyDetails(
+            CompanyDetails(
                 name = name,
                 roles = roles,
                 containerWidth = logoContainerSize.width,
@@ -140,7 +140,7 @@ private fun GameInfoCompany(
 }
 
 @Composable
-private fun GameInfoCompanyLogoImage(
+private fun CompanyLogoImage(
     logoImageUrl: String?,
     logoContainerSize: Pair<Dp, Dp>,
     logoImageSize: Pair<Int, Int>,
@@ -177,7 +177,7 @@ private fun GameInfoCompanyLogoImage(
 }
 
 @Composable
-private fun GameInfoCompanyDetails(
+private fun CompanyDetails(
     name: String,
     roles: String,
     containerWidth: Dp,

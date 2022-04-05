@@ -70,7 +70,7 @@ internal fun GameInfoLinks(
                 crossAxisSpacing = dimensionResource(R.dimen.game_links_flow_row_vertical_spacing),
             ) {
                 for (link in links) {
-                    GameInfoLink(
+                    Link(
                         link = link,
                         onLinkClicked = { onLinkClicked(link) },
                     )
@@ -81,7 +81,7 @@ internal fun GameInfoLinks(
 }
 
 @Composable
-private fun GameInfoLink(
+private fun Link(
     link: GameInfoLinkModel,
     onLinkClicked: () -> Unit,
 ) {

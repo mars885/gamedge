@@ -43,12 +43,12 @@ fun Games(
 ) {
     AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
         when (finiteUiState) {
-            FiniteUiState.EMPTY -> GamesEmptyState(
+            FiniteUiState.EMPTY -> EmptyState(
                 uiState = uiState,
                 modifier = Modifier.align(Alignment.Center)
             )
-            FiniteUiState.LOADING -> GamesLoadingState(Modifier.align(Alignment.Center))
-            FiniteUiState.SUCCESS -> GamesSuccessState(
+            FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
+            FiniteUiState.SUCCESS -> SuccessState(
                 uiState = uiState,
                 modifier = Modifier.matchParentSize(),
                 onGameClicked = onGameClicked,
@@ -59,7 +59,7 @@ fun Games(
 }
 
 @Composable
-private fun GamesLoadingState(modifier: Modifier) {
+private fun LoadingState(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier,
         color = GamedgeTheme.colors.secondary,
@@ -67,7 +67,7 @@ private fun GamesLoadingState(modifier: Modifier) {
 }
 
 @Composable
-private fun GamesEmptyState(
+private fun EmptyState(
     uiState: GamesUiState,
     modifier: Modifier,
 ) {
@@ -81,7 +81,7 @@ private fun GamesEmptyState(
 }
 
 @Composable
-private fun GamesSuccessState(
+private fun SuccessState(
     uiState: GamesUiState,
     modifier: Modifier,
     onGameClicked: (GameModel) -> Unit,

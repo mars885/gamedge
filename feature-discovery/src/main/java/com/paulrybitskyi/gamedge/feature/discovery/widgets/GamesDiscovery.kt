@@ -73,7 +73,7 @@ internal fun GamesDiscovery(
                     }
                 },
             ) {
-                GamesDiscoveryItems(
+                CategoryPreviewItems(
                     items = items,
                     onCategoryMoreButtonClicked = onCategoryMoreButtonClicked,
                     onCategoryGameClicked = onCategoryGameClicked,
@@ -84,7 +84,7 @@ internal fun GamesDiscovery(
 }
 
 @Composable
-private fun GamesDiscoveryItems(
+private fun CategoryPreviewItems(
     items: List<GamesDiscoveryItemModel>,
     onCategoryMoreButtonClicked: (category: String) -> Unit,
     onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,

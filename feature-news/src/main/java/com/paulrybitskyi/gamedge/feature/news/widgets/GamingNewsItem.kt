@@ -57,7 +57,7 @@ internal fun GamingNewsItem(
     ) {
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.gaming_news_item_padding))) {
             if (imageUrl != null) {
-                GamingNewsItemImage(
+                Image(
                     imageUrl = imageUrl,
                     modifier = Modifier
                         .height(dimensionResource(R.dimen.gaming_news_item_image_height))
@@ -80,13 +80,13 @@ internal fun GamingNewsItem(
                     lineHeight = TextUnit.Unspecified,
                 ),
             )
-            GamingNewsItemTimestamp(publicationDate = publicationDate)
+            Timestamp(publicationDate = publicationDate)
         }
     }
 }
 
 @Composable
-private fun GamingNewsItemImage(
+private fun Image(
     imageUrl: String,
     modifier: Modifier
 ) {
@@ -112,7 +112,7 @@ private fun GamingNewsItemImage(
 }
 
 @Composable
-private fun GamingNewsItemTimestamp(publicationDate: String) {
+private fun Timestamp(publicationDate: String) {
     Row(
         modifier = Modifier.padding(
             top = dimensionResource(R.dimen.gaming_news_item_publication_date_padding_top)

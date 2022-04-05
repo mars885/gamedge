@@ -79,7 +79,7 @@ internal fun GameInfoScreenshots(
                     items = screenshots,
                     key = { _, screenshot -> screenshot.id },
                 ) { index, screenshot ->
-                    GameInfoScreenshot(
+                    Screenshot(
                         screenshotUrl = screenshot.url,
                         modifier = Modifier.size(
                             width = dimensionResource(R.dimen.game_screenshots_item_width),
@@ -94,7 +94,7 @@ internal fun GameInfoScreenshots(
 }
 
 @Composable
-private fun GameInfoScreenshot(
+private fun Screenshot(
     screenshotUrl: String,
     modifier: Modifier,
     onScreenshotClicked: () -> Unit,

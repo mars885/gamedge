@@ -89,7 +89,7 @@ internal fun GameInfoVideos(
                 )
             ) {
                 items(videos, key = GameInfoVideoModel::id) { video ->
-                    GameInfoVideo(
+                    Video(
                         thumbnailUrl = video.thumbnailUrl,
                         title = video.title,
                         thumbnailHeight = dimensionResource(R.dimen.game_videos_item_thumbnail_height),
@@ -103,7 +103,7 @@ internal fun GameInfoVideos(
 }
 
 @Composable
-private fun GameInfoVideo(
+private fun Video(
     thumbnailUrl: String?,
     title: String,
     thumbnailHeight: Dp,
