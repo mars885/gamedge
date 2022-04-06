@@ -24,12 +24,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -44,6 +41,8 @@ import androidx.constraintlayout.compose.ConstraintLayoutScope
 import androidx.constraintlayout.compose.Dimension
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
+import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
+import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 
@@ -57,11 +56,7 @@ fun GamesCategoryPreview(
     isMoreButtonVisible: Boolean = true,
     onCategoryMoreButtonClicked: (() -> Unit)? = null,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RectangleShape,
-        elevation = dimensionResource(R.dimen.games_category_preview_card_elevation),
-    ) {
+    GamedgeCard(Modifier.fillMaxWidth()) {
         ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
             val titleRefMargin = dimensionResource(R.dimen.games_category_preview_title_margin)
             val progressBarMarginEnd = dimensionResource(R.dimen.games_category_preview_progress_bar_margin_end)
@@ -130,9 +125,8 @@ private fun Title(
 
 @Composable
 private fun ProgressBar(modifier: Modifier) {
-    CircularProgressIndicator(
+    GamedgeProgressIndicator(
         modifier = modifier.size(dimensionResource(R.dimen.games_category_preview_progress_bar_size)),
-        color = GamedgeTheme.colors.secondary,
         strokeWidth = dimensionResource(R.dimen.games_category_preview_progress_bar_stroke_width),
     )
 }

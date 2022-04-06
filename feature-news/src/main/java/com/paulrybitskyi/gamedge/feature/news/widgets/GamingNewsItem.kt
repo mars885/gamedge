@@ -21,14 +21,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -39,6 +37,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.feature.news.R
 
 @Composable
@@ -46,11 +45,9 @@ internal fun GamingNewsItem(
     model: GamingNewsItemModel,
     onClick: () -> Unit
 ) {
-    Card(
+    GamedgeCard(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
-        shape = RectangleShape,
-        elevation = dimensionResource(R.dimen.gaming_news_item_card_elevation),
     ) {
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.gaming_news_item_padding))) {
             if (model.hasImageUrl) {
@@ -87,12 +84,12 @@ private fun Image(
     imageUrl: String,
     modifier: Modifier
 ) {
-    Card(
+    GamedgeCard(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier),
+        shape = GamedgeTheme.shapes.medium,
         backgroundColor = Color.Transparent,
-        elevation = dimensionResource(R.dimen.gaming_news_item_image_card_elevation)
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)

@@ -23,7 +23,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.feature.news.R
@@ -69,10 +69,7 @@ internal fun GamingNews(
 
 @Composable
 private fun LoadingState(modifier: Modifier) {
-    CircularProgressIndicator(
-        modifier = modifier,
-        color = GamedgeTheme.colors.secondary,
-    )
+    GamedgeProgressIndicator(modifier)
 }
 
 @Composable

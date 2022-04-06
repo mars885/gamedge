@@ -16,13 +16,10 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.links
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalMinimumTouchTargetEnforcement
 import androidx.compose.material.Text
@@ -30,15 +27,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.flowlayout.FlowRow
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.gamedge.feature.info.R
+import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSection
 import java.util.Locale
 
 @Composable
@@ -46,35 +44,19 @@ internal fun GameInfoLinks(
     links: List<GameInfoLinkModel>,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RectangleShape,
-        elevation = dimensionResource(R.dimen.game_links_card_elevation),
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.game_links_container_padding)),
+    GameInfoSection(title = stringResource(R.string.game_links_title)) {
+        FlowRow(
+            modifier = Modifier.padding(
+                horizontal = dimensionResource(R.dimen.game_links_container_padding_horizontal),
+            ),
+            mainAxisSpacing = dimensionResource(R.dimen.game_links_flow_row_horizontal_spacing),
+            crossAxisSpacing = dimensionResource(R.dimen.game_links_flow_row_vertical_spacing),
         ) {
-            Text(
-                text = stringResource(R.string.game_links_title),
-                modifier = Modifier.padding(
-                    bottom = dimensionResource(R.dimen.game_links_title_padding),
-                ),
-                color = GamedgeTheme.colors.onPrimary,
-                style = GamedgeTheme.typography.h6,
-            )
-
-            FlowRow(
-                mainAxisSpacing = dimensionResource(R.dimen.game_links_flow_row_horizontal_spacing),
-                crossAxisSpacing = dimensionResource(R.dimen.game_links_flow_row_vertical_spacing),
-            ) {
-                for (link in links) {
-                    Link(
-                        link = link,
-                        onLinkClicked = { onLinkClicked(link) },
-                    )
-                }
+            for (link in links) {
+                Link(
+                    link = link,
+                    onLinkClicked = { onLinkClicked(link) },
+                )
             }
         }
     }
@@ -86,14 +68,13 @@ private fun Link(
     onLinkClicked: () -> Unit,
 ) {
     CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
-        Card(
+        GamedgeCard(
             onClick = onLinkClicked,
             shape = RoundedCornerShape(
                 dimensionResource(R.dimen.game_links_item_corner_radius)
             ),
             backgroundColor = GamedgeTheme.colors.primaryVariant,
             contentColor = GamedgeTheme.colors.onSurface,
-            elevation = dimensionResource(R.dimen.game_links_item_elevation),
         ) {
             Row(
                 modifier = Modifier

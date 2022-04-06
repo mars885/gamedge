@@ -19,13 +19,13 @@ package com.paulrybitskyi.gamedge.feature.splash
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
 
 @Composable
 internal fun Splash() {
@@ -36,9 +36,8 @@ internal fun Splash() {
             verticalBias = 0.5f
         )
     ) {
-        CircularProgressIndicator(
+        GamedgeProgressIndicator(
             modifier = Modifier.size(dimensionResource(R.dimen.splash_progress_bar_size)),
-            color = GamedgeTheme.colors.secondary,
             strokeWidth = dimensionResource(R.dimen.progress_bar_stroke_width)
         )
     }

@@ -17,141 +17,77 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.details
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.theme.subtitle3
 import com.paulrybitskyi.gamedge.feature.info.R
+import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSection
 
 @Composable
 internal fun GameInfoDetails(details: GameInfoDetailsModel) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RectangleShape,
-        elevation = dimensionResource(R.dimen.game_details_card_elevation),
+    GameInfoSection(
+        title = stringResource(R.string.game_details_title),
+        titleBottomPadding = dimensionResource(R.dimen.game_details_title_padding_bottom),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.game_details_container_padding)),
+            modifier = Modifier.padding(
+                horizontal = dimensionResource(R.dimen.game_details_container_padding_horizontal),
+            ),
         ) {
-            Title(
-                modifier = Modifier.padding(
-                    bottom = dimensionResource(R.dimen.game_details_title_padding_bottom)
-                ),
-            )
-
             if (details.hasGenresText) {
-                GenresSection(checkNotNull(details.genresText))
+                CategorySection(
+                    title = stringResource(R.string.game_details_genres_title),
+                    value = checkNotNull(details.genresText),
+                )
             }
 
             if (details.hasPlatformsText) {
-                PlatformsSection(checkNotNull(details.platformsText))
+                CategorySection(
+                    title = stringResource(R.string.game_details_platforms_title),
+                    value = checkNotNull(details.platformsText),
+                )
             }
 
             if (details.hasModesText) {
-                ModesSection(checkNotNull(details.modesText))
+                CategorySection(
+                    title = stringResource(R.string.game_details_modes_title),
+                    value = checkNotNull(details.modesText),
+                )
             }
 
             if (details.hasPlayerPerspectivesText) {
-                PlayerPerspectivesSection(checkNotNull(details.playerPerspectivesText))
+                CategorySection(
+                    title = stringResource(R.string.game_details_player_perspectives_title),
+                    value = checkNotNull(details.playerPerspectivesText),
+                )
             }
 
             if (details.hasThemesText) {
-                ThemesSection(checkNotNull(details.themesText))
+                CategorySection(
+                    title = stringResource(R.string.game_details_themes_title),
+                    value = checkNotNull(details.themesText),
+                )
             }
         }
     }
 }
 
 @Composable
-private fun Title(modifier: Modifier) {
+private fun CategorySection(title: String, value: String) {
     Text(
-        text = stringResource(R.string.game_details_title),
-        modifier = modifier,
-        color = GamedgeTheme.colors.onPrimary,
-        style = GamedgeTheme.typography.h6,
-    )
-}
-
-@Composable
-private fun GenresSection(genres: String) {
-    Text(
-        text = stringResource(R.string.game_details_genres_title),
+        text = title,
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
         color = GamedgeTheme.colors.onPrimary,
         style = GamedgeTheme.typography.subtitle3,
     )
     Text(
-        text = genres,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
-        style = GamedgeTheme.typography.body2,
-    )
-}
-
-@Composable
-private fun PlatformsSection(platforms: String) {
-    Text(
-        text = stringResource(R.string.game_details_platforms_title),
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
-        color = GamedgeTheme.colors.onPrimary,
-        style = GamedgeTheme.typography.subtitle3,
-    )
-    Text(
-        text = platforms,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
-        style = GamedgeTheme.typography.body2,
-    )
-}
-
-@Composable
-private fun ModesSection(modes: String) {
-    Text(
-        text = stringResource(R.string.game_details_modes_title),
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
-        color = GamedgeTheme.colors.onPrimary,
-        style = GamedgeTheme.typography.subtitle3,
-    )
-    Text(
-        text = modes,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
-        style = GamedgeTheme.typography.body2,
-    )
-}
-
-@Composable
-private fun PlayerPerspectivesSection(playerPerspectives: String) {
-    Text(
-        text = stringResource(R.string.game_details_player_perspectives_title),
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
-        color = GamedgeTheme.colors.onPrimary,
-        style = GamedgeTheme.typography.subtitle3,
-    )
-    Text(
-        text = playerPerspectives,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
-        style = GamedgeTheme.typography.body2,
-    )
-}
-
-@Composable
-private fun ThemesSection(themes: String) {
-    Text(
-        text = stringResource(R.string.game_details_themes_title),
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
-        color = GamedgeTheme.colors.onPrimary,
-        style = GamedgeTheme.typography.subtitle3,
-    )
-    Text(
-        text = themes,
+        text = value,
         modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
         style = GamedgeTheme.typography.body2,
     )

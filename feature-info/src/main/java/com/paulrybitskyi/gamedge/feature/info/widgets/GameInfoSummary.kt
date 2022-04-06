@@ -19,10 +19,7 @@ package com.paulrybitskyi.gamedge.feature.info.widgets
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -31,7 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.stringResource
@@ -39,6 +35,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.feature.info.R
+import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSection
 
 private const val ANIMATION_DURATION = 300
 
@@ -56,43 +53,27 @@ internal fun GameInfoSummary(summary: String) {
         }
     }
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(cardClickableModifier),
-        shape = RectangleShape,
-        elevation = dimensionResource(R.dimen.game_summary_card_elevation),
+    GameInfoSection(
+        title = stringResource(R.string.game_summary_title),
+        modifier = cardClickableModifier,
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Text(
-                text = stringResource(R.string.game_summary_title),
-                modifier = Modifier
-                    .padding(
-                        top = dimensionResource(R.dimen.game_summary_title_padding),
-                        bottom = dimensionResource(R.dimen.game_summary_title_padding_bottom)
-                    )
-                    .padding(horizontal = dimensionResource(R.dimen.game_summary_title_padding)),
-                color = GamedgeTheme.colors.onPrimary,
-                style = GamedgeTheme.typography.h6,
-            )
-            Text(
-                text = summary,
-                modifier = Modifier
-                    .animateContentSize(animationSpec = tween(durationMillis = ANIMATION_DURATION))
-                    .padding(horizontal = dimensionResource(R.dimen.game_summary_content_padding))
-                    .padding(bottom = dimensionResource(R.dimen.game_summary_content_padding)),
-                overflow = TextOverflow.Ellipsis,
-                maxLines = if (isExpanded) {
-                    Integer.MAX_VALUE
-                } else {
-                    integerResource(R.integer.game_summary_content_max_lines)
-                },
-                onTextLayout = { textLayoutResult ->
-                    isExpandable = textLayoutResult.didOverflowHeight
-                },
-                style = GamedgeTheme.typography.body1,
-            )
-        }
+        Text(
+            text = summary,
+            modifier = Modifier
+                .animateContentSize(animationSpec = tween(durationMillis = ANIMATION_DURATION))
+                .padding(horizontal = dimensionResource(R.dimen.game_summary_content_padding)),
+            color = GamedgeTheme.colors.onSurface,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = if (isExpanded) {
+                Integer.MAX_VALUE
+            } else {
+                integerResource(R.integer.game_summary_content_max_lines)
+            },
+            onTextLayout = { textLayoutResult ->
+                isExpandable = textLayoutResult.didOverflowHeight
+            },
+            style = GamedgeTheme.typography.body1,
+        )
     }
 }
 

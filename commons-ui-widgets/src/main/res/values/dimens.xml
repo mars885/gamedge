@@ -18,6 +18,9 @@
 
 <resources>
 
+    <!-- Card -->
+    <dimen name="card_elevation">2dp</dimen>
+
     <!-- General -->
     <dimen name="progress_bar_stroke_width">3dp</dimen>
 
@@ -35,12 +38,10 @@
     <dimen name="swipe_refresh_refreshing_offset">24dp</dimen>
 
     <!-- GameCover -->
-    <dimen name="game_cover_card_elevation">2dp</dimen>
     <dimen name="game_cover_card_corner_radius">4dp</dimen>
     <dimen name="game_cover_title_horizontal_padding">16dp</dimen>
 
     <!-- GamesCategoryPreview -->
-    <dimen name="games_category_preview_card_elevation">2dp</dimen>
     <dimen name="games_category_preview_title_margin">15dp</dimen>
     <dimen name="games_category_preview_progress_bar_size">16dp</dimen>
     <dimen name="games_category_preview_progress_bar_stroke_width">2dp</dimen>
@@ -59,7 +60,6 @@
     <dimen name="games_category_preview_cover_horizontal_arrangement">6dp</dimen>
 
     <!-- Game -->
-    <dimen name="game_card_elevation">2dp</dimen>
     <dimen name="game_padding">15dp</dimen>
     <dimen name="game_cover_width">112dp</dimen>
     <dimen name="game_cover_height">153dp</dimen>

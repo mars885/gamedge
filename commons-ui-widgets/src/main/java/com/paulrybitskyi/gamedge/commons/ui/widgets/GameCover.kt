@@ -20,8 +20,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -30,12 +28,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter.State
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -50,12 +48,11 @@ fun GameCover(
     hasRoundedShape: Boolean = true,
     onCoverClicked: () -> Unit,
 ) {
-    Card(
+    GamedgeCard(
         onClick = onCoverClicked,
         modifier = modifier,
-        shape = if (hasRoundedShape) GamedgeTheme.shapes.medium else RoundedCornerShape(0.dp),
+        shape = if (hasRoundedShape) GamedgeTheme.shapes.medium else RectangleShape,
         backgroundColor = Color.Transparent,
-        elevation = dimensionResource(R.dimen.game_cover_card_elevation),
     ) {
         Box {
             val contentScale = ContentScale.Crop

@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,6 +34,7 @@ import com.google.accompanist.insets.navigationBarsPadding
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.feature.info.R
@@ -93,10 +93,7 @@ internal fun GameInfo(
 
 @Composable
 private fun LoadingState(modifier: Modifier) {
-    CircularProgressIndicator(
-        modifier = modifier,
-        color = GamedgeTheme.colors.secondary,
-    )
+    GamedgeProgressIndicator(modifier)
 }
 
 @Composable
@@ -225,7 +222,7 @@ private fun LazyListScope.HeaderItem(
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
 ) {
-    item(key = GameInfoSection.HEADER.id) {
+    item(key = GameInfoItem.HEADER.id) {
         GameInfoHeader(
             headerInfo = model,
             onArtworkClicked = onArtworkClicked,
@@ -240,7 +237,7 @@ private fun LazyListScope.VideosItem(
     videos: List<GameInfoVideoModel>,
     onVideoClicked: (GameInfoVideoModel) -> Unit,
 ) {
-    item(key = GameInfoSection.VIDEOS.id) {
+    item(key = GameInfoItem.VIDEOS.id) {
         GameInfoVideos(
             videos = videos,
             onVideClicked = onVideoClicked,
@@ -252,7 +249,7 @@ private fun LazyListScope.ScreenshotsItem(
     screenshots: List<GameInfoScreenshotModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
-    item(key = GameInfoSection.SCREENSHOTS.id) {
+    item(key = GameInfoItem.SCREENSHOTS.id) {
         GameInfoScreenshots(
             screenshots = screenshots,
             onScreenshotClicked = onScreenshotClicked,
@@ -261,13 +258,13 @@ private fun LazyListScope.ScreenshotsItem(
 }
 
 private fun LazyListScope.SummaryItem(model: String) {
-    item(key = GameInfoSection.SUMMARY.id) {
+    item(key = GameInfoItem.SUMMARY.id) {
         GameInfoSummary(summary = model)
     }
 }
 
 private fun LazyListScope.DetailsItem(model: GameInfoDetailsModel) {
-    item(key = GameInfoSection.DETAILS.id) {
+    item(key = GameInfoItem.DETAILS.id) {
         GameInfoDetails(details = model)
     }
 }
@@ -276,7 +273,7 @@ private fun LazyListScope.LinksItem(
     model: List<GameInfoLinkModel>,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
 ) {
-    item(key = GameInfoSection.LINKS.id) {
+    item(key = GameInfoItem.LINKS.id) {
         GameInfoLinks(
             links = model,
             onLinkClicked = onLinkClicked,
@@ -288,7 +285,7 @@ private fun LazyListScope.CompaniesItem(
     model: List<GameInfoCompanyModel>,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
 ) {
-    item(key = GameInfoSection.COMPANIES.id) {
+    item(key = GameInfoItem.COMPANIES.id) {
         GameInfoCompanies(
             companies = model,
             onCompanyClicked = onCompanyClicked,
@@ -302,8 +299,8 @@ private fun LazyListScope.RelatedGamesItem(
 ) {
     item(
         key = when (model.type) {
-            GameInfoRelatedGamesType.OTHER_COMPANY_GAMES -> GameInfoSection.OTHER_COMPANY_GAMES.id
-            GameInfoRelatedGamesType.SIMILAR_GAMES -> GameInfoSection.SIMILAR_GAMES.id
+            GameInfoRelatedGamesType.OTHER_COMPANY_GAMES -> GameInfoItem.OTHER_COMPANY_GAMES.id
+            GameInfoRelatedGamesType.SIMILAR_GAMES -> GameInfoItem.SIMILAR_GAMES.id
         }
     ) {
         val categoryGames = remember(model.items) {
@@ -321,6 +318,18 @@ private fun LazyListScope.RelatedGamesItem(
             isMoreButtonVisible = false,
         )
     }
+}
+
+private enum class GameInfoItem(val id: Int) {
+    HEADER(id = 1),
+    VIDEOS(id = 2),
+    SCREENSHOTS(id = 3),
+    SUMMARY(id = 4),
+    DETAILS(id = 5),
+    LINKS(id = 6),
+    COMPANIES(id = 7),
+    OTHER_COMPANY_GAMES(id = 8),
+    SIMILAR_GAMES(id = 9),
 }
 
 // TODO (02.01.2022): Currently, preview height is limited to 2k DP.

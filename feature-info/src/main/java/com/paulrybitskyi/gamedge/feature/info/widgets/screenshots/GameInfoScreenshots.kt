@@ -17,21 +17,12 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.screenshots
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Card
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -41,54 +32,28 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.feature.info.R
+import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSectionWithInnerList
 
 @Composable
 internal fun GameInfoScreenshots(
     screenshots: List<GameInfoScreenshotModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RectangleShape,
-        elevation = dimensionResource(R.dimen.game_screenshots_card_elevation),
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = dimensionResource(R.dimen.game_screenshots_card_vertical_padding)),
-        ) {
-            Text(
-                text = stringResource(R.string.game_screenshots_title),
-                modifier = Modifier
-                    .padding(bottom = dimensionResource(R.dimen.game_screenshots_title_padding_bottom))
-                    .padding(horizontal = dimensionResource(R.dimen.game_screenshots_title_padding)),
-                color = GamedgeTheme.colors.onPrimary,
-                style = GamedgeTheme.typography.h6,
-            )
-
-            LazyRow(
-                contentPadding = PaddingValues(
-                    horizontal = dimensionResource(R.dimen.game_screenshots_horizontal_content_padding),
+    GameInfoSectionWithInnerList(title = stringResource(R.string.game_screenshots_title)) {
+        itemsIndexed(
+            items = screenshots,
+            key = { _, screenshot -> screenshot.id },
+        ) { index, screenshot ->
+            Screenshot(
+                screenshot = screenshot,
+                modifier = Modifier.size(
+                    width = dimensionResource(R.dimen.game_screenshots_item_width),
+                    height = dimensionResource(R.dimen.game_screenshots_item_height),
                 ),
-                horizontalArrangement = Arrangement.spacedBy(
-                    dimensionResource(R.dimen.game_screenshots_horizontal_arrangement),
-                )
-            ) {
-                itemsIndexed(
-                    items = screenshots,
-                    key = { _, screenshot -> screenshot.id },
-                ) { index, screenshot ->
-                    Screenshot(
-                        screenshot = screenshot,
-                        modifier = Modifier.size(
-                            width = dimensionResource(R.dimen.game_screenshots_item_width),
-                            height = dimensionResource(R.dimen.game_screenshots_item_height),
-                        ),
-                        onScreenshotClicked = { onScreenshotClicked(index) },
-                    )
-                }
-            }
+                onScreenshotClicked = { onScreenshotClicked(index) },
+            )
         }
     }
 }
@@ -99,11 +64,11 @@ private fun Screenshot(
     modifier: Modifier,
     onScreenshotClicked: () -> Unit,
 ) {
-    Card(
+    GamedgeCard(
         onClick = onScreenshotClicked,
         modifier = modifier,
+        shape = GamedgeTheme.shapes.medium,
         backgroundColor = Color.Transparent,
-        elevation = dimensionResource(R.dimen.game_screenshot_card_elevation),
     ) {
         Box {
             Image(

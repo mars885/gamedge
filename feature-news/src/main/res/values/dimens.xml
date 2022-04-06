@@ -18,11 +18,7 @@
 
 <resources>
 
-    <!-- GamingNewsItemImage -->
-    <dimen name="gaming_news_item_image_card_elevation">2dp</dimen>
-
     <!-- GamingNewsItem -->
-    <dimen name="gaming_news_item_card_elevation">2dp</dimen>
     <dimen name="gaming_news_item_padding">15dp</dimen>
     <dimen name="gaming_news_item_image_height">168dp</dimen>
     <dimen name="gaming_news_item_image_padding_bottom">15dp</dimen>

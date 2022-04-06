@@ -19,22 +19,16 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.companies
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -53,49 +47,23 @@ import com.paulrybitskyi.commons.ktx.hasTransparentPixels
 import com.paulrybitskyi.commons.ktx.isOpaque
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.core.utils.height
 import com.paulrybitskyi.gamedge.core.utils.width
 import com.paulrybitskyi.gamedge.feature.info.R
+import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSectionWithInnerList
 
 @Composable
 internal fun GameInfoCompanies(
     companies: List<GameInfoCompanyModel>,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RectangleShape,
-        elevation = dimensionResource(R.dimen.game_companies_card_elevation),
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = dimensionResource(R.dimen.game_companies_card_vertical_padding)),
-        ) {
-            Text(
-                text = stringResource(R.string.game_companies_title),
-                modifier = Modifier
-                    .padding(bottom = dimensionResource(R.dimen.game_companies_title_padding_bottom))
-                    .padding(horizontal = dimensionResource(R.dimen.game_companies_title_padding)),
-                color = GamedgeTheme.colors.onPrimary,
-                style = GamedgeTheme.typography.h6,
+    GameInfoSectionWithInnerList(title = stringResource(R.string.game_companies_title)) {
+        items(companies, key = GameInfoCompanyModel::id) { company ->
+            Company(
+                company = company,
+                onCompanyClicked = { onCompanyClicked(company) },
             )
-
-            LazyRow(
-                contentPadding = PaddingValues(
-                    horizontal = dimensionResource(R.dimen.game_companies_horizontal_content_padding),
-                ),
-                horizontalArrangement = Arrangement.spacedBy(
-                    dimensionResource(R.dimen.game_companies_horizontal_arrangement),
-                )
-            ) {
-                items(companies, key = GameInfoCompanyModel::id) { company ->
-                    Company(
-                        company = company,
-                        onCompanyClicked = { onCompanyClicked(company) },
-                    )
-                }
-            }
         }
     }
 }
@@ -111,10 +79,10 @@ private fun Company(
         with(density) { company.logoContainerSize.height.toDp() },
     )
 
-    Card(
+    GamedgeCard(
         onClick = onCompanyClicked,
+        shape = GamedgeTheme.shapes.medium,
         backgroundColor = Color.Transparent,
-        elevation = dimensionResource(R.dimen.game_company_card_elevation),
     ) {
         Column {
             CompanyLogoImage(
