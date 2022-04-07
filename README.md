@@ -18,6 +18,7 @@ The aim of this project is to showcase the latest trends in Android development 
 * [Development Setup](#development-setup)
   * [IGDB](#igdb)
   * [Gamespot](#gamespot)
+* [Jetpack Compose](#jetpack-compose)
 * [MAD Score](#mad-score)
 * [Download](#download)
 * [Contribution](#contribution)
@@ -118,6 +119,10 @@ Check [this link](https://www.gamespot.com/api/) on how to obtain an API key. On
 ```
 GAMESPOT_API_KEY=your_api_key_here
 ```
+
+## Jetpack Compose
+
+The app is currently being migrated to the Jetpack Compose on a [separate branch](https://github.com/mars885/gamedge/tree/feature/migrate-to-compose).
 
 ## MAD Score
 
