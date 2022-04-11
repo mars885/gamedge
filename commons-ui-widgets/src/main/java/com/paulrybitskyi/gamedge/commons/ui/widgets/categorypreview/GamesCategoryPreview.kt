@@ -27,13 +27,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutBaseScope
@@ -52,17 +52,15 @@ fun GamesCategoryPreview(
     isProgressBarVisible: Boolean,
     games: List<GamesCategoryPreviewItemModel>,
     onCategoryGameClicked: (GamesCategoryPreviewItemModel) -> Unit,
-    topBarMargin: Dp = dimensionResource(R.dimen.games_category_preview_top_bar_barrier_margin),
+    topBarMargin: Dp = GamedgeTheme.spaces.spacing_2_0,
     isMoreButtonVisible: Boolean = true,
     onCategoryMoreButtonClicked: (() -> Unit)? = null,
 ) {
     GamedgeCard(Modifier.fillMaxWidth()) {
         ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-            val titleRefMargin = dimensionResource(R.dimen.games_category_preview_title_margin)
-            val progressBarMarginEnd = dimensionResource(R.dimen.games_category_preview_progress_bar_margin_end)
-            val moreBtnHorizontalMargin = dimensionResource(
-                R.dimen.games_category_preview_more_button_horizontal_margin
-            )
+            val titleRefMargin = GamedgeTheme.spaces.spacing_3_5
+            val progressBarMarginEnd = GamedgeTheme.spaces.spacing_1_5
+            val moreBtnHorizontalMargin = GamedgeTheme.spaces.spacing_1_5
             val refs = createRefs()
             val (titleRef, progressBarRef, moreBtnRef, itemsListRef, infoRef) = refs
             val topBarBarrier = createBottomBarrier(titleRef, progressBarRef, moreBtnRef, margin = topBarMargin)
@@ -126,8 +124,8 @@ private fun Title(
 @Composable
 private fun ProgressBar(modifier: Modifier) {
     GamedgeProgressIndicator(
-        modifier = modifier.size(dimensionResource(R.dimen.games_category_preview_progress_bar_size)),
-        strokeWidth = dimensionResource(R.dimen.games_category_preview_progress_bar_stroke_width),
+        modifier = modifier.size(16.dp),
+        strokeWidth = 2.dp,
     )
 }
 
@@ -146,7 +144,7 @@ private fun MoreButton(
         text = stringResource(R.string.games_category_preview_more_button_text).uppercase(),
         modifier = modifier
             .then(clickableModifier)
-            .padding(dimensionResource(R.dimen.games_category_preview_more_button_padding)),
+            .padding(GamedgeTheme.spaces.spacing_2_0),
         color = GamedgeTheme.colors.secondary,
         style = GamedgeTheme.typography.button,
     )
@@ -161,8 +159,8 @@ private fun ConstraintLayoutScope.Content(
     onCategoryGameClicked: (GamesCategoryPreviewItemModel) -> Unit,
 ) {
     if (games.isEmpty()) {
-        val infoBottomMargin = dimensionResource(R.dimen.games_category_preview_info_view_margin_bottom)
-        val infoHorizontalMargin = dimensionResource(R.dimen.games_category_preview_info_view_horizontal_margin)
+        val infoBottomMargin = GamedgeTheme.spaces.spacing_7_0
+        val infoHorizontalMargin = GamedgeTheme.spaces.spacing_7_5
 
         EmptyState(
             modifier = Modifier.constrainAs(infoRef) {
@@ -196,7 +194,7 @@ private fun EmptyState(modifier: Modifier) {
         icon = painterResource(R.drawable.google_controller),
         title = stringResource(R.string.games_category_preview_info_view_title),
         modifier = modifier,
-        iconSize = dimensionResource(R.dimen.games_category_preview_info_view_icon_size),
+        iconSize = 80.dp,
     )
 }
 
@@ -206,28 +204,21 @@ private fun SuccessState(
     modifier: Modifier,
     onCategoryGameClicked: (GamesCategoryPreviewItemModel) -> Unit,
 ) {
-    val horizontalPadding = dimensionResource(R.dimen.games_category_preview_padding_horizontal)
-    val bottomPadding = dimensionResource(R.dimen.games_category_preview_padding_bottom)
+    val padding = GamedgeTheme.spaces.spacing_3_5
 
     LazyRow(
         modifier = modifier,
         contentPadding = PaddingValues(
-            start = horizontalPadding,
-            end = horizontalPadding,
-            bottom = bottomPadding,
+            start = padding,
+            end = padding,
+            bottom = padding,
         ),
-        horizontalArrangement = Arrangement.spacedBy(
-            dimensionResource(R.dimen.games_category_preview_cover_horizontal_arrangement)
-        ),
+        horizontalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_1_5),
     ) {
         items(games, key = GamesCategoryPreviewItemModel::id) { item ->
             GameCover(
                 title = item.title,
                 imageUrl = item.coverUrl,
-                modifier = Modifier.size(
-                    width = dimensionResource(R.dimen.games_category_preview_cover_item_width),
-                    height = dimensionResource(R.dimen.games_category_preview_cover_item_height)
-                ),
                 onCoverClicked = { onCategoryGameClicked(item) },
             )
         }

@@ -22,8 +22,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
 
@@ -37,8 +37,8 @@ internal fun Splash() {
         )
     ) {
         GamedgeProgressIndicator(
-            modifier = Modifier.size(dimensionResource(R.dimen.splash_progress_bar_size)),
-            strokeWidth = dimensionResource(R.dimen.progress_bar_stroke_width)
+            modifier = Modifier.size(30.dp),
+            strokeWidth = 3.dp,
         )
     }
 }

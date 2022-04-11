@@ -27,39 +27,39 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
-import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
 internal fun GameInfoSection(
     title: String,
     modifier: Modifier = Modifier,
-    titleBottomPadding: Dp = dimensionResource(R.dimen.game_info_section_title_padding_bottom),
-    content: @Composable ColumnScope.() -> Unit,
+    titleBottomPadding: Dp = GamedgeTheme.spaces.spacing_2_5,
+    content: @Composable ColumnScope.(PaddingValues) -> Unit,
 ) {
     GamedgeCard(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier),
     ) {
+        val contentPadding = GamedgeTheme.spaces.spacing_3_5
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = dimensionResource(R.dimen.game_info_section_padding_vertical)),
+                .padding(vertical = contentPadding),
         ) {
             Text(
                 text = title,
                 modifier = Modifier
-                    .padding(horizontal = dimensionResource(R.dimen.game_info_section_title_padding_horizontal))
+                    .padding(horizontal = contentPadding)
                     .padding(bottom = titleBottomPadding),
                 color = GamedgeTheme.colors.onPrimary,
                 style = GamedgeTheme.typography.h6,
             )
 
-            content()
+            content(PaddingValues(horizontal = contentPadding))
         }
     }
 }
@@ -69,14 +69,10 @@ internal fun GameInfoSectionWithInnerList(
     title: String,
     content: LazyListScope.() -> Unit,
 ) {
-    GameInfoSection(title = title) {
+    GameInfoSection(title = title) { paddingValues ->
         LazyRow(
-            contentPadding = PaddingValues(
-                horizontal = dimensionResource(R.dimen.game_info_section_horizontal_content_padding),
-            ),
-            horizontalArrangement = Arrangement.spacedBy(
-                dimensionResource(R.dimen.game_info_section_horizontal_arrangement),
-            ),
+            contentPadding = paddingValues,
+            horizontalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_1_5),
             content = content,
         )
     }

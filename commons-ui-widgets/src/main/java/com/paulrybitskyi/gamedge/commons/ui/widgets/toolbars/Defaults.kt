@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.ui.theme
+package com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars
 
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Shapes
 import androidx.compose.ui.unit.dp
 
-val shapes = Shapes(
-    small = RoundedCornerShape(16.dp),
-    medium = RoundedCornerShape(4.dp),
-    large = RoundedCornerShape(0.dp),
-)
+internal val TOOLBAR_HEIGHT = 56.dp

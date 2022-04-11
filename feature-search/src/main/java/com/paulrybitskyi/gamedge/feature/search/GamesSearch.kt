@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.statusBarsPadding
 import com.paulrybitskyi.gamedge.commons.ui.OnLifecycleEvent
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.commons.ui.widgets.SearchToolbar
+import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.SearchToolbar
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.Games
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState

@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,14 +29,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.widgets.DEFAULT_COVER_HEIGHT
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
-import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 import kotlin.math.roundToInt
 
 @Composable
@@ -52,17 +50,11 @@ fun Game(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.game_padding))
+                .padding(GamedgeTheme.spaces.spacing_3_5)
         ) {
-            val gameCoverHeight = dimensionResource(R.dimen.game_cover_height)
-
             GameCover(
                 title = null,
                 imageUrl = game.coverImageUrl,
-                modifier = Modifier.size(
-                    width = dimensionResource(R.dimen.game_cover_width),
-                    height = gameCoverHeight,
-                ),
                 onCoverClicked = onClick,
             )
 
@@ -71,7 +63,7 @@ fun Game(
                 releaseDate = game.releaseDate,
                 developerName = game.developerName,
                 description = game.description,
-                modifier = Modifier.height(gameCoverHeight),
+                modifier = Modifier.height(DEFAULT_COVER_HEIGHT),
             )
         }
     }
@@ -88,9 +80,7 @@ private fun Details(
     Column(modifier = modifier) {
         Text(
             text = name,
-            modifier = Modifier.padding(
-                start = dimensionResource(R.dimen.game_name_padding_start),
-            ),
+            modifier = Modifier.padding(start = GamedgeTheme.spaces.spacing_3_0),
             color = GamedgeTheme.colors.onPrimary,
             overflow = TextOverflow.Ellipsis,
             maxLines = 3,
@@ -101,8 +91,8 @@ private fun Details(
             text = releaseDate,
             modifier = Modifier
                 .padding(
-                    top = dimensionResource(R.dimen.game_details_padding_top),
-                    start = dimensionResource(R.dimen.game_details_padding_start),
+                    top = GamedgeTheme.spaces.spacing_2_5,
+                    start = GamedgeTheme.spaces.spacing_3_0,
                 ),
             style = GamedgeTheme.typography.caption,
         )
@@ -110,9 +100,7 @@ private fun Details(
         if (developerName != null) {
             Text(
                 text = developerName,
-                modifier = Modifier.padding(
-                    start = dimensionResource(R.dimen.game_details_padding_start)
-                ),
+                modifier = Modifier.padding(start = GamedgeTheme.spaces.spacing_3_0),
                 style = GamedgeTheme.typography.caption,
             )
         }
@@ -132,8 +120,8 @@ private fun DetailsDescription(description: String) {
         modifier = Modifier
             .fillMaxHeight()
             .padding(
-                top = dimensionResource(R.dimen.game_details_padding_top),
-                start = dimensionResource(R.dimen.game_details_padding_start),
+                top = GamedgeTheme.spaces.spacing_2_5,
+                start = GamedgeTheme.spaces.spacing_3_0,
             ),
         overflow = TextOverflow.Ellipsis,
         maxLines = maxLines,

@@ -53,11 +53,11 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
@@ -94,6 +94,9 @@ private const val CONSTRAINT_ID_RATING = "rating"
 private const val CONSTRAINT_ID_LIKE_COUNT = "like_count"
 private const val CONSTRAINT_ID_AGE_RATING = "age_rating"
 private const val CONSTRAINT_ID_GAME_CATEGORY = "game_category"
+
+private val COVER_SPACE = 40.dp
+private val INFO_ICON_SIZE = 34.dp
 
 @Composable
 internal fun GameInfoHeader(
@@ -139,20 +142,20 @@ internal fun GameInfoHeader(
             modifier = Modifier
                 .layoutId(CONSTRAINT_ID_BACK_BUTTON)
                 .statusBarsPadding()
-                .size(dimensionResource(R.dimen.game_info_header_back_button_size))
+                .size(56.dp)
                 .clickable(
                     indication = rememberRipple(
                         bounded = false,
-                        radius = dimensionResource(R.dimen.game_info_header_back_button_ripple_radius),
+                        radius = 18.dp,
                     ),
                     onClick = onBackButtonClicked,
                 )
-                .padding(dimensionResource(R.dimen.game_info_header_back_button_drawable_bg_padding))
+                .padding(GamedgeTheme.spaces.spacing_2_5)
                 .background(
                     color = GamedgeTheme.colors.lightScrim,
                     shape = CircleShape,
                 )
-                .padding(dimensionResource(R.dimen.game_info_header_back_button_drawable_fog_padding)),
+                .padding(GamedgeTheme.spaces.spacing_1_5),
             tint = GamedgeTheme.colors.onPrimary,
         )
 
@@ -168,13 +171,11 @@ internal fun GameInfoHeader(
                     .statusBarsPadding()
                     .background(
                         color = GamedgeTheme.colors.lightScrim,
-                        shape = RoundedCornerShape(
-                            dimensionResource(R.dimen.game_info_header_page_indicator_background_radius),
-                        )
+                        shape = RoundedCornerShape(20.dp),
                     )
                     .padding(
-                        vertical = dimensionResource(R.dimen.game_info_header_page_indicator_vertical_padding),
-                        horizontal = dimensionResource(R.dimen.game_info_header_page_indicator_horizontal_padding),
+                        vertical = GamedgeTheme.spaces.spacing_1_5,
+                        horizontal = GamedgeTheme.spaces.spacing_2_0,
                     ),
                 color = GamedgeTheme.colors.onPrimary,
                 style = GamedgeTheme.typography.subtitle3,
@@ -185,7 +186,7 @@ internal fun GameInfoHeader(
             Modifier
                 .layoutId(CONSTRAINT_ID_BACKDROP)
                 .shadow(
-                    elevation = dimensionResource(R.dimen.game_info_header_backdrop_elevation_expanded),
+                    elevation = GamedgeTheme.spaces.spacing_0_5,
                     shape = RectangleShape,
                     clip = false,
                 )
@@ -199,7 +200,7 @@ internal fun GameInfoHeader(
         Spacer(
             Modifier
                 .layoutId(CONSTRAINT_ID_COVER_SPACE)
-                .height(dimensionResource(R.dimen.game_info_header_cover_space)),
+                .height(COVER_SPACE),
         )
 
         GameCover(
@@ -226,9 +227,7 @@ internal fun GameInfoHeader(
                     atEnd = headerInfo.isLiked,
                 ),
                 contentDescription = null,
-                modifier = Modifier.size(
-                    dimensionResource(R.dimen.game_info_header_like_btn_max_image_size),
-                ),
+                modifier = Modifier.size(52.dp),
                 tint = GamedgeTheme.colors.onSecondary,
             )
         }
@@ -285,28 +284,28 @@ internal fun GameInfoHeader(
             icon = painterResource(R.drawable.star_circle_outline),
             title = headerInfo.rating,
             modifier = Modifier.layoutId(CONSTRAINT_ID_RATING),
-            iconSize = dimensionResource(R.dimen.game_info_header_info_view_icon_size),
+            iconSize = INFO_ICON_SIZE,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.account_heart_outline),
             title = headerInfo.likeCount,
             modifier = Modifier.layoutId(CONSTRAINT_ID_LIKE_COUNT),
-            iconSize = dimensionResource(R.dimen.game_info_header_info_view_icon_size),
+            iconSize = INFO_ICON_SIZE,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.age_rating_outline),
             title = headerInfo.ageRating,
             modifier = Modifier.layoutId(CONSTRAINT_ID_AGE_RATING),
-            iconSize = dimensionResource(R.dimen.game_info_header_info_view_icon_size),
+            iconSize = INFO_ICON_SIZE,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.shape_outline),
             title = headerInfo.gameCategory,
             modifier = Modifier.layoutId(CONSTRAINT_ID_GAME_CATEGORY),
-            iconSize = dimensionResource(R.dimen.game_info_header_info_view_icon_size),
+            iconSize = INFO_ICON_SIZE,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
     }
@@ -314,22 +313,20 @@ internal fun GameInfoHeader(
 
 @Composable
 private fun constructExpandedConstraintSet(): ConstraintSet {
-    val artworksHeight = dimensionResource(R.dimen.game_info_header_artworks_height_expanded)
-    val pageIndicatorMargin = dimensionResource(R.dimen.game_info_header_page_indicator_margin)
-    val coverSpaceMargin = dimensionResource(R.dimen.game_info_header_cover_space)
-    val coverWidth = dimensionResource(R.dimen.game_info_header_cover_width)
-    val coverHeight = dimensionResource(R.dimen.game_info_header_cover_height)
-    val coverMarginStart = dimensionResource(R.dimen.game_info_header_cover_margin_start)
-    val likeBtnMarginEnd = dimensionResource(R.dimen.game_info_header_like_btn_margin_end)
-    val titleMarginStart = dimensionResource(R.dimen.game_info_header_title_margin_start)
-    val firstTitleMarginTop = dimensionResource(R.dimen.game_info_header_title_margin_start)
-    val firstTitleMarginEnd = dimensionResource(R.dimen.game_info_header_first_title_margin_end_expanded)
-    val secondTitleMarginEnd = dimensionResource(R.dimen.game_info_header_second_title_margin_end)
-    val releaseDateMarginTop = dimensionResource(R.dimen.game_info_header_release_date_margin_top)
-    val releaseDateMarginHorizontal = dimensionResource(R.dimen.game_info_header_release_date_horizontal_margin)
-    val developerNameMarginHorizontal = dimensionResource(R.dimen.game_info_header_developer_name_horizontal_margin)
-    val bottomBarrierMargin = dimensionResource(R.dimen.game_info_header_bottom_barrier_margin)
-    val infoItemMarginBottom = dimensionResource(R.dimen.game_info_header_info_view_vertical_margin)
+    val artworksHeight = 240.dp
+    val pageIndicatorMargin = GamedgeTheme.spaces.spacing_2_5
+    val coverSpaceMargin = COVER_SPACE
+    val coverMarginStart = GamedgeTheme.spaces.spacing_3_5
+    val likeBtnMarginEnd = GamedgeTheme.spaces.spacing_2_5
+    val titleMarginStart = GamedgeTheme.spaces.spacing_3_5
+    val firstTitleMarginTop = titleMarginStart
+    val firstTitleMarginEnd = GamedgeTheme.spaces.spacing_1_0
+    val secondTitleMarginEnd = GamedgeTheme.spaces.spacing_3_5
+    val releaseDateMarginTop = GamedgeTheme.spaces.spacing_2_5
+    val releaseDateMarginHorizontal = GamedgeTheme.spaces.spacing_3_5
+    val developerNameMarginHorizontal = GamedgeTheme.spaces.spacing_3_5
+    val bottomBarrierMargin = GamedgeTheme.spaces.spacing_5_0
+    val infoItemMarginBottom = GamedgeTheme.spaces.spacing_3_5
 
     return ConstraintSet {
         val artworks = createRefFor(CONSTRAINT_ID_ARTWORKS)
@@ -382,8 +379,6 @@ private fun constructExpandedConstraintSet(): ConstraintSet {
             bottom.linkTo(artworks.bottom, coverSpaceMargin)
         }
         constrain(cover) {
-            width = Dimension.value(coverWidth)
-            height = Dimension.value(coverHeight)
             top.linkTo(coverSpace.bottom)
             start.linkTo(parent.start, coverMarginStart)
         }

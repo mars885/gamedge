@@ -28,10 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+
+private val DEFAULT_ELEVATION = 2.dp
 
 @Composable
 fun GamedgeCard(
@@ -40,7 +42,7 @@ fun GamedgeCard(
     backgroundColor: Color = GamedgeTheme.colors.surface,
     contentColor: Color = contentColorFor(backgroundColor),
     border: BorderStroke? = null,
-    elevation: Dp = dimensionResource(R.dimen.card_elevation),
+    elevation: Dp = DEFAULT_ELEVATION,
     content: @Composable () -> Unit,
 ) {
     Card(
@@ -62,7 +64,7 @@ fun GamedgeCard(
     backgroundColor: Color = GamedgeTheme.colors.surface,
     contentColor: Color = contentColorFor(backgroundColor),
     border: BorderStroke? = null,
-    elevation: Dp = dimensionResource(R.dimen.card_elevation),
+    elevation: Dp = DEFAULT_ELEVATION,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     indication: Indication? = LocalIndication.current,
     enabled: Boolean = true,

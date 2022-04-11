@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
@@ -33,12 +32,10 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSection
 internal fun GameInfoDetails(details: GameInfoDetailsModel) {
     GameInfoSection(
         title = stringResource(R.string.game_details_title),
-        titleBottomPadding = dimensionResource(R.dimen.game_details_title_padding_bottom),
-    ) {
+        titleBottomPadding = GamedgeTheme.spaces.spacing_1_0,
+    ) { paddingValues ->
         Column(
-            modifier = Modifier.padding(
-                horizontal = dimensionResource(R.dimen.game_details_container_padding_horizontal),
-            ),
+            modifier = Modifier.padding(paddingValues),
         ) {
             if (details.hasGenresText) {
                 CategorySection(
@@ -82,13 +79,13 @@ internal fun GameInfoDetails(details: GameInfoDetailsModel) {
 private fun CategorySection(title: String, value: String) {
     Text(
         text = title,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_title_padding_top)),
+        modifier = Modifier.padding(top = GamedgeTheme.spaces.spacing_2_5),
         color = GamedgeTheme.colors.onPrimary,
         style = GamedgeTheme.typography.subtitle3,
     )
     Text(
         text = value,
-        modifier = Modifier.padding(top = dimensionResource(R.dimen.game_details_category_value_padding_top)),
+        modifier = Modifier.padding(top = GamedgeTheme.spaces.spacing_1_0),
         style = GamedgeTheme.typography.body2,
     )
 }

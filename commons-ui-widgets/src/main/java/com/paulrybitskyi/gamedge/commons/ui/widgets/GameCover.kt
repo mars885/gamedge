@@ -31,26 +31,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter.State
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
+val DEFAULT_COVER_WIDTH = 112.dp
+val DEFAULT_COVER_HEIGHT = 153.dp
+
 @Composable
 fun GameCover(
     title: String?,
     imageUrl: String?,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     hasRoundedShape: Boolean = true,
     onCoverClicked: () -> Unit,
 ) {
     GamedgeCard(
         onClick = onCoverClicked,
-        modifier = modifier,
+        modifier = Modifier
+            .size(width = DEFAULT_COVER_WIDTH, height = DEFAULT_COVER_HEIGHT)
+            .then(modifier),
         shape = if (hasRoundedShape) GamedgeTheme.shapes.medium else RectangleShape,
         backgroundColor = Color.Transparent,
     ) {
@@ -85,9 +90,7 @@ fun GameCover(
                     text = checkNotNull(title),
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .padding(
-                            horizontal = dimensionResource(R.dimen.game_cover_title_horizontal_padding),
-                        ),
+                        .padding(horizontal = GamedgeTheme.spaces.spacing_4_0),
                     color = GamedgeTheme.colors.onPrimary,
                     textAlign = TextAlign.Center,
                     style = GamedgeTheme.typography.caption,
@@ -104,10 +107,6 @@ internal fun GameCoverWithTitlePreview() {
         GameCover(
             title = "Ghost of Tsushima: Director's Cut",
             imageUrl = null,
-            modifier = Modifier.size(
-                width = dimensionResource(R.dimen.games_category_preview_cover_item_width),
-                height = dimensionResource(R.dimen.games_category_preview_cover_item_height)
-            ),
             onCoverClicked = {},
         )
     }
@@ -120,10 +119,6 @@ internal fun GameCoverWithoutTitlePreview() {
         GameCover(
             title = null,
             imageUrl = null,
-            modifier = Modifier.size(
-                width = dimensionResource(R.dimen.games_category_preview_cover_item_width),
-                height = dimensionResource(R.dimen.games_category_preview_cover_item_height)
-            ),
             onCoverClicked = {},
         )
     }

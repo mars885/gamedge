@@ -38,12 +38,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
@@ -62,8 +62,8 @@ internal fun GameInfoVideos(
         items(videos, key = GameInfoVideoModel::id) { video ->
             Video(
                 video = video,
-                thumbnailHeight = dimensionResource(R.dimen.game_videos_item_thumbnail_height),
-                modifier = Modifier.width(dimensionResource(R.dimen.game_videos_item_width)),
+                thumbnailHeight = 150.dp,
+                modifier = Modifier.width(268.dp),
                 onVideoClicked = { onVideClicked(video) },
             )
         }
@@ -109,9 +109,9 @@ private fun Video(
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .size(dimensionResource(R.dimen.game_video_play_btn_size))
+                        .size(45.dp)
                         .border(
-                            width = dimensionResource(R.dimen.game_video_play_btn_background_stroke_width),
+                            width = 2.dp,
                             color = LocalContentColor.current,
                             shape = CircleShape,
                         )
@@ -119,7 +119,7 @@ private fun Video(
                             color = GamedgeTheme.colors.darkScrim,
                             shape = CircleShape,
                         )
-                        .padding(dimensionResource(R.dimen.game_video_play_btn_padding)),
+                        .padding(GamedgeTheme.spaces.spacing_2_0),
                 )
             }
 
@@ -130,9 +130,7 @@ private fun Video(
             ) {
                 Text(
                     text = video.title,
-                    modifier = Modifier.padding(
-                        dimensionResource(R.dimen.game_video_title_padding)
-                    ),
+                    modifier = Modifier.padding(GamedgeTheme.spaces.spacing_2_5),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = GamedgeTheme.typography.caption,

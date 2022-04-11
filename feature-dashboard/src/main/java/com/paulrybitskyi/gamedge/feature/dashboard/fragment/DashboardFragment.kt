@@ -32,7 +32,7 @@ import com.paulrybitskyi.commons.utils.viewBinding
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseFragment
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.commons.ui.widgets.Toolbar
+import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
 import com.paulrybitskyi.gamedge.feature.dashboard.R
 import com.paulrybitskyi.gamedge.feature.dashboard.databinding.FragmentDashboardBinding
 import com.paulrybitskyi.gamedge.feature.dashboard.fragment.DashboardPage.Companion.toDashboardPageFromMenuItemId

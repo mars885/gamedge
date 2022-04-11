@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.ui.widgets
+package com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,13 +31,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 
 @Composable
 fun Toolbar(
@@ -55,7 +55,7 @@ fun Toolbar(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier)
-            .height(dimensionResource(R.dimen.toolbar_height)),
+            .height(TOOLBAR_HEIGHT),
         color = backgroundColor,
         contentColor = contentColor,
     ) {
@@ -95,13 +95,11 @@ fun Toolbar(
 
 @Composable
 private fun getTitleHorizontalPadding(icon: Painter?): Dp {
-    return dimensionResource(
-        if (icon != null) {
-            R.dimen.toolbar_title_horizontal_padding_with_icon
-        } else {
-            R.dimen.toolbar_title_horizontal_padding_without_icon
-        }
-    )
+    return if (icon != null) {
+        GamedgeTheme.spaces.spacing_4_0
+    } else {
+        GamedgeTheme.spaces.spacing_5_0
+    }
 }
 
 @Composable
@@ -110,7 +108,7 @@ private fun Button(
     onClick: () -> Unit,
 ) {
     IconButton(
-        modifier = Modifier.size(dimensionResource(R.dimen.toolbar_height)),
+        modifier = Modifier.size(TOOLBAR_HEIGHT),
         onClick = onClick,
     ) {
         Icon(

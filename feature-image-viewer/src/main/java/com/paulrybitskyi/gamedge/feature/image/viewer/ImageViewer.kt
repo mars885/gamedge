@@ -30,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,7 +43,7 @@ import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.theme.darkScrim
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
-import com.paulrybitskyi.gamedge.commons.ui.widgets.Toolbar
+import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 
 @Composable
@@ -102,7 +101,7 @@ private fun Pager(
         count = uiState.imageUrls.size,
         modifier = modifier,
         state = pagerState,
-        itemSpacing = dimensionResource(R.dimen.image_viewer_pager_item_spacing),
+        itemSpacing = GamedgeTheme.spaces.spacing_2_0,
     ) { pageIndex ->
         ImageItem(
             imageUrl = uiState.imageUrls[pageIndex],
@@ -138,7 +137,7 @@ private fun ImageItem(
                 ),
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(horizontal = dimensionResource(R.dimen.image_viewer_item_info_view_horizontal_padding)),
+                    .padding(horizontal = GamedgeTheme.spaces.spacing_7_5),
             )
         }
 

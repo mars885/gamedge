@@ -29,10 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
@@ -49,13 +49,13 @@ internal fun GamingNewsItem(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.gaming_news_item_padding))) {
+        Column(modifier = Modifier.padding(GamedgeTheme.spaces.spacing_4_0)) {
             if (model.hasImageUrl) {
                 Image(
                     imageUrl = checkNotNull(model.imageUrl),
                     modifier = Modifier
-                        .height(dimensionResource(R.dimen.gaming_news_item_image_height))
-                        .padding(bottom = dimensionResource(R.dimen.gaming_news_item_image_padding_bottom))
+                        .height(168.dp)
+                        .padding(bottom = GamedgeTheme.spaces.spacing_3_5)
                 )
             }
 
@@ -69,7 +69,7 @@ internal fun GamingNewsItem(
                 text = model.lede,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = dimensionResource(R.dimen.gaming_news_item_lede_padding_top)),
+                    .padding(top = GamedgeTheme.spaces.spacing_1_5),
                 style = GamedgeTheme.typography.body2.copy(
                     lineHeight = TextUnit.Unspecified,
                 ),
@@ -108,17 +108,13 @@ private fun Image(
 @Composable
 private fun Timestamp(publicationDate: String) {
     Row(
-        modifier = Modifier.padding(
-            top = dimensionResource(R.dimen.gaming_news_item_publication_date_padding_top)
-        ),
+        modifier = Modifier.padding(top = GamedgeTheme.spaces.spacing_2_5),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = painterResource(R.drawable.clock_outline_16dp),
             contentDescription = null,
-            modifier = Modifier.padding(
-                end = dimensionResource(R.dimen.gaming_news_item_publication_date_icon_padding)
-            ),
+            modifier = Modifier.padding(end = GamedgeTheme.spaces.spacing_1_0),
         )
         Text(
             text = publicationDate,

@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.links
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalMinimumTouchTargetEnforcement
 import androidx.compose.material.Text
@@ -27,10 +26,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
@@ -44,13 +43,11 @@ internal fun GameInfoLinks(
     links: List<GameInfoLinkModel>,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
 ) {
-    GameInfoSection(title = stringResource(R.string.game_links_title)) {
+    GameInfoSection(title = stringResource(R.string.game_links_title)) { paddingValues ->
         FlowRow(
-            modifier = Modifier.padding(
-                horizontal = dimensionResource(R.dimen.game_links_container_padding_horizontal),
-            ),
-            mainAxisSpacing = dimensionResource(R.dimen.game_links_flow_row_horizontal_spacing),
-            crossAxisSpacing = dimensionResource(R.dimen.game_links_flow_row_vertical_spacing),
+            modifier = Modifier.padding(paddingValues),
+            mainAxisSpacing = GamedgeTheme.spaces.spacing_2_0,
+            crossAxisSpacing = GamedgeTheme.spaces.spacing_3_0,
         ) {
             for (link in links) {
                 Link(
@@ -70,33 +67,27 @@ private fun Link(
     CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
         GamedgeCard(
             onClick = onLinkClicked,
-            shape = RoundedCornerShape(
-                dimensionResource(R.dimen.game_links_item_corner_radius)
-            ),
+            shape = GamedgeTheme.shapes.small,
             backgroundColor = GamedgeTheme.colors.primaryVariant,
             contentColor = GamedgeTheme.colors.onSurface,
         ) {
             Row(
                 modifier = Modifier
-                    .padding(vertical = dimensionResource(R.dimen.game_links_item_padding_vertical))
+                    .padding(vertical = GamedgeTheme.spaces.spacing_1_5)
                     .padding(
-                        start = dimensionResource(R.dimen.game_links_item_padding_start),
-                        end = dimensionResource(R.dimen.game_links_item_padding_end),
+                        start = GamedgeTheme.spaces.spacing_2_5,
+                        end = GamedgeTheme.spaces.spacing_3_0,
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     painter = painterResource(link.iconId),
                     contentDescription = null,
-                    modifier = Modifier.size(
-                        dimensionResource(R.dimen.game_links_item_icon_size)
-                    ),
+                    modifier = Modifier.size(20.dp),
                 )
                 Text(
                     text = link.text,
-                    modifier = Modifier.padding(
-                        start = dimensionResource(R.dimen.game_links_item_text_padding_start),
-                    ),
+                    modifier = Modifier.padding(start = GamedgeTheme.spaces.spacing_1_5),
                     style = GamedgeTheme.typography.button,
                 )
             }

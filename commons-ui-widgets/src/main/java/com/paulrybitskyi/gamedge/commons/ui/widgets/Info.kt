@@ -27,12 +27,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
 @Composable
@@ -40,7 +40,7 @@ fun Info(
     icon: Painter,
     title: String,
     modifier: Modifier = Modifier,
-    iconSize: Dp = dimensionResource(R.dimen.info_view_icon_size),
+    iconSize: Dp = 100.dp,
     iconColor: Color = GamedgeTheme.colors.onBackground,
     titleTextColor: Color = GamedgeTheme.colors.onBackground,
     titleTextStyle: TextStyle = GamedgeTheme.typography.subtitle1,
@@ -55,7 +55,7 @@ fun Info(
             contentDescription = null,
             tint = iconColor,
         )
-        Spacer(Modifier.height(dimensionResource(R.dimen.info_view_vertical_spacing)))
+        Spacer(Modifier.height(GamedgeTheme.spaces.spacing_1_0))
         Text(
             text = title,
             color = titleTextColor,

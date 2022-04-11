@@ -26,7 +26,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -85,7 +84,7 @@ private fun EmptyState(modifier: Modifier) {
             icon = painterResource(R.drawable.newspaper_variant_outline),
             title = stringResource(R.string.gaming_news_info_view_title),
             modifier = Modifier.padding(
-                horizontal = dimensionResource(R.dimen.gaming_news_info_view_horizontal_padding)
+                horizontal = GamedgeTheme.spaces.spacing_7_5,
             ),
         )
     }
@@ -97,7 +96,7 @@ private fun SuccessState(
     onNewsItemClicked: (GamingNewsItemModel) -> Unit,
 ) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.gaming_news_arrangement_spacing))
+        verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
         items(news, key = GamingNewsItemModel::id) { itemModel ->
             GamingNewsItem(

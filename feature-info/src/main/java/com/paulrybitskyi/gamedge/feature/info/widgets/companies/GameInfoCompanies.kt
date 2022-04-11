@@ -27,16 +27,19 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
@@ -48,10 +51,12 @@ import com.paulrybitskyi.commons.ktx.isOpaque
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
-import com.paulrybitskyi.gamedge.core.utils.height
-import com.paulrybitskyi.gamedge.core.utils.width
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSectionWithInnerList
+import kotlin.math.roundToInt
+
+private val LOGO_MAX_WIDTH = 268.dp
+private val LOGO_MAX_HEIGHT = 150.dp
 
 @Composable
 internal fun GameInfoCompanies(
@@ -73,10 +78,10 @@ private fun Company(
     company: GameInfoCompanyModel,
     onCompanyClicked: () -> Unit,
 ) {
-    val density = LocalDensity.current
-    val logoContainerSizeInDp = Pair(
-        with(density) { company.logoContainerSize.width.toDp() },
-        with(density) { company.logoContainerSize.height.toDp() },
+    val logoImageSize = rememberLogoImageSize(company)
+    val logoContainerSizeInDp = DpSize(
+        width = with(LocalDensity.current) { logoImageSize.width.toDp() },
+        height = LOGO_MAX_HEIGHT,
     )
 
     GamedgeCard(
@@ -88,7 +93,7 @@ private fun Company(
             CompanyLogoImage(
                 logoImageUrl = company.logoUrl,
                 logoContainerSize = logoContainerSizeInDp,
-                logoImageSize = company.logoImageSize,
+                logoImageSize = logoImageSize,
             )
 
             CompanyDetails(
@@ -101,10 +106,39 @@ private fun Company(
 }
 
 @Composable
+private fun rememberLogoImageSize(company: GameInfoCompanyModel): IntSize {
+    val density = LocalDensity.current
+
+    return remember(company.logoWidth, company.logoHeight) {
+        val logoMaxWidthInPx = with(density) { LOGO_MAX_WIDTH.roundToPx() }
+        val logoMaxHeightInPx = with(density) { LOGO_MAX_HEIGHT.roundToPx() }
+
+        if (!company.hasLogoSize) {
+            return@remember IntSize(logoMaxWidthInPx, logoMaxHeightInPx)
+        }
+
+        val logoWidth = checkNotNull(company.logoWidth)
+        val logoHeight = checkNotNull(company.logoHeight)
+        val aspectRatio = (logoWidth.toFloat() / logoHeight.toFloat())
+        val adjustedWidth = (aspectRatio * logoMaxHeightInPx).roundToInt()
+
+        if (adjustedWidth <= logoMaxWidthInPx) {
+            return@remember IntSize(adjustedWidth, logoMaxHeightInPx)
+        }
+
+        val finalWidth = logoMaxWidthInPx
+        val widthFraction = (logoMaxWidthInPx.toFloat() / adjustedWidth.toFloat())
+        val finalHeight = (widthFraction * logoMaxHeightInPx).roundToInt()
+
+        return@remember IntSize(finalWidth, finalHeight)
+    }
+}
+
+@Composable
 private fun CompanyLogoImage(
     logoImageUrl: String?,
-    logoContainerSize: Pair<Dp, Dp>,
-    logoImageSize: Pair<Int, Int>,
+    logoContainerSize: DpSize,
+    logoImageSize: IntSize,
 ) {
     val density = LocalDensity.current
     val logoContainerWidthInPx = with(density) { logoContainerSize.width.roundToPx() }
@@ -148,11 +182,7 @@ private fun CompanyDetails(
         color = GamedgeTheme.colors.primaryVariant,
         contentColor = GamedgeTheme.colors.onSurface,
     ) {
-        Column(
-            modifier = Modifier.padding(
-                dimensionResource(R.dimen.game_company_label_padding)
-            ),
-        ) {
+        Column(modifier = Modifier.padding(GamedgeTheme.spaces.spacing_2_5)) {
             Text(
                 text = name,
                 overflow = TextOverflow.Ellipsis,
@@ -231,18 +261,18 @@ internal fun GameInfoCompaniesPreview() {
             companies = listOf(
                 GameInfoCompanyModel(
                     id = 1,
-                    logoContainerSize = 750 to 400,
-                    logoImageSize = 0 to 0,
                     logoUrl = null,
+                    logoWidth = 1400,
+                    logoHeight = 400,
                     websiteUrl = "",
                     name = "FromSoftware",
                     roles = "Main Developer",
                 ),
                 GameInfoCompanyModel(
                     id = 2,
-                    logoContainerSize = 500 to 400,
-                    logoImageSize = 0 to 0,
                     logoUrl = null,
+                    logoWidth = 500,
+                    logoHeight = 400,
                     websiteUrl = "",
                     name = "Bandai Namco Entertainment",
                     roles = "Publisher",

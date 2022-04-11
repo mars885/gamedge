@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -101,9 +100,7 @@ private fun EmptyState(modifier: Modifier) {
     Info(
         icon = painterResource(R.drawable.gamepad_variant_outline),
         title = stringResource(R.string.game_info_info_view_title),
-        modifier = modifier.padding(
-            horizontal = dimensionResource(R.dimen.game_info_info_view_horizontal_padding)
-        ),
+        modifier = modifier.padding(horizontal = GamedgeTheme.spaces.spacing_7_5),
     )
 }
 
@@ -149,11 +146,9 @@ private fun Content(
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
-    val arrangementSpacing = dimensionResource(R.dimen.game_info_vertical_arrangement_spacing)
-
     LazyColumn(
         modifier = Modifier.navigationBarsPadding(),
-        verticalArrangement = Arrangement.spacedBy(arrangementSpacing),
+        verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
         HeaderItem(
             model = gameInfo.headerModel,
@@ -314,7 +309,7 @@ private fun LazyListScope.RelatedGamesItem(
             onCategoryGameClicked = {
                 onGameClicked(it.mapToInfoRelatedGameModel())
             },
-            topBarMargin = dimensionResource(R.dimen.game_info_related_games_top_bar_margin),
+            topBarMargin = GamedgeTheme.spaces.spacing_2_5,
             isMoreButtonVisible = false,
         )
     }
@@ -523,18 +518,18 @@ private fun buildFakeGameModel(): GameInfoModel {
         companyModels = listOf(
             GameInfoCompanyModel(
                 id = 1,
-                logoContainerSize = 750 to 400,
-                logoImageSize = 0 to 0,
                 logoUrl = null,
+                logoWidth = 1400,
+                logoHeight = 400,
                 websiteUrl = "",
                 name = "FromSoftware",
                 roles = "Main Developer",
             ),
             GameInfoCompanyModel(
                 id = 2,
-                logoContainerSize = 500 to 400,
-                logoImageSize = 0 to 0,
                 logoUrl = null,
+                logoWidth = 500,
+                logoHeight = 400,
                 websiteUrl = "",
                 name = "Bandai Namco Entertainment",
                 roles = "Publisher",

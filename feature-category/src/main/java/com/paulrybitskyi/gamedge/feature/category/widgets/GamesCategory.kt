@@ -29,7 +29,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,7 +41,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
-import com.paulrybitskyi.gamedge.commons.ui.widgets.Toolbar
+import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
 import com.paulrybitskyi.gamedge.feature.category.R
 
 @Composable
@@ -89,9 +88,7 @@ private fun EmptyState(modifier: Modifier) {
     Info(
         icon = painterResource(R.drawable.gamepad_variant_outline),
         title = stringResource(R.string.games_category_info_view_title),
-        modifier = modifier.padding(
-            horizontal = dimensionResource(R.dimen.games_category_info_view_horizontal_padding),
-        ),
+        modifier = modifier.padding(horizontal = GamedgeTheme.spaces.spacing_7_5),
     )
 }
 

@@ -17,19 +17,16 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.companies
 
 import android.content.Context
-import com.paulrybitskyi.commons.ktx.getDimensionPixelSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageExtension
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory.Config
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.core.utils.width
 import com.paulrybitskyi.gamedge.domain.games.entities.InvolvedCompany
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.hiltbinder.BindType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 internal interface GameInfoCompanyModelFactory {
     fun createCompanyModels(companies: List<InvolvedCompany>): List<GameInfoCompanyModel>
@@ -61,43 +58,15 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
     }
 
     override fun createCompanyModel(company: InvolvedCompany): GameInfoCompanyModel {
-        val logoImageSize = company.calculateLogoImageSize()
-        val logoContainerHeight = context.getDimensionPixelSize(R.dimen.game_info_company_logo_view_height)
-        val logoContainerSize = (logoImageSize.width to logoContainerHeight)
-
         return GameInfoCompanyModel(
             id = company.company.id,
-            logoContainerSize = logoContainerSize,
-            logoImageSize = logoImageSize,
             logoUrl = company.createLogoUrl(),
+            logoWidth = company.company.logo?.width,
+            logoHeight = company.company.logo?.height,
             websiteUrl = company.company.websiteUrl,
             name = company.company.name,
             roles = company.createRolesString()
         )
-    }
-
-    private fun InvolvedCompany.calculateLogoImageSize(): Pair<Int, Int> {
-        val maxLogoWidth = context.getDimensionPixelSize(R.dimen.game_info_company_logo_view_width)
-        val maxLogoHeight = context.getDimensionPixelSize(R.dimen.game_info_company_logo_view_height)
-
-        val logoWidth = company.logo?.width
-        val logoHeight = company.logo?.height
-
-        if ((logoWidth == null) || (logoHeight == null)) {
-            return (maxLogoWidth to maxLogoHeight)
-        }
-
-        val aspectRatio = (logoWidth.toFloat() / logoHeight.toFloat())
-        val adjustedWidth = (aspectRatio * maxLogoHeight).roundToInt()
-
-        if (adjustedWidth <= maxLogoWidth) {
-            return (adjustedWidth to maxLogoHeight)
-        }
-
-        val finalWidth = maxLogoWidth
-        val finalHeight = ((maxLogoWidth.toFloat() / adjustedWidth.toFloat()) * maxLogoHeight).roundToInt()
-
-        return (finalWidth to finalHeight)
     }
 
     private fun InvolvedCompany.createLogoUrl(): String? {

@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
@@ -71,9 +70,7 @@ private fun EmptyState(
     Info(
         icon = painterResource(uiState.infoIconId),
         title = uiState.infoTitle,
-        modifier = modifier.padding(
-            horizontal = dimensionResource(R.dimen.games_info_view_horizontal_padding)
-        ),
+        modifier = modifier.padding(horizontal = GamedgeTheme.spaces.spacing_7_0),
     )
 }
 
@@ -93,9 +90,7 @@ private fun SuccessState(
         val lastIndex = games.lastIndex
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(
-                dimensionResource(R.dimen.games_vertical_arrangement_spacing)
-            )
+            verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
         ) {
             itemsIndexed(
                 items = games,

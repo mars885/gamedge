@@ -50,6 +50,11 @@ object GamedgeTheme {
         @Composable
         @ReadOnlyComposable
         get() = MaterialTheme.shapes
+
+    val spaces: Spaces
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSpaces.current
 }
 
 @Composable

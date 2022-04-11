@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.ui.widgets
+package com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -43,7 +43,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -51,6 +50,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 
 private const val CLEAR_BUTTON_ANIMATION_DURATION = 100
 
@@ -73,7 +73,7 @@ fun SearchToolbar(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier)
-            .height(dimensionResource(R.dimen.toolbar_height)),
+            .height(TOOLBAR_HEIGHT),
         color = backgroundColor,
         contentColor = contentColor,
     ) {
@@ -114,7 +114,7 @@ private fun Button(
     onClick: () -> Unit,
 ) {
     IconButton(
-        modifier = Modifier.size(dimensionResource(R.dimen.toolbar_height)),
+        modifier = Modifier.size(TOOLBAR_HEIGHT),
         onClick = onClick,
     ) {
         Icon(
@@ -142,7 +142,7 @@ private fun Input(
         value = queryText,
         onValueChange = onQueryChanged,
         modifier = modifier
-            .padding(horizontal = dimensionResource(R.dimen.search_toolbar_query_input_horizontal_padding))
+            .padding(horizontal = GamedgeTheme.spaces.spacing_4_0)
             .focusRequester(focusRequester),
         textStyle = titleTextStyle.copy(color = LocalContentColor.current),
         keyboardOptions = KeyboardOptions(

@@ -25,9 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
@@ -48,10 +48,7 @@ internal fun GameInfoScreenshots(
         ) { index, screenshot ->
             Screenshot(
                 screenshot = screenshot,
-                modifier = Modifier.size(
-                    width = dimensionResource(R.dimen.game_screenshots_item_width),
-                    height = dimensionResource(R.dimen.game_screenshots_item_height),
-                ),
+                modifier = Modifier.size(width = 268.dp, height = 150.dp),
                 onScreenshotClicked = { onScreenshotClicked(index) },
             )
         }

@@ -28,8 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +36,7 @@ import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSection
 
 private const val ANIMATION_DURATION = 300
+private const val CONTENT_MAX_LINES = 4
 
 @Composable
 internal fun GameInfoSummary(summary: String) {
@@ -56,19 +55,15 @@ internal fun GameInfoSummary(summary: String) {
     GameInfoSection(
         title = stringResource(R.string.game_summary_title),
         modifier = cardClickableModifier,
-    ) {
+    ) { paddingValues ->
         Text(
             text = summary,
             modifier = Modifier
                 .animateContentSize(animationSpec = tween(durationMillis = ANIMATION_DURATION))
-                .padding(horizontal = dimensionResource(R.dimen.game_summary_content_padding)),
+                .padding(paddingValues),
             color = GamedgeTheme.colors.onSurface,
             overflow = TextOverflow.Ellipsis,
-            maxLines = if (isExpanded) {
-                Integer.MAX_VALUE
-            } else {
-                integerResource(R.integer.game_summary_content_max_lines)
-            },
+            maxLines = if (isExpanded) Integer.MAX_VALUE else CONTENT_MAX_LINES,
             onTextLayout = { textLayoutResult ->
                 isExpandable = textLayoutResult.didOverflowHeight
             },

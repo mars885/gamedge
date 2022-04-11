@@ -29,14 +29,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryCategory
-import com.paulrybitskyi.gamedge.feature.discovery.R
 import com.paulrybitskyi.gamedge.feature.discovery.titleId
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -90,7 +88,7 @@ private fun CategoryPreviewItems(
     onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,
 ) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.games_discovery_arrangement_spacing)),
+        verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
         items(items, key = GamesDiscoveryItemModel::id) { item ->
             val categoryGames = remember(item.games) {
