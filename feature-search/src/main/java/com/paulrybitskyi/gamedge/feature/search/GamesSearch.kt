@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.feature.search
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -27,8 +28,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.insets.statusBarsPadding
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
+import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
 import com.paulrybitskyi.gamedge.commons.ui.OnLifecycleEvent
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.SearchToolbar
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
@@ -40,7 +46,33 @@ import kotlinx.coroutines.launch
 private const val KEYBOARD_POPUP_INTENTIONAL_DELAY = 300L
 
 @Composable
-internal fun GamesSearch(
+fun GamesSearch(onRoute: (Route) -> Unit) {
+    GamesSearch(
+        viewModel = hiltViewModel(),
+        onRoute = onRoute,
+    )
+}
+
+@Composable
+private fun GamesSearch(
+    viewModel: GamesSearchViewModel,
+    onRoute: (Route) -> Unit,
+) {
+    HandleCommands(viewModel = viewModel)
+    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    GamesSearch(
+        uiState = viewModel.uiState.collectAsState().value,
+        onSearchActionRequested = viewModel::onSearchActionRequested,
+        onBackButtonClicked = viewModel::onToolbarBackButtonClicked,
+        onClearButtonClicked = viewModel::onToolbarClearButtonClicked,
+        onQueryChanged = viewModel::onQueryChanged,
+        onGameClicked = viewModel::onGameClicked,
+        onBottomReached = viewModel::onBottomReached,
+    )
+}
+
+@Composable
+private fun GamesSearch(
     uiState: GamesSearchUiState,
     onSearchActionRequested: (query: String) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -58,7 +90,9 @@ internal fun GamesSearch(
         SearchToolbar(
             queryText = uiState.queryText,
             placeholderText = stringResource(R.string.games_search_toolbar_hint),
-            modifier = Modifier.statusBarsPadding(),
+            contentPadding = rememberInsetsPaddingValues(
+                insets = LocalWindowInsets.current.statusBars,
+            ),
             focusRequester = focusRequester,
             onQueryChanged = onQueryChanged,
             onSearchActionRequested = { query ->

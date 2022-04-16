@@ -16,33 +16,37 @@
 
 package com.paulrybitskyi.gamedge.feature.splash
 
+import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseComposeActivity
-import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-internal class SplashActivity : BaseComposeActivity<SplashViewModel, SplashNavigator>() {
+internal class SplashActivity : AppCompatActivity() {
 
-    override val viewModel by viewModels<SplashViewModel>()
+    private val viewModel by viewModels<SplashViewModel>()
 
-    override fun getContent() = @Composable {
-        Splash()
+    @Inject lateinit var navigator: SplashNavigator
+
+    // Cannot be made final due to Dagger Hilt
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContent {
+            GamedgeTheme(content = getContent())
+        }
     }
 
-    override fun onLoadData() {
-        super.onLoadData()
-
-        viewModel.init()
-    }
-
-    override fun onRoute(route: Route) {
-        super.onRoute(route)
-
-        when (route) {
-            is SplashRoute.Dashboard -> navigator.goToDashboard(this)
-            is SplashRoute.Exit -> navigator.exitApp()
+    private fun getContent() = @Composable {
+        Splash { route ->
+            when (route) {
+                is SplashRoute.Dashboard -> navigator.goToDashboard(this)
+                is SplashRoute.Exit -> navigator.exitApp()
+            }
         }
     }
 }

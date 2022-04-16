@@ -19,7 +19,12 @@
 package com.paulrybitskyi.gamedge.feature.news
 
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 
 internal sealed class GamingNewsCommand : Command {
     data class OpenUrl(val url: String) : GamingNewsCommand()
+}
+
+sealed class GamingNewsRoute : Route {
+    object Search : GamingNewsRoute()
 }

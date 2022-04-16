@@ -77,7 +77,6 @@ object deps {
         const val gamespotApi = ":gamespot-api"
 
         const val featureCategory = ":feature-category"
-        const val featureDashboard = ":feature-dashboard"
         const val featureDiscovery = ":feature-discovery"
         const val featureInfo = ":feature-info"
         const val featureImageViewer = ":feature-image-viewer"
@@ -133,6 +132,7 @@ object deps {
 
         private const val coilCompose = "2.0.0-rc01"
         private const val constraintLayoutCompose = "1.0.0"
+        private const val hiltCompose = "1.0.0"
 
         const val ui = "androidx.compose.ui:ui:${versions.compose}"
         const val tooling = "androidx.compose.ui:ui-tooling:${versions.compose}"
@@ -144,6 +144,8 @@ object deps {
 
         const val coil = "io.coil-kt:coil-compose:$coilCompose"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:$constraintLayoutCompose"
+        const val navigation = "androidx.navigation:navigation-compose:${versions.navigation}"
+        const val hilt = "androidx.hilt:hilt-navigation-compose:$hiltCompose"
 
         object accompanist {
 
@@ -154,6 +156,7 @@ object deps {
             const val flowLayout = "com.google.accompanist:accompanist-flowlayout:$version"
             const val pager = "com.google.accompanist:accompanist-pager:$version"
             const val systemUi = "com.google.accompanist:accompanist-systemuicontroller:$version"
+            const val navigationAnimations = "com.google.accompanist:accompanist-navigation-animation:$version"
         }
     }
 

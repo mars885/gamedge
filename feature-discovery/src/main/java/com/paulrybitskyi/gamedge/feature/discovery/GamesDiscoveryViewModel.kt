@@ -48,7 +48,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class GamesDiscoveryViewModel @Inject constructor(
+internal class GamesDiscoveryViewModel @Inject constructor(
     private val useCases: GamesDiscoveryUseCases,
     private val itemGameModelMapper: GamesDiscoveryItemGameModelMapper,
     private val dispatcherProvider: DispatcherProvider,
@@ -73,6 +73,8 @@ class GamesDiscoveryViewModel @Inject constructor(
 
     init {
         initDiscoveryItemsData()
+        observeGames()
+        refreshGames()
     }
 
     private fun initDiscoveryItemsData() {
@@ -85,11 +87,6 @@ class GamesDiscoveryViewModel @Inject constructor(
                 games = emptyList(),
             )
         }
-    }
-
-    fun loadData() {
-        observeGames()
-        refreshGames()
     }
 
     private fun observeGames() {
@@ -144,6 +141,10 @@ class GamesDiscoveryViewModel @Inject constructor(
         return useCases.getRefreshableUseCase(category.toKeyType())
             .execute(refreshGamesUseCaseParams)
             .resultOrError()
+    }
+
+    fun onSearchButtonClicked() {
+        route(GamesDiscoveryRoute.Search)
     }
 
     fun onCategoryMoreButtonClicked(category: String) {

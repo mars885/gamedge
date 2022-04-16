@@ -23,7 +23,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,23 +39,95 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
+import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
+import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.LocalNetworkStateProvider
+import com.paulrybitskyi.gamedge.commons.ui.LocalTextSharer
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.theme.darkScrim
+import com.paulrybitskyi.gamedge.commons.ui.theme.navBar
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
-import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 
 @Composable
-internal fun ImageViewer(
+fun ImageViewer(onRoute: (Route) -> Unit) {
+    ImageViewer(
+        viewModel = hiltViewModel(),
+        onRoute = onRoute,
+    )
+}
+
+@Composable
+private fun ImageViewer(
+    viewModel: ImageViewerViewModel,
+    onRoute: (Route) -> Unit,
+) {
+    ChangeStatusBarColor()
+
+    val textSharer = LocalTextSharer.current
+    val context = LocalContext.current
+
+    HandleCommands(viewModel = viewModel) { command ->
+        when (command) {
+            is ImageViewerCommand.ShareText -> {
+                textSharer.share(context, command.text)
+            }
+        }
+    }
+
+    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+
+    ImageViewer(
+        uiState = viewModel.uiState.collectAsState().value,
+        onToolbarLeftBtnClicked = {
+            /*if (viewBinding.imageViewerView.isCurrentImageScaled()) {
+                viewBinding.imageViewerView.resetCurrentImageScale()
+            } else {
+                viewModel.onBackPressed()
+            }*/
+
+            viewModel.onBackPressed()
+        },
+        onToolbarRightBtnClicked = viewModel::onToolbarRightButtonClicked,
+        onImageChanged = viewModel::onImageChanged,
+    )
+}
+
+@Composable
+private fun ChangeStatusBarColor() {
+    val systemUiController = rememberSystemUiController()
+    val defaultNavigationBarColor = GamedgeTheme.colors.navBar
+    val systemBarColor = GamedgeTheme.colors.darkScrim
+    var originalStatusBarColor by remember { mutableStateOf(0) }
+
+    DisposableEffect(Unit) {
+        //originalStatusBarColor = (LocalContext.current as Activity).window
+        //originalStatusBarColor = window.statusBarColor
+        systemUiController.setSystemBarsColor(systemBarColor)
+
+        onDispose {
+            with(systemUiController) {
+                setStatusBarColor(Color(originalStatusBarColor))
+                setNavigationBarColor(defaultNavigationBarColor)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ImageViewer(
     uiState: ImageViewerUiState,
-    networkStateProvider: NetworkStateProvider,
     onToolbarLeftBtnClicked: () -> Unit,
     onToolbarRightBtnClicked: () -> Unit,
     onImageChanged: (imageIndex: Int) -> Unit,
@@ -62,7 +140,6 @@ internal fun ImageViewer(
         Box(Modifier.fillMaxSize()) {
             Pager(
                 uiState = uiState,
-                networkStateProvider = networkStateProvider,
                 modifier = Modifier.matchParentSize(),
                 onImageChanged = onImageChanged,
             )
@@ -70,8 +147,10 @@ internal fun ImageViewer(
             Toolbar(
                 title = uiState.toolbarTitle,
                 modifier = Modifier
-                    .statusBarsPadding()
                     .align(Alignment.TopCenter),
+                contentPadding = rememberInsetsPaddingValues(
+                    insets = LocalWindowInsets.current.statusBars,
+                ),
                 backgroundColor = GamedgeTheme.colors.darkScrim,
                 contentColor = LocalContentColor.current,
                 leftButtonIcon = painterResource(R.drawable.arrow_left),
@@ -86,7 +165,6 @@ internal fun ImageViewer(
 @Composable
 private fun Pager(
     uiState: ImageViewerUiState,
-    networkStateProvider: NetworkStateProvider,
     modifier: Modifier,
     onImageChanged: (imageIndex: Int) -> Unit,
 ) {
@@ -105,16 +183,12 @@ private fun Pager(
     ) { pageIndex ->
         ImageItem(
             imageUrl = uiState.imageUrls[pageIndex],
-            networkStateProvider = networkStateProvider,
         )
     }
 }
 
 @Composable
-private fun ImageItem(
-    imageUrl: String,
-    networkStateProvider: NetworkStateProvider,
-) {
+private fun ImageItem(imageUrl: String) {
     Box(modifier = Modifier.fillMaxSize()) {
         val contentScale = ContentScale.Fit
         val imagePainter = rememberAsyncImagePainter(
@@ -129,7 +203,7 @@ private fun ImageItem(
             Info(
                 icon = painterResource(R.drawable.alert_circle_outline),
                 title = stringResource(
-                    if (!networkStateProvider.isNetworkAvailable) {
+                    if (!LocalNetworkStateProvider.current.isNetworkAvailable) {
                         R.string.error_no_network_message
                     } else {
                         R.string.error_unknown_message
@@ -160,9 +234,6 @@ internal fun ImageViewerPreview() {
                 imageUrls = emptyList(),
                 selectedImageUrlIndex = 0,
             ),
-            networkStateProvider = object : NetworkStateProvider {
-                override val isNetworkAvailable = true
-            },
             onToolbarLeftBtnClicked = {},
             onToolbarRightBtnClicked = {},
             onImageChanged = {},

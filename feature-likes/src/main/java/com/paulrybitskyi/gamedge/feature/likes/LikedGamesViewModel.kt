@@ -42,7 +42,6 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
@@ -52,7 +51,7 @@ import kotlinx.coroutines.launch
 private const val SUBSEQUENT_EMISSION_DELAY = 500L
 
 @HiltViewModel
-class LikedGamesViewModel @Inject constructor(
+internal class LikedGamesViewModel @Inject constructor(
     private val observeLikedGamesUseCase: ObserveLikedGamesUseCase,
     private val likedGameModelMapper: GameModelMapper,
     private val dispatcherProvider: DispatcherProvider,
@@ -76,6 +75,10 @@ class LikedGamesViewModel @Inject constructor(
     val uiState: StateFlow<GamesUiState>
         get() = _uiState
 
+    init {
+        observeGames()
+    }
+
     private fun createDefaultUiState(): GamesUiState {
         return GamesUiState(
             isLoading = false,
@@ -83,10 +86,6 @@ class LikedGamesViewModel @Inject constructor(
             infoTitle = stringProvider.getString(R.string.liked_games_info_title),
             games = emptyList(),
         )
-    }
-
-    fun loadData() {
-        observeGames()
     }
 
     private fun observeGames() {
@@ -133,6 +132,10 @@ class LikedGamesViewModel @Inject constructor(
 
     private fun GamesUiState.hasLoadedNewGames(): Boolean {
         return (!isLoading && games.isNotEmpty())
+    }
+
+    fun onSearchButtonClicked() {
+        route(LikedGamesRoute.Search)
     }
 
     fun onGameClicked(game: GameModel) {

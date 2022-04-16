@@ -20,13 +20,13 @@ import androidx.compose.runtime.Immutable
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 
 @Immutable
-data class GamingNewsUiState(
+internal data class GamingNewsUiState(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val news: List<GamingNewsItemModel> = emptyList(),
 )
 
-val GamingNewsUiState.finiteUiState: FiniteUiState
+internal val GamingNewsUiState.finiteUiState: FiniteUiState
     get() = when {
         isInEmptyState -> FiniteUiState.EMPTY
         isLoading -> FiniteUiState.LOADING

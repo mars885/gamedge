@@ -25,10 +25,6 @@ android {
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {

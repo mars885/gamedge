@@ -18,47 +18,118 @@ package com.paulrybitskyi.gamedge.feature.news.widgets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.paulrybitskyi.commons.ktx.showShortToast
+import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
+import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.LocalUrlOpener
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
+import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
+import com.paulrybitskyi.gamedge.feature.news.GamingNewsCommand
+import com.paulrybitskyi.gamedge.feature.news.GamingNewsViewModel
 import com.paulrybitskyi.gamedge.feature.news.R
 
 @Composable
-internal fun GamingNews(
+fun GamingNews(
+    modifier: Modifier = Modifier,
+    onRoute: (Route) -> Unit,
+) {
+    GamingNews(
+        viewModel = hiltViewModel(),
+        modifier = modifier,
+        onRoute = onRoute,
+    )
+}
+
+@Composable
+private fun GamingNews(
+    viewModel: GamingNewsViewModel,
+    modifier: Modifier,
+    onRoute: (Route) -> Unit,
+) {
+    val urlOpener = LocalUrlOpener.current
+    val context = LocalContext.current
+
+    HandleCommands(viewModel = viewModel) { command ->
+        when (command) {
+            is GamingNewsCommand.OpenUrl -> {
+                if (!urlOpener.openUrl(command.url, context)) {
+                    context.showShortToast(context.getString(R.string.url_opener_not_found))
+                }
+            }
+        }
+    }
+
+    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    GamingNews(
+        uiState = viewModel.uiState.collectAsState().value,
+        modifier = modifier,
+        onSearchButtonClicked = viewModel::onSearchButtonClicked,
+        onNewsItemClicked = viewModel::onNewsItemClicked,
+        onRefreshRequested = viewModel::onRefreshRequested,
+    )
+}
+
+@Composable
+private fun GamingNews(
     uiState: GamingNewsUiState,
+    modifier: Modifier = Modifier,
+    onSearchButtonClicked: () -> Unit,
     onNewsItemClicked: (GamingNewsItemModel) -> Unit,
     onRefreshRequested: () -> Unit,
 ) {
-    AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
-        when (finiteUiState) {
-            FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
-            else -> {
-                RefreshableContent(
-                    isRefreshing = uiState.isRefreshing,
-                    modifier = Modifier.matchParentSize(),
-                    onRefreshRequested = onRefreshRequested,
-                ) {
-                    if (finiteUiState == FiniteUiState.EMPTY) {
-                        EmptyState(Modifier.matchParentSize())
-                    } else {
-                        SuccessState(
-                            news = uiState.news,
-                            onNewsItemClicked = onNewsItemClicked,
-                        )
+    Column(modifier = Modifier.fillMaxSize()) {
+        Toolbar(
+            title = stringResource(R.string.gaming_news_toolbar_title),
+            contentPadding = rememberInsetsPaddingValues(
+                insets = LocalWindowInsets.current.statusBars,
+            ),
+            rightButtonIcon = painterResource(R.drawable.magnify),
+            onRightButtonClick = onSearchButtonClicked,
+        )
+
+        AnimatedContentContainer(
+            finiteUiState = uiState.finiteUiState,
+            modifier = modifier,
+        ) { finiteUiState ->
+            when (finiteUiState) {
+                FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
+                else -> {
+                    RefreshableContent(
+                        isRefreshing = uiState.isRefreshing,
+                        modifier = Modifier.matchParentSize(),
+                        onRefreshRequested = onRefreshRequested,
+                    ) {
+                        if (finiteUiState == FiniteUiState.EMPTY) {
+                            EmptyState(Modifier.matchParentSize())
+                        } else {
+                            SuccessState(
+                                news = uiState.news,
+                                onNewsItemClicked = onNewsItemClicked,
+                            )
+                        }
                     }
                 }
             }
@@ -145,6 +216,7 @@ internal fun GamingNewsSuccessStatePreview() {
             uiState = GamingNewsUiState(
                 news = news,
             ),
+            onSearchButtonClicked = {},
             onNewsItemClicked = {},
             onRefreshRequested = {},
         )
@@ -157,6 +229,7 @@ internal fun GamingNewsEmptyStatePreview() {
     GamedgeTheme {
         GamingNews(
             uiState = GamingNewsUiState(),
+            onSearchButtonClicked = {},
             onNewsItemClicked = {},
             onRefreshRequested = {},
         )
@@ -169,6 +242,7 @@ internal fun GamingNewsLoadingStatePreview() {
     GamedgeTheme {
         GamingNews(
             uiState = GamingNewsUiState(isLoading = true),
+            onSearchButtonClicked = {},
             onNewsItemClicked = {},
             onRefreshRequested = {},
         )

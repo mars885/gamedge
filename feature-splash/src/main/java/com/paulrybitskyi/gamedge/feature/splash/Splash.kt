@@ -20,15 +20,53 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
+import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
 
 @Composable
-internal fun Splash() {
+internal fun Splash(onRoute: (Route) -> Unit) {
+    Splash(
+        viewModel = hiltViewModel(),
+        onRoute = onRoute,
+    )
+}
+
+@Composable
+private fun Splash(
+    viewModel: SplashViewModel,
+    onRoute: (Route) -> Unit,
+) {
+    HandleCommands(viewModel)
+    HandleRoutes(
+        viewModel = viewModel,
+        onRoute = onRoute,
+    )
+
+    Splash()
+}
+
+@Composable
+private fun HandleRoutes(
+    viewModel: BaseViewModel,
+    onRoute: (Route) -> Unit,
+) {
+    LaunchedEffect(viewModel) {
+        viewModel.routeFlow
+            .collect(onRoute)
+    }
+}
+
+@Composable
+private fun Splash() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = BiasAlignment(

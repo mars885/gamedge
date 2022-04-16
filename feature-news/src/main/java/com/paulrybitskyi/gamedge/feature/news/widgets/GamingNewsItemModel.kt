@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.feature.news.widgets
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class GamingNewsItemModel(
+internal data class GamingNewsItemModel(
     val id: Int,
     val imageUrl: String?,
     val title: String,

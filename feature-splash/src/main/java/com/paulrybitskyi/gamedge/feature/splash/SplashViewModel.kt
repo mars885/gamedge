@@ -39,7 +39,7 @@ internal class SplashViewModel @Inject constructor(
     private val logger: Logger
 ) : BaseViewModel() {
 
-    fun init() {
+    init {
         runInitializationFlow()
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-@file:Suppress("MatchingDeclarationName")
+package com.paulrybitskyi.gamedge.dashboard.compose
 
-package com.paulrybitskyi.gamedge.feature.likes
+import androidx.navigation.NavDestination
 
-import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
-
-sealed class LikedGamesRoute : Route {
-    object Search : LikedGamesRoute()
-    data class Info(val gameId: Int) : LikedGamesRoute()
+internal fun NavDestination.requireRoute(): String {
+    return checkNotNull(route) {
+        "The route is not set for this destination."
+    }
 }

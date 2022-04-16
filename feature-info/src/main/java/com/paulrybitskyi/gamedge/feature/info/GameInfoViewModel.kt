@@ -20,6 +20,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
+import com.paulrybitskyi.gamedge.commons.ui.di.qualifiers.TransitionAnimationDuration
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
@@ -51,7 +52,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOf
@@ -61,12 +61,14 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-private const val PARAM_GAME_ID = "game_id"
+private const val PARAM_GAME_ID = "gameId"
 
 @HiltViewModel
 @Suppress("LongParameterList")
 internal class GameInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    @TransitionAnimationDuration
+    transitionAnimationDuration: Long,
     private val useCases: GameInfoUseCases,
     private val modelFactory: GameInfoModelFactory,
     private val gameUrlFactory: ImageViewerGameUrlFactory,
@@ -90,8 +92,8 @@ internal class GameInfoViewModel @Inject constructor(
     val uiState: StateFlow<GameInfoUiState>
         get() = _uiState
 
-    fun loadData(resultEmissionDelay: Long) {
-        observeGameData(resultEmissionDelay)
+    init {
+        observeGameData(resultEmissionDelay = transitionAnimationDuration)
     }
 
     private fun observeGameData(resultEmissionDelay: Long) {

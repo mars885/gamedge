@@ -23,11 +23,11 @@ import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-interface GamingNewsItemModelMapper {
+internal interface GamingNewsItemModelMapper {
     fun mapToGamingNewsItemModel(article: Article): GamingNewsItemModel
 }
 
-fun GamingNewsItemModelMapper.mapToGamingNewsItemModels(articles: List<Article>): List<GamingNewsItemModel> {
+internal fun GamingNewsItemModelMapper.mapToGamingNewsItemModels(articles: List<Article>): List<GamingNewsItemModel> {
     return articles.map(::mapToGamingNewsItemModel)
 }
 

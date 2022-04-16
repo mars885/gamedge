@@ -24,7 +24,6 @@ plugins {
 
 android {
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 
@@ -37,9 +36,7 @@ dependencies {
     implementation(project(deps.local.domain))
     implementation(project(deps.local.core))
     implementation(project(deps.local.commonsUi))
-    implementation(project(deps.local.imageLoading))
 
-    implementation(deps.androidX.recyclerView)
     implementation(deps.androidX.constraintLayout)
     api(deps.androidX.swipeRefreshLayout)
     implementation(deps.androidX.coreKtx)

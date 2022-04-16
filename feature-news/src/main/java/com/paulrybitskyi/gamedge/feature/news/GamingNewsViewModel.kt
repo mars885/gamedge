@@ -51,7 +51,7 @@ private const val MAX_ARTICLE_COUNT = 100
 private const val ARTICLES_REFRESH_DELAY = 1000L
 
 @HiltViewModel
-class GamingNewsViewModel @Inject constructor(
+internal class GamingNewsViewModel @Inject constructor(
     private val observeArticlesUseCase: ObserveArticlesUseCase,
     private val refreshArticlesUseCase: RefreshArticlesUseCase,
     private val gamingNewsItemModelMapper: GamingNewsItemModelMapper,
@@ -62,8 +62,8 @@ class GamingNewsViewModel @Inject constructor(
 
     private var isObservingArticles = false
 
-    private var observerUseCaseParams: ObserveArticlesUseCase.Params
-    private var refresherUseCaseParams: RefreshArticlesUseCase.Params
+    private lateinit var observerUseCaseParams: ObserveArticlesUseCase.Params
+    private lateinit var refresherUseCaseParams: RefreshArticlesUseCase.Params
 
     private val _uiState = MutableStateFlow(GamingNewsUiState())
 
@@ -74,15 +74,16 @@ class GamingNewsViewModel @Inject constructor(
         get() = _uiState
 
     init {
+        initUseCaseParams()
+        observeArticles()
+        refreshArticles()
+    }
+
+    private fun initUseCaseParams() {
         val pagination = Pagination(limit = MAX_ARTICLE_COUNT)
 
         observerUseCaseParams = ObserveArticlesUseCase.Params(pagination)
         refresherUseCaseParams = RefreshArticlesUseCase.Params(pagination)
-    }
-
-    fun loadData() {
-        observeArticles()
-        refreshArticles()
     }
 
     private fun observeArticles() {
@@ -105,6 +106,10 @@ class GamingNewsViewModel @Inject constructor(
                 .onCompletion { isObservingArticles = false }
                 .collect { _uiState.value = it }
         }
+    }
+
+    fun onSearchButtonClicked() {
+        route(GamingNewsRoute.Search)
     }
 
     fun onNewsItemClicked(model: GamingNewsItemModel) {

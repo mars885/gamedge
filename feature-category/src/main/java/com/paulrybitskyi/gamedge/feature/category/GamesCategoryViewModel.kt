@@ -20,6 +20,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
+import com.paulrybitskyi.gamedge.commons.ui.di.qualifiers.TransitionAnimationDuration
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
@@ -42,7 +43,6 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
@@ -50,12 +50,14 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val PARAM_GAMES_CATEGORY = "games_category"
+private const val PARAM_GAMES_CATEGORY = "category"
 
 @HiltViewModel
 internal class GamesCategoryViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringProvider: StringProvider,
+    @TransitionAnimationDuration
+    transitionAnimationDuration: Long,
     private val useCases: GamesCategoryUseCases,
     private val gameCategoryModelMapper: GameCategoryModelMapper,
     private val dispatcherProvider: DispatcherProvider,
@@ -91,6 +93,9 @@ internal class GamesCategoryViewModel @Inject constructor(
         _uiState.value = currentUiState.copy(
             title = stringProvider.getString(gamesCategory.titleId)
         )
+
+        observeGames(resultEmissionDelay = transitionAnimationDuration)
+        refreshGames()
     }
 
     private fun createEmptyUiState(): GamesCategoryUiState {
@@ -99,11 +104,6 @@ internal class GamesCategoryViewModel @Inject constructor(
             title = "",
             games = emptyList(),
         )
-    }
-
-    fun loadData(resultEmissionDelay: Long) {
-        observeGames(resultEmissionDelay)
-        refreshGames()
     }
 
     private fun observeGames(resultEmissionDelay: Long = 0L) {

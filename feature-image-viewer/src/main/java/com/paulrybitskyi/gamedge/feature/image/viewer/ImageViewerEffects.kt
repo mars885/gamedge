@@ -23,6 +23,6 @@ internal sealed class ImageViewerCommand : Command {
     data class ShareText(val text: String) : ImageViewerCommand()
 }
 
-internal sealed class ImageViewerRoute : Route {
+sealed class ImageViewerRoute : Route {
     object Back : ImageViewerRoute()
 }

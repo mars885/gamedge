@@ -24,7 +24,6 @@ plugins {
 
 android {
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 
@@ -38,7 +37,6 @@ dependencies {
     implementation(project(deps.local.core))
     implementation(project(deps.local.commonsUi))
     implementation(project(deps.local.commonsUiWidgets))
-    implementation(project(deps.local.imageLoading))
 
     implementation(deps.kotlin.coroutines)
 
@@ -55,6 +53,7 @@ dependencies {
     implementation(deps.compose.runtime)
     implementation(deps.compose.coil)
     implementation(deps.compose.constraintLayout)
+    implementation(deps.compose.hilt)
     implementation(deps.compose.accompanist.insets)
     implementation(deps.compose.accompanist.flowLayout)
     implementation(deps.compose.accompanist.pager)

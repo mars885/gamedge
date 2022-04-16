@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.feature.discovery.widgets
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class GamesDiscoveryItemModel(
+internal data class GamesDiscoveryItemModel(
     val id: Int,
     val categoryName: String,
     val title: String,

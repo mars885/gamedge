@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 
@@ -43,6 +45,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 fun Toolbar(
     title: String,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
     backgroundColor: Color = GamedgeTheme.colors.primary,
     contentColor: Color = contentColorFor(backgroundColor),
     titleTextStyle: TextStyle = GamedgeTheme.typography.h5,
@@ -54,13 +57,15 @@ fun Toolbar(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .then(modifier)
-            .height(TOOLBAR_HEIGHT),
+            .then(modifier),
         color = backgroundColor,
         contentColor = contentColor,
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(contentPadding)
+                .height(TOOLBAR_HEIGHT),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             val titleLeftPadding = getTitleHorizontalPadding(leftButtonIcon)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  ~ Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+  ~ Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -18,8 +18,7 @@
 
 <resources>
 
-    <!-- GamingNews -->
-    <string name="gaming_news_toolbar_title">News</string>
-    <string name="gaming_news_info_view_title">No News Available</string>
+    <!-- GamesDiscovery -->
+    <string name="games_discovery_toolbar_title">Discover</string>
 
 </resources>

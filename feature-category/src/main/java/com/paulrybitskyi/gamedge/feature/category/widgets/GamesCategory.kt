@@ -26,14 +26,20 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
+import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
@@ -42,10 +48,34 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
+import com.paulrybitskyi.gamedge.feature.category.GamesCategoryViewModel
 import com.paulrybitskyi.gamedge.feature.category.R
 
 @Composable
-internal fun GamesCategory(
+fun GamesCategory(onRoute: (Route) -> Unit) {
+    GamesCategory(
+        viewModel = hiltViewModel(),
+        onRoute = onRoute,
+    )
+}
+
+@Composable
+private fun GamesCategory(
+    viewModel: GamesCategoryViewModel,
+    onRoute: (Route) -> Unit,
+) {
+    HandleCommands(viewModel = viewModel)
+    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    GamesCategory(
+        uiState = viewModel.uiState.collectAsState().value,
+        onBackButtonClicked = viewModel::onToolbarLeftButtonClicked,
+        onGameClicked = viewModel::onGameClicked,
+        onBottomReached = viewModel::onBottomReached,
+    )
+}
+
+@Composable
+private fun GamesCategory(
     uiState: GamesCategoryUiState,
     onBackButtonClicked: () -> Unit,
     onGameClicked: (GameCategoryModel) -> Unit,
@@ -54,7 +84,9 @@ internal fun GamesCategory(
     Column(modifier = Modifier.fillMaxSize()) {
         Toolbar(
             title = uiState.title,
-            modifier = Modifier.statusBarsPadding(),
+            contentPadding = rememberInsetsPaddingValues(
+                insets = LocalWindowInsets.current.statusBars,
+            ),
             leftButtonIcon = painterResource(R.drawable.arrow_left),
             onLeftButtonClick = onBackButtonClicked,
         )

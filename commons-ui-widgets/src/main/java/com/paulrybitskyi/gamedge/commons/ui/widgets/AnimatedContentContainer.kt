@@ -36,12 +36,13 @@ private const val ANIMATION_DURATION = 500
 @Composable
 fun AnimatedContentContainer(
     finiteUiState: FiniteUiState,
+    modifier: Modifier = Modifier,
     exitTransition: ExitTransition = fadeOut(animationSpec = tween(ANIMATION_DURATION)),
     enterTransition: EnterTransition = fadeIn(animationSpec = tween(ANIMATION_DURATION)),
     content: @Composable BoxScope.(FiniteUiState) -> Unit,
 ) {
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         color = GamedgeTheme.colors.background,
     ) {
         Box(Modifier.fillMaxSize()) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-@file:Suppress("MatchingDeclarationName")
+package com.paulrybitskyi.gamedge.core.utils
 
-package com.paulrybitskyi.gamedge.feature.likes
+private const val SEPARATOR = ","
 
-import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+fun Iterable<String>.toCsv(): String {
+    return joinToString(separator = SEPARATOR)
+}
 
-sealed class LikedGamesRoute : Route {
-    object Search : LikedGamesRoute()
-    data class Info(val gameId: Int) : LikedGamesRoute()
+fun String.fromCsv(): List<String> {
+    return split(SEPARATOR)
 }

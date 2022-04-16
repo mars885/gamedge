@@ -24,7 +24,6 @@ plugins {
 
 android {
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 
@@ -51,6 +50,7 @@ dependencies {
     implementation(deps.compose.activity)
     implementation(deps.compose.material)
     implementation(deps.compose.runtime)
+    implementation(deps.compose.hilt)
 
     implementation(deps.commons.core)
 

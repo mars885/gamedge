@@ -23,19 +23,29 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsPadding
+import com.paulrybitskyi.commons.ktx.showShortToast
+import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
+import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.LocalUrlOpener
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
+import com.paulrybitskyi.gamedge.feature.info.GameInfoCommand
+import com.paulrybitskyi.gamedge.feature.info.GameInfoViewModel
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetails
 import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreenshots
@@ -58,7 +68,49 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreen
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideos
 
 @Composable
-internal fun GameInfo(
+fun GameInfo(onRoute: (Route) -> Unit) {
+    GameInfo(
+        viewModel = hiltViewModel(),
+        onRoute = onRoute,
+    )
+}
+
+@Composable
+private fun GameInfo(
+    viewModel: GameInfoViewModel,
+    onRoute: (Route) -> Unit,
+) {
+    val urlOpener = LocalUrlOpener.current
+    val context = LocalContext.current
+
+    HandleCommands(viewModel = viewModel) { command ->
+        when (command) {
+            is GameInfoCommand.OpenUrl -> {
+                if (!urlOpener.openUrl(command.url, context)) {
+                    context.showShortToast(context.getString(R.string.url_opener_not_found))
+                }
+            }
+        }
+    }
+
+    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+
+    GameInfo(
+        uiState = viewModel.uiState.collectAsState().value,
+        onArtworkClicked = viewModel::onArtworkClicked,
+        onBackButtonClicked = viewModel::onBackButtonClicked,
+        onCoverClicked = viewModel::onCoverClicked,
+        onLikeButtonClicked = viewModel::onLikeButtonClicked,
+        onVideoClicked = viewModel::onVideoClicked,
+        onScreenshotClicked = viewModel::onScreenshotClicked,
+        onLinkClicked = viewModel::onLinkClicked,
+        onCompanyClicked = viewModel::onCompanyClicked,
+        onRelatedGameClicked = viewModel::onRelatedGameClicked,
+    )
+}
+
+@Composable
+private fun GameInfo(
     uiState: GameInfoUiState,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,

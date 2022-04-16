@@ -18,23 +18,35 @@ package com.paulrybitskyi.gamedge.feature.discovery.widgets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
+import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreview
+import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryCategory
+import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryViewModel
+import com.paulrybitskyi.gamedge.feature.discovery.R
 import com.paulrybitskyi.gamedge.feature.discovery.titleId
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -44,38 +56,81 @@ import kotlinx.coroutines.launch
 private const val SWIPE_REFRESH_INTENTIONAL_DELAY = 300L
 
 @Composable
-internal fun GamesDiscovery(
+fun GamesDiscovery(
+    modifier: Modifier = Modifier,
+    onRoute: (Route) -> Unit,
+) {
+    GamesDiscovery(
+        viewModel = hiltViewModel(),
+        modifier = modifier,
+        onRoute = onRoute,
+    )
+}
+
+@Composable
+private fun GamesDiscovery(
+    viewModel: GamesDiscoveryViewModel,
+    modifier: Modifier,
+    onRoute: (Route) -> Unit,
+) {
+    HandleCommands(viewModel = viewModel)
+    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    GamesDiscovery(
+        items = viewModel.items.collectAsState().value,
+        modifier = modifier,
+        onCategoryMoreButtonClicked = viewModel::onCategoryMoreButtonClicked,
+        onSearchButtonClicked = viewModel::onSearchButtonClicked,
+        onCategoryGameClicked = viewModel::onCategoryGameClicked,
+        onRefreshRequested = viewModel::onRefreshRequested,
+    )
+}
+
+@Composable
+private fun GamesDiscovery(
     items: List<GamesDiscoveryItemModel>,
+    modifier: Modifier = Modifier,
+    onSearchButtonClicked: () -> Unit,
     onCategoryMoreButtonClicked: (category: String) -> Unit,
     onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,
     onRefreshRequested: () -> Unit,
 ) {
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         color = GamedgeTheme.colors.background,
     ) {
-        Box(Modifier.fillMaxSize()) {
-            var isRefreshing by remember { mutableStateOf(false) }
-            val coroutineScope = rememberCoroutineScope()
+        Column {
+            Toolbar(
+                title = stringResource(R.string.games_discovery_toolbar_title),
+                contentPadding = rememberInsetsPaddingValues(
+                    insets = LocalWindowInsets.current.statusBars,
+                ),
+                rightButtonIcon = painterResource(R.drawable.magnify),
+                onRightButtonClick = onSearchButtonClicked,
+            )
 
-            RefreshableContent(
-                isRefreshing = isRefreshing,
-                modifier = Modifier.matchParentSize(),
-                onRefreshRequested = {
-                    isRefreshing = true
+            Box(Modifier.fillMaxSize()) {
+                var isRefreshing by remember { mutableStateOf(false) }
+                val coroutineScope = rememberCoroutineScope()
 
-                    coroutineScope.launch {
-                        delay(SWIPE_REFRESH_INTENTIONAL_DELAY)
-                        onRefreshRequested()
-                        isRefreshing = false
-                    }
-                },
-            ) {
-                CategoryPreviewItems(
-                    items = items,
-                    onCategoryMoreButtonClicked = onCategoryMoreButtonClicked,
-                    onCategoryGameClicked = onCategoryGameClicked,
-                )
+                RefreshableContent(
+                    isRefreshing = isRefreshing,
+                    modifier = Modifier.matchParentSize(),
+                    onRefreshRequested = {
+                        isRefreshing = true
+
+                        coroutineScope.launch {
+                            delay(SWIPE_REFRESH_INTENTIONAL_DELAY)
+                            onRefreshRequested()
+                            isRefreshing = false
+                        }
+                    },
+                ) {
+                    CategoryPreviewItems(
+                        items = items,
+                        onCategoryMoreButtonClicked = onCategoryMoreButtonClicked,
+                        onCategoryGameClicked = onCategoryGameClicked,
+                    )
+                }
             }
         }
     }
@@ -132,6 +187,7 @@ internal fun GamesDiscoverySuccessStatePreview() {
     GamedgeTheme {
         GamesDiscovery(
             items = items,
+            onSearchButtonClicked = {},
             onCategoryMoreButtonClicked = {},
             onCategoryGameClicked = {},
             onRefreshRequested = {},
@@ -155,6 +211,7 @@ internal fun GamesDiscoveryEmptyStatePreview() {
     GamedgeTheme {
         GamesDiscovery(
             items = items,
+            onSearchButtonClicked = {},
             onCategoryMoreButtonClicked = {},
             onCategoryGameClicked = {},
             onRefreshRequested = {},

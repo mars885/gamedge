@@ -16,19 +16,41 @@
 
 package com.paulrybitskyi.gamedge.commons.ui
 
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.coroutineScope
-import androidx.lifecycle.flowWithLifecycle
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.launchIn
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import com.paulrybitskyi.commons.ktx.showLongToast
+import com.paulrybitskyi.commons.ktx.showShortToast
+import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
+import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 
-fun <T> Flow<T>.observeIn(lifecycleOwner: LifecycleOwner): Job {
-    return flowWithLifecycle(lifecycleOwner.lifecycle)
-        .launchIn(lifecycleOwner.lifecycle.coroutineScope)
+@Composable
+fun HandleCommands(
+    viewModel: BaseViewModel,
+    onHandleCommand: ((Command) -> Unit)? = null,
+) {
+    val context = LocalContext.current
+
+    LaunchedEffect(viewModel) {
+        viewModel.commandFlow.collect { command ->
+            when (command) {
+                is GeneralCommand.ShowShortToast -> context.showShortToast(command.message)
+                is GeneralCommand.ShowLongToast -> context.showLongToast(command.message)
+                else -> onHandleCommand?.invoke(command)
+            }
+        }
+    }
 }
 
-fun <T> Flow<T>.observeIn(fragment: Fragment): Job {
-    return observeIn(fragment.viewLifecycleOwner)
+@Composable
+fun HandleRoutes(
+    viewModel: BaseViewModel,
+    onRoute: (Route) -> Unit
+) {
+    LaunchedEffect(viewModel) {
+        viewModel.routeFlow
+            .collect(onRoute)
+    }
 }
