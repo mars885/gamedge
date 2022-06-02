@@ -31,14 +31,14 @@ fun colors(): Colors {
     return darkColors(
         primary = colorResource(R.color.colorPrimary),
         primaryVariant = colorResource(R.color.colorPrimaryVariant),
-        secondary = colorResource(R.color.colorAccent),
+        secondary = colorResource(R.color.colorSecondary),
         secondaryVariant = Color.Unspecified,
-        background = colorResource(R.color.colorContentContainer),
-        surface = colorResource(R.color.colorPrimaryDark),
-        onPrimary = colorResource(R.color.colorPrimaryText),
+        background = colorResource(R.color.colorBackground),
+        surface = colorResource(R.color.colorSurface),
+        onPrimary = colorResource(R.color.colorOnPrimary),
         onSecondary = colorResource(R.color.colorOnSecondary),
-        onBackground = colorResource(R.color.colorSecondaryText),
-        onSurface = colorResource(R.color.colorSecondaryText),
+        onBackground = colorResource(R.color.colorOnBackground),
+        onSurface = colorResource(R.color.colorOnSurface),
     )
 }
 

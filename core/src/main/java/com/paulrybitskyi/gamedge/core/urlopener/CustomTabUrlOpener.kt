@@ -62,7 +62,7 @@ internal class CustomTabUrlOpener @Inject constructor(
     private fun createColorSchemeParams(context: Context): CustomTabColorSchemeParams {
         return CustomTabColorSchemeParams.Builder()
             .setToolbarColor(context.getCompatColor(R.color.colorPrimary))
-            .setSecondaryToolbarColor(context.getCompatColor(R.color.colorPrimaryDark))
+            .setSecondaryToolbarColor(context.getCompatColor(R.color.colorSurface))
             .setNavigationBarColor(context.getCompatColor(R.color.colorNavigationBar))
             .build()
     }
