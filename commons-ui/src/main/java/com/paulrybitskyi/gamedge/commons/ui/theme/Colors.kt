@@ -42,6 +42,11 @@ fun colors(): Colors {
     )
 }
 
+val Colors.statusBar: Color
+    @Composable
+    @ReadOnlyComposable
+    get() = colorResource(R.color.colorStatusBar)
+
 val Colors.navBar: Color
     @Composable
     @ReadOnlyComposable

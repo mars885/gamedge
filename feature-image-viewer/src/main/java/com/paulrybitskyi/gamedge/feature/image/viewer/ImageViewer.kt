@@ -26,10 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,8 +51,8 @@ import com.paulrybitskyi.gamedge.commons.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.commons.ui.LocalTextSharer
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.commons.ui.theme.darkScrim
 import com.paulrybitskyi.gamedge.commons.ui.theme.navBar
+import com.paulrybitskyi.gamedge.commons.ui.theme.statusBar
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
 
@@ -107,18 +103,23 @@ private fun ImageViewer(
 @Composable
 private fun ChangeStatusBarColor() {
     val systemUiController = rememberSystemUiController()
+    val defaultStatusBarColor = GamedgeTheme.colors.statusBar
     val defaultNavigationBarColor = GamedgeTheme.colors.navBar
-    val systemBarColor = GamedgeTheme.colors.darkScrim
-    var originalStatusBarColor by remember { mutableStateOf(0) }
 
     DisposableEffect(Unit) {
-        //originalStatusBarColor = (LocalContext.current as Activity).window
-        //originalStatusBarColor = window.statusBarColor
-        systemUiController.setSystemBarsColor(systemBarColor)
+        // We want to make the system bars translucent when viewing images
+        with(systemUiController) {
+            // Making the status bar transparent causes it to use the color
+            // of the toolbar (which uses the status bar color)
+            setStatusBarColor(Color.Transparent)
+            // We want the color of the navigation bar to be
+            // the same as the color of the status bar
+            setNavigationBarColor(defaultStatusBarColor)
+        }
 
         onDispose {
             with(systemUiController) {
-                setStatusBarColor(Color(originalStatusBarColor))
+                setStatusBarColor(defaultStatusBarColor)
                 setNavigationBarColor(defaultNavigationBarColor)
             }
         }
@@ -146,12 +147,11 @@ private fun ImageViewer(
 
             Toolbar(
                 title = uiState.toolbarTitle,
-                modifier = Modifier
-                    .align(Alignment.TopCenter),
+                modifier = Modifier.align(Alignment.TopCenter),
                 contentPadding = rememberInsetsPaddingValues(
                     insets = LocalWindowInsets.current.statusBars,
                 ),
-                backgroundColor = GamedgeTheme.colors.darkScrim,
+                backgroundColor = GamedgeTheme.colors.statusBar,
                 contentColor = LocalContentColor.current,
                 leftButtonIcon = painterResource(R.drawable.arrow_left),
                 rightButtonIcon = painterResource(R.drawable.share_variant),
