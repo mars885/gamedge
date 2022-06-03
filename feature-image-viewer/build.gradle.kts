@@ -61,6 +61,7 @@ dependencies {
     implementation(deps.commons.ktx)
     implementation(deps.commons.widgets)
 
+    implementation(deps.misc.zoomable)
     implementation(deps.misc.photoView)
 
     implementation(deps.google.daggerHilt)
