@@ -48,7 +48,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 private const val MAX_ARTICLE_COUNT = 100
-private const val ARTICLES_REFRESH_DELAY = 1000L
+private const val ARTICLES_REFRESH_INITIAL_DELAY = 500L
+private const val ARTICLES_REFRESH_DEFAULT_DELAY = 1000L
 
 @HiltViewModel
 internal class GamingNewsViewModel @Inject constructor(
@@ -76,7 +77,7 @@ internal class GamingNewsViewModel @Inject constructor(
     init {
         initUseCaseParams()
         observeArticles()
-        refreshArticles()
+        refreshArticles(isFirstRefresh = true)
     }
 
     private fun initUseCaseParams() {
@@ -118,11 +119,11 @@ internal class GamingNewsViewModel @Inject constructor(
 
     fun onRefreshRequested() {
         if (!currentUiState.isRefreshing) {
-            refreshArticles()
+            refreshArticles(isFirstRefresh = false)
         }
     }
 
-    private fun refreshArticles() {
+    private fun refreshArticles(isFirstRefresh: Boolean) {
         viewModelScope.launch {
             refreshArticlesUseCase.execute(refresherUseCaseParams)
                 .resultOrError()
@@ -132,9 +133,15 @@ internal class GamingNewsViewModel @Inject constructor(
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
                 }
                 .onStart {
+                    // Adding the delay on the first refresh to wait until the cached
+                    // articles are loaded and not overload the UI with loaders
+                    if (isFirstRefresh) {
+                        delay(ARTICLES_REFRESH_INITIAL_DELAY)
+                    }
+
                     emit(currentUiState.enableRefreshing())
                     // Adding a delay to prevent the SwipeRefresh from disappearing quickly
-                    delay(ARTICLES_REFRESH_DELAY)
+                    delay(ARTICLES_REFRESH_DEFAULT_DELAY)
                 }
                 .onCompletion {
                     emit(currentUiState.disableRefreshing())
