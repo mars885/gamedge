@@ -48,6 +48,7 @@ fun Toolbar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     backgroundColor: Color = GamedgeTheme.colors.primary,
     contentColor: Color = contentColorFor(backgroundColor),
+    elevation: Dp = TOOLBAR_ELEVATION,
     titleTextStyle: TextStyle = GamedgeTheme.typography.h5,
     leftButtonIcon: Painter? = null,
     rightButtonIcon: Painter? = null,
@@ -60,6 +61,7 @@ fun Toolbar(
             .then(modifier),
         color = backgroundColor,
         contentColor = contentColor,
+        elevation = elevation,
     ) {
         Row(
             modifier = Modifier

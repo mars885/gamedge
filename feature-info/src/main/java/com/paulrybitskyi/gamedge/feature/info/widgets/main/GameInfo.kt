@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -122,22 +123,24 @@ private fun GameInfo(
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
-    AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
-        when (finiteUiState) {
-            FiniteUiState.EMPTY -> EmptyState(Modifier.align(Alignment.Center))
-            FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
-            FiniteUiState.SUCCESS -> SuccessState(
-                gameInfo = checkNotNull(uiState.game),
-                onArtworkClicked = onArtworkClicked,
-                onBackButtonClicked = onBackButtonClicked,
-                onCoverClicked = onCoverClicked,
-                onLikeButtonClicked = onLikeButtonClicked,
-                onVideoClicked = onVideoClicked,
-                onScreenshotClicked = onScreenshotClicked,
-                onLinkClicked = onLinkClicked,
-                onCompanyClicked = onCompanyClicked,
-                onRelatedGameClicked = onRelatedGameClicked,
-            )
+    Scaffold {
+        AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
+            when (finiteUiState) {
+                FiniteUiState.EMPTY -> EmptyState(Modifier.align(Alignment.Center))
+                FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
+                FiniteUiState.SUCCESS -> SuccessState(
+                    gameInfo = checkNotNull(uiState.game),
+                    onArtworkClicked = onArtworkClicked,
+                    onBackButtonClicked = onBackButtonClicked,
+                    onCoverClicked = onCoverClicked,
+                    onLikeButtonClicked = onLikeButtonClicked,
+                    onVideoClicked = onVideoClicked,
+                    onScreenshotClicked = onScreenshotClicked,
+                    onLinkClicked = onLinkClicked,
+                    onCompanyClicked = onCompanyClicked,
+                    onRelatedGameClicked = onRelatedGameClicked,
+                )
+            }
         }
     }
 }

@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
@@ -181,6 +182,7 @@ private fun ImageViewer(
                 ),
                 backgroundColor = GamedgeTheme.colors.statusBar,
                 contentColor = LocalContentColor.current,
+                elevation = 0.dp,
                 leftButtonIcon = painterResource(R.drawable.arrow_left),
                 rightButtonIcon = painterResource(R.drawable.share_variant),
                 onLeftButtonClick = onBackPressed,

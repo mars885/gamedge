@@ -16,8 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.likes
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -73,18 +72,21 @@ private fun LikedGames(
     onGameClicked: (GameModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Toolbar(
-            title = stringResource(R.string.liked_games_toolbar_title),
-            contentPadding = rememberInsetsPaddingValues(
-                insets = LocalWindowInsets.current.statusBars,
-            ),
-            rightButtonIcon = painterResource(R.drawable.magnify),
-            onRightButtonClick = onSearchButtonClicked,
-        )
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            Toolbar(
+                title = stringResource(R.string.liked_games_toolbar_title),
+                contentPadding = rememberInsetsPaddingValues(
+                    insets = LocalWindowInsets.current.statusBars,
+                ),
+                rightButtonIcon = painterResource(R.drawable.magnify),
+                onRightButtonClick = onSearchButtonClicked,
+            )
+        },
+    ) {
         Games(
             uiState = uiState,
-            modifier = modifier,
             onGameClicked = onGameClicked,
             onBottomReached = onBottomReached,
         )

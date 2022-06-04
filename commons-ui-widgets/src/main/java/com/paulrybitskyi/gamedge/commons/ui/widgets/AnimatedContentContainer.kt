@@ -26,46 +26,38 @@ import androidx.compose.animation.with
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
 private const val ANIMATION_DURATION = 500
 
 @Composable
 fun AnimatedContentContainer(
     finiteUiState: FiniteUiState,
-    modifier: Modifier = Modifier,
     exitTransition: ExitTransition = fadeOut(animationSpec = tween(ANIMATION_DURATION)),
     enterTransition: EnterTransition = fadeIn(animationSpec = tween(ANIMATION_DURATION)),
     content: @Composable BoxScope.(FiniteUiState) -> Unit,
 ) {
-    Surface(
-        modifier = modifier.fillMaxSize(),
-        color = GamedgeTheme.colors.background,
-    ) {
-        Box(Modifier.fillMaxSize()) {
-            AnimatedContent(
-                targetState = finiteUiState,
-                transitionSpec = {
-                    val finalExitTransition = when (initialState) {
-                        FiniteUiState.EMPTY,
-                        FiniteUiState.LOADING -> ExitTransition.None
-                        FiniteUiState.SUCCESS -> exitTransition
-                    }
-                    val finalEnterTransition = when (targetState) {
-                        FiniteUiState.LOADING -> EnterTransition.None
-                        FiniteUiState.EMPTY,
-                        FiniteUiState.SUCCESS -> enterTransition
-                    }
-
-                    finalEnterTransition with finalExitTransition
-                },
-            ) { targetUiState ->
-                Box(Modifier.fillMaxSize()) {
-                    content(targetUiState)
+    Box(Modifier.fillMaxSize()) {
+        AnimatedContent(
+            targetState = finiteUiState,
+            transitionSpec = {
+                val finalExitTransition = when (initialState) {
+                    FiniteUiState.EMPTY,
+                    FiniteUiState.LOADING -> ExitTransition.None
+                    FiniteUiState.SUCCESS -> exitTransition
                 }
+                val finalEnterTransition = when (targetState) {
+                    FiniteUiState.LOADING -> EnterTransition.None
+                    FiniteUiState.EMPTY,
+                    FiniteUiState.SUCCESS -> enterTransition
+                }
+
+                finalEnterTransition with finalExitTransition
+            },
+        ) { targetUiState ->
+            Box(Modifier.fillMaxSize()) {
+                content(targetUiState)
             }
         }
     }

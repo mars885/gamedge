@@ -17,12 +17,10 @@
 package com.paulrybitskyi.gamedge.feature.discovery.widgets
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Surface
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -94,11 +92,9 @@ private fun GamesDiscovery(
     onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,
     onRefreshRequested: () -> Unit,
 ) {
-    Surface(
-        modifier = modifier.fillMaxSize(),
-        color = GamedgeTheme.colors.background,
-    ) {
-        Column {
+    Scaffold(
+        modifier = modifier,
+        topBar = {
             Toolbar(
                 title = stringResource(R.string.games_discovery_toolbar_title),
                 contentPadding = rememberInsetsPaddingValues(
@@ -107,31 +103,29 @@ private fun GamesDiscovery(
                 rightButtonIcon = painterResource(R.drawable.magnify),
                 onRightButtonClick = onSearchButtonClicked,
             )
+        },
+    ) {
+        var isRefreshing by remember { mutableStateOf(false) }
+        val coroutineScope = rememberCoroutineScope()
 
-            Box(Modifier.fillMaxSize()) {
-                var isRefreshing by remember { mutableStateOf(false) }
-                val coroutineScope = rememberCoroutineScope()
+        RefreshableContent(
+            isRefreshing = isRefreshing,
+            modifier = Modifier.fillMaxSize(),
+            onRefreshRequested = {
+                isRefreshing = true
 
-                RefreshableContent(
-                    isRefreshing = isRefreshing,
-                    modifier = Modifier.matchParentSize(),
-                    onRefreshRequested = {
-                        isRefreshing = true
-
-                        coroutineScope.launch {
-                            delay(SWIPE_REFRESH_INTENTIONAL_DELAY)
-                            onRefreshRequested()
-                            isRefreshing = false
-                        }
-                    },
-                ) {
-                    CategoryPreviewItems(
-                        items = items,
-                        onCategoryMoreButtonClicked = onCategoryMoreButtonClicked,
-                        onCategoryGameClicked = onCategoryGameClicked,
-                    )
+                coroutineScope.launch {
+                    delay(SWIPE_REFRESH_INTENTIONAL_DELAY)
+                    onRefreshRequested()
+                    isRefreshing = false
                 }
-            }
+            },
+        ) {
+            CategoryPreviewItems(
+                items = items,
+                onCategoryMoreButtonClicked = onCategoryMoreButtonClicked,
+                onCategoryGameClicked = onCategoryGameClicked,
+            )
         }
     }
 }

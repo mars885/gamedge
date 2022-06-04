@@ -18,4 +18,5 @@ package com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars
 
 import androidx.compose.ui.unit.dp
 
+internal val TOOLBAR_ELEVATION = 4.dp
 internal val TOOLBAR_HEIGHT = 56.dp

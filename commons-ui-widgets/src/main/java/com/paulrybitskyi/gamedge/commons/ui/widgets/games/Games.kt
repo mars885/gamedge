@@ -37,14 +37,10 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 @Composable
 fun Games(
     uiState: GamesUiState,
-    modifier: Modifier = Modifier,
     onGameClicked: (GameModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
-    AnimatedContentContainer(
-        modifier = modifier,
-        finiteUiState = uiState.finiteUiState,
-    ) { finiteUiState ->
+    AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
         when (finiteUiState) {
             FiniteUiState.EMPTY -> EmptyState(
                 uiState = uiState,

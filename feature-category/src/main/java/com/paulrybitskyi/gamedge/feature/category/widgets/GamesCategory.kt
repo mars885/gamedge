@@ -16,14 +16,13 @@
 
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -81,16 +80,18 @@ private fun GamesCategory(
     onGameClicked: (GameCategoryModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Toolbar(
-            title = uiState.title,
-            contentPadding = rememberInsetsPaddingValues(
-                insets = LocalWindowInsets.current.statusBars,
-            ),
-            leftButtonIcon = painterResource(R.drawable.arrow_left),
-            onLeftButtonClick = onBackButtonClicked,
-        )
-
+    Scaffold(
+        topBar = {
+            Toolbar(
+                title = uiState.title,
+                contentPadding = rememberInsetsPaddingValues(
+                    insets = LocalWindowInsets.current.statusBars,
+                ),
+                leftButtonIcon = painterResource(R.drawable.arrow_left),
+                onLeftButtonClick = onBackButtonClicked,
+            )
+        },
+    ) {
         AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
             when (finiteUiState) {
                 FiniteUiState.EMPTY -> EmptyState(Modifier.align(Alignment.Center))

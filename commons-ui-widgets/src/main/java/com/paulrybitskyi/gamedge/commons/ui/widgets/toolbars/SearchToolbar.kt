@@ -50,6 +50,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
@@ -64,6 +65,7 @@ fun SearchToolbar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     backgroundColor: Color = GamedgeTheme.colors.primary,
     contentColor: Color = contentColorFor(backgroundColor),
+    elevation: Dp = TOOLBAR_ELEVATION,
     titleTextStyle: TextStyle = GamedgeTheme.typography.h5,
     cursorColor: Color = GamedgeTheme.colors.secondary,
     focusRequester: FocusRequester = remember { FocusRequester() },
@@ -78,6 +80,7 @@ fun SearchToolbar(
             .then(modifier),
         color = backgroundColor,
         contentColor = contentColor,
+        elevation = elevation,
     ) {
         Row(
             modifier = Modifier

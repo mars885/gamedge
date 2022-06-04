@@ -16,13 +16,11 @@
 
 package com.paulrybitskyi.gamedge.feature.search
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -86,23 +84,25 @@ private fun GamesSearch(
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        SearchToolbar(
-            queryText = uiState.queryText,
-            placeholderText = stringResource(R.string.games_search_toolbar_hint),
-            contentPadding = rememberInsetsPaddingValues(
-                insets = LocalWindowInsets.current.statusBars,
-            ),
-            focusRequester = focusRequester,
-            onQueryChanged = onQueryChanged,
-            onSearchActionRequested = { query ->
-                focusManager.clearFocus(force = true)
-                onSearchActionRequested(query)
-            },
-            onBackButtonClicked = onBackButtonClicked,
-            onClearButtonClicked = onClearButtonClicked,
-        )
-
+    Scaffold(
+        topBar = {
+            SearchToolbar(
+                queryText = uiState.queryText,
+                placeholderText = stringResource(R.string.games_search_toolbar_hint),
+                contentPadding = rememberInsetsPaddingValues(
+                    insets = LocalWindowInsets.current.statusBars,
+                ),
+                focusRequester = focusRequester,
+                onQueryChanged = onQueryChanged,
+                onSearchActionRequested = { query ->
+                    focusManager.clearFocus(force = true)
+                    onSearchActionRequested(query)
+                },
+                onBackButtonClicked = onBackButtonClicked,
+                onClearButtonClicked = onClearButtonClicked,
+            )
+        },
+    ) {
         Games(
             uiState = uiState.gamesUiState,
             onGameClicked = onGameClicked,
