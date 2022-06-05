@@ -67,7 +67,6 @@ object deps {
         const val database = ":database"
         const val igdbApi = ":igdb-api"
         const val igdbApicalypse = ":igdb-apicalypse"
-        const val imageLoading = ":image-loading"
         const val core = ":core"
         const val commonsData = ":commons-data"
         const val commonsUi = ":commons-ui"
