@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,20 +27,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter.State
 import coil.request.ImageRequest
 import coil.size.Size
 import com.google.accompanist.insets.LocalWindowInsets
@@ -228,17 +230,9 @@ private fun ImageItem(
     onDismiss: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        val contentScale = ContentScale.Fit
-        val imagePainter = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUrl)
-                .size(Size.ORIGINAL)
-                .crossfade(CROSSFADE_ANIMATION_DURATION)
-                .build(),
-            contentScale = contentScale,
-        )
+        var imageState by remember { mutableStateOf<State>(State.Empty) }
 
-        if (imagePainter.state is AsyncImagePainter.State.Error) {
+        if (imageState is State.Error) {
             Info(
                 icon = painterResource(R.drawable.alert_circle_outline),
                 title = stringResource(
@@ -265,18 +259,27 @@ private fun ImageItem(
                 true
             },
         ) {
-            if (imagePainter.state is AsyncImagePainter.State.Success) {
-                val size = imagePainter.intrinsicSize
-
-                Image(
-                    painter = imagePainter,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .aspectRatio(size.width / size.height)
-                        .fillMaxSize(),
-                    contentScale = contentScale,
-                )
+            val aspectRatioModifier = if (imageState is State.Success) {
+                val size = checkNotNull(imageState.painter).intrinsicSize
+                Modifier.aspectRatio(size.width / size.height)
+            } else {
+                Modifier
             }
+
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imageUrl)
+                    .size(Size.ORIGINAL)
+                    .crossfade(CROSSFADE_ANIMATION_DURATION)
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier
+                    .then(aspectRatioModifier)
+                    .fillMaxSize(),
+                onState = { state ->
+                    imageState = state
+                },
+            )
         }
     }
 }

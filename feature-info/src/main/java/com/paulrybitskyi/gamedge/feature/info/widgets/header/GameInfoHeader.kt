@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.header
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -61,7 +60,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.HorizontalPager
@@ -471,22 +470,19 @@ private fun Artwork(
     artwork: GameInfoArtworkModel,
     onArtworkClicked: () -> Unit,
 ) {
-    val painter = when (artwork) {
-        is GameInfoArtworkModel.DefaultImage -> painterResource(R.drawable.game_background_placeholder)
-        is GameInfoArtworkModel.UrlImage -> rememberAsyncImagePainter(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(artwork.url)
-                .fallback(R.drawable.game_background_placeholder)
-                .placeholder(R.drawable.game_background_placeholder)
-                .error(R.drawable.game_background_placeholder)
-                .crossfade(CROSSFADE_ANIMATION_DURATION)
-                .build(),
-            contentScale = ContentScale.Crop,
-        )
+    val data = when (artwork) {
+        is GameInfoArtworkModel.DefaultImage -> R.drawable.game_background_placeholder
+        is GameInfoArtworkModel.UrlImage -> artwork.url
     }
 
-    Image(
-        painter = painter,
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(data)
+            .fallback(R.drawable.game_background_placeholder)
+            .placeholder(R.drawable.game_background_placeholder)
+            .error(R.drawable.game_background_placeholder)
+            .crossfade(CROSSFADE_ANIMATION_DURATION)
+            .build(),
         contentDescription = null,
         modifier = Modifier
             .fillMaxSize()
@@ -495,10 +491,7 @@ private fun Artwork(
                 indication = null,
                 onClick = onArtworkClicked,
             ),
-        contentScale = when (artwork) {
-            is GameInfoArtworkModel.DefaultImage -> ContentScale.Crop
-            is GameInfoArtworkModel.UrlImage -> ContentScale.FillBounds
-        },
+        contentScale = ContentScale.Crop,
     )
 }
 

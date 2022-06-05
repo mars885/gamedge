@@ -130,7 +130,7 @@ object deps {
 
     object compose {
 
-        private const val coilCompose = "2.0.0-rc01"
+        private const val coilCompose = "2.1.0"
         private const val constraintLayoutCompose = "1.0.0"
         private const val hiltCompose = "1.0.0"
 

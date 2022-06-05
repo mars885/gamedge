@@ -16,11 +16,11 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.videos
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -44,7 +44,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
@@ -88,20 +88,18 @@ private fun Video(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(thumbnailHeight)
+                    .height(thumbnailHeight),
             ) {
-                Image(
-                    painter = rememberAsyncImagePainter(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(video.thumbnailUrl)
-                            .fallback(R.drawable.game_landscape_placeholder)
-                            .placeholder(R.drawable.game_landscape_placeholder)
-                            .error(R.drawable.game_landscape_placeholder)
-                            .crossfade(CROSSFADE_ANIMATION_DURATION)
-                            .build(),
-                    ),
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(video.thumbnailUrl)
+                        .fallback(R.drawable.game_landscape_placeholder)
+                        .placeholder(R.drawable.game_landscape_placeholder)
+                        .error(R.drawable.game_landscape_placeholder)
+                        .crossfade(CROSSFADE_ANIMATION_DURATION)
+                        .build(),
                     contentDescription = null,
-                    modifier = Modifier.matchParentSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
                 )
                 Icon(

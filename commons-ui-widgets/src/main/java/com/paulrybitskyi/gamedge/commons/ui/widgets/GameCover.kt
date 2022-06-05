@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,7 +23,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,8 +35,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter.State
-import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
@@ -60,8 +61,15 @@ fun GameCover(
         backgroundColor = Color.Transparent,
     ) {
         Box {
-            val contentScale = ContentScale.Crop
-            val imagePainter = rememberAsyncImagePainter(
+            var imageState by remember { mutableStateOf<State>(State.Empty) }
+            val shouldDisplayTitle by remember(title) {
+                derivedStateOf {
+                    (title != null) &&
+                    (imageState !is State.Success)
+                }
+            }
+
+            AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(imageUrl)
                     .fallback(R.drawable.game_cover_placeholder)
@@ -69,20 +77,12 @@ fun GameCover(
                     .error(R.drawable.game_cover_placeholder)
                     .crossfade(CROSSFADE_ANIMATION_DURATION)
                     .build(),
-                contentScale = contentScale,
-            )
-            val shouldDisplayTitle by remember(title) {
-                derivedStateOf {
-                    (title != null) &&
-                    (imagePainter.state !is State.Success)
-                }
-            }
-
-            Image(
-                painter = imagePainter,
                 contentDescription = null,
                 modifier = Modifier.matchParentSize(),
-                contentScale = contentScale,
+                onState = { state ->
+                    imageState = state
+                },
+                contentScale = ContentScale.Crop,
             )
 
             if (shouldDisplayTitle) {
