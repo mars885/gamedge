@@ -20,14 +20,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
+import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
@@ -46,38 +46,27 @@ private fun Splash(
     onRoute: (Route) -> Unit,
 ) {
     HandleCommands(viewModel)
-    HandleRoutes(
-        viewModel = viewModel,
-        onRoute = onRoute,
+    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    Splash(
+        uiState = viewModel.uiState.collectAsState().value,
     )
-
-    Splash()
 }
 
 @Composable
-private fun HandleRoutes(
-    viewModel: BaseViewModel,
-    onRoute: (Route) -> Unit,
-) {
-    LaunchedEffect(viewModel) {
-        viewModel.routeFlow
-            .collect(onRoute)
-    }
-}
-
-@Composable
-private fun Splash() {
+private fun Splash(uiState: SplashUiState) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = BiasAlignment(
             horizontalBias = 0f,
-            verticalBias = 0.5f
+            verticalBias = 0.5f,
         )
     ) {
-        GamedgeProgressIndicator(
-            modifier = Modifier.size(30.dp),
-            strokeWidth = 3.dp,
-        )
+        if (uiState.isProgressVisible) {
+            GamedgeProgressIndicator(
+                modifier = Modifier.size(30.dp),
+                strokeWidth = 3.dp,
+            )
+        }
     }
 }
 
@@ -85,6 +74,8 @@ private fun Splash() {
 @Composable
 internal fun SplashScreenPreview() {
     GamedgeTheme {
-        Splash()
+        Splash(
+            uiState = SplashUiState(),
+        )
     }
 }

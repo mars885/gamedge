@@ -18,7 +18,6 @@ package com.paulrybitskyi.gamedge.feature.splash
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
@@ -27,8 +26,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 internal class SplashActivity : AppCompatActivity() {
-
-    private val viewModel by viewModels<SplashViewModel>()
 
     @Inject lateinit var navigator: SplashNavigator
 
