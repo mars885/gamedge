@@ -18,6 +18,7 @@ plugins {
     androidLibrary()
     gamedgeAndroid()
     kotlinKapt()
+    ksp()
 }
 
 android {
@@ -48,6 +49,7 @@ dependencies {
     implementation(deps.compose.activity)
     implementation(deps.compose.runtime)
     implementation(deps.compose.material)
+    implementation(deps.compose.coil)
     implementation(deps.compose.accompanist.insets)
 
     implementation(deps.google.materialComponents)
@@ -60,6 +62,9 @@ dependencies {
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
+
+    implementation(deps.misc.hiltBinder)
+    ksp(deps.misc.hiltBinderCompiler)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

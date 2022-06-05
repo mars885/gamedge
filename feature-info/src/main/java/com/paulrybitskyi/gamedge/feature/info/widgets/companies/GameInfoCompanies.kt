@@ -48,7 +48,7 @@ import com.paulrybitskyi.commons.ktx.centerX
 import com.paulrybitskyi.commons.ktx.centerY
 import com.paulrybitskyi.commons.ktx.hasTransparentPixels
 import com.paulrybitskyi.commons.ktx.isOpaque
-import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
+import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.feature.info.R

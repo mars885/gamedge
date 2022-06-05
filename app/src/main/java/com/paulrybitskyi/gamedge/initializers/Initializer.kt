@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.ui
+package com.paulrybitskyi.gamedge.initializers
 
-const val CROSSFADE_ANIMATION_DURATION = 200
+internal interface Initializer {
+    fun init()
+}

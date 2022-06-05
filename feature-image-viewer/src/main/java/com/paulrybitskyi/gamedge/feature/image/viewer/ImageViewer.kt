@@ -55,7 +55,7 @@ import com.mxalbert.zoomable.OverZoomConfig
 import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.ZoomableState
 import com.mxalbert.zoomable.rememberZoomableState
-import com.paulrybitskyi.gamedge.commons.ui.CROSSFADE_ANIMATION_DURATION
+import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
 import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
 import com.paulrybitskyi.gamedge.commons.ui.LocalNetworkStateProvider

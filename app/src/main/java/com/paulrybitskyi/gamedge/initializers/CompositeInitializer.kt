@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge
+package com.paulrybitskyi.gamedge.initializers
 
-import android.app.Application
-import com.paulrybitskyi.gamedge.initializers.Initializer
-import dagger.hilt.android.HiltAndroidApp
+import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-@HiltAndroidApp
-internal class GamedgeApplication : Application() {
+@BindType
+internal class CompositeInitializer @Inject constructor(
+    private val initializers: Set<@JvmSuppressWildcards Initializer>,
+) : Initializer {
 
-    @Inject lateinit var initializer: Initializer
-
-    override fun onCreate() {
-        super.onCreate()
-
-        initializer.init()
+    override fun init() {
+        initializers.forEach(Initializer::init)
     }
 }

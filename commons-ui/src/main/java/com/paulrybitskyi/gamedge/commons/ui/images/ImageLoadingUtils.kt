@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge
+package com.paulrybitskyi.gamedge.commons.ui.images
 
-import android.app.Application
-import com.paulrybitskyi.gamedge.initializers.Initializer
-import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
-
-@HiltAndroidApp
-internal class GamedgeApplication : Application() {
-
-    @Inject lateinit var initializer: Initializer
-
-    override fun onCreate() {
-        super.onCreate()
-
-        initializer.init()
-    }
-}
+const val CROSSFADE_ANIMATION_DURATION = 200
