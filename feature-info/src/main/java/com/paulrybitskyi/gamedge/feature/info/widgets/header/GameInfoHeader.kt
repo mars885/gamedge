@@ -41,6 +41,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
@@ -108,7 +109,7 @@ internal fun GameInfoHeader(
     val artworks = headerInfo.artworks
     val isPageIndicatorVisible by remember(artworks) { mutableStateOf(artworks.size > 1) }
     var selectedArtworkPage by remember { mutableStateOf(0) }
-    var secondTitleText by remember { mutableStateOf("") }
+    var secondTitleText by rememberSaveable { mutableStateOf("") }
     val isSecondTitleVisible by remember {
         derivedStateOf {
             secondTitleText.isNotEmpty()

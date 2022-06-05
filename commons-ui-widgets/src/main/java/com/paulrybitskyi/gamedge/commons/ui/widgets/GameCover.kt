@@ -21,10 +21,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,11 +62,11 @@ fun GameCover(
     ) {
         Box {
             var imageState by remember { mutableStateOf<State>(State.Empty) }
-            val shouldDisplayTitle by remember(title) {
-                derivedStateOf {
-                    (title != null) &&
-                    (imageState !is State.Success)
-                }
+            // Not using derivedStateOf here because rememberSaveable does not support derivedStateOf?
+            // https://stackoverflow.com/questions/71986944/custom-saver-remembersaveable-using-derivedstateof
+            val shouldDisplayTitle = rememberSaveable(title, imageState) {
+                (title != null) &&
+                (imageState !is State.Success)
             }
 
             AsyncImage(

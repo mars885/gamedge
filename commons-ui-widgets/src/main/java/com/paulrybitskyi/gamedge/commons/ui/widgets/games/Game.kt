@@ -26,7 +26,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -113,7 +113,7 @@ private fun Details(
 
 @Composable
 private fun DetailsDescription(description: String) {
-    var maxLines by remember { mutableStateOf(Int.MAX_VALUE) }
+    var maxLines by rememberSaveable { mutableStateOf(Int.MAX_VALUE) }
 
     Text(
         text = description,
