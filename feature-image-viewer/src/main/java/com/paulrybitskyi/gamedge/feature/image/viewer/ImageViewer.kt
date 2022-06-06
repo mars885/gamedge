@@ -30,7 +30,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -53,7 +52,6 @@ import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mxalbert.zoomable.OverZoomConfig
 import com.mxalbert.zoomable.Zoomable
-import com.mxalbert.zoomable.ZoomableState
 import com.mxalbert.zoomable.rememberZoomableState
 import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
@@ -66,7 +64,6 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.navBar
 import com.paulrybitskyi.gamedge.commons.ui.theme.statusBar
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
-import kotlinx.coroutines.launch
 
 private const val ZOOM_SCALE_MIN = 0.5f
 private const val ZOOM_SCALE_MAX = 5f
@@ -89,15 +86,6 @@ private fun ImageViewer(
 ) {
     val textSharer = LocalTextSharer.current
     val context = LocalContext.current
-    val zoomableState = rememberZoomableState(
-        minScale = ZOOM_SCALE_MIN,
-        maxScale = ZOOM_SCALE_MAX,
-        overZoomConfig = OverZoomConfig(
-            minSnapScale = ZOOM_OVER_SNAP_SCALE_MIN,
-            maxSnapScale = ZOOM_OVER_SNAP_SCALE_MAX,
-        ),
-    )
-    val coroutineScope = rememberCoroutineScope()
 
     HandleCommands(viewModel = viewModel) { command ->
         when (command) {
@@ -109,20 +97,52 @@ private fun ImageViewer(
     HandleRoutes(viewModel = viewModel, onRoute = onRoute)
     ImageViewer(
         uiState = viewModel.uiState.collectAsState().value,
-        zoomableState = zoomableState,
-        onBackPressed = {
-            if (zoomableState.scale != ZOOM_SCALE_DEFAULT) {
-                coroutineScope.launch {
-                    zoomableState.animateScaleTo(ZOOM_SCALE_DEFAULT)
-                }
-            } else {
-                viewModel.onBackPressed()
-            }
-        },
+        onBackPressed = viewModel::onBackPressed,
         onToolbarRightBtnClicked = viewModel::onToolbarRightButtonClicked,
         onImageChanged = viewModel::onImageChanged,
         onDismiss = viewModel::onBackPressed,
     )
+}
+
+@Composable
+private fun ImageViewer(
+    uiState: ImageViewerUiState,
+    onBackPressed: () -> Unit,
+    onToolbarRightBtnClicked: () -> Unit,
+    onImageChanged: (imageIndex: Int) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    ChangeStatusBarColor()
+    BackHandler(onBack = onBackPressed)
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.Black,
+        contentColor = Color.White,
+    ) {
+        Box(Modifier.fillMaxSize()) {
+            Pager(
+                uiState = uiState,
+                modifier = Modifier.matchParentSize(),
+                onImageChanged = onImageChanged,
+                onDismiss = onDismiss,
+            )
+
+            Toolbar(
+                title = uiState.toolbarTitle,
+                modifier = Modifier.align(Alignment.TopCenter),
+                contentPadding = rememberInsetsPaddingValues(
+                    insets = LocalWindowInsets.current.statusBars,
+                ),
+                backgroundColor = GamedgeTheme.colors.statusBar,
+                contentColor = LocalContentColor.current,
+                elevation = 0.dp,
+                leftButtonIcon = painterResource(R.drawable.arrow_left),
+                rightButtonIcon = painterResource(R.drawable.share_variant),
+                onLeftButtonClick = onBackPressed,
+                onRightButtonClick = onToolbarRightBtnClicked,
+            )
+        }
+    }
 }
 
 @Composable
@@ -152,52 +172,8 @@ private fun ChangeStatusBarColor() {
 }
 
 @Composable
-private fun ImageViewer(
-    uiState: ImageViewerUiState,
-    zoomableState: ZoomableState,
-    onBackPressed: () -> Unit,
-    onToolbarRightBtnClicked: () -> Unit,
-    onImageChanged: (imageIndex: Int) -> Unit,
-    onDismiss: () -> Unit,
-) {
-    ChangeStatusBarColor()
-    BackHandler(onBack = onBackPressed)
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.Black,
-        contentColor = Color.White,
-    ) {
-        Box(Modifier.fillMaxSize()) {
-            Pager(
-                uiState = uiState,
-                zoomableState = zoomableState,
-                modifier = Modifier.matchParentSize(),
-                onImageChanged = onImageChanged,
-                onDismiss = onDismiss,
-            )
-
-            Toolbar(
-                title = uiState.toolbarTitle,
-                modifier = Modifier.align(Alignment.TopCenter),
-                contentPadding = rememberInsetsPaddingValues(
-                    insets = LocalWindowInsets.current.statusBars,
-                ),
-                backgroundColor = GamedgeTheme.colors.statusBar,
-                contentColor = LocalContentColor.current,
-                elevation = 0.dp,
-                leftButtonIcon = painterResource(R.drawable.arrow_left),
-                rightButtonIcon = painterResource(R.drawable.share_variant),
-                onLeftButtonClick = onBackPressed,
-                onRightButtonClick = onToolbarRightBtnClicked,
-            )
-        }
-    }
-}
-
-@Composable
 private fun Pager(
     uiState: ImageViewerUiState,
-    zoomableState: ZoomableState,
     modifier: Modifier,
     onImageChanged: (imageIndex: Int) -> Unit,
     onDismiss: () -> Unit,
@@ -217,7 +193,6 @@ private fun Pager(
     ) { pageIndex ->
         ImageItem(
             imageUrl = uiState.imageUrls[pageIndex],
-            zoomableState = zoomableState,
             onDismiss = onDismiss,
         )
     }
@@ -226,11 +201,18 @@ private fun Pager(
 @Composable
 private fun ImageItem(
     imageUrl: String,
-    zoomableState: ZoomableState,
     onDismiss: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         var imageState by remember { mutableStateOf<State>(State.Empty) }
+        val zoomableState = rememberZoomableState(
+            minScale = ZOOM_SCALE_MIN,
+            maxScale = ZOOM_SCALE_MAX,
+            overZoomConfig = OverZoomConfig(
+                minSnapScale = ZOOM_OVER_SNAP_SCALE_MIN,
+                maxSnapScale = ZOOM_OVER_SNAP_SCALE_MAX,
+            ),
+        )
 
         if (imageState is State.Error) {
             Info(
@@ -294,7 +276,6 @@ internal fun ImageViewerPreview() {
                 imageUrls = emptyList(),
                 selectedImageUrlIndex = 0,
             ),
-            zoomableState = rememberZoomableState(),
             onBackPressed = {},
             onToolbarRightBtnClicked = {},
             onImageChanged = {},
