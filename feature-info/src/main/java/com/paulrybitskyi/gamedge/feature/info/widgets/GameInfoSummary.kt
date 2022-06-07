@@ -16,8 +16,14 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets
 
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -27,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,12 +47,16 @@ private const val CONTENT_MAX_LINES = 4
 
 @Composable
 internal fun GameInfoSummary(summary: String) {
+    var hasTextBeenLaidOut by remember { mutableStateOf(false) }
+    var collapsedHeight by remember { mutableStateOf(0) }
     var isExpanded by remember { mutableStateOf(false) }
     var isExpandable by remember { mutableStateOf(true) }
     val cardClickableModifier by remember {
         derivedStateOf {
             if (isExpandable || isExpanded) {
-                Modifier.clickable(onClick = { isExpanded = !isExpanded })
+                Modifier.clickable(
+                    onClick = { isExpanded = !isExpanded },
+                )
             } else {
                 Modifier
             }
@@ -56,19 +67,44 @@ internal fun GameInfoSummary(summary: String) {
         title = stringResource(R.string.game_summary_title),
         modifier = cardClickableModifier,
     ) { paddingValues ->
-        Text(
-            text = summary,
-            modifier = Modifier
-                .animateContentSize(animationSpec = tween(durationMillis = ANIMATION_DURATION))
-                .padding(paddingValues),
-            color = GamedgeTheme.colors.onSurface,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = if (isExpanded) Integer.MAX_VALUE else CONTENT_MAX_LINES,
-            onTextLayout = { textLayoutResult ->
-                isExpandable = textLayoutResult.didOverflowHeight
+        AnimatedContent(
+            targetState = isExpanded,
+            modifier = Modifier.padding(paddingValues),
+            transitionSpec = {
+                val isExpanding = !initialState && targetState
+
+                if (isExpanding) {
+                    expandVertically(
+                        animationSpec = tween(ANIMATION_DURATION),
+                        expandFrom = Alignment.Top,
+                        initialHeight = { collapsedHeight },
+                    ) with ExitTransition.None
+                } else {
+                    EnterTransition.None with shrinkVertically(
+                        animationSpec = tween(ANIMATION_DURATION),
+                        shrinkTowards = Alignment.Top,
+                        targetHeight = { collapsedHeight },
+                    )
+                } using SizeTransform(
+                    sizeAnimationSpec = { _, _ -> tween(ANIMATION_DURATION) },
+                )
             },
-            style = GamedgeTheme.typography.body1,
-        )
+        ) { isInExpandedState ->
+            Text(
+                text = summary,
+                color = GamedgeTheme.colors.onSurface,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = if (isInExpandedState) Int.MAX_VALUE else CONTENT_MAX_LINES,
+                onTextLayout = { textLayoutResult ->
+                    if (!hasTextBeenLaidOut) {
+                        hasTextBeenLaidOut = true
+                        collapsedHeight = textLayoutResult.size.height
+                        isExpandable = textLayoutResult.didOverflowHeight
+                    }
+                },
+                style = GamedgeTheme.typography.body1,
+            )
+        }
     }
 }
 
