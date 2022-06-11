@@ -17,8 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -93,9 +92,7 @@ private fun GameInfo(
             }
         }
     }
-
     HandleRoutes(viewModel = viewModel, onRoute = onRoute)
-
     GameInfo(
         uiState = viewModel.uiState.collectAsState().value,
         onArtworkClicked = viewModel::onArtworkClicked,
@@ -172,13 +169,16 @@ private fun SuccessState(
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    GameInfoHeader(
+        headerInfo = gameInfo.headerModel,
+        onArtworkClicked = onArtworkClicked,
+        onBackButtonClicked = onBackButtonClicked,
+        onCoverClicked = onCoverClicked,
+        onLikeButtonClicked = onLikeButtonClicked,
+    ) { modifier ->
         Content(
             gameInfo = gameInfo,
-            onArtworkClicked = onArtworkClicked,
-            onBackButtonClicked = onBackButtonClicked,
-            onCoverClicked = onCoverClicked,
-            onLikeButtonClicked = onLikeButtonClicked,
+            modifier = modifier,
             onVideoClicked = onVideoClicked,
             onScreenshotClicked = onScreenshotClicked,
             onLinkClicked = onLinkClicked,
@@ -191,73 +191,66 @@ private fun SuccessState(
 @Composable
 private fun Content(
     gameInfo: GameInfoModel,
-    onArtworkClicked: (artworkIndex: Int) -> Unit,
-    onBackButtonClicked: () -> Unit,
-    onCoverClicked: () -> Unit,
-    onLikeButtonClicked: () -> Unit,
+    modifier: Modifier,
     onVideoClicked: (GameInfoVideoModel) -> Unit,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
+    val spacing = GamedgeTheme.spaces.spacing_3_5
+
     LazyColumn(
-        modifier = Modifier.navigationBarsPadding(),
-        verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
+        modifier = modifier.navigationBarsPadding(),
+        contentPadding = PaddingValues(top = spacing),
+        verticalArrangement = Arrangement.spacedBy(spacing),
     ) {
-        HeaderItem(
-            model = gameInfo.headerModel,
-            onArtworkClicked = onArtworkClicked,
-            onBackButtonClicked = onBackButtonClicked,
-            onCoverClicked = onCoverClicked,
-            onLikeButtonClicked = onLikeButtonClicked,
-        )
 
         if (gameInfo.hasVideoModels) {
-            VideosItem(
+            videosItem(
                 videos = gameInfo.videoModels,
                 onVideoClicked = onVideoClicked,
             )
         }
 
         if (gameInfo.hasScreenshotModels) {
-            ScreenshotsItem(
+            screenshotsItem(
                 screenshots = gameInfo.screenshotModels,
                 onScreenshotClicked = onScreenshotClicked,
             )
         }
 
         if (gameInfo.hasSummary) {
-            SummaryItem(model = checkNotNull(gameInfo.summary))
+            summaryItem(model = checkNotNull(gameInfo.summary))
         }
 
         if (gameInfo.hasDetailsModel) {
-            DetailsItem(model = checkNotNull(gameInfo.detailsModel))
+            detailsItem(model = checkNotNull(gameInfo.detailsModel))
         }
 
         if (gameInfo.hasLinkModels) {
-            LinksItem(
+            linksItem(
                 model = gameInfo.linkModels,
                 onLinkClicked = onLinkClicked,
             )
         }
 
         if (gameInfo.hasCompanyModels) {
-            CompaniesItem(
+            companiesItem(
                 model = gameInfo.companyModels,
                 onCompanyClicked = onCompanyClicked,
             )
         }
 
         if (gameInfo.hasOtherCompanyGames) {
-            RelatedGamesItem(
+            relatedGamesItem(
                 model = checkNotNull(gameInfo.otherCompanyGames),
                 onGameClicked = onRelatedGameClicked,
             )
         }
 
         if (gameInfo.hasSimilarGames) {
-            RelatedGamesItem(
+            relatedGamesItem(
                 model = checkNotNull(gameInfo.similarGames),
                 onGameClicked = onRelatedGameClicked,
             )
@@ -265,25 +258,7 @@ private fun Content(
     }
 }
 
-private fun LazyListScope.HeaderItem(
-    model: GameInfoHeaderModel,
-    onArtworkClicked: (artworkIndex: Int) -> Unit,
-    onBackButtonClicked: () -> Unit,
-    onCoverClicked: () -> Unit,
-    onLikeButtonClicked: () -> Unit,
-) {
-    item(key = GameInfoItem.HEADER.id) {
-        GameInfoHeader(
-            headerInfo = model,
-            onArtworkClicked = onArtworkClicked,
-            onBackButtonClicked = onBackButtonClicked,
-            onCoverClicked = onCoverClicked,
-            onLikeButtonClicked = onLikeButtonClicked,
-        )
-    }
-}
-
-private fun LazyListScope.VideosItem(
+private fun LazyListScope.videosItem(
     videos: List<GameInfoVideoModel>,
     onVideoClicked: (GameInfoVideoModel) -> Unit,
 ) {
@@ -295,7 +270,7 @@ private fun LazyListScope.VideosItem(
     }
 }
 
-private fun LazyListScope.ScreenshotsItem(
+private fun LazyListScope.screenshotsItem(
     screenshots: List<GameInfoScreenshotModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
@@ -307,19 +282,19 @@ private fun LazyListScope.ScreenshotsItem(
     }
 }
 
-private fun LazyListScope.SummaryItem(model: String) {
+private fun LazyListScope.summaryItem(model: String) {
     item(key = GameInfoItem.SUMMARY.id) {
         GameInfoSummary(summary = model)
     }
 }
 
-private fun LazyListScope.DetailsItem(model: GameInfoDetailsModel) {
+private fun LazyListScope.detailsItem(model: GameInfoDetailsModel) {
     item(key = GameInfoItem.DETAILS.id) {
         GameInfoDetails(details = model)
     }
 }
 
-private fun LazyListScope.LinksItem(
+private fun LazyListScope.linksItem(
     model: List<GameInfoLinkModel>,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
 ) {
@@ -331,7 +306,7 @@ private fun LazyListScope.LinksItem(
     }
 }
 
-private fun LazyListScope.CompaniesItem(
+private fun LazyListScope.companiesItem(
     model: List<GameInfoCompanyModel>,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
 ) {
@@ -343,7 +318,7 @@ private fun LazyListScope.CompaniesItem(
     }
 }
 
-private fun LazyListScope.RelatedGamesItem(
+private fun LazyListScope.relatedGamesItem(
     model: GameInfoRelatedGamesModel,
     onGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
@@ -371,15 +346,14 @@ private fun LazyListScope.RelatedGamesItem(
 }
 
 private enum class GameInfoItem(val id: Int) {
-    HEADER(id = 1),
-    VIDEOS(id = 2),
-    SCREENSHOTS(id = 3),
-    SUMMARY(id = 4),
-    DETAILS(id = 5),
-    LINKS(id = 6),
-    COMPANIES(id = 7),
-    OTHER_COMPANY_GAMES(id = 8),
-    SIMILAR_GAMES(id = 9),
+    VIDEOS(id = 1),
+    SCREENSHOTS(id = 2),
+    SUMMARY(id = 3),
+    DETAILS(id = 4),
+    LINKS(id = 5),
+    COMPANIES(id = 6),
+    OTHER_COMPANY_GAMES(id = 7),
+    SIMILAR_GAMES(id = 8),
 }
 
 // TODO (02.01.2022): Currently, preview height is limited to 2k DP.
