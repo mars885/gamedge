@@ -17,7 +17,8 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -58,6 +59,7 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanies
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoAnimatableHeader
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeader
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinks
@@ -169,16 +171,13 @@ private fun SuccessState(
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
-    GameInfoHeader(
-        headerInfo = gameInfo.headerModel,
-        onArtworkClicked = onArtworkClicked,
-        onBackButtonClicked = onBackButtonClicked,
-        onCoverClicked = onCoverClicked,
-        onLikeButtonClicked = onLikeButtonClicked,
-    ) { modifier ->
+    Column(modifier = Modifier.fillMaxWidth()) {
         Content(
             gameInfo = gameInfo,
-            modifier = modifier,
+            onArtworkClicked = onArtworkClicked,
+            onBackButtonClicked = onBackButtonClicked,
+            onCoverClicked = onCoverClicked,
+            onLikeButtonClicked = onLikeButtonClicked,
             onVideoClicked = onVideoClicked,
             onScreenshotClicked = onScreenshotClicked,
             onLinkClicked = onLinkClicked,
@@ -191,20 +190,27 @@ private fun SuccessState(
 @Composable
 private fun Content(
     gameInfo: GameInfoModel,
-    modifier: Modifier,
+    onArtworkClicked: (artworkIndex: Int) -> Unit,
+    onBackButtonClicked: () -> Unit,
+    onCoverClicked: () -> Unit,
+    onLikeButtonClicked: () -> Unit,
     onVideoClicked: (GameInfoVideoModel) -> Unit,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
 ) {
-    val spacing = GamedgeTheme.spaces.spacing_3_5
-
     LazyColumn(
-        modifier = modifier.navigationBarsPadding(),
-        contentPadding = PaddingValues(top = spacing),
-        verticalArrangement = Arrangement.spacedBy(spacing),
+        modifier = Modifier.navigationBarsPadding(),
+        verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
+        headerItem(
+            model = gameInfo.headerModel,
+            onArtworkClicked = onArtworkClicked,
+            onBackButtonClicked = onBackButtonClicked,
+            onCoverClicked = onCoverClicked,
+            onLikeButtonClicked = onLikeButtonClicked,
+        )
 
         if (gameInfo.hasVideoModels) {
             videosItem(
@@ -255,6 +261,24 @@ private fun Content(
                 onGameClicked = onRelatedGameClicked,
             )
         }
+    }
+}
+
+private fun LazyListScope.headerItem(
+    model: GameInfoHeaderModel,
+    onArtworkClicked: (artworkIndex: Int) -> Unit,
+    onBackButtonClicked: () -> Unit,
+    onCoverClicked: () -> Unit,
+    onLikeButtonClicked: () -> Unit,
+) {
+    item(key = GameInfoItem.HEADER.id) {
+        GameInfoHeader(
+            headerInfo = model,
+            onArtworkClicked = onArtworkClicked,
+            onBackButtonClicked = onBackButtonClicked,
+            onCoverClicked = onCoverClicked,
+            onLikeButtonClicked = onLikeButtonClicked,
+        )
     }
 }
 
@@ -346,14 +370,15 @@ private fun LazyListScope.relatedGamesItem(
 }
 
 private enum class GameInfoItem(val id: Int) {
-    VIDEOS(id = 1),
-    SCREENSHOTS(id = 2),
-    SUMMARY(id = 3),
-    DETAILS(id = 4),
-    LINKS(id = 5),
-    COMPANIES(id = 6),
-    OTHER_COMPANY_GAMES(id = 7),
-    SIMILAR_GAMES(id = 8),
+    HEADER(id = 1),
+    VIDEOS(id = 2),
+    SCREENSHOTS(id = 3),
+    SUMMARY(id = 4),
+    DETAILS(id = 5),
+    LINKS(id = 6),
+    COMPANIES(id = 7),
+    OTHER_COMPANY_GAMES(id = 8),
+    SIMILAR_GAMES(id = 9),
 }
 
 // TODO (02.01.2022): Currently, preview height is limited to 2k DP.
