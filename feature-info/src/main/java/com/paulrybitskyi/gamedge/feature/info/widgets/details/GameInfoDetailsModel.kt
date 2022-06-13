@@ -25,7 +25,7 @@ internal data class GameInfoDetailsModel(
     val modesText: String?,
     val playerPerspectivesText: String?,
     val themesText: String?
-)  {
+) {
 
     val hasGenresText: Boolean
         get() = (genresText != null)

@@ -59,7 +59,6 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanies
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoAnimatableHeader
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeader
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinks

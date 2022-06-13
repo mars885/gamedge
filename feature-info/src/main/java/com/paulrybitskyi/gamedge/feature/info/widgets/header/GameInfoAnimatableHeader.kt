@@ -165,7 +165,7 @@ internal fun GameInfoAnimatableHeader(
     }
 
     MotionLayout(
-        //motionScene = MotionScene(constructJson()),
+        // motionScene = MotionScene(constructJson()),
         start = constructExpandedConstraintSet(
             hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
             isSecondTitleVisible = isSecondTitleVisible,
@@ -706,7 +706,7 @@ private fun constructCollapsedConstraintSet(
 }
 
 private var ConstrainScope.isVisible: Boolean
-    set (isVisible) {
+    set(isVisible) {
         visibility = if (isVisible) Visibility.Visible else Visibility.Gone
     }
     get() = visibility == Visibility.Visible

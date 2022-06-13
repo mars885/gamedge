@@ -42,7 +42,8 @@ internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoD
             game.platforms.isEmpty() &&
             game.modes.isEmpty() &&
             game.playerPerspectives.isEmpty() &&
-            game.themes.isEmpty()) {
+            game.themes.isEmpty()
+        ) {
             return null
         }
 

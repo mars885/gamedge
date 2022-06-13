@@ -62,7 +62,7 @@ internal fun BottomBar(
         ),
         exit = slideOutVertically(
             animationSpec = tween(BOTTOM_BAR_ANIMATION_DURATION),
-            targetOffsetY =  { it },
+            targetOffsetY = { it },
         ),
     ) {
         BottomBarNavigation(
