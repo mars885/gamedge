@@ -32,7 +32,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.insets.ProvideWindowInsets
 
-private const val DEFAULT_CONTENT_ALPHA = 1f
+private const val DefaultContentAlpha = 1f
 
 object GamedgeTheme {
 
@@ -68,7 +68,7 @@ fun GamedgeTheme(content: @Composable () -> Unit) {
                     shapes = shapes,
                 ) {
                     CompositionLocalProvider(LocalRippleTheme provides GamedgeRippleTheme) {
-                        CompositionLocalProvider(LocalContentAlpha provides DEFAULT_CONTENT_ALPHA) {
+                        CompositionLocalProvider(LocalContentAlpha provides DefaultContentAlpha) {
                             content()
                         }
                     }

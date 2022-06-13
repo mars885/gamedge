@@ -107,9 +107,9 @@ internal class GameInfoViewModelTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
             SUT.uiState.test {
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.EMPTY)
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.LOADING)
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.SUCCESS)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Loading)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Success)
             }
         }
     }

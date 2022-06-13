@@ -32,6 +32,6 @@ internal object CommonUiModule {
     @Singleton
     @TransitionAnimationDuration
     fun provideTransitionAnimationDuration(): Long {
-        return TransitionAnimations.DEFAULT_ANIMATION_DURATION.toLong()
+        return TransitionAnimations.DefaultAnimationDuration.toLong()
     }
 }

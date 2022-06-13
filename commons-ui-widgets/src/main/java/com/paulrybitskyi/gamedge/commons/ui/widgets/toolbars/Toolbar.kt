@@ -48,7 +48,7 @@ fun Toolbar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     backgroundColor: Color = GamedgeTheme.colors.primary,
     contentColor: Color = contentColorFor(backgroundColor),
-    elevation: Dp = TOOLBAR_ELEVATION,
+    elevation: Dp = ToolbarElevation,
     titleTextStyle: TextStyle = GamedgeTheme.typography.h5,
     leftButtonIcon: Painter? = null,
     rightButtonIcon: Painter? = null,
@@ -67,7 +67,7 @@ fun Toolbar(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(contentPadding)
-                .height(TOOLBAR_HEIGHT),
+                .height(ToolbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             val titleLeftPadding = getTitleHorizontalPadding(leftButtonIcon)
@@ -115,7 +115,7 @@ private fun Button(
     onClick: () -> Unit,
 ) {
     IconButton(
-        modifier = Modifier.size(TOOLBAR_HEIGHT),
+        modifier = Modifier.size(ToolbarHeight),
         onClick = onClick,
     ) {
         Icon(

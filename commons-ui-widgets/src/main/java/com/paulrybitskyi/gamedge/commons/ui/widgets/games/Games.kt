@@ -42,24 +42,30 @@ fun Games(
 ) {
     AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
         when (finiteUiState) {
-            FiniteUiState.EMPTY -> EmptyState(
-                uiState = uiState,
-                modifier = Modifier.align(Alignment.Center)
-            )
-            FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
-            FiniteUiState.SUCCESS -> SuccessState(
-                uiState = uiState,
-                modifier = Modifier.matchParentSize(),
-                onGameClicked = onGameClicked,
-                onBottomReached = onBottomReached,
-            )
+            FiniteUiState.Empty -> {
+                EmptyState(
+                    uiState = uiState,
+                    modifier = Modifier.align(Alignment.Center),
+                )
+            }
+            FiniteUiState.Loading -> {
+                LoadingState(modifier = Modifier.align(Alignment.Center))
+            }
+            FiniteUiState.Success -> {
+                SuccessState(
+                    uiState = uiState,
+                    modifier = Modifier.matchParentSize(),
+                    onGameClicked = onGameClicked,
+                    onBottomReached = onBottomReached,
+                )
+            }
         }
     }
 }
 
 @Composable
 private fun LoadingState(modifier: Modifier) {
-    GamedgeProgressIndicator(modifier)
+    GamedgeProgressIndicator(modifier = modifier)
 }
 
 @Composable

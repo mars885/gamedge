@@ -60,7 +60,7 @@ import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 
-private const val CLEAR_BUTTON_ANIMATION_DURATION = 100
+private const val ClearButtonAnimationDuration = 100
 
 @Composable
 fun SearchToolbar(
@@ -70,7 +70,7 @@ fun SearchToolbar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     backgroundColor: Color = GamedgeTheme.colors.primary,
     contentColor: Color = contentColorFor(backgroundColor),
-    elevation: Dp = TOOLBAR_ELEVATION,
+    elevation: Dp = ToolbarElevation,
     titleTextStyle: TextStyle = GamedgeTheme.typography.h5,
     cursorColor: Color = GamedgeTheme.colors.secondary,
     focusRequester: FocusRequester = remember { FocusRequester() },
@@ -91,7 +91,7 @@ fun SearchToolbar(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(contentPadding)
-                .height(TOOLBAR_HEIGHT),
+                .height(ToolbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Button(
@@ -102,8 +102,8 @@ fun SearchToolbar(
             Input(
                 queryText = queryText,
                 placeholderText = placeholderText,
-                focusRequester = focusRequester,
                 modifier = Modifier.weight(1f),
+                focusRequester = focusRequester,
                 titleTextStyle = titleTextStyle,
                 cursorColor = cursorColor,
                 onQueryChanged = { onQueryChanged?.invoke(it) },
@@ -127,7 +127,7 @@ private fun Button(
     onClick: () -> Unit,
 ) {
     IconButton(
-        modifier = Modifier.size(TOOLBAR_HEIGHT),
+        modifier = Modifier.size(ToolbarHeight),
         onClick = onClick,
     ) {
         Icon(
@@ -141,8 +141,8 @@ private fun Button(
 private fun Input(
     queryText: String,
     placeholderText: String,
-    focusRequester: FocusRequester,
     modifier: Modifier,
+    focusRequester: FocusRequester,
     titleTextStyle: TextStyle,
     cursorColor: Color,
     onQueryChanged: (query: String) -> Unit,
@@ -208,11 +208,11 @@ private fun ClearButton(
         visible = isVisible,
         enter = slideInHorizontally(
             initialOffsetX = { it / 2 },
-            animationSpec = tween(durationMillis = CLEAR_BUTTON_ANIMATION_DURATION),
+            animationSpec = tween(durationMillis = ClearButtonAnimationDuration),
         ),
         exit = slideOutHorizontally(
             targetOffsetX = { it / 2 },
-            animationSpec = tween(durationMillis = CLEAR_BUTTON_ANIMATION_DURATION),
+            animationSpec = tween(durationMillis = ClearButtonAnimationDuration),
         ),
     ) {
         Button(

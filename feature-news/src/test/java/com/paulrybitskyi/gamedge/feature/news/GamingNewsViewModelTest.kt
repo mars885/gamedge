@@ -80,9 +80,9 @@ internal class GamingNewsViewModelTest {
                 val loadingState = awaitItem()
                 val resultState = awaitItem()
 
-                assertThat(emptyState.finiteUiState).isEqualTo(FiniteUiState.EMPTY)
-                assertThat(loadingState.finiteUiState).isEqualTo(FiniteUiState.LOADING)
-                assertThat(resultState.finiteUiState).isEqualTo(FiniteUiState.SUCCESS)
+                assertThat(emptyState.finiteUiState).isEqualTo(FiniteUiState.Empty)
+                assertThat(loadingState.finiteUiState).isEqualTo(FiniteUiState.Loading)
+                assertThat(resultState.finiteUiState).isEqualTo(FiniteUiState.Success)
                 assertThat(resultState.news).hasSize(DOMAIN_ARTICLES.size)
             }
         }

@@ -29,34 +29,34 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
-private const val ANIMATION_DURATION = 500
+private const val AnimationDuration = 500
 
 @Composable
 fun AnimatedContentContainer(
     finiteUiState: FiniteUiState,
-    exitTransition: ExitTransition = fadeOut(animationSpec = tween(ANIMATION_DURATION)),
-    enterTransition: EnterTransition = fadeIn(animationSpec = tween(ANIMATION_DURATION)),
+    exitTransition: ExitTransition = fadeOut(animationSpec = tween(AnimationDuration)),
+    enterTransition: EnterTransition = fadeIn(animationSpec = tween(AnimationDuration)),
     content: @Composable BoxScope.(FiniteUiState) -> Unit,
 ) {
-    Box(Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
         AnimatedContent(
             targetState = finiteUiState,
             transitionSpec = {
                 val finalExitTransition = when (initialState) {
-                    FiniteUiState.EMPTY,
-                    FiniteUiState.LOADING -> ExitTransition.None
-                    FiniteUiState.SUCCESS -> exitTransition
+                    FiniteUiState.Empty,
+                    FiniteUiState.Loading -> ExitTransition.None
+                    FiniteUiState.Success -> exitTransition
                 }
                 val finalEnterTransition = when (targetState) {
-                    FiniteUiState.LOADING -> EnterTransition.None
-                    FiniteUiState.EMPTY,
-                    FiniteUiState.SUCCESS -> enterTransition
+                    FiniteUiState.Loading -> EnterTransition.None
+                    FiniteUiState.Empty,
+                    FiniteUiState.Success -> enterTransition
                 }
 
                 finalEnterTransition with finalExitTransition
             },
         ) { targetUiState ->
-            Box(Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.fillMaxSize()) {
                 content(targetUiState)
             }
         }
@@ -64,7 +64,7 @@ fun AnimatedContentContainer(
 }
 
 enum class FiniteUiState {
-    EMPTY,
-    LOADING,
-    SUCCESS,
+    Empty,
+    Loading,
+    Success,
 }

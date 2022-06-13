@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
-private val DEFAULT_ELEVATION = 2.dp
+private val DefaultElevation = 2.dp
 
 @Composable
 fun GamedgeCard(
@@ -42,7 +42,7 @@ fun GamedgeCard(
     backgroundColor: Color = GamedgeTheme.colors.surface,
     contentColor: Color = contentColorFor(backgroundColor),
     border: BorderStroke? = null,
-    elevation: Dp = DEFAULT_ELEVATION,
+    elevation: Dp = DefaultElevation,
     content: @Composable () -> Unit,
 ) {
     Card(
@@ -64,7 +64,7 @@ fun GamedgeCard(
     backgroundColor: Color = GamedgeTheme.colors.surface,
     contentColor: Color = contentColorFor(backgroundColor),
     border: BorderStroke? = null,
-    elevation: Dp = DEFAULT_ELEVATION,
+    elevation: Dp = DefaultElevation,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     indication: Indication? = LocalIndication.current,
     enabled: Boolean = true,

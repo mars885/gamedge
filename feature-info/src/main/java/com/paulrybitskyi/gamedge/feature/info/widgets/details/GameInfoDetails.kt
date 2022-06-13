@@ -34,9 +34,7 @@ internal fun GameInfoDetails(details: GameInfoDetailsModel) {
         title = stringResource(R.string.game_details_title),
         titleBottomPadding = GamedgeTheme.spaces.spacing_1_0,
     ) { paddingValues ->
-        Column(
-            modifier = Modifier.padding(paddingValues),
-        ) {
+        Column(modifier = Modifier.padding(paddingValues)) {
             if (details.hasGenresText) {
                 CategorySection(
                     title = stringResource(R.string.game_details_genres_title),

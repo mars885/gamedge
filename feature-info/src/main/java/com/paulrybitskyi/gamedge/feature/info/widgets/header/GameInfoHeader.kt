@@ -67,25 +67,25 @@ import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.Artworks
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
 
-private const val CONSTRAINT_ID_ARTWORKS = "artworks"
-private const val CONSTRAINT_ID_ARTWORKS_SCRIM = "artworks_scrim"
-private const val CONSTRAINT_ID_BACK_BUTTON = "back_button"
-private const val CONSTRAINT_ID_PAGE_INDICATOR = "page_indicator"
-private const val CONSTRAINT_ID_BACKDROP = "backdrop"
-private const val CONSTRAINT_ID_COVER_SPACE = "cover_space"
-private const val CONSTRAINT_ID_COVER = "cover"
-private const val CONSTRAINT_ID_LIKE_BUTTON = "like_button"
-private const val CONSTRAINT_ID_FIRST_TITLE = "first_title"
-private const val CONSTRAINT_ID_SECOND_TITLE = "second_title"
-private const val CONSTRAINT_ID_RELEASE_DATE = "release_date"
-private const val CONSTRAINT_ID_DEVELOPER_NAME = "developer_name"
-private const val CONSTRAINT_ID_RATING = "rating"
-private const val CONSTRAINT_ID_LIKE_COUNT = "like_count"
-private const val CONSTRAINT_ID_AGE_RATING = "age_rating"
-private const val CONSTRAINT_ID_GAME_CATEGORY = "game_category"
+private const val ConstraintIdArtworks = "artworks"
+private const val ConstraintIdArtworksScrim = "artworks_scrim"
+private const val ConstraintIdBackButton = "back_button"
+private const val ConstraintIdPageIndicator = "page_indicator"
+private const val ConstraintIdBackdrop = "backdrop"
+private const val ConstraintIdCoverSpace = "cover_space"
+private const val ConstraintIdCover = "cover"
+private const val ConstraintIdLikeButton = "like_button"
+private const val ConstraintIdFirstTitle = "first_title"
+private const val ConstraintIdSecondTitle = "second_title"
+private const val ConstraintIdReleaseDate = "release_date"
+private const val ConstraintIdDeveloperName = "developer_name"
+private const val ConstraintIdRating = "rating"
+private const val ConstraintIdLikeCount = "like_count"
+private const val ConstraintIdAgeRating = "age_rating"
+private const val ConstraintIdGameCategory = "game_category"
 
-private val COVER_SPACE = 40.dp
-private val INFO_ICON_SIZE = 34.dp
+private val CoverSpace = 40.dp
+private val InfoIconSize = 34.dp
 
 @Composable
 internal fun GameInfoHeader(
@@ -112,7 +112,7 @@ internal fun GameInfoHeader(
         Artworks(
             artworks = artworks,
             isScrollingEnabled = true,
-            modifier = Modifier.layoutId(CONSTRAINT_ID_ARTWORKS),
+            modifier = Modifier.layoutId(ConstraintIdArtworks),
             onArtworkChanged = { page ->
                 selectedArtworkPage = page
             },
@@ -120,8 +120,8 @@ internal fun GameInfoHeader(
         )
 
         Box(
-            Modifier
-                .layoutId(CONSTRAINT_ID_ARTWORKS_SCRIM)
+            modifier = Modifier
+                .layoutId(ConstraintIdArtworksScrim)
                 .background(Color.Transparent),
         )
 
@@ -129,7 +129,7 @@ internal fun GameInfoHeader(
             painter = painterResource(R.drawable.arrow_left),
             contentDescription = null,
             modifier = Modifier
-                .layoutId(CONSTRAINT_ID_BACK_BUTTON)
+                .layoutId(ConstraintIdBackButton)
                 .statusBarsPadding()
                 .size(56.dp)
                 .clickable(
@@ -156,7 +156,7 @@ internal fun GameInfoHeader(
                     headerInfo.artworks.size,
                 ),
                 modifier = Modifier
-                    .layoutId(CONSTRAINT_ID_PAGE_INDICATOR)
+                    .layoutId(ConstraintIdPageIndicator)
                     .statusBarsPadding()
                     .background(
                         color = GamedgeTheme.colors.lightScrim,
@@ -172,8 +172,8 @@ internal fun GameInfoHeader(
         }
 
         Box(
-            Modifier
-                .layoutId(CONSTRAINT_ID_BACKDROP)
+            modifier = Modifier
+                .layoutId(ConstraintIdBackdrop)
                 .shadow(
                     elevation = GamedgeTheme.spaces.spacing_0_5,
                     shape = RectangleShape,
@@ -187,21 +187,21 @@ internal fun GameInfoHeader(
         )
 
         Spacer(
-            Modifier
-                .layoutId(CONSTRAINT_ID_COVER_SPACE)
-                .height(COVER_SPACE),
+            modifier = Modifier
+                .layoutId(ConstraintIdCoverSpace)
+                .height(CoverSpace),
         )
 
         GameCover(
             title = null,
             imageUrl = headerInfo.coverImageUrl,
-            modifier = Modifier.layoutId(CONSTRAINT_ID_COVER),
+            modifier = Modifier.layoutId(ConstraintIdCover),
             onCoverClicked = onCoverClicked,
         )
 
         FloatingActionButton(
             onClick = onLikeButtonClicked,
-            modifier = Modifier.layoutId(CONSTRAINT_ID_LIKE_BUTTON),
+            modifier = Modifier.layoutId(ConstraintIdLikeButton),
             backgroundColor = GamedgeTheme.colors.secondary,
         ) {
             // Animated selector drawables are not currently supported by the Jetpack Compose.
@@ -223,7 +223,7 @@ internal fun GameInfoHeader(
 
         Text(
             text = headerInfo.title,
-            modifier = Modifier.layoutId(CONSTRAINT_ID_FIRST_TITLE),
+            modifier = Modifier.layoutId(ConstraintIdFirstTitle),
             color = GamedgeTheme.colors.onPrimary,
             maxLines = 1,
             onTextLayout = { textLayoutResult ->
@@ -238,7 +238,7 @@ internal fun GameInfoHeader(
             style = GamedgeTheme.typography.h6,
         )
 
-        Box(Modifier.layoutId(CONSTRAINT_ID_SECOND_TITLE)) {
+        Box(modifier = Modifier.layoutId(ConstraintIdSecondTitle)) {
             if (isSecondTitleVisible) {
                 // Remove font padding once https://issuetracker.google.com/issues/171394808
                 // is implemented (includeFontPadding="false" in XML)
@@ -254,12 +254,12 @@ internal fun GameInfoHeader(
 
         Text(
             text = headerInfo.releaseDate,
-            modifier = Modifier.layoutId(CONSTRAINT_ID_RELEASE_DATE),
+            modifier = Modifier.layoutId(ConstraintIdReleaseDate),
             color = GamedgeTheme.colors.onSurface,
             style = GamedgeTheme.typography.subtitle3,
         )
 
-        Box(Modifier.layoutId(CONSTRAINT_ID_DEVELOPER_NAME)) {
+        Box(modifier = Modifier.layoutId(ConstraintIdDeveloperName)) {
             if (headerInfo.hasDeveloperName) {
                 Text(
                     text = checkNotNull(headerInfo.developerName),
@@ -272,29 +272,29 @@ internal fun GameInfoHeader(
         Info(
             icon = painterResource(R.drawable.star_circle_outline),
             title = headerInfo.rating,
-            modifier = Modifier.layoutId(CONSTRAINT_ID_RATING),
-            iconSize = INFO_ICON_SIZE,
+            modifier = Modifier.layoutId(ConstraintIdRating),
+            iconSize = InfoIconSize,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.account_heart_outline),
             title = headerInfo.likeCount,
-            modifier = Modifier.layoutId(CONSTRAINT_ID_LIKE_COUNT),
-            iconSize = INFO_ICON_SIZE,
+            modifier = Modifier.layoutId(ConstraintIdLikeCount),
+            iconSize = InfoIconSize,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.age_rating_outline),
             title = headerInfo.ageRating,
-            modifier = Modifier.layoutId(CONSTRAINT_ID_AGE_RATING),
-            iconSize = INFO_ICON_SIZE,
+            modifier = Modifier.layoutId(ConstraintIdAgeRating),
+            iconSize = InfoIconSize,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.shape_outline),
             title = headerInfo.gameCategory,
-            modifier = Modifier.layoutId(CONSTRAINT_ID_GAME_CATEGORY),
-            iconSize = INFO_ICON_SIZE,
+            modifier = Modifier.layoutId(ConstraintIdGameCategory),
+            iconSize = InfoIconSize,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
     }
@@ -304,7 +304,7 @@ internal fun GameInfoHeader(
 private fun constructExpandedConstraintSet(): ConstraintSet {
     val artworksHeight = 240.dp
     val pageIndicatorMargin = GamedgeTheme.spaces.spacing_2_5
-    val coverSpaceMargin = COVER_SPACE
+    val coverSpaceMargin = CoverSpace
     val coverMarginStart = GamedgeTheme.spaces.spacing_3_5
     val likeBtnMarginEnd = GamedgeTheme.spaces.spacing_2_5
     val titleMarginStart = GamedgeTheme.spaces.spacing_3_5
@@ -318,23 +318,23 @@ private fun constructExpandedConstraintSet(): ConstraintSet {
     val infoItemMarginBottom = GamedgeTheme.spaces.spacing_3_5
 
     return ConstraintSet {
-        val artworks = createRefFor(CONSTRAINT_ID_ARTWORKS)
-        val artworksScrim = createRefFor(CONSTRAINT_ID_ARTWORKS_SCRIM)
-        val backButton = createRefFor(CONSTRAINT_ID_BACK_BUTTON)
-        val pageIndicator = createRefFor(CONSTRAINT_ID_PAGE_INDICATOR)
-        val backdrop = createRefFor(CONSTRAINT_ID_BACKDROP)
-        val coverSpace = createRefFor(CONSTRAINT_ID_COVER_SPACE)
-        val cover = createRefFor(CONSTRAINT_ID_COVER)
-        val likeButton = createRefFor(CONSTRAINT_ID_LIKE_BUTTON)
-        val firstTitle = createRefFor(CONSTRAINT_ID_FIRST_TITLE)
-        val secondTitle = createRefFor(CONSTRAINT_ID_SECOND_TITLE)
-        val releaseDate = createRefFor(CONSTRAINT_ID_RELEASE_DATE)
-        val developerName = createRefFor(CONSTRAINT_ID_DEVELOPER_NAME)
+        val artworks = createRefFor(ConstraintIdArtworks)
+        val artworksScrim = createRefFor(ConstraintIdArtworksScrim)
+        val backButton = createRefFor(ConstraintIdBackButton)
+        val pageIndicator = createRefFor(ConstraintIdPageIndicator)
+        val backdrop = createRefFor(ConstraintIdBackdrop)
+        val coverSpace = createRefFor(ConstraintIdCoverSpace)
+        val cover = createRefFor(ConstraintIdCover)
+        val likeButton = createRefFor(ConstraintIdLikeButton)
+        val firstTitle = createRefFor(ConstraintIdFirstTitle)
+        val secondTitle = createRefFor(ConstraintIdSecondTitle)
+        val releaseDate = createRefFor(ConstraintIdReleaseDate)
+        val developerName = createRefFor(ConstraintIdDeveloperName)
         val bottomBarrier = createBottomBarrier(cover, developerName, margin = bottomBarrierMargin)
-        val rating = createRefFor(CONSTRAINT_ID_RATING)
-        val likeCount = createRefFor(CONSTRAINT_ID_LIKE_COUNT)
-        val ageRating = createRefFor(CONSTRAINT_ID_AGE_RATING)
-        val gameCategory = createRefFor(CONSTRAINT_ID_GAME_CATEGORY)
+        val rating = createRefFor(ConstraintIdRating)
+        val likeCount = createRefFor(ConstraintIdLikeCount)
+        val ageRating = createRefFor(ConstraintIdAgeRating)
+        val gameCategory = createRefFor(ConstraintIdGameCategory)
 
         constrain(artworks) {
             width = Dimension.fillToConstraints

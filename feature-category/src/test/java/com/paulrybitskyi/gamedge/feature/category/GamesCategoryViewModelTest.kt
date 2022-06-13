@@ -117,9 +117,9 @@ internal class GamesCategoryViewModelTest {
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.uiState.test {
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.EMPTY)
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.LOADING)
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.SUCCESS)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Loading)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Success)
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -156,9 +156,9 @@ internal class GamesCategoryViewModelTest {
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.uiState.test {
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.EMPTY)
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.LOADING)
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.SUCCESS)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Loading)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Success)
                 assertThat(awaitItem().isRefreshing).isTrue
                 cancelAndIgnoreRemainingEvents()
             }

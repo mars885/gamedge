@@ -27,9 +27,9 @@ internal data class GameInfoUiState(
 
 internal val GameInfoUiState.finiteUiState: FiniteUiState
     get() = when {
-        isInEmptyState -> FiniteUiState.EMPTY
-        isInLoadingState -> FiniteUiState.LOADING
-        isInSuccessState -> FiniteUiState.SUCCESS
+        isInEmptyState -> FiniteUiState.Empty
+        isInLoadingState -> FiniteUiState.Loading
+        isInSuccessState -> FiniteUiState.Success
         else -> error("Unknown game info UI state.")
     }
 

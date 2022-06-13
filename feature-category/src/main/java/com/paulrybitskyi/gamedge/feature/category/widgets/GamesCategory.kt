@@ -36,8 +36,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
-import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
@@ -63,8 +63,8 @@ private fun GamesCategory(
     viewModel: GamesCategoryViewModel,
     onRoute: (Route) -> Unit,
 ) {
-    HandleCommands(viewModel = viewModel)
-    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    CommandsHandler(viewModel = viewModel)
+    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
     GamesCategory(
         uiState = viewModel.uiState.collectAsState().value,
         onBackButtonClicked = viewModel::onToolbarLeftButtonClicked,
@@ -94,9 +94,13 @@ private fun GamesCategory(
     ) {
         AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
             when (finiteUiState) {
-                FiniteUiState.EMPTY -> EmptyState(Modifier.align(Alignment.Center))
-                FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
-                FiniteUiState.SUCCESS -> {
+                FiniteUiState.Empty -> {
+                    EmptyState(modifier = Modifier.align(Alignment.Center))
+                }
+                FiniteUiState.Loading -> {
+                    LoadingState(modifier = Modifier.align(Alignment.Center))
+                }
+                FiniteUiState.Success -> {
                     SuccessState(
                         uiState = uiState,
                         modifier = Modifier
@@ -113,7 +117,7 @@ private fun GamesCategory(
 
 @Composable
 private fun LoadingState(modifier: Modifier) {
-    GamedgeProgressIndicator(modifier)
+    GamedgeProgressIndicator(modifier = modifier)
 }
 
 @Composable
@@ -157,7 +161,7 @@ private fun VerticalGrid(
     val lastIndex = games.lastIndex
 
     LazyVerticalGrid(cells = GridCells.Fixed(gridConfig.spanCount)) {
-        itemsIndexed(games) { index, game ->
+        itemsIndexed(items = games) { index, game ->
             if (index == lastIndex) {
                 LaunchedEffect(lastIndex) {
                     onBottomReached()

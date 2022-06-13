@@ -55,8 +55,8 @@ import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSectionWithInnerList
 import kotlin.math.roundToInt
 
-private val LOGO_MAX_WIDTH = 268.dp
-private val LOGO_MAX_HEIGHT = 150.dp
+private val LogoMaxWidth = 268.dp
+private val LogoMaxHeight = 150.dp
 
 @Composable
 internal fun GameInfoCompanies(
@@ -64,7 +64,7 @@ internal fun GameInfoCompanies(
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
 ) {
     GameInfoSectionWithInnerList(title = stringResource(R.string.game_companies_title)) {
-        items(companies, key = GameInfoCompanyModel::id) { company ->
+        items(items = companies, key = GameInfoCompanyModel::id) { company ->
             Company(
                 company = company,
                 onCompanyClicked = { onCompanyClicked(company) },
@@ -81,7 +81,7 @@ private fun Company(
     val logoImageSize = rememberLogoImageSize(company)
     val logoContainerSizeInDp = DpSize(
         width = with(LocalDensity.current) { logoImageSize.width.toDp() },
-        height = LOGO_MAX_HEIGHT,
+        height = LogoMaxHeight,
     )
 
     GamedgeCard(
@@ -110,8 +110,8 @@ private fun rememberLogoImageSize(company: GameInfoCompanyModel): IntSize {
     val density = LocalDensity.current
 
     return remember(company.logoWidth, company.logoHeight) {
-        val logoMaxWidthInPx = with(density) { LOGO_MAX_WIDTH.roundToPx() }
-        val logoMaxHeightInPx = with(density) { LOGO_MAX_HEIGHT.roundToPx() }
+        val logoMaxWidthInPx = with(density) { LogoMaxWidth.roundToPx() }
+        val logoMaxHeightInPx = with(density) { LogoMaxHeight.roundToPx() }
 
         if (!company.hasLogoSize) {
             return@remember IntSize(logoMaxWidthInPx, logoMaxHeightInPx)

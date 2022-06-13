@@ -56,7 +56,7 @@ fun GamesCategoryPreview(
     isMoreButtonVisible: Boolean = true,
     onCategoryMoreButtonClicked: (() -> Unit)? = null,
 ) {
-    GamedgeCard(Modifier.fillMaxWidth()) {
+    GamedgeCard(modifier = Modifier.fillMaxWidth()) {
         ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
             val titleRefMargin = GamedgeTheme.spaces.spacing_3_5
             val progressBarMarginEnd = GamedgeTheme.spaces.spacing_1_5
@@ -215,7 +215,7 @@ private fun SuccessState(
         ),
         horizontalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_1_5),
     ) {
-        items(games, key = GamesCategoryPreviewItemModel::id) { item ->
+        items(items = games, key = GamesCategoryPreviewItemModel::id) { item ->
             GameCover(
                 title = item.title,
                 imageUrl = item.coverUrl,

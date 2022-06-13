@@ -35,8 +35,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
-import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
@@ -51,11 +51,11 @@ import kotlinx.coroutines.launch
 
 // Intentional delay to keep the swipe refresh visible
 // because as soon as it is let go, it disappears instantaneously.
-private const val SWIPE_REFRESH_INTENTIONAL_DELAY = 300L
+private const val SwipeRefreshIntentionalDelay = 300L
 
 @Composable
 fun GamesDiscovery(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
     GamesDiscovery(
@@ -71,26 +71,26 @@ private fun GamesDiscovery(
     modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
-    HandleCommands(viewModel = viewModel)
-    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    CommandsHandler(viewModel = viewModel)
+    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
     GamesDiscovery(
         items = viewModel.items.collectAsState().value,
-        modifier = modifier,
         onCategoryMoreButtonClicked = viewModel::onCategoryMoreButtonClicked,
         onSearchButtonClicked = viewModel::onSearchButtonClicked,
         onCategoryGameClicked = viewModel::onCategoryGameClicked,
         onRefreshRequested = viewModel::onRefreshRequested,
+        modifier = modifier,
     )
 }
 
 @Composable
 private fun GamesDiscovery(
     items: List<GamesDiscoveryItemModel>,
-    modifier: Modifier = Modifier,
     onSearchButtonClicked: () -> Unit,
     onCategoryMoreButtonClicked: (category: String) -> Unit,
     onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,
     onRefreshRequested: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
@@ -115,7 +115,7 @@ private fun GamesDiscovery(
                 isRefreshing = true
 
                 coroutineScope.launch {
-                    delay(SWIPE_REFRESH_INTENTIONAL_DELAY)
+                    delay(SwipeRefreshIntentionalDelay)
                     onRefreshRequested()
                     isRefreshing = false
                 }
@@ -139,7 +139,7 @@ private fun CategoryPreviewItems(
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
-        items(items, key = GamesDiscoveryItemModel::id) { item ->
+        items(items = items, key = GamesDiscoveryItemModel::id) { item ->
             val categoryGames = remember(item.games) {
                 item.games.mapToCategoryItems()
             }

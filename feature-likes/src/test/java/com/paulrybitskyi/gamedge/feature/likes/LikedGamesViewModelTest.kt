@@ -78,9 +78,9 @@ internal class LikedGamesViewModelTest {
                 val loadingState = awaitItem()
                 val resultState = awaitItem()
 
-                assertThat(emptyState.finiteUiState).isEqualTo(FiniteUiState.EMPTY)
-                assertThat(loadingState.finiteUiState).isEqualTo(FiniteUiState.LOADING)
-                assertThat(resultState.finiteUiState).isEqualTo(FiniteUiState.SUCCESS)
+                assertThat(emptyState.finiteUiState).isEqualTo(FiniteUiState.Empty)
+                assertThat(loadingState.finiteUiState).isEqualTo(FiniteUiState.Loading)
+                assertThat(resultState.finiteUiState).isEqualTo(FiniteUiState.Success)
                 assertThat(resultState.games).hasSize(DOMAIN_GAMES.size)
             }
         }

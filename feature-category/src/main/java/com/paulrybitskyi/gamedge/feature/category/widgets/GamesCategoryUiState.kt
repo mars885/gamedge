@@ -35,9 +35,9 @@ internal data class GameCategoryModel(
 
 internal val GamesCategoryUiState.finiteUiState: FiniteUiState
     get() = when {
-        isInEmptyState -> FiniteUiState.EMPTY
-        isInLoadingState -> FiniteUiState.LOADING
-        isInSuccessState -> FiniteUiState.SUCCESS
+        isInEmptyState -> FiniteUiState.Empty
+        isInLoadingState -> FiniteUiState.Loading
+        isInSuccessState -> FiniteUiState.Success
         else -> error("Unknown games category UI state.")
     }
 

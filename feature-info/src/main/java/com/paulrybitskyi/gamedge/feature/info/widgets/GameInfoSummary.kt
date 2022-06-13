@@ -43,8 +43,8 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSection
 
-private const val ANIMATION_DURATION = 300
-private const val CONTENT_MAX_LINES = 4
+private const val AnimationDuration = 300
+private const val ContentMaxLines = 4
 
 @Composable
 internal fun GameInfoSummary(summary: String) {
@@ -76,18 +76,18 @@ internal fun GameInfoSummary(summary: String) {
 
                 if (isExpanding) {
                     expandVertically(
-                        animationSpec = tween(ANIMATION_DURATION),
+                        animationSpec = tween(AnimationDuration),
                         expandFrom = Alignment.Top,
                         initialHeight = { collapsedHeight },
                     ) with ExitTransition.None
                 } else {
                     EnterTransition.None with shrinkVertically(
-                        animationSpec = tween(ANIMATION_DURATION),
+                        animationSpec = tween(AnimationDuration),
                         shrinkTowards = Alignment.Top,
                         targetHeight = { collapsedHeight },
                     )
                 } using SizeTransform(
-                    sizeAnimationSpec = { _, _ -> tween(ANIMATION_DURATION) },
+                    sizeAnimationSpec = { _, _ -> tween(AnimationDuration) },
                 )
             },
         ) { isInExpandedState ->
@@ -95,7 +95,7 @@ internal fun GameInfoSummary(summary: String) {
                 text = summary,
                 color = GamedgeTheme.colors.onSurface,
                 overflow = TextOverflow.Ellipsis,
-                maxLines = if (isInExpandedState) Int.MAX_VALUE else CONTENT_MAX_LINES,
+                maxLines = if (isInExpandedState) Int.MAX_VALUE else ContentMaxLines,
                 onTextLayout = { textLayoutResult ->
                     if (!hasTextBeenLaidOut) {
                         hasTextBeenLaidOut = true

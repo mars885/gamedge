@@ -36,8 +36,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.paulrybitskyi.commons.ktx.showShortToast
-import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
-import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.LocalUrlOpener
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
@@ -53,7 +53,7 @@ import com.paulrybitskyi.gamedge.feature.news.R
 
 @Composable
 fun GamingNews(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
     GamingNews(
@@ -72,7 +72,7 @@ private fun GamingNews(
     val urlOpener = LocalUrlOpener.current
     val context = LocalContext.current
 
-    HandleCommands(viewModel = viewModel) { command ->
+    CommandsHandler(viewModel = viewModel) { command ->
         when (command) {
             is GamingNewsCommand.OpenUrl -> {
                 if (!urlOpener.openUrl(command.url, context)) {
@@ -81,24 +81,23 @@ private fun GamingNews(
             }
         }
     }
-
-    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
     GamingNews(
         uiState = viewModel.uiState.collectAsState().value,
-        modifier = modifier,
         onSearchButtonClicked = viewModel::onSearchButtonClicked,
         onNewsItemClicked = viewModel::onNewsItemClicked,
         onRefreshRequested = viewModel::onRefreshRequested,
+        modifier = modifier,
     )
 }
 
 @Composable
 private fun GamingNews(
     uiState: GamingNewsUiState,
-    modifier: Modifier = Modifier,
     onSearchButtonClicked: () -> Unit,
     onNewsItemClicked: (GamingNewsItemModel) -> Unit,
     onRefreshRequested: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
@@ -115,14 +114,16 @@ private fun GamingNews(
     ) {
         AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
             when (finiteUiState) {
-                FiniteUiState.LOADING -> LoadingState(Modifier.align(Alignment.Center))
+                FiniteUiState.Loading -> {
+                    LoadingState(modifier = Modifier.align(Alignment.Center))
+                }
                 else -> {
                     RefreshableContent(
                         isRefreshing = uiState.isRefreshing,
                         modifier = Modifier.matchParentSize(),
                         onRefreshRequested = onRefreshRequested,
                     ) {
-                        if (finiteUiState == FiniteUiState.EMPTY) {
+                        if (finiteUiState == FiniteUiState.Empty) {
                             EmptyState(Modifier.matchParentSize())
                         } else {
                             SuccessState(
@@ -139,7 +140,7 @@ private fun GamingNews(
 
 @Composable
 private fun LoadingState(modifier: Modifier) {
-    GamedgeProgressIndicator(modifier)
+    GamedgeProgressIndicator(modifier = modifier)
 }
 
 @Composable
@@ -169,7 +170,7 @@ private fun SuccessState(
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
-        items(news, key = GamingNewsItemModel::id) { itemModel ->
+        items(items = news, key = GamingNewsItemModel::id) { itemModel ->
             GamingNewsItem(
                 model = itemModel,
                 onClick = { onNewsItemClicked(itemModel) }

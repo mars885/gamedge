@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
-import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeProgressIndicator
@@ -45,11 +45,9 @@ private fun Splash(
     viewModel: SplashViewModel,
     onRoute: (Route) -> Unit,
 ) {
-    HandleCommands(viewModel)
-    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
-    Splash(
-        uiState = viewModel.uiState.collectAsState().value,
-    )
+    CommandsHandler(viewModel = viewModel)
+    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
+    Splash(uiState = viewModel.uiState.collectAsState().value)
 }
 
 @Composable

@@ -41,21 +41,21 @@ import coil.request.ImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
-val DEFAULT_COVER_WIDTH = 112.dp
-val DEFAULT_COVER_HEIGHT = 153.dp
+val DefaultCoverWidth = 112.dp
+val DefaultCoverHeight = 153.dp
 
 @Composable
 fun GameCover(
     title: String?,
     imageUrl: String?,
+    onCoverClicked: () -> Unit,
     modifier: Modifier = Modifier,
     hasRoundedShape: Boolean = true,
-    onCoverClicked: () -> Unit,
 ) {
     GamedgeCard(
         onClick = onCoverClicked,
         modifier = Modifier
-            .size(width = DEFAULT_COVER_WIDTH, height = DEFAULT_COVER_HEIGHT)
+            .size(width = DefaultCoverWidth, height = DefaultCoverHeight)
             .then(modifier),
         shape = if (hasRoundedShape) GamedgeTheme.shapes.medium else RectangleShape,
         backgroundColor = Color.Transparent,

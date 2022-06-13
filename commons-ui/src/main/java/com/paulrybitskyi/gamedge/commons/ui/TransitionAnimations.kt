@@ -33,7 +33,7 @@ import kotlin.math.roundToInt
 sealed interface TransitionAnimations {
 
     companion object {
-        const val DEFAULT_ANIMATION_DURATION = 300
+        const val DefaultAnimationDuration = 300
     }
 
     fun enter(): EnterTransition
@@ -44,116 +44,116 @@ sealed interface TransitionAnimations {
 
 object OvershootScaling : TransitionAnimations {
 
-    private const val FADING_ANIM_DURATION = 100
+    private const val FadingAnimationDuration = 100
 
-    private const val MIN_SCALE = 0.9f
-    private const val MAX_SCALE = 1.1f
+    private const val MinScale = 0.9f
+    private const val MaxScale = 1.1f
 
-    private const val MIN_ALPHA = 0f
-    private const val MAX_ALPHA = 0.9f
+    private const val MinAlpha = 0f
+    private const val MaxAlpha = 0.9f
 
     private val overshootInterpolator = OvershootInterpolator()
 
     override fun enter(): EnterTransition {
         return scaleIn(
             animationSpec = tween(
-                durationMillis = TransitionAnimations.DEFAULT_ANIMATION_DURATION,
+                durationMillis = TransitionAnimations.DefaultAnimationDuration,
                 easing = Easing(overshootInterpolator::getInterpolation),
             ),
-            initialScale = MAX_SCALE,
+            initialScale = MaxScale,
         ) + fadeIn(
             animationSpec = tween(
-                durationMillis = FADING_ANIM_DURATION,
+                durationMillis = FadingAnimationDuration,
                 easing = LinearEasing,
             ),
-            initialAlpha = MAX_ALPHA,
+            initialAlpha = MaxAlpha,
         )
     }
 
     override fun exit(): ExitTransition {
         return scaleOut(
             animationSpec = tween(
-                durationMillis = TransitionAnimations.DEFAULT_ANIMATION_DURATION,
+                durationMillis = TransitionAnimations.DefaultAnimationDuration,
                 easing = Easing(overshootInterpolator::getInterpolation),
             ),
-            targetScale = MIN_SCALE,
+            targetScale = MinScale,
         ) + fadeOut(
             animationSpec = tween(
-                durationMillis = FADING_ANIM_DURATION,
+                durationMillis = FadingAnimationDuration,
                 easing = LinearEasing,
             ),
-            targetAlpha = MAX_ALPHA,
+            targetAlpha = MaxAlpha,
         )
     }
 
     override fun popEnter(): EnterTransition {
         return scaleIn(
             animationSpec = tween(
-                durationMillis = TransitionAnimations.DEFAULT_ANIMATION_DURATION,
+                durationMillis = TransitionAnimations.DefaultAnimationDuration,
                 easing = Easing(overshootInterpolator::getInterpolation),
             ),
-            initialScale = MIN_SCALE,
+            initialScale = MinScale,
         ) + fadeIn(
             animationSpec = tween(
-                durationMillis = FADING_ANIM_DURATION,
+                durationMillis = FadingAnimationDuration,
                 easing = LinearEasing,
             ),
-            initialAlpha = MAX_ALPHA,
+            initialAlpha = MaxAlpha,
         )
     }
 
     override fun popExit(): ExitTransition {
         return scaleOut(
             animationSpec = tween(
-                durationMillis = TransitionAnimations.DEFAULT_ANIMATION_DURATION,
+                durationMillis = TransitionAnimations.DefaultAnimationDuration,
                 easing = Easing(overshootInterpolator::getInterpolation),
             ),
-            targetScale = MAX_SCALE,
+            targetScale = MaxScale,
         ) + fadeOut(
             animationSpec = tween(
-                durationMillis = FADING_ANIM_DURATION,
+                durationMillis = FadingAnimationDuration,
                 easing = LinearEasing,
             ),
-            targetAlpha = MIN_ALPHA,
+            targetAlpha = MinAlpha,
         )
     }
 }
 
 object HorizontalSliding : TransitionAnimations {
 
-    private const val MIN_ALPHA = 0.8f
-    private const val MAX_OFFSET_RATIO = 0.25f
+    private const val MinAlpha = 0.8f
+    private const val MaxOffsetRatio = 0.25f
 
     override fun enter(): EnterTransition {
         return slideInHorizontally(
-            animationSpec = tween(TransitionAnimations.DEFAULT_ANIMATION_DURATION),
+            animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
             initialOffsetX = ::calculateMinOffsetX,
         )
     }
 
     override fun exit(): ExitTransition {
         return fadeOut(
-            animationSpec = tween(TransitionAnimations.DEFAULT_ANIMATION_DURATION),
-            targetAlpha = MIN_ALPHA,
+            animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
+            targetAlpha = MinAlpha,
         ) + slideOutHorizontally(
-            animationSpec = tween(TransitionAnimations.DEFAULT_ANIMATION_DURATION),
+            animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
             targetOffsetX = ::calculateMaxOffsetX,
         )
     }
 
     override fun popEnter(): EnterTransition {
         return fadeIn(
-            animationSpec = tween(TransitionAnimations.DEFAULT_ANIMATION_DURATION),
-            initialAlpha = MIN_ALPHA,
+            animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
+            initialAlpha = MinAlpha,
         ) + slideInHorizontally(
-            animationSpec = tween(TransitionAnimations.DEFAULT_ANIMATION_DURATION),
+            animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
             initialOffsetX = ::calculateMaxOffsetX,
         )
     }
 
     override fun popExit(): ExitTransition {
         return slideOutHorizontally(
-            animationSpec = tween(TransitionAnimations.DEFAULT_ANIMATION_DURATION),
+            animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
             targetOffsetX = ::calculateMinOffsetX,
         )
     }
@@ -163,6 +163,6 @@ object HorizontalSliding : TransitionAnimations {
     }
 
     private fun calculateMaxOffsetX(fullWidth: Int): Int {
-        return (-fullWidth * MAX_OFFSET_RATIO).roundToInt()
+        return (-fullWidth * MaxOffsetRatio).roundToInt()
     }
 }

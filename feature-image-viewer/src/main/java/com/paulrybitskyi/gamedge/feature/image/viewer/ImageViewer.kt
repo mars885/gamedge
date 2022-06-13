@@ -54,8 +54,8 @@ import com.mxalbert.zoomable.OverZoomConfig
 import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
 import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
-import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
-import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.commons.ui.LocalTextSharer
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
@@ -65,10 +65,10 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.statusBar
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
 
-private const val ZOOM_SCALE_MIN = 0.5f
-private const val ZOOM_SCALE_MAX = 5f
-private const val ZOOM_OVER_SNAP_SCALE_MIN = 1f
-private const val ZOOM_OVER_SNAP_SCALE_MAX = 3f
+private const val ZoomScaleMin = 0.5f
+private const val ZoomScaleMax = 5f
+private const val ZoomOverSnapScaleMin = 1f
+private const val ZoomOverSnapScaleMax = 3f
 
 @Composable
 fun ImageViewer(onRoute: (Route) -> Unit) {
@@ -86,14 +86,14 @@ private fun ImageViewer(
     val textSharer = LocalTextSharer.current
     val context = LocalContext.current
 
-    HandleCommands(viewModel = viewModel) { command ->
+    CommandsHandler(viewModel = viewModel) { command ->
         when (command) {
             is ImageViewerCommand.ShareText -> {
                 textSharer.share(context, command.text)
             }
         }
     }
-    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
     ImageViewer(
         uiState = viewModel.uiState.collectAsState().value,
         onBackPressed = viewModel::onBackPressed,
@@ -111,14 +111,14 @@ private fun ImageViewer(
     onImageChanged: (imageIndex: Int) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    ChangeStatusBarColor()
+    StatusBarColorHandler()
     BackHandler(onBack = onBackPressed)
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.Black,
         contentColor = Color.White,
     ) {
-        Box(Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize()) {
             Pager(
                 uiState = uiState,
                 modifier = Modifier.matchParentSize(),
@@ -145,7 +145,7 @@ private fun ImageViewer(
 }
 
 @Composable
-private fun ChangeStatusBarColor() {
+private fun StatusBarColorHandler() {
     val systemUiController = rememberSystemUiController()
     val defaultStatusBarColor = GamedgeTheme.colors.statusBar
     val defaultNavigationBarColor = GamedgeTheme.colors.navBar
@@ -205,11 +205,11 @@ private fun ImageItem(
     Box(modifier = Modifier.fillMaxSize()) {
         var imageState by remember { mutableStateOf<State>(State.Empty) }
         val zoomableState = rememberZoomableState(
-            minScale = ZOOM_SCALE_MIN,
-            maxScale = ZOOM_SCALE_MAX,
+            minScale = ZoomScaleMin,
+            maxScale = ZoomScaleMax,
             overZoomConfig = OverZoomConfig(
-                minSnapScale = ZOOM_OVER_SNAP_SCALE_MIN,
-                maxSnapScale = ZOOM_OVER_SNAP_SCALE_MAX,
+                minSnapScale = ZoomOverSnapScaleMin,
+                maxSnapScale = ZoomOverSnapScaleMax,
             ),
         )
 

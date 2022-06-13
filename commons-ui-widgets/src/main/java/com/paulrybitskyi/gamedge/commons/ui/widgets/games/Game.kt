@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.commons.ui.widgets.DEFAULT_COVER_HEIGHT
+import com.paulrybitskyi.gamedge.commons.ui.widgets.DefaultCoverHeight
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
 import kotlin.math.roundToInt
@@ -63,7 +63,7 @@ fun Game(
                 releaseDate = game.releaseDate,
                 developerName = game.developerName,
                 description = game.description,
-                modifier = Modifier.height(DEFAULT_COVER_HEIGHT),
+                modifier = Modifier.height(DefaultCoverHeight),
             )
         }
     }

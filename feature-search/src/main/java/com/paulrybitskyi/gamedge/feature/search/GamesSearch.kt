@@ -29,8 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
-import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.OnLifecycleEvent
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
@@ -43,7 +43,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.games.finiteUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-private const val KEYBOARD_POPUP_INTENTIONAL_DELAY = 300L
+private const val KeyboardPopupIntentionalDelay = 300L
 
 @Composable
 fun GamesSearch(onRoute: (Route) -> Unit) {
@@ -58,8 +58,8 @@ private fun GamesSearch(
     viewModel: GamesSearchViewModel,
     onRoute: (Route) -> Unit,
 ) {
-    HandleCommands(viewModel = viewModel)
-    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    CommandsHandler(viewModel = viewModel)
+    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
     GamesSearch(
         uiState = viewModel.uiState.collectAsState().value,
         onSearchConfirmed = viewModel::onSearchConfirmed,
@@ -113,13 +113,13 @@ private fun GamesSearch(
 
         OnLifecycleEvent(
             onResume = {
-                if (uiState.gamesUiState.finiteUiState == FiniteUiState.EMPTY) {
+                if (uiState.gamesUiState.finiteUiState == FiniteUiState.Empty) {
                     // On subsequent openings of this screen from the background,
                     // simply calling focusRequester.requestFocus() does not make
                     // the keyboard visible. The workaround is to add small delay
                     // and call keyboardController.show() as well.
                     coroutineScope.launch {
-                        delay(KEYBOARD_POPUP_INTENTIONAL_DELAY)
+                        delay(KeyboardPopupIntentionalDelay)
                         focusRequester.requestFocus()
                         keyboardController?.show()
                     }

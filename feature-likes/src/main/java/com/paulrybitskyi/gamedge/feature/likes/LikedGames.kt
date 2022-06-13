@@ -26,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.paulrybitskyi.gamedge.commons.ui.HandleCommands
-import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
+import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
@@ -37,7 +37,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
 
 @Composable
 fun LikedGames(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
     LikedGames(
@@ -50,27 +50,27 @@ fun LikedGames(
 @Composable
 private fun LikedGames(
     viewModel: LikedGamesViewModel,
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
-    HandleCommands(viewModel)
-    HandleRoutes(viewModel = viewModel, onRoute = onRoute)
+    CommandsHandler(viewModel = viewModel)
+    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
     LikedGames(
         uiState = viewModel.uiState.collectAsState().value,
-        modifier = modifier,
         onSearchButtonClicked = viewModel::onSearchButtonClicked,
         onGameClicked = viewModel::onGameClicked,
         onBottomReached = viewModel::onBottomReached,
+        modifier = modifier,
     )
 }
 
 @Composable
 private fun LikedGames(
     uiState: GamesUiState,
-    modifier: Modifier = Modifier,
     onSearchButtonClicked: () -> Unit,
     onGameClicked: (GameModel) -> Unit,
     onBottomReached: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,

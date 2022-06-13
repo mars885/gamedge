@@ -81,41 +81,41 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.Artworks
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
 import org.intellij.lang.annotations.Language
 
-private const val CONSTRAINT_ID_ARTWORKS = "artworks"
-private const val CONSTRAINT_ID_ARTWORKS_SCRIM = "artworks_scrim"
-private const val CONSTRAINT_ID_BACK_BUTTON = "back_button"
-private const val CONSTRAINT_ID_PAGE_INDICATOR = "page_indicator"
-private const val CONSTRAINT_ID_BACKDROP = "backdrop"
-private const val CONSTRAINT_ID_COVER_SPACE = "cover_space"
-private const val CONSTRAINT_ID_COVER = "cover"
-private const val CONSTRAINT_ID_LIKE_BUTTON = "like_button"
-private const val CONSTRAINT_ID_FIRST_TITLE = "first_title"
-private const val CONSTRAINT_ID_SECOND_TITLE = "second_title"
-private const val CONSTRAINT_ID_RELEASE_DATE = "release_date"
-private const val CONSTRAINT_ID_DEVELOPER_NAME = "developer_name"
-private const val CONSTRAINT_ID_RATING = "rating"
-private const val CONSTRAINT_ID_LIKE_COUNT = "like_count"
-private const val CONSTRAINT_ID_AGE_RATING = "age_rating"
-private const val CONSTRAINT_ID_GAME_CATEGORY = "game_category"
-private const val CONSTRAINT_ID_LIST = "list"
+private const val ConstraintIdArtworks = "artworks"
+private const val ConstraintIdArtworksScrim = "artworks_scrim"
+private const val ConstraintIdBackButton = "back_button"
+private const val ConstraintIdPageIndicator = "page_indicator"
+private const val ConstraintIdBackdrop = "backdrop"
+private const val ConstraintIdCoverSpace = "cover_space"
+private const val ConstraintIdCover = "cover"
+private const val ConstraintIdLikeButton = "like_button"
+private const val ConstraintIdFirstTitle = "first_title"
+private const val ConstraintIdSecondTitle = "second_title"
+private const val ConstraintIdReleaseDate = "release_date"
+private const val ConstraintIdDeveloperName = "developer_name"
+private const val ConstraintIdRating = "rating"
+private const val ConstraintIdLikeCount = "like_count"
+private const val ConstraintIdAgeRating = "age_rating"
+private const val ConstraintIdGameCategory = "game_category"
+private const val ConstraintIdList = "list"
 
-private val COVER_SPACE = 40.dp
-private val INFO_ICON_SIZE = 34.dp
+private val CoverSpace = 40.dp
+private val InfoIconSize = 34.dp
 
-private const val FIRST_TITLE_SCALE_COLLAPSED = 1.1f
-private const val LIKE_BUTTON_SCALE_COLLAPSED = 0f
+private const val FirstTitleScaleCollapsed = 1.1f
+private const val LikeButtonScaleCollapsed = 0f
 
-private val ARTWORKS_HEIGHT_EXPANDED = 240.dp
-private val ARTWORKS_HEIGHT_COLLAPSED = 56.dp
+private val ArtworksHeightExpanded = 240.dp
+private val ArtworksHeightCollapsed = 56.dp
 
-private val PAGE_INDICATOR_DELTA_X_COLLAPSED = 60.dp
-private val COVER_DELTA_X_COLLAPSED = -130.dp
-private val COVER_DELTA_Y_COLLAPSED = -60.dp
-private val SECONDARY_TEXT_DELTA_X_COLLAPSED = -8.dp
+private val PageIndicatorDeltaXCollapsed = 60.dp
+private val CoverDeltaXCollapsed = -130.dp
+private val CoverDeltaYCollapsed = -60.dp
+private val SecondaryTextDeltaXCollapsed = -8.dp
 
 private enum class State {
-    EXPANDED,
-    COLLAPSED,
+    Expanded,
+    Collapsed,
 }
 
 // Try out this again when a new version of MotionLayout for compose
@@ -130,9 +130,9 @@ internal fun GameInfoAnimatableHeader(
     onLikeButtonClicked: () -> Unit,
     content: @Composable (Modifier) -> Unit,
 ) {
-    var state by remember { mutableStateOf(State.EXPANDED) }
+    var state by remember { mutableStateOf(State.Expanded) }
     val progress by animateFloatAsState(
-        targetValue = if (state == State.EXPANDED) 0f else 1f,
+        targetValue = if (state == State.Expanded) 0f else 1f,
         animationSpec = tween(3000),
     )
 
@@ -180,7 +180,7 @@ internal fun GameInfoAnimatableHeader(
         Artworks(
             artworks = artworks,
             isScrollingEnabled = isArtworkInteractionEnabled,
-            modifier = Modifier.layoutId(CONSTRAINT_ID_ARTWORKS),
+            modifier = Modifier.layoutId(ConstraintIdArtworks),
             onArtworkChanged = { page ->
                 selectedArtworkPage = page
             },
@@ -192,8 +192,8 @@ internal fun GameInfoAnimatableHeader(
         )
 
         Box(
-            Modifier
-                .layoutId(CONSTRAINT_ID_ARTWORKS_SCRIM)
+            modifier = Modifier
+                .layoutId(ConstraintIdArtworksScrim)
                 .background(GamedgeTheme.colors.darkScrim),
         )
 
@@ -201,7 +201,7 @@ internal fun GameInfoAnimatableHeader(
             painter = painterResource(R.drawable.arrow_left),
             contentDescription = null,
             modifier = Modifier
-                .layoutId(CONSTRAINT_ID_BACK_BUTTON)
+                .layoutId(ConstraintIdBackButton)
                 .statusBarsPadding()
                 .size(56.dp)
                 .clickable(
@@ -228,7 +228,7 @@ internal fun GameInfoAnimatableHeader(
                     headerInfo.artworks.size,
                 ),
                 modifier = Modifier
-                    .layoutId(CONSTRAINT_ID_PAGE_INDICATOR)
+                    .layoutId(ConstraintIdPageIndicator)
                     .statusBarsPadding()
                     .background(
                         color = GamedgeTheme.colors.lightScrim,
@@ -244,8 +244,8 @@ internal fun GameInfoAnimatableHeader(
         }
 
         Box(
-            Modifier
-                .layoutId(CONSTRAINT_ID_BACKDROP)
+            modifier = Modifier
+                .layoutId(ConstraintIdBackdrop)
                 .background(
                     color = GamedgeTheme.colors.surface,
                     shape = RectangleShape,
@@ -255,15 +255,15 @@ internal fun GameInfoAnimatableHeader(
 
         Spacer(
             Modifier
-                .layoutId(CONSTRAINT_ID_COVER_SPACE)
-                .height(COVER_SPACE),
+                .layoutId(ConstraintIdCoverSpace)
+                .height(CoverSpace),
         )
 
         GameCover(
             title = null,
             imageUrl = headerInfo.coverImageUrl,
             modifier = Modifier
-                .layoutId(CONSTRAINT_ID_COVER)
+                .layoutId(ConstraintIdCover)
                 .drawOnTop(),
             onCoverClicked = onCoverClicked,
         )
@@ -271,7 +271,7 @@ internal fun GameInfoAnimatableHeader(
         FloatingActionButton(
             onClick = onLikeButtonClicked,
             modifier = Modifier
-                .layoutId(CONSTRAINT_ID_LIKE_BUTTON)
+                .layoutId(ConstraintIdLikeButton)
                 .drawOnTop(),
             backgroundColor = GamedgeTheme.colors.secondary,
         ) {
@@ -295,7 +295,7 @@ internal fun GameInfoAnimatableHeader(
         Text(
             text = headerInfo.title,
             modifier = Modifier
-                .layoutId(CONSTRAINT_ID_FIRST_TITLE)
+                .layoutId(ConstraintIdFirstTitle)
                 .drawOnTop(),
             color = GamedgeTheme.colors.onPrimary,
             overflow = firstTitleOverflowMode,
@@ -313,8 +313,8 @@ internal fun GameInfoAnimatableHeader(
         )
 
         Box(
-            Modifier
-                .layoutId(CONSTRAINT_ID_SECOND_TITLE)
+            modifier = Modifier
+                .layoutId(ConstraintIdSecondTitle)
                 .drawOnTop(),
         ) {
             if (isSecondTitleVisible) {
@@ -333,15 +333,15 @@ internal fun GameInfoAnimatableHeader(
         Text(
             text = headerInfo.releaseDate,
             modifier = Modifier
-                .layoutId(CONSTRAINT_ID_RELEASE_DATE)
+                .layoutId(ConstraintIdReleaseDate)
                 .drawOnTop(),
             color = GamedgeTheme.colors.onSurface,
             style = GamedgeTheme.typography.subtitle3,
         )
 
         Box(
-            Modifier
-                .layoutId(CONSTRAINT_ID_DEVELOPER_NAME)
+            modifier = Modifier
+                .layoutId(ConstraintIdDeveloperName)
                 .drawOnTop(),
         ) {
             if (headerInfo.hasDeveloperName) {
@@ -357,48 +357,48 @@ internal fun GameInfoAnimatableHeader(
             icon = painterResource(R.drawable.star_circle_outline),
             title = headerInfo.rating,
             modifier = Modifier
-                .layoutId(CONSTRAINT_ID_RATING)
+                .layoutId(ConstraintIdRating)
                 .drawOnTop()
                 .clickable {
                     // TODO: To be removed, only for debugging purposes
-                    state = if (state == State.EXPANDED) {
-                        State.COLLAPSED
+                    state = if (state == State.Expanded) {
+                        State.Collapsed
                     } else {
-                        State.EXPANDED
+                        State.Expanded
                     }
                 },
-            iconSize = INFO_ICON_SIZE,
+            iconSize = InfoIconSize,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.account_heart_outline),
             title = headerInfo.likeCount,
             modifier = Modifier
-                .layoutId(CONSTRAINT_ID_LIKE_COUNT)
+                .layoutId(ConstraintIdLikeCount)
                 .drawOnTop(),
-            iconSize = INFO_ICON_SIZE,
+            iconSize = InfoIconSize,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.age_rating_outline),
             title = headerInfo.ageRating,
             modifier = Modifier
-                .layoutId(CONSTRAINT_ID_AGE_RATING)
+                .layoutId(ConstraintIdAgeRating)
                 .drawOnTop(),
-            iconSize = INFO_ICON_SIZE,
+            iconSize = InfoIconSize,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
             icon = painterResource(R.drawable.shape_outline),
             title = headerInfo.gameCategory,
             modifier = Modifier
-                .layoutId(CONSTRAINT_ID_GAME_CATEGORY)
+                .layoutId(ConstraintIdGameCategory)
                 .drawOnTop(),
-            iconSize = INFO_ICON_SIZE,
+            iconSize = InfoIconSize,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
 
-        content(Modifier.layoutId(CONSTRAINT_ID_LIST))
+        content(Modifier.layoutId(ConstraintIdList))
     }
 }
 
@@ -409,7 +409,7 @@ private fun constructExpandedConstraintSet(
 ): ConstraintSet {
     val pageIndicatorMargin = GamedgeTheme.spaces.spacing_2_5
     val backdropElevation = GamedgeTheme.spaces.spacing_0_5
-    val coverSpaceMargin = COVER_SPACE
+    val coverSpaceMargin = CoverSpace
     val coverMarginStart = GamedgeTheme.spaces.spacing_3_5
     val likeBtnMarginEnd = GamedgeTheme.spaces.spacing_2_5
     val titleMarginStart = GamedgeTheme.spaces.spacing_3_5
@@ -423,28 +423,28 @@ private fun constructExpandedConstraintSet(
     val infoItemMarginBottom = GamedgeTheme.spaces.spacing_3_5
 
     return ConstraintSet {
-        val artworks = createRefFor(CONSTRAINT_ID_ARTWORKS)
-        val artworksScrim = createRefFor(CONSTRAINT_ID_ARTWORKS_SCRIM)
-        val backButton = createRefFor(CONSTRAINT_ID_BACK_BUTTON)
-        val pageIndicator = createRefFor(CONSTRAINT_ID_PAGE_INDICATOR)
-        val backdrop = createRefFor(CONSTRAINT_ID_BACKDROP)
-        val coverSpace = createRefFor(CONSTRAINT_ID_COVER_SPACE)
-        val cover = createRefFor(CONSTRAINT_ID_COVER)
-        val likeButton = createRefFor(CONSTRAINT_ID_LIKE_BUTTON)
-        val firstTitle = createRefFor(CONSTRAINT_ID_FIRST_TITLE)
-        val secondTitle = createRefFor(CONSTRAINT_ID_SECOND_TITLE)
-        val releaseDate = createRefFor(CONSTRAINT_ID_RELEASE_DATE)
-        val developerName = createRefFor(CONSTRAINT_ID_DEVELOPER_NAME)
+        val artworks = createRefFor(ConstraintIdArtworks)
+        val artworksScrim = createRefFor(ConstraintIdArtworksScrim)
+        val backButton = createRefFor(ConstraintIdBackButton)
+        val pageIndicator = createRefFor(ConstraintIdPageIndicator)
+        val backdrop = createRefFor(ConstraintIdBackdrop)
+        val coverSpace = createRefFor(ConstraintIdCoverSpace)
+        val cover = createRefFor(ConstraintIdCover)
+        val likeButton = createRefFor(ConstraintIdLikeButton)
+        val firstTitle = createRefFor(ConstraintIdFirstTitle)
+        val secondTitle = createRefFor(ConstraintIdSecondTitle)
+        val releaseDate = createRefFor(ConstraintIdReleaseDate)
+        val developerName = createRefFor(ConstraintIdDeveloperName)
         val bottomBarrier = createBottomBarrier(cover, developerName, margin = bottomBarrierMargin)
-        val rating = createRefFor(CONSTRAINT_ID_RATING)
-        val likeCount = createRefFor(CONSTRAINT_ID_LIKE_COUNT)
-        val ageRating = createRefFor(CONSTRAINT_ID_AGE_RATING)
-        val gameCategory = createRefFor(CONSTRAINT_ID_GAME_CATEGORY)
-        val list = createRefFor(CONSTRAINT_ID_LIST)
+        val rating = createRefFor(ConstraintIdRating)
+        val likeCount = createRefFor(ConstraintIdLikeCount)
+        val ageRating = createRefFor(ConstraintIdAgeRating)
+        val gameCategory = createRefFor(ConstraintIdGameCategory)
+        val list = createRefFor(ConstraintIdList)
 
         constrain(artworks) {
             width = Dimension.fillToConstraints
-            height = Dimension.value(ARTWORKS_HEIGHT_EXPANDED)
+            height = Dimension.value(ArtworksHeightExpanded)
             top.linkTo(parent.top)
             centerHorizontallyTo(parent)
         }
@@ -556,7 +556,7 @@ private fun constructCollapsedConstraintSet(
     val statusBarHeight = calculateStatusBarHeightInDp()
     val pageIndicatorMargin = GamedgeTheme.spaces.spacing_2_5
     val backdropElevation = GamedgeTheme.spaces.spacing_1_0
-    val coverSpaceMargin = COVER_SPACE
+    val coverSpaceMargin = CoverSpace
     val coverMarginStart = GamedgeTheme.spaces.spacing_3_5
     val likeBtnMarginEnd = GamedgeTheme.spaces.spacing_2_5
     val titleMarginStart = GamedgeTheme.spaces.spacing_3_5
@@ -569,23 +569,23 @@ private fun constructCollapsedConstraintSet(
     val infoItemVerticalMargin = GamedgeTheme.spaces.spacing_3_5
 
     return ConstraintSet {
-        val artworks = createRefFor(CONSTRAINT_ID_ARTWORKS)
-        val artworksScrim = createRefFor(CONSTRAINT_ID_ARTWORKS_SCRIM)
-        val backButton = createRefFor(CONSTRAINT_ID_BACK_BUTTON)
-        val pageIndicator = createRefFor(CONSTRAINT_ID_PAGE_INDICATOR)
-        val backdrop = createRefFor(CONSTRAINT_ID_BACKDROP)
-        val coverSpace = createRefFor(CONSTRAINT_ID_COVER_SPACE)
-        val cover = createRefFor(CONSTRAINT_ID_COVER)
-        val likeButton = createRefFor(CONSTRAINT_ID_LIKE_BUTTON)
-        val firstTitle = createRefFor(CONSTRAINT_ID_FIRST_TITLE)
-        val secondTitle = createRefFor(CONSTRAINT_ID_SECOND_TITLE)
-        val releaseDate = createRefFor(CONSTRAINT_ID_RELEASE_DATE)
-        val developerName = createRefFor(CONSTRAINT_ID_DEVELOPER_NAME)
-        val rating = createRefFor(CONSTRAINT_ID_RATING)
-        val likeCount = createRefFor(CONSTRAINT_ID_LIKE_COUNT)
-        val ageRating = createRefFor(CONSTRAINT_ID_AGE_RATING)
-        val gameCategory = createRefFor(CONSTRAINT_ID_GAME_CATEGORY)
-        val list = createRefFor(CONSTRAINT_ID_LIST)
+        val artworks = createRefFor(ConstraintIdArtworks)
+        val artworksScrim = createRefFor(ConstraintIdArtworksScrim)
+        val backButton = createRefFor(ConstraintIdBackButton)
+        val pageIndicator = createRefFor(ConstraintIdPageIndicator)
+        val backdrop = createRefFor(ConstraintIdBackdrop)
+        val coverSpace = createRefFor(ConstraintIdCoverSpace)
+        val cover = createRefFor(ConstraintIdCover)
+        val likeButton = createRefFor(ConstraintIdLikeButton)
+        val firstTitle = createRefFor(ConstraintIdFirstTitle)
+        val secondTitle = createRefFor(ConstraintIdSecondTitle)
+        val releaseDate = createRefFor(ConstraintIdReleaseDate)
+        val developerName = createRefFor(ConstraintIdDeveloperName)
+        val rating = createRefFor(ConstraintIdRating)
+        val likeCount = createRefFor(ConstraintIdLikeCount)
+        val ageRating = createRefFor(ConstraintIdAgeRating)
+        val gameCategory = createRefFor(ConstraintIdGameCategory)
+        val list = createRefFor(ConstraintIdList)
 
         constrain(artworks) {
             width = Dimension.fillToConstraints
@@ -612,7 +612,7 @@ private fun constructCollapsedConstraintSet(
         constrain(pageIndicator) {
             top.linkTo(parent.top, pageIndicatorMargin)
             end.linkTo(parent.end, pageIndicatorMargin)
-            translationX = PAGE_INDICATOR_DELTA_X_COLLAPSED
+            translationX = PageIndicatorDeltaXCollapsed
         }
         constrain(backdrop) {
             width = Dimension.fillToConstraints
@@ -629,15 +629,15 @@ private fun constructCollapsedConstraintSet(
         constrain(cover) {
             top.linkTo(coverSpace.bottom)
             start.linkTo(parent.start, coverMarginStart)
-            translationX = COVER_DELTA_X_COLLAPSED
-            translationY = COVER_DELTA_Y_COLLAPSED
+            translationX = CoverDeltaXCollapsed
+            translationY = CoverDeltaYCollapsed
         }
         constrain(likeButton) {
             top.linkTo(artworks.bottom)
             bottom.linkTo(artworks.bottom)
             end.linkTo(parent.end, likeBtnMarginEnd)
             alpha = 0f
-            setScale(LIKE_BUTTON_SCALE_COLLAPSED)
+            setScale(LikeButtonScaleCollapsed)
         }
         constrain(firstTitle) {
             width = Dimension.fillToConstraints
@@ -645,7 +645,7 @@ private fun constructCollapsedConstraintSet(
             bottom.linkTo(artworks.bottom)
             start.linkTo(backButton.end, firstTitleMarginStart)
             end.linkTo(parent.end, firstTitleMarginEnd)
-            setScale(FIRST_TITLE_SCALE_COLLAPSED)
+            setScale(FirstTitleScaleCollapsed)
         }
         constrain(secondTitle) {
             width = Dimension.fillToConstraints
@@ -653,7 +653,7 @@ private fun constructCollapsedConstraintSet(
             start.linkTo(cover.end, titleMarginStart)
             end.linkTo(parent.end, secondTitleMarginEnd)
             alpha = 0f
-            translationX = SECONDARY_TEXT_DELTA_X_COLLAPSED
+            translationX = SecondaryTextDeltaXCollapsed
         }
         constrain(releaseDate) {
             width = Dimension.fillToConstraints
@@ -661,7 +661,7 @@ private fun constructCollapsedConstraintSet(
             start.linkTo(cover.end, releaseDateMarginHorizontal)
             end.linkTo(parent.end, releaseDateMarginHorizontal)
             alpha = 0f
-            translationX = SECONDARY_TEXT_DELTA_X_COLLAPSED
+            translationX = SecondaryTextDeltaXCollapsed
         }
         constrain(developerName) {
             width = Dimension.fillToConstraints
@@ -669,7 +669,7 @@ private fun constructCollapsedConstraintSet(
             start.linkTo(cover.end, developerNameMarginHorizontal)
             end.linkTo(parent.end, developerNameMarginHorizontal)
             alpha = 0f
-            translationX = SECONDARY_TEXT_DELTA_X_COLLAPSED
+            translationX = SecondaryTextDeltaXCollapsed
         }
         constrain(rating) {
             width = Dimension.fillToConstraints
@@ -723,7 +723,7 @@ private fun constructTransition(): String {
         onSwipe: {
           direction: "up",
           touchUp: "decelerateComplete",
-          anchor: "$CONSTRAINT_ID_LIST",
+          anchor: "$ConstraintIdList",
           side: "top",
           mode: "velocity",
         },
@@ -739,41 +739,41 @@ private fun constructTransition(): String {
           KeyFrames: {
               KeyAttributes: [
                   {
-                    target: ["$CONSTRAINT_ID_SECOND_TITLE"],
+                    target: ["$ConstraintIdSecondTitle"],
                     frames: [15, 100],
                     alpha: [0, 0],
-                    translationX: ${SECONDARY_TEXT_DELTA_X_COLLAPSED.value.toInt()},
+                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
                   },
                   {
-                    target: ["$CONSTRAINT_ID_RELEASE_DATE"],
+                    target: ["$ConstraintIdReleaseDate"],
                     frames: [15, 100],
                     alpha: [0, 0],
-                    translationX: ${SECONDARY_TEXT_DELTA_X_COLLAPSED.value.toInt()},
+                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
                   },
                   {
-                    target: ["$CONSTRAINT_ID_DEVELOPER_NAME"],
+                    target: ["$ConstraintIdDeveloperName"],
                     frames: [15, 100],
                     alpha: [0, 0],
-                    translationX: ${SECONDARY_TEXT_DELTA_X_COLLAPSED.value.toInt()},
+                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
                   },
                   {
-                    target: ["$CONSTRAINT_ID_COVER"],
+                    target: ["$ConstraintIdCover"],
                     frames: [50],
                     alpha: 0,
-                    translationX: ${COVER_DELTA_X_COLLAPSED.value.toInt()},
-                    translationY: ${COVER_DELTA_Y_COLLAPSED.value.toInt()},
+                    translationX: ${CoverDeltaXCollapsed.value.toInt()},
+                    translationY: ${CoverDeltaYCollapsed.value.toInt()},
                   },
                   {
-                    target: ["$CONSTRAINT_ID_LIKE_BUTTON"],
+                    target: ["$ConstraintIdLikeButton"],
                     frames: [60],
                     alpha: 0,
                     scaleX: 0,
                     scaleY: 0,
                   },
                   {
-                    target: ["$CONSTRAINT_ID_PAGE_INDICATOR"],
+                    target: ["$ConstraintIdPageIndicator"],
                     frames: [80],
-                    translationX: ${PAGE_INDICATOR_DELTA_X_COLLAPSED.value.toInt()},
+                    translationX: ${PageIndicatorDeltaXCollapsed.value.toInt()},
                   }
              ]
           }
@@ -800,7 +800,7 @@ private fun constructJson(): String {
     val scrimColorExpanded = Integer.toHexString(Color.Transparent.toArgb())
     val pageIndicatorMargin = GamedgeTheme.spaces.spacing_2_5.value.toInt()
     val backdropElevationExpanded = GamedgeTheme.spaces.spacing_0_5.value.toInt()
-    val coverSpaceMargin = COVER_SPACE.value.toInt()
+    val coverSpaceMargin = CoverSpace.value.toInt()
     val coverMarginStart = GamedgeTheme.spaces.spacing_3_5.value.toInt()
     val likeBtnMarginEnd = GamedgeTheme.spaces.spacing_2_5.value.toInt()
     val titleMarginStart = GamedgeTheme.spaces.spacing_3_5.value.toInt()
@@ -819,23 +819,23 @@ private fun constructJson(): String {
     val firstTitleMarginStartCollapsed = GamedgeTheme.spaces.spacing_7_5.value.toInt()
     val firstTitleMarginEndCollapsed = GamedgeTheme.spaces.spacing_6_0.value.toInt()
     val infoItemVerticalMarginCollapsed = GamedgeTheme.spaces.spacing_3_5.value.toInt()
-    val pageIndicatorDeltaXInPx = with(density) { PAGE_INDICATOR_DELTA_X_COLLAPSED.roundToPx() }
-    val coverDeltaXInPx = with(density) { COVER_DELTA_X_COLLAPSED.roundToPx() }
-    val coverDeltaYInPx = with(density) { COVER_DELTA_Y_COLLAPSED.roundToPx() }
-    val secondaryTextDeltaXInPx = with(density) { SECONDARY_TEXT_DELTA_X_COLLAPSED.roundToPx() }
+    val pageIndicatorDeltaXInPx = with(density) { PageIndicatorDeltaXCollapsed.roundToPx() }
+    val coverDeltaXInPx = with(density) { CoverDeltaXCollapsed.roundToPx() }
+    val coverDeltaYInPx = with(density) { CoverDeltaYCollapsed.roundToPx() }
+    val secondaryTextDeltaXInPx = with(density) { SecondaryTextDeltaXCollapsed.roundToPx() }
 
     return """
         {
           ConstraintSets: {
             start: {
-              $CONSTRAINT_ID_ARTWORKS: {
+              $ConstraintIdArtworks: {
                 width: "spread",
-                height: ${ARTWORKS_HEIGHT_EXPANDED.value.toInt()},
+                height: ${ArtworksHeightExpanded.value.toInt()},
                 top: ["parent", "top"],
                 start: ["parent", "start"],
                 end: ["parent", "end"],
               },
-              $CONSTRAINT_ID_ARTWORKS_SCRIM: {
+              $ConstraintIdArtworksScrim: {
                 width: "spread",
                 height: "spread",
                 top: ["artworks", "top"],
@@ -847,15 +847,15 @@ private fun constructJson(): String {
                   scrim_color: "#$scrimColorExpanded",
                 },
               },
-              $CONSTRAINT_ID_BACK_BUTTON: {
+              $ConstraintIdBackButton: {
                 top: ["parent", "top"],
                 start: ["parent", "start"],
               },
-              $CONSTRAINT_ID_PAGE_INDICATOR: {
+              $ConstraintIdPageIndicator: {
                 top: ["parent", "top", $pageIndicatorMargin],
                 end: ["parent", "end", $pageIndicatorMargin],
               },
-              $CONSTRAINT_ID_BACKDROP: {
+              $ConstraintIdBackdrop: {
                 width: "spread",
                 height: "spread",
                 top: ["artworks", "bottom"],
@@ -866,44 +866,44 @@ private fun constructJson(): String {
                   elevation: $backdropElevationExpanded,
                 },
               },
-              $CONSTRAINT_ID_COVER_SPACE: {
+              $ConstraintIdCoverSpace: {
                 start: ["parent", "start"],
                 bottom: ["artworks", "bottom", $coverSpaceMargin],
               },
-              $CONSTRAINT_ID_COVER: {
+              $ConstraintIdCover: {
                 top: ["cover_space", "bottom"],
                 start: ["parent", "start", $coverMarginStart],
               },
-              $CONSTRAINT_ID_LIKE_BUTTON: {
+              $ConstraintIdLikeButton: {
                 top: ["artworks", "bottom"],
                 bottom: ["artworks", "bottom"],
                 end: ["parent", "end", $likeBtnMarginEnd],
               },
-              $CONSTRAINT_ID_FIRST_TITLE: {
+              $ConstraintIdFirstTitle: {
                 width: "spread",
                 top: ["artworks", "bottom", $firstTitleMarginTop],
                 start: ["cover", "end", $titleMarginStart],
                 end: ["like_button", "start", $firstTitleMarginEnd],
               },
-              $CONSTRAINT_ID_SECOND_TITLE: {
+              $ConstraintIdSecondTitle: {
                 width: "spread",
                 top: ["first_title", "bottom"],
                 start: ["cover", "end", $titleMarginStart],
                 end: ["parent", "end", $secondTitleMarginEnd],
               },
-              $CONSTRAINT_ID_RELEASE_DATE: {
+              $ConstraintIdReleaseDate: {
                 width: "spread",
                 top: ["second_title", "bottom", $releaseDateMarginTop],
                 start: ["cover", "end", $releaseDateMarginHorizontal],
                 end: ["parent", "end", $releaseDateMarginHorizontal],
               },
-              $CONSTRAINT_ID_DEVELOPER_NAME: {
+              $ConstraintIdDeveloperName: {
                 width: "spread",
                 top: ["release_date", "bottom"],
                 start: ["cover", "end", $developerNameMarginHorizontal],
                 end: ["parent", "end", $developerNameMarginHorizontal],
               },
-              $CONSTRAINT_ID_RATING: {
+              $ConstraintIdRating: {
                 width: "spread",
                 top: ["cover", "bottom", $bottomBarrierMargin],
                 bottom: ["list", "top", $infoItemMarginBottom],
@@ -911,7 +911,7 @@ private fun constructJson(): String {
                 end: ["like_count", "start"],
                 hBias: 0.25
               },
-              $CONSTRAINT_ID_LIKE_COUNT: {
+              $ConstraintIdLikeCount: {
                 width: "spread",
                 top: ["cover", "bottom", $bottomBarrierMargin],
                 bottom: ["list", "top", $infoItemMarginBottom],
@@ -919,7 +919,7 @@ private fun constructJson(): String {
                 end: ["age_rating", "start"],
                 hBias: 0.25
               },
-              $CONSTRAINT_ID_AGE_RATING: {
+              $ConstraintIdAgeRating: {
                 width: "spread",
                 top: ["cover", "bottom", $bottomBarrierMargin],
                 bottom: ["list", "top", $infoItemMarginBottom],
@@ -927,7 +927,7 @@ private fun constructJson(): String {
                 end: ["game_category", "start"],
                 hBias: 0.25
               },
-              $CONSTRAINT_ID_GAME_CATEGORY: {
+              $ConstraintIdGameCategory: {
                 width: "spread",
                 top: ["cover", "bottom", $bottomBarrierMargin],
                 bottom: ["list", "top", $infoItemMarginBottom],
@@ -935,7 +935,7 @@ private fun constructJson(): String {
                 end: ["parent", "end"],
                 hBias: 0.25
               },
-              $CONSTRAINT_ID_LIST: {
+              $ConstraintIdList: {
                 width: "spread",
                 height: "spread",
                 top: ["rating", "bottom"],
@@ -945,7 +945,7 @@ private fun constructJson(): String {
               },
             },
             end: {
-              $CONSTRAINT_ID_ARTWORKS: {
+              $ConstraintIdArtworks: {
                 width: "spread",
                 height: $artworksHeightCollapsed,
                 top: ["parent", "top"],
@@ -953,7 +953,7 @@ private fun constructJson(): String {
                 start: ["parent", "start"],
                 end: ["parent", "end"],
               },
-              $CONSTRAINT_ID_ARTWORKS_SCRIM: {
+              $ConstraintIdArtworksScrim: {
                 width: "spread",
                 height: "spread",
                 top: ["artworks", "top"],
@@ -965,16 +965,16 @@ private fun constructJson(): String {
                   scrim_color: "#$scrimColorCollapsed",
                 },
               },
-              $CONSTRAINT_ID_BACK_BUTTON: {
+              $ConstraintIdBackButton: {
                 top: ["parent", "top"],
                 start: ["parent", "start"],
               },
-              $CONSTRAINT_ID_PAGE_INDICATOR: {
+              $ConstraintIdPageIndicator: {
                 top: ["parent", "top", $pageIndicatorMargin],
                 end: ["parent", "end", $pageIndicatorMargin],
                 translationX: $pageIndicatorDeltaXInPx,
               },
-              $CONSTRAINT_ID_BACKDROP: {
+              $ConstraintIdBackdrop: {
                 width: "spread",
                 height: "spread",
                 top: ["artworks", "bottom"],
@@ -985,18 +985,18 @@ private fun constructJson(): String {
                   elevation: $backdropElevationCollapsed,
                 },
               },
-              $CONSTRAINT_ID_COVER_SPACE: {
+              $ConstraintIdCoverSpace: {
                 start: ["parent", "start"],
                 bottom: ["artworks", "bottom", $coverSpaceMargin],
               },
-              $CONSTRAINT_ID_COVER: {
+              $ConstraintIdCover: {
                 top: ["cover_space", "bottom"],
                 start: ["parent", "start", $coverMarginStart],
                 translationX: $coverDeltaXInPx,
                 translationY: $coverDeltaYInPx,
                 visibility: "invisible",
               },
-              $CONSTRAINT_ID_LIKE_BUTTON: {
+              $ConstraintIdLikeButton: {
                 top: ["artworks", "bottom"],
                 bottom: ["artworks", "bottom"],
                 end: ["parent", "end", $likeBtnMarginEnd],
@@ -1004,7 +1004,7 @@ private fun constructJson(): String {
                 scaleX: 0,
                 scaleY: 0,
               },
-              $CONSTRAINT_ID_FIRST_TITLE: {
+              $ConstraintIdFirstTitle: {
                 width: "spread",
                 top: ["artworks", "top", $statusBarHeight],
                 bottom: ["artworks", "bottom"],
@@ -1013,7 +1013,7 @@ private fun constructJson(): String {
                 scaleX: 1.1,
                 scaleY: 1.1,
               },
-              $CONSTRAINT_ID_SECOND_TITLE: {
+              $ConstraintIdSecondTitle: {
                 width: "spread",
                 top: ["first_title", "bottom"],
                 start: ["cover", "end", $titleMarginStart],
@@ -1021,7 +1021,7 @@ private fun constructJson(): String {
                 alpha: 0,
                 translationX: $secondaryTextDeltaXInPx,
               },
-              $CONSTRAINT_ID_RELEASE_DATE: {
+              $ConstraintIdReleaseDate: {
                 width: "spread",
                 top: ["second_title", "bottom", $releaseDateMarginTop],
                 start: ["cover", "end", $releaseDateMarginHorizontal],
@@ -1029,7 +1029,7 @@ private fun constructJson(): String {
                 alpha: 0,
                 translationX: $secondaryTextDeltaXInPx,
               },
-              $CONSTRAINT_ID_DEVELOPER_NAME: {
+              $ConstraintIdDeveloperName: {
                 width: "spread",
                 top: ["release_date", "bottom"],
                 start: ["cover", "end", $developerNameMarginHorizontal],
@@ -1037,7 +1037,7 @@ private fun constructJson(): String {
                 alpha: 0,
                 translationX: $secondaryTextDeltaXInPx,
               },
-              $CONSTRAINT_ID_RATING: {
+              $ConstraintIdRating: {
                 width: "spread",
                 top: ["artworks", "bottom", $infoItemVerticalMarginCollapsed],
                 bottom: ["list", "top", $infoItemVerticalMarginCollapsed],
@@ -1045,7 +1045,7 @@ private fun constructJson(): String {
                 end: ["like_count", "start"],
                 hBias: 0.25
               },
-              $CONSTRAINT_ID_LIKE_COUNT: {
+              $ConstraintIdLikeCount: {
                 width: "spread",
                 top: ["artworks", "bottom", $infoItemVerticalMarginCollapsed],
                 bottom: ["list", "top", $infoItemVerticalMarginCollapsed],
@@ -1053,7 +1053,7 @@ private fun constructJson(): String {
                 end: ["age_rating", "start"],
                 hBias: 0.25
               },
-              $CONSTRAINT_ID_AGE_RATING: {
+              $ConstraintIdAgeRating: {
                 width: "spread",
                 top: ["artworks", "bottom", $infoItemVerticalMarginCollapsed],
                 bottom: ["list", "top", $infoItemVerticalMarginCollapsed],
@@ -1061,7 +1061,7 @@ private fun constructJson(): String {
                 end: ["game_category", "start"],
                 hBias: 0.25
               },
-              $CONSTRAINT_ID_GAME_CATEGORY: {
+              $ConstraintIdGameCategory: {
                 width: "spread",
                 top: ["artworks", "bottom", $infoItemVerticalMarginCollapsed],
                 bottom: ["list", "top", $infoItemVerticalMarginCollapsed],
@@ -1069,7 +1069,7 @@ private fun constructJson(): String {
                 end: ["parent", "end"],
                 hBias: 0.25
               },
-              $CONSTRAINT_ID_LIST: {
+              $ConstraintIdList: {
                 width: "spread",
                 height: "spread",
                 top: ["rating", "bottom"],
@@ -1089,41 +1089,41 @@ private fun constructJson(): String {
               KeyFrames: {
                 KeyAttributes: [
                   {
-                    target: ["$CONSTRAINT_ID_SECOND_TITLE"],
+                    target: ["$ConstraintIdSecondTitle"],
                     frames: [15, 100],
                     alpha: [0, 0],
-                    translationX: ${SECONDARY_TEXT_DELTA_X_COLLAPSED.value.toInt()},
+                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
                   },
                   {
-                    target: ["$CONSTRAINT_ID_RELEASE_DATE"],
+                    target: ["$ConstraintIdReleaseDate"],
                     frames: [15, 100],
                     alpha: [0, 0],
-                    translationX: ${SECONDARY_TEXT_DELTA_X_COLLAPSED.value.toInt()},
+                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
                   },
                   {
-                    target: ["$CONSTRAINT_ID_DEVELOPER_NAME"],
+                    target: ["$ConstraintIdDeveloperName"],
                     frames: [15, 100],
                     alpha: [0, 0],
-                    translationX: ${SECONDARY_TEXT_DELTA_X_COLLAPSED.value.toInt()},
+                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
                   },
                   {
-                    target: ["$CONSTRAINT_ID_COVER"],
+                    target: ["$ConstraintIdCover"],
                     frames: [50],
                     alpha: 0,
-                    translationX: ${COVER_DELTA_X_COLLAPSED.value.toInt()},
-                    translationY: ${COVER_DELTA_Y_COLLAPSED.value.toInt()},
+                    translationX: ${CoverDeltaXCollapsed.value.toInt()},
+                    translationY: ${CoverDeltaYCollapsed.value.toInt()},
                   },
                   {
-                    target: ["$CONSTRAINT_ID_LIKE_BUTTON"],
+                    target: ["$ConstraintIdLikeButton"],
                     frames: [60],
                     alpha: 0,
                     scaleX: 0,
                     scaleY: 0,
                   },
                   {
-                    target: ["$CONSTRAINT_ID_PAGE_INDICATOR"],
+                    target: ["$ConstraintIdPageIndicator"],
                     frames: [80],
-                    translationX: ${PAGE_INDICATOR_DELTA_X_COLLAPSED.value.toInt()},
+                    translationX: ${PageIndicatorDeltaXCollapsed.value.toInt()},
                   }
                 ]
               }
@@ -1135,7 +1135,7 @@ private fun constructJson(): String {
 
 @Composable
 private fun calculateArtworksHeightInCollapsedState(): Dp {
-    return ARTWORKS_HEIGHT_COLLAPSED + calculateStatusBarHeightInDp()
+    return ArtworksHeightCollapsed + calculateStatusBarHeightInDp()
 }
 
 @Composable

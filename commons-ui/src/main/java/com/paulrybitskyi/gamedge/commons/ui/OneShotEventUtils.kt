@@ -27,7 +27,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 
 @Composable
-fun HandleCommands(
+fun CommandsHandler(
     viewModel: BaseViewModel,
     onHandleCommand: ((Command) -> Unit)? = null,
 ) {
@@ -45,9 +45,9 @@ fun HandleCommands(
 }
 
 @Composable
-fun HandleRoutes(
+fun RoutesHandler(
     viewModel: BaseViewModel,
-    onRoute: (Route) -> Unit
+    onRoute: (Route) -> Unit,
 ) {
     LaunchedEffect(viewModel) {
         viewModel.routeFlow
