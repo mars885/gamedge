@@ -225,9 +225,9 @@ private fun SuccessState(
     }
 }
 
-@Composable
 @Preview
-internal fun GamesCategoryPreviewSuccessStateWithMoreButtonPreview() {
+@Composable
+private fun GamesCategoryPreviewSuccessStateWithMoreButtonPreview() {
     GamedgeTheme {
         GamesCategoryPreview(
             title = "Popular",
@@ -260,9 +260,9 @@ internal fun GamesCategoryPreviewSuccessStateWithMoreButtonPreview() {
     }
 }
 
-@Composable
 @Preview
-internal fun GamesCategoryPreviewSuccessStateWithoutMoreButtonPreview() {
+@Composable
+private fun GamesCategoryPreviewSuccessStateWithoutMoreButtonPreview() {
     GamedgeTheme {
         GamesCategoryPreview(
             title = "Popular",
@@ -296,9 +296,9 @@ internal fun GamesCategoryPreviewSuccessStateWithoutMoreButtonPreview() {
     }
 }
 
-@Composable
 @Preview
-internal fun GamesCategoryPreviewEmptyStatePreview() {
+@Composable
+private fun GamesCategoryPreviewEmptyStatePreview() {
     GamedgeTheme {
         GamesCategoryPreview(
             title = "Popular",

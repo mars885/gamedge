@@ -90,9 +90,9 @@ private fun CategorySection(title: String, value: String) {
     )
 }
 
-@Composable
 @Preview
-internal fun GameInfoDetailsPreview() {
+@Composable
+private fun GameInfoDetailsPreview() {
     GamedgeTheme {
         GameInfoDetails(
             details = GameInfoDetailsModel(

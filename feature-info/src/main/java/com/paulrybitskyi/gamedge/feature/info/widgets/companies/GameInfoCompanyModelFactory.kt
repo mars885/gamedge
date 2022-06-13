@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.companies
 
-import android.content.Context
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageExtension
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
@@ -25,7 +24,6 @@ import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.InvolvedCompany
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.hiltbinder.BindType
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 internal interface GameInfoCompanyModelFactory {
@@ -35,7 +33,6 @@ internal interface GameInfoCompanyModelFactory {
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
     private val stringProvider: StringProvider
 ) : GameInfoCompanyModelFactory {

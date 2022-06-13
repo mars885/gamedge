@@ -28,6 +28,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import kotlin.math.roundToInt
 
 sealed interface TransitionAnimations {
 
@@ -121,6 +122,7 @@ object OvershootScaling : TransitionAnimations {
 object HorizontalSliding : TransitionAnimations {
 
     private const val MIN_ALPHA = 0.8f
+    private const val MAX_OFFSET_RATIO = 0.25f
 
     override fun enter(): EnterTransition {
         return slideInHorizontally(
@@ -161,6 +163,6 @@ object HorizontalSliding : TransitionAnimations {
     }
 
     private fun calculateMaxOffsetX(fullWidth: Int): Int {
-        return -fullWidth / 4
+        return (-fullWidth * MAX_OFFSET_RATIO).roundToInt()
     }
 }

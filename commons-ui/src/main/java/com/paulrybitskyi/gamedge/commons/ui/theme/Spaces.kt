@@ -24,6 +24,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+@Suppress("ConstructorParameterNaming", "VariableNaming")
 @Stable
 class Spaces(
     spacing_0_5: Dp = 2.dp,

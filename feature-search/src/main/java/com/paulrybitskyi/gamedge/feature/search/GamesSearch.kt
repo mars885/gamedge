@@ -131,7 +131,7 @@ private fun GamesSearch(
 
 @Preview
 @Composable
-internal fun GamesSearchSuccessStatePreview() {
+private fun GamesSearchSuccessStatePreview() {
     GamedgeTheme {
         GamesSearch(
             uiState = GamesSearchUiState(
@@ -183,7 +183,7 @@ internal fun GamesSearchSuccessStatePreview() {
 
 @Preview
 @Composable
-internal fun GamesSearchEmptyStatePreview() {
+private fun GamesSearchEmptyStatePreview() {
     GamedgeTheme {
         GamesSearch(
             uiState = GamesSearchUiState(
@@ -207,7 +207,7 @@ internal fun GamesSearchEmptyStatePreview() {
 
 @Preview
 @Composable
-internal fun GamesSearchLoadingStatePreview() {
+private fun GamesSearchLoadingStatePreview() {
     GamedgeTheme {
         GamesSearch(
             uiState = GamesSearchUiState(

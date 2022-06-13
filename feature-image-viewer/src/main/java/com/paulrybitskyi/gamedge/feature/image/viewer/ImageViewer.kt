@@ -67,7 +67,6 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
 
 private const val ZOOM_SCALE_MIN = 0.5f
 private const val ZOOM_SCALE_MAX = 5f
-private const val ZOOM_SCALE_DEFAULT = 1f
 private const val ZOOM_OVER_SNAP_SCALE_MIN = 1f
 private const val ZOOM_OVER_SNAP_SCALE_MAX = 3f
 
@@ -268,7 +267,7 @@ private fun ImageItem(
 
 @Preview
 @Composable
-internal fun ImageViewerPreview() {
+private fun ImageViewerPreview() {
     GamedgeTheme {
         ImageViewer(
             uiState = ImageViewerUiState(

@@ -140,7 +140,7 @@ private fun Video(
 
 @Preview
 @Composable
-internal fun GameInfoVideosPreview() {
+private fun GameInfoVideosPreview() {
     GamedgeTheme {
         GameInfoVideos(
             videos = listOf(

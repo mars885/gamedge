@@ -385,7 +385,7 @@ private enum class GameInfoItem(val id: Int) {
 // Try to increase this value in the future to showcase all the UI.
 @Preview(heightDp = 2000)
 @Composable
-internal fun GameInfoSuccessStateWithMaxUiElementsPreview() {
+private fun GameInfoSuccessStateWithMaxUiElementsPreview() {
     GamedgeTheme {
         GameInfo(
             uiState = GameInfoUiState(
@@ -407,7 +407,7 @@ internal fun GameInfoSuccessStateWithMaxUiElementsPreview() {
 
 @Preview
 @Composable
-internal fun GameInfoSuccessStateWithMinUiElementsPreview() {
+private fun GameInfoSuccessStateWithMinUiElementsPreview() {
     val game = buildFakeGameModel()
     val strippedGame = game.copy(
         headerModel = game.headerModel.copy(
@@ -446,7 +446,7 @@ internal fun GameInfoSuccessStateWithMinUiElementsPreview() {
 
 @Preview
 @Composable
-internal fun GameInfoEmptyStatePreview() {
+private fun GameInfoEmptyStatePreview() {
     GamedgeTheme {
         GameInfo(
             uiState = GameInfoUiState(
@@ -468,7 +468,7 @@ internal fun GameInfoEmptyStatePreview() {
 
 @Preview
 @Composable
-internal fun GameInfoLoadingStatePreview() {
+private fun GameInfoLoadingStatePreview() {
     GamedgeTheme {
         GameInfo(
             uiState = GameInfoUiState(
@@ -488,6 +488,7 @@ internal fun GameInfoLoadingStatePreview() {
     }
 }
 
+@Suppress("LongMethod")
 private fun buildFakeGameModel(): GameInfoModel {
     return GameInfoModel(
         id = 1,

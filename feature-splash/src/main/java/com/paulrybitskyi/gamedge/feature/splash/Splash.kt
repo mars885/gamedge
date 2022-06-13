@@ -72,7 +72,7 @@ private fun Splash(uiState: SplashUiState) {
 
 @Preview(showBackground = true)
 @Composable
-internal fun SplashScreenPreview() {
+private fun SplashScreenPreview() {
     GamedgeTheme {
         Splash(
             uiState = SplashUiState(),

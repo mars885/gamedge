@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("LongMethod")
+
 package com.paulrybitskyi.gamedge.feature.info.widgets.header
 
 import androidx.compose.animation.graphics.res.animatedVectorResource
@@ -77,7 +79,6 @@ private const val CONSTRAINT_ID_FIRST_TITLE = "first_title"
 private const val CONSTRAINT_ID_SECOND_TITLE = "second_title"
 private const val CONSTRAINT_ID_RELEASE_DATE = "release_date"
 private const val CONSTRAINT_ID_DEVELOPER_NAME = "developer_name"
-private const val CONSTRAINT_ID_BOTTOM_BARRIER = "bottom_barrier"
 private const val CONSTRAINT_ID_RATING = "rating"
 private const val CONSTRAINT_ID_LIKE_COUNT = "like_count"
 private const val CONSTRAINT_ID_AGE_RATING = "age_rating"
@@ -428,7 +429,7 @@ private fun constructExpandedConstraintSet(): ConstraintSet {
 
 @Preview
 @Composable
-internal fun GameInfoHeaderPreview() {
+private fun GameInfoHeaderPreview() {
     GamedgeTheme {
         GameInfoHeader(
             headerInfo = GameInfoHeaderModel(

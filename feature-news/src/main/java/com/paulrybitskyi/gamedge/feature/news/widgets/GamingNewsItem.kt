@@ -125,7 +125,7 @@ private fun Timestamp(publicationDate: String) {
 
 @Preview
 @Composable
-internal fun GamingNewsItemWithImagePreview() {
+private fun GamingNewsItemWithImagePreview() {
     GamedgeTheme {
         GamingNewsItem(
             model = GamingNewsItemModel(
@@ -143,7 +143,7 @@ internal fun GamingNewsItemWithImagePreview() {
 
 @Preview
 @Composable
-internal fun GamingNewsItemWithoutImagePreview() {
+private fun GamingNewsItemWithoutImagePreview() {
     GamedgeTheme {
         GamingNewsItem(
             model = GamingNewsItemModel(

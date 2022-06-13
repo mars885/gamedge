@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("LongMethod")
+
 package com.paulrybitskyi.gamedge.feature.info.widgets.header
 
 import android.annotation.SuppressLint
@@ -91,7 +93,6 @@ private const val CONSTRAINT_ID_FIRST_TITLE = "first_title"
 private const val CONSTRAINT_ID_SECOND_TITLE = "second_title"
 private const val CONSTRAINT_ID_RELEASE_DATE = "release_date"
 private const val CONSTRAINT_ID_DEVELOPER_NAME = "developer_name"
-private const val CONSTRAINT_ID_BOTTOM_BARRIER = "bottom_barrier"
 private const val CONSTRAINT_ID_RATING = "rating"
 private const val CONSTRAINT_ID_LIKE_COUNT = "like_count"
 private const val CONSTRAINT_ID_AGE_RATING = "age_rating"
@@ -108,9 +109,9 @@ private val ARTWORKS_HEIGHT_EXPANDED = 240.dp
 private val ARTWORKS_HEIGHT_COLLAPSED = 56.dp
 
 private val PAGE_INDICATOR_DELTA_X_COLLAPSED = 60.dp
-private val COVER_DELTA_X_COLLAPSED = (-130).dp
-private val COVER_DELTA_Y_COLLAPSED = (-60).dp
-private val SECONDARY_TEXT_DELTA_X_COLLAPSED = (-8).dp
+private val COVER_DELTA_X_COLLAPSED = -130.dp
+private val COVER_DELTA_Y_COLLAPSED = -60.dp
+private val SECONDARY_TEXT_DELTA_X_COLLAPSED = -8.dp
 
 private enum class State {
     EXPANDED,
@@ -780,6 +781,7 @@ private fun constructTransition(): String {
     """.trimIndent()
 }
 
+@Suppress("UnusedPrivateMember")
 @Language("json5")
 @Composable
 private fun constructJson(): String {

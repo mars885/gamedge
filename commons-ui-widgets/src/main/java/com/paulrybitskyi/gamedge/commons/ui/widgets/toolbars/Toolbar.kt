@@ -127,7 +127,7 @@ private fun Button(
 
 @Preview
 @Composable
-internal fun ToolbarPreviewWithTitle() {
+private fun ToolbarPreviewWithTitle() {
     GamedgeTheme {
         Toolbar(
             title = "Toolbar"
@@ -137,7 +137,7 @@ internal fun ToolbarPreviewWithTitle() {
 
 @Preview
 @Composable
-internal fun ToolbarPreviewWithLongTitle() {
+private fun ToolbarPreviewWithLongTitle() {
     GamedgeTheme {
         Toolbar(
             title = "Toolbar toolbar toolbar toolbar toolbar toolbar toolbar toolbar"
@@ -147,7 +147,7 @@ internal fun ToolbarPreviewWithLongTitle() {
 
 @Preview
 @Composable
-internal fun ToolbarPreviewWithBothIcons() {
+private fun ToolbarPreviewWithBothIcons() {
     GamedgeTheme {
         Toolbar(
             title = "Toolbar",
@@ -159,7 +159,7 @@ internal fun ToolbarPreviewWithBothIcons() {
 
 @Preview
 @Composable
-internal fun ToolbarPreviewWithLeftIcon() {
+private fun ToolbarPreviewWithLeftIcon() {
     GamedgeTheme {
         Toolbar(
             title = "Toolbar",
@@ -170,7 +170,7 @@ internal fun ToolbarPreviewWithLeftIcon() {
 
 @Preview
 @Composable
-internal fun ToolbarPreviewWithRightIcon() {
+private fun ToolbarPreviewWithRightIcon() {
     GamedgeTheme {
         Toolbar(
             title = "Toolbar",

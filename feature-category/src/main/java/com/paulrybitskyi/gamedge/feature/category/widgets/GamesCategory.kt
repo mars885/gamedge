@@ -192,7 +192,7 @@ private fun VerticalGrid(
 
 @Preview
 @Composable
-internal fun GamesCategorySuccessStatePreview() {
+private fun GamesCategorySuccessStatePreview() {
     val games = buildList {
         repeat(15) { index ->
             add(
@@ -221,7 +221,7 @@ internal fun GamesCategorySuccessStatePreview() {
 
 @Preview
 @Composable
-internal fun GamesCategoryEmptyStatePreview() {
+private fun GamesCategoryEmptyStatePreview() {
     GamedgeTheme {
         GamesCategory(
             uiState = GamesCategoryUiState(
@@ -238,7 +238,7 @@ internal fun GamesCategoryEmptyStatePreview() {
 
 @Preview
 @Composable
-internal fun GamesCategoryLoadingStatePreview() {
+private fun GamesCategoryLoadingStatePreview() {
     GamedgeTheme {
         GamesCategory(
             uiState = GamesCategoryUiState(

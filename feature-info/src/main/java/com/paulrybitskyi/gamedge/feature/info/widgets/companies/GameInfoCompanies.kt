@@ -255,7 +255,7 @@ private class LogoImageTransformation(
 
 @Preview
 @Composable
-internal fun GameInfoCompaniesPreview() {
+private fun GameInfoCompaniesPreview() {
     GamedgeTheme {
         GameInfoCompanies(
             companies = listOf(

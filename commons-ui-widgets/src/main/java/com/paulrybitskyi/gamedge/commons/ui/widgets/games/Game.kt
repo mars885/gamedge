@@ -141,7 +141,7 @@ private fun DetailsDescription(description: String) {
 
 @Preview
 @Composable
-internal fun GameFullPreview() {
+private fun GameFullPreview() {
     GamedgeTheme {
         Game(
             game = GameModel(
@@ -160,7 +160,7 @@ internal fun GameFullPreview() {
 
 @Preview
 @Composable
-internal fun GameWithoutDeveloperPreview() {
+private fun GameWithoutDeveloperPreview() {
     GamedgeTheme {
         Game(
             game = GameModel(
@@ -179,7 +179,7 @@ internal fun GameWithoutDeveloperPreview() {
 
 @Preview
 @Composable
-internal fun GameWithoutDescriptionPreview() {
+private fun GameWithoutDescriptionPreview() {
     GamedgeTheme {
         Game(
             game = GameModel(
@@ -197,7 +197,7 @@ internal fun GameWithoutDescriptionPreview() {
 
 @Preview
 @Composable
-internal fun GameMinimalPreview() {
+private fun GameMinimalPreview() {
     GamedgeTheme {
         Game(
             game = GameModel(

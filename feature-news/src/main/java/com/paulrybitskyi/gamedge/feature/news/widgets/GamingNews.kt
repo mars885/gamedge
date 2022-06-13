@@ -180,7 +180,7 @@ private fun SuccessState(
 
 @Preview
 @Composable
-internal fun GamingNewsSuccessStatePreview() {
+private fun GamingNewsSuccessStatePreview() {
     val news = listOf(
         GamingNewsItemModel(
             id = 1,
@@ -225,7 +225,7 @@ internal fun GamingNewsSuccessStatePreview() {
 
 @Preview
 @Composable
-internal fun GamingNewsEmptyStatePreview() {
+private fun GamingNewsEmptyStatePreview() {
     GamedgeTheme {
         GamingNews(
             uiState = GamingNewsUiState(),
@@ -238,7 +238,7 @@ internal fun GamingNewsEmptyStatePreview() {
 
 @Preview
 @Composable
-internal fun GamingNewsLoadingStatePreview() {
+private fun GamingNewsLoadingStatePreview() {
     GamedgeTheme {
         GamingNews(
             uiState = GamingNewsUiState(isLoading = true),

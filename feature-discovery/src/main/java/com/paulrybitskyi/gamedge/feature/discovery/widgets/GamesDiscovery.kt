@@ -157,7 +157,7 @@ private fun CategoryPreviewItems(
 
 @Preview
 @Composable
-internal fun GamesDiscoverySuccessStatePreview() {
+private fun GamesDiscoverySuccessStatePreview() {
     val games = listOf(
         "Ghost of Tsushima: Director's Cut",
         "Outer Wilds: Echoes of the Eye",
@@ -191,7 +191,7 @@ internal fun GamesDiscoverySuccessStatePreview() {
 
 @Preview
 @Composable
-internal fun GamesDiscoveryEmptyStatePreview() {
+private fun GamesDiscoveryEmptyStatePreview() {
     val items = GamesDiscoveryCategory.values().map { category ->
         GamesDiscoveryItemModel(
             id = category.id,

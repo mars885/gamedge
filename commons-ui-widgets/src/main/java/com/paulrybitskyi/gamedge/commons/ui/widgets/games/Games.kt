@@ -113,7 +113,7 @@ private fun SuccessState(
 
 @Preview
 @Composable
-internal fun GamesSuccessStatePreview() {
+private fun GamesSuccessStatePreview() {
     val games = listOf(
         GameModel(
             id = 1,
@@ -157,7 +157,7 @@ internal fun GamesSuccessStatePreview() {
 
 @Preview
 @Composable
-internal fun GamesEmptyStatePreview() {
+private fun GamesEmptyStatePreview() {
     GamedgeTheme {
         Games(
             uiState = GamesUiState(
@@ -174,7 +174,7 @@ internal fun GamesEmptyStatePreview() {
 
 @Preview
 @Composable
-internal fun GamesLoadingStatePreview() {
+private fun GamesLoadingStatePreview() {
     GamedgeTheme {
         Games(
             uiState = GamesUiState(

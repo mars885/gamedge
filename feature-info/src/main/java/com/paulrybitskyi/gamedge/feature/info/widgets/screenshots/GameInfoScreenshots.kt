@@ -83,7 +83,7 @@ private fun Screenshot(
 
 @Preview
 @Composable
-internal fun GameInfoScreenshotsPreview() {
+private fun GameInfoScreenshotsPreview() {
     GamedgeTheme {
         GameInfoScreenshots(
             screenshots = listOf(

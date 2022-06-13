@@ -97,7 +97,7 @@ private fun Link(
 
 @Preview
 @Composable
-internal fun GameInfoLinksPreview() {
+private fun GameInfoLinksPreview() {
     val links = WebsiteCategory.values()
         .filterNot { it == WebsiteCategory.UNKNOWN }
         .mapIndexed { index, websiteCategory ->

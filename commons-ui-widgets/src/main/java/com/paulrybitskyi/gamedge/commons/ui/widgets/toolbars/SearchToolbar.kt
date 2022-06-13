@@ -224,7 +224,7 @@ private fun ClearButton(
 
 @Preview
 @Composable
-internal fun SearchToolbarWithQueryPreview() {
+private fun SearchToolbarWithQueryPreview() {
     GamedgeTheme {
         SearchToolbar(
             queryText = "God of War",
@@ -235,7 +235,7 @@ internal fun SearchToolbarWithQueryPreview() {
 
 @Preview
 @Composable
-internal fun SearchToolbarWithoutQueryPreview() {
+private fun SearchToolbarWithoutQueryPreview() {
     GamedgeTheme {
         SearchToolbar(
             queryText = "",

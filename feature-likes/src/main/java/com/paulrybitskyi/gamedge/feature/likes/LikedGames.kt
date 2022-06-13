@@ -95,7 +95,7 @@ private fun LikedGames(
 
 @Preview
 @Composable
-internal fun LikedGamesPreview() {
+private fun LikedGamesPreview() {
     GamedgeTheme {
         LikedGames(
             uiState = GamesUiState(

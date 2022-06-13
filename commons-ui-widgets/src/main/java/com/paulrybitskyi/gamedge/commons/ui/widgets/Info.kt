@@ -70,7 +70,7 @@ fun Info(
     showBackground = true
 )
 @Composable
-internal fun InfoWithSingleLineTitlePreview() {
+private fun InfoWithSingleLineTitlePreview() {
     GamedgeTheme {
         Info(
             icon = painterResource(R.drawable.heart),
@@ -84,7 +84,7 @@ internal fun InfoWithSingleLineTitlePreview() {
     showBackground = true
 )
 @Composable
-internal fun InfoWithMultiLineTitlePreview() {
+private fun InfoWithMultiLineTitlePreview() {
     GamedgeTheme {
         Info(
             icon = painterResource(R.drawable.heart),

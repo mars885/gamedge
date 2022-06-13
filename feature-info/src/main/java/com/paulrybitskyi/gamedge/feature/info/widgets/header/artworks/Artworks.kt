@@ -23,17 +23,20 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.paulrybitskyi.gamedge.commons.ui.clickable
 import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
 internal fun Artworks(
     artworks: List<GameInfoArtworkModel>,
+    @Suppress("UnusedPrivateMember")
     isScrollingEnabled: Boolean, // todo
     modifier: Modifier,
     onArtworkChanged: (artworkIndex: Int) -> Unit,
@@ -86,4 +89,20 @@ private fun Artwork(
             ),
         contentScale = ContentScale.Crop,
     )
+}
+
+@Preview(heightDp = 240)
+@Composable
+private fun ArtworksPreview() {
+    GamedgeTheme {
+        Artworks(
+            artworks = listOf(
+                GameInfoArtworkModel.DefaultImage,
+            ),
+            isScrollingEnabled = true,
+            modifier = Modifier,
+            onArtworkChanged = {},
+            onArtworkClicked = {},
+        )
+    }
 }

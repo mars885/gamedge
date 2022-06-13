@@ -102,7 +102,7 @@ fun GameCover(
 
 @Preview
 @Composable
-internal fun GameCoverWithTitlePreview() {
+private fun GameCoverWithTitlePreview() {
     GamedgeTheme {
         GameCover(
             title = "Ghost of Tsushima: Director's Cut",
@@ -114,7 +114,7 @@ internal fun GameCoverWithTitlePreview() {
 
 @Preview
 @Composable
-internal fun GameCoverWithoutTitlePreview() {
+private fun GameCoverWithoutTitlePreview() {
     GamedgeTheme {
         GameCover(
             title = null,

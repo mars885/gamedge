@@ -111,7 +111,7 @@ internal fun GameInfoSummary(summary: String) {
 
 @Preview
 @Composable
-internal fun GameInfoSummaryCollapsedPreview() {
+private fun GameInfoSummaryCollapsedPreview() {
     GamedgeTheme {
         GameInfoSummary(
             summary = "Elden Ring is an action-RPG open world game with RPG " +
