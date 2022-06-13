@@ -90,12 +90,42 @@ internal class GamesSearchViewModelTest {
     }
 
     @Test
+    fun `Query text is cleared from UI state when clear button is clicked`() {
+        runTest {
+            val query = "query"
+
+            SUT.onQueryChanged(query)
+
+            SUT.uiState.test {
+                SUT.onToolbarClearButtonClicked()
+
+                assertThat(awaitItem().queryText).isEqualTo(query)
+                assertThat(awaitItem().queryText).isEmpty()
+            }
+        }
+    }
+
+    @Test
+    fun `Query text of UI state is synced with query text entered by user`() {
+        runTest {
+            val query = "Shadow of the Colossus"
+
+            SUT.uiState.test {
+                SUT.onQueryChanged(query)
+
+                assertThat(awaitItem().queryText).isEmpty()
+                assertThat(awaitItem().queryText).isEqualTo(query)
+            }
+        }
+    }
+
+    @Test
     fun `Emits correct ui states when searching for games`() {
         runTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.uiState.test {
-                SUT.onSearchActionRequested("god of war")
+                SUT.onSearchConfirmed("god of war")
 
                 val emptyState = awaitItem().gamesUiState
                 val loadingState = awaitItem().gamesUiState
@@ -113,7 +143,7 @@ internal class GamesSearchViewModelTest {
     fun `Does not emit ui states when search query is empty`() {
         runTest {
             SUT.uiState.test {
-                SUT.onSearchActionRequested("")
+                SUT.onSearchConfirmed("")
 
                 assertThat(awaitItem().gamesUiState.finiteUiState).isEqualTo(FiniteUiState.EMPTY)
                 expectNoEvents()
@@ -128,11 +158,11 @@ internal class GamesSearchViewModelTest {
 
             val gameQuery = "god of war"
 
-            SUT.onSearchActionRequested(gameQuery)
+            SUT.onSearchConfirmed(gameQuery)
             advanceUntilIdle()
 
             SUT.uiState.test {
-                SUT.onSearchActionRequested(gameQuery)
+                SUT.onSearchConfirmed(gameQuery)
 
                 assertThat(awaitItem().gamesUiState.finiteUiState).isEqualTo(FiniteUiState.SUCCESS)
                 expectNoEvents()
@@ -144,7 +174,7 @@ internal class GamesSearchViewModelTest {
     fun `Emits empty ui state when blank search query is provided`() {
         runTest {
             SUT.uiState.test {
-                SUT.onSearchActionRequested("   ")
+                SUT.onSearchConfirmed("   ")
 
                 assertThat(awaitItem().gamesUiState.finiteUiState).isEqualTo(FiniteUiState.EMPTY)
                 expectNoEvents()
@@ -158,7 +188,7 @@ internal class GamesSearchViewModelTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.uiState.test {
-                SUT.onSearchActionRequested("god of war")
+                SUT.onSearchConfirmed("god of war")
 
                 assertThat(awaitItem().gamesUiState.games).isEmpty()
                 cancelAndIgnoreRemainingEvents()
@@ -171,7 +201,7 @@ internal class GamesSearchViewModelTest {
         runTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
-            SUT.onSearchActionRequested("god of war")
+            SUT.onSearchConfirmed("god of war")
             advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
@@ -184,7 +214,7 @@ internal class GamesSearchViewModelTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
-                SUT.onSearchActionRequested("god of war")
+                SUT.onSearchConfirmed("god of war")
 
                 assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
             }

@@ -36,7 +36,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -45,9 +48,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -70,7 +75,7 @@ fun SearchToolbar(
     cursorColor: Color = GamedgeTheme.colors.secondary,
     focusRequester: FocusRequester = remember { FocusRequester() },
     onQueryChanged: ((query: String) -> Unit)? = null,
-    onSearchActionRequested: ((query: String) -> Unit)? = null,
+    onSearchConfirmed: ((query: String) -> Unit)? = null,
     onBackButtonClicked: (() -> Unit)? = null,
     onClearButtonClicked: (() -> Unit)? = null,
 ) {
@@ -102,7 +107,7 @@ fun SearchToolbar(
                 titleTextStyle = titleTextStyle,
                 cursorColor = cursorColor,
                 onQueryChanged = { onQueryChanged?.invoke(it) },
-                onSearchActionRequested = onSearchActionRequested,
+                onSearchConfirmed = onSearchConfirmed,
             )
 
             ClearButton(
@@ -141,14 +146,31 @@ private fun Input(
     titleTextStyle: TextStyle,
     cursorColor: Color,
     onQueryChanged: (query: String) -> Unit,
-    onSearchActionRequested: ((query: String) -> Unit)?,
+    onSearchConfirmed: ((query: String) -> Unit)?,
 ) {
+    // Need custom TextFieldValue here to set the default selection
+    // to the length of the query text after process death restoration.
+    var textFieldValueState by remember {
+        mutableStateOf(
+            TextFieldValue(
+                text = queryText,
+                selection = TextRange(queryText.length),
+            )
+        )
+    }
+    val textFieldValue = textFieldValueState.copy(text = queryText)
+
     // TextField has a preset height and some characters from the font
     // that is used are clipped. Therefore, using BasicTextField.
-
     BasicTextField(
-        value = queryText,
-        onValueChange = onQueryChanged,
+        value = textFieldValue,
+        onValueChange = {
+            textFieldValueState = it
+
+            if (queryText != it.text) {
+                onQueryChanged(it.text)
+            }
+        },
         modifier = modifier
             .padding(horizontal = GamedgeTheme.spaces.spacing_4_0)
             .focusRequester(focusRequester),
@@ -159,7 +181,7 @@ private fun Input(
             imeAction = ImeAction.Search,
         ),
         keyboardActions = KeyboardActions(
-            onSearch = { onSearchActionRequested?.invoke(queryText) },
+            onSearch = { onSearchConfirmed?.invoke(queryText) },
         ),
         singleLine = true,
         cursorBrush = SolidColor(cursorColor),

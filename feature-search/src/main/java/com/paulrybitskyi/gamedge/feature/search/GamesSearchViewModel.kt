@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.feature.search
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
@@ -44,7 +45,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-private const val KEY_SEARCH_QUERY = "search_query"
+private const val KEY_CURRENT_SEARCH_QUERY = "current_search_query"
+private const val KEY_CONFIRMED_SEARCH_QUERY = "confirmed_search_query"
 
 @HiltViewModel
 internal class GamesSearchViewModel @Inject constructor(
@@ -59,12 +61,15 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private var hasMoreGamesToLoad = false
 
-    private var searchQuery: String
-        set(value) {
-            useCaseParams = useCaseParams.copy(searchQuery = value)
-            savedStateHandle.set(KEY_SEARCH_QUERY, value)
-        }
-        get() = useCaseParams.searchQuery
+    private var currentSearchQuery by observeChanges("") { _, newQuery ->
+        _uiState.update { it.copy(queryText = newQuery) }
+        savedStateHandle.set(KEY_CURRENT_SEARCH_QUERY, newQuery)
+    }
+
+    private var confirmedSearchQuery by observeChanges("") { _, newQuery ->
+        useCaseParams = useCaseParams.copy(searchQuery = newQuery)
+        savedStateHandle.set(KEY_CONFIRMED_SEARCH_QUERY, newQuery)
+    }
 
     private var pagination: Pagination
         set(value) { useCaseParams = useCaseParams.copy(pagination = value) }
@@ -83,12 +88,24 @@ internal class GamesSearchViewModel @Inject constructor(
         get() = _uiState
 
     init {
-        onSearchActionRequested(savedStateHandle.get(KEY_SEARCH_QUERY) ?: "")
+        restoreState()
+    }
+
+    private fun restoreState() {
+        if (savedStateHandle.contains(KEY_CURRENT_SEARCH_QUERY)) {
+            currentSearchQuery = checkNotNull(savedStateHandle.get(KEY_CURRENT_SEARCH_QUERY))
+        }
+
+        val restoredConfirmedSearchQuery = savedStateHandle.get<String>(KEY_CONFIRMED_SEARCH_QUERY)
+
+        if (restoredConfirmedSearchQuery == currentSearchQuery) {
+            onSearchConfirmed(checkNotNull(savedStateHandle.get(KEY_CONFIRMED_SEARCH_QUERY)))
+        }
     }
 
     private fun createGamesSearchEmptyUiState(): GamesSearchUiState {
         return GamesSearchUiState(
-            queryText = searchQuery,
+            queryText = confirmedSearchQuery,
             gamesUiState = createGamesEmptyUiState(),
         )
     }
@@ -103,12 +120,12 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
     private fun getUiStateInfoTitle(): String {
-        return if (searchQuery.isBlank()) {
+        return if (confirmedSearchQuery.isBlank()) {
             stringProvider.getString(R.string.games_search_info_title_default)
         } else {
             stringProvider.getString(
                 R.string.games_search_info_title_empty,
-                searchQuery
+                confirmedSearchQuery,
             )
         }
     }
@@ -122,13 +139,13 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
     fun onQueryChanged(newQueryText: String) {
-        _uiState.update { it.copy(queryText = newQueryText) }
+        currentSearchQuery = newQueryText
     }
 
-    fun onSearchActionRequested(query: String) {
-        if (query.isEmpty() || (searchQuery == query)) return
+    fun onSearchConfirmed(query: String) {
+        if (query.isEmpty() || (confirmedSearchQuery == query)) return
 
-        searchQuery = query
+        confirmedSearchQuery = query
 
         resetPagination()
         searchGames()
@@ -140,7 +157,7 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
     private fun searchGames() = viewModelScope.launch {
-        if (searchQuery.isBlank()) {
+        if (confirmedSearchQuery.isBlank()) {
             flowOf(createGamesEmptyUiState())
         } else {
             searchGamesUseCase.execute(useCaseParams)

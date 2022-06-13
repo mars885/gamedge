@@ -34,10 +34,12 @@ import com.paulrybitskyi.gamedge.commons.ui.HandleRoutes
 import com.paulrybitskyi.gamedge.commons.ui.OnLifecycleEvent
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.SearchToolbar
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.Games
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.finiteUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -60,7 +62,7 @@ private fun GamesSearch(
     HandleRoutes(viewModel = viewModel, onRoute = onRoute)
     GamesSearch(
         uiState = viewModel.uiState.collectAsState().value,
-        onSearchActionRequested = viewModel::onSearchActionRequested,
+        onSearchConfirmed = viewModel::onSearchConfirmed,
         onBackButtonClicked = viewModel::onToolbarBackButtonClicked,
         onClearButtonClicked = viewModel::onToolbarClearButtonClicked,
         onQueryChanged = viewModel::onQueryChanged,
@@ -72,7 +74,7 @@ private fun GamesSearch(
 @Composable
 private fun GamesSearch(
     uiState: GamesSearchUiState,
-    onSearchActionRequested: (query: String) -> Unit,
+    onSearchConfirmed: (query: String) -> Unit,
     onBackButtonClicked: () -> Unit,
     onClearButtonClicked: () -> Unit,
     onQueryChanged: (query: String) -> Unit,
@@ -94,9 +96,9 @@ private fun GamesSearch(
                 ),
                 focusRequester = focusRequester,
                 onQueryChanged = onQueryChanged,
-                onSearchActionRequested = { query ->
+                onSearchConfirmed = { query ->
                     focusManager.clearFocus(force = true)
-                    onSearchActionRequested(query)
+                    onSearchConfirmed(query)
                 },
                 onBackButtonClicked = onBackButtonClicked,
                 onClearButtonClicked = onClearButtonClicked,
@@ -111,10 +113,11 @@ private fun GamesSearch(
 
         OnLifecycleEvent(
             onResume = {
-                if (uiState.queryText.isEmpty()) {
-                    // On subsequent openings of this screen from the background, simply calling
-                    // focusRequester.requestFocus() does not make the keyboard visible. The
-                    // workaround is to add small delay and call keyboardController.show() as well.
+                if (uiState.gamesUiState.finiteUiState == FiniteUiState.EMPTY) {
+                    // On subsequent openings of this screen from the background,
+                    // simply calling focusRequester.requestFocus() does not make
+                    // the keyboard visible. The workaround is to add small delay
+                    // and call keyboardController.show() as well.
                     coroutineScope.launch {
                         delay(KEYBOARD_POPUP_INTENTIONAL_DELAY)
                         focusRequester.requestFocus()
@@ -168,7 +171,7 @@ internal fun GamesSearchSuccessStatePreview() {
                     ),
                 )
             ),
-            onSearchActionRequested = {},
+            onSearchConfirmed = {},
             onBackButtonClicked = {},
             onClearButtonClicked = {},
             onQueryChanged = {},
@@ -192,7 +195,7 @@ internal fun GamesSearchEmptyStatePreview() {
                     games = emptyList(),
                 )
             ),
-            onSearchActionRequested = {},
+            onSearchConfirmed = {},
             onBackButtonClicked = {},
             onClearButtonClicked = {},
             onQueryChanged = {},
@@ -216,7 +219,7 @@ internal fun GamesSearchLoadingStatePreview() {
                     games = emptyList(),
                 )
             ),
-            onSearchActionRequested = {},
+            onSearchConfirmed = {},
             onBackButtonClicked = {},
             onClearButtonClicked = {},
             onQueryChanged = {},

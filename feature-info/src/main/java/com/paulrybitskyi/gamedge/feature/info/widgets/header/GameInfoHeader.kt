@@ -96,7 +96,7 @@ internal fun GameInfoHeader(
 ) {
     val artworks = headerInfo.artworks
     val isPageIndicatorVisible by remember(artworks) { mutableStateOf(artworks.size > 1) }
-    var selectedArtworkPage by remember { mutableStateOf(0) }
+    var selectedArtworkPage by rememberSaveable { mutableStateOf(0) }
     var secondTitleText by rememberSaveable { mutableStateOf("") }
     val isSecondTitleVisible by remember {
         derivedStateOf {

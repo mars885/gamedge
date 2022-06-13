@@ -21,7 +21,8 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavController
 import com.paulrybitskyi.gamedge.core.utils.toCsv
 import java.net.URLEncoder
@@ -90,6 +91,11 @@ internal sealed class Screen(val route: String) {
 
     internal companion object {
 
+        val Saver = Saver(
+            save = { it.route },
+            restore = ::forRoute,
+        )
+
         fun forRoute(route: String): Screen {
             return when (route) {
                 News.route -> News
@@ -108,7 +114,9 @@ internal sealed class Screen(val route: String) {
 @Stable
 @Composable
 internal fun NavController.currentScreenAsState(): State<Screen> {
-    val selectedScreen = remember { mutableStateOf<Screen>(START_SCREEN) }
+    val selectedScreen = rememberSaveable(stateSaver = Screen.Saver) {
+        mutableStateOf(START_SCREEN)
+    }
 
     DisposableEffect(this) {
         val listener = NavController.OnDestinationChangedListener { _, destination, _ ->

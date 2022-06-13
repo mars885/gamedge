@@ -32,6 +32,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,10 +48,10 @@ private const val CONTENT_MAX_LINES = 4
 
 @Composable
 internal fun GameInfoSummary(summary: String) {
-    var hasTextBeenLaidOut by remember { mutableStateOf(false) }
-    var collapsedHeight by remember { mutableStateOf(0) }
-    var isExpanded by remember { mutableStateOf(false) }
-    var isExpandable by remember { mutableStateOf(true) }
+    var hasTextBeenLaidOut by rememberSaveable { mutableStateOf(false) }
+    var collapsedHeight by rememberSaveable { mutableStateOf(0) }
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
+    var isExpandable by rememberSaveable { mutableStateOf(true) }
     val cardClickableModifier by remember {
         derivedStateOf {
             if (isExpandable || isExpanded) {
