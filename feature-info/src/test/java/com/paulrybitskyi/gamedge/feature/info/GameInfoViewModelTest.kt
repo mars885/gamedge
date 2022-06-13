@@ -29,20 +29,24 @@ import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
 import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
-import com.paulrybitskyi.gamedge.feature.info.mapping.GameInfoUiStateFactory
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiState
+import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.finiteUiState
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -52,7 +56,7 @@ import org.junit.Test
 internal class GameInfoViewModelTest {
 
     @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
+    val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
     private lateinit var useCases: GameInfoUseCases
     private lateinit var logger: FakeLogger
@@ -63,14 +67,15 @@ internal class GameInfoViewModelTest {
         useCases = setupUseCases()
         logger = FakeLogger()
         SUT = GameInfoViewModel(
+            savedStateHandle = setupSavedStateHandle(),
+            transitionAnimationDuration = 0L,
             useCases = useCases,
-            uiStateFactory = FakeGameInfoUiStateFactory(),
+            modelFactory = FakeGameInfoModelFactory(),
             gameUrlFactory = FakeGameUrlFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,
-            savedStateHandle = setupSavedStateHandle()
         )
     }
 
@@ -102,11 +107,9 @@ internal class GameInfoViewModelTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
             SUT.uiState.test {
-                SUT.loadData(resultEmissionDelay = 0L)
-
-                assertThat(awaitItem() is GameInfoUiState.Empty).isTrue
-                assertThat(awaitItem() is GameInfoUiState.Loading).isTrue
-                assertThat(awaitItem() is GameInfoUiState.Result).isTrue
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.EMPTY)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.LOADING)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.SUCCESS)
             }
         }
     }
@@ -116,7 +119,7 @@ internal class GameInfoViewModelTest {
         runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_API))
 
-            SUT.loadData(resultEmissionDelay = 0L)
+            advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
         }
@@ -128,9 +131,7 @@ internal class GameInfoViewModelTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_NOT_FOUND))
 
             SUT.commandFlow.test {
-                SUT.loadData(resultEmissionDelay = 0L)
-
-                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
             }
         }
     }
@@ -140,10 +141,42 @@ internal class GameInfoViewModelTest {
         runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
-            SUT.routeFlow.test {
-                SUT.onArtworkClicked(position = 0)
+            val artworkIndex = 10
 
-                assertThat(awaitItem() is GameInfoRoute.ImageViewer).isTrue
+            SUT.routeFlow.test {
+                SUT.onArtworkClicked(artworkIndex = artworkIndex)
+
+                val route = awaitItem()
+
+                assertThat(route).isInstanceOf(GameInfoRoute.ImageViewer::class.java)
+                assertThat((route as GameInfoRoute.ImageViewer).initialPosition).isEqualTo(artworkIndex)
+            }
+        }
+    }
+
+    @Test
+    fun `Logs error when artwork is clicked and game fetching use case throws error when`() {
+        runTest {
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_API))
+
+            SUT.onArtworkClicked(artworkIndex = 0)
+            advanceUntilIdle()
+
+            assertThat(logger.errorMessage).isNotEmpty
+        }
+    }
+
+    @Test
+    fun `Dispatches toast showing command when artwork is clicked and game fetching use case throws error`() {
+        runTest {
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_NOT_FOUND))
+
+            advanceUntilIdle()
+
+            SUT.commandFlow.test {
+                SUT.onArtworkClicked(artworkIndex = 0)
+
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
             }
         }
     }
@@ -154,7 +187,7 @@ internal class GameInfoViewModelTest {
             SUT.routeFlow.test {
                 SUT.onBackButtonClicked()
 
-                assertThat(awaitItem() is GameInfoRoute.Back).isTrue
+                assertThat(awaitItem()).isInstanceOf(GameInfoRoute.Back::class.java)
             }
         }
     }
@@ -167,7 +200,34 @@ internal class GameInfoViewModelTest {
             SUT.routeFlow.test {
                 SUT.onCoverClicked()
 
-                assertThat(awaitItem() is GameInfoRoute.ImageViewer).isTrue
+                assertThat(awaitItem()).isInstanceOf(GameInfoRoute.ImageViewer::class.java)
+            }
+        }
+    }
+
+    @Test
+    fun `Logs error when cover is clicked and game fetching use case throws error when`() {
+        runTest {
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_API))
+
+            SUT.onCoverClicked()
+            advanceUntilIdle()
+
+            assertThat(logger.errorMessage).isNotEmpty
+        }
+    }
+
+    @Test
+    fun `Dispatches toast showing command when cover is clicked and game fetching use case throws error`() {
+        runTest {
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_NOT_FOUND))
+
+            advanceUntilIdle()
+
+            SUT.commandFlow.test {
+                SUT.onCoverClicked()
+
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
             }
         }
     }
@@ -179,7 +239,7 @@ internal class GameInfoViewModelTest {
                 id = "1",
                 thumbnailUrl = "thumbnail_url",
                 videoUrl = "video_url",
-                title = "title"
+                title = "title",
             )
 
             SUT.commandFlow.test {
@@ -187,7 +247,7 @@ internal class GameInfoViewModelTest {
 
                 val command = awaitItem()
 
-                assertThat(command is GameInfoCommand.OpenUrl).isTrue
+                assertThat(command).isInstanceOf(GameInfoCommand.OpenUrl::class.java)
                 assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(video.videoUrl)
             }
         }
@@ -198,10 +258,42 @@ internal class GameInfoViewModelTest {
         runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
 
-            SUT.routeFlow.test {
-                SUT.onScreenshotClicked(position = 0)
+            val screenshotIndex = 10
 
-                assertThat(awaitItem() is GameInfoRoute.ImageViewer).isTrue
+            SUT.routeFlow.test {
+                SUT.onScreenshotClicked(screenshotIndex = screenshotIndex)
+
+                val route = awaitItem()
+
+                assertThat(route).isInstanceOf(GameInfoRoute.ImageViewer::class.java)
+                assertThat((route as GameInfoRoute.ImageViewer).initialPosition).isEqualTo(screenshotIndex)
+            }
+        }
+    }
+
+    @Test
+    fun `Logs error when screenshot is clicked and game fetching use case throws error when`() {
+        runTest {
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_API))
+
+            SUT.onScreenshotClicked(screenshotIndex = 0)
+            advanceUntilIdle()
+
+            assertThat(logger.errorMessage).isNotEmpty
+        }
+    }
+
+    @Test
+    fun `Dispatches toast showing command when screenshot is clicked and game fetching use case throws error`() {
+        runTest {
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_NOT_FOUND))
+
+            advanceUntilIdle()
+
+            SUT.commandFlow.test {
+                SUT.onScreenshotClicked(screenshotIndex = 0)
+
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
             }
         }
     }
@@ -212,8 +304,8 @@ internal class GameInfoViewModelTest {
             val link = GameInfoLinkModel(
                 id = 1,
                 text = "text",
-                iconId = null,
-                payload = "url"
+                iconId = 0,
+                payload = "url",
             )
 
             SUT.commandFlow.test {
@@ -221,7 +313,7 @@ internal class GameInfoViewModelTest {
 
                 val command = awaitItem()
 
-                assertThat(command is GameInfoCommand.OpenUrl).isTrue
+                assertThat(command).isInstanceOf(GameInfoCommand.OpenUrl::class.java)
                 assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(link.payload)
             }
         }
@@ -232,12 +324,12 @@ internal class GameInfoViewModelTest {
         runTest {
             val company = GameInfoCompanyModel(
                 id = 1,
-                logoContainerSize = (0 to 0),
-                logoImageSize = (0 to 0),
+                logoWidth = null,
+                logoHeight = null,
                 logoUrl = null,
                 websiteUrl = "url",
                 name = "",
-                roles = ""
+                roles = "",
             )
 
             SUT.commandFlow.test {
@@ -245,7 +337,7 @@ internal class GameInfoViewModelTest {
 
                 val command = awaitItem()
 
-                assertThat(command is GameInfoCommand.OpenUrl).isTrue
+                assertThat(command).isInstanceOf(GameInfoCommand.OpenUrl::class.java)
                 assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(company.websiteUrl)
             }
         }
@@ -257,7 +349,7 @@ internal class GameInfoViewModelTest {
             val relatedGame = GameInfoRelatedGameModel(
                 id = 1,
                 title = "title",
-                coverUrl = "url"
+                coverUrl = "url",
             )
 
             SUT.routeFlow.test {
@@ -265,52 +357,42 @@ internal class GameInfoViewModelTest {
 
                 val route = awaitItem()
 
-                assertThat(route is GameInfoRoute.Info).isTrue
+                assertThat(route).isInstanceOf(GameInfoRoute.Info::class.java)
                 assertThat((route as GameInfoRoute.Info).gameId).isEqualTo(relatedGame.id)
             }
         }
     }
 
-    private class FakeGameInfoUiStateFactory : GameInfoUiStateFactory {
+    private class FakeGameInfoModelFactory : GameInfoModelFactory {
 
-        override fun createWithEmptyState(): GameInfoUiState {
-            return GameInfoUiState.Empty
-        }
-
-        override fun createWithLoadingState(): GameInfoUiState {
-            return GameInfoUiState.Loading
-        }
-
-        override fun createWithResultState(
-            game: DomainGame,
+        override fun createInfoModel(
+            game: Game,
             isLiked: Boolean,
-            companyGames: List<DomainGame>,
-            similarGames: List<DomainGame>
-        ): GameInfoUiState {
-            return GameInfoUiState.Result(
-                GameInfoModel(
-                    id = 1,
-                    headerModel = GameInfoHeaderModel(
-                        artworks = emptyList(),
-                        isLiked = true,
-                        coverImageUrl = null,
-                        title = "title",
-                        releaseDate = "release_date",
-                        developerName = null,
-                        rating = "rating",
-                        likeCount = "like_count",
-                        ageRating = "age_rating",
-                        gameCategory = "game_category"
-                    ),
-                    videoModels = emptyList(),
-                    screenshotModels = emptyList(),
-                    summary = null,
-                    detailsModel = null,
-                    linkModels = emptyList(),
-                    companyModels = emptyList(),
-                    otherCompanyGames = null,
-                    similarGames = null
-                )
+            companyGames: List<Game>,
+            similarGames: List<Game>
+        ): GameInfoModel {
+            return GameInfoModel(
+                id = 1,
+                headerModel = GameInfoHeaderModel(
+                    artworks = emptyList(),
+                    isLiked = true,
+                    coverImageUrl = null,
+                    title = "title",
+                    releaseDate = "release_date",
+                    developerName = null,
+                    rating = "rating",
+                    likeCount = "like_count",
+                    ageRating = "age_rating",
+                    gameCategory = "game_category"
+                ),
+                videoModels = emptyList(),
+                screenshotModels = emptyList(),
+                summary = null,
+                detailsModel = null,
+                linkModels = emptyList(),
+                companyModels = emptyList(),
+                otherCompanyGames = null,
+                similarGames = null
             )
         }
     }

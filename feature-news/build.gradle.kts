@@ -60,6 +60,8 @@ dependencies {
     implementation(deps.commons.widgets)
     implementation(deps.commons.recyclerView)
 
+    implementation(deps.misc.kotlinResult)
+
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
 

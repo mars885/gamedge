@@ -40,7 +40,7 @@ internal const val KEY_SELECTED_POSITION = "selected_position"
 @HiltViewModel
 internal class ImageViewerViewModel @Inject constructor(
     private val stringProvider: StringProvider,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
     private val title: String

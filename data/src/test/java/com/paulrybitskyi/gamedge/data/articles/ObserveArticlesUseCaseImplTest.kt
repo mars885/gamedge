@@ -17,19 +17,15 @@
 package com.paulrybitskyi.gamedge.data.articles
 
 import app.cash.turbine.test
-import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.testing.DATA_ARTICLES
-import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_ARTICLES
 import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.commons.testing.OBSERVE_ARTICLES_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesLocalDataStore
 import com.paulrybitskyi.gamedge.data.articles.usecases.ObserveArticlesUseCaseImpl
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.ArticleMapper
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.mapToDomainArticles
-import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -39,7 +35,6 @@ import org.junit.Test
 
 internal class ObserveArticlesUseCaseImplTest {
 
-    @MockK private lateinit var refreshArticlesUseCase: RefreshArticlesUseCase
     @MockK private lateinit var articlesLocalDataStore: ArticlesLocalDataStore
 
     private lateinit var articleMapper: ArticleMapper
@@ -51,7 +46,6 @@ internal class ObserveArticlesUseCaseImplTest {
 
         articleMapper = ArticleMapper()
         SUT = ObserveArticlesUseCaseImpl(
-            refreshArticlesUseCase = refreshArticlesUseCase,
             articlesLocalDataStore = articlesLocalDataStore,
             dispatcherProvider = FakeDispatcherProvider(),
             articleMapper = articleMapper
@@ -59,48 +53,11 @@ internal class ObserveArticlesUseCaseImplTest {
     }
 
     @Test
-    fun `Verify that articles are refreshed when refresh is requested`() {
+    fun `Emits articles from local data store`() {
         runTest {
-            coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_ARTICLES))
-
-            SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS)
-
-            coVerify { refreshArticlesUseCase.execute(any()) }
-        }
-    }
-
-    @Test
-    fun `Emits articles from local data store when refresh is requested`() {
-        runTest {
-            coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_ARTICLES))
             coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
             SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).test {
-                assertThat(awaitItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
-                awaitComplete()
-            }
-        }
-    }
-
-    @Test
-    fun `Emits articles from local data store when refresh use cases emits empty flow`() {
-        runTest {
-            coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf()
-            coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
-
-            SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).test {
-                assertThat(awaitItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
-                awaitComplete()
-            }
-        }
-    }
-
-    @Test
-    fun `Emits articles from local data store when refresh is not requested`() {
-        runTest {
-            coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
-
-            SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS.copy(refreshArticles = false)).test {
                 assertThat(awaitItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))
                 awaitComplete()
             }

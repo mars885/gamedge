@@ -21,10 +21,13 @@ import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.finiteUiState
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import io.mockk.MockKAnnotations
@@ -32,6 +35,8 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -41,7 +46,7 @@ import org.junit.Test
 internal class LikedGamesViewModelTest {
 
     @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
+    val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
     @MockK private lateinit var observeLikedGamesUseCase: ObserveLikedGamesUseCase
 
@@ -55,10 +60,11 @@ internal class LikedGamesViewModelTest {
         logger = FakeLogger()
         SUT = LikedGamesViewModel(
             observeLikedGamesUseCase = observeLikedGamesUseCase,
-            uiStateFactory = FakeUiStateFactory(),
+            likedGameModelMapper = FakeGameModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
+            stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
-            logger = logger
+            logger = logger,
         )
     }
 
@@ -68,16 +74,14 @@ internal class LikedGamesViewModelTest {
             coEvery { observeLikedGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.uiState.test {
-                SUT.loadData()
-
                 val emptyState = awaitItem()
                 val loadingState = awaitItem()
                 val resultState = awaitItem()
 
-                assertThat(emptyState is GamesUiState.Empty).isTrue
-                assertThat(loadingState is GamesUiState.Loading).isTrue
-                assertThat(resultState is GamesUiState.Result).isTrue
-                assertThat((resultState as GamesUiState.Result).items).hasSize(DOMAIN_GAMES.size)
+                assertThat(emptyState.finiteUiState).isEqualTo(FiniteUiState.EMPTY)
+                assertThat(loadingState.finiteUiState).isEqualTo(FiniteUiState.LOADING)
+                assertThat(resultState.finiteUiState).isEqualTo(FiniteUiState.SUCCESS)
+                assertThat(resultState.games).hasSize(DOMAIN_GAMES.size)
             }
         }
     }
@@ -87,7 +91,7 @@ internal class LikedGamesViewModelTest {
         runTest {
             coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
-            SUT.loadData()
+            advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
         }
@@ -99,9 +103,18 @@ internal class LikedGamesViewModelTest {
             coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
-                SUT.loadData()
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
+            }
+        }
+    }
 
-                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
+    @Test
+    fun `Routes to search screen when search button is clicked`() {
+        runTest {
+            SUT.routeFlow.test {
+                SUT.onSearchButtonClicked()
+
+                assertThat(awaitItem()).isInstanceOf(LikedGamesRoute.Search::class.java)
             }
         }
     }
@@ -115,7 +128,7 @@ internal class LikedGamesViewModelTest {
                 name = "",
                 releaseDate = "",
                 developerName = null,
-                description = null
+                description = null,
             )
 
             SUT.routeFlow.test {
@@ -123,34 +136,22 @@ internal class LikedGamesViewModelTest {
 
                 val route = awaitItem()
 
-                assertThat(route is LikedGamesRoute.Info).isTrue
+                assertThat(route).isInstanceOf(LikedGamesRoute.Info::class.java)
                 assertThat((route as LikedGamesRoute.Info).gameId).isEqualTo(gameModel.id)
             }
         }
     }
 
-    private class FakeUiStateFactory : LikedGamesUiStateFactory {
+    private class FakeGameModelMapper : GameModelMapper {
 
-        override fun createWithEmptyState(): GamesUiState {
-            return GamesUiState.Empty(iconId = -1, title = "title")
-        }
-
-        override fun createWithLoadingState(): GamesUiState {
-            return GamesUiState.Loading
-        }
-
-        override fun createWithResultState(games: List<DomainGame>): GamesUiState {
-            return GamesUiState.Result(
-                games.map {
-                    GameModel(
-                        id = it.id,
-                        coverImageUrl = null,
-                        name = it.name,
-                        releaseDate = "release_date",
-                        developerName = null,
-                        description = null
-                    )
-                }
+        override fun mapToGameModel(game: DomainGame): GameModel {
+            return GameModel(
+                id = game.id,
+                coverImageUrl = null,
+                name = game.name,
+                releaseDate = "release_date",
+                developerName = null,
+                description = null,
             )
         }
     }
