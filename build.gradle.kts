@@ -61,6 +61,7 @@ allprojects {
     }
 
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        version.set(versions.ktlint)
         android.set(true)
         outputToConsole.set(true)
         reporters {
