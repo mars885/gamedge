@@ -230,7 +230,7 @@ internal class GameInfoViewModel @Inject constructor(
     }
 
     fun onLinkClicked(link: GameInfoLinkModel) {
-        openUrl(link.payload as String)
+        openUrl(link.url)
     }
 
     fun onCompanyClicked(company: GameInfoCompanyModel) {

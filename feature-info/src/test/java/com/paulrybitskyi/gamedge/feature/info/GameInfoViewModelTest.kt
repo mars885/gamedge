@@ -305,7 +305,7 @@ internal class GameInfoViewModelTest {
                 id = 1,
                 text = "text",
                 iconId = 0,
-                payload = "url",
+                url = "url",
             )
 
             SUT.commandFlow.test {
@@ -314,7 +314,7 @@ internal class GameInfoViewModelTest {
                 val command = awaitItem()
 
                 assertThat(command).isInstanceOf(GameInfoCommand.OpenUrl::class.java)
-                assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(link.payload)
+                assertThat((command as GameInfoCommand.OpenUrl).url).isEqualTo(link.url)
             }
         }
     }

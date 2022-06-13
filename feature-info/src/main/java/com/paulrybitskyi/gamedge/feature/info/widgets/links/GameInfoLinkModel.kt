@@ -23,5 +23,5 @@ internal data class GameInfoLinkModel(
     val id: Int,
     val text: String,
     val iconId: Int,
-    val payload: Any? = null
+    val url: String,
 )

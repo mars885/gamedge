@@ -110,6 +110,7 @@ internal fun GameInfoLinksPreview() {
                         if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
                     },
                 iconId = R.drawable.web,
+                url = "url$index",
             )
     }
 

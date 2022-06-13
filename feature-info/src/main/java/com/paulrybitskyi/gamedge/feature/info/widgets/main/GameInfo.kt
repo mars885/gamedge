@@ -542,31 +542,37 @@ private fun buildFakeGameModel(): GameInfoModel {
                 id = 1,
                 text = "Steam",
                 iconId = R.drawable.steam,
+                url = "",
             ),
             GameInfoLinkModel(
                 id = 2,
                 text = "Official",
                 iconId = R.drawable.web,
+                url = "",
             ),
             GameInfoLinkModel(
                 id = 3,
                 text = "Twitter",
                 iconId = R.drawable.twitter,
+                url = "",
             ),
             GameInfoLinkModel(
                 id = 4,
                 text = "Subreddit",
                 iconId = R.drawable.reddit,
+                url = "",
             ),
             GameInfoLinkModel(
                 id = 5,
                 text = "YouTube",
                 iconId = R.drawable.youtube,
+                url = "",
             ),
             GameInfoLinkModel(
                 id = 6,
                 text = "Twitch",
                 iconId = R.drawable.twitch,
+                url = "",
             ),
         ),
         companyModels = listOf(

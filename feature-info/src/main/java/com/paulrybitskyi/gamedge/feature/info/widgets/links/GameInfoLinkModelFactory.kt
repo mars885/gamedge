@@ -49,7 +49,7 @@ internal class GameInfoLinkModelFactoryImpl @Inject constructor(
             id = website.id,
             text = websiteNameProvider.provideWebsiteName(website),
             iconId = websiteIconProvider.provideIconIdForWebsite(website),
-            payload = website.url
+            url = website.url,
         )
     }
 
