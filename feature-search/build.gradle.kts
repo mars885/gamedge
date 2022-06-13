@@ -40,9 +40,6 @@ dependencies {
 
     implementation(deps.kotlin.coroutines)
 
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.androidX.fragmentKtx)
-
     implementation(deps.compose.ui)
     implementation(deps.compose.tooling)
     implementation(deps.compose.foundation)

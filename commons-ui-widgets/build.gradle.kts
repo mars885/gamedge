@@ -37,10 +37,6 @@ dependencies {
     implementation(project(deps.local.core))
     implementation(project(deps.local.commonsUi))
 
-    implementation(deps.androidX.constraintLayout)
-    api(deps.androidX.swipeRefreshLayout)
-    implementation(deps.androidX.coreKtx)
-
     implementation(deps.compose.ui)
     implementation(deps.compose.tooling)
     implementation(deps.compose.foundation)
@@ -48,19 +44,9 @@ dependencies {
     implementation(deps.compose.material)
     implementation(deps.compose.runtime)
     implementation(deps.compose.constraintLayout)
-    implementation(deps.compose.coil)
     implementation(deps.compose.accompanist.swipeRefresh)
 
-    implementation(deps.google.materialComponents)
-
-    implementation(deps.commons.core)
-    implementation(deps.commons.ktx)
-    implementation(deps.commons.widgets)
-    implementation(deps.commons.recyclerView)
-    implementation(deps.commons.material)
-    implementation(deps.commons.deviceInfo)
-
-    implementation(deps.misc.expandableTextView)
+    implementation(deps.misc.coil)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)

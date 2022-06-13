@@ -17,15 +17,15 @@
 package com.paulrybitskyi.gamedge.feature.splash
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-internal class SplashActivity : AppCompatActivity() {
+internal class SplashActivity : ComponentActivity() {
 
     @Inject lateinit var navigator: SplashNavigator
 

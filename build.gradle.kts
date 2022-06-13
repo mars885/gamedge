@@ -33,7 +33,6 @@ buildscript {
     dependencies {
         classpath(deps.plugins.androidGradle)
         classpath(deps.plugins.kotlinGradle)
-        classpath(deps.plugins.navSafeArgs)
         classpath(deps.plugins.daggerHiltGradle)
         classpath(deps.plugins.protobuf)
         classpath(deps.plugins.gradleVersions)

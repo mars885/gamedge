@@ -33,8 +33,6 @@ dependencies {
     implementation(deps.kotlin.coroutines)
     implementation(deps.kotlin.serialization)
 
-    implementation(deps.androidX.appCompat)
-    implementation(deps.androidX.lifecycleCommonJava8)
     implementation(deps.androidX.browser)
 
     implementation(deps.commons.core)

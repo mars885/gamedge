@@ -40,33 +40,23 @@ dependencies {
 
     implementation(deps.kotlin.coroutines)
 
-    implementation(deps.androidX.recyclerView)
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.androidX.viewPager2)
-    implementation(deps.androidX.fragmentKtx)
-
     implementation(deps.compose.ui)
     implementation(deps.compose.tooling)
     implementation(deps.compose.animation)
     implementation(deps.compose.foundation)
     implementation(deps.compose.material)
     implementation(deps.compose.runtime)
-    implementation(deps.compose.coil)
     implementation(deps.compose.constraintLayout)
     implementation(deps.compose.hilt)
     implementation(deps.compose.accompanist.insets)
     implementation(deps.compose.accompanist.flowLayout)
     implementation(deps.compose.accompanist.pager)
 
-    implementation(deps.google.materialComponents)
-
     implementation(deps.commons.core)
     implementation(deps.commons.ktx)
-    implementation(deps.commons.widgets)
-    implementation(deps.commons.recyclerView)
 
     implementation(deps.misc.kotlinResult)
-    implementation(deps.misc.expandableTextView)
+    implementation(deps.misc.coil)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)

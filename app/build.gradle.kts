@@ -19,7 +19,6 @@ plugins {
     gamedgeAndroid()
     kotlinKapt()
     ksp()
-    navSafeArgsKotlin()
     daggerHiltAndroid()
 }
 
@@ -53,8 +52,6 @@ dependencies {
     implementation(project(deps.local.featureSearch))
     implementation(project(deps.local.featureSplash))
 
-    implementation(deps.androidX.appCompat)
-
     implementation(deps.compose.ui)
     implementation(deps.compose.tooling)
     implementation(deps.compose.foundation)
@@ -66,9 +63,7 @@ dependencies {
 
     implementation(deps.commons.core)
     implementation(deps.commons.ktx)
-    implementation(deps.commons.widgets)
     implementation(deps.commons.windowAnims)
-    implementation(deps.commons.material)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)

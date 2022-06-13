@@ -18,7 +18,7 @@
 
 <resources>
 
-    <style name="GamedgeTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="GamedgeTheme" parent="android:Theme.Material.NoActionBar">
         <item name="android:statusBarColor">@color/colorStatusBar</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:navigationBarColor">@color/colorNavigationBar</item>

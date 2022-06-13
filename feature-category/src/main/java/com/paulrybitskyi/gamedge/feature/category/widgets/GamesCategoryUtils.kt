@@ -19,10 +19,10 @@ package com.paulrybitskyi.gamedge.feature.category.widgets
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import com.paulrybitskyi.commons.device.info.screenMetrics
+import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
 private const val GRID_SPAN_COUNT = 3
@@ -38,16 +38,17 @@ internal data class GamesGridConfig(
 
 @Composable
 internal fun rememberGamesGridConfig(): GamesGridConfig {
-    val context = LocalContext.current
     val density = LocalDensity.current
+    val configuration = LocalConfiguration.current
     val gridItemSpacingInDp = GamedgeTheme.spaces.spacing_0_5
 
-    return remember(context, density) {
+    return remember(density, configuration) {
         val gridItemSpacingInPx = with(density) { gridItemSpacingInDp.toPx() }
+        val screenWidthInPx = with(density) { configuration.screenWidthDp.dp.roundToPx() }
 
         val horizontalTotalSpacing = (gridItemSpacingInPx * (GRID_SPAN_COUNT + 1))
-        val screenWidth = (context.screenMetrics.width.sizeInPixels - horizontalTotalSpacing)
-        val itemWidth = (screenWidth / GRID_SPAN_COUNT.toFloat())
+        val availableScreenWidth = (screenWidthInPx - horizontalTotalSpacing)
+        val itemWidth = (availableScreenWidth / GRID_SPAN_COUNT.toFloat())
         val itemWidthInDp = with(density) { itemWidth.toDp() }
 
         val itemHeight = (itemWidth * ITEM_HEIGHT_TO_WIDTH_RATIO)
