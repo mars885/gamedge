@@ -63,6 +63,19 @@ internal class SplashViewModelTest {
     }
 
     @Test
+    fun `Hides progress indicator when auth refresh use case emits credentials`() {
+        runTest {
+            coEvery { refreshAuthUseCase.execute() } returns flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
+
+            advanceUntilIdle()
+
+            SUT.uiState.test {
+                assertThat(awaitItem().isProgressVisible).isFalse
+            }
+        }
+    }
+
+    @Test
     fun `Routes to dashboard when auth refresh use case emits credentials`() {
         runTest {
             coEvery { refreshAuthUseCase.execute() } returns flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
