@@ -26,7 +26,7 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 @Composable
 fun RefreshableContent(
     isRefreshing: Boolean,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     isSwipeEnabled: Boolean = true,
     onRefreshRequested: (() -> Unit)? = null,
     content: @Composable () -> Unit,

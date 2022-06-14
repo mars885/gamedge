@@ -47,7 +47,7 @@ internal sealed class Screen(val route: String) {
 
     object GameInfo : Screen("game-info/{${Parameters.GAME_ID}}") {
         object Parameters {
-            const val GAME_ID = "gameId"
+            const val GAME_ID = "game-id"
         }
 
         fun createLink(gameId: Int): String {

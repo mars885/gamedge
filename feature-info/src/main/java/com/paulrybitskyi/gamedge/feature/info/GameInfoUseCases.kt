@@ -23,7 +23,7 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStat
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
 import javax.inject.Inject
 
-class GameInfoUseCases @Inject constructor(
+internal class GameInfoUseCases @Inject constructor(
     val getGameUseCase: GetGameUseCase,
     val observeGameLikeStateUseCase: ObserveGameLikeStateUseCase,
     val toggleGameLikeStateUseCase: ToggleGameLikeStateUseCase,

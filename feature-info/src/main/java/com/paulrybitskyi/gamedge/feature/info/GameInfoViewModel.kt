@@ -61,7 +61,7 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-private const val PARAM_GAME_ID = "gameId"
+private const val PARAM_GAME_ID = "game-id"
 
 @HiltViewModel
 @Suppress("LongParameterList")
