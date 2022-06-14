@@ -31,7 +31,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -41,14 +40,14 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
 import coil.size.Size
 import coil.transform.Transformation
 import com.paulrybitskyi.commons.ktx.centerX
 import com.paulrybitskyi.commons.ktx.centerY
 import com.paulrybitskyi.commons.ktx.hasTransparentPixels
 import com.paulrybitskyi.commons.ktx.isOpaque
-import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
+import com.paulrybitskyi.gamedge.commons.ui.images.defaultImageRequest
+import com.paulrybitskyi.gamedge.commons.ui.images.secondaryImage
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.feature.info.R
@@ -144,20 +143,16 @@ private fun CompanyLogoImage(
     val logoContainerWidthInPx = with(density) { logoContainerSize.width.roundToPx() }
     val logoContainerHeightInPx = with(density) { logoContainerSize.height.roundToPx() }
     val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(logoImageUrl)
-            .fallback(R.drawable.game_landscape_placeholder)
-            .placeholder(R.drawable.game_landscape_placeholder)
-            .error(R.drawable.game_landscape_placeholder)
-            .size(logoImageSize.width, logoImageSize.height)
-            .transformations(
+        model = defaultImageRequest(logoImageUrl) {
+            secondaryImage(R.drawable.game_landscape_placeholder)
+            size(logoImageSize.width, logoImageSize.height)
+            transformations(
                 LogoImageTransformation(
                     logoContainerWidth = logoContainerWidthInPx,
                     logoContainerHeight = logoContainerHeightInPx,
                 )
             )
-            .crossfade(CROSSFADE_ANIMATION_DURATION)
-            .build(),
+        },
     )
 
     Image(

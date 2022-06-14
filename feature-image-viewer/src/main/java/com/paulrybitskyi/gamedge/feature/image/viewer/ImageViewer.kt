@@ -43,7 +43,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter.State
-import coil.request.ImageRequest
 import coil.size.Size
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
@@ -53,12 +52,12 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mxalbert.zoomable.OverZoomConfig
 import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
-import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
 import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.commons.ui.LocalTextSharer
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+import com.paulrybitskyi.gamedge.commons.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.theme.navBar
 import com.paulrybitskyi.gamedge.commons.ui.theme.statusBar
@@ -248,11 +247,9 @@ private fun ImageItem(
             }
 
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(imageUrl)
-                    .size(Size.ORIGINAL)
-                    .crossfade(CROSSFADE_ANIMATION_DURATION)
-                    .build(),
+                model = defaultImageRequest(imageUrl) {
+                    size(Size.ORIGINAL)
+                },
                 contentDescription = null,
                 modifier = Modifier
                     .then(aspectRatioModifier)

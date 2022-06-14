@@ -31,14 +31,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter.State
-import coil.request.ImageRequest
-import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
+import com.paulrybitskyi.gamedge.commons.ui.images.defaultImageRequest
+import com.paulrybitskyi.gamedge.commons.ui.images.secondaryImage
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
 val DefaultCoverWidth = 112.dp
@@ -70,13 +69,9 @@ fun GameCover(
             }
 
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(imageUrl)
-                    .fallback(R.drawable.game_cover_placeholder)
-                    .placeholder(R.drawable.game_cover_placeholder)
-                    .error(R.drawable.game_cover_placeholder)
-                    .crossfade(CROSSFADE_ANIMATION_DURATION)
-                    .build(),
+                model = defaultImageRequest(imageUrl) {
+                    secondaryImage(R.drawable.game_cover_placeholder)
+                },
                 contentDescription = null,
                 modifier = Modifier.matchParentSize(),
                 onState = { state ->

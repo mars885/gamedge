@@ -22,14 +22,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.paulrybitskyi.gamedge.commons.ui.clickable
-import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
+import com.paulrybitskyi.gamedge.commons.ui.images.defaultImageRequest
+import com.paulrybitskyi.gamedge.commons.ui.images.secondaryImage
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.feature.info.R
 
@@ -73,13 +72,9 @@ private fun Artwork(
     }
 
     AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(data)
-            .fallback(R.drawable.game_background_placeholder)
-            .placeholder(R.drawable.game_background_placeholder)
-            .error(R.drawable.game_background_placeholder)
-            .crossfade(CROSSFADE_ANIMATION_DURATION)
-            .build(),
+        model = defaultImageRequest(data) {
+            secondaryImage(R.drawable.game_background_placeholder)
+        },
         contentDescription = null,
         modifier = Modifier
             .fillMaxSize()

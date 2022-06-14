@@ -37,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -45,8 +44,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.paulrybitskyi.gamedge.commons.ui.images.CROSSFADE_ANIMATION_DURATION
+import com.paulrybitskyi.gamedge.commons.ui.images.defaultImageRequest
+import com.paulrybitskyi.gamedge.commons.ui.images.secondaryImage
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.theme.darkScrim
 import com.paulrybitskyi.gamedge.commons.ui.widgets.GamedgeCard
@@ -91,13 +90,9 @@ private fun Video(
                     .height(thumbnailHeight),
             ) {
                 AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(video.thumbnailUrl)
-                        .fallback(R.drawable.game_landscape_placeholder)
-                        .placeholder(R.drawable.game_landscape_placeholder)
-                        .error(R.drawable.game_landscape_placeholder)
-                        .crossfade(CROSSFADE_ANIMATION_DURATION)
-                        .build(),
+                    model = defaultImageRequest(video.thumbnailUrl) {
+                        secondaryImage(R.drawable.game_landscape_placeholder)
+                    },
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
