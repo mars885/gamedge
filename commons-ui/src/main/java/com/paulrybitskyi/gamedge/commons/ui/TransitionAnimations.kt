@@ -42,6 +42,35 @@ sealed interface TransitionAnimations {
     fun popExit(): ExitTransition
 }
 
+object Fading : TransitionAnimations {
+
+    override fun enter(): EnterTransition {
+        return fadeIn(
+            animationSpec = tween(
+                durationMillis = TransitionAnimations.DefaultAnimationDuration,
+                easing = LinearEasing,
+            ),
+        )
+    }
+
+    override fun exit(): ExitTransition {
+        return fadeOut(
+            animationSpec = tween(
+                durationMillis = TransitionAnimations.DefaultAnimationDuration,
+                easing = LinearEasing,
+            ),
+        )
+    }
+
+    override fun popEnter(): EnterTransition {
+        return enter()
+    }
+
+    override fun popExit(): ExitTransition {
+        return exit()
+    }
+}
+
 object OvershootScaling : TransitionAnimations {
 
     private const val FadingAnimationDuration = 100
@@ -119,12 +148,18 @@ object OvershootScaling : TransitionAnimations {
     }
 }
 
+// Replace sliding animations with fading ones temporarily because
+// for sliding to work properly, we need to be able to specify the
+// zIndex of the entering and exiting animation.
+//
+// The GitHub issue: https://github.com/google/accompanist/issues/1160
 object HorizontalSliding : TransitionAnimations {
 
     private const val MinAlpha = 0.8f
     private const val MaxOffsetRatio = 0.25f
 
     override fun enter(): EnterTransition {
+        return Fading.enter()
         return slideInHorizontally(
             animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
             initialOffsetX = ::calculateMinOffsetX,
@@ -132,6 +167,7 @@ object HorizontalSliding : TransitionAnimations {
     }
 
     override fun exit(): ExitTransition {
+        return Fading.exit()
         return fadeOut(
             animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
             targetAlpha = MinAlpha,
@@ -142,6 +178,7 @@ object HorizontalSliding : TransitionAnimations {
     }
 
     override fun popEnter(): EnterTransition {
+        return Fading.popEnter()
         return fadeIn(
             animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
             initialAlpha = MinAlpha,
@@ -152,6 +189,7 @@ object HorizontalSliding : TransitionAnimations {
     }
 
     override fun popExit(): ExitTransition {
+        return Fading.popExit()
         return slideOutHorizontally(
             animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
             targetOffsetX = ::calculateMinOffsetX,
