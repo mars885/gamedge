@@ -23,7 +23,7 @@ internal sealed class GamesSearchCommand : Command {
     object ClearItems : GamesSearchCommand()
 }
 
-internal sealed class GamesSearchRoute : Route {
+sealed class GamesSearchRoute : Route {
     data class Info(val gameId: Int) : GamesSearchRoute()
     object Back : GamesSearchRoute()
 }

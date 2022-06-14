@@ -23,18 +23,24 @@ import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
+import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
+import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
-import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsUiStateFactory
+import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemModelMapper
+import com.paulrybitskyi.gamedge.feature.news.mapping.mapToGamingNewsItemModels
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsUiState
+import com.paulrybitskyi.gamedge.feature.news.widgets.disableRefreshing
+import com.paulrybitskyi.gamedge.feature.news.widgets.enableRefreshing
+import com.paulrybitskyi.gamedge.feature.news.widgets.toEmptyState
+import com.paulrybitskyi.gamedge.feature.news.widgets.toLoadingState
+import com.paulrybitskyi.gamedge.feature.news.widgets.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
@@ -42,11 +48,14 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 private const val MAX_ARTICLE_COUNT = 100
+private const val ARTICLES_REFRESH_INITIAL_DELAY = 500L
+private const val ARTICLES_REFRESH_DEFAULT_DELAY = 1000L
 
 @HiltViewModel
-class GamingNewsViewModel @Inject constructor(
+internal class GamingNewsViewModel @Inject constructor(
     private val observeArticlesUseCase: ObserveArticlesUseCase,
-    private val uiStateFactory: GamingNewsUiStateFactory,
+    private val refreshArticlesUseCase: RefreshArticlesUseCase,
+    private val gamingNewsItemModelMapper: GamingNewsItemModelMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
@@ -54,45 +63,54 @@ class GamingNewsViewModel @Inject constructor(
 
     private var isObservingArticles = false
 
-    private var useCaseParams: ObserveArticlesUseCase.Params
+    private lateinit var observerUseCaseParams: ObserveArticlesUseCase.Params
+    private lateinit var refresherUseCaseParams: RefreshArticlesUseCase.Params
 
-    private var articlesObservingJob: Job? = null
+    private val _uiState = MutableStateFlow(GamingNewsUiState())
 
-    private val _uiState = MutableStateFlow<GamingNewsUiState>(GamingNewsUiState.Empty)
+    private val currentUiState: GamingNewsUiState
+        get() = _uiState.value
 
     val uiState: StateFlow<GamingNewsUiState>
         get() = _uiState
 
     init {
-        useCaseParams = ObserveArticlesUseCase.Params(
-            refreshArticles = true,
-            pagination = Pagination(limit = MAX_ARTICLE_COUNT)
-        )
+        initUseCaseParams()
+        observeArticles()
+        refreshArticles(isFirstRefresh = true)
     }
 
-    fun loadData() {
-        observeArticles()
+    private fun initUseCaseParams() {
+        val pagination = Pagination(limit = MAX_ARTICLE_COUNT)
+
+        observerUseCaseParams = ObserveArticlesUseCase.Params(pagination)
+        refresherUseCaseParams = RefreshArticlesUseCase.Params(pagination)
     }
 
     private fun observeArticles() {
         if (isObservingArticles) return
 
-        articlesObservingJob = viewModelScope.launch {
-            observeArticlesUseCase.execute(useCaseParams)
-                .map(uiStateFactory::createWithResultState)
+        viewModelScope.launch {
+            observeArticlesUseCase.execute(observerUseCaseParams)
+                .map(gamingNewsItemModelMapper::mapToGamingNewsItemModels)
                 .flowOn(dispatcherProvider.computation)
+                .map { news -> currentUiState.toSuccessState(news) }
                 .onError {
                     logger.error(logTag, "Failed to load articles.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(uiStateFactory.createWithEmptyState())
+                    emit(currentUiState.toEmptyState())
                 }
                 .onStart {
                     isObservingArticles = true
-                    emit(uiStateFactory.createWithLoadingState())
+                    emit(currentUiState.toLoadingState())
                 }
                 .onCompletion { isObservingArticles = false }
                 .collect { _uiState.value = it }
         }
+    }
+
+    fun onSearchButtonClicked() {
+        route(GamingNewsRoute.Search)
     }
 
     fun onNewsItemClicked(model: GamingNewsItemModel) {
@@ -100,13 +118,35 @@ class GamingNewsViewModel @Inject constructor(
     }
 
     fun onRefreshRequested() {
-        refreshArticles()
+        if (!currentUiState.isRefreshing) {
+            refreshArticles(isFirstRefresh = false)
+        }
     }
 
-    private fun refreshArticles() {
+    private fun refreshArticles(isFirstRefresh: Boolean) {
         viewModelScope.launch {
-            articlesObservingJob?.cancelAndJoin()
-            observeArticles()
+            refreshArticlesUseCase.execute(refresherUseCaseParams)
+                .resultOrError()
+                .map { currentUiState }
+                .onError {
+                    logger.error(logTag, "Failed to refresh articles.", it)
+                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+                }
+                .onStart {
+                    // Adding the delay on the first refresh to wait until the cached
+                    // articles are loaded and not overload the UI with loaders
+                    if (isFirstRefresh) {
+                        delay(ARTICLES_REFRESH_INITIAL_DELAY)
+                    }
+
+                    emit(currentUiState.enableRefreshing())
+                    // Adding a delay to prevent the SwipeRefresh from disappearing quickly
+                    delay(ARTICLES_REFRESH_DEFAULT_DELAY)
+                }
+                .onCompletion {
+                    emit(currentUiState.disableRefreshing())
+                }
+                .collect { _uiState.value = it }
         }
     }
 }

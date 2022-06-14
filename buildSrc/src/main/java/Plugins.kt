@@ -27,7 +27,6 @@ const val PLUGIN_KOTLIN_ANDROID = "kotlin-android"
 const val PLUGIN_KOTLIN_KAPT = "kotlin-kapt"
 const val PLUGIN_KSP = "com.google.devtools.ksp"
 const val PLUGIN_KOTLINX_SERIALIZATION = "org.jetbrains.kotlin.plugin.serialization"
-const val PLUGIN_NAV_SAFE_ARGS_KOTLIN = "androidx.navigation.safeargs.kotlin"
 const val PLUGIN_DAGGER_HILT_ANDROID = "dagger.hilt.android.plugin"
 const val PLUGIN_DETEKT = "io.gitlab.arturbosch.detekt"
 const val PLUGIN_KTLINT = "org.jlleitschuh.gradle.ktlint"
@@ -67,10 +66,6 @@ fun PluginDependenciesSpec.ksp(): PluginDependencySpec {
 
 fun PluginDependenciesSpec.kotlinxSerialization(): PluginDependencySpec {
     return (id(PLUGIN_KOTLINX_SERIALIZATION) version versions.kotlin)
-}
-
-fun PluginDependenciesSpec.navSafeArgsKotlin(): PluginDependencySpec {
-    return id(PLUGIN_NAV_SAFE_ARGS_KOTLIN)
 }
 
 fun PluginDependenciesSpec.daggerHiltAndroid(): PluginDependencySpec {

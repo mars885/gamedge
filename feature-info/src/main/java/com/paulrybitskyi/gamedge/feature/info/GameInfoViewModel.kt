@@ -20,6 +20,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
+import com.paulrybitskyi.gamedge.commons.ui.di.qualifiers.TransitionAnimationDuration
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
@@ -36,19 +37,21 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
-import com.paulrybitskyi.gamedge.feature.info.mapping.GameInfoUiStateFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiState
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoCompanyModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoLinkModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoVideoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.games.GameInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.toEmptyState
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.toLoadingState
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOf
@@ -58,14 +61,16 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-private const val PARAM_GAME_ID = "game_id"
+private const val PARAM_GAME_ID = "game-id"
 
 @HiltViewModel
 @Suppress("LongParameterList")
 internal class GameInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    @TransitionAnimationDuration
+    transitionAnimationDuration: Long,
     private val useCases: GameInfoUseCases,
-    private val uiStateFactory: GameInfoUiStateFactory,
+    private val modelFactory: GameInfoModelFactory,
     private val gameUrlFactory: ImageViewerGameUrlFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
@@ -79,13 +84,16 @@ internal class GameInfoViewModel @Inject constructor(
 
     private val relatedGamesUseCasePagination = Pagination()
 
-    private val _uiState = MutableStateFlow<GameInfoUiState>(GameInfoUiState.Empty)
+    private val _uiState = MutableStateFlow(GameInfoUiState(isLoading = false, game = null))
+
+    private val currentUiState: GameInfoUiState
+        get() = _uiState.value
 
     val uiState: StateFlow<GameInfoUiState>
         get() = _uiState
 
-    fun loadData(resultEmissionDelay: Long) {
-        observeGameData(resultEmissionDelay)
+    init {
+        observeGameData(resultEmissionDelay = transitionAnimationDuration)
     }
 
     private fun observeGameData(resultEmissionDelay: Long) {
@@ -107,7 +115,7 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .map { (game, isGameLiked, companyGames, similarGames) ->
-                uiStateFactory.createWithResultState(
+                modelFactory.createInfoModel(
                     game,
                     isGameLiked,
                     companyGames,
@@ -115,14 +123,15 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .flowOn(dispatcherProvider.computation)
+            .map { game -> currentUiState.toSuccessState(game) }
             .onError {
                 logger.error(logTag, "Failed to load game info data.", it)
                 dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                emit(uiStateFactory.createWithEmptyState())
+                emit(currentUiState.toEmptyState())
             }
             .onStart {
                 isObservingGameData = true
-                emit(uiStateFactory.createWithLoadingState())
+                emit(currentUiState.toLoadingState())
                 delay(resultEmissionDelay)
             }
             .onCompletion { isObservingGameData = false }
@@ -156,10 +165,10 @@ internal class GameInfoViewModel @Inject constructor(
             .execute(GetSimilarGamesUseCase.Params(game, relatedGamesUseCasePagination))
     }
 
-    fun onArtworkClicked(position: Int) {
+    fun onArtworkClicked(artworkIndex: Int) {
         navigateToImageViewer(
             title = stringProvider.getString(R.string.artwork),
-            initialPosition = position,
+            initialPosition = artworkIndex,
             gameImageUrlsProvider = gameUrlFactory::createArtworkImageUrls
         )
     }
@@ -212,16 +221,16 @@ internal class GameInfoViewModel @Inject constructor(
         openUrl(video.videoUrl)
     }
 
-    fun onScreenshotClicked(position: Int) {
+    fun onScreenshotClicked(screenshotIndex: Int) {
         navigateToImageViewer(
             title = stringProvider.getString(R.string.screenshot),
-            initialPosition = position,
+            initialPosition = screenshotIndex,
             gameImageUrlsProvider = gameUrlFactory::createScreenshotImageUrls
         )
     }
 
     fun onLinkClicked(link: GameInfoLinkModel) {
-        openUrl(link.payload as String)
+        openUrl(link.url)
     }
 
     fun onCompanyClicked(company: GameInfoCompanyModel) {

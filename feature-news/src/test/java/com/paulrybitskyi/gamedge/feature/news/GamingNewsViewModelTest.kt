@@ -17,22 +17,27 @@
 package com.paulrybitskyi.gamedge.feature.news
 
 import app.cash.turbine.test
+import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_ARTICLES
 import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
-import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsUiStateFactory
+import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
+import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemModelMapper
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
-import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsUiState
+import com.paulrybitskyi.gamedge.feature.news.widgets.finiteUiState
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -42,9 +47,10 @@ import org.junit.Test
 internal class GamingNewsViewModelTest {
 
     @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
+    val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
     @MockK private lateinit var observeArticlesUseCase: ObserveArticlesUseCase
+    @MockK private lateinit var refreshArticlesUseCase: RefreshArticlesUseCase
 
     private lateinit var logger: FakeLogger
     private lateinit var SUT: GamingNewsViewModel
@@ -56,10 +62,11 @@ internal class GamingNewsViewModelTest {
         logger = FakeLogger()
         SUT = GamingNewsViewModel(
             observeArticlesUseCase = observeArticlesUseCase,
-            uiStateFactory = FakeGamingNewsUiStateFactory(),
+            refreshArticlesUseCase = refreshArticlesUseCase,
+            gamingNewsItemModelMapper = FakeGamingNewsItemModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             errorMapper = FakeErrorMapper(),
-            logger = logger
+            logger = logger,
         )
     }
 
@@ -69,16 +76,14 @@ internal class GamingNewsViewModelTest {
             coEvery { observeArticlesUseCase.execute(any()) } returns flowOf(DOMAIN_ARTICLES)
 
             SUT.uiState.test {
-                SUT.loadData()
-
                 val emptyState = awaitItem()
                 val loadingState = awaitItem()
                 val resultState = awaitItem()
 
-                assertThat(emptyState is GamingNewsUiState.Empty).isTrue
-                assertThat(loadingState is GamingNewsUiState.Loading).isTrue
-                assertThat(resultState is GamingNewsUiState.Result).isTrue
-                assertThat((resultState as GamingNewsUiState.Result).items).hasSize(DOMAIN_ARTICLES.size)
+                assertThat(emptyState.finiteUiState).isEqualTo(FiniteUiState.Empty)
+                assertThat(loadingState.finiteUiState).isEqualTo(FiniteUiState.Loading)
+                assertThat(resultState.finiteUiState).isEqualTo(FiniteUiState.Success)
+                assertThat(resultState.news).hasSize(DOMAIN_ARTICLES.size)
             }
         }
     }
@@ -88,7 +93,7 @@ internal class GamingNewsViewModelTest {
         runTest {
             coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
-            SUT.loadData()
+            advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
         }
@@ -100,9 +105,18 @@ internal class GamingNewsViewModelTest {
             coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
-                SUT.loadData()
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
+            }
+        }
+    }
 
-                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
+    @Test
+    fun `Routes to search screen when search button is clicked`() {
+        runTest {
+            SUT.routeFlow.test {
+                SUT.onSearchButtonClicked()
+
+                assertThat(awaitItem()).isInstanceOf(GamingNewsRoute.Search::class.java)
             }
         }
     }
@@ -116,7 +130,7 @@ internal class GamingNewsViewModelTest {
                 title = "",
                 lede = "",
                 publicationDate = "",
-                siteDetailUrl = "site_detail_url"
+                siteDetailUrl = "site_detail_url",
             )
 
             SUT.commandFlow.test {
@@ -124,7 +138,7 @@ internal class GamingNewsViewModelTest {
 
                 val command = awaitItem()
 
-                assertThat(command is GamingNewsCommand.OpenUrl).isTrue
+                assertThat(command).isInstanceOf(GamingNewsCommand.OpenUrl::class.java)
                 assertThat((command as GamingNewsCommand.OpenUrl).url).isEqualTo(itemModel.siteDetailUrl)
             }
         }
@@ -133,45 +147,30 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Emits correct ui states when refreshing data`() {
         runTest {
-            coEvery { observeArticlesUseCase.execute(any()) } returns flowOf(DOMAIN_ARTICLES)
+            coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_ARTICLES))
+
+            advanceUntilIdle()
 
             SUT.uiState.test {
                 SUT.onRefreshRequested()
 
-                val emptyState = awaitItem()
-                val loadingState = awaitItem()
-                val resultState = awaitItem()
-
-                assertThat(emptyState is GamingNewsUiState.Empty).isTrue
-                assertThat(loadingState is GamingNewsUiState.Loading).isTrue
-                assertThat(resultState is GamingNewsUiState.Result).isTrue
-                assertThat((resultState as GamingNewsUiState.Result).items).hasSize(DOMAIN_ARTICLES.size)
+                assertThat(awaitItem().isRefreshing).isFalse
+                assertThat(awaitItem().isRefreshing).isTrue
+                assertThat(awaitItem().isRefreshing).isFalse
             }
         }
     }
 
-    private class FakeGamingNewsUiStateFactory : GamingNewsUiStateFactory {
+    private class FakeGamingNewsItemModelMapper : GamingNewsItemModelMapper {
 
-        override fun createWithEmptyState(): GamingNewsUiState {
-            return GamingNewsUiState.Empty
-        }
-
-        override fun createWithLoadingState(): GamingNewsUiState {
-            return GamingNewsUiState.Loading
-        }
-
-        override fun createWithResultState(articles: List<DomainArticle>): GamingNewsUiState {
-            return GamingNewsUiState.Result(
-                articles.map {
-                    GamingNewsItemModel(
-                        id = it.id,
-                        imageUrl = null,
-                        title = it.title,
-                        lede = it.lede,
-                        publicationDate = "publication_date",
-                        siteDetailUrl = it.siteDetailUrl
-                    )
-                }
+        override fun mapToGamingNewsItemModel(article: DomainArticle): GamingNewsItemModel {
+            return GamingNewsItemModel(
+                id = article.id,
+                imageUrl = null,
+                title = article.title,
+                lede = article.lede,
+                publicationDate = "publication_date",
+                siteDetailUrl = article.siteDetailUrl,
             )
         }
     }

@@ -16,8 +16,45 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
-sealed class GamesUiState {
-    data class Empty(val iconId: Int, val title: String) : GamesUiState()
-    object Loading : GamesUiState()
-    data class Result(val items: List<GameModel>) : GamesUiState()
+import androidx.compose.runtime.Immutable
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
+
+@Immutable
+data class GamesUiState(
+    val isLoading: Boolean,
+    val infoIconId: Int,
+    val infoTitle: String,
+    val games: List<GameModel>,
+)
+
+val GamesUiState.finiteUiState: FiniteUiState
+    get() = when {
+        isInEmptyState -> FiniteUiState.Empty
+        isInLoadingState -> FiniteUiState.Loading
+        isInSuccessState -> FiniteUiState.Success
+        else -> error("Unknown games UI state.")
+    }
+
+private val GamesUiState.isInEmptyState: Boolean
+    get() = (!isLoading && games.isEmpty())
+
+private val GamesUiState.isInLoadingState: Boolean
+    get() = (isLoading && games.isEmpty())
+
+private val GamesUiState.isInSuccessState: Boolean
+    get() = games.isNotEmpty()
+
+val GamesUiState.isRefreshing: Boolean
+    get() = (isLoading && games.isNotEmpty())
+
+fun GamesUiState.toEmptyState(): GamesUiState {
+    return copy(isLoading = false, games = emptyList())
+}
+
+fun GamesUiState.toLoadingState(): GamesUiState {
+    return copy(isLoading = true)
+}
+
+fun GamesUiState.toSuccessState(games: List<GameModel>): GamesUiState {
+    return copy(isLoading = false, games = games)
 }

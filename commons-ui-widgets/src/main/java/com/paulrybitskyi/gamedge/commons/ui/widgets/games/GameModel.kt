@@ -16,6 +16,9 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class GameModel(
     val id: Int,
     val coverImageUrl: String?,

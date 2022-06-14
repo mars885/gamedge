@@ -30,7 +30,6 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularG
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameModelMapper
-import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemModelFactoryImpl
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -38,6 +37,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -47,7 +48,7 @@ import org.junit.Test
 internal class GamesDiscoveryViewModelTest {
 
     @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
+    val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
     @MockK private lateinit var observePopularGamesUseCase: ObservePopularGamesUseCase
     @MockK private lateinit var refreshPopularGamesUseCase: RefreshPopularGamesUseCase
@@ -62,9 +63,9 @@ internal class GamesDiscoveryViewModelTest {
         logger = FakeLogger()
         SUT = GamesDiscoveryViewModel(
             useCases = setupUseCases(),
-            itemModelFactory = GamesDiscoveryItemModelFactoryImpl(FakeStringProvider()),
             itemGameModelMapper = FakeGamesDiscoveryItemGameModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
+            stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger
         )
@@ -105,7 +106,7 @@ internal class GamesDiscoveryViewModelTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
-            SUT.loadData()
+            advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
         }
@@ -117,7 +118,7 @@ internal class GamesDiscoveryViewModelTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
-            SUT.loadData()
+            advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
         }
@@ -130,11 +131,18 @@ internal class GamesDiscoveryViewModelTest {
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
-                SUT.loadData()
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
+            }
+        }
+    }
 
-                val command = awaitItem()
+    @Test
+    fun `Routes to search screen when search button is clicked`() {
+        runTest {
+            SUT.routeFlow.test {
+                SUT.onSearchButtonClicked()
 
-                assertThat(command is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem()).isInstanceOf(GamesDiscoveryRoute.Search::class.java)
             }
         }
     }
@@ -142,13 +150,15 @@ internal class GamesDiscoveryViewModelTest {
     @Test
     fun `Routes to games category screen when more button is clicked`() {
         runTest {
+            val categoryName = GamesDiscoveryCategory.POPULAR.name
+
             SUT.routeFlow.test {
-                SUT.onCategoryMoreButtonClicked("popular")
+                SUT.onCategoryMoreButtonClicked(categoryName)
 
                 val route = awaitItem()
 
-                assertThat(route is GamesDiscoveryRoute.Category).isTrue
-                assertThat((route as GamesDiscoveryRoute.Category).category).isEqualTo("popular")
+                assertThat(route).isInstanceOf(GamesDiscoveryRoute.Category::class.java)
+                assertThat((route as GamesDiscoveryRoute.Category).category).isEqualTo(categoryName)
             }
         }
     }
@@ -167,7 +177,7 @@ internal class GamesDiscoveryViewModelTest {
 
                 val route = awaitItem()
 
-                assertThat(route is GamesDiscoveryRoute.Info).isTrue
+                assertThat(route).isInstanceOf(GamesDiscoveryRoute.Info::class.java)
                 assertThat((route as GamesDiscoveryRoute.Info).gameId).isEqualTo(item.id)
             }
         }

@@ -23,7 +23,7 @@ import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGam
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-interface GamesDiscoveryItemGameModelMapper {
+internal interface GamesDiscoveryItemGameModelMapper {
     fun mapToGameModel(game: Game): GamesDiscoveryItemGameModel
 }
 

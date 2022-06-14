@@ -33,7 +33,6 @@ buildscript {
     dependencies {
         classpath(deps.plugins.androidGradle)
         classpath(deps.plugins.kotlinGradle)
-        classpath(deps.plugins.navSafeArgs)
         classpath(deps.plugins.daggerHiltGradle)
         classpath(deps.plugins.protobuf)
         classpath(deps.plugins.gradleVersions)
@@ -61,6 +60,7 @@ allprojects {
     }
 
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        version.set(versions.ktlint)
         android.set(true)
         outputToConsole.set(true)
         reporters {
@@ -87,7 +87,14 @@ subprojects {
                 "-Xopt-in=kotlin.time.ExperimentalTime",
                 "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-Xopt-in=kotlinx.coroutines.FlowPreview",
-                "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
+                "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
+                "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
+                "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                "-Xopt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
+                "-Xopt-in=coil.annotation.ExperimentalCoilApi",
+                "-Xopt-in=com.google.accompanist.pager.ExperimentalPagerApi",
             )
 
             jvmTarget = appConfig.kotlinCompatibilityVersion.toString()

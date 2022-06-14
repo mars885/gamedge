@@ -17,16 +17,17 @@
 -->
 
 <resources>
-
     <color name="colorPrimary">#2B303C</color>
-    <color name="colorPrimaryDark">#222630</color>
-    <color name="colorAccent">#F55663</color>
-    <color name="colorContentContainer">#1c2028</color>
-    <color name="colorPrimaryText">#FFFFFF</color>
-    <color name="colorSecondaryText">#809aaf</color>
+    <color name="colorPrimaryVariant">#1D212B</color>
+    <color name="colorSecondary">#F55663</color>
+    <color name="colorBackground">#1c2028</color>
+    <color name="colorSurface">#222630</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnSecondary">#611d12</color>
+    <color name="colorOnBackground">#809aaf</color>
+    <color name="colorOnSurface">@color/colorOnBackground</color>
+    <color name="colorStatusBar">@color/colorDarkScrim</color>
     <color name="colorNavigationBar">#282d38</color>
-
-    <color name="colorProgressBar">@color/colorAccent</color>
-    <color name="colorInfoView">@color/colorSecondaryText</color>
-
+    <color name="colorLightScrim">#35000000</color>
+    <color name="colorDarkScrim">#66000000</color>
 </resources>

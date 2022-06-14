@@ -16,9 +16,29 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery.widgets
 
-data class GamesDiscoveryItemModel(
-    val category: String,
+import androidx.compose.runtime.Immutable
+
+@Immutable
+internal data class GamesDiscoveryItemModel(
+    val id: Int,
+    val categoryName: String,
     val title: String,
     val isProgressBarVisible: Boolean,
-    val uiState: GamesDiscoveryItemUiState
+    val games: List<GamesDiscoveryItemGameModel>,
 )
+
+internal fun List<GamesDiscoveryItemModel>.toSuccessState(
+    games: List<List<GamesDiscoveryItemGameModel>>
+): List<GamesDiscoveryItemModel> {
+    return mapIndexed { index, itemModel ->
+        itemModel.copy(games = games[index])
+    }
+}
+
+internal fun List<GamesDiscoveryItemModel>.showProgressBar(): List<GamesDiscoveryItemModel> {
+    return map { itemModel -> itemModel.copy(isProgressBarVisible = true) }
+}
+
+internal fun List<GamesDiscoveryItemModel>.hideProgressBar(): List<GamesDiscoveryItemModel> {
+    return map { itemModel -> itemModel.copy(isProgressBarVisible = false) }
+}

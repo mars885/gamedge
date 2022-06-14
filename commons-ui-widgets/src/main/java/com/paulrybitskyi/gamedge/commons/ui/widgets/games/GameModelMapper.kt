@@ -57,3 +57,7 @@ internal class GameModelMapperImpl @Inject constructor(
         return null
     }
 }
+
+fun GameModelMapper.mapToGameModels(games: List<Game>): List<GameModel> {
+    return games.map(::mapToGameModel)
+}

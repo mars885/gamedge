@@ -24,7 +24,11 @@ plugins {
 
 android {
     buildFeatures {
-        viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = versions.compose
     }
 }
 
@@ -33,20 +37,25 @@ dependencies {
     implementation(project(deps.local.core))
     implementation(project(deps.local.commonsUi))
     implementation(project(deps.local.commonsUiWidgets))
-    implementation(project(deps.local.imageLoading))
 
     implementation(deps.kotlin.coroutines)
 
-    implementation(deps.androidX.appCompat)
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.androidX.viewPager2)
-    implementation(deps.androidX.fragmentKtx)
+    implementation(deps.compose.ui)
+    implementation(deps.compose.tooling)
+    implementation(deps.compose.foundation)
+    implementation(deps.compose.activity)
+    implementation(deps.compose.material)
+    implementation(deps.compose.runtime)
+    implementation(deps.compose.hilt)
+    implementation(deps.compose.accompanist.insets)
+    implementation(deps.compose.accompanist.pager)
+    implementation(deps.compose.accompanist.systemUi)
 
     implementation(deps.commons.core)
     implementation(deps.commons.ktx)
-    implementation(deps.commons.widgets)
 
-    implementation(deps.misc.photoView)
+    implementation(deps.misc.coil)
+    implementation(deps.misc.zoomable)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)

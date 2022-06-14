@@ -18,13 +18,13 @@
 
 <resources>
 
-    <!-- GamesCategoryView -->
+    <!-- GamesCategory -->
     <string name="games_category_popular">Popular</string>
     <string name="games_category_recently_released">Recently Released</string>
     <string name="games_category_coming_soon">Coming Soon</string>
     <string name="games_category_most_anticipated">Most Anticipated</string>
 
-    <!-- GameInfoView -->
+    <!-- GameInfo -->
     <string name="game_info_other_company_games_title_template">More Games by %s</string>
     <string name="game_info_other_company_games_title_default_arg">Developer</string>
     <string name="game_info_similar_games_title">Similar Games</string>

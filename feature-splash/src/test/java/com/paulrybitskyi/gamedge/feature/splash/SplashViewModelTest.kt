@@ -32,6 +32,8 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -41,7 +43,7 @@ import org.junit.Test
 internal class SplashViewModelTest {
 
     @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
+    val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
     @MockK private lateinit var refreshAuthUseCase: RefreshAuthUseCase
 
@@ -61,14 +63,25 @@ internal class SplashViewModelTest {
     }
 
     @Test
+    fun `Hides progress indicator when auth refresh use case emits credentials`() {
+        runTest {
+            coEvery { refreshAuthUseCase.execute() } returns flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
+
+            advanceUntilIdle()
+
+            SUT.uiState.test {
+                assertThat(awaitItem().isProgressVisible).isFalse
+            }
+        }
+    }
+
+    @Test
     fun `Routes to dashboard when auth refresh use case emits credentials`() {
         runTest {
             coEvery { refreshAuthUseCase.execute() } returns flowOf(Ok(DOMAIN_OAUTH_CREDENTIALS))
 
             SUT.routeFlow.test {
-                SUT.init()
-
-                assertThat(awaitItem() is SplashRoute.Dashboard).isTrue
+                assertThat(awaitItem()).isInstanceOf(SplashRoute.Dashboard::class.java)
             }
         }
     }
@@ -78,7 +91,7 @@ internal class SplashViewModelTest {
         runTest {
             coEvery { refreshAuthUseCase.execute() } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
-            SUT.init()
+            advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
         }
@@ -89,7 +102,7 @@ internal class SplashViewModelTest {
         runTest {
             coEvery { refreshAuthUseCase.execute() } returns flow { throw IllegalStateException("error") }
 
-            SUT.init()
+            advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
         }
@@ -101,9 +114,7 @@ internal class SplashViewModelTest {
             coEvery { refreshAuthUseCase.execute() } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.commandFlow.test {
-                SUT.init()
-
-                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
             }
         }
     }
@@ -114,9 +125,7 @@ internal class SplashViewModelTest {
             coEvery { refreshAuthUseCase.execute() } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
-                SUT.init()
-
-                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
             }
         }
     }
@@ -127,9 +136,7 @@ internal class SplashViewModelTest {
             coEvery { refreshAuthUseCase.execute() } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.routeFlow.test {
-                SUT.init()
-
-                assertThat(awaitItem() is SplashRoute.Exit).isTrue
+                assertThat(awaitItem()).isInstanceOf(SplashRoute.Exit::class.java)
             }
         }
     }
@@ -140,9 +147,7 @@ internal class SplashViewModelTest {
             coEvery { refreshAuthUseCase.execute() } returns flow { throw IllegalStateException("error") }
 
             SUT.routeFlow.test {
-                SUT.init()
-
-                assertThat(awaitItem() is SplashRoute.Exit).isTrue
+                assertThat(awaitItem()).isInstanceOf(SplashRoute.Exit::class.java)
             }
         }
     }

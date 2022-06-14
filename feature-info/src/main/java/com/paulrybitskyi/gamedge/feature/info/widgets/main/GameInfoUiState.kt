@@ -16,10 +16,40 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.model.GameInfoModel
+import androidx.compose.runtime.Immutable
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 
-internal sealed class GameInfoUiState {
-    object Empty : GameInfoUiState()
-    object Loading : GameInfoUiState()
-    data class Result(val model: GameInfoModel) : GameInfoUiState()
+@Immutable
+internal data class GameInfoUiState(
+    val isLoading: Boolean,
+    val game: GameInfoModel?,
+)
+
+internal val GameInfoUiState.finiteUiState: FiniteUiState
+    get() = when {
+        isInEmptyState -> FiniteUiState.Empty
+        isInLoadingState -> FiniteUiState.Loading
+        isInSuccessState -> FiniteUiState.Success
+        else -> error("Unknown game info UI state.")
+    }
+
+private val GameInfoUiState.isInEmptyState: Boolean
+    get() = (!isLoading && (game == null))
+
+private val GameInfoUiState.isInLoadingState: Boolean
+    get() = (isLoading && (game == null))
+
+private val GameInfoUiState.isInSuccessState: Boolean
+    get() = (game != null)
+
+internal fun GameInfoUiState.toEmptyState(): GameInfoUiState {
+    return copy(isLoading = false, game = null)
+}
+
+internal fun GameInfoUiState.toLoadingState(): GameInfoUiState {
+    return copy(isLoading = true)
+}
+
+internal fun GameInfoUiState.toSuccessState(game: GameInfoModel): GameInfoUiState {
+    return copy(isLoading = false, game = game)
 }

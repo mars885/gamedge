@@ -16,6 +16,9 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class GamesCategoryPreviewItemModel(
     val id: Int,
     val title: String,

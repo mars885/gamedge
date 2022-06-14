@@ -21,9 +21,8 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 
 internal sealed class ImageViewerCommand : Command {
     data class ShareText(val text: String) : ImageViewerCommand()
-    object ResetSystemWindows : ImageViewerCommand()
 }
 
-internal sealed class ImageViewerRoute : Route {
+sealed class ImageViewerRoute : Route {
     object Back : ImageViewerRoute()
 }

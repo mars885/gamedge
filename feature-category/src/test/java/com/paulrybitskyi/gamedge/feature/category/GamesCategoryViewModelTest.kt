@@ -26,13 +26,14 @@ import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
 import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
-import com.paulrybitskyi.gamedge.feature.category.mapping.GamesCategoryUiStateFactory
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
-import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
+import com.paulrybitskyi.gamedge.feature.category.widgets.finiteUiState
+import com.paulrybitskyi.gamedge.feature.category.widgets.isRefreshing
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -40,6 +41,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -50,7 +53,7 @@ import javax.inject.Provider
 internal class GamesCategoryViewModelTest {
 
     @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
+    val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
     @MockK private lateinit var observePopularGamesUseCase: ObservePopularGamesUseCase
     @MockK private lateinit var refreshPopularGamesUseCase: RefreshPopularGamesUseCase
@@ -64,20 +67,24 @@ internal class GamesCategoryViewModelTest {
 
         logger = FakeLogger()
         SUT = GamesCategoryViewModel(
+            savedStateHandle = setupSavedStateHandle(),
             stringProvider = FakeStringProvider(),
+            transitionAnimationDuration = 0L,
             useCases = setupUseCases(),
-            uiStateFactory = FakeGamesCategoryUiStateFactory(),
+            gameCategoryModelMapper = FakeGameCategoryModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,
-            savedStateHandle = setupSavedStateHandle()
         )
     }
 
-    private fun setupUseCases(): GamesCategoryUseCases {
-        coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-        coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+    private fun setupSavedStateHandle(): SavedStateHandle {
+        return mockk(relaxed = true) {
+            every { get<String>(any()) } returns GamesCategory.POPULAR.name
+        }
+    }
 
+    private fun setupUseCases(): GamesCategoryUseCases {
         return GamesCategoryUseCases(
             observeGamesUseCasesMap = mapOf(
                 GamesCategoryKey.Type.POPULAR to Provider { observePopularGamesUseCase },
@@ -94,17 +101,11 @@ internal class GamesCategoryViewModelTest {
         )
     }
 
-    private fun setupSavedStateHandle(): SavedStateHandle {
-        return mockk(relaxed = true) {
-            every { get<String>(any()) } returns GamesCategory.POPULAR.name
-        }
-    }
-
     @Test
     fun `Emits toolbar title when initialized`() {
         runTest {
-            SUT.toolbarTitle.test {
-                assertThat(awaitItem()).isNotEmpty
+            SUT.uiState.test {
+                assertThat(awaitItem().title).isNotEmpty
             }
         }
     }
@@ -116,12 +117,9 @@ internal class GamesCategoryViewModelTest {
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.uiState.test {
-                SUT.loadData(resultEmissionDelay = 0L)
-
-                assertThat(awaitItem() is GamesCategoryUiState.Empty).isTrue
-                assertThat(awaitItem() is GamesCategoryUiState.Loading).isTrue
-                assertThat(awaitItem() is GamesCategoryUiState.Result).isTrue
-
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Loading)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Success)
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -133,7 +131,7 @@ internal class GamesCategoryViewModelTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
-            SUT.loadData(resultEmissionDelay = 0L)
+            advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
         }
@@ -146,9 +144,7 @@ internal class GamesCategoryViewModelTest {
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.commandFlow.test {
-                SUT.loadData(resultEmissionDelay = 0L)
-
-                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
             }
         }
     }
@@ -160,13 +156,10 @@ internal class GamesCategoryViewModelTest {
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.uiState.test {
-                SUT.loadData(resultEmissionDelay = 0L)
-
-                assertThat(awaitItem() is GamesCategoryUiState.Empty).isTrue
-                assertThat(awaitItem() is GamesCategoryUiState.Loading).isTrue
-                assertThat(awaitItem() is GamesCategoryUiState.Result).isTrue
-                assertThat(awaitItem() is GamesCategoryUiState.Loading).isTrue
-
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Loading)
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Success)
+                assertThat(awaitItem().isRefreshing).isTrue
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -178,7 +171,7 @@ internal class GamesCategoryViewModelTest {
             coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
-            SUT.loadData(resultEmissionDelay = 0L)
+            advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
         }
@@ -191,9 +184,7 @@ internal class GamesCategoryViewModelTest {
             coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
-                SUT.loadData(resultEmissionDelay = 0L)
-
-                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
             }
         }
     }
@@ -204,7 +195,7 @@ internal class GamesCategoryViewModelTest {
             SUT.routeFlow.test {
                 SUT.onToolbarLeftButtonClicked()
 
-                assertThat(awaitItem() is GamesCategoryRoute.Back).isTrue
+                assertThat(awaitItem()).isInstanceOf(GamesCategoryRoute.Back::class.java)
             }
         }
     }
@@ -223,31 +214,19 @@ internal class GamesCategoryViewModelTest {
 
                 val route = awaitItem()
 
-                assertThat(route is GamesCategoryRoute.Info).isTrue
+                assertThat(route).isInstanceOf(GamesCategoryRoute.Info::class.java)
                 assertThat((route as GamesCategoryRoute.Info).gameId).isEqualTo(game.id)
             }
         }
     }
 
-    private class FakeGamesCategoryUiStateFactory : GamesCategoryUiStateFactory {
+    private class FakeGameCategoryModelMapper : GameCategoryModelMapper {
 
-        override fun createWithEmptyState(): GamesCategoryUiState {
-            return GamesCategoryUiState.Empty
-        }
-
-        override fun createWithLoadingState(): GamesCategoryUiState {
-            return GamesCategoryUiState.Loading
-        }
-
-        override fun createWithResultState(games: List<DomainGame>): GamesCategoryUiState {
-            return GamesCategoryUiState.Result(
-                games.map {
-                    GameCategoryModel(
-                        id = it.id,
-                        title = it.name,
-                        coverUrl = null
-                    )
-                }
+        override fun mapToGameCategoryModel(game: DomainGame): GameCategoryModel {
+            return GameCategoryModel(
+                id = game.id,
+                title = game.name,
+                coverUrl = null,
             )
         }
     }

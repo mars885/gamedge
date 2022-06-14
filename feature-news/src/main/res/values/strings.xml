@@ -18,7 +18,8 @@
 
 <resources>
 
-    <!-- GamingNewsView -->
+    <!-- GamingNews -->
+    <string name="gaming_news_toolbar_title">News</string>
     <string name="gaming_news_info_view_title">No News Available</string>
 
 </resources>

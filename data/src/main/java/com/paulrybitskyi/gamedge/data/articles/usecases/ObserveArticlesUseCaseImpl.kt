@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.data.articles.usecases
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
-import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.data.articles.datastores.ArticlesLocalDataStore
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.ArticleMapper
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.mapToDomainArticles
@@ -25,44 +24,22 @@ import com.paulrybitskyi.gamedge.data.commons.utils.toDataPagination
 import com.paulrybitskyi.gamedge.domain.articles.entities.Article
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase.Params
-import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEmpty
 
 @Singleton
 @BindType
 internal class ObserveArticlesUseCaseImpl @Inject constructor(
-    private val refreshArticlesUseCase: RefreshArticlesUseCase,
     private val articlesLocalDataStore: ArticlesLocalDataStore,
     private val dispatcherProvider: DispatcherProvider,
     private val articleMapper: ArticleMapper
 ) : ObserveArticlesUseCase {
 
     override suspend fun execute(params: Params): Flow<List<Article>> {
-        return if (params.refreshArticles) {
-            refreshArticles(params)
-                .flatMapConcat { observeArticles(params) }
-                .onEmpty { emitAll(observeArticles(params)) }
-        } else {
-            observeArticles(params)
-        }
-    }
-
-    private suspend fun refreshArticles(params: Params): Flow<List<Article>> {
-        val refreshUseCaseParams = RefreshArticlesUseCase.Params(params.pagination)
-
-        return refreshArticlesUseCase.execute(refreshUseCaseParams)
-            .resultOrError()
-    }
-
-    private suspend fun observeArticles(params: Params): Flow<List<Article>> {
         return articlesLocalDataStore
             .observeArticles(params.pagination.toDataPagination())
             .map(articleMapper::mapToDomainArticles)

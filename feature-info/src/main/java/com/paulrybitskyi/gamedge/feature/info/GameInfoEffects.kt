@@ -23,7 +23,7 @@ internal sealed class GameInfoCommand : Command {
     data class OpenUrl(val url: String) : GameInfoCommand()
 }
 
-internal sealed class GameInfoRoute : Route {
+sealed class GameInfoRoute : Route {
     data class Info(val gameId: Int) : GameInfoRoute()
 
     data class ImageViewer(

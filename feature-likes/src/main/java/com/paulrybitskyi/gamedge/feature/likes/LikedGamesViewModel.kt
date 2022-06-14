@@ -20,13 +20,19 @@ import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToGameModels
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toEmptyState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toLoadingState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toSuccessState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.domain.commons.entities.hasDefaultLimit
-import com.paulrybitskyi.gamedge.domain.commons.entities.nextLimitPage
+import com.paulrybitskyi.gamedge.domain.commons.entities.nextLimit
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +42,6 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
@@ -46,10 +51,11 @@ import kotlinx.coroutines.launch
 private const val SUBSEQUENT_EMISSION_DELAY = 500L
 
 @HiltViewModel
-class LikedGamesViewModel @Inject constructor(
+internal class LikedGamesViewModel @Inject constructor(
     private val observeLikedGamesUseCase: ObserveLikedGamesUseCase,
-    private val uiStateFactory: LikedGamesUiStateFactory,
+    private val likedGameModelMapper: GameModelMapper,
     private val dispatcherProvider: DispatcherProvider,
+    private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
 ) : BaseViewModel() {
@@ -61,13 +67,25 @@ class LikedGamesViewModel @Inject constructor(
 
     private var gamesObservingJob: Job? = null
 
-    private val _uiState = MutableStateFlow(uiStateFactory.createWithEmptyState())
+    private val _uiState = MutableStateFlow(createDefaultUiState())
+
+    private val currentUiState: GamesUiState
+        get() = _uiState.value
 
     val uiState: StateFlow<GamesUiState>
         get() = _uiState
 
-    fun loadData() {
+    init {
         observeGames()
+    }
+
+    private fun createDefaultUiState(): GamesUiState {
+        return GamesUiState(
+            isLoading = false,
+            infoIconId = R.drawable.account_heart_outline,
+            infoTitle = stringProvider.getString(R.string.liked_games_info_title),
+            games = emptyList(),
+        )
     }
 
     private fun observeGames() {
@@ -75,16 +93,17 @@ class LikedGamesViewModel @Inject constructor(
 
         gamesObservingJob = viewModelScope.launch {
             observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
-                .map(uiStateFactory::createWithResultState)
+                .map(likedGameModelMapper::mapToGameModels)
                 .flowOn(dispatcherProvider.computation)
+                .map { games -> currentUiState.toSuccessState(games) }
                 .onError {
                     logger.error(logTag, "Failed to load liked games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(uiStateFactory.createWithEmptyState())
+                    emit(currentUiState.toEmptyState())
                 }
                 .onStart {
                     isObservingGames = true
-                    emit(uiStateFactory.createWithLoadingState())
+                    emit(currentUiState.toLoadingState())
 
                     // Delaying to give a sense of "loading" since progress indicators
                     // do not have the time to fully show themselves
@@ -103,12 +122,20 @@ class LikedGamesViewModel @Inject constructor(
     }
 
     private fun configureNextLoad(uiState: GamesUiState) {
-        if (uiState !is GamesUiState.Result) return
+        if (!uiState.hasLoadedNewGames()) return
 
         val paginationLimit = observeGamesUseCaseParams.pagination.limit
-        val itemCount = uiState.items.size
+        val itemCount = uiState.games.size
 
         hasMoreGamesToLoad = (paginationLimit == itemCount)
+    }
+
+    private fun GamesUiState.hasLoadedNewGames(): Boolean {
+        return (!isLoading && games.isNotEmpty())
+    }
+
+    fun onSearchButtonClicked() {
+        route(LikedGamesRoute.Search)
     }
 
     fun onGameClicked(game: GameModel) {
@@ -123,7 +150,7 @@ class LikedGamesViewModel @Inject constructor(
         if (!hasMoreGamesToLoad) return
 
         observeGamesUseCaseParams = observeGamesUseCaseParams.copy(
-            observeGamesUseCaseParams.pagination.nextLimitPage()
+            observeGamesUseCaseParams.pagination.nextLimit()
         )
 
         viewModelScope.launch {

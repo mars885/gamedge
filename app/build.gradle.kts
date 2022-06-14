@@ -19,7 +19,6 @@ plugins {
     gamedgeAndroid()
     kotlinKapt()
     ksp()
-    navSafeArgsKotlin()
     daggerHiltAndroid()
 }
 
@@ -29,17 +28,22 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = versions.compose
     }
 }
 
 dependencies {
+    implementation(project(deps.local.core))
     implementation(project(deps.local.commonsUi))
+    implementation(project(deps.local.commonsUiWidgets))
     implementation(project(deps.local.igdbApi))
     implementation(project(deps.local.gamespotApi))
     implementation(project(deps.local.database))
     implementation(project(deps.local.featureCategory))
-    implementation(project(deps.local.featureDashboard))
     implementation(project(deps.local.featureDiscovery))
     implementation(project(deps.local.featureInfo))
     implementation(project(deps.local.featureImageViewer))
@@ -48,8 +52,17 @@ dependencies {
     implementation(project(deps.local.featureSearch))
     implementation(project(deps.local.featureSplash))
 
-    implementation(deps.androidX.navFragmentKtx)
+    implementation(deps.compose.ui)
+    implementation(deps.compose.tooling)
+    implementation(deps.compose.foundation)
+    implementation(deps.compose.material)
+    implementation(deps.compose.runtime)
+    implementation(deps.compose.navigation)
+    implementation(deps.compose.accompanist.insets)
+    implementation(deps.compose.accompanist.navigationAnimations)
 
+    implementation(deps.commons.core)
+    implementation(deps.commons.ktx)
     implementation(deps.commons.windowAnims)
 
     implementation(deps.google.daggerHilt)

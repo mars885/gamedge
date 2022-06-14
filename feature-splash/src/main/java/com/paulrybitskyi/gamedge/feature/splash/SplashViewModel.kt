@@ -29,7 +29,9 @@ import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -39,7 +41,9 @@ internal class SplashViewModel @Inject constructor(
     private val logger: Logger
 ) : BaseViewModel() {
 
-    fun init() {
+    val uiState = MutableStateFlow(SplashUiState())
+
+    init {
         runInitializationFlow()
     }
 
@@ -56,6 +60,8 @@ internal class SplashViewModel @Inject constructor(
     }
 
     private fun onInitializationFlowSucceeded() {
+        uiState.update { it.copy(isProgressVisible = false) }
+
         route(SplashRoute.Dashboard)
     }
 

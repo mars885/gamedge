@@ -18,36 +18,40 @@ plugins {
     androidLibrary()
     gamedgeAndroid()
     kotlinKapt()
+    ksp()
 }
 
 android {
     buildFeatures {
-        viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = versions.compose
     }
 }
 
 dependencies {
     implementation(project(deps.local.core))
 
-    implementation(deps.androidX.appCompat)
-    implementation(deps.androidX.navFragmentKtx)
-    implementation(deps.androidX.recyclerView)
-    implementation(deps.androidX.viewPager2)
-    implementation(deps.androidX.swipeRefreshLayout)
-    implementation(deps.androidX.lifecycleRuntime)
-    implementation(deps.androidX.coreKtx)
-    implementation(deps.androidX.fragmentKtx)
-
-    implementation(deps.google.materialComponents)
+    implementation(deps.compose.ui)
+    implementation(deps.compose.tooling)
+    implementation(deps.compose.foundation)
+    implementation(deps.compose.activity)
+    implementation(deps.compose.runtime)
+    implementation(deps.compose.material)
+    implementation(deps.compose.accompanist.insets)
 
     implementation(deps.commons.core)
     implementation(deps.commons.ktx)
-    implementation(deps.commons.widgets)
-    implementation(deps.commons.windowAnims)
-    implementation(deps.commons.navigation)
+
+    implementation(deps.misc.coil)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
+
+    implementation(deps.misc.hiltBinder)
+    ksp(deps.misc.hiltBinderCompiler)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

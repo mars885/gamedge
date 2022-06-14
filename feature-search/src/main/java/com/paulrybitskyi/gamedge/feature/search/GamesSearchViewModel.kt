@@ -18,36 +18,42 @@ package com.paulrybitskyi.gamedge.feature.search
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToGameModels
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toSuccessState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
-import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffsetPage
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffset
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-private const val KEY_SEARCH_QUERY = "search_query"
+private const val KEY_CURRENT_SEARCH_QUERY = "current_search_query"
+private const val KEY_CONFIRMED_SEARCH_QUERY = "confirmed_search_query"
 
 @HiltViewModel
 internal class GamesSearchViewModel @Inject constructor(
     private val searchGamesUseCase: SearchGamesUseCase,
-    private val uiStateFactory: GamesSearchUiStateFactory,
+    private val gameModelMapper: GameModelMapper,
     private val dispatcherProvider: DispatcherProvider,
+    private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger,
     private val savedStateHandle: SavedStateHandle
@@ -55,12 +61,15 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private var hasMoreGamesToLoad = false
 
-    private var searchQuery: String
-        set(value) {
-            useCaseParams = useCaseParams.copy(searchQuery = value)
-            savedStateHandle.set(KEY_SEARCH_QUERY, value)
-        }
-        get() = useCaseParams.searchQuery
+    private var currentSearchQuery by observeChanges("") { _, newQuery ->
+        _uiState.update { it.copy(queryText = newQuery) }
+        savedStateHandle.set(KEY_CURRENT_SEARCH_QUERY, newQuery)
+    }
+
+    private var confirmedSearchQuery by observeChanges("") { _, newQuery ->
+        useCaseParams = useCaseParams.copy(searchQuery = newQuery)
+        savedStateHandle.set(KEY_CONFIRMED_SEARCH_QUERY, newQuery)
+    }
 
     private var pagination: Pagination
         set(value) { useCaseParams = useCaseParams.copy(pagination = value) }
@@ -68,29 +77,75 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private var useCaseParams = SearchGamesUseCase.Params(searchQuery = "")
 
-    private var totalGamesResult: GamesUiState.Result? = null
+    private var allLoadedGames = emptyList<GameModel>()
 
-    private val _uiState = MutableStateFlow(createEmptyGamesUiState())
+    private val _uiState = MutableStateFlow(createGamesSearchEmptyUiState())
 
-    val uiState: StateFlow<GamesUiState>
+    private val currentUiState: GamesSearchUiState
+        get() = _uiState.value
+
+    val uiState: StateFlow<GamesSearchUiState>
         get() = _uiState
 
     init {
-        onSearchActionRequested(savedStateHandle.get(KEY_SEARCH_QUERY) ?: "")
+        restoreState()
     }
 
-    private fun createEmptyGamesUiState(): GamesUiState {
-        return uiStateFactory.createWithEmptyState(searchQuery)
+    private fun restoreState() {
+        if (savedStateHandle.contains(KEY_CURRENT_SEARCH_QUERY)) {
+            currentSearchQuery = checkNotNull(savedStateHandle.get(KEY_CURRENT_SEARCH_QUERY))
+        }
+
+        val restoredConfirmedSearchQuery = savedStateHandle.get<String>(KEY_CONFIRMED_SEARCH_QUERY)
+
+        if (restoredConfirmedSearchQuery == currentSearchQuery) {
+            onSearchConfirmed(checkNotNull(savedStateHandle.get(KEY_CONFIRMED_SEARCH_QUERY)))
+        }
+    }
+
+    private fun createGamesSearchEmptyUiState(): GamesSearchUiState {
+        return GamesSearchUiState(
+            queryText = confirmedSearchQuery,
+            gamesUiState = createGamesEmptyUiState(),
+        )
+    }
+
+    private fun createGamesEmptyUiState(): GamesUiState {
+        return GamesUiState(
+            isLoading = false,
+            infoIconId = R.drawable.magnify,
+            infoTitle = getUiStateInfoTitle(),
+            games = emptyList(),
+        )
+    }
+
+    private fun getUiStateInfoTitle(): String {
+        return if (confirmedSearchQuery.isBlank()) {
+            stringProvider.getString(R.string.games_search_info_title_default)
+        } else {
+            stringProvider.getString(
+                R.string.games_search_info_title_empty,
+                confirmedSearchQuery,
+            )
+        }
     }
 
     fun onToolbarBackButtonClicked() {
         route(GamesSearchRoute.Back)
     }
 
-    fun onSearchActionRequested(query: String) {
-        if (query.isEmpty() || (searchQuery == query)) return
+    fun onToolbarClearButtonClicked() {
+        _uiState.update { it.copy(queryText = "") }
+    }
 
-        searchQuery = query
+    fun onQueryChanged(newQueryText: String) {
+        currentSearchQuery = newQueryText
+    }
+
+    fun onSearchConfirmed(query: String) {
+        if (query.isEmpty() || (confirmedSearchQuery == query)) return
+
+        confirmedSearchQuery = query
 
         resetPagination()
         searchGames()
@@ -98,73 +153,86 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private fun resetPagination() {
         pagination = Pagination()
-        totalGamesResult = null
+        allLoadedGames = emptyList()
     }
 
     private fun searchGames() = viewModelScope.launch {
-        if (searchQuery.isBlank()) {
-            flowOf(createEmptyGamesUiState())
+        if (confirmedSearchQuery.isBlank()) {
+            flowOf(createGamesEmptyUiState())
         } else {
             searchGamesUseCase.execute(useCaseParams)
-                .map(::mapToUiState)
+                .map(gameModelMapper::mapToGameModels)
                 .flowOn(dispatcherProvider.computation)
+                .map { games ->
+                    currentUiState.gamesUiState.toSuccessState(
+                        infoTitle = getUiStateInfoTitle(),
+                        games = games,
+                    )
+                }
                 .onError {
                     logger.error(logTag, "Failed to search games.", it)
                     dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(createEmptyGamesUiState())
+                    emit(createGamesEmptyUiState())
                 }
                 .onStart {
-                    if (isPerformingNewSearch()) {
-                        dispatchCommand(GamesSearchCommand.ClearItems)
+                    val games = if (isPerformingNewSearch()) {
+                        emptyList()
+                    } else {
+                        currentUiState.gamesUiState.games
                     }
 
-                    emit(uiStateFactory.createWithLoadingState())
+                    emit(currentUiState.gamesUiState.toLoadingState(games))
                 }
-                .map(::aggregateResults)
+                .map(::combineWithAlreadyLoadedGames)
         }
         .collect {
             configureNextLoad(it)
             updateTotalGamesResult(it)
-            _uiState.value = it
-        }
-    }
-
-    private fun mapToUiState(games: List<Game>): GamesUiState {
-        return if (games.isEmpty()) {
-            createEmptyGamesUiState()
-        } else {
-            uiStateFactory.createWithResultState(games)
+            _uiState.update { uiState -> uiState.copy(gamesUiState = it) }
         }
     }
 
     private fun isPerformingNewSearch(): Boolean {
-        return (totalGamesResult == null)
+        return allLoadedGames.isEmpty()
     }
 
-    private fun aggregateResults(uiState: GamesUiState): GamesUiState {
-        if ((uiState !is GamesUiState.Result) || (totalGamesResult == null)) {
-            return uiState
+    private fun combineWithAlreadyLoadedGames(gamesUiState: GamesUiState): GamesUiState {
+        if (!gamesUiState.hasLoadedNewGames() || allLoadedGames.isEmpty()) {
+            return gamesUiState
         }
 
-        val oldItems = checkNotNull(totalGamesResult).items
-        val newItems = uiState.items
+        val oldGames = allLoadedGames
+        val newGames = gamesUiState.games
 
-        return GamesUiState.Result(oldItems + newItems)
+        // The reason for distinctBy is because IGDB API, unfortunately, returns sometimes
+        // duplicate entries. This causes Compose to throw the following error:
+        // - java.lang.IllegalArgumentException: Key 389 was already used. If you are using
+        // - LazyColumn/Row please make sure you provide a unique key for each item.
+        // We do indeed provide game's ID as key ID for each composable inside LazyColumn
+        // to improve performance in some cases. To fix that crash, we are filtering
+        // duplicate entries using .distinctBy extension.
+        val totalGames = (oldGames + newGames).distinctBy(GameModel::id)
+
+        return gamesUiState.toSuccessState(totalGames)
     }
 
-    private fun configureNextLoad(uiState: GamesUiState) {
-        if (uiState !is GamesUiState.Result) return
+    private fun GamesUiState.hasLoadedNewGames(): Boolean {
+        return (!isLoading && games.isNotEmpty())
+    }
+
+    private fun configureNextLoad(gamesUiState: GamesUiState) {
+        if (!gamesUiState.hasLoadedNewGames()) return
 
         val paginationLimit = useCaseParams.pagination.limit
-        val itemCount = uiState.items.size
+        val gameCount = gamesUiState.games.size
 
-        hasMoreGamesToLoad = ((itemCount % paginationLimit) == 0)
+        hasMoreGamesToLoad = ((gameCount % paginationLimit) == 0)
     }
 
-    private fun updateTotalGamesResult(uiState: GamesUiState) {
-        if (uiState !is GamesUiState.Result) return
+    private fun updateTotalGamesResult(gamesUiState: GamesUiState) {
+        if (!gamesUiState.hasLoadedNewGames()) return
 
-        totalGamesResult = uiState
+        allLoadedGames = gamesUiState.games
     }
 
     fun onGameClicked(game: GameModel) {
@@ -178,7 +246,7 @@ internal class GamesSearchViewModel @Inject constructor(
     private fun loadMoreGames() {
         if (!hasMoreGamesToLoad) return
 
-        pagination = pagination.nextOffsetPage()
+        pagination = pagination.nextOffset()
         searchGames()
     }
 }

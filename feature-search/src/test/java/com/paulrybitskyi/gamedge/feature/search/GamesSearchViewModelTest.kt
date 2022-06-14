@@ -22,10 +22,13 @@ import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.commons.testing.FakeLogger
+import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
+import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.finiteUiState
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
 import io.mockk.MockKAnnotations
@@ -35,6 +38,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -44,7 +49,7 @@ import org.junit.Test
 internal class GamesSearchViewModelTest {
 
     @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
+    val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
     @MockK private lateinit var searchGamesUseCase: SearchGamesUseCase
 
@@ -58,11 +63,12 @@ internal class GamesSearchViewModelTest {
         logger = FakeLogger()
         SUT = GamesSearchViewModel(
             searchGamesUseCase = searchGamesUseCase,
-            uiStateFactory = FakeGamesSearchUiStateFactory(),
+            gameModelMapper = FakeGameModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
+            stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,
-            savedStateHandle = setupSavedStateHandle()
+            savedStateHandle = setupSavedStateHandle(),
         )
     }
 
@@ -78,7 +84,37 @@ internal class GamesSearchViewModelTest {
             SUT.routeFlow.test {
                 SUT.onToolbarBackButtonClicked()
 
-                assertThat(awaitItem() is GamesSearchRoute.Back).isTrue
+                assertThat(awaitItem()).isInstanceOf(GamesSearchRoute.Back::class.java)
+            }
+        }
+    }
+
+    @Test
+    fun `Query text is cleared from UI state when clear button is clicked`() {
+        runTest {
+            val query = "query"
+
+            SUT.onQueryChanged(query)
+
+            SUT.uiState.test {
+                SUT.onToolbarClearButtonClicked()
+
+                assertThat(awaitItem().queryText).isEqualTo(query)
+                assertThat(awaitItem().queryText).isEmpty()
+            }
+        }
+    }
+
+    @Test
+    fun `Query text of UI state is synced with query text entered by user`() {
+        runTest {
+            val query = "Shadow of the Colossus"
+
+            SUT.uiState.test {
+                SUT.onQueryChanged(query)
+
+                assertThat(awaitItem().queryText).isEmpty()
+                assertThat(awaitItem().queryText).isEqualTo(query)
             }
         }
     }
@@ -89,16 +125,16 @@ internal class GamesSearchViewModelTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.uiState.test {
-                SUT.onSearchActionRequested("god of war")
+                SUT.onSearchConfirmed("god of war")
 
-                val emptyState = awaitItem()
-                val loadingState = awaitItem()
-                val resultState = awaitItem()
+                val emptyState = awaitItem().gamesUiState
+                val loadingState = awaitItem().gamesUiState
+                val resultState = awaitItem().gamesUiState
 
-                assertThat(emptyState is GamesUiState.Empty).isTrue
-                assertThat(loadingState is GamesUiState.Loading).isTrue
-                assertThat(resultState is GamesUiState.Result).isTrue
-                assertThat((resultState as GamesUiState.Result).items).hasSize(DOMAIN_GAMES.size)
+                assertThat(emptyState.finiteUiState).isEqualTo(FiniteUiState.Empty)
+                assertThat(loadingState.finiteUiState).isEqualTo(FiniteUiState.Loading)
+                assertThat(resultState.finiteUiState).isEqualTo(FiniteUiState.Success)
+                assertThat(resultState.games).hasSize(DOMAIN_GAMES.size)
             }
         }
     }
@@ -107,9 +143,9 @@ internal class GamesSearchViewModelTest {
     fun `Does not emit ui states when search query is empty`() {
         runTest {
             SUT.uiState.test {
-                SUT.onSearchActionRequested("")
+                SUT.onSearchConfirmed("")
 
-                assertThat(awaitItem() is GamesUiState.Empty).isTrue
+                assertThat(awaitItem().gamesUiState.finiteUiState).isEqualTo(FiniteUiState.Empty)
                 expectNoEvents()
             }
         }
@@ -120,12 +156,15 @@ internal class GamesSearchViewModelTest {
         runTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
-            SUT.onSearchActionRequested("god of war")
+            val gameQuery = "god of war"
+
+            SUT.onSearchConfirmed(gameQuery)
+            advanceUntilIdle()
 
             SUT.uiState.test {
-                SUT.onSearchActionRequested("god of war")
+                SUT.onSearchConfirmed(gameQuery)
 
-                assertThat(awaitItem() is GamesUiState.Result).isTrue
+                assertThat(awaitItem().gamesUiState.finiteUiState).isEqualTo(FiniteUiState.Success)
                 expectNoEvents()
             }
         }
@@ -135,9 +174,9 @@ internal class GamesSearchViewModelTest {
     fun `Emits empty ui state when blank search query is provided`() {
         runTest {
             SUT.uiState.test {
-                SUT.onSearchActionRequested("   ")
+                SUT.onSearchConfirmed("   ")
 
-                assertThat(awaitItem() is GamesUiState.Empty).isTrue
+                assertThat(awaitItem().gamesUiState.finiteUiState).isEqualTo(FiniteUiState.Empty)
                 expectNoEvents()
             }
         }
@@ -148,10 +187,11 @@ internal class GamesSearchViewModelTest {
         runTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
-            SUT.commandFlow.test {
-                SUT.onSearchActionRequested("god of war")
+            SUT.uiState.test {
+                SUT.onSearchConfirmed("god of war")
 
-                assertThat(awaitItem() is GamesSearchCommand.ClearItems).isTrue
+                assertThat(awaitItem().gamesUiState.games).isEmpty()
+                cancelAndIgnoreRemainingEvents()
             }
         }
     }
@@ -161,7 +201,8 @@ internal class GamesSearchViewModelTest {
         runTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
-            SUT.onSearchActionRequested("god of war")
+            SUT.onSearchConfirmed("god of war")
+            advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty
         }
@@ -173,10 +214,9 @@ internal class GamesSearchViewModelTest {
             coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
-                SUT.onSearchActionRequested("god of war")
+                SUT.onSearchConfirmed("god of war")
 
-                assertThat(awaitItem() is GamesSearchCommand.ClearItems).isTrue
-                assertThat(awaitItem() is GeneralCommand.ShowLongToast).isTrue
+                assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
             }
         }
     }
@@ -190,7 +230,7 @@ internal class GamesSearchViewModelTest {
                 name = "",
                 releaseDate = "",
                 developerName = null,
-                description = null
+                description = null,
             )
 
             SUT.routeFlow.test {
@@ -198,34 +238,22 @@ internal class GamesSearchViewModelTest {
 
                 val route = awaitItem()
 
-                assertThat(route is GamesSearchRoute.Info).isTrue
+                assertThat(route).isInstanceOf(GamesSearchRoute.Info::class.java)
                 assertThat((route as GamesSearchRoute.Info).gameId).isEqualTo(gameModel.id)
             }
         }
     }
 
-    private class FakeGamesSearchUiStateFactory : GamesSearchUiStateFactory {
+    private class FakeGameModelMapper : GameModelMapper {
 
-        override fun createWithEmptyState(searchQuery: String): GamesUiState {
-            return GamesUiState.Empty(iconId = -1, title = "title")
-        }
-
-        override fun createWithLoadingState(): GamesUiState {
-            return GamesUiState.Loading
-        }
-
-        override fun createWithResultState(games: List<DomainGame>): GamesUiState {
-            return GamesUiState.Result(
-                games.map {
-                    GameModel(
-                        id = it.id,
-                        coverImageUrl = null,
-                        name = it.name,
-                        releaseDate = "release_date",
-                        developerName = "developer_name",
-                        description = "description"
-                    )
-                }
+        override fun mapToGameModel(game: DomainGame): GameModel {
+            return GameModel(
+                id = game.id,
+                coverImageUrl = null,
+                name = game.name,
+                releaseDate = "release_date",
+                developerName = "developer_name",
+                description = "description",
             )
         }
     }

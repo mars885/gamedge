@@ -24,7 +24,11 @@ plugins {
 
 android {
     buildFeatures {
-        viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = versions.compose
     }
 }
 
@@ -36,11 +40,16 @@ dependencies {
 
     implementation(deps.kotlin.coroutines)
 
-    implementation(deps.androidX.appCompat)
-    implementation(deps.androidX.constraintLayout)
-    implementation(deps.androidX.fragmentKtx)
+    implementation(deps.compose.ui)
+    implementation(deps.compose.tooling)
+    implementation(deps.compose.foundation)
+    implementation(deps.compose.activity)
+    implementation(deps.compose.material)
+    implementation(deps.compose.runtime)
+    implementation(deps.compose.hilt)
 
     implementation(deps.commons.core)
+    implementation(deps.commons.ktx)
 
     implementation(deps.misc.kotlinResult)
 

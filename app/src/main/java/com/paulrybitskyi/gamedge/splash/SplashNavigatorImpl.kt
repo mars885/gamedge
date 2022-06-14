@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.splash
 
 import android.app.Activity
 import android.content.Context
-import com.paulrybitskyi.gamedge.feature.dashboard.activity.DashboardActivity
+import com.paulrybitskyi.gamedge.dashboard.DashboardActivity
 import com.paulrybitskyi.gamedge.feature.splash.SplashNavigator
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject

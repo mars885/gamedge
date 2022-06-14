@@ -27,6 +27,10 @@ internal interface GamingNewsItemModelMapper {
     fun mapToGamingNewsItemModel(article: Article): GamingNewsItemModel
 }
 
+internal fun GamingNewsItemModelMapper.mapToGamingNewsItemModels(articles: List<Article>): List<GamingNewsItemModel> {
+    return articles.map(::mapToGamingNewsItemModel)
+}
+
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GamingNewsItemModelMapperImpl @Inject constructor(
     private val publicationDateFormatter: ArticlePublicationDateFormatter

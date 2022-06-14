@@ -18,35 +18,10 @@
 
 <resources>
 
-    <style name="GamedgeTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
+    <style name="GamedgeTheme" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
-        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:navigationBarColor">@color/colorNavigationBar</item>
-    </style>
-
-    <style name="Gamedge"/>
-
-    <style name="Gamedge.Toolbar">
-        <item name="android:background">@color/toolbar_background_color</item>
-        <item name="toolbar_titleTextColor">@color/toolbar_title_text_color</item>
-        <item name="toolbar_buttonIconColor">@color/toolbar_button_icon_color</item>
-        <item name="toolbar_titleTextSize">@dimen/toolbar_title_text_size</item>
-        <item name="toolbar_titleTextGravity">left</item>
-    </style>
-
-    <style name="Gamedge.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="labelVisibilityMode">labeled</item>
-        <item name="itemTextAppearanceInactive">@style/Gamedge.BottomNavigationView.TextAppearance</item>
-        <item name="itemTextAppearanceActive">@style/Gamedge.BottomNavigationView.TextAppearance</item>
-    </style>
-
-    <style name="Gamedge.BottomNavigationView.TextAppearance" parent="@style/TextAppearance.AppCompat.Caption">
-        <item name="android:textSize">@dimen/bottom_navigation_item_text_size</item>
-        <item name="android:fontFamily">@string/font_family_medium</item>
     </style>
 
 </resources>
