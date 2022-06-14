@@ -23,8 +23,16 @@ import PLUGIN_ANDROID_APPLICATION
 import PLUGIN_KOTLIN_ANDROID
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.kotlin.dsl.findByType
+import java.util.Properties
 
 class GamedgeAndroidPlugin : Plugin<Project> {
+
+    private companion object {
+        const val BUILD_TYPE_DEBUG = "debug"
+        const val BUILD_TYPE_RELEASE = "release"
+        const val SIGNING_CONFIG_RELEASE = "release"
+        const val KEYSTORE_FILE_NAME = "keystore.properties"
+    }
 
     override fun apply(project: Project) = with(project) {
         configurePlugins()
@@ -57,14 +65,15 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 // Enabling accessing sites with http schemas for testing (especially
                 // instrumented tests using MockWebServer) and disabling it in the
                 // production to avoid security issues
-                getByName("debug") {
+                getByName(BUILD_TYPE_DEBUG) {
                     manifestPlaceholders["usesCleartextTraffic"] = true
                 }
 
-                getByName("release") {
+                getByName(BUILD_TYPE_RELEASE) {
+                    debuggable(true)
                     manifestPlaceholders["usesCleartextTraffic"] = false
 
-                    isMinifyEnabled = false
+                    isMinifyEnabled = true
                     proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
                 }
             }
@@ -94,7 +103,43 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 defaultConfig {
                     applicationId = appConfig.applicationId
                 }
+
+                signingConfigs {
+                    create(SIGNING_CONFIG_RELEASE) {
+                        if (rootProject.file(KEYSTORE_FILE_NAME).canRead()) {
+                            val properties = readProperties(KEYSTORE_FILE_NAME)
+
+                            storeFile = file(properties.getValue("storeFile"))
+                            storePassword = properties.getValue("storePassword")
+                            keyAlias = properties.getValue("keyAlias")
+                            keyPassword = properties.getValue("keyPassword")
+                        } else {
+                            println("""
+                                Cannot create a release signing config. The file,
+                                $KEYSTORE_FILE_NAME, either does not exist or
+                                cannot be read from.
+                            """.trimIndent())
+                        }
+                    }
+                }
+
+                buildTypes {
+                    getByName(BUILD_TYPE_RELEASE) {
+                        signingConfig = signingConfigs.getByName(SIGNING_CONFIG_RELEASE)
+                    }
+                }
             }
         }
+    }
+
+    private fun Project.readProperties(fileName: String): Properties {
+        return Properties().apply {
+            load(rootProject.file(fileName).inputStream())
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun <T> Properties.getValue(key: String): T {
+        return (get(key) as T)
     }
 }
