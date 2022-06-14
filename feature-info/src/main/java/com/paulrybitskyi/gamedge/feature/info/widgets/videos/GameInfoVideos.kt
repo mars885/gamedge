@@ -57,7 +57,7 @@ internal fun GameInfoVideos(
     videos: List<GameInfoVideoModel>,
     onVideClicked: (GameInfoVideoModel) -> Unit,
 ) {
-    GameInfoSectionWithInnerList(title = stringResource(R.string.game_videos_title)) {
+    GameInfoSectionWithInnerList(title = stringResource(R.string.game_info_videos_title)) {
         items(items = videos, key = GameInfoVideoModel::id) { video ->
             Video(
                 video = video,

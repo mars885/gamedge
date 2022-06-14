@@ -17,7 +17,6 @@
 -->
 
 <resources>
-
     <plurals name="past_relative_timestamp_year">
         <item quantity="one">a year ago</item>
         <item quantity="other">%d years ago</item>
@@ -77,5 +76,4 @@
         <item quantity="one">in a sec</item>
         <item quantity="other">in %d sec</item>
     </plurals>
-
 </resources>

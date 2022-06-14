@@ -17,7 +17,6 @@
 -->
 
 <resources>
-
     <string name="app_name" translatable="false">Gamedge</string>
 
     <string name="text_font_family_medium" translatable="false">sans-serif-medium</string>
@@ -70,12 +69,10 @@
     <string name="game_category_episode">Episode</string>
     <string name="game_category_season">Season</string>
 
-    <!-- Errors -->
     <string name="error_no_network_message">Please check your network connection.</string>
     <string name="error_unknown_message">Oops! Something went wrong.</string>
 
     <string name="error_api_network_message">@string/error_no_network_message</string>
     <string name="error_api_server_message">The server is not responding! Please try again later.</string>
     <string name="error_api_unknown_message">Could not perform the request! Please try again later.</string>
-
 </resources>

@@ -43,7 +43,7 @@ internal fun GameInfoLinks(
     links: List<GameInfoLinkModel>,
     onLinkClicked: (GameInfoLinkModel) -> Unit,
 ) {
-    GameInfoSection(title = stringResource(R.string.game_links_title)) { paddingValues ->
+    GameInfoSection(title = stringResource(R.string.game_info_links_title)) { paddingValues ->
         FlowRow(
             modifier = Modifier.padding(paddingValues),
             mainAxisSpacing = GamedgeTheme.spaces.spacing_2_0,

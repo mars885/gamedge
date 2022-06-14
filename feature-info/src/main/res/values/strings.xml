@@ -17,32 +17,20 @@
 -->
 
 <resources>
-
-    <!-- GameVideos -->
-    <string name="game_videos_title">Videos</string>
-
-    <!-- GameScreenshots -->
-    <string name="game_screenshots_title">Screenshots</string>
-
-    <!-- GameSummary -->
-    <string name="game_summary_title">Summary</string>
-
-    <!-- GameDetails -->
-    <string name="game_details_title">Details</string>
-    <string name="game_details_genres_title">Genres</string>
-    <string name="game_details_platforms_title">Platforms</string>
-    <string name="game_details_modes_title">Modes</string>
-    <string name="game_details_player_perspectives_title">Player Perspectives</string>
-    <string name="game_details_themes_title">Themes</string>
-
-    <!-- GameLinks -->
-    <string name="game_links_title">Links</string>
-
-    <!-- GameCompanies -->
-    <string name="game_companies_title">Involved Companies</string>
-
-    <!-- GameInfo -->
-    <string name="game_info_header_page_indicator_template">%1$d/%2$d</string>
     <string name="game_info_info_view_title">No Data Available</string>
-
+    <string name="game_info_header_page_indicator_template">%1$d/%2$d</string>
+    <string name="game_info_videos_title">Videos</string>
+    <string name="game_info_screenshots_title">Screenshots</string>
+    <string name="game_info_summary_title">Summary</string>
+    <string name="game_info_details_title">Details</string>
+    <string name="game_info_details_genres_title">Genres</string>
+    <string name="game_info_details_platforms_title">Platforms</string>
+    <string name="game_info_details_modes_title">Modes</string>
+    <string name="game_info_details_player_perspectives_title">Player Perspectives</string>
+    <string name="game_info_details_themes_title">Themes</string>
+    <string name="game_info_links_title">Links</string>
+    <string name="game_info_companies_title">Involved Companies</string>
+    <string name="game_info_other_company_games_title_template">More Games by %s</string>
+    <string name="game_info_other_company_games_title_default_arg">Developer</string>
+    <string name="game_info_similar_games_title">Similar Games</string>
 </resources>

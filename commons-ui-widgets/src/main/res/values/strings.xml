@@ -17,9 +17,6 @@
 -->
 
 <resources>
-
-    <!-- GamesCategoryPreview -->
     <string name="games_category_preview_more_button_text">See All</string>
     <string name="games_category_preview_info_view_title">No Games Available</string>
-
 </resources>

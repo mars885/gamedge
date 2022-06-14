@@ -17,9 +17,7 @@
 -->
 
 <resources>
-
     <style name="GamedgeTheme.SplashScreen">
         <item name="android:windowBackground">@drawable/splash_screen_background</item>
     </style>
-
 </resources>

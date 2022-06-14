@@ -65,7 +65,7 @@ internal fun GameInfoSummary(summary: String) {
     }
 
     GameInfoSection(
-        title = stringResource(R.string.game_summary_title),
+        title = stringResource(R.string.game_info_summary_title),
         modifier = cardClickableModifier,
     ) { paddingValues ->
         AnimatedContent(

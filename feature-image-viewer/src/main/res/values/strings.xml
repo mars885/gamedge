@@ -17,8 +17,6 @@
 -->
 
 <resources>
-
     <string name="image_viewer_default_toolbar_title">Image</string>
     <string name="image_viewer_toolbar_title_template">%1$s %2$d of %3$d</string>
-
 </resources>

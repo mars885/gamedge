@@ -62,7 +62,7 @@ internal fun GameInfoCompanies(
     companies: List<GameInfoCompanyModel>,
     onCompanyClicked: (GameInfoCompanyModel) -> Unit,
 ) {
-    GameInfoSectionWithInnerList(title = stringResource(R.string.game_companies_title)) {
+    GameInfoSectionWithInnerList(title = stringResource(R.string.game_info_companies_title)) {
         items(items = companies, key = GameInfoCompanyModel::id) { company ->
             Company(
                 company = company,
