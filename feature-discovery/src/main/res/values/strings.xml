@@ -17,8 +17,5 @@
 -->
 
 <resources>
-
-    <!-- GamesDiscovery -->
     <string name="games_discovery_toolbar_title">Discover</string>
-
 </resources>

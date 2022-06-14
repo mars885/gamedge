@@ -31,41 +31,41 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSection
 @Composable
 internal fun GameInfoDetails(details: GameInfoDetailsModel) {
     GameInfoSection(
-        title = stringResource(R.string.game_details_title),
+        title = stringResource(R.string.game_info_details_title),
         titleBottomPadding = GamedgeTheme.spaces.spacing_1_0,
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
             if (details.hasGenresText) {
                 CategorySection(
-                    title = stringResource(R.string.game_details_genres_title),
+                    title = stringResource(R.string.game_info_details_genres_title),
                     value = checkNotNull(details.genresText),
                 )
             }
 
             if (details.hasPlatformsText) {
                 CategorySection(
-                    title = stringResource(R.string.game_details_platforms_title),
+                    title = stringResource(R.string.game_info_details_platforms_title),
                     value = checkNotNull(details.platformsText),
                 )
             }
 
             if (details.hasModesText) {
                 CategorySection(
-                    title = stringResource(R.string.game_details_modes_title),
+                    title = stringResource(R.string.game_info_details_modes_title),
                     value = checkNotNull(details.modesText),
                 )
             }
 
             if (details.hasPlayerPerspectivesText) {
                 CategorySection(
-                    title = stringResource(R.string.game_details_player_perspectives_title),
+                    title = stringResource(R.string.game_info_details_player_perspectives_title),
                     value = checkNotNull(details.playerPerspectivesText),
                 )
             }
 
             if (details.hasThemesText) {
                 CategorySection(
-                    title = stringResource(R.string.game_details_themes_title),
+                    title = stringResource(R.string.game_info_details_themes_title),
                     value = checkNotNull(details.themesText),
                 )
             }

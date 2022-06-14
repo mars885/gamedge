@@ -39,7 +39,7 @@ internal fun GameInfoScreenshots(
     screenshots: List<GameInfoScreenshotModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
-    GameInfoSectionWithInnerList(title = stringResource(R.string.game_screenshots_title)) {
+    GameInfoSectionWithInnerList(title = stringResource(R.string.game_info_screenshots_title)) {
         itemsIndexed(
             items = screenshots,
             key = { _, screenshot -> screenshot.id },
