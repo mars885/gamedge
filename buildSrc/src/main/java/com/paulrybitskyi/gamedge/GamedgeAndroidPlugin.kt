@@ -106,12 +106,20 @@ class GamedgeAndroidPlugin : Plugin<Project> {
 
                 signingConfigs {
                     create(SIGNING_CONFIG_RELEASE) {
-                        val properties = readProperties(KEYSTORE_FILE_NAME)
+                        if (rootProject.file(KEYSTORE_FILE_NAME).canRead()) {
+                            val properties = readProperties(KEYSTORE_FILE_NAME)
 
-                        storeFile = file(properties.getValue("storeFile"))
-                        storePassword = properties.getValue("storePassword")
-                        keyAlias = properties.getValue("keyAlias")
-                        keyPassword = properties.getValue("keyPassword")
+                            storeFile = file(properties.getValue("storeFile"))
+                            storePassword = properties.getValue("storePassword")
+                            keyAlias = properties.getValue("keyAlias")
+                            keyPassword = properties.getValue("keyPassword")
+                        } else {
+                            println("""
+                                Cannot create a release signing config. The file,
+                                $KEYSTORE_FILE_NAME, either does not exist or
+                                cannot be read from.
+                            """.trimIndent())
+                        }
                     }
                 }
 
