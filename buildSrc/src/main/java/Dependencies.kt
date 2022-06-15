@@ -49,7 +49,7 @@ object deps {
 
     object plugins {
 
-        private const val gradlePluginVersion = "7.1.2" // also in buildSrc build.gradle.kts file
+        private const val gradlePluginVersion = "7.2.0" // also in buildSrc build.gradle.kts file
         private const val protobufPluginVersion = "0.8.18"
 
         const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
