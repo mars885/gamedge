@@ -149,7 +149,7 @@ object deps {
 
     object square {
 
-        private const val okHttpVersion = "4.9.3"
+        private const val okHttpVersion = "4.10.0"
         private const val retrofitVersion = "2.9.0"
         private const val retrofitKotlinxSerializationConverterVersion = "0.8.0"
 
