@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:7.1.2")
+    implementation("com.android.tools.build:gradle:7.2.0")
     // https://github.com/google/dagger/issues/3068#issuecomment-999118496
     // Needs to be checked whether JavaPoet is still needed after AGP is updated
     // because currently it forces 1.10 JavaPoet version, for some odd reason.

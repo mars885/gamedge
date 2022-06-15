@@ -37,11 +37,11 @@ object versions {
     const val compose = "1.1.1"
     const val gradleVersionsPlugin = "0.42.0"
     const val kspPlugin = "1.6.10-1.0.4"
-    const val daggerHilt = "2.41"
+    const val daggerHilt = "2.42"
     const val detektPlugin = "1.20.0"
     const val ktlintPlugin = "10.3.0"
     const val ktlint = "0.45.2"
-    const val coroutines = "1.6.0"
+    const val coroutines = "1.6.2"
     const val room = "2.4.2"
 }
 
@@ -49,7 +49,7 @@ object deps {
 
     object plugins {
 
-        private const val gradlePluginVersion = "7.1.2" // also in buildSrc build.gradle.kts file
+        private const val gradlePluginVersion = "7.2.0" // also in buildSrc build.gradle.kts file
         private const val protobufPluginVersion = "0.8.18"
 
         const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
@@ -86,7 +86,7 @@ object deps {
 
     object kotlin {
 
-        private const val serializationVersion = "1.3.2"
+        private const val serializationVersion = "1.3.3"
 
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
@@ -108,7 +108,7 @@ object deps {
 
     object compose {
 
-        private const val navigationVersion = "2.4.1"
+        private const val navigationVersion = "2.4.2"
         private const val constraintLayoutVersion = "1.1.0-alpha02"
         private const val hiltVersion = "1.0.0"
 
@@ -139,7 +139,7 @@ object deps {
 
     object google {
 
-        private const val protobufVersion = "3.19.4"
+        private const val protobufVersion = "3.21.1"
 
         const val daggerHilt = "com.google.dagger:hilt-android:${versions.daggerHilt}"
         const val daggerHiltCompiler = "com.google.dagger:hilt-android-compiler:${versions.daggerHilt}"
@@ -149,7 +149,7 @@ object deps {
 
     object square {
 
-        private const val okHttpVersion = "4.9.3"
+        private const val okHttpVersion = "4.10.0"
         private const val retrofitVersion = "2.9.0"
         private const val retrofitKotlinxSerializationConverterVersion = "0.8.0"
 
@@ -175,7 +175,7 @@ object deps {
     object misc {
 
         private const val desugaredLibsVersion = "1.1.5"
-        private const val kotlinResultVersion = "1.1.14"
+        private const val kotlinResultVersion = "1.1.16"
         private const val hiltBinderVersion = "1.1.2"
         private const val coilVersion = "2.1.0"
         private const val zoomableVersion = "1.4.2"
@@ -192,12 +192,12 @@ object deps {
 
         private const val jUnitVersion = "4.13.2"
         private const val jUnitExtVersion = "1.1.3"
-        private const val assertJVersion = "3.22.0"
-        private const val mockkVersion = "1.12.3"
+        private const val assertJVersion = "3.23.1"
+        private const val mockkVersion = "1.12.4"
         private const val turbineVersion = "0.8.0"
         private const val testRunnerVersion = "1.4.0"
         private const val archCoreVersion = "2.1.0"
-        private const val mockWebServerVersion = "4.9.2"
+        private const val mockWebServerVersion = "4.10.0"
 
         const val jUnit = "junit:junit:$jUnitVersion"
         const val jUnitExt = "androidx.test.ext:junit:$jUnitExtVersion"
