@@ -24,7 +24,7 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 interface GameModelUiMapper {
-    fun mapToGameUiModel(game: Game): GameUiModel
+    fun mapToUiModel(game: Game): GameUiModel
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
@@ -33,14 +33,14 @@ internal class GameModelUiMapperImpl @Inject constructor(
     private val gameReleaseDateFormatter: GameReleaseDateFormatter
 ) : GameModelUiMapper {
 
-    override fun mapToGameUiModel(game: Game): GameUiModel {
+    override fun mapToUiModel(game: Game): GameUiModel {
         return GameUiModel(
             id = game.id,
             coverImageUrl = game.buildCoverImageUrl(),
             name = game.name,
             releaseDate = gameReleaseDateFormatter.formatReleaseDate(game),
             developerName = game.developerCompany?.name,
-            description = game.buildDescription()
+            description = game.buildDescription(),
         )
     }
 
@@ -58,6 +58,6 @@ internal class GameModelUiMapperImpl @Inject constructor(
     }
 }
 
-fun GameModelUiMapper.mapToGameModels(games: List<Game>): List<GameUiModel> {
-    return games.map(::mapToGameUiModel)
+fun GameModelUiMapper.mapToUiModels(games: List<Game>): List<GameUiModel> {
+    return games.map(::mapToUiModel)
 }

@@ -37,7 +37,7 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoUiModel
@@ -70,7 +70,7 @@ internal class GameInfoViewModel @Inject constructor(
     @TransitionAnimationDuration
     transitionAnimationDuration: Long,
     private val useCases: GameInfoUseCases,
-    private val modelFactory: GameInfoUiModelFactory,
+    private val uiModelFactory: GameInfoUiModelMapper,
     private val gameUrlFactory: ImageViewerGameUrlFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
@@ -115,7 +115,7 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .map { (game, isGameLiked, companyGames, similarGames) ->
-                modelFactory.createInfoUiModel(
+                uiModelFactory.mapToUiModel(
                     game,
                     isGameLiked,
                     companyGames,

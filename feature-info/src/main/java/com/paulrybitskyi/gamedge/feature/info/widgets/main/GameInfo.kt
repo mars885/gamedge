@@ -62,8 +62,8 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanie
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeader
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinks
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToCategoryModels
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToCategoryUiModels
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToInfoRelatedGameUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesType
 import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreenshotUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideos
@@ -358,7 +358,7 @@ private fun LazyListScope.relatedGamesItem(
         }
     ) {
         val categoryGames = remember(model.items) {
-            model.items.mapToCategoryModels()
+            model.items.mapToCategoryUiModels()
         }
 
         GamesCategoryPreview(
@@ -366,7 +366,7 @@ private fun LazyListScope.relatedGamesItem(
             isProgressBarVisible = false,
             games = categoryGames,
             onCategoryGameClicked = {
-                onGameClicked(it.mapToInfoRelatedGameModel())
+                onGameClicked(it.mapToInfoRelatedGameUiModel())
             },
             topBarMargin = GamedgeTheme.spaces.spacing_2_5,
             isMoreButtonVisible = false,

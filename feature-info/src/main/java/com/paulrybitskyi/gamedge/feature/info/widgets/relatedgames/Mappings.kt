@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames
 
 import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewItemUiModel
 
-internal fun List<GameInfoRelatedGameUiModel>.mapToCategoryModels(): List<GamesCategoryPreviewItemUiModel> {
+internal fun List<GameInfoRelatedGameUiModel>.mapToCategoryUiModels(): List<GamesCategoryPreviewItemUiModel> {
     return map {
         GamesCategoryPreviewItemUiModel(
             id = it.id,
@@ -28,7 +28,7 @@ internal fun List<GameInfoRelatedGameUiModel>.mapToCategoryModels(): List<GamesC
     }
 }
 
-internal fun GamesCategoryPreviewItemUiModel.mapToInfoRelatedGameModel(): GameInfoRelatedGameUiModel {
+internal fun GamesCategoryPreviewItemUiModel.mapToInfoRelatedGameUiModel(): GameInfoRelatedGameUiModel {
     return GameInfoRelatedGameUiModel(
         id = id,
         title = title,

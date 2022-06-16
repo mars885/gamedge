@@ -35,7 +35,7 @@ import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModelUiMapper
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
-import com.paulrybitskyi.gamedge.feature.category.widgets.mapToGameCategoryModels
+import com.paulrybitskyi.gamedge.feature.category.widgets.mapToUiModels
 import com.paulrybitskyi.gamedge.feature.category.widgets.toEmptyState
 import com.paulrybitskyi.gamedge.feature.category.widgets.toLoadingState
 import com.paulrybitskyi.gamedge.feature.category.widgets.toSuccessState
@@ -114,7 +114,7 @@ internal class GamesCategoryViewModel @Inject constructor(
         gamesObservingJob = viewModelScope.launch {
             useCases.getObservableUseCase(gamesCategoryKeyType)
                 .execute(observeGamesUseCaseParams)
-                .map(gameCategoryModelUiMapper::mapToGameCategoryModels)
+                .map(gameCategoryModelUiMapper::mapToUiModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { games -> currentUiState.toSuccessState(games) }
                 .onError {

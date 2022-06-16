@@ -22,16 +22,16 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Video
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoVideoUiModelFactory {
-    fun createVideoUiModel(video: Video): GameInfoVideoUiModel?
+internal interface GameInfoVideoUiModelMapper {
+    fun mapToUiModel(video: Video): GameInfoVideoUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoVideoUiModelFactoryImpl @Inject constructor(
+internal class GameInfoVideoUiModelMapperImpl @Inject constructor(
     private val youtubeMediaUrlFactory: YoutubeMediaUrlFactory,
-) : GameInfoVideoUiModelFactory {
+) : GameInfoVideoUiModelMapper {
 
-    override fun createVideoUiModel(video: Video): GameInfoVideoUiModel? {
+    override fun mapToUiModel(video: Video): GameInfoVideoUiModel? {
         val thumbnailUrl = youtubeMediaUrlFactory.createThumbnailUrl(
             video,
             YoutubeThumbnailSize.MEDIUM
@@ -49,10 +49,10 @@ internal class GameInfoVideoUiModelFactoryImpl @Inject constructor(
     }
 }
 
-internal fun GameInfoVideoUiModelFactory.createVideoUiModels(
+internal fun GameInfoVideoUiModelMapper.mapToUiModels(
     videos: List<Video>,
 ): List<GameInfoVideoUiModel> {
     if (videos.isEmpty()) return emptyList()
 
-    return videos.mapNotNull(::createVideoUiModel)
+    return videos.mapNotNull(::mapToUiModel)
 }

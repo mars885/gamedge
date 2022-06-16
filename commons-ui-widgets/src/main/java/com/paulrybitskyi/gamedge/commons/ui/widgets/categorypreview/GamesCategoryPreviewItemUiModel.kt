@@ -22,5 +22,5 @@ import androidx.compose.runtime.Immutable
 data class GamesCategoryPreviewItemUiModel(
     val id: Int,
     val title: String,
-    val coverUrl: String?
+    val coverUrl: String?,
 )

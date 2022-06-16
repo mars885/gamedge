@@ -23,7 +23,7 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 internal interface GameCategoryModelUiMapper {
-    fun mapToGameCategoryUiModel(game: Game): GameCategoryUiModel
+    fun mapToUiModel(game: Game): GameCategoryUiModel
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
@@ -31,7 +31,7 @@ internal class GameCategoryModelUiMapperImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
 ) : GameCategoryModelUiMapper {
 
-    override fun mapToGameCategoryUiModel(game: Game): GameCategoryUiModel {
+    override fun mapToUiModel(game: Game): GameCategoryUiModel {
         return GameCategoryUiModel(
             id = game.id,
             title = game.name,
@@ -42,8 +42,8 @@ internal class GameCategoryModelUiMapperImpl @Inject constructor(
     }
 }
 
-internal fun GameCategoryModelUiMapper.mapToGameCategoryModels(
-    games: List<Game>
+internal fun GameCategoryModelUiMapper.mapToUiModels(
+    games: List<Game>,
 ): List<GameCategoryUiModel> {
-    return games.map(::mapToGameCategoryUiModel)
+    return games.map(::mapToUiModel)
 }

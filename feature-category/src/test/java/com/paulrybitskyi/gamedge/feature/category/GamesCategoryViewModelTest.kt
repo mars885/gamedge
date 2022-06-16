@@ -223,7 +223,7 @@ internal class GamesCategoryViewModelTest {
 
     private class FakeGameCategoryModelUiMapper : GameCategoryModelUiMapper {
 
-        override fun mapToGameCategoryUiModel(game: DomainGame): GameCategoryUiModel {
+        override fun mapToUiModel(game: DomainGame): GameCategoryUiModel {
             return GameCategoryUiModel(
                 id = game.id,
                 title = game.name,

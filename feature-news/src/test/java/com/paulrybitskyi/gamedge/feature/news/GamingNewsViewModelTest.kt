@@ -28,7 +28,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
-import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemModelMapper
+import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemUiModelMapper
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemUiModel
 import com.paulrybitskyi.gamedge.feature.news.widgets.finiteUiState
 import io.mockk.MockKAnnotations
@@ -63,7 +63,7 @@ internal class GamingNewsViewModelTest {
         SUT = GamingNewsViewModel(
             observeArticlesUseCase = observeArticlesUseCase,
             refreshArticlesUseCase = refreshArticlesUseCase,
-            gamingNewsItemModelMapper = FakeGamingNewsItemModelMapper(),
+            gamingNewsItemModelMapper = FakeGamingNewsItemUiModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,
@@ -161,9 +161,9 @@ internal class GamingNewsViewModelTest {
         }
     }
 
-    private class FakeGamingNewsItemModelMapper : GamingNewsItemModelMapper {
+    private class FakeGamingNewsItemUiModelMapper : GamingNewsItemUiModelMapper {
 
-        override fun mapToGamingNewsItemModel(article: DomainArticle): GamingNewsItemUiModel {
+        override fun mapToUiModel(article: DomainArticle): GamingNewsItemUiModel {
             return GamingNewsItemUiModel(
                 id = article.id,
                 imageUrl = null,

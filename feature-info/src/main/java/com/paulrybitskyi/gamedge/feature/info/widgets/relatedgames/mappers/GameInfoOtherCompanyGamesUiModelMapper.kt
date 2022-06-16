@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.factories
+package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mappers
 
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
@@ -27,21 +27,21 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelat
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoOtherCompanyGamesUiModelFactory {
+internal interface GameInfoOtherCompanyGamesUiModelMapper {
 
-    fun createOtherCompanyGamesUiModel(
+    fun mapToUiModel(
         companyGames: List<Game>,
-        currentGame: Game
+        currentGame: Game,
     ): GameInfoRelatedGamesUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoOtherCompanyGamesUiModelFactoryImpl @Inject constructor(
+internal class GameInfoOtherCompanyGamesUiModelMapperImpl @Inject constructor(
     private val stringProvider: StringProvider,
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
-) : GameInfoOtherCompanyGamesUiModelFactory {
+) : GameInfoOtherCompanyGamesUiModelMapper {
 
-    override fun createOtherCompanyGamesUiModel(
+    override fun mapToUiModel(
         companyGames: List<Game>,
         currentGame: Game
     ): GameInfoRelatedGamesUiModel? {

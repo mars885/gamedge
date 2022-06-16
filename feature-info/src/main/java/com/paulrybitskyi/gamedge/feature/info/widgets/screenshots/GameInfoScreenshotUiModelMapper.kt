@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks
+package com.paulrybitskyi.gamedge.feature.info.widgets.screenshots
 
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
@@ -22,30 +22,32 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Image
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoArtworkUiModelFactory {
-    fun createArtworkUiModel(image: Image): GameInfoArtworkUiModel
+internal interface GameInfoScreenshotUiModelMapper {
+    fun mapToUiModel(image: Image): GameInfoScreenshotUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoArtworkUiModelFactoryImpl @Inject constructor(
+internal class GameInfoScreenshotUiModelMapperImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
-) : GameInfoArtworkUiModelFactory {
+) : GameInfoScreenshotUiModelMapper {
 
-    override fun createArtworkUiModel(image: Image): GameInfoArtworkUiModel {
-        return igdbImageUrlFactory.createUrl(
-            image = image,
-            config = IgdbImageUrlFactory.Config(IgdbImageSize.BIG_SCREENSHOT),
+    override fun mapToUiModel(image: Image): GameInfoScreenshotUiModel? {
+        val screenshotUrl = igdbImageUrlFactory.createUrl(
+            image,
+            IgdbImageUrlFactory.Config(IgdbImageSize.MEDIUM_SCREENSHOT),
+        ) ?: return null
+
+        return GameInfoScreenshotUiModel(
+            id = image.id,
+            url = screenshotUrl,
         )
-        ?.let { url -> GameInfoArtworkUiModel.UrlImage(id = image.id, url = url) }
-        ?: GameInfoArtworkUiModel.DefaultImage
     }
 }
 
-internal fun GameInfoArtworkUiModelFactory.createArtworkUiModels(
+internal fun GameInfoScreenshotUiModelMapper.mapToUiModels(
     images: List<Image>,
-): List<GameInfoArtworkUiModel> {
-    if (images.isEmpty()) return listOf(GameInfoArtworkUiModel.DefaultImage)
+) : List<GameInfoScreenshotUiModel> {
+    if (images.isEmpty()) return emptyList()
 
-    return images.map(::createArtworkUiModel)
-        .filterIsInstance<GameInfoArtworkUiModel.UrlImage>()
+    return images.mapNotNull(::mapToUiModel)
 }

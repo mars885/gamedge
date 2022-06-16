@@ -23,18 +23,18 @@ import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoLinkUiModelFactory {
-    fun createLinkUiModel(website: Website): GameInfoLinkUiModel?
-    fun createLinkUiModels(websites: List<Website>): List<GameInfoLinkUiModel>
+internal interface GameInfoLinkUiModelMapper {
+    fun mapToUiModel(website: Website): GameInfoLinkUiModel?
+    fun mapToUiModels(websites: List<Website>): List<GameInfoLinkUiModel>
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoLinkUiModelFactoryImpl @Inject constructor(
+internal class GameInfoLinkUiModelMapperImpl @Inject constructor(
     private val websiteNameProvider: WebsiteNameProvider,
     private val websiteIconProvider: WebsiteIconProvider,
-) : GameInfoLinkUiModelFactory {
+) : GameInfoLinkUiModelMapper {
 
-    override fun createLinkUiModel(website: Website): GameInfoLinkUiModel? {
+    override fun mapToUiModel(website: Website): GameInfoLinkUiModel? {
         if (website.category == WebsiteCategory.UNKNOWN) return null
 
         return GameInfoLinkUiModel(
@@ -45,12 +45,12 @@ internal class GameInfoLinkUiModelFactoryImpl @Inject constructor(
         )
     }
 
-    override fun createLinkUiModels(websites: List<Website>): List<GameInfoLinkUiModel> {
+    override fun mapToUiModels(websites: List<Website>): List<GameInfoLinkUiModel> {
         if (websites.isEmpty()) return emptyList()
 
         return websites
             .sortedBy { it.category.orderPosition }
-            .mapNotNull(::createLinkUiModel)
+            .mapNotNull(::mapToUiModel)
     }
 
     @Suppress("MagicNumber")

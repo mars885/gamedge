@@ -144,7 +144,7 @@ internal class LikedGamesViewModelTest {
 
     private class FakeGameModelUiMapper : GameModelUiMapper {
 
-        override fun mapToGameUiModel(game: DomainGame): GameUiModel {
+        override fun mapToUiModel(game: DomainGame): GameUiModel {
             return GameUiModel(
                 id = game.id,
                 coverImageUrl = null,

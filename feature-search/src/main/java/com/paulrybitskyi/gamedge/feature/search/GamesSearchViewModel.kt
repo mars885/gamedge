@@ -24,7 +24,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelUiMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToGameModels
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToUiModels
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toSuccessState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
@@ -161,7 +161,7 @@ internal class GamesSearchViewModel @Inject constructor(
             flowOf(createGamesEmptyUiState())
         } else {
             searchGamesUseCase.execute(useCaseParams)
-                .map(gameModelUiMapper::mapToGameModels)
+                .map(gameModelUiMapper::mapToUiModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { games ->
                     currentUiState.gamesUiState.toSuccessState(

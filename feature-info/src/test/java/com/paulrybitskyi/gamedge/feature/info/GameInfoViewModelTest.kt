@@ -37,7 +37,7 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyU
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.finiteUiState
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameUiModel
@@ -70,7 +70,7 @@ internal class GameInfoViewModelTest {
             savedStateHandle = setupSavedStateHandle(),
             transitionAnimationDuration = 0L,
             useCases = useCases,
-            modelFactory = FakeGameInfoUiModelFactory(),
+            modelFactory = FakeGameInfoUiModelMapper(),
             gameUrlFactory = FakeGameUrlFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),
@@ -363,9 +363,9 @@ internal class GameInfoViewModelTest {
         }
     }
 
-    private class FakeGameInfoUiModelFactory : GameInfoUiModelFactory {
+    private class FakeGameInfoUiModelMapper : GameInfoUiModelMapper {
 
-        override fun createInfoUiModel(
+        override fun mapToUiModel(
             game: Game,
             isLiked: Boolean,
             companyGames: List<Game>,

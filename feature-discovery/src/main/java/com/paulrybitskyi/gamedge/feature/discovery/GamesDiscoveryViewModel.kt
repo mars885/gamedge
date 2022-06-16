@@ -28,8 +28,8 @@ import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameModelMapper
-import com.paulrybitskyi.gamedge.feature.discovery.mapping.mapToGameModels
+import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameUiModelMapper
+import com.paulrybitskyi.gamedge.feature.discovery.mapping.mapToUiModels
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameUiModel
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemUiModel
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.hideProgressBar
@@ -50,7 +50,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 internal class GamesDiscoveryViewModel @Inject constructor(
     private val useCases: GamesDiscoveryUseCases,
-    private val itemGameModelMapper: GamesDiscoveryItemGameModelMapper,
+    private val itemGameModelMapper: GamesDiscoveryItemGameUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
@@ -108,7 +108,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
     private suspend fun observeGames(category: GamesDiscoveryCategory): Flow<List<GamesDiscoveryItemGameUiModel>> {
         return useCases.getObservableUseCase(category.toKeyType())
             .execute(observeGamesUseCaseParams)
-            .map(itemGameModelMapper::mapToGameModels)
+            .map(itemGameModelMapper::mapToUiModels)
             .flowOn(dispatcherProvider.computation)
     }
 

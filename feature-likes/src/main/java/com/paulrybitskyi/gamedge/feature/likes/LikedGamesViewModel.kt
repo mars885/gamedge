@@ -22,7 +22,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelUiMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToGameModels
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToUiModels
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toEmptyState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toLoadingState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toSuccessState
@@ -93,7 +93,7 @@ internal class LikedGamesViewModel @Inject constructor(
 
         gamesObservingJob = viewModelScope.launch {
             observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
-                .map(likedGameModelUiMapper::mapToGameModels)
+                .map(likedGameModelUiMapper::mapToUiModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { games -> currentUiState.toSuccessState(games) }
                 .onError {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.factories
+package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mappers
 
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
@@ -27,17 +27,17 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelat
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoSimilarGamesUiModelFactory {
-    fun createSimilarGamesUiModel(similarGames: List<Game>): GameInfoRelatedGamesUiModel?
+internal interface GameInfoSimilarGamesUiModelMapper {
+    fun mapToUiModel(similarGames: List<Game>): GameInfoRelatedGamesUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoSimilarGamesUiModelFactoryImpl @Inject constructor(
+internal class GameInfoSimilarGamesUiModelMapperImpl @Inject constructor(
     private val stringProvider: StringProvider,
-    private val igdbImageUrlFactory: IgdbImageUrlFactory
-) : GameInfoSimilarGamesUiModelFactory {
+    private val igdbImageUrlFactory: IgdbImageUrlFactory,
+) : GameInfoSimilarGamesUiModelMapper {
 
-    override fun createSimilarGamesUiModel(similarGames: List<Game>): GameInfoRelatedGamesUiModel? {
+    override fun mapToUiModel(similarGames: List<Game>): GameInfoRelatedGamesUiModel? {
         if (similarGames.isEmpty()) return null
 
         return GameInfoRelatedGamesUiModel(

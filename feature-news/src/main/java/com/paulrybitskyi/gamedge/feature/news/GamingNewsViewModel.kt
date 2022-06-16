@@ -27,8 +27,8 @@ import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
-import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemModelMapper
-import com.paulrybitskyi.gamedge.feature.news.mapping.mapToGamingNewsItemModels
+import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemUiModelMapper
+import com.paulrybitskyi.gamedge.feature.news.mapping.mapToUiModels
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemUiModel
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsUiState
 import com.paulrybitskyi.gamedge.feature.news.widgets.disableRefreshing
@@ -55,7 +55,7 @@ private const val ARTICLES_REFRESH_DEFAULT_DELAY = 1000L
 internal class GamingNewsViewModel @Inject constructor(
     private val observeArticlesUseCase: ObserveArticlesUseCase,
     private val refreshArticlesUseCase: RefreshArticlesUseCase,
-    private val gamingNewsItemModelMapper: GamingNewsItemModelMapper,
+    private val gamingNewsItemUiModelMapper: GamingNewsItemUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
@@ -92,7 +92,7 @@ internal class GamingNewsViewModel @Inject constructor(
 
         viewModelScope.launch {
             observeArticlesUseCase.execute(observerUseCaseParams)
-                .map(gamingNewsItemModelMapper::mapToGamingNewsItemModels)
+                .map(gamingNewsItemUiModelMapper::mapToUiModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { news -> currentUiState.toSuccessState(news) }
                 .onError {

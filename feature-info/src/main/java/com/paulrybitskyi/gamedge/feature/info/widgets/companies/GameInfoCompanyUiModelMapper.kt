@@ -26,21 +26,21 @@ import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoCompanyUiModelFactory {
-    fun createCompanyUiModel(company: InvolvedCompany): GameInfoCompanyUiModel
+internal interface GameInfoCompanyUiModelMapper {
+    fun mapToUiModel(company: InvolvedCompany): GameInfoCompanyUiModel
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoCompanyUiModelFactoryImpl @Inject constructor(
+internal class GameInfoCompanyUiModelMapperImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
-    private val stringProvider: StringProvider
-) : GameInfoCompanyUiModelFactory {
+    private val stringProvider: StringProvider,
+) : GameInfoCompanyUiModelMapper {
 
     private companion object {
         private const val COMPANY_ROLE_SEPARATOR = ", "
     }
 
-    override fun createCompanyUiModel(company: InvolvedCompany): GameInfoCompanyUiModel {
+    override fun mapToUiModel(company: InvolvedCompany): GameInfoCompanyUiModel {
         return GameInfoCompanyUiModel(
             id = company.company.id,
             logoUrl = company.createLogoUrl(),
@@ -72,7 +72,7 @@ internal class GameInfoCompanyUiModelFactoryImpl @Inject constructor(
     }
 }
 
-internal fun GameInfoCompanyUiModelFactory.createCompanyUiModels(
+internal fun GameInfoCompanyUiModelMapper.mapToUiModels(
     companies: List<InvolvedCompany>,
 ): List<GameInfoCompanyUiModel> {
     if (companies.isEmpty()) return emptyList()
@@ -84,5 +84,5 @@ internal fun GameInfoCompanyUiModelFactory.createCompanyUiModels(
 
     return companies
         .sortedWith(comparator)
-        .map(::createCompanyUiModel)
+        .map(::mapToUiModel)
 }

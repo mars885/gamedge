@@ -26,7 +26,7 @@ import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 internal interface GameInfoDetailsUiModelFactory {
-    fun createDetailsUiModel(game: Game): GameInfoDetailsUiModel?
+    fun mapToUiModel(game: Game): GameInfoDetailsUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
@@ -36,7 +36,7 @@ internal class GameInfoDetailsUiModelFactoryImpl @Inject constructor() : GameInf
         private const val TEXT_SEPARATOR = " • "
     }
 
-    override fun createDetailsUiModel(game: Game): GameInfoDetailsUiModel? {
+    override fun mapToUiModel(game: Game): GameInfoDetailsUiModel? {
         @Suppress("ComplexCondition")
         if (game.genres.isEmpty() &&
             game.platforms.isEmpty() &&
