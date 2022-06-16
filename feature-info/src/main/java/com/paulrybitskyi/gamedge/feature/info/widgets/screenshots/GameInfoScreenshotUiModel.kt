@@ -14,25 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.header
+package com.paulrybitskyi.gamedge.feature.info.widgets.screenshots
 
 import androidx.compose.runtime.Immutable
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
 
 @Immutable
-internal data class GameInfoHeaderModel(
-    val artworks: List<GameInfoArtworkModel>,
-    val isLiked: Boolean,
-    val coverImageUrl: String?,
-    val title: String,
-    val releaseDate: String,
-    val developerName: String?,
-    val rating: String,
-    val likeCount: String,
-    val ageRating: String,
-    val gameCategory: String
-) {
-
-    val hasDeveloperName: Boolean
-        get() = (developerName != null)
-}
+internal data class GameInfoScreenshotUiModel(
+    val id: String,
+    val url: String,
+)

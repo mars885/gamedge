@@ -21,57 +21,35 @@ import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.R
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesType
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoOtherCompanyGamesModelFactory {
-
-    fun createOtherCompanyGamesModel(
-        companyGames: List<Game>,
-        currentGame: Game
-    ): GameInfoRelatedGamesModel?
+internal interface GameInfoSimilarGamesUiModelFactory {
+    fun createSimilarGamesUiModel(similarGames: List<Game>): GameInfoRelatedGamesUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
+internal class GameInfoSimilarGamesUiModelFactoryImpl @Inject constructor(
     private val stringProvider: StringProvider,
     private val igdbImageUrlFactory: IgdbImageUrlFactory
-) : GameInfoOtherCompanyGamesModelFactory {
+) : GameInfoSimilarGamesUiModelFactory {
 
-    override fun createOtherCompanyGamesModel(
-        companyGames: List<Game>,
-        currentGame: Game
-    ): GameInfoRelatedGamesModel? {
-        return companyGames
-            .filter { it.id != currentGame.id }
-            .takeIf(List<Game>::isNotEmpty)
-            ?.let { games ->
-                GameInfoRelatedGamesModel(
-                    type = GameInfoRelatedGamesType.OTHER_COMPANY_GAMES,
-                    title = currentGame.createOtherCompanyGamesModelTitle(),
-                    items = games.toRelatedGameModels()
-                )
-            }
-    }
+    override fun createSimilarGamesUiModel(similarGames: List<Game>): GameInfoRelatedGamesUiModel? {
+        if (similarGames.isEmpty()) return null
 
-    private fun Game.createOtherCompanyGamesModelTitle(): String {
-        val developerName = developerCompany?.name
-            ?: stringProvider.getString(R.string.game_info_other_company_games_title_default_arg)
-
-        val title = stringProvider.getString(
-            R.string.game_info_other_company_games_title_template,
-            developerName
+        return GameInfoRelatedGamesUiModel(
+            type = GameInfoRelatedGamesType.SIMILAR_GAMES,
+            title = stringProvider.getString(R.string.game_info_similar_games_title),
+            items = similarGames.toRelatedGameUiModels(),
         )
-
-        return title
     }
 
-    private fun List<Game>.toRelatedGameModels(): List<GameInfoRelatedGameModel> {
+    private fun List<Game>.toRelatedGameUiModels(): List<GameInfoRelatedGameUiModel> {
         return map {
-            GameInfoRelatedGameModel(
+            GameInfoRelatedGameUiModel(
                 id = it.id,
                 title = it.name,
                 coverUrl = it.cover?.let { cover ->

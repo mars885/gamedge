@@ -37,7 +37,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.RefreshableContent
 @Composable
 fun Games(
     uiState: GamesUiState,
-    onGameClicked: (GameModel) -> Unit,
+    onGameClicked: (GameUiModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
     AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
@@ -84,7 +84,7 @@ private fun EmptyState(
 private fun SuccessState(
     uiState: GamesUiState,
     modifier: Modifier,
-    onGameClicked: (GameModel) -> Unit,
+    onGameClicked: (GameUiModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
     RefreshableContent(
@@ -121,7 +121,7 @@ private fun SuccessState(
 @Composable
 private fun GamesSuccessStatePreview() {
     val games = listOf(
-        GameModel(
+        GameUiModel(
             id = 1,
             coverImageUrl = null,
             name = "Ghost of Tsushima: Director's Cut",
@@ -129,7 +129,7 @@ private fun GamesSuccessStatePreview() {
             developerName = "Sucker Punch Productions",
             description = "Some very very very very very very very very very long description",
         ),
-        GameModel(
+        GameUiModel(
             id = 2,
             coverImageUrl = null,
             name = "Forza Horizon 5",
@@ -137,7 +137,7 @@ private fun GamesSuccessStatePreview() {
             developerName = "Playground Games",
             description = "Some very very very very very very very very very long description",
         ),
-        GameModel(
+        GameUiModel(
             id = 3,
             coverImageUrl = null,
             name = "Outer Wilds: Echoes of the Eye",

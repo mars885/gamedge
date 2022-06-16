@@ -19,12 +19,12 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.details
 import androidx.compose.runtime.Immutable
 
 @Immutable
-internal data class GameInfoDetailsModel(
+internal data class GameInfoDetailsUiModel(
     val genresText: String?,
     val platformsText: String?,
     val modesText: String?,
     val playerPerspectivesText: String?,
-    val themesText: String?
+    val themesText: String?,
 ) {
 
     val hasGenresText: Boolean

@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.feature.info.widgets.links
 import androidx.compose.runtime.Immutable
 
 @Immutable
-internal data class GameInfoLinkModel(
+internal data class GameInfoLinkUiModel(
     val id: Int,
     val text: String,
     val iconId: Int,

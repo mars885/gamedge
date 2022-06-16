@@ -36,7 +36,7 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSectionWithI
 
 @Composable
 internal fun GameInfoScreenshots(
-    screenshots: List<GameInfoScreenshotModel>,
+    screenshots: List<GameInfoScreenshotUiModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
     GameInfoSectionWithInnerList(title = stringResource(R.string.game_info_screenshots_title)) {
@@ -55,7 +55,7 @@ internal fun GameInfoScreenshots(
 
 @Composable
 private fun Screenshot(
-    screenshot: GameInfoScreenshotModel,
+    screenshot: GameInfoScreenshotUiModel,
     modifier: Modifier,
     onScreenshotClicked: () -> Unit,
 ) {
@@ -82,15 +82,15 @@ private fun GameInfoScreenshotsPreview() {
     GamedgeTheme {
         GameInfoScreenshots(
             screenshots = listOf(
-                GameInfoScreenshotModel(
+                GameInfoScreenshotUiModel(
                     id = "1",
                     url = "",
                 ),
-                GameInfoScreenshotModel(
+                GameInfoScreenshotUiModel(
                     id = "2",
                     url = "",
                 ),
-                GameInfoScreenshotModel(
+                GameInfoScreenshotUiModel(
                     id = "3",
                     url = "",
                 ),

@@ -26,8 +26,8 @@ import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelUiMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.finiteUiState
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
@@ -63,7 +63,7 @@ internal class GamesSearchViewModelTest {
         logger = FakeLogger()
         SUT = GamesSearchViewModel(
             searchGamesUseCase = searchGamesUseCase,
-            gameModelMapper = FakeGameModelMapper(),
+            gameModelMapper = FakeGameModelUiMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
@@ -224,7 +224,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Routes to info screen when game is clicked`() {
         runTest {
-            val gameModel = GameModel(
+            val gameUiModel = GameUiModel(
                 id = 1,
                 coverImageUrl = null,
                 name = "",
@@ -234,20 +234,20 @@ internal class GamesSearchViewModelTest {
             )
 
             SUT.routeFlow.test {
-                SUT.onGameClicked(gameModel)
+                SUT.onGameClicked(gameUiModel)
 
                 val route = awaitItem()
 
                 assertThat(route).isInstanceOf(GamesSearchRoute.Info::class.java)
-                assertThat((route as GamesSearchRoute.Info).gameId).isEqualTo(gameModel.id)
+                assertThat((route as GamesSearchRoute.Info).gameId).isEqualTo(gameUiModel.id)
             }
         }
     }
 
-    private class FakeGameModelMapper : GameModelMapper {
+    private class FakeGameModelUiMapper : GameModelUiMapper {
 
-        override fun mapToGameModel(game: DomainGame): GameModel {
-            return GameModel(
+        override fun mapToGameUiModel(game: DomainGame): GameUiModel {
+            return GameUiModel(
                 id = game.id,
                 coverImageUrl = null,
                 name = game.name,

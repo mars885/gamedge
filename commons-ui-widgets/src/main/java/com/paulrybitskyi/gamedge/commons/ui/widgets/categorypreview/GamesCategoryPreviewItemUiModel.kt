@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.news.widgets
+package com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-internal data class GamingNewsItemModel(
+data class GamesCategoryPreviewItemUiModel(
     val id: Int,
-    val imageUrl: String?,
     val title: String,
-    val lede: String,
-    val publicationDate: String,
-    val siteDetailUrl: String
-) {
-
-    val hasImageUrl: Boolean
-        get() = imageUrl != null
-}
+    val coverUrl: String?
+)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,25 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.discovery.mapping
+package com.paulrybitskyi.gamedge.feature.category.widgets
 
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameUiModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GamesDiscoveryItemGameModelMapper {
-    fun mapToGameModel(game: Game): GamesDiscoveryItemGameUiModel
+internal interface GameCategoryModelUiMapper {
+    fun mapToGameCategoryUiModel(game: Game): GameCategoryUiModel
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GamesDiscoveryItemGameModelMapperImpl @Inject constructor(
-    private val igdbImageUrlFactory: IgdbImageUrlFactory
-) : GamesDiscoveryItemGameModelMapper {
+internal class GameCategoryModelUiMapperImpl @Inject constructor(
+    private val igdbImageUrlFactory: IgdbImageUrlFactory,
+) : GameCategoryModelUiMapper {
 
-    override fun mapToGameModel(game: Game): GamesDiscoveryItemGameUiModel {
-        return GamesDiscoveryItemGameUiModel(
+    override fun mapToGameCategoryUiModel(game: Game): GameCategoryUiModel {
+        return GameCategoryUiModel(
             id = game.id,
             title = game.name,
             coverUrl = game.cover?.let { cover ->
@@ -43,8 +42,8 @@ internal class GamesDiscoveryItemGameModelMapperImpl @Inject constructor(
     }
 }
 
-internal fun GamesDiscoveryItemGameModelMapper.mapToGameModels(
+internal fun GameCategoryModelUiMapper.mapToGameCategoryModels(
     games: List<Game>
-): List<GamesDiscoveryItemGameUiModel> {
-    return games.map(::mapToGameModel)
+): List<GameCategoryUiModel> {
+    return games.map(::mapToGameCategoryUiModel)
 }

@@ -40,8 +40,8 @@ import java.util.Locale
 
 @Composable
 internal fun GameInfoLinks(
-    links: List<GameInfoLinkModel>,
-    onLinkClicked: (GameInfoLinkModel) -> Unit,
+    links: List<GameInfoLinkUiModel>,
+    onLinkClicked: (GameInfoLinkUiModel) -> Unit,
 ) {
     GameInfoSection(title = stringResource(R.string.game_info_links_title)) { paddingValues ->
         FlowRow(
@@ -61,7 +61,7 @@ internal fun GameInfoLinks(
 
 @Composable
 private fun Link(
-    link: GameInfoLinkModel,
+    link: GameInfoLinkUiModel,
     onLinkClicked: () -> Unit,
 ) {
     CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
@@ -101,7 +101,7 @@ private fun GameInfoLinksPreview() {
     val links = WebsiteCategory.values()
         .filterNot { it == WebsiteCategory.UNKNOWN }
         .mapIndexed { index, websiteCategory ->
-            GameInfoLinkModel(
+            GameInfoLinkUiModel(
                 id = index,
                 text = websiteCategory.name
                     .replace("_", " ")

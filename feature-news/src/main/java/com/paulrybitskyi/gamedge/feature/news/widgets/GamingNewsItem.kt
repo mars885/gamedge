@@ -41,7 +41,7 @@ import com.paulrybitskyi.gamedge.feature.news.R
 
 @Composable
 internal fun GamingNewsItem(
-    model: GamingNewsItemModel,
+    model: GamingNewsItemUiModel,
     onClick: () -> Unit
 ) {
     GamedgeCard(
@@ -123,7 +123,7 @@ private fun Timestamp(publicationDate: String) {
 private fun GamingNewsItemWithImagePreview() {
     GamedgeTheme {
         GamingNewsItem(
-            model = GamingNewsItemModel(
+            model = GamingNewsItemUiModel(
                 id = 1,
                 imageUrl = "url",
                 title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",
@@ -141,7 +141,7 @@ private fun GamingNewsItemWithImagePreview() {
 private fun GamingNewsItemWithoutImagePreview() {
     GamedgeTheme {
         GamingNewsItem(
-            model = GamingNewsItemModel(
+            model = GamingNewsItemUiModel(
                 id = 1,
                 imageUrl = null,
                 title = "Steam Concurrent Player Count Breaks Record Again, Tops 26 Million",

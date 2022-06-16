@@ -16,11 +16,11 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames
 
-import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewItemModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview.GamesCategoryPreviewItemUiModel
 
-internal fun List<GameInfoRelatedGameModel>.mapToCategoryModels(): List<GamesCategoryPreviewItemModel> {
+internal fun List<GameInfoRelatedGameUiModel>.mapToCategoryModels(): List<GamesCategoryPreviewItemUiModel> {
     return map {
-        GamesCategoryPreviewItemModel(
+        GamesCategoryPreviewItemUiModel(
             id = it.id,
             title = it.title,
             coverUrl = it.coverUrl
@@ -28,8 +28,8 @@ internal fun List<GameInfoRelatedGameModel>.mapToCategoryModels(): List<GamesCat
     }
 }
 
-internal fun GamesCategoryPreviewItemModel.mapToInfoRelatedGameModel(): GameInfoRelatedGameModel {
-    return GameInfoRelatedGameModel(
+internal fun GamesCategoryPreviewItemUiModel.mapToInfoRelatedGameModel(): GameInfoRelatedGameUiModel {
+    return GameInfoRelatedGameUiModel(
         id = id,
         title = title,
         coverUrl = coverUrl

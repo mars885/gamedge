@@ -29,7 +29,7 @@ import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.commons.entities.Pagination
 import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemModelMapper
 import com.paulrybitskyi.gamedge.feature.news.mapping.mapToGamingNewsItemModels
-import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
+import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemUiModel
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsUiState
 import com.paulrybitskyi.gamedge.feature.news.widgets.disableRefreshing
 import com.paulrybitskyi.gamedge.feature.news.widgets.enableRefreshing
@@ -113,7 +113,7 @@ internal class GamingNewsViewModel @Inject constructor(
         route(GamingNewsRoute.Search)
     }
 
-    fun onNewsItemClicked(model: GamingNewsItemModel) {
+    fun onNewsItemClicked(model: GamingNewsItemUiModel) {
         dispatchCommand(GamingNewsCommand.OpenUrl(model.siteDetailUrl))
     }
 

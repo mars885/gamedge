@@ -40,7 +40,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun Game(
-    game: GameModel,
+    game: GameUiModel,
     onClick: () -> Unit,
 ) {
     GamedgeCard(
@@ -144,7 +144,7 @@ private fun DetailsDescription(description: String) {
 private fun GameFullPreview() {
     GamedgeTheme {
         Game(
-            game = GameModel(
+            game = GameUiModel(
                 id = 1,
                 coverImageUrl = null,
                 name = "Forza Horizon 5",
@@ -163,7 +163,7 @@ private fun GameFullPreview() {
 private fun GameWithoutDeveloperPreview() {
     GamedgeTheme {
         Game(
-            game = GameModel(
+            game = GameUiModel(
                 id = 1,
                 coverImageUrl = null,
                 name = "Forza Horizon 5",
@@ -182,7 +182,7 @@ private fun GameWithoutDeveloperPreview() {
 private fun GameWithoutDescriptionPreview() {
     GamedgeTheme {
         Game(
-            game = GameModel(
+            game = GameUiModel(
                 id = 1,
                 coverImageUrl = null,
                 name = "Forza Horizon 5",
@@ -200,7 +200,7 @@ private fun GameWithoutDescriptionPreview() {
 private fun GameMinimalPreview() {
     GamedgeTheme {
         Game(
-            game = GameModel(
+            game = GameUiModel(
                 id = 1,
                 coverImageUrl = null,
                 name = "Forza Horizon 5",

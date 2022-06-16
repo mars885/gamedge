@@ -54,11 +54,11 @@ import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSectionWithI
 
 @Composable
 internal fun GameInfoVideos(
-    videos: List<GameInfoVideoModel>,
-    onVideClicked: (GameInfoVideoModel) -> Unit,
+    videos: List<GameInfoVideoUiModel>,
+    onVideClicked: (GameInfoVideoUiModel) -> Unit,
 ) {
     GameInfoSectionWithInnerList(title = stringResource(R.string.game_info_videos_title)) {
-        items(items = videos, key = GameInfoVideoModel::id) { video ->
+        items(items = videos, key = GameInfoVideoUiModel::id) { video ->
             Video(
                 video = video,
                 thumbnailHeight = 150.dp,
@@ -71,7 +71,7 @@ internal fun GameInfoVideos(
 
 @Composable
 private fun Video(
-    video: GameInfoVideoModel,
+    video: GameInfoVideoUiModel,
     thumbnailHeight: Dp,
     modifier: Modifier,
     onVideoClicked: () -> Unit,
@@ -139,13 +139,13 @@ private fun GameInfoVideosPreview() {
     GamedgeTheme {
         GameInfoVideos(
             videos = listOf(
-                GameInfoVideoModel(
+                GameInfoVideoUiModel(
                     id = "1",
                     thumbnailUrl = "",
                     videoUrl = "",
                     title = "Announcement Trailer",
                 ),
-                GameInfoVideoModel(
+                GameInfoVideoUiModel(
                     id = "2",
                     thumbnailUrl = "",
                     videoUrl = "",

@@ -22,23 +22,16 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Video
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoVideoModelFactory {
-    fun createVideoModels(videos: List<Video>): List<GameInfoVideoModel>
-    fun createVideoModel(video: Video): GameInfoVideoModel?
+internal interface GameInfoVideoUiModelFactory {
+    fun createVideoUiModel(video: Video): GameInfoVideoUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoVideoModelFactoryImpl @Inject constructor(
+internal class GameInfoVideoUiModelFactoryImpl @Inject constructor(
     private val youtubeMediaUrlFactory: YoutubeMediaUrlFactory,
-) : GameInfoVideoModelFactory {
+) : GameInfoVideoUiModelFactory {
 
-    override fun createVideoModels(videos: List<Video>): List<GameInfoVideoModel> {
-        if (videos.isEmpty()) return emptyList()
-
-        return videos.mapNotNull(::createVideoModel)
-    }
-
-    override fun createVideoModel(video: Video): GameInfoVideoModel? {
+    override fun createVideoUiModel(video: Video): GameInfoVideoUiModel? {
         val thumbnailUrl = youtubeMediaUrlFactory.createThumbnailUrl(
             video,
             YoutubeThumbnailSize.MEDIUM
@@ -47,11 +40,19 @@ internal class GameInfoVideoModelFactoryImpl @Inject constructor(
 
         if ((thumbnailUrl == null) && (videoUrl == null)) return null
 
-        return GameInfoVideoModel(
+        return GameInfoVideoUiModel(
             id = video.id,
             thumbnailUrl = checkNotNull(thumbnailUrl),
             videoUrl = checkNotNull(videoUrl),
             title = video.name
         )
     }
+}
+
+internal fun GameInfoVideoUiModelFactory.createVideoUiModels(
+    videos: List<Video>,
+): List<GameInfoVideoUiModel> {
+    if (videos.isEmpty()) return emptyList()
+
+    return videos.mapNotNull(::createVideoUiModel)
 }

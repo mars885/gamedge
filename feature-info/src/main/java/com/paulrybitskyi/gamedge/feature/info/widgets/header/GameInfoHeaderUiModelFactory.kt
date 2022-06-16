@@ -24,28 +24,29 @@ import com.paulrybitskyi.gamedge.core.formatters.GameCategoryFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkUiModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.createArtworkUiModels
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoHeaderModelFactory {
-    fun createHeaderModel(game: Game, isLiked: Boolean): GameInfoHeaderModel
+internal interface GameInfoHeaderUiModelFactory {
+    fun createHeaderUiModel(game: Game, isLiked: Boolean): GameInfoHeaderUiModel
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
+internal class GameInfoHeaderUiModelFactoryImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
-    private val artworkModelFactory: GameInfoArtworkModelFactory,
+    private val artworkModelFactory: GameInfoArtworkUiModelFactory,
     private val releaseDateFormatter: GameReleaseDateFormatter,
     private val ratingFormatter: GameRatingFormatter,
     private val likeCountCalculator: GameLikeCountCalculator,
     private val ageRatingFormatter: GameAgeRatingFormatter,
     private val categoryFormatter: GameCategoryFormatter
-) : GameInfoHeaderModelFactory {
+) : GameInfoHeaderUiModelFactory {
 
-    override fun createHeaderModel(game: Game, isLiked: Boolean): GameInfoHeaderModel {
-        return GameInfoHeaderModel(
+    override fun createHeaderUiModel(game: Game, isLiked: Boolean): GameInfoHeaderUiModel {
+        return GameInfoHeaderUiModel(
             artworks = game.createArtworks(),
             isLiked = isLiked,
             coverImageUrl = game.createCoverImageUrl(),
@@ -59,8 +60,8 @@ internal class GameInfoHeaderModelFactoryImpl @Inject constructor(
         )
     }
 
-    private fun Game.createArtworks(): List<GameInfoArtworkModel> {
-        return artworkModelFactory.createArtworkModels(artworks)
+    private fun Game.createArtworks(): List<GameInfoArtworkUiModel> {
+        return artworkModelFactory.createArtworkUiModels(artworks)
     }
 
     private fun Game.createCoverImageUrl(): String? {

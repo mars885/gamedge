@@ -78,7 +78,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.Artworks
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkUiModel
 import org.intellij.lang.annotations.Language
 
 private const val ConstraintIdArtworks = "artworks"
@@ -123,7 +123,7 @@ private enum class State {
 @OptIn(ExperimentalMotionApi::class)
 @Composable
 internal fun GameInfoAnimatableHeader(
-    headerInfo: GameInfoHeaderModel,
+    headerInfo: GameInfoHeaderUiModel,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
@@ -140,7 +140,7 @@ internal fun GameInfoAnimatableHeader(
     val isPageIndicatorVisible = remember(artworks) { artworks.size > 1 }
     val hasDefaultPlaceholderArtwork = remember(artworks) {
         artworks.size == 1 &&
-        artworks.single() is GameInfoArtworkModel.DefaultImage
+        artworks.single() is GameInfoArtworkUiModel.DefaultImage
     }
     var selectedArtworkPage by remember { mutableStateOf(0) }
     var secondTitleText by rememberSaveable { mutableStateOf("") }

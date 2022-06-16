@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,21 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames
+package com.paulrybitskyi.gamedge.feature.info.widgets.companies
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-internal data class GameInfoRelatedGameModel(
+internal data class GameInfoCompanyUiModel(
     val id: Int,
-    val title: String,
-    val coverUrl: String?
-)
+    val logoUrl: String?,
+    val logoWidth: Int?,
+    val logoHeight: Int?,
+    val websiteUrl: String,
+    val name: String,
+    val roles: String,
+) {
+
+    val hasLogoSize: Boolean
+        get() = ((logoWidth != null) && (logoHeight != null))
+}

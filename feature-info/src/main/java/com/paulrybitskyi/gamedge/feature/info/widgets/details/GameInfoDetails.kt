@@ -29,7 +29,7 @@ import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.utils.GameInfoSection
 
 @Composable
-internal fun GameInfoDetails(details: GameInfoDetailsModel) {
+internal fun GameInfoDetails(details: GameInfoDetailsUiModel) {
     GameInfoSection(
         title = stringResource(R.string.game_info_details_title),
         titleBottomPadding = GamedgeTheme.spaces.spacing_1_0,
@@ -93,7 +93,7 @@ private fun CategorySection(title: String, value: String) {
 private fun GameInfoDetailsPreview() {
     GamedgeTheme {
         GameInfoDetails(
-            details = GameInfoDetailsModel(
+            details = GameInfoDetailsUiModel(
                 genresText = "Adventure • Shooter • Role-playing (RPG)",
                 platformsText = "PC • PS4 • XONE • PS5 • Series X • Stadia",
                 modesText = "Single Player • Multiplayer",

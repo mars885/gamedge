@@ -34,7 +34,7 @@ import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
 internal fun Artworks(
-    artworks: List<GameInfoArtworkModel>,
+    artworks: List<GameInfoArtworkUiModel>,
     @Suppress("UnusedPrivateMember")
     isScrollingEnabled: Boolean, // todo
     modifier: Modifier,
@@ -63,12 +63,12 @@ internal fun Artworks(
 
 @Composable
 private fun Artwork(
-    artwork: GameInfoArtworkModel,
+    artwork: GameInfoArtworkUiModel,
     onArtworkClicked: () -> Unit,
 ) {
     val data = when (artwork) {
-        is GameInfoArtworkModel.DefaultImage -> R.drawable.game_background_placeholder
-        is GameInfoArtworkModel.UrlImage -> artwork.url
+        is GameInfoArtworkUiModel.DefaultImage -> R.drawable.game_background_placeholder
+        is GameInfoArtworkUiModel.UrlImage -> artwork.url
     }
 
     AsyncImage(
@@ -92,7 +92,7 @@ private fun ArtworksPreview() {
     GamedgeTheme {
         Artworks(
             artworks = listOf(
-                GameInfoArtworkModel.DefaultImage,
+                GameInfoArtworkUiModel.DefaultImage,
             ),
             isScrollingEnabled = true,
             modifier = Modifier,

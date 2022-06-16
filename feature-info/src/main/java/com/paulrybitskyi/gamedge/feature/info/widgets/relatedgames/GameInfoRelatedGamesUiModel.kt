@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.screenshots
+package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-internal data class GameInfoScreenshotModel(
-    val id: String,
-    val url: String,
-)
+internal data class GameInfoRelatedGamesUiModel(
+    val type: GameInfoRelatedGamesType,
+    val title: String,
+    val items: List<GameInfoRelatedGameUiModel>,
+) {
+
+    val hasItems: Boolean
+        get() = items.isNotEmpty()
+}

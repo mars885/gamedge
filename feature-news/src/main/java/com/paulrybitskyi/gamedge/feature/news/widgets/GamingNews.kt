@@ -95,7 +95,7 @@ private fun GamingNews(
 private fun GamingNews(
     uiState: GamingNewsUiState,
     onSearchButtonClicked: () -> Unit,
-    onNewsItemClicked: (GamingNewsItemModel) -> Unit,
+    onNewsItemClicked: (GamingNewsItemUiModel) -> Unit,
     onRefreshRequested: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -164,13 +164,13 @@ private fun EmptyState(modifier: Modifier) {
 
 @Composable
 private fun SuccessState(
-    news: List<GamingNewsItemModel>,
-    onNewsItemClicked: (GamingNewsItemModel) -> Unit,
+    news: List<GamingNewsItemUiModel>,
+    onNewsItemClicked: (GamingNewsItemUiModel) -> Unit,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
-        items(items = news, key = GamingNewsItemModel::id) { itemModel ->
+        items(items = news, key = GamingNewsItemUiModel::id) { itemModel ->
             GamingNewsItem(
                 model = itemModel,
                 onClick = { onNewsItemClicked(itemModel) }
@@ -183,7 +183,7 @@ private fun SuccessState(
 @Composable
 private fun GamingNewsSuccessStatePreview() {
     val news = listOf(
-        GamingNewsItemModel(
+        GamingNewsItemUiModel(
             id = 1,
             imageUrl = "",
             title = "Halo Infinite Season 1 Will Run Until May 2022",
@@ -192,7 +192,7 @@ private fun GamingNewsSuccessStatePreview() {
             publicationDate = "3 mins ago",
             siteDetailUrl = "url",
         ),
-        GamingNewsItemModel(
+        GamingNewsItemUiModel(
             id = 2,
             imageUrl = "",
             title = "Call of Duty: Vanguard's UK Launch Sales are Down 40% From Last Year",
@@ -201,7 +201,7 @@ private fun GamingNewsSuccessStatePreview() {
             publicationDate = "an hour ago",
             siteDetailUrl = "url",
         ),
-        GamingNewsItemModel(
+        GamingNewsItemUiModel(
             id = 3,
             imageUrl = null,
             title = "WoW Classic Season of Mastery: Full List of Changes",

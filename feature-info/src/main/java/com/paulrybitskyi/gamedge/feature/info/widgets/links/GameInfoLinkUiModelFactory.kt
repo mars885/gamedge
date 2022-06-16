@@ -23,34 +23,34 @@ import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoLinkModelFactory {
-    fun createLinkModels(websites: List<Website>): List<GameInfoLinkModel>
-    fun createLinkModel(website: Website): GameInfoLinkModel?
+internal interface GameInfoLinkUiModelFactory {
+    fun createLinkUiModel(website: Website): GameInfoLinkUiModel?
+    fun createLinkUiModels(websites: List<Website>): List<GameInfoLinkUiModel>
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoLinkModelFactoryImpl @Inject constructor(
+internal class GameInfoLinkUiModelFactoryImpl @Inject constructor(
     private val websiteNameProvider: WebsiteNameProvider,
-    private val websiteIconProvider: WebsiteIconProvider
-) : GameInfoLinkModelFactory {
+    private val websiteIconProvider: WebsiteIconProvider,
+) : GameInfoLinkUiModelFactory {
 
-    override fun createLinkModels(websites: List<Website>): List<GameInfoLinkModel> {
-        if (websites.isEmpty()) return emptyList()
-
-        return websites
-            .sortedBy { it.category.orderPosition }
-            .mapNotNull(::createLinkModel)
-    }
-
-    override fun createLinkModel(website: Website): GameInfoLinkModel? {
+    override fun createLinkUiModel(website: Website): GameInfoLinkUiModel? {
         if (website.category == WebsiteCategory.UNKNOWN) return null
 
-        return GameInfoLinkModel(
+        return GameInfoLinkUiModel(
             id = website.id,
             text = websiteNameProvider.provideWebsiteName(website),
             iconId = websiteIconProvider.provideIconIdForWebsite(website),
             url = website.url,
         )
+    }
+
+    override fun createLinkUiModels(websites: List<Website>): List<GameInfoLinkUiModel> {
+        if (websites.isEmpty()) return emptyList()
+
+        return websites
+            .sortedBy { it.category.orderPosition }
+            .mapNotNull(::createLinkUiModel)
     }
 
     @Suppress("MagicNumber")

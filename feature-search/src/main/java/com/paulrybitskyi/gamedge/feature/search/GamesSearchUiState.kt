@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.search
 
 import androidx.compose.runtime.Immutable
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 
 @Immutable
@@ -26,7 +26,7 @@ internal data class GamesSearchUiState(
     val gamesUiState: GamesUiState,
 )
 
-internal fun GamesUiState.toLoadingState(games: List<GameModel>): GamesUiState {
+internal fun GamesUiState.toLoadingState(games: List<GameUiModel>): GamesUiState {
     return copy(
         isLoading = true,
         games = games,
@@ -35,7 +35,7 @@ internal fun GamesUiState.toLoadingState(games: List<GameModel>): GamesUiState {
 
 internal fun GamesUiState.toSuccessState(
     infoTitle: String,
-    games: List<GameModel>,
+    games: List<GameUiModel>,
 ): GamesUiState {
     return copy(
         isLoading = false,

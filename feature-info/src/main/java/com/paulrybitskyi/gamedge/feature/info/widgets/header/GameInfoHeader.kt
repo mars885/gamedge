@@ -65,7 +65,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.Artworks
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkUiModel
 
 private const val ConstraintIdArtworks = "artworks"
 private const val ConstraintIdArtworksScrim = "artworks_scrim"
@@ -89,7 +89,7 @@ private val InfoIconSize = 34.dp
 
 @Composable
 internal fun GameInfoHeader(
-    headerInfo: GameInfoHeaderModel,
+    headerInfo: GameInfoHeaderUiModel,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
@@ -432,8 +432,8 @@ private fun constructExpandedConstraintSet(): ConstraintSet {
 private fun GameInfoHeaderPreview() {
     GamedgeTheme {
         GameInfoHeader(
-            headerInfo = GameInfoHeaderModel(
-                artworks = listOf(GameInfoArtworkModel.DefaultImage),
+            headerInfo = GameInfoHeaderUiModel(
+                artworks = listOf(GameInfoArtworkUiModel.DefaultImage),
                 isLiked = true,
                 coverImageUrl = null,
                 title = "Elden Ring",

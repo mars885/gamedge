@@ -26,36 +26,22 @@ import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoCompanyModelFactory {
-    fun createCompanyModels(companies: List<InvolvedCompany>): List<GameInfoCompanyModel>
-    fun createCompanyModel(company: InvolvedCompany): GameInfoCompanyModel?
+internal interface GameInfoCompanyUiModelFactory {
+    fun createCompanyUiModel(company: InvolvedCompany): GameInfoCompanyUiModel
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
+internal class GameInfoCompanyUiModelFactoryImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
     private val stringProvider: StringProvider
-) : GameInfoCompanyModelFactory {
+) : GameInfoCompanyUiModelFactory {
 
     private companion object {
         private const val COMPANY_ROLE_SEPARATOR = ", "
     }
 
-    override fun createCompanyModels(companies: List<InvolvedCompany>): List<GameInfoCompanyModel> {
-        if (companies.isEmpty()) return emptyList()
-
-        val comparator = compareByDescending(InvolvedCompany::isDeveloper)
-            .thenByDescending(InvolvedCompany::isPublisher)
-            .thenByDescending(InvolvedCompany::isPorter)
-            .thenByDescending { it.company.hasLogo }
-
-        return companies
-            .sortedWith(comparator)
-            .map(::createCompanyModel)
-    }
-
-    override fun createCompanyModel(company: InvolvedCompany): GameInfoCompanyModel {
-        return GameInfoCompanyModel(
+    override fun createCompanyUiModel(company: InvolvedCompany): GameInfoCompanyUiModel {
+        return GameInfoCompanyUiModel(
             id = company.company.id,
             logoUrl = company.createLogoUrl(),
             logoWidth = company.company.logo?.width,
@@ -84,4 +70,19 @@ internal class GameInfoCompanyModelFactoryImpl @Inject constructor(
             transform = stringProvider::getString
         )
     }
+}
+
+internal fun GameInfoCompanyUiModelFactory.createCompanyUiModels(
+    companies: List<InvolvedCompany>,
+): List<GameInfoCompanyUiModel> {
+    if (companies.isEmpty()) return emptyList()
+
+    val comparator = compareByDescending(InvolvedCompany::isDeveloper)
+        .thenByDescending(InvolvedCompany::isPublisher)
+        .thenByDescending(InvolvedCompany::isPorter)
+        .thenByDescending { it.company.hasLogo }
+
+    return companies
+        .sortedWith(comparator)
+        .map(::createCompanyUiModel)
 }

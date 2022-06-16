@@ -77,7 +77,7 @@ private fun GamesCategory(
 private fun GamesCategory(
     uiState: GamesCategoryUiState,
     onBackButtonClicked: () -> Unit,
-    onGameClicked: (GameCategoryModel) -> Unit,
+    onGameClicked: (GameCategoryUiModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
     Scaffold(
@@ -133,7 +133,7 @@ private fun EmptyState(modifier: Modifier) {
 private fun SuccessState(
     uiState: GamesCategoryUiState,
     modifier: Modifier,
-    onGameClicked: (GameCategoryModel) -> Unit,
+    onGameClicked: (GameCategoryUiModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
     RefreshableContent(
@@ -151,8 +151,8 @@ private fun SuccessState(
 
 @Composable
 private fun VerticalGrid(
-    games: List<GameCategoryModel>,
-    onGameClicked: (GameCategoryModel) -> Unit,
+    games: List<GameCategoryUiModel>,
+    onGameClicked: (GameCategoryUiModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
     val gridConfig = rememberGamesGridConfig()
@@ -200,7 +200,7 @@ private fun GamesCategorySuccessStatePreview() {
     val games = buildList {
         repeat(15) { index ->
             add(
-                GameCategoryModel(
+                GameCategoryUiModel(
                     id = index + 1,
                     title = "Popular Game",
                     coverUrl = null,
