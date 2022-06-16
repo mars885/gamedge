@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsUiModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mappers.GameInfoOtherCompanyGamesUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mappers.GameInfoSimilarGamesUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyUiModelMapper
@@ -48,7 +48,7 @@ internal class GameInfoUiModelMapperImpl @Inject constructor(
     private val headerModelMapper: GameInfoHeaderUiModelMapper,
     private val videoModelMapper: GameInfoVideoUiModelMapper,
     private val screenshotModelMapper: GameInfoScreenshotUiModelMapper,
-    private val detailsModelMapper: GameInfoDetailsUiModelFactory,
+    private val detailsModelMapper: GameInfoDetailsUiModelMapper,
     private val linkModelMapper: GameInfoLinkUiModelMapper,
     private val companyModelMapper: GameInfoCompanyUiModelMapper,
     private val otherCompanyGamesModelMapper: GameInfoOtherCompanyGamesUiModelMapper,

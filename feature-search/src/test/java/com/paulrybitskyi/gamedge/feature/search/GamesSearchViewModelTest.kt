@@ -63,7 +63,7 @@ internal class GamesSearchViewModelTest {
         logger = FakeLogger()
         SUT = GamesSearchViewModel(
             searchGamesUseCase = searchGamesUseCase,
-            gameModelMapper = FakeGameModelUiMapper(),
+            gameModelUiMapper = FakeGameModelUiMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
@@ -224,7 +224,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Routes to info screen when game is clicked`() {
         runTest {
-            val gameUiModel = GameUiModel(
+            val game = GameUiModel(
                 id = 1,
                 coverImageUrl = null,
                 name = "",
@@ -234,12 +234,12 @@ internal class GamesSearchViewModelTest {
             )
 
             SUT.routeFlow.test {
-                SUT.onGameClicked(gameUiModel)
+                SUT.onGameClicked(game)
 
                 val route = awaitItem()
 
                 assertThat(route).isInstanceOf(GamesSearchRoute.Info::class.java)
-                assertThat((route as GamesSearchRoute.Info).gameId).isEqualTo(gameUiModel.id)
+                assertThat((route as GamesSearchRoute.Info).gameId).isEqualTo(game.id)
             }
         }
     }

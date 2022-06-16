@@ -72,7 +72,7 @@ internal class GamesCategoryViewModelTest {
             stringProvider = FakeStringProvider(),
             transitionAnimationDuration = 0L,
             useCases = setupUseCases(),
-            gameCategoryModelMapper = FakeGameCategoryModelUiMapper(),
+            gameCategoryModelUiMapper = FakeGameCategoryModelUiMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,

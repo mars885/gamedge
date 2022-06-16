@@ -60,7 +60,7 @@ internal class LikedGamesViewModelTest {
         logger = FakeLogger()
         SUT = LikedGamesViewModel(
             observeLikedGamesUseCase = observeLikedGamesUseCase,
-            likedGameModelMapper = FakeGameModelUiMapper(),
+            likedGameModelUiMapper = FakeGameModelUiMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
@@ -122,7 +122,7 @@ internal class LikedGamesViewModelTest {
     @Test
     fun `Routes to info screen when game is clicked`() {
         runTest {
-            val gameUiModel = GameUiModel(
+            val game = GameUiModel(
                 id = 1,
                 coverImageUrl = null,
                 name = "",
@@ -132,12 +132,12 @@ internal class LikedGamesViewModelTest {
             )
 
             SUT.routeFlow.test {
-                SUT.onGameClicked(gameUiModel)
+                SUT.onGameClicked(game)
 
                 val route = awaitItem()
 
                 assertThat(route).isInstanceOf(LikedGamesRoute.Info::class.java)
-                assertThat((route as LikedGamesRoute.Info).gameId).isEqualTo(gameUiModel.id)
+                assertThat((route as LikedGamesRoute.Info).gameId).isEqualTo(game.id)
             }
         }
     }

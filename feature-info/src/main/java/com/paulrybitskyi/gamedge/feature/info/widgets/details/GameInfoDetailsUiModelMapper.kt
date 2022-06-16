@@ -25,12 +25,12 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Theme
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoDetailsUiModelFactory {
+internal interface GameInfoDetailsUiModelMapper {
     fun mapToUiModel(game: Game): GameInfoDetailsUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoDetailsUiModelFactoryImpl @Inject constructor() : GameInfoDetailsUiModelFactory {
+internal class GameInfoDetailsUiModelMapperImpl @Inject constructor() : GameInfoDetailsUiModelMapper {
 
     private companion object {
         private const val TEXT_SEPARATOR = " • "
