@@ -70,7 +70,7 @@ internal class GameInfoViewModelTest {
             savedStateHandle = setupSavedStateHandle(),
             transitionAnimationDuration = 0L,
             useCases = useCases,
-            uiModelFactory = FakeGameInfoUiModelMapper(),
+            uiModelMapper = FakeGameInfoUiModelMapper(),
             gameUrlFactory = FakeGameUrlFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),

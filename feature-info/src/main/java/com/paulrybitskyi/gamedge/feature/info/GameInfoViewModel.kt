@@ -70,7 +70,7 @@ internal class GameInfoViewModel @Inject constructor(
     @TransitionAnimationDuration
     transitionAnimationDuration: Long,
     private val useCases: GameInfoUseCases,
-    private val uiModelFactory: GameInfoUiModelMapper,
+    private val uiModelMapper: GameInfoUiModelMapper,
     private val gameUrlFactory: ImageViewerGameUrlFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
@@ -115,7 +115,7 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .map { (game, isGameLiked, companyGames, similarGames) ->
-                uiModelFactory.mapToUiModel(
+                uiModelMapper.mapToUiModel(
                     game,
                     isGameLiked,
                     companyGames,
