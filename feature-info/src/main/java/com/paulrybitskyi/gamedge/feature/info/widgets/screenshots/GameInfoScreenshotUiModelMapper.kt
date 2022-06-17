@@ -46,7 +46,7 @@ internal class GameInfoScreenshotUiModelMapperImpl @Inject constructor(
 
 internal fun GameInfoScreenshotUiModelMapper.mapToUiModels(
     images: List<Image>,
-) : List<GameInfoScreenshotUiModel> {
+): List<GameInfoScreenshotUiModel> {
     if (images.isEmpty()) return emptyList()
 
     return images.mapNotNull(::mapToUiModel)
