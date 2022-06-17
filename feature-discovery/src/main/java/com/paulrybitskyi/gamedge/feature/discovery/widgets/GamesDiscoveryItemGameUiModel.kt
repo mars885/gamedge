@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.companies
+package com.paulrybitskyi.gamedge.feature.discovery.widgets
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-internal data class GameInfoCompanyModel(
+internal data class GamesDiscoveryItemGameUiModel(
     val id: Int,
-    val logoUrl: String?,
-    val logoWidth: Int?,
-    val logoHeight: Int?,
-    val websiteUrl: String,
-    val name: String,
-    val roles: String,
-) {
-
-    val hasLogoSize: Boolean
-        get() = ((logoWidth != null) && (logoHeight != null))
-}
+    val title: String,
+    val coverUrl: String?,
+)

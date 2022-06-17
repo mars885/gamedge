@@ -29,8 +29,8 @@ import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey
-import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameModelMapper
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameModel
+import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameUiModelMapper
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameUiModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -63,7 +63,7 @@ internal class GamesDiscoveryViewModelTest {
         logger = FakeLogger()
         SUT = GamesDiscoveryViewModel(
             useCases = setupUseCases(),
-            itemGameModelMapper = FakeGamesDiscoveryItemGameModelMapper(),
+            itemGameModelMapper = FakeGamesDiscoveryItemGameUiModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
@@ -166,7 +166,7 @@ internal class GamesDiscoveryViewModelTest {
     @Test
     fun `Routes to game info screen when game is clicked`() {
         runTest {
-            val item = GamesDiscoveryItemGameModel(
+            val item = GamesDiscoveryItemGameUiModel(
                 id = 1,
                 title = "title",
                 coverUrl = null
@@ -183,10 +183,10 @@ internal class GamesDiscoveryViewModelTest {
         }
     }
 
-    private class FakeGamesDiscoveryItemGameModelMapper : GamesDiscoveryItemGameModelMapper {
+    private class FakeGamesDiscoveryItemGameUiModelMapper : GamesDiscoveryItemGameUiModelMapper {
 
-        override fun mapToGameModel(game: DomainGame): GamesDiscoveryItemGameModel {
-            return GamesDiscoveryItemGameModel(
+        override fun mapToUiModel(game: DomainGame): GamesDiscoveryItemGameUiModel {
+            return GamesDiscoveryItemGameUiModel(
                 id = game.id,
                 title = game.name,
                 coverUrl = null

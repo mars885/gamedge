@@ -14,45 +14,45 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.factories
+package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mappers
 
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.R
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesType
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoOtherCompanyGamesModelFactory {
+internal interface GameInfoOtherCompanyGamesUiModelMapper {
 
-    fun createOtherCompanyGamesModel(
+    fun mapToUiModel(
         companyGames: List<Game>,
-        currentGame: Game
-    ): GameInfoRelatedGamesModel?
+        currentGame: Game,
+    ): GameInfoRelatedGamesUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
+internal class GameInfoOtherCompanyGamesUiModelMapperImpl @Inject constructor(
     private val stringProvider: StringProvider,
-    private val igdbImageUrlFactory: IgdbImageUrlFactory
-) : GameInfoOtherCompanyGamesModelFactory {
+    private val igdbImageUrlFactory: IgdbImageUrlFactory,
+) : GameInfoOtherCompanyGamesUiModelMapper {
 
-    override fun createOtherCompanyGamesModel(
+    override fun mapToUiModel(
         companyGames: List<Game>,
         currentGame: Game
-    ): GameInfoRelatedGamesModel? {
+    ): GameInfoRelatedGamesUiModel? {
         return companyGames
             .filter { it.id != currentGame.id }
             .takeIf(List<Game>::isNotEmpty)
             ?.let { games ->
-                GameInfoRelatedGamesModel(
+                GameInfoRelatedGamesUiModel(
                     type = GameInfoRelatedGamesType.OTHER_COMPANY_GAMES,
                     title = currentGame.createOtherCompanyGamesModelTitle(),
-                    items = games.toRelatedGameModels()
+                    items = games.toRelatedGameUiModels()
                 )
             }
     }
@@ -69,9 +69,9 @@ internal class GameInfoOtherCompanyGamesModelFactoryImpl @Inject constructor(
         return title
     }
 
-    private fun List<Game>.toRelatedGameModels(): List<GameInfoRelatedGameModel> {
+    private fun List<Game>.toRelatedGameUiModels(): List<GameInfoRelatedGameUiModel> {
         return map {
-            GameInfoRelatedGameModel(
+            GameInfoRelatedGameUiModel(
                 id = it.id,
                 title = it.name,
                 coverUrl = it.cover?.let { cover ->

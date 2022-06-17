@@ -23,7 +23,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 internal data class GamingNewsUiState(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
-    val news: List<GamingNewsItemModel> = emptyList(),
+    val news: List<GamingNewsItemUiModel> = emptyList(),
 )
 
 internal val GamingNewsUiState.finiteUiState: FiniteUiState
@@ -49,7 +49,7 @@ internal fun GamingNewsUiState.toLoadingState(): GamingNewsUiState {
 }
 
 internal fun GamingNewsUiState.toSuccessState(
-    news: List<GamingNewsItemModel>
+    news: List<GamingNewsItemUiModel>
 ): GamingNewsUiState {
     return copy(isLoading = false, news = news)
 }

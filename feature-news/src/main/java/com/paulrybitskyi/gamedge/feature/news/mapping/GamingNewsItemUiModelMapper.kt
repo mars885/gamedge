@@ -19,25 +19,21 @@ package com.paulrybitskyi.gamedge.feature.news.mapping
 import com.paulrybitskyi.gamedge.core.formatters.ArticlePublicationDateFormatter
 import com.paulrybitskyi.gamedge.domain.articles.entities.Article
 import com.paulrybitskyi.gamedge.domain.articles.entities.ImageType
-import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
+import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemUiModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GamingNewsItemModelMapper {
-    fun mapToGamingNewsItemModel(article: Article): GamingNewsItemModel
-}
-
-internal fun GamingNewsItemModelMapper.mapToGamingNewsItemModels(articles: List<Article>): List<GamingNewsItemModel> {
-    return articles.map(::mapToGamingNewsItemModel)
+internal interface GamingNewsItemUiModelMapper {
+    fun mapToUiModel(article: Article): GamingNewsItemUiModel
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GamingNewsItemModelMapperImpl @Inject constructor(
+internal class GamingNewsItemUiModelMapperImpl @Inject constructor(
     private val publicationDateFormatter: ArticlePublicationDateFormatter
-) : GamingNewsItemModelMapper {
+) : GamingNewsItemUiModelMapper {
 
-    override fun mapToGamingNewsItemModel(article: Article): GamingNewsItemModel {
-        return GamingNewsItemModel(
+    override fun mapToUiModel(article: Article): GamingNewsItemUiModel {
+        return GamingNewsItemUiModel(
             id = article.id,
             imageUrl = article.imageUrls[ImageType.ORIGINAL],
             title = article.title,
@@ -50,4 +46,10 @@ internal class GamingNewsItemModelMapperImpl @Inject constructor(
     private fun Article.formatPublicationDate(): String {
         return publicationDateFormatter.formatPublicationDate(publicationDate)
     }
+}
+
+internal fun GamingNewsItemUiModelMapper.mapToUiModels(
+    articles: List<Article>,
+): List<GamingNewsItemUiModel> {
+    return articles.map(::mapToUiModel)
 }

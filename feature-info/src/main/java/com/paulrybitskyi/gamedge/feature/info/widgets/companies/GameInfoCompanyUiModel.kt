@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks
+package com.paulrybitskyi.gamedge.feature.info.widgets.companies
 
 import androidx.compose.runtime.Immutable
 
-private const val DEFAULT_IMAGE_ID = "default_image_id"
-
 @Immutable
-internal sealed class GameInfoArtworkModel {
-    object DefaultImage : GameInfoArtworkModel()
-    data class UrlImage(val id: String, val url: String) : GameInfoArtworkModel()
-}
+internal data class GameInfoCompanyUiModel(
+    val id: Int,
+    val logoUrl: String?,
+    val logoWidth: Int?,
+    val logoHeight: Int?,
+    val websiteUrl: String,
+    val name: String,
+    val roles: String,
+) {
 
-internal val GameInfoArtworkModel.id: String
-    get() = when (this) {
-        is GameInfoArtworkModel.DefaultImage -> DEFAULT_IMAGE_ID
-        is GameInfoArtworkModel.UrlImage -> id
-    }
+    val hasLogoSize: Boolean
+        get() = ((logoWidth != null) && (logoHeight != null))
+}

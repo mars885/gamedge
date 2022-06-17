@@ -85,10 +85,10 @@ private fun GamesDiscovery(
 
 @Composable
 private fun GamesDiscovery(
-    items: List<GamesDiscoveryItemModel>,
+    items: List<GamesDiscoveryItemUiModel>,
     onSearchButtonClicked: () -> Unit,
     onCategoryMoreButtonClicked: (category: String) -> Unit,
-    onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,
+    onCategoryGameClicked: (GamesDiscoveryItemGameUiModel) -> Unit,
     onRefreshRequested: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -132,23 +132,23 @@ private fun GamesDiscovery(
 
 @Composable
 private fun CategoryPreviewItems(
-    items: List<GamesDiscoveryItemModel>,
+    items: List<GamesDiscoveryItemUiModel>,
     onCategoryMoreButtonClicked: (category: String) -> Unit,
-    onCategoryGameClicked: (GamesDiscoveryItemGameModel) -> Unit,
+    onCategoryGameClicked: (GamesDiscoveryItemGameUiModel) -> Unit,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
-        items(items = items, key = GamesDiscoveryItemModel::id) { item ->
+        items(items = items, key = GamesDiscoveryItemUiModel::id) { item ->
             val categoryGames = remember(item.games) {
-                item.games.mapToCategoryItems()
+                item.games.mapToCategoryUiModels()
             }
 
             GamesCategoryPreview(
                 title = item.title,
                 isProgressBarVisible = item.isProgressBarVisible,
                 games = categoryGames,
-                onCategoryGameClicked = { onCategoryGameClicked(it.mapToDiscoveryItemGameModel()) },
+                onCategoryGameClicked = { onCategoryGameClicked(it.mapToDiscoveryUiModel()) },
                 onCategoryMoreButtonClicked = { onCategoryMoreButtonClicked(item.categoryName) },
             )
         }
@@ -165,11 +165,11 @@ private fun GamesDiscoverySuccessStatePreview() {
         "Forza Horizon 5",
     )
     .mapIndexed { index, gameTitle ->
-        GamesDiscoveryItemGameModel(id = index, title = gameTitle, coverUrl = null)
+        GamesDiscoveryItemGameUiModel(id = index, title = gameTitle, coverUrl = null)
     }
 
     val items = GamesDiscoveryCategory.values().map { category ->
-        GamesDiscoveryItemModel(
+        GamesDiscoveryItemUiModel(
             id = category.id,
             categoryName = category.name,
             title = stringResource(category.titleId),
@@ -193,7 +193,7 @@ private fun GamesDiscoverySuccessStatePreview() {
 @Composable
 private fun GamesDiscoveryEmptyStatePreview() {
     val items = GamesDiscoveryCategory.values().map { category ->
-        GamesDiscoveryItemModel(
+        GamesDiscoveryItemUiModel(
             id = category.id,
             categoryName = category.name,
             title = stringResource(category.titleId),

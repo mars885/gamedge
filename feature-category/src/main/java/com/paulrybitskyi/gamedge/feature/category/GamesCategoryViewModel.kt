@@ -32,8 +32,10 @@ import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffset
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
-import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
+import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModelUiMapper
+import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
+import com.paulrybitskyi.gamedge.feature.category.widgets.mapToUiModels
 import com.paulrybitskyi.gamedge.feature.category.widgets.toEmptyState
 import com.paulrybitskyi.gamedge.feature.category.widgets.toLoadingState
 import com.paulrybitskyi.gamedge.feature.category.widgets.toSuccessState
@@ -59,7 +61,7 @@ internal class GamesCategoryViewModel @Inject constructor(
     @TransitionAnimationDuration
     transitionAnimationDuration: Long,
     private val useCases: GamesCategoryUseCases,
-    private val gameCategoryModelMapper: GameCategoryModelMapper,
+    private val gameCategoryModelUiMapper: GameCategoryModelUiMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
@@ -112,7 +114,7 @@ internal class GamesCategoryViewModel @Inject constructor(
         gamesObservingJob = viewModelScope.launch {
             useCases.getObservableUseCase(gamesCategoryKeyType)
                 .execute(observeGamesUseCaseParams)
-                .map(gameCategoryModelMapper::mapToGameCategoryModels)
+                .map(gameCategoryModelUiMapper::mapToUiModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { games -> currentUiState.toSuccessState(games) }
                 .onError {
@@ -171,7 +173,7 @@ internal class GamesCategoryViewModel @Inject constructor(
         route(GamesCategoryRoute.Back)
     }
 
-    fun onGameClicked(game: GameCategoryModel) {
+    fun onGameClicked(game: GameCategoryUiModel) {
         route(GamesCategoryRoute.Info(game.id))
     }
 

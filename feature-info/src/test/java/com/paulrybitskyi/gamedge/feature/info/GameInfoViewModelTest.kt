@@ -33,14 +33,14 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoModelFactory
+import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.finiteUiState
-import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameUiModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -70,7 +70,7 @@ internal class GameInfoViewModelTest {
             savedStateHandle = setupSavedStateHandle(),
             transitionAnimationDuration = 0L,
             useCases = useCases,
-            modelFactory = FakeGameInfoModelFactory(),
+            uiModelMapper = FakeGameInfoUiModelMapper(),
             gameUrlFactory = FakeGameUrlFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),
@@ -235,7 +235,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches url opening command when video is clicked`() {
         runTest {
-            val video = GameInfoVideoModel(
+            val video = GameInfoVideoUiModel(
                 id = "1",
                 thumbnailUrl = "thumbnail_url",
                 videoUrl = "video_url",
@@ -301,7 +301,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches url opening command when game link is clicked`() {
         runTest {
-            val link = GameInfoLinkModel(
+            val link = GameInfoLinkUiModel(
                 id = 1,
                 text = "text",
                 iconId = 0,
@@ -322,7 +322,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches url opening command when company is clicked`() {
         runTest {
-            val company = GameInfoCompanyModel(
+            val company = GameInfoCompanyUiModel(
                 id = 1,
                 logoWidth = null,
                 logoHeight = null,
@@ -346,7 +346,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to game info when related game is clicked`() {
         runTest {
-            val relatedGame = GameInfoRelatedGameModel(
+            val relatedGame = GameInfoRelatedGameUiModel(
                 id = 1,
                 title = "title",
                 coverUrl = "url",
@@ -363,17 +363,17 @@ internal class GameInfoViewModelTest {
         }
     }
 
-    private class FakeGameInfoModelFactory : GameInfoModelFactory {
+    private class FakeGameInfoUiModelMapper : GameInfoUiModelMapper {
 
-        override fun createInfoModel(
+        override fun mapToUiModel(
             game: Game,
             isLiked: Boolean,
             companyGames: List<Game>,
             similarGames: List<Game>
-        ): GameInfoModel {
-            return GameInfoModel(
+        ): GameInfoUiModel {
+            return GameInfoUiModel(
                 id = 1,
-                headerModel = GameInfoHeaderModel(
+                headerModel = GameInfoHeaderUiModel(
                     artworks = emptyList(),
                     isLiked = true,
                     coverImageUrl = null,

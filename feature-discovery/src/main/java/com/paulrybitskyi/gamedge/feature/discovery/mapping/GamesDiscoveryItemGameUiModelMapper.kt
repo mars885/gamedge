@@ -19,21 +19,21 @@ package com.paulrybitskyi.gamedge.feature.discovery.mapping
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameModel
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameUiModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GamesDiscoveryItemGameModelMapper {
-    fun mapToGameModel(game: Game): GamesDiscoveryItemGameModel
+internal interface GamesDiscoveryItemGameUiModelMapper {
+    fun mapToUiModel(game: Game): GamesDiscoveryItemGameUiModel
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GamesDiscoveryItemGameModelMapperImpl @Inject constructor(
+internal class GamesDiscoveryItemGameUiModelMapperImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory
-) : GamesDiscoveryItemGameModelMapper {
+) : GamesDiscoveryItemGameUiModelMapper {
 
-    override fun mapToGameModel(game: Game): GamesDiscoveryItemGameModel {
-        return GamesDiscoveryItemGameModel(
+    override fun mapToUiModel(game: Game): GamesDiscoveryItemGameUiModel {
+        return GamesDiscoveryItemGameUiModel(
             id = game.id,
             title = game.name,
             coverUrl = game.cover?.let { cover ->
@@ -43,8 +43,8 @@ internal class GamesDiscoveryItemGameModelMapperImpl @Inject constructor(
     }
 }
 
-internal fun GamesDiscoveryItemGameModelMapper.mapToGameModels(
-    games: List<Game>
-): List<GamesDiscoveryItemGameModel> {
-    return games.map(::mapToGameModel)
+internal fun GamesDiscoveryItemGameUiModelMapper.mapToUiModels(
+    games: List<Game>,
+): List<GamesDiscoveryItemGameUiModel> {
+    return games.map(::mapToUiModel)
 }

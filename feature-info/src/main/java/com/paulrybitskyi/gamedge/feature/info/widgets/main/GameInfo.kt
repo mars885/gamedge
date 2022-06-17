@@ -51,21 +51,21 @@ import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetails
 import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreenshots
 import com.paulrybitskyi.gamedge.feature.info.widgets.GameInfoSummary
-import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanies
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeader
 import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinks
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToCategoryModels
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToCategoryUiModels
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.mapToInfoRelatedGameUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesType
-import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreenshotModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreenshotUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideos
 
 @Composable
@@ -115,11 +115,11 @@ private fun GameInfo(
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
-    onVideoClicked: (GameInfoVideoModel) -> Unit,
+    onVideoClicked: (GameInfoVideoUiModel) -> Unit,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
-    onLinkClicked: (GameInfoLinkModel) -> Unit,
-    onCompanyClicked: (GameInfoCompanyModel) -> Unit,
-    onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
+    onLinkClicked: (GameInfoLinkUiModel) -> Unit,
+    onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
+    onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
     Scaffold {
         AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
@@ -165,16 +165,16 @@ private fun EmptyState(modifier: Modifier) {
 
 @Composable
 private fun SuccessState(
-    gameInfo: GameInfoModel,
+    gameInfo: GameInfoUiModel,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
-    onVideoClicked: (GameInfoVideoModel) -> Unit,
+    onVideoClicked: (GameInfoVideoUiModel) -> Unit,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
-    onLinkClicked: (GameInfoLinkModel) -> Unit,
-    onCompanyClicked: (GameInfoCompanyModel) -> Unit,
-    onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
+    onLinkClicked: (GameInfoLinkUiModel) -> Unit,
+    onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
+    onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Content(
@@ -194,16 +194,16 @@ private fun SuccessState(
 
 @Composable
 private fun Content(
-    gameInfo: GameInfoModel,
+    gameInfo: GameInfoUiModel,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
-    onVideoClicked: (GameInfoVideoModel) -> Unit,
+    onVideoClicked: (GameInfoVideoUiModel) -> Unit,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
-    onLinkClicked: (GameInfoLinkModel) -> Unit,
-    onCompanyClicked: (GameInfoCompanyModel) -> Unit,
-    onRelatedGameClicked: (GameInfoRelatedGameModel) -> Unit,
+    onLinkClicked: (GameInfoLinkUiModel) -> Unit,
+    onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
+    onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.navigationBarsPadding(),
@@ -217,14 +217,14 @@ private fun Content(
             onLikeButtonClicked = onLikeButtonClicked,
         )
 
-        if (gameInfo.hasVideoModels) {
+        if (gameInfo.hasVideos) {
             videosItem(
                 videos = gameInfo.videoModels,
                 onVideoClicked = onVideoClicked,
             )
         }
 
-        if (gameInfo.hasScreenshotModels) {
+        if (gameInfo.hasScreenshots) {
             screenshotsItem(
                 screenshots = gameInfo.screenshotModels,
                 onScreenshotClicked = onScreenshotClicked,
@@ -235,18 +235,18 @@ private fun Content(
             summaryItem(model = checkNotNull(gameInfo.summary))
         }
 
-        if (gameInfo.hasDetailsModel) {
+        if (gameInfo.hasDetails) {
             detailsItem(model = checkNotNull(gameInfo.detailsModel))
         }
 
-        if (gameInfo.hasLinkModels) {
+        if (gameInfo.hasLinks) {
             linksItem(
                 model = gameInfo.linkModels,
                 onLinkClicked = onLinkClicked,
             )
         }
 
-        if (gameInfo.hasCompanyModels) {
+        if (gameInfo.hasCompanies) {
             companiesItem(
                 model = gameInfo.companyModels,
                 onCompanyClicked = onCompanyClicked,
@@ -270,7 +270,7 @@ private fun Content(
 }
 
 private fun LazyListScope.headerItem(
-    model: GameInfoHeaderModel,
+    model: GameInfoHeaderUiModel,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
@@ -288,8 +288,8 @@ private fun LazyListScope.headerItem(
 }
 
 private fun LazyListScope.videosItem(
-    videos: List<GameInfoVideoModel>,
-    onVideoClicked: (GameInfoVideoModel) -> Unit,
+    videos: List<GameInfoVideoUiModel>,
+    onVideoClicked: (GameInfoVideoUiModel) -> Unit,
 ) {
     item(key = GameInfoItem.Videos.id) {
         GameInfoVideos(
@@ -300,7 +300,7 @@ private fun LazyListScope.videosItem(
 }
 
 private fun LazyListScope.screenshotsItem(
-    screenshots: List<GameInfoScreenshotModel>,
+    screenshots: List<GameInfoScreenshotUiModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
     item(key = GameInfoItem.Screenshots.id) {
@@ -317,15 +317,15 @@ private fun LazyListScope.summaryItem(model: String) {
     }
 }
 
-private fun LazyListScope.detailsItem(model: GameInfoDetailsModel) {
+private fun LazyListScope.detailsItem(model: GameInfoDetailsUiModel) {
     item(key = GameInfoItem.Details.id) {
         GameInfoDetails(details = model)
     }
 }
 
 private fun LazyListScope.linksItem(
-    model: List<GameInfoLinkModel>,
-    onLinkClicked: (GameInfoLinkModel) -> Unit,
+    model: List<GameInfoLinkUiModel>,
+    onLinkClicked: (GameInfoLinkUiModel) -> Unit,
 ) {
     item(key = GameInfoItem.Links.id) {
         GameInfoLinks(
@@ -336,8 +336,8 @@ private fun LazyListScope.linksItem(
 }
 
 private fun LazyListScope.companiesItem(
-    model: List<GameInfoCompanyModel>,
-    onCompanyClicked: (GameInfoCompanyModel) -> Unit,
+    model: List<GameInfoCompanyUiModel>,
+    onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
 ) {
     item(key = GameInfoItem.Companies.id) {
         GameInfoCompanies(
@@ -348,8 +348,8 @@ private fun LazyListScope.companiesItem(
 }
 
 private fun LazyListScope.relatedGamesItem(
-    model: GameInfoRelatedGamesModel,
-    onGameClicked: (GameInfoRelatedGameModel) -> Unit,
+    model: GameInfoRelatedGamesUiModel,
+    onGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
     item(
         key = when (model.type) {
@@ -358,7 +358,7 @@ private fun LazyListScope.relatedGamesItem(
         }
     ) {
         val categoryGames = remember(model.items) {
-            model.items.mapToCategoryModels()
+            model.items.mapToCategoryUiModels()
         }
 
         GamesCategoryPreview(
@@ -366,7 +366,7 @@ private fun LazyListScope.relatedGamesItem(
             isProgressBarVisible = false,
             games = categoryGames,
             onCategoryGameClicked = {
-                onGameClicked(it.mapToInfoRelatedGameModel())
+                onGameClicked(it.mapToInfoRelatedGameUiModel())
             },
             topBarMargin = GamedgeTheme.spaces.spacing_2_5,
             isMoreButtonVisible = false,
@@ -494,11 +494,11 @@ private fun GameInfoLoadingStatePreview() {
 }
 
 @Suppress("LongMethod")
-private fun buildFakeGameModel(): GameInfoModel {
-    return GameInfoModel(
+private fun buildFakeGameModel(): GameInfoUiModel {
+    return GameInfoUiModel(
         id = 1,
-        headerModel = GameInfoHeaderModel(
-            artworks = listOf(GameInfoArtworkModel.DefaultImage),
+        headerModel = GameInfoHeaderUiModel(
+            artworks = listOf(GameInfoArtworkUiModel.DefaultImage),
             isLiked = true,
             coverImageUrl = null,
             title = "Elden Ring",
@@ -510,13 +510,13 @@ private fun buildFakeGameModel(): GameInfoModel {
             gameCategory = "Main",
         ),
         videoModels = listOf(
-            GameInfoVideoModel(
+            GameInfoVideoUiModel(
                 id = "1",
                 thumbnailUrl = "",
                 videoUrl = "",
                 title = "Announcement Trailer",
             ),
-            GameInfoVideoModel(
+            GameInfoVideoUiModel(
                 id = "2",
                 thumbnailUrl = "",
                 videoUrl = "",
@@ -524,18 +524,18 @@ private fun buildFakeGameModel(): GameInfoModel {
             ),
         ),
         screenshotModels = listOf(
-            GameInfoScreenshotModel(
+            GameInfoScreenshotUiModel(
                 id = "1",
                 url = "",
             ),
-            GameInfoScreenshotModel(
+            GameInfoScreenshotUiModel(
                 id = "2",
                 url = "",
             ),
         ),
         summary = "Elden Ring is an action-RPG open world game with RPG " +
             "elements such as stats, weapons and spells.",
-        detailsModel = GameInfoDetailsModel(
+        detailsModel = GameInfoDetailsUiModel(
             genresText = "Role-playing (RPG)",
             platformsText = "PC (Microsoft Windows) • PlayStation 4 • " +
                 "Xbox One • PlayStation 5 • Xbox Series X|S",
@@ -544,37 +544,37 @@ private fun buildFakeGameModel(): GameInfoModel {
             themesText = "Action",
         ),
         linkModels = listOf(
-            GameInfoLinkModel(
+            GameInfoLinkUiModel(
                 id = 1,
                 text = "Steam",
                 iconId = R.drawable.steam,
                 url = "",
             ),
-            GameInfoLinkModel(
+            GameInfoLinkUiModel(
                 id = 2,
                 text = "Official",
                 iconId = R.drawable.web,
                 url = "",
             ),
-            GameInfoLinkModel(
+            GameInfoLinkUiModel(
                 id = 3,
                 text = "Twitter",
                 iconId = R.drawable.twitter,
                 url = "",
             ),
-            GameInfoLinkModel(
+            GameInfoLinkUiModel(
                 id = 4,
                 text = "Subreddit",
                 iconId = R.drawable.reddit,
                 url = "",
             ),
-            GameInfoLinkModel(
+            GameInfoLinkUiModel(
                 id = 5,
                 text = "YouTube",
                 iconId = R.drawable.youtube,
                 url = "",
             ),
-            GameInfoLinkModel(
+            GameInfoLinkUiModel(
                 id = 6,
                 text = "Twitch",
                 iconId = R.drawable.twitch,
@@ -582,7 +582,7 @@ private fun buildFakeGameModel(): GameInfoModel {
             ),
         ),
         companyModels = listOf(
-            GameInfoCompanyModel(
+            GameInfoCompanyUiModel(
                 id = 1,
                 logoUrl = null,
                 logoWidth = 1400,
@@ -591,7 +591,7 @@ private fun buildFakeGameModel(): GameInfoModel {
                 name = "FromSoftware",
                 roles = "Main Developer",
             ),
-            GameInfoCompanyModel(
+            GameInfoCompanyUiModel(
                 id = 2,
                 logoUrl = null,
                 logoWidth = 500,
@@ -601,52 +601,52 @@ private fun buildFakeGameModel(): GameInfoModel {
                 roles = "Publisher",
             ),
         ),
-        otherCompanyGames = GameInfoRelatedGamesModel(
+        otherCompanyGames = GameInfoRelatedGamesUiModel(
             type = GameInfoRelatedGamesType.OTHER_COMPANY_GAMES,
             title = "More games by FromSoftware",
             items = listOf(
-                GameInfoRelatedGameModel(
+                GameInfoRelatedGameUiModel(
                     id = 1,
                     title = "Dark Souls",
                     coverUrl = null,
                 ),
-                GameInfoRelatedGameModel(
+                GameInfoRelatedGameUiModel(
                     id = 2,
                     title = "Dark Souls II",
                     coverUrl = null,
                 ),
-                GameInfoRelatedGameModel(
+                GameInfoRelatedGameUiModel(
                     id = 3,
                     title = "Lost Kingdoms",
                     coverUrl = null,
                 ),
-                GameInfoRelatedGameModel(
+                GameInfoRelatedGameUiModel(
                     id = 4,
                     title = "Lost Kingdoms II",
                     coverUrl = null,
                 ),
             ),
         ),
-        similarGames = GameInfoRelatedGamesModel(
+        similarGames = GameInfoRelatedGamesUiModel(
             type = GameInfoRelatedGamesType.SIMILAR_GAMES,
             title = "Similar Games",
             items = listOf(
-                GameInfoRelatedGameModel(
+                GameInfoRelatedGameUiModel(
                     id = 1,
                     title = "Nights of Azure 2: Bride of the New Moon",
                     coverUrl = null,
                 ),
-                GameInfoRelatedGameModel(
+                GameInfoRelatedGameUiModel(
                     id = 2,
                     title = "God Eater 3",
                     coverUrl = null,
                 ),
-                GameInfoRelatedGameModel(
+                GameInfoRelatedGameUiModel(
                     id = 3,
                     title = "Shadows: Awakening",
                     coverUrl = null,
                 ),
-                GameInfoRelatedGameModel(
+                GameInfoRelatedGameUiModel(
                     id = 3,
                     title = "SoulWorker",
                     coverUrl = null,

@@ -59,11 +59,11 @@ private val LogoMaxHeight = 150.dp
 
 @Composable
 internal fun GameInfoCompanies(
-    companies: List<GameInfoCompanyModel>,
-    onCompanyClicked: (GameInfoCompanyModel) -> Unit,
+    companies: List<GameInfoCompanyUiModel>,
+    onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
 ) {
     GameInfoSectionWithInnerList(title = stringResource(R.string.game_info_companies_title)) {
-        items(items = companies, key = GameInfoCompanyModel::id) { company ->
+        items(items = companies, key = GameInfoCompanyUiModel::id) { company ->
             Company(
                 company = company,
                 onCompanyClicked = { onCompanyClicked(company) },
@@ -74,7 +74,7 @@ internal fun GameInfoCompanies(
 
 @Composable
 private fun Company(
-    company: GameInfoCompanyModel,
+    company: GameInfoCompanyUiModel,
     onCompanyClicked: () -> Unit,
 ) {
     val logoImageSize = rememberLogoImageSize(company)
@@ -105,7 +105,7 @@ private fun Company(
 }
 
 @Composable
-private fun rememberLogoImageSize(company: GameInfoCompanyModel): IntSize {
+private fun rememberLogoImageSize(company: GameInfoCompanyUiModel): IntSize {
     val density = LocalDensity.current
 
     return remember(company.logoWidth, company.logoHeight) {
@@ -254,7 +254,7 @@ private fun GameInfoCompaniesPreview() {
     GamedgeTheme {
         GameInfoCompanies(
             companies = listOf(
-                GameInfoCompanyModel(
+                GameInfoCompanyUiModel(
                     id = 1,
                     logoUrl = null,
                     logoWidth = 1400,
@@ -263,7 +263,7 @@ private fun GameInfoCompaniesPreview() {
                     name = "FromSoftware",
                     roles = "Main Developer",
                 ),
-                GameInfoCompanyModel(
+                GameInfoCompanyUiModel(
                     id = 2,
                     logoUrl = null,
                     logoWidth = 500,

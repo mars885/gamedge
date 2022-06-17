@@ -19,10 +19,10 @@ package com.paulrybitskyi.gamedge.feature.likes
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelUiMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToGameModels
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToUiModels
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toEmptyState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toLoadingState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toSuccessState
@@ -53,7 +53,7 @@ private const val SUBSEQUENT_EMISSION_DELAY = 500L
 @HiltViewModel
 internal class LikedGamesViewModel @Inject constructor(
     private val observeLikedGamesUseCase: ObserveLikedGamesUseCase,
-    private val likedGameModelMapper: GameModelMapper,
+    private val likedGameModelUiMapper: GameModelUiMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
@@ -93,7 +93,7 @@ internal class LikedGamesViewModel @Inject constructor(
 
         gamesObservingJob = viewModelScope.launch {
             observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
-                .map(likedGameModelMapper::mapToGameModels)
+                .map(likedGameModelUiMapper::mapToUiModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { games -> currentUiState.toSuccessState(games) }
                 .onError {
@@ -138,7 +138,7 @@ internal class LikedGamesViewModel @Inject constructor(
         route(LikedGamesRoute.Search)
     }
 
-    fun onGameClicked(game: GameModel) {
+    fun onGameClicked(game: GameUiModel) {
         route(LikedGamesRoute.Info(game.id))
     }
 

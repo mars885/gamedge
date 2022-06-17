@@ -30,7 +30,7 @@ import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.Games
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
@@ -68,7 +68,7 @@ private fun LikedGames(
 private fun LikedGames(
     uiState: GamesUiState,
     onSearchButtonClicked: () -> Unit,
-    onGameClicked: (GameModel) -> Unit,
+    onGameClicked: (GameUiModel) -> Unit,
     onBottomReached: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

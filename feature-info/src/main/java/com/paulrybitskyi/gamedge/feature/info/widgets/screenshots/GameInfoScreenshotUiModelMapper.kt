@@ -14,37 +14,40 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.category
+package com.paulrybitskyi.gamedge.feature.info.widgets.screenshots
 
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
+import com.paulrybitskyi.gamedge.domain.games.entities.Image
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameCategoryModelMapper {
-    fun mapToGameCategoryModel(game: Game): GameCategoryModel
+internal interface GameInfoScreenshotUiModelMapper {
+    fun mapToUiModel(image: Image): GameInfoScreenshotUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameCategoryModelMapperImpl @Inject constructor(
+internal class GameInfoScreenshotUiModelMapperImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
-) : GameCategoryModelMapper {
+) : GameInfoScreenshotUiModelMapper {
 
-    override fun mapToGameCategoryModel(game: Game): GameCategoryModel {
-        return GameCategoryModel(
-            id = game.id,
-            title = game.name,
-            coverUrl = game.cover?.let { cover ->
-                igdbImageUrlFactory.createUrl(cover, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_COVER))
-            }
+    override fun mapToUiModel(image: Image): GameInfoScreenshotUiModel? {
+        val screenshotUrl = igdbImageUrlFactory.createUrl(
+            image,
+            IgdbImageUrlFactory.Config(IgdbImageSize.MEDIUM_SCREENSHOT),
+        ) ?: return null
+
+        return GameInfoScreenshotUiModel(
+            id = image.id,
+            url = screenshotUrl,
         )
     }
 }
 
-internal fun GameCategoryModelMapper.mapToGameCategoryModels(
-    games: List<Game>
-): List<GameCategoryModel> {
-    return games.map(::mapToGameCategoryModel)
+internal fun GameInfoScreenshotUiModelMapper.mapToUiModels(
+    images: List<Image>,
+): List<GameInfoScreenshotUiModel> {
+    if (images.isEmpty()) return emptyList()
+
+    return images.mapNotNull(::mapToUiModel)
 }

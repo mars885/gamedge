@@ -25,18 +25,18 @@ import com.paulrybitskyi.gamedge.domain.games.entities.Theme
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface GameInfoDetailsModelFactory {
-    fun createDetailsModel(game: Game): GameInfoDetailsModel?
+internal interface GameInfoDetailsUiModelMapper {
+    fun mapToUiModel(game: Game): GameInfoDetailsUiModel?
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoDetailsModelFactory {
+internal class GameInfoDetailsUiModelMapperImpl @Inject constructor() : GameInfoDetailsUiModelMapper {
 
     private companion object {
         private const val TEXT_SEPARATOR = " • "
     }
 
-    override fun createDetailsModel(game: Game): GameInfoDetailsModel? {
+    override fun mapToUiModel(game: Game): GameInfoDetailsUiModel? {
         @Suppress("ComplexCondition")
         if (game.genres.isEmpty() &&
             game.platforms.isEmpty() &&
@@ -47,7 +47,7 @@ internal class GameInfoDetailsModelFactoryImpl @Inject constructor() : GameInfoD
             return null
         }
 
-        return GameInfoDetailsModel(
+        return GameInfoDetailsUiModel(
             genresText = game.genresToText(),
             platformsText = game.platformsToText(),
             modesText = game.modesToText(),

@@ -37,11 +37,11 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.GetGameUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoModelFactory
-import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiModelMapper
+import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGameUiModel
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfoUiState
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.toEmptyState
 import com.paulrybitskyi.gamedge.feature.info.widgets.main.toLoadingState
@@ -70,7 +70,7 @@ internal class GameInfoViewModel @Inject constructor(
     @TransitionAnimationDuration
     transitionAnimationDuration: Long,
     private val useCases: GameInfoUseCases,
-    private val modelFactory: GameInfoModelFactory,
+    private val uiModelMapper: GameInfoUiModelMapper,
     private val gameUrlFactory: ImageViewerGameUrlFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
@@ -115,7 +115,7 @@ internal class GameInfoViewModel @Inject constructor(
                 )
             }
             .map { (game, isGameLiked, companyGames, similarGames) ->
-                modelFactory.createInfoModel(
+                uiModelMapper.mapToUiModel(
                     game,
                     isGameLiked,
                     companyGames,
@@ -217,7 +217,7 @@ internal class GameInfoViewModel @Inject constructor(
         }
     }
 
-    fun onVideoClicked(video: GameInfoVideoModel) {
+    fun onVideoClicked(video: GameInfoVideoUiModel) {
         openUrl(video.videoUrl)
     }
 
@@ -229,11 +229,11 @@ internal class GameInfoViewModel @Inject constructor(
         )
     }
 
-    fun onLinkClicked(link: GameInfoLinkModel) {
+    fun onLinkClicked(link: GameInfoLinkUiModel) {
         openUrl(link.url)
     }
 
-    fun onCompanyClicked(company: GameInfoCompanyModel) {
+    fun onCompanyClicked(company: GameInfoCompanyUiModel) {
         openUrl(company.websiteUrl)
     }
 
@@ -241,7 +241,7 @@ internal class GameInfoViewModel @Inject constructor(
         dispatchCommand(GameInfoCommand.OpenUrl(url))
     }
 
-    fun onRelatedGameClicked(game: GameInfoRelatedGameModel) {
+    fun onRelatedGameClicked(game: GameInfoRelatedGameUiModel) {
         route(GameInfoRoute.Info(gameId = game.id))
     }
 }

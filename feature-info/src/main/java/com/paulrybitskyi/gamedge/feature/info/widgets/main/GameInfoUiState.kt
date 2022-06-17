@@ -22,7 +22,7 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 @Immutable
 internal data class GameInfoUiState(
     val isLoading: Boolean,
-    val game: GameInfoModel?,
+    val game: GameInfoUiModel?,
 )
 
 internal val GameInfoUiState.finiteUiState: FiniteUiState
@@ -50,6 +50,6 @@ internal fun GameInfoUiState.toLoadingState(): GameInfoUiState {
     return copy(isLoading = true)
 }
 
-internal fun GameInfoUiState.toSuccessState(game: GameInfoModel): GameInfoUiState {
+internal fun GameInfoUiState.toSuccessState(game: GameInfoUiModel): GameInfoUiState {
     return copy(isLoading = false, game = game)
 }

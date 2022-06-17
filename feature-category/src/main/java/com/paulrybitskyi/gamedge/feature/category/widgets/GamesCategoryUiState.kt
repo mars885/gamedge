@@ -23,14 +23,14 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 internal data class GamesCategoryUiState(
     val isLoading: Boolean,
     val title: String,
-    val games: List<GameCategoryModel>,
+    val games: List<GameCategoryUiModel>,
 )
 
 @Immutable
-internal data class GameCategoryModel(
+internal data class GameCategoryUiModel(
     val id: Int,
     val title: String,
-    val coverUrl: String?
+    val coverUrl: String?,
 )
 
 internal val GamesCategoryUiState.finiteUiState: FiniteUiState
@@ -62,7 +62,7 @@ internal fun GamesCategoryUiState.toEmptyState(): GamesCategoryUiState {
 }
 
 internal fun GamesCategoryUiState.toSuccessState(
-    games: List<GameCategoryModel>
+    games: List<GameCategoryUiModel>
 ): GamesCategoryUiState {
     return copy(isLoading = false, games = games)
 }

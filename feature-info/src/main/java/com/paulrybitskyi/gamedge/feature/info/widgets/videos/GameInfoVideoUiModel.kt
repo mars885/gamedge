@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.links
+package com.paulrybitskyi.gamedge.feature.info.widgets.videos
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-internal data class GameInfoLinkModel(
-    val id: Int,
-    val text: String,
-    val iconId: Int,
-    val url: String,
+internal data class GameInfoVideoUiModel(
+    val id: String,
+    val thumbnailUrl: String,
+    val videoUrl: String,
+    val title: String,
 )

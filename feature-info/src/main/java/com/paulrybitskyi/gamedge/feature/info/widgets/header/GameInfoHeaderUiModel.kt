@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,25 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.videos
+package com.paulrybitskyi.gamedge.feature.info.widgets.header
 
 import androidx.compose.runtime.Immutable
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks.GameInfoArtworkUiModel
 
 @Immutable
-internal data class GameInfoVideoModel(
-    val id: String,
-    val thumbnailUrl: String,
-    val videoUrl: String,
+internal data class GameInfoHeaderUiModel(
+    val artworks: List<GameInfoArtworkUiModel>,
+    val isLiked: Boolean,
+    val coverImageUrl: String?,
     val title: String,
-)
+    val releaseDate: String,
+    val developerName: String?,
+    val rating: String,
+    val likeCount: String,
+    val ageRating: String,
+    val gameCategory: String,
+) {
+
+    val hasDeveloperName: Boolean
+        get() = (developerName != null)
+}

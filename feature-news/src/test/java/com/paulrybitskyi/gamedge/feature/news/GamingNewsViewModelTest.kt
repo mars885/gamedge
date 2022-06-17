@@ -28,8 +28,8 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
-import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemModelMapper
-import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemModel
+import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemUiModelMapper
+import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemUiModel
 import com.paulrybitskyi.gamedge.feature.news.widgets.finiteUiState
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -63,7 +63,7 @@ internal class GamingNewsViewModelTest {
         SUT = GamingNewsViewModel(
             observeArticlesUseCase = observeArticlesUseCase,
             refreshArticlesUseCase = refreshArticlesUseCase,
-            gamingNewsItemModelMapper = FakeGamingNewsItemModelMapper(),
+            gamingNewsItemUiModelMapper = FakeGamingNewsItemUiModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,
@@ -124,7 +124,7 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Dispatches url opening command when clicking on news item`() {
         runTest {
-            val itemModel = GamingNewsItemModel(
+            val itemModel = GamingNewsItemUiModel(
                 id = 1,
                 imageUrl = null,
                 title = "",
@@ -161,10 +161,10 @@ internal class GamingNewsViewModelTest {
         }
     }
 
-    private class FakeGamingNewsItemModelMapper : GamingNewsItemModelMapper {
+    private class FakeGamingNewsItemUiModelMapper : GamingNewsItemUiModelMapper {
 
-        override fun mapToGamingNewsItemModel(article: DomainArticle): GamingNewsItemModel {
-            return GamingNewsItemModel(
+        override fun mapToUiModel(article: DomainArticle): GamingNewsItemUiModel {
+            return GamingNewsItemUiModel(
                 id = article.id,
                 imageUrl = null,
                 title = article.title,

@@ -31,7 +31,8 @@ import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
-import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModel
+import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModelUiMapper
+import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.finiteUiState
 import com.paulrybitskyi.gamedge.feature.category.widgets.isRefreshing
 import io.mockk.MockKAnnotations
@@ -71,7 +72,7 @@ internal class GamesCategoryViewModelTest {
             stringProvider = FakeStringProvider(),
             transitionAnimationDuration = 0L,
             useCases = setupUseCases(),
-            gameCategoryModelMapper = FakeGameCategoryModelMapper(),
+            gameCategoryModelUiMapper = FakeGameCategoryModelUiMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,
@@ -203,7 +204,7 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Routes to game info screen when game is clicked`() {
         runTest {
-            val game = GameCategoryModel(
+            val game = GameCategoryUiModel(
                 id = 1,
                 title = "title",
                 coverUrl = null
@@ -220,10 +221,10 @@ internal class GamesCategoryViewModelTest {
         }
     }
 
-    private class FakeGameCategoryModelMapper : GameCategoryModelMapper {
+    private class FakeGameCategoryModelUiMapper : GameCategoryModelUiMapper {
 
-        override fun mapToGameCategoryModel(game: DomainGame): GameCategoryModel {
-            return GameCategoryModel(
+        override fun mapToUiModel(game: DomainGame): GameCategoryUiModel {
+            return GameCategoryUiModel(
                 id = game.id,
                 title = game.name,
                 coverUrl = null,

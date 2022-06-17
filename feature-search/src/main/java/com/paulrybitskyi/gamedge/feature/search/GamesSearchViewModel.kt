@@ -21,10 +21,10 @@ import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelMapper
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelUiMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToGameModels
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToUiModels
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toSuccessState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
@@ -51,7 +51,7 @@ private const val KEY_CONFIRMED_SEARCH_QUERY = "confirmed_search_query"
 @HiltViewModel
 internal class GamesSearchViewModel @Inject constructor(
     private val searchGamesUseCase: SearchGamesUseCase,
-    private val gameModelMapper: GameModelMapper,
+    private val gameModelUiMapper: GameModelUiMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
@@ -77,7 +77,7 @@ internal class GamesSearchViewModel @Inject constructor(
 
     private var useCaseParams = SearchGamesUseCase.Params(searchQuery = "")
 
-    private var allLoadedGames = emptyList<GameModel>()
+    private var allLoadedGames = emptyList<GameUiModel>()
 
     private val _uiState = MutableStateFlow(createGamesSearchEmptyUiState())
 
@@ -161,7 +161,7 @@ internal class GamesSearchViewModel @Inject constructor(
             flowOf(createGamesEmptyUiState())
         } else {
             searchGamesUseCase.execute(useCaseParams)
-                .map(gameModelMapper::mapToGameModels)
+                .map(gameModelUiMapper::mapToUiModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { games ->
                     currentUiState.gamesUiState.toSuccessState(
@@ -211,7 +211,7 @@ internal class GamesSearchViewModel @Inject constructor(
         // We do indeed provide game's ID as key ID for each composable inside LazyColumn
         // to improve performance in some cases. To fix that crash, we are filtering
         // duplicate entries using .distinctBy extension.
-        val totalGames = (oldGames + newGames).distinctBy(GameModel::id)
+        val totalGames = (oldGames + newGames).distinctBy(GameUiModel::id)
 
         return gamesUiState.toSuccessState(totalGames)
     }
@@ -235,7 +235,7 @@ internal class GamesSearchViewModel @Inject constructor(
         allLoadedGames = gamesUiState.games
     }
 
-    fun onGameClicked(game: GameModel) {
+    fun onGameClicked(game: GameUiModel) {
         route(GamesSearchRoute.Info(game.id))
     }
 

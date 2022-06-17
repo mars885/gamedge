@@ -24,7 +24,7 @@ data class GamesUiState(
     val isLoading: Boolean,
     val infoIconId: Int,
     val infoTitle: String,
-    val games: List<GameModel>,
+    val games: List<GameUiModel>,
 )
 
 val GamesUiState.finiteUiState: FiniteUiState
@@ -55,6 +55,6 @@ fun GamesUiState.toLoadingState(): GamesUiState {
     return copy(isLoading = true)
 }
 
-fun GamesUiState.toSuccessState(games: List<GameModel>): GamesUiState {
+fun GamesUiState.toSuccessState(games: List<GameUiModel>): GamesUiState {
     return copy(isLoading = false, games = games)
 }

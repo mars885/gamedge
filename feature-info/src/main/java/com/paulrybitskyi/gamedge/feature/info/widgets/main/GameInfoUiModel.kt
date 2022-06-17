@@ -17,44 +17,44 @@
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
 import androidx.compose.runtime.Immutable
-import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreenshotModel
-import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.companies.GameInfoCompanyUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.details.GameInfoDetailsUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.header.GameInfoHeaderUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.links.GameInfoLinkUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames.GameInfoRelatedGamesUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.screenshots.GameInfoScreenshotUiModel
+import com.paulrybitskyi.gamedge.feature.info.widgets.videos.GameInfoVideoUiModel
 
 @Immutable
-internal data class GameInfoModel(
+internal data class GameInfoUiModel(
     val id: Int,
-    val headerModel: GameInfoHeaderModel,
-    val videoModels: List<GameInfoVideoModel>,
-    val screenshotModels: List<GameInfoScreenshotModel>,
+    val headerModel: GameInfoHeaderUiModel,
+    val videoModels: List<GameInfoVideoUiModel>,
+    val screenshotModels: List<GameInfoScreenshotUiModel>,
     val summary: String?,
-    val detailsModel: GameInfoDetailsModel?,
-    val linkModels: List<GameInfoLinkModel>,
-    val companyModels: List<GameInfoCompanyModel>,
-    val otherCompanyGames: GameInfoRelatedGamesModel?,
-    val similarGames: GameInfoRelatedGamesModel?
+    val detailsModel: GameInfoDetailsUiModel?,
+    val linkModels: List<GameInfoLinkUiModel>,
+    val companyModels: List<GameInfoCompanyUiModel>,
+    val otherCompanyGames: GameInfoRelatedGamesUiModel?,
+    val similarGames: GameInfoRelatedGamesUiModel?,
 ) {
 
-    val hasVideoModels: Boolean
+    val hasVideos: Boolean
         get() = videoModels.isNotEmpty()
 
-    val hasScreenshotModels: Boolean
+    val hasScreenshots: Boolean
         get() = screenshotModels.isNotEmpty()
 
     val hasSummary: Boolean
         get() = ((summary != null) && summary.isNotBlank())
 
-    val hasDetailsModel: Boolean
+    val hasDetails: Boolean
         get() = (detailsModel != null)
 
-    val hasLinkModels: Boolean
+    val hasLinks: Boolean
         get() = linkModels.isNotEmpty()
 
-    val hasCompanyModels: Boolean
+    val hasCompanies: Boolean
         get() = companyModels.isNotEmpty()
 
     val hasOtherCompanyGames: Boolean

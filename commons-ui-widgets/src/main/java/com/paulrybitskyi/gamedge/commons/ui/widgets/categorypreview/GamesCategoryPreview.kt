@@ -50,8 +50,8 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.R
 fun GamesCategoryPreview(
     title: String,
     isProgressBarVisible: Boolean,
-    games: List<GamesCategoryPreviewItemModel>,
-    onCategoryGameClicked: (GamesCategoryPreviewItemModel) -> Unit,
+    games: List<GamesCategoryPreviewItemUiModel>,
+    onCategoryGameClicked: (GamesCategoryPreviewItemUiModel) -> Unit,
     topBarMargin: Dp = GamedgeTheme.spaces.spacing_2_0,
     isMoreButtonVisible: Boolean = true,
     onCategoryMoreButtonClicked: (() -> Unit)? = null,
@@ -152,11 +152,11 @@ private fun MoreButton(
 
 @Composable
 private fun ConstraintLayoutScope.Content(
-    games: List<GamesCategoryPreviewItemModel>,
+    games: List<GamesCategoryPreviewItemUiModel>,
     topBarBarrier: ConstraintLayoutBaseScope.HorizontalAnchor,
     infoRef: ConstrainedLayoutReference,
     itemsListRef: ConstrainedLayoutReference,
-    onCategoryGameClicked: (GamesCategoryPreviewItemModel) -> Unit,
+    onCategoryGameClicked: (GamesCategoryPreviewItemUiModel) -> Unit,
 ) {
     if (games.isEmpty()) {
         val infoBottomMargin = GamedgeTheme.spaces.spacing_7_0
@@ -200,9 +200,9 @@ private fun EmptyState(modifier: Modifier) {
 
 @Composable
 private fun SuccessState(
-    games: List<GamesCategoryPreviewItemModel>,
+    games: List<GamesCategoryPreviewItemUiModel>,
     modifier: Modifier,
-    onCategoryGameClicked: (GamesCategoryPreviewItemModel) -> Unit,
+    onCategoryGameClicked: (GamesCategoryPreviewItemUiModel) -> Unit,
 ) {
     val padding = GamedgeTheme.spaces.spacing_3_5
 
@@ -215,7 +215,7 @@ private fun SuccessState(
         ),
         horizontalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_1_5),
     ) {
-        items(items = games, key = GamesCategoryPreviewItemModel::id) { item ->
+        items(items = games, key = GamesCategoryPreviewItemUiModel::id) { item ->
             GameCover(
                 title = item.title,
                 imageUrl = item.coverUrl,
@@ -233,22 +233,22 @@ private fun GamesCategoryPreviewSuccessStateWithMoreButtonPreview() {
             title = "Popular",
             isProgressBarVisible = false,
             games = listOf(
-                GamesCategoryPreviewItemModel(
+                GamesCategoryPreviewItemUiModel(
                     id = 1,
                     title = "Ghost of Tsushima: Director's Cut",
                     coverUrl = null,
                 ),
-                GamesCategoryPreviewItemModel(
+                GamesCategoryPreviewItemUiModel(
                     id = 2,
                     title = "Outer Wilds: Echoes of the Eye",
                     coverUrl = null,
                 ),
-                GamesCategoryPreviewItemModel(
+                GamesCategoryPreviewItemUiModel(
                     id = 3,
                     title = "Kena: Bridge of Spirits",
                     coverUrl = null,
                 ),
-                GamesCategoryPreviewItemModel(
+                GamesCategoryPreviewItemUiModel(
                     id = 4,
                     title = "Forza Horizon 5",
                     coverUrl = null,
@@ -269,22 +269,22 @@ private fun GamesCategoryPreviewSuccessStateWithoutMoreButtonPreview() {
             isProgressBarVisible = false,
             isMoreButtonVisible = false,
             games = listOf(
-                GamesCategoryPreviewItemModel(
+                GamesCategoryPreviewItemUiModel(
                     id = 1,
                     title = "Ghost of Tsushima: Director's Cut",
                     coverUrl = null,
                 ),
-                GamesCategoryPreviewItemModel(
+                GamesCategoryPreviewItemUiModel(
                     id = 2,
                     title = "Outer Wilds: Echoes of the Eye",
                     coverUrl = null,
                 ),
-                GamesCategoryPreviewItemModel(
+                GamesCategoryPreviewItemUiModel(
                     id = 3,
                     title = "Kena: Bridge of Spirits",
                     coverUrl = null,
                 ),
-                GamesCategoryPreviewItemModel(
+                GamesCategoryPreviewItemUiModel(
                     id = 4,
                     title = "Forza Horizon 5",
                     coverUrl = null,

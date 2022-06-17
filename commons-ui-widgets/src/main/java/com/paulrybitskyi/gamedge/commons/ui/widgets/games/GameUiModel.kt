@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.widgets.screenshots
+package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-internal data class GameInfoScreenshotModel(
-    val id: String,
-    val url: String,
+data class GameUiModel(
+    val id: Int,
+    val coverImageUrl: String?,
+    val name: String,
+    val releaseDate: String,
+    val developerName: String?,
+    val description: String?
 )

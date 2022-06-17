@@ -36,7 +36,7 @@ import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.SearchToolbar
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModel
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.Games
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.finiteUiState
@@ -78,7 +78,7 @@ private fun GamesSearch(
     onBackButtonClicked: () -> Unit,
     onClearButtonClicked: () -> Unit,
     onQueryChanged: (query: String) -> Unit,
-    onGameClicked: (GameModel) -> Unit,
+    onGameClicked: (GameUiModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -141,7 +141,7 @@ private fun GamesSearchSuccessStatePreview() {
                     infoIconId = R.drawable.magnify,
                     infoTitle = "",
                     games = listOf(
-                        GameModel(
+                        GameUiModel(
                             id = 1,
                             coverImageUrl = null,
                             name = "God of War",
@@ -150,7 +150,7 @@ private fun GamesSearchSuccessStatePreview() {
                             description = "Very very very very very very very very very " +
                                     "very very very very very very very very long description",
                         ),
-                        GameModel(
+                        GameUiModel(
                             id = 2,
                             coverImageUrl = null,
                             name = "God of War II",
@@ -159,7 +159,7 @@ private fun GamesSearchSuccessStatePreview() {
                             description = "Very very very very very very very very very " +
                                     "very very very very very very very very long description",
                         ),
-                        GameModel(
+                        GameUiModel(
                             id = 3,
                             coverImageUrl = null,
                             name = "God of War II HD",

@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.commons.ui.widgets.games
+package com.paulrybitskyi.gamedge.feature.info.widgets.relatedgames
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class GameModel(
+internal data class GameInfoRelatedGameUiModel(
     val id: Int,
-    val coverImageUrl: String?,
-    val name: String,
-    val releaseDate: String,
-    val developerName: String?,
-    val description: String?
+    val title: String,
+    val coverUrl: String?,
 )
