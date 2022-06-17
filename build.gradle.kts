@@ -84,16 +84,11 @@ subprojects {
 
         kotlinOptions {
             freeCompilerArgs += listOf(
-                "-Xopt-in=kotlin.time.ExperimentalTime",
-                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xopt-in=kotlinx.coroutines.FlowPreview",
-                "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
                 "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
                 "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
                 "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
                 "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
                 "-Xopt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
-                "-Xopt-in=coil.annotation.ExperimentalCoilApi",
                 "-Xopt-in=com.google.accompanist.pager.ExperimentalPagerApi",
             )
 
