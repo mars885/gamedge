@@ -59,6 +59,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val PARAM_GAME_ID = "game-id"
@@ -135,7 +136,7 @@ internal class GameInfoViewModel @Inject constructor(
                 delay(resultEmissionDelay)
             }
             .onCompletion { isObservingGameData = false }
-            .collect { _uiState.value = it }
+            .collect { emittedUiState -> _uiState.update { emittedUiState } }
     }
 
     private suspend fun getGame(): Flow<Game> {
