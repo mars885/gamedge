@@ -42,9 +42,9 @@ import org.junit.Before
 import org.junit.Test
 
 private val API_GAMES = listOf(
-    ApiGame(id = 1),
-    ApiGame(id = 2),
-    ApiGame(id = 3)
+    ApiGame(id = 1, name = "name1"),
+    ApiGame(id = 2, name = "name2"),
+    ApiGame(id = 3, name = "name3"),
 )
 
 internal class GamesIgdbDataStoreTest {
