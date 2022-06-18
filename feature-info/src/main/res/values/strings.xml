@@ -20,6 +20,7 @@
     <string name="game_info_info_view_title">No Data Available</string>
     <string name="game_info_header_page_indicator_template">%1$d/%2$d</string>
     <string name="game_info_videos_title">Videos</string>
+    <string name="game_info_video_title_fallback">Video</string>
     <string name="game_info_screenshots_title">Screenshots</string>
     <string name="game_info_summary_title">Summary</string>
     <string name="game_info_details_title">Details</string>

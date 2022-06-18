@@ -26,10 +26,10 @@ import kotlinx.serialization.Serializable
 internal data class Platform(
     @Apicalypse(Schema.ABBREVIATION)
     @SerialName(Schema.ABBREVIATION)
-    val abbreviation: String = "",
+    val abbreviation: String? = null,
     @Apicalypse(Schema.NAME)
     @SerialName(Schema.NAME)
-    val name: String = "",
+    val name: String,
 ) {
 
     object Schema {

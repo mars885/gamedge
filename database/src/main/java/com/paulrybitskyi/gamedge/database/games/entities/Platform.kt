@@ -20,6 +20,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class Platform(
-    val abbreviation: String,
+    val abbreviation: String?,
     val name: String,
 )

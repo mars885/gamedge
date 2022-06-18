@@ -85,7 +85,7 @@ internal class GameMapper @Inject constructor() {
             keywords = game.keywords.toDomainKeywords(),
             involvedCompanies = game.involvedCompanies.toDomainInvolvedCompanies(),
             websites = game.websites.toDomainWebsites(),
-            similarGames = game.similarGames
+            similarGames = game.similarGames,
         )
     }
 
@@ -97,7 +97,7 @@ internal class GameMapper @Inject constructor() {
         return DomainImage(
             id = id,
             width = width,
-            height = height
+            height = height,
         )
     }
 
@@ -110,7 +110,7 @@ internal class GameMapper @Inject constructor() {
             DomainReleaseDate(
                 date = it.date,
                 year = it.year,
-                category = DomainReleaseDateCategory.valueOf(it.category.name)
+                category = DomainReleaseDateCategory.valueOf(it.category.name),
             )
         }
     }
@@ -119,7 +119,7 @@ internal class GameMapper @Inject constructor() {
         return map {
             DomainAgeRating(
                 category = DomainAgeRatingCategory.valueOf(it.category.name),
-                type = DomainAgeRatingType.valueOf(it.type.name)
+                type = DomainAgeRatingType.valueOf(it.type.name),
             )
         }
     }
@@ -128,7 +128,7 @@ internal class GameMapper @Inject constructor() {
         return map {
             DomainVideo(
                 id = it.id,
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -136,7 +136,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<DataGenre>.toDomainGenres(): List<DomainGenre> {
         return map {
             DomainGenre(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -145,7 +145,7 @@ internal class GameMapper @Inject constructor() {
         return map {
             DomainPlatform(
                 abbreviation = it.abbreviation,
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -153,7 +153,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<DataPlayerPerspective>.toDomainPlayerPerspectives(): List<DomainPlayerPerspective> {
         return map {
             DomainPlayerPerspective(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -161,7 +161,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<DataTheme>.toDomainThemes(): List<DomainTheme> {
         return map {
             DomainTheme(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -169,7 +169,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<DataMode>.toDomainModes(): List<DomainMode> {
         return map {
             DomainMode(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -177,7 +177,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<DataKeyword>.toDomainKeywords(): List<DomainKeyword> {
         return map {
             DomainKeyword(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -189,7 +189,7 @@ internal class GameMapper @Inject constructor() {
                 isDeveloper = it.isDeveloper,
                 isPublisher = it.isPublisher,
                 isPorter = it.isPorter,
-                isSupporting = it.isSupporting
+                isSupporting = it.isSupporting,
             )
         }
     }
@@ -200,7 +200,7 @@ internal class GameMapper @Inject constructor() {
             name = name,
             websiteUrl = websiteUrl,
             logo = logo?.toDomainImage(),
-            developedGames = developedGames
+            developedGames = developedGames,
         )
     }
 
@@ -209,7 +209,7 @@ internal class GameMapper @Inject constructor() {
             DomainWebsite(
                 id = it.id,
                 url = it.url,
-                category = DomainWebsiteCategory.valueOf(it.category.name)
+                category = DomainWebsiteCategory.valueOf(it.category.name),
             )
         }
     }
@@ -241,7 +241,7 @@ internal class GameMapper @Inject constructor() {
             keywords = game.keywords.toDataKeywords(),
             involvedCompanies = game.involvedCompanies.toDataInvolvedCompanies(),
             websites = game.websites.toDataWebsites(),
-            similarGames = game.similarGames
+            similarGames = game.similarGames,
         )
     }
 
@@ -253,7 +253,7 @@ internal class GameMapper @Inject constructor() {
         return DataImage(
             id = id,
             width = width,
-            height = height
+            height = height,
         )
     }
 
@@ -266,7 +266,7 @@ internal class GameMapper @Inject constructor() {
             DataReleaseDate(
                 date = it.date,
                 year = it.year,
-                category = DataReleaseDateCategory.valueOf(it.category.name)
+                category = DataReleaseDateCategory.valueOf(it.category.name),
             )
         }
     }
@@ -275,7 +275,7 @@ internal class GameMapper @Inject constructor() {
         return map {
             DataAgeRating(
                 category = DataAgeRatingCategory.valueOf(it.category.name),
-                type = DataAgeRatingType.valueOf(it.type.name)
+                type = DataAgeRatingType.valueOf(it.type.name),
             )
         }
     }
@@ -284,7 +284,7 @@ internal class GameMapper @Inject constructor() {
         return map {
             DataVideo(
                 id = it.id,
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -292,7 +292,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<DomainGenre>.toDataGenres(): List<DataGenre> {
         return map {
             DataGenre(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -301,7 +301,7 @@ internal class GameMapper @Inject constructor() {
         return map {
             DataPlatform(
                 abbreviation = it.abbreviation,
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -309,7 +309,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<DomainPlayerPerspective>.toDataPlayerPerspectives(): List<DataPlayerPerspective> {
         return map {
             DataPlayerPerspective(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -317,7 +317,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<DomainTheme>.toDataThemes(): List<DataTheme> {
         return map {
             DataTheme(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -325,7 +325,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<DomainMode>.toDataModes(): List<DataMode> {
         return map {
             DataMode(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -333,7 +333,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<DomainKeyword>.toDataKeywords(): List<DataKeyword> {
         return map {
             DataKeyword(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -345,7 +345,7 @@ internal class GameMapper @Inject constructor() {
                 isDeveloper = it.isDeveloper,
                 isPublisher = it.isPublisher,
                 isPorter = it.isPorter,
-                isSupporting = it.isSupporting
+                isSupporting = it.isSupporting,
             )
         }
     }
@@ -356,7 +356,7 @@ internal class GameMapper @Inject constructor() {
             name = company.name,
             websiteUrl = company.websiteUrl,
             logo = company.logo?.toDataImage(),
-            developedGames = company.developedGames
+            developedGames = company.developedGames,
         )
     }
 
@@ -365,7 +365,7 @@ internal class GameMapper @Inject constructor() {
             DataWebsite(
                 id = it.id,
                 url = it.url,
-                category = DataWebsiteCategory.valueOf(it.category.name)
+                category = DataWebsiteCategory.valueOf(it.category.name),
             )
         }
     }

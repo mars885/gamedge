@@ -26,7 +26,7 @@ import kotlinx.serialization.Serializable
 internal data class Game(
     @Apicalypse(Schema.ID)
     @SerialName(Schema.ID)
-    val id: Int = -1,
+    val id: Int,
     @Apicalypse(Schema.FOLLOWER_COUNT)
     @SerialName(Schema.FOLLOWER_COUNT)
     val followerCount: Int? = null,
@@ -47,7 +47,7 @@ internal data class Game(
     val totalRating: Double? = null,
     @Apicalypse(Schema.NAME)
     @SerialName(Schema.NAME)
-    val name: String = "",
+    val name: String,
     @Apicalypse(Schema.SUMMARY)
     @SerialName(Schema.SUMMARY)
     val summary: String? = null,
