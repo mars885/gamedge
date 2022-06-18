@@ -45,6 +45,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val MAX_ARTICLE_COUNT = 100
@@ -105,7 +106,7 @@ internal class GamingNewsViewModel @Inject constructor(
                     emit(currentUiState.toLoadingState())
                 }
                 .onCompletion { isObservingArticles = false }
-                .collect { _uiState.value = it }
+                .collect { emittedUiState -> _uiState.update { emittedUiState } }
         }
     }
 
@@ -146,7 +147,7 @@ internal class GamingNewsViewModel @Inject constructor(
                 .onCompletion {
                     emit(currentUiState.disableRefreshing())
                 }
-                .collect { _uiState.value = it }
+                .collect { emittedUiState -> _uiState.update { emittedUiState } }
         }
     }
 }

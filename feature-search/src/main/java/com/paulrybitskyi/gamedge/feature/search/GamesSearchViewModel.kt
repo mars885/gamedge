@@ -185,10 +185,10 @@ internal class GamesSearchViewModel @Inject constructor(
                 }
                 .map(::combineWithAlreadyLoadedGames)
         }
-        .collect {
-            configureNextLoad(it)
-            updateTotalGamesResult(it)
-            _uiState.update { uiState -> uiState.copy(gamesUiState = it) }
+        .collect { emittedUiState ->
+            configureNextLoad(emittedUiState)
+            updateTotalGamesResult(emittedUiState)
+            _uiState.update { it.copy(gamesUiState = emittedUiState) }
         }
     }
 

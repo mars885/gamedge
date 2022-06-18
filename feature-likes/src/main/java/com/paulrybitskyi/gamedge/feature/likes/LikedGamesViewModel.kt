@@ -46,6 +46,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val SUBSEQUENT_EMISSION_DELAY = 500L
@@ -110,9 +111,9 @@ internal class LikedGamesViewModel @Inject constructor(
                     if (isSubsequentEmission()) delay(SUBSEQUENT_EMISSION_DELAY)
                 }
                 .onCompletion { isObservingGames = false }
-                .collect {
-                    configureNextLoad(it)
-                    _uiState.value = it
+                .collect { emittedUiState ->
+                    configureNextLoad(emittedUiState)
+                    _uiState.update { emittedUiState }
                 }
         }
     }

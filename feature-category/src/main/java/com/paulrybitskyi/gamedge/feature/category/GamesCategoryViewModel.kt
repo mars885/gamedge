@@ -49,6 +49,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -92,9 +93,9 @@ internal class GamesCategoryViewModel @Inject constructor(
         gamesCategory = GamesCategory.valueOf(checkNotNull(savedStateHandle.get<String>(PARAM_GAMES_CATEGORY)))
         gamesCategoryKeyType = gamesCategory.toKeyType()
 
-        _uiState.value = currentUiState.copy(
-            title = stringProvider.getString(gamesCategory.titleId)
-        )
+        _uiState.update {
+            it.copy(title = stringProvider.getString(gamesCategory.titleId))
+        }
 
         observeGames(resultEmissionDelay = transitionAnimationDuration)
         refreshGames()
@@ -128,9 +129,9 @@ internal class GamesCategoryViewModel @Inject constructor(
                     delay(resultEmissionDelay)
                 }
                 .onCompletion { isObservingGames = false }
-                .collect {
-                    configureNextLoad(it)
-                    _uiState.value = it
+                .collect { emittedUiState ->
+                    configureNextLoad(emittedUiState)
+                    _uiState.update { emittedUiState }
                 }
         }
     }
@@ -165,7 +166,7 @@ internal class GamesCategoryViewModel @Inject constructor(
                     emit(currentUiState.toLoadingState())
                 }
                 .onCompletion { isRefreshingGames = false }
-                .collect { _uiState.value = it }
+                .collect { emittedUiState -> _uiState.update { emittedUiState } }
         }
     }
 

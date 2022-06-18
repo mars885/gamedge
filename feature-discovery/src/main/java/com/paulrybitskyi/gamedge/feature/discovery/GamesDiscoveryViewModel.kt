@@ -45,6 +45,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -78,14 +79,16 @@ internal class GamesDiscoveryViewModel @Inject constructor(
     }
 
     private fun initDiscoveryItemsData() {
-        _items.value = GamesDiscoveryCategory.values().map { category ->
-            GamesDiscoveryItemUiModel(
-                id = category.id,
-                categoryName = category.name,
-                title = stringProvider.getString(category.titleId),
-                isProgressBarVisible = false,
-                games = emptyList(),
-            )
+        _items.update {
+            GamesDiscoveryCategory.values().map { category ->
+                GamesDiscoveryItemUiModel(
+                    id = category.id,
+                    categoryName = category.name,
+                    title = stringProvider.getString(category.titleId),
+                    isProgressBarVisible = false,
+                    games = emptyList(),
+                )
+            }
         }
     }
 
@@ -101,7 +104,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
             .onError { logger.error(logTag, "Failed to observe games.", it) }
             .onStart { isObservingGames = true }
             .onCompletion { isObservingGames = false }
-            .collect { _items.value = it }
+            .collect { emittedItems -> _items.update { emittedItems } }
         }
     }
 
@@ -133,7 +136,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
                 isRefreshingGames = false
                 emit(currentItems.hideProgressBar())
             }
-            .collect { _items.value = it }
+            .collect { emittedItems -> _items.update { emittedItems } }
         }
     }
 
