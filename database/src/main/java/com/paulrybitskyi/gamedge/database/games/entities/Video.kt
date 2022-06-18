@@ -21,5 +21,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class Video(
     val id: String,
-    val name: String
+    val name: String?,
 )

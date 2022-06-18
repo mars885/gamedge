@@ -29,7 +29,7 @@ internal data class Video(
     val id: String,
     @Apicalypse(Schema.NAME)
     @SerialName(Schema.NAME)
-    val name: String
+    val name: String? = null,
 ) {
 
     object Schema {

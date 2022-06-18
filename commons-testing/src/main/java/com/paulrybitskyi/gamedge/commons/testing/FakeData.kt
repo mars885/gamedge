@@ -73,28 +73,28 @@ val DOMAIN_GAME = DomainGame(
     keywords = listOf(),
     involvedCompanies = listOf(),
     websites = listOf(),
-    similarGames = listOf()
+    similarGames = listOf(),
 )
 val DOMAIN_GAMES = listOf(
     DOMAIN_GAME.copy(id = 1),
     DOMAIN_GAME.copy(id = 2),
-    DOMAIN_GAME.copy(id = 3)
+    DOMAIN_GAME.copy(id = 3),
 )
 val DOMAIN_IMAGE = DomainImage(
     id = "id",
     width = 500,
-    height = 1000
+    height = 1000,
 )
 val DOMAIN_VIDEO = DomainVideo(
     id = "id",
-    name = "name"
+    name = "name",
 )
 val DOMAIN_COMPANY = DomainCompany(
     id = 1,
     name = "name",
     websiteUrl = "url",
     logo = null,
-    developedGames = listOf(1, 2, 3)
+    developedGames = listOf(1, 2, 3),
 )
 val DATA_GAME = DataGame(
     id = 1,
@@ -122,19 +122,19 @@ val DATA_GAME = DataGame(
     keywords = listOf(),
     involvedCompanies = listOf(),
     websites = listOf(),
-    similarGames = listOf()
+    similarGames = listOf(),
 )
 val DATA_GAMES = listOf(
     DATA_GAME.copy(id = 1),
     DATA_GAME.copy(id = 2),
-    DATA_GAME.copy(id = 3)
+    DATA_GAME.copy(id = 3),
 )
 val DATA_COMPANY = DataCompany(
     id = 1,
     name = "name",
     websiteUrl = "website_url",
     logo = null,
-    developedGames = listOf(1, 2, 3)
+    developedGames = listOf(1, 2, 3),
 )
 
 val DOMAIN_ARTICLE = DomainArticle(
@@ -143,7 +143,7 @@ val DOMAIN_ARTICLE = DomainArticle(
     lede = "lede",
     imageUrls = emptyMap(),
     publicationDate = 500L,
-    siteDetailUrl = "site_detail_url"
+    siteDetailUrl = "site_detail_url",
 )
 val DOMAIN_ARTICLES = listOf(
     DOMAIN_ARTICLE.copy(id = 1),
@@ -156,7 +156,7 @@ val DATA_ARTICLE = DataArticle(
     lede = "lede",
     imageUrls = emptyMap(),
     publicationDate = 500L,
-    siteDetailUrl = "site_detail_url"
+    siteDetailUrl = "site_detail_url",
 )
 val DATA_ARTICLES = listOf(
     DATA_ARTICLE.copy(id = 1),
@@ -167,12 +167,12 @@ val DATA_ARTICLES = listOf(
 val DOMAIN_OAUTH_CREDENTIALS = DomainOauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",
-    tokenTtl = 5000L
+    tokenTtl = 5000L,
 )
 val DATA_OAUTH_CREDENTIALS = DataOauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",
-    tokenTtl = 5000L
+    tokenTtl = 5000L,
 )
 
 val DOMAIN_PAGINATION = DomainPagination(offset = 0, limit = 20)
@@ -196,11 +196,11 @@ val TOGGLE_GAME_LIKE_STATE_USE_CASE_PARAMS = ToggleGameLikeStateUseCase.Params(g
 val GET_GAME_USE_CASE_PARAMS = GetGameUseCase.Params(gameId = 10)
 val GET_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS = GetCompanyDevelopedGamesUseCase.Params(
     DOMAIN_COMPANY,
-    DOMAIN_PAGINATION
+    DOMAIN_PAGINATION,
 )
 val REFRESH_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS = RefreshCompanyDevelopedGamesUseCase.Params(
     DOMAIN_COMPANY,
-    DOMAIN_PAGINATION
+    DOMAIN_PAGINATION,
 )
 val GET_SIMILAR_GAMES_USE_CASE_PARAMS = GetSimilarGamesUseCase.Params(DOMAIN_GAME, DOMAIN_PAGINATION)
 val REFRESH_SIMILAR_GAMES_USE_CASE_PARAMS = RefreshSimilarGamesUseCase.Params(DOMAIN_GAME, DOMAIN_PAGINATION)

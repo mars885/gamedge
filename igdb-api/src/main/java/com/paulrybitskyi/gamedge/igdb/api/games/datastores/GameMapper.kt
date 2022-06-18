@@ -81,7 +81,7 @@ internal class GameMapper @Inject constructor() {
             keywords = apiGame.keywords.toDataKeywords(),
             involvedCompanies = apiGame.involvedCompanies.toDataInvolvedCompanies(),
             websites = apiGame.websites.toDataWebsites(),
-            similarGames = apiGame.similarGames
+            similarGames = apiGame.similarGames,
         )
     }
 
@@ -93,7 +93,7 @@ internal class GameMapper @Inject constructor() {
         return DataImage(
             id = id,
             width = width,
-            height = height
+            height = height,
         )
     }
 
@@ -105,7 +105,7 @@ internal class GameMapper @Inject constructor() {
         return map {
             DataVideo(
                 id = it.id,
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -115,7 +115,7 @@ internal class GameMapper @Inject constructor() {
             DataReleaseDate(
                 date = it.date,
                 year = it.year,
-                category = DataReleaseDateCategory.valueOf(it.category.name)
+                category = DataReleaseDateCategory.valueOf(it.category.name),
             )
         }
     }
@@ -124,7 +124,7 @@ internal class GameMapper @Inject constructor() {
         return map {
             DataAgeRating(
                 category = DataAgeRatingCategory.valueOf(it.category.name),
-                type = DataAgeRatingType.valueOf(it.type.name)
+                type = DataAgeRatingType.valueOf(it.type.name),
             )
         }
     }
@@ -132,7 +132,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<ApiGenre>.toDataGenres(): List<DataGenre> {
         return map {
             DataGenre(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -141,7 +141,7 @@ internal class GameMapper @Inject constructor() {
         return map {
             DataPlatform(
                 abbreviation = it.abbreviation,
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -149,7 +149,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<ApiPlayerPerspective>.toDataPlayerPerspectives(): List<DataPlayerPerspective> {
         return map {
             DataPlayerPerspective(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -157,7 +157,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<ApiTheme>.toDataThemes(): List<DataTheme> {
         return map {
             DataTheme(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -165,7 +165,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<ApiMode>.toDataModes(): List<DataMode> {
         return map {
             DataMode(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -173,7 +173,7 @@ internal class GameMapper @Inject constructor() {
     private fun List<ApiKeyword>.toDataKeywords(): List<DataKeyword> {
         return map {
             DataKeyword(
-                name = it.name
+                name = it.name,
             )
         }
     }
@@ -185,7 +185,7 @@ internal class GameMapper @Inject constructor() {
                 isDeveloper = it.isDeveloper,
                 isPublisher = it.isPublisher,
                 isPorter = it.isPorter,
-                isSupporting = it.isSupporting
+                isSupporting = it.isSupporting,
             )
         }
     }
@@ -196,7 +196,7 @@ internal class GameMapper @Inject constructor() {
             name = name,
             websiteUrl = websiteUrl,
             logo = logo?.toDataImage(),
-            developedGames = developedGames
+            developedGames = developedGames,
         )
     }
 
@@ -205,7 +205,7 @@ internal class GameMapper @Inject constructor() {
             DataWebsite(
                 id = it.id,
                 url = it.url,
-                category = DataWebsiteCategory.valueOf(it.category.name)
+                category = DataWebsiteCategory.valueOf(it.category.name),
             )
         }
     }

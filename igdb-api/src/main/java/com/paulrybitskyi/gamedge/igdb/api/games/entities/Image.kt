@@ -29,10 +29,10 @@ internal data class Image(
     val id: String,
     @Apicalypse(Schema.WIDTH)
     @SerialName(Schema.WIDTH)
-    val width: Int?,
+    val width: Int? = null,
     @Apicalypse(Schema.HEIGHT)
     @SerialName(Schema.HEIGHT)
-    val height: Int?,
+    val height: Int? = null,
 ) {
 
     object Schema {
