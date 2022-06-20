@@ -51,7 +51,7 @@ dependencies {
 
     implementation(deps.androidX.room)
     implementation(deps.androidX.roomKtx)
-    kapt(deps.androidX.roomCompiler)
+    ksp(deps.androidX.roomCompiler)
 
     implementation(deps.google.daggerHilt)
     kapt(deps.google.daggerHiltCompiler)
