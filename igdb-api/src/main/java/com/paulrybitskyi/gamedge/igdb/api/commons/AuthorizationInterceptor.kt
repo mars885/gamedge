@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.commons
 
 import com.paulrybitskyi.gamedge.commons.api.HttpHeaders
+import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
 import kotlinx.coroutines.runBlocking
@@ -24,21 +25,28 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 internal class AuthorizationInterceptor(
+    private val authLocalDataStore: AuthLocalDataStore,
     private val authorizer: Authorizer,
-    private val clientId: String
+    private val clientId: String,
 ) : Interceptor {
 
-    private val authorizationHeader by lazy {
-        runBlocking { authorizer.buildAuthorizationHeader(AuthorizationType.BEARER) }
-    }
-
-    override fun intercept(chain: Interceptor.Chain): Response {
+    override fun intercept(chain: Interceptor.Chain): Response = runBlocking {
+        val authorizationHeader = authorizer.buildAuthorizationHeader(
+            type = AuthorizationType.BEARER,
+            token = getAccessToken(),
+        )
         val authorizedRequest = chain.request()
             .newBuilder()
             .addHeader(ApiHeaders.CLIENT_ID, clientId)
             .addHeader(HttpHeaders.AUTHORIZATION, authorizationHeader)
             .build()
 
-        return chain.proceed(authorizedRequest)
+        chain.proceed(authorizedRequest)
+    }
+
+    private suspend fun getAccessToken(): String {
+        return authLocalDataStore.getOauthCredentials()
+            ?.accessToken
+            .orEmpty()
     }
 }

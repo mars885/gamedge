@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.igdb.api.commons.di
 import com.paulrybitskyi.gamedge.commons.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.commons.api.addInterceptorAsFirstInChain
 import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
+import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.commons.AuthorizationInterceptor
 import com.paulrybitskyi.gamedge.igdb.api.commons.TwitchConstantsProvider
@@ -27,6 +28,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Authenticator
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
 
@@ -39,10 +41,12 @@ internal object CommonsModule {
     @IgdbApi
     fun provideOkHttpClient(
         okHttpClient: OkHttpClient,
-        authorizationInterceptor: AuthorizationInterceptor
+        authorizationInterceptor: AuthorizationInterceptor,
+        authenticator: Authenticator,
     ): OkHttpClient {
         return okHttpClient.newBuilder()
             .addInterceptorAsFirstInChain(authorizationInterceptor)
+            .authenticator(authenticator)
             .build()
     }
 
@@ -56,10 +60,12 @@ internal object CommonsModule {
 
     @Provides
     fun provideAuthorizationInterceptor(
+        authLocalDataStore: AuthLocalDataStore,
         authorizer: Authorizer,
         twitchConstantsProvider: TwitchConstantsProvider
     ): AuthorizationInterceptor {
         return AuthorizationInterceptor(
+            authLocalDataStore = authLocalDataStore,
             authorizer = authorizer,
             clientId = twitchConstantsProvider.clientId
         )

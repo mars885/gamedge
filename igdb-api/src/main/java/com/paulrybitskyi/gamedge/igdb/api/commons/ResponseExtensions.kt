@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.igdb.api.auth
+package com.paulrybitskyi.gamedge.igdb.api.commons
 
-import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
-import javax.inject.Inject
+import okhttp3.Response
 
-internal class Authorizer @Inject constructor() {
+internal val Response.responseCount: Int
+    get() {
+        var result = 1
+        var response: Response? = priorResponse
 
-    fun buildAuthorizationHeader(type: AuthorizationType, token: String): String {
-        return buildString {
-            append(type.rawType)
-            append(" ")
-            append(token)
+        while (response != null) {
+            result++
+
+            response = response.priorResponse
         }
+
+        return result
     }
-}

@@ -18,5 +18,13 @@ package com.paulrybitskyi.gamedge.igdb.api.auth.entities
 
 internal enum class AuthorizationType(val rawType: String) {
     BASIC("Basic"),
-    BEARER("Bearer")
+    BEARER("Bearer");
+
+    companion object {
+
+        fun forRawType(rawType: String): AuthorizationType {
+            return values().find { it.rawType == rawType }
+                ?: throw IllegalArgumentException("No auth type with raw type = $rawType.")
+        }
+    }
 }
