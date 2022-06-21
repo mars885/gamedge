@@ -94,9 +94,11 @@ object deps {
 
     object androidX {
 
+        private const val splashVersion = "1.0.0-rc01"
         private const val browserVersion = "1.4.0"
         private const val dataStoreVersion = "1.0.0"
 
+        const val splash = "androidx.core:core-splashscreen:$splashVersion"
         const val browser = "androidx.browser:browser:${browserVersion}"
         const val room = "androidx.room:room-runtime:${versions.room}"
         const val roomKtx = "androidx.room:room-ktx:${versions.room}"

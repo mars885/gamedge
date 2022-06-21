@@ -51,6 +51,8 @@ dependencies {
     implementation(project(deps.local.featureNews))
     implementation(project(deps.local.featureSearch))
 
+    implementation(deps.androidX.splash)
+
     implementation(deps.compose.ui)
     implementation(deps.compose.tooling)
     implementation(deps.compose.foundation)
