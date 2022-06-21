@@ -27,7 +27,6 @@ import com.paulrybitskyi.gamedge.data.games.DataGame
 import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
-import com.paulrybitskyi.gamedge.domain.auth.DomainOauthCredentials
 import com.paulrybitskyi.gamedge.domain.commons.DomainPagination
 import com.paulrybitskyi.gamedge.domain.games.DomainCategory
 import com.paulrybitskyi.gamedge.domain.games.DomainCompany
@@ -164,11 +163,6 @@ val DATA_ARTICLES = listOf(
     DATA_ARTICLE.copy(id = 3),
 )
 
-val DOMAIN_OAUTH_CREDENTIALS = DomainOauthCredentials(
-    accessToken = "access_token",
-    tokenType = "token_type",
-    tokenTtl = 5000L,
-)
 val DATA_OAUTH_CREDENTIALS = DataOauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",

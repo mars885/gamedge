@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.dashboard
+package com.paulrybitskyi.gamedge
 
 import android.content.Context
 import android.content.Intent
@@ -24,8 +24,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.view.WindowCompat
 import com.paulrybitskyi.commons.ktx.intentFor
-import com.paulrybitskyi.commons.window.anims.WindowAnimations
-import com.paulrybitskyi.commons.window.anims.overrideEnterTransition
 import com.paulrybitskyi.gamedge.commons.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.commons.ui.LocalTextSharer
 import com.paulrybitskyi.gamedge.commons.ui.LocalUrlOpener
@@ -33,17 +31,16 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.sharers.TextSharer
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
-import com.paulrybitskyi.gamedge.dashboard.compose.MainScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DashboardActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
 
     companion object {
 
         fun newIntent(context: Context): Intent {
-            return context.intentFor<DashboardActivity>()
+            return context.intentFor<MainActivity>()
         }
     }
 
@@ -54,8 +51,8 @@ class DashboardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        overrideEnterTransition(WindowAnimations.FADING_ANIMATIONS)
-        initSystemUiVisibility()
+        // To be able to draw behind system bars & change their colors
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             CompositionLocalProvider(LocalUrlOpener provides urlOpener) {
@@ -68,10 +65,5 @@ class DashboardActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    private fun initSystemUiVisibility() {
-        // To be able to draw behind system bars & change their colors
-        WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 }

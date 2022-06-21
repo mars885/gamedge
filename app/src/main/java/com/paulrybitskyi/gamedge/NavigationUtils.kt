@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.domain.auth
+package com.paulrybitskyi.gamedge
 
-import com.paulrybitskyi.gamedge.domain.auth.entities.OauthCredentials
+import androidx.navigation.NavDestination
 
-typealias DomainOauthCredentials = OauthCredentials
+internal fun NavDestination.requireRoute(): String {
+    return checkNotNull(route) {
+        "The route is not set for this destination."
+    }
+}

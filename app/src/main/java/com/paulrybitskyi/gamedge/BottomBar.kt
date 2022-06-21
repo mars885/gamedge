@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.dashboard.compose
+package com.paulrybitskyi.gamedge
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -34,7 +34,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.google.accompanist.insets.navigationBarsPadding
-import com.paulrybitskyi.gamedge.R
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 
 private const val BOTTOM_BAR_ANIMATION_DURATION = 300

@@ -53,7 +53,6 @@ internal class AuthFileDataStoreTest {
 
         SUT = AuthFileDataStore(
             protoDataStore = protoDataStore,
-            timestampProvider = timestampProvider,
             mapper = AuthMapper(AuthExpiryTimeCalculator(timestampProvider))
         )
     }
@@ -84,37 +83,6 @@ internal class AuthFileDataStoreTest {
             coEvery { protoDataStore.data } returns flowOf()
 
             assertThat(SUT.getOauthCredentials()).isNull()
-        }
-    }
-
-    @Test
-    fun `Credentials should not be expired`() {
-        runTest {
-            coEvery { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
-            coEvery { timestampProvider.getUnixTimestamp(any()) } returns 0L
-
-            assertThat(SUT.isExpired()).isFalse
-        }
-    }
-
-    @Test
-    fun `Credentials should be expired`() {
-        runTest {
-            coEvery { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
-            coEvery {
-                timestampProvider.getUnixTimestamp(any())
-            } returns (PROTO_OAUTH_CREDENTIALS.expirationTime + 10_000L)
-
-            assertThat(SUT.isExpired()).isTrue
-        }
-    }
-
-    @Test
-    fun `Credentials are expired if data store is empty`() {
-        runTest {
-            coEvery { protoDataStore.data } returns flowOf()
-
-            assertThat(SUT.isExpired()).isTrue
         }
     }
 }
