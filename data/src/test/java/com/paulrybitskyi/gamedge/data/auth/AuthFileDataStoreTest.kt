@@ -53,7 +53,6 @@ internal class AuthFileDataStoreTest {
 
         SUT = AuthFileDataStore(
             protoDataStore = protoDataStore,
-            timestampProvider = timestampProvider,
             mapper = AuthMapper(AuthExpiryTimeCalculator(timestampProvider))
         )
     }
