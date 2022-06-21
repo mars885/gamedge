@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.dashboard.compose
+package com.paulrybitskyi.gamedge
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold

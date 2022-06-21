@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.dashboard.compose
+package com.paulrybitskyi.gamedge
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition

@@ -32,27 +32,14 @@
         <!-- See this https://stackoverflow.com/a/68899786/7015881 why tools:ignore is needed above -->
 
         <activity
-            android:name=".feature.splash.SplashActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/GamedgeTheme.SplashScreen"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-        </activity>
-
-        <activity
-            android:name=".dashboard.DashboardActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="false">
-
-            <intent-filter>
-                <action android:name="com.paulrybitskyi.gamedge.DASHBOARD_ACTIVITY"/>
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
         </activity>

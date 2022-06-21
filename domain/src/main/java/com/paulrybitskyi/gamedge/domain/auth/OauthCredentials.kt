@@ -14,19 +14,10 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.data.auth.usecases.mappers
+package com.paulrybitskyi.gamedge.domain.auth
 
-import com.paulrybitskyi.gamedge.data.auth.DataOauthCredentials
-import com.paulrybitskyi.gamedge.domain.auth.DomainOauthCredentials
-import javax.inject.Inject
-
-internal class AuthMapper @Inject constructor() {
-
-    fun mapToDomainOauthCredentials(oauthCredentials: DataOauthCredentials): DomainOauthCredentials {
-        return DomainOauthCredentials(
-            accessToken = oauthCredentials.accessToken,
-            tokenType = oauthCredentials.tokenType,
-            tokenTtl = oauthCredentials.tokenTtl
-        )
-    }
-}
+data class OauthCredentials(
+    val accessToken: String,
+    val tokenType: String,
+    val tokenTtl: Long
+)
