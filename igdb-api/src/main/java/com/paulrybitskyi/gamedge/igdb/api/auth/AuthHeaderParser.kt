@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,13 +19,28 @@ package com.paulrybitskyi.gamedge.igdb.api.auth
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
 import javax.inject.Inject
 
-internal class Authorizer @Inject constructor() {
+internal class AuthHeaderParser @Inject constructor() {
 
-    fun buildAuthorizationHeader(type: AuthorizationType, token: String): String {
-        return buildString {
-            append(type.rawType)
-            append(" ")
-            append(token)
-        }
+    private companion object {
+        const val SEPARATOR = ' '
+    }
+
+    fun parse(header: String): AuthHeaderParsingResult? {
+        val stringParts = header.split(SEPARATOR)
+
+        if (stringParts.size != 2) return null
+
+        val rawType = stringParts[0]
+        val token = stringParts[1]
+
+        return AuthHeaderParsingResult(
+            type = AuthorizationType.forRawType(rawType),
+            token = token,
+        )
     }
 }
+
+internal data class AuthHeaderParsingResult(
+    val type: AuthorizationType,
+    val token: String?,
+)
