@@ -65,7 +65,7 @@ dependencies {
 
     testImplementation(project(deps.local.commonsTesting))
     testImplementation(deps.testing.jUnit)
-    testImplementation(deps.testing.assertJ)
+    testImplementation(deps.testing.truth)
     testImplementation(deps.testing.mockk)
     testImplementation(deps.testing.coroutines)
     testImplementation(deps.testing.turbine)

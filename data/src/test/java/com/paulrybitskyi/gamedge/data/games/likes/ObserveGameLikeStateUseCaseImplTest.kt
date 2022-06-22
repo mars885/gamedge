@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.data.games.likes
 
 import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ObserveGameLikeStateUseCaseImpl
@@ -25,7 +26,6 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -47,13 +47,13 @@ internal class ObserveGameLikeStateUseCaseImplTest {
         runTest {
             coEvery { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(true)
             SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).test {
-                assertThat(awaitItem()).isTrue
+                assertThat(awaitItem()).isTrue()
                 awaitComplete()
             }
 
             coEvery { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(false)
             SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).test {
-                assertThat(awaitItem()).isFalse
+                assertThat(awaitItem()).isFalse()
                 awaitComplete()
             }
         }

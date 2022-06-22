@@ -61,14 +61,14 @@ dependencies {
 
     testImplementation(project(deps.local.commonsTesting))
     testImplementation(deps.testing.jUnit)
-    testImplementation(deps.testing.assertJ)
+    testImplementation(deps.testing.truth)
     testImplementation(deps.testing.mockk)
     testImplementation(deps.testing.coroutines)
 
     androidTestImplementation(project(deps.local.commonsTesting))
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
-    androidTestImplementation(deps.testing.assertJ)
+    androidTestImplementation(deps.testing.truth)
     androidTestImplementation(deps.testing.mockWebServer)
 
     androidTestImplementation(deps.testing.daggerHilt)

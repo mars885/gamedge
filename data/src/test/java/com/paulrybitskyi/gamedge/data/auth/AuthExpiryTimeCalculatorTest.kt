@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.auth
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AUTH_TOKEN_TTL_DEDUCTION
@@ -23,7 +24,6 @@ import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthExpiryTimeCalcul
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.TimeUnit

@@ -18,12 +18,13 @@ package com.paulrybitskyi.gamedge.database.tables
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.database.commons.di.DatabaseModule
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
-import com.paulrybitskyi.gamedge.database.utils.DATABASE_GAMES
-import com.paulrybitskyi.gamedge.database.utils.LIKED_GAME
-import com.paulrybitskyi.gamedge.database.utils.LIKED_GAMES
+import com.paulrybitskyi.gamedge.database.DATABASE_GAMES
+import com.paulrybitskyi.gamedge.database.LIKED_GAME
+import com.paulrybitskyi.gamedge.database.LIKED_GAMES
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -31,7 +32,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -64,7 +64,7 @@ internal class LikedGamesTableTest {
         runTest {
             SUT.saveLikedGame(LIKED_GAME)
 
-            assertThat(SUT.isGameLiked(LIKED_GAME.gameId)).isTrue
+            assertThat(SUT.isGameLiked(LIKED_GAME.gameId)).isTrue()
         }
     }
 
@@ -74,14 +74,14 @@ internal class LikedGamesTableTest {
             SUT.saveLikedGame(LIKED_GAME)
             SUT.deleteLikedGame(LIKED_GAME.gameId)
 
-            assertThat(SUT.isGameLiked(LIKED_GAME.gameId)).isFalse
+            assertThat(SUT.isGameLiked(LIKED_GAME.gameId)).isFalse()
         }
     }
 
     @Test
     fun verifies_that_unliked_game_is_unliked() {
         runTest {
-            assertThat(SUT.isGameLiked(100)).isFalse
+            assertThat(SUT.isGameLiked(100)).isFalse()
         }
     }
 
@@ -91,7 +91,7 @@ internal class LikedGamesTableTest {
             SUT.saveLikedGame(LIKED_GAME)
 
             SUT.observeGameLikeState(LIKED_GAME.gameId).test {
-                assertThat(awaitItem()).isTrue
+                assertThat(awaitItem()).isTrue()
             }
         }
     }
@@ -103,7 +103,7 @@ internal class LikedGamesTableTest {
             SUT.deleteLikedGame(LIKED_GAME.gameId)
 
             SUT.observeGameLikeState(LIKED_GAME.gameId).test {
-                assertThat(awaitItem()).isFalse
+                assertThat(awaitItem()).isFalse()
             }
         }
     }

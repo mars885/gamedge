@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.data.games
 import app.cash.turbine.test
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DATA_GAME
 import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.commons.testing.GET_GAME_USE_CASE_PARAMS
@@ -30,7 +31,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -71,7 +71,7 @@ internal class GetGameUseCaseImplTest {
             coEvery { gamesLocalDataStore.getGame(any()) } returns null
 
             SUT.execute(GET_GAME_USE_CASE_PARAMS).test {
-                assertThat(awaitItem().getError() is Error.NotFound).isTrue
+                assertThat(awaitItem().getError() is Error.NotFound).isTrue()
                 awaitComplete()
             }
         }

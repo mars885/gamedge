@@ -20,6 +20,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.api.ErrorMapper
 import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_HTTP
 import com.paulrybitskyi.gamedge.commons.testing.API_ERROR_NETWORK
@@ -32,7 +33,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 

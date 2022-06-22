@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.core
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -37,7 +37,7 @@ internal class GameRatingFormatterImplTest {
     fun `Returns not available string when rating is null`() {
         SUT.formatRating(null)
 
-        assertThat(stringProvider.isRatingNotAvailable).isTrue
+        assertThat(stringProvider.isRatingNotAvailable).isTrue()
     }
 
     @Test
@@ -46,7 +46,7 @@ internal class GameRatingFormatterImplTest {
 
         SUT.formatRating(rating)
 
-        assertThat(stringProvider.isRatingAvailable).isTrue
+        assertThat(stringProvider.isRatingAvailable).isTrue()
         assertThat(stringProvider.rating).isEqualTo(rating.toInt())
     }
 
@@ -56,7 +56,7 @@ internal class GameRatingFormatterImplTest {
 
         SUT.formatRating(rating)
 
-        assertThat(stringProvider.isRatingAvailable).isTrue
+        assertThat(stringProvider.isRatingAvailable).isTrue()
         assertThat(stringProvider.rating).isEqualTo(0)
     }
 
@@ -66,7 +66,7 @@ internal class GameRatingFormatterImplTest {
 
         SUT.formatRating(rating)
 
-        assertThat(stringProvider.isRatingAvailable).isTrue
+        assertThat(stringProvider.isRatingAvailable).isTrue()
         assertThat(stringProvider.rating).isEqualTo(100)
     }
 

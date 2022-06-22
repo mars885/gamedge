@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.gamespot.api
 
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.api.Error
 import com.paulrybitskyi.gamedge.commons.testing.utils.startSafe
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
@@ -28,7 +29,6 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.SocketPolicy
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -57,7 +57,7 @@ internal class ArticlesServiceTest {
 
             val error = articlesService.getArticles(emptyMap()).getError()
 
-            assertThat(error is Error.HttpError).isTrue
+            assertThat(error is Error.HttpError).isTrue()
         }
     }
 
@@ -68,7 +68,7 @@ internal class ArticlesServiceTest {
 
             val error = articlesService.getArticles(emptyMap()).getError()
 
-            assertThat(error is Error.HttpError).isTrue
+            assertThat(error is Error.HttpError).isTrue()
             assertThat((error as Error.HttpError).code).isEqualTo(400)
         }
     }
@@ -84,7 +84,7 @@ internal class ArticlesServiceTest {
 
             val error = articlesService.getArticles(emptyMap()).getError()
 
-            assertThat(error is Error.HttpError).isTrue
+            assertThat(error is Error.HttpError).isTrue()
             assertThat((error as Error.HttpError).message).isEqualTo("Invalid API Key")
         }
     }
@@ -102,8 +102,8 @@ internal class ArticlesServiceTest {
 
             val error = articlesService.getArticles(emptyMap()).getError()
 
-            assertThat(error is Error.HttpError).isTrue
-            assertThat((error as Error.HttpError).message).isNotEmpty
+            assertThat(error is Error.HttpError).isTrue()
+            assertThat((error as Error.HttpError).message).isNotEmpty()
         }
     }
 
@@ -166,7 +166,7 @@ internal class ArticlesServiceTest {
 
             val error = articlesService.getArticles(emptyMap()).getError()
 
-            assertThat(error is Error.UnknownError).isTrue
+            assertThat(error is Error.UnknownError).isTrue()
         }
     }
 
@@ -187,7 +187,7 @@ internal class ArticlesServiceTest {
 
             val error = articlesService.getArticles(emptyMap()).getError()
 
-            assertThat(error is Error.UnknownError).isTrue
+            assertThat(error is Error.UnknownError).isTrue()
         }
     }
 
@@ -201,7 +201,7 @@ internal class ArticlesServiceTest {
 
             val error = articlesService.getArticles(emptyMap()).getError()
 
-            assertThat(error is Error.NetworkError).isTrue
+            assertThat(error is Error.NetworkError).isTrue()
         }
     }
 

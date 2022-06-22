@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.feature.category
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
@@ -45,7 +46,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -106,7 +106,7 @@ internal class GamesCategoryViewModelTest {
     fun `Emits toolbar title when initialized`() {
         runTest {
             SUT.uiState.test {
-                assertThat(awaitItem().title).isNotEmpty
+                assertThat(awaitItem().title).isNotEmpty()
             }
         }
     }
@@ -134,7 +134,7 @@ internal class GamesCategoryViewModelTest {
 
             advanceUntilIdle()
 
-            assertThat(logger.errorMessage).isNotEmpty
+            assertThat(logger.errorMessage).isNotEmpty()
         }
     }
 
@@ -160,7 +160,7 @@ internal class GamesCategoryViewModelTest {
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Loading)
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Success)
-                assertThat(awaitItem().isRefreshing).isTrue
+                assertThat(awaitItem().isRefreshing).isTrue()
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -174,7 +174,7 @@ internal class GamesCategoryViewModelTest {
 
             advanceUntilIdle()
 
-            assertThat(logger.errorMessage).isNotEmpty
+            assertThat(logger.errorMessage).isNotEmpty()
         }
     }
 

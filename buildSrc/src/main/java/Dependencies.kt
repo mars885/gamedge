@@ -193,7 +193,7 @@ object deps {
 
         private const val jUnitVersion = "4.13.2"
         private const val jUnitExtVersion = "1.1.3"
-        private const val assertJVersion = "3.23.1"
+        private const val truthVersion = "1.1.3"
         private const val mockkVersion = "1.12.4"
         private const val turbineVersion = "0.8.0"
         private const val testRunnerVersion = "1.4.0"
@@ -202,7 +202,7 @@ object deps {
 
         const val jUnit = "junit:junit:$jUnitVersion"
         const val jUnitExt = "androidx.test.ext:junit:$jUnitExtVersion"
-        const val assertJ = "org.assertj:assertj-core:$assertJVersion"
+        const val truth = "com.google.truth:truth:$truthVersion"
         const val mockk = "io.mockk:mockk:$mockkVersion"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
         const val turbine = "app.cash.turbine:turbine:$turbineVersion"

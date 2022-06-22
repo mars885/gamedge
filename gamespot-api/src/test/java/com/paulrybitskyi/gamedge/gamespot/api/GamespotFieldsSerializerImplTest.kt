@@ -16,11 +16,11 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.Gamespot
 import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.GamespotFieldsSerializer
 import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.GamespotFieldsSerializerImpl
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatExceptionOfType
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 
@@ -72,8 +72,9 @@ internal class GamespotFieldsSerializerImplTest {
             val field1: Int
         )
 
-        assertThatExceptionOfType(IllegalArgumentException::class.java)
-            .isThrownBy { SUT.serializeFields(Entity::class.java) }
+        assertThrows(IllegalArgumentException::class.java) {
+            SUT.serializeFields(Entity::class.java)
+        }
     }
 
     @Test
@@ -83,7 +84,8 @@ internal class GamespotFieldsSerializerImplTest {
             val field1: Int
         )
 
-        assertThatExceptionOfType(IllegalArgumentException::class.java)
-            .isThrownBy { SUT.serializeFields(Entity::class.java) }
+        assertThrows(IllegalArgumentException::class.java) {
+            SUT.serializeFields(Entity::class.java)
+        }
     }
 }

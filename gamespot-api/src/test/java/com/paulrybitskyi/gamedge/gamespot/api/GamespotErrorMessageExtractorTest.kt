@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotErrorMessageExtractor
 import kotlinx.serialization.json.Json
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -50,7 +50,7 @@ internal class GamespotErrorMessageExtractorTest {
 
     @Test
     fun `Returns unknown error's message when response body is not json`() {
-        assertThat(SUT.extract("hello there")).isNotEmpty
+        assertThat(SUT.extract("hello there")).isNotEmpty()
     }
 
     @Test
@@ -66,6 +66,6 @@ internal class GamespotErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertThat(SUT.extract(responseBody)).isNotEmpty
+        assertThat(SUT.extract(responseBody)).isNotEmpty()
     }
 }

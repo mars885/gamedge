@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.igdb.api
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
