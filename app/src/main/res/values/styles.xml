@@ -17,6 +17,12 @@
 -->
 
 <resources>
+    <style name="GamedgeThemeSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/colorPrimary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="postSplashScreenTheme">@style/GamedgeTheme</item>
+    </style>
+
     <style name="GamedgeTheme" parent="android:Theme.Material.NoActionBar">
         <item name="android:statusBarColor">@color/colorStatusBar</item>
         <item name="android:windowBackground">@color/colorPrimary</item>

@@ -22,6 +22,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.paulrybitskyi.commons.ktx.intentFor
 import com.paulrybitskyi.gamedge.commons.ui.LocalNetworkStateProvider
@@ -49,6 +50,8 @@ class MainActivity : ComponentActivity() {
     @Inject lateinit var networkStateProvider: NetworkStateProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
+
         super.onCreate(savedInstanceState)
 
         // To be able to draw behind system bars & change their colors
