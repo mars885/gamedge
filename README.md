@@ -78,7 +78,7 @@ The aim of this project is to showcase the latest trends in Android development 
 - [Ktlint](https://github.com/pinterest/ktlint) - A library for formatting Kotlin code according to official guidelines.
 - [Testing](https://developer.android.com/training/testing) - The app is currently covered with unit tests and instrumentation tests.
   - [JUnit](https://junit.org/junit5) - JUnit is a unit testing framework for the Java programming language.
-  - [AssertJ](https://assertj.github.io/doc) - AssertJ is a java library providing a rich set of assertions.
+  - [Truth](https://github.com/google/truth) - Truth is a library providing fluent assertions for Java and Android.
   - [MockK](https://github.com/mockk/mockk) - MockK is a mocking library for Kotlin.
   - [Coroutines Test](https://github.com/Kotlin/kotlinx.coroutines/tree/master/kotlinx-coroutines-test) - A library for testing Kotlin coroutines.
   - [Turbine](https://github.com/cashapp/turbine) - A testing library for Kotlin Flows.
