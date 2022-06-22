@@ -18,10 +18,11 @@ package com.paulrybitskyi.gamedge.database.tables
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.database.commons.di.DatabaseModule
 import com.paulrybitskyi.gamedge.database.games.DatabaseGame
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
-import com.paulrybitskyi.gamedge.database.utils.DATABASE_GAMES
+import com.paulrybitskyi.gamedge.database.DATABASE_GAMES
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -29,7 +30,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

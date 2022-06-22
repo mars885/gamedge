@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.database.utils
+package com.paulrybitskyi.gamedge.database
 
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
 import com.paulrybitskyi.gamedge.database.games.DatabaseCategory

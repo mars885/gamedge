@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.extractors
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.TwitchErrorMessageExtractor
 import kotlinx.serialization.json.Json
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatExceptionOfType
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 
@@ -46,8 +46,9 @@ internal class TwitchErrorMessageExtractorTest {
 
     @Test
     fun `Throws exception when twitch response body is not json`() {
-        assertThatExceptionOfType(IllegalStateException::class.java)
-            .isThrownBy { SUT.extract("hello there") }
+        assertThrows(IllegalStateException::class.java) {
+            SUT.extract("hello there")
+        }
     }
 
     @Test
@@ -59,7 +60,8 @@ internal class TwitchErrorMessageExtractorTest {
             }
         """.trimIndent()
 
-        assertThatExceptionOfType(IllegalStateException::class.java)
-            .isThrownBy { SUT.extract(responseBody) }
+        assertThrows(IllegalStateException::class.java) {
+            SUT.extract(responseBody)
+        }
     }
 }

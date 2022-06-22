@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.database
 
 import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
 import com.paulrybitskyi.gamedge.commons.testing.DATA_PAGINATION
 import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
@@ -30,7 +31,6 @@ import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -60,7 +60,7 @@ internal class LikedGamesDatabaseDataStoreTest {
         runTest {
             SUT.likeGame(GAME_ID)
 
-            assertThat(SUT.isGameLiked(GAME_ID)).isTrue
+            assertThat(SUT.isGameLiked(GAME_ID)).isTrue()
         }
     }
 
@@ -70,14 +70,14 @@ internal class LikedGamesDatabaseDataStoreTest {
             SUT.likeGame(GAME_ID)
             SUT.unlikeGame(GAME_ID)
 
-            assertThat(SUT.isGameLiked(GAME_ID)).isFalse
+            assertThat(SUT.isGameLiked(GAME_ID)).isFalse()
         }
     }
 
     @Test
     fun `Validates that unliked game is unliked`() {
         runTest {
-            assertThat(SUT.isGameLiked(gameId = ANOTHER_GAME_ID)).isFalse
+            assertThat(SUT.isGameLiked(gameId = ANOTHER_GAME_ID)).isFalse()
         }
     }
 
@@ -87,12 +87,12 @@ internal class LikedGamesDatabaseDataStoreTest {
             SUT.likeGame(GAME_ID)
 
             SUT.observeGameLikeState(GAME_ID).test {
-                assertThat(awaitItem()).isTrue
+                assertThat(awaitItem()).isTrue()
                 awaitComplete()
             }
 
             SUT.observeGameLikeState(ANOTHER_GAME_ID).test {
-                assertThat(awaitItem()).isFalse
+                assertThat(awaitItem()).isFalse()
                 awaitComplete()
             }
         }

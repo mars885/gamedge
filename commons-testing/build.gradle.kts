@@ -31,7 +31,6 @@ dependencies {
 
     // Unit tests
     implementation(deps.testing.jUnit)
-    implementation(deps.testing.assertJ)
     implementation(deps.testing.mockk)
     implementation(deps.testing.coroutines)
 

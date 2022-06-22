@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.igdb.api
 
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.api.Error
 import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
 import com.paulrybitskyi.gamedge.commons.testing.utils.startSafe
@@ -31,7 +32,6 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.SocketPolicy
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -65,7 +65,7 @@ internal class GamesServiceTest {
 
             val error = gamesService.getGames("").getError()
 
-            assertThat(error is Error.HttpError).isTrue
+            assertThat(error is Error.HttpError).isTrue()
         }
     }
 
@@ -76,7 +76,7 @@ internal class GamesServiceTest {
 
             val error = gamesService.getGames("").getError()
 
-            assertThat(error is Error.HttpError).isTrue
+            assertThat(error is Error.HttpError).isTrue()
             assertThat((error as Error.HttpError).code).isEqualTo(400)
         }
     }
@@ -100,7 +100,7 @@ internal class GamesServiceTest {
 
             val error = gamesService.getGames("").getError()
 
-            assertThat(error is Error.HttpError).isTrue
+            assertThat(error is Error.HttpError).isTrue()
             assertThat((error as Error.HttpError).message).isEqualTo("Syntax Error")
         }
     }
@@ -118,7 +118,7 @@ internal class GamesServiceTest {
 
             val error = gamesService.getGames("").getError()
 
-            assertThat(error is Error.HttpError).isTrue
+            assertThat(error is Error.HttpError).isTrue()
             assertThat((error as Error.HttpError).message).isEqualTo("Unknown Error: $errorBody")
         }
     }
@@ -188,7 +188,7 @@ internal class GamesServiceTest {
 
             val error = gamesService.getGames("").getError()
 
-            assertThat(error is Error.UnknownError).isTrue
+            assertThat(error is Error.UnknownError).isTrue()
         }
     }
 
@@ -203,7 +203,7 @@ internal class GamesServiceTest {
 
             val error = gamesService.getGames("").getError()
 
-            assertThat(error is Error.UnknownError).isTrue
+            assertThat(error is Error.UnknownError).isTrue()
         }
     }
 
@@ -217,7 +217,7 @@ internal class GamesServiceTest {
 
             val error = gamesService.getGames("").getError()
 
-            assertThat(error is Error.NetworkError).isTrue
+            assertThat(error is Error.NetworkError).isTrue()
         }
     }
 

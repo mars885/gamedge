@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.likes
 
 import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.commons.testing.FakeErrorMapper
@@ -38,7 +39,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -93,7 +93,7 @@ internal class LikedGamesViewModelTest {
 
             advanceUntilIdle()
 
-            assertThat(logger.errorMessage).isNotEmpty
+            assertThat(logger.errorMessage).isNotEmpty()
         }
     }
 

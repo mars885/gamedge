@@ -20,6 +20,7 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_ERROR_API
 import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_ERROR_NOT_FOUND
 import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAME
@@ -48,7 +49,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -121,7 +121,7 @@ internal class GameInfoViewModelTest {
 
             advanceUntilIdle()
 
-            assertThat(logger.errorMessage).isNotEmpty
+            assertThat(logger.errorMessage).isNotEmpty()
         }
     }
 
@@ -162,7 +162,7 @@ internal class GameInfoViewModelTest {
             SUT.onArtworkClicked(artworkIndex = 0)
             advanceUntilIdle()
 
-            assertThat(logger.errorMessage).isNotEmpty
+            assertThat(logger.errorMessage).isNotEmpty()
         }
     }
 
@@ -213,7 +213,7 @@ internal class GameInfoViewModelTest {
             SUT.onCoverClicked()
             advanceUntilIdle()
 
-            assertThat(logger.errorMessage).isNotEmpty
+            assertThat(logger.errorMessage).isNotEmpty()
         }
     }
 
@@ -279,7 +279,7 @@ internal class GameInfoViewModelTest {
             SUT.onScreenshotClicked(screenshotIndex = 0)
             advanceUntilIdle()
 
-            assertThat(logger.errorMessage).isNotEmpty
+            assertThat(logger.errorMessage).isNotEmpty()
         }
     }
 

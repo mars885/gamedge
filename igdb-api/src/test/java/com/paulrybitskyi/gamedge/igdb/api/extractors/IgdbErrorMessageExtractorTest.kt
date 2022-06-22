@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.extractors
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.IgdbErrorMessageExtractor
 import kotlinx.serialization.json.Json
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatExceptionOfType
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 
@@ -49,8 +49,9 @@ internal class IgdbErrorMessageExtractorTest {
 
     @Test
     fun `Throws exception when igdb response body is not json`() {
-        assertThatExceptionOfType(IllegalStateException::class.java)
-            .isThrownBy { SUT.extract("hello there") }
+        assertThrows(IllegalStateException::class.java) {
+            SUT.extract("hello there")
+        }
     }
 
     @Test
@@ -64,7 +65,8 @@ internal class IgdbErrorMessageExtractorTest {
             ]
         """.trimIndent()
 
-        assertThatExceptionOfType(IllegalStateException::class.java)
-            .isThrownBy { SUT.extract(responseBody) }
+        assertThrows(IllegalStateException::class.java) {
+            SUT.extract(responseBody)
+        }
     }
 }

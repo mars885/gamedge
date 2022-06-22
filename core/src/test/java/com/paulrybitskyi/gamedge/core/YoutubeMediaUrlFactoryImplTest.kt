@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.core
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_VIDEO
 import com.paulrybitskyi.gamedge.core.factories.YoutubeMediaUrlFactoryImpl
 import com.paulrybitskyi.gamedge.core.factories.YoutubeThumbnailSize
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 

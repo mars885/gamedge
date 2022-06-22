@@ -16,11 +16,11 @@
 
 package com.paulrybitskyi.gamedge.igdb.apicalypse
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializerImpl
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.Apicalypse
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.annotations.ApicalypseClass
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatExceptionOfType
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 
@@ -62,8 +62,9 @@ internal class ApicalypseSerializerImplTest {
             val field2: Float
         )
 
-        assertThatExceptionOfType(IllegalArgumentException::class.java)
-            .isThrownBy { SUT.serialize(Entity::class.java) }
+        assertThrows(IllegalArgumentException::class.java) {
+            SUT.serialize(Entity::class.java)
+        }
     }
 
     @Test
@@ -74,8 +75,9 @@ internal class ApicalypseSerializerImplTest {
             val field1: Int
         )
 
-        assertThatExceptionOfType(IllegalArgumentException::class.java)
-            .isThrownBy { SUT.serialize(Entity::class.java) }
+        assertThrows(IllegalArgumentException::class.java) {
+            SUT.serialize(Entity::class.java)
+        }
     }
 
     @Test
@@ -86,8 +88,9 @@ internal class ApicalypseSerializerImplTest {
             val field1: Int
         )
 
-        assertThatExceptionOfType(IllegalArgumentException::class.java)
-            .isThrownBy { SUT.serialize(Entity::class.java) }
+        assertThrows(IllegalArgumentException::class.java) {
+            SUT.serialize(Entity::class.java)
+        }
     }
 
     @Test
@@ -254,7 +257,8 @@ internal class ApicalypseSerializerImplTest {
             val field2: Map<String, String>
         )
 
-        assertThatExceptionOfType(IllegalStateException::class.java)
-            .isThrownBy { SUT.serialize(Entity::class.java) }
+        assertThrows(IllegalStateException::class.java) {
+            SUT.serialize(Entity::class.java)
+        }
     }
 }

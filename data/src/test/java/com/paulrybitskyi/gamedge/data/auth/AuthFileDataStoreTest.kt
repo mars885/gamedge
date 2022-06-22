@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.data.auth
 
 import androidx.datastore.core.DataStore
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
 import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthExpiryTimeCalculator
@@ -29,7 +30,6 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 

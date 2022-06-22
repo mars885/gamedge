@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.gamespot.api.articles.datastores.ArticlePublicationDateMapper
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatExceptionOfType
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import java.time.format.DateTimeParseException
@@ -39,13 +39,15 @@ internal class ArticlePublicationDateMapperTest {
 
     @Test
     fun `Throws exception when providing empty date`() {
-        assertThatExceptionOfType(DateTimeParseException::class.java)
-            .isThrownBy { SUT.mapToTimestamp("") }
+        assertThrows(DateTimeParseException::class.java) {
+            SUT.mapToTimestamp("")
+        }
     }
 
     @Test
     fun `Throws exception when providing blank date`() {
-        assertThatExceptionOfType(DateTimeParseException::class.java)
-            .isThrownBy { SUT.mapToTimestamp("   ") }
+        assertThrows(DateTimeParseException::class.java) {
+            SUT.mapToTimestamp("   ")
+        }
     }
 }

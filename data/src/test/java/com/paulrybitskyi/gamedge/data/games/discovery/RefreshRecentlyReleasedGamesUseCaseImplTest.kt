@@ -20,6 +20,7 @@ import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DATA_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.commons.testing.DATA_GAMES
 import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
@@ -42,7 +43,6 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 

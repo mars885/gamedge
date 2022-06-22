@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import io.mockk.every
@@ -25,7 +26,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
 
@@ -89,7 +89,7 @@ internal class ImageViewerViewModelTest {
             advanceUntilIdle()
 
             SUT.uiState.test {
-                assertThat(awaitItem().toolbarTitle).isNotEmpty
+                assertThat(awaitItem().toolbarTitle).isNotEmpty()
             }
         }
     }

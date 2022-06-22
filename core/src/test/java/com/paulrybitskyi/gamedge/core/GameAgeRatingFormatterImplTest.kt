@@ -16,13 +16,13 @@
 
 package com.paulrybitskyi.gamedge.core
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.domain.games.DomainAgeRating
 import com.paulrybitskyi.gamedge.domain.games.DomainAgeRatingCategory
 import com.paulrybitskyi.gamedge.domain.games.DomainAgeRatingType
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -47,14 +47,14 @@ internal class GameAgeRatingFormatterImplTest {
 
         SUT.formatAgeRating(game)
 
-        assertThat(stringProvider.isRatingAvailable).isTrue
+        assertThat(stringProvider.isRatingAvailable).isTrue()
     }
 
     @Test
     fun `Returns not available string when game does not contain any ratings`() {
         SUT.formatAgeRating(DOMAIN_GAME)
 
-        assertThat(stringProvider.isRatingNotAvailable).isTrue
+        assertThat(stringProvider.isRatingNotAvailable).isTrue()
     }
 
     @Test
@@ -68,7 +68,7 @@ internal class GameAgeRatingFormatterImplTest {
 
         SUT.formatAgeRating(game)
 
-        assertThat(stringProvider.isRatingNotAvailable).isTrue
+        assertThat(stringProvider.isRatingNotAvailable).isTrue()
     }
 
     private class FakeStringProvider : StringProvider {

@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.igdb.api
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthHeaderParser
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -45,7 +45,7 @@ internal class AuthHeaderParserTest {
         val expectedAuthType = AuthorizationType.BASIC
         val actualResult = SUT.parse("Basic $TOKEN")
 
-        assertThat(actualResult).isNotNull
+        assertThat(actualResult).isNotNull()
         assertThat(actualResult!!.type).isEqualTo(expectedAuthType)
         assertThat(actualResult.token).isEqualTo(TOKEN)
     }
@@ -55,7 +55,7 @@ internal class AuthHeaderParserTest {
         val expectedAuthType = AuthorizationType.BEARER
         val actualResult = SUT.parse("Bearer $TOKEN")
 
-        assertThat(actualResult).isNotNull
+        assertThat(actualResult).isNotNull()
         assertThat(actualResult!!.type).isEqualTo(expectedAuthType)
         assertThat(actualResult.token).isEqualTo(TOKEN)
     }

@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core
 
+import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.core.formatters.ArticlePublicationDateFormatterImpl
 import com.paulrybitskyi.gamedge.core.formatters.RelativeDateFormatter
 import com.paulrybitskyi.gamedge.core.providers.TimeFormat
@@ -25,7 +26,6 @@ import com.paulrybitskyi.gamedge.core.utils.toMillis
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
