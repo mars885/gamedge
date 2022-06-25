@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
+import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -263,6 +264,7 @@ private fun ImageItem(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ImageViewerPreview() {
     GamedgeTheme {

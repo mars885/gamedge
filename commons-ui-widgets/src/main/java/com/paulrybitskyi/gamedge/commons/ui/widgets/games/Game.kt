@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -140,6 +141,7 @@ private fun DetailsDescription(description: String) {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameFullPreview() {
     GamedgeTheme {
@@ -159,6 +161,7 @@ private fun GameFullPreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameWithoutDeveloperPreview() {
     GamedgeTheme {
@@ -178,6 +181,7 @@ private fun GameWithoutDeveloperPreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameWithoutDescriptionPreview() {
     GamedgeTheme {
@@ -196,6 +200,7 @@ private fun GameWithoutDescriptionPreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameMinimalPreview() {
     GamedgeTheme {

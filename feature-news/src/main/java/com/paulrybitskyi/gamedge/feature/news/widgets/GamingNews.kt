@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.news.widgets
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -180,6 +181,7 @@ private fun SuccessState(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamingNewsSuccessStatePreview() {
     val news = listOf(
@@ -225,6 +227,7 @@ private fun GamingNewsSuccessStatePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamingNewsEmptyStatePreview() {
     GamedgeTheme {
@@ -238,6 +241,7 @@ private fun GamingNewsEmptyStatePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamingNewsLoadingStatePreview() {
     GamedgeTheme {

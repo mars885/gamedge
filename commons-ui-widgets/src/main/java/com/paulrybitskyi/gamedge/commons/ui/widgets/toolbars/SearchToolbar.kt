@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
@@ -223,6 +224,7 @@ private fun ClearButton(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun SearchToolbarWithQueryPreview() {
     GamedgeTheme {
@@ -234,6 +236,7 @@ private fun SearchToolbarWithQueryPreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun SearchToolbarWithoutQueryPreview() {
     GamedgeTheme {

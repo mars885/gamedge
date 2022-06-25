@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.categorypreview
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -226,6 +227,7 @@ private fun SuccessState(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesCategoryPreviewSuccessStateWithMoreButtonPreview() {
     GamedgeTheme {
@@ -261,6 +263,7 @@ private fun GamesCategoryPreviewSuccessStateWithMoreButtonPreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesCategoryPreviewSuccessStateWithoutMoreButtonPreview() {
     GamedgeTheme {
@@ -297,6 +300,7 @@ private fun GamesCategoryPreviewSuccessStateWithoutMoreButtonPreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesCategoryPreviewEmptyStatePreview() {
     GamedgeTheme {

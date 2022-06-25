@@ -18,6 +18,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.header
 
+import android.content.res.Configuration
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
@@ -428,6 +429,7 @@ private fun constructExpandedConstraintSet(): ConstraintSet {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameInfoHeaderPreview() {
     GamedgeTheme {

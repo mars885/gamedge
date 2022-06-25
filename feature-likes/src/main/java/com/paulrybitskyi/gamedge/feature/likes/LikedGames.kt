@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.likes
 
+import android.content.res.Configuration
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -94,6 +95,7 @@ private fun LikedGames(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun LikedGamesPreview() {
     GamedgeTheme {

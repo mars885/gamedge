@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.companies
 
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.compose.foundation.Image
@@ -249,6 +250,7 @@ private class LogoImageTransformation(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameInfoCompaniesPreview() {
     GamedgeTheme {
