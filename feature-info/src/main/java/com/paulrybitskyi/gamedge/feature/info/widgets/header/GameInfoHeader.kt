@@ -145,7 +145,7 @@ internal fun GameInfoHeader(
                     shape = CircleShape,
                 )
                 .padding(GamedgeTheme.spaces.spacing_1_5),
-            tint = GamedgeTheme.colors.onPrimary,
+            tint = Color.White,
         )
 
         if (isPageIndicatorVisible) {
@@ -166,7 +166,7 @@ internal fun GameInfoHeader(
                         vertical = GamedgeTheme.spaces.spacing_1_5,
                         horizontal = GamedgeTheme.spaces.spacing_2_0,
                     ),
-                color = GamedgeTheme.colors.onPrimary,
+                color = Color.White,
                 style = GamedgeTheme.typography.subtitle3,
             )
         }

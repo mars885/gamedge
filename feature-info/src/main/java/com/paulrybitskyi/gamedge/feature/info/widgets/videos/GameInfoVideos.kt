@@ -81,7 +81,7 @@ private fun Video(
         modifier = modifier,
         shape = GamedgeTheme.shapes.medium,
         backgroundColor = Color.Transparent,
-        contentColor = GamedgeTheme.colors.onPrimary,
+        contentColor = Color.White,
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Box(

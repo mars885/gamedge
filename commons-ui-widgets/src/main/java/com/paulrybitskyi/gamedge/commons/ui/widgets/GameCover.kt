@@ -86,7 +86,7 @@ fun GameCover(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(horizontal = GamedgeTheme.spaces.spacing_4_0),
-                    color = GamedgeTheme.colors.onPrimary,
+                    color = Color.White,
                     textAlign = TextAlign.Center,
                     style = GamedgeTheme.typography.caption,
                 )

@@ -110,7 +110,7 @@ private fun ImageViewer(
     onImageChanged: (imageIndex: Int) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    StatusBarColorHandler()
+    SystemBarsColorHandler()
     BackHandler(onBack = onBackPressed)
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -144,7 +144,7 @@ private fun ImageViewer(
 }
 
 @Composable
-private fun StatusBarColorHandler() {
+private fun SystemBarsColorHandler() {
     val systemUiController = rememberSystemUiController()
     val defaultStatusBarColor = GamedgeTheme.colors.statusBar
     val defaultNavigationBarColor = GamedgeTheme.colors.navBar

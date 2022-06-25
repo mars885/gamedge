@@ -17,17 +17,31 @@
 -->
 
 <resources>
-    <color name="colorPrimary">#2B303C</color>
-    <color name="colorPrimaryVariant">#1D212B</color>
-    <color name="colorSecondary">#F55663</color>
-    <color name="colorBackground">#1c2028</color>
-    <color name="colorSurface">#222630</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
-    <color name="colorOnSecondary">#611d12</color>
-    <color name="colorOnBackground">#809aaf</color>
-    <color name="colorOnSurface">@color/colorOnBackground</color>
+    <color name="light_colorPrimary">#ffffff</color>
+    <color name="light_colorPrimaryVariant">#FBFBF8</color>
+    <color name="light_colorSecondary">#dd4d59</color>
+    <color name="light_colorBackground">#faf9f7</color> <!-- f2f2ed -->
+    <color name="light_colorSurface">#FEFEFA</color>
+    <color name="light_colorOnPrimary">#000000</color>
+    <color name="light_colorOnSecondary">#611d12</color>
+    <color name="light_colorOnBackground">#4d5c69</color> <!-- 373D3F 3F3739 -->
+    <color name="light_colorOnSurface">@color/light_colorOnBackground</color>
+    <!-- Has to be darker by default since android:windowLightNavigationBar
+    is allowed only from API Level 27. -->
+    <color name="light_colorNavigationBar">#A1A1A1</color>
+
+    <color name="dark_colorPrimary">#2B303C</color>
+    <color name="dark_colorPrimaryVariant">#1D212B</color>
+    <color name="dark_colorSecondary">#F55663</color>
+    <color name="dark_colorBackground">#1c2028</color>
+    <color name="dark_colorSurface">#222630</color>
+    <color name="dark_colorOnPrimary">#FFFFFF</color>
+    <color name="dark_colorOnSecondary">#611d12</color>
+    <color name="dark_colorOnBackground">#809aaf</color>
+    <color name="dark_colorOnSurface">@color/dark_colorOnBackground</color>
+    <color name="dark_colorNavigationBar">#282d38</color>
+
     <color name="colorStatusBar">@color/colorDarkScrim</color>
-    <color name="colorNavigationBar">#282d38</color>
     <color name="colorLightScrim">#35000000</color>
     <color name="colorDarkScrim">#66000000</color>
 </resources>
