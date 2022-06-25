@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.videos
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -81,7 +82,7 @@ private fun Video(
         modifier = modifier,
         shape = GamedgeTheme.shapes.medium,
         backgroundColor = Color.Transparent,
-        contentColor = GamedgeTheme.colors.onPrimary,
+        contentColor = Color.White,
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Box(
@@ -134,6 +135,7 @@ private fun Video(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameInfoVideosPreview() {
     GamedgeTheme {

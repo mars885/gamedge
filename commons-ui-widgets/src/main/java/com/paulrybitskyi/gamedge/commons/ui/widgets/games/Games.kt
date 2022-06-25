@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.games
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -118,6 +119,7 @@ private fun SuccessState(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesSuccessStatePreview() {
     val games = listOf(
@@ -162,6 +164,7 @@ private fun GamesSuccessStatePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesEmptyStatePreview() {
     GamedgeTheme {
@@ -179,6 +182,7 @@ private fun GamesEmptyStatePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesLoadingStatePreview() {
     GamedgeTheme {

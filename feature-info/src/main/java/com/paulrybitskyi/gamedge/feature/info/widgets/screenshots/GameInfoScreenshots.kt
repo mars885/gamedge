@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.screenshots
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -77,6 +78,7 @@ private fun Screenshot(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameInfoScreenshotsPreview() {
     GamedgeTheme {

@@ -18,6 +18,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.header
 
+import android.content.res.Configuration
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
@@ -145,7 +146,7 @@ internal fun GameInfoHeader(
                     shape = CircleShape,
                 )
                 .padding(GamedgeTheme.spaces.spacing_1_5),
-            tint = GamedgeTheme.colors.onPrimary,
+            tint = Color.White,
         )
 
         if (isPageIndicatorVisible) {
@@ -166,7 +167,7 @@ internal fun GameInfoHeader(
                         vertical = GamedgeTheme.spaces.spacing_1_5,
                         horizontal = GamedgeTheme.spaces.spacing_2_0,
                     ),
-                color = GamedgeTheme.colors.onPrimary,
+                color = Color.White,
                 style = GamedgeTheme.typography.subtitle3,
             )
         }
@@ -428,6 +429,7 @@ private fun constructExpandedConstraintSet(): ConstraintSet {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameInfoHeaderPreview() {
     GamedgeTheme {

@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery.widgets
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -156,6 +157,7 @@ private fun CategoryPreviewItems(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesDiscoverySuccessStatePreview() {
     val games = listOf(
@@ -190,6 +192,7 @@ private fun GamesDiscoverySuccessStatePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesDiscoveryEmptyStatePreview() {
     val items = GamesDiscoveryCategory.values().map { category ->

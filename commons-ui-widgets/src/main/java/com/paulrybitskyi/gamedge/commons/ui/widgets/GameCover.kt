@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -86,7 +87,7 @@ fun GameCover(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(horizontal = GamedgeTheme.spaces.spacing_4_0),
-                    color = GamedgeTheme.colors.onPrimary,
+                    color = Color.White,
                     textAlign = TextAlign.Center,
                     style = GamedgeTheme.typography.caption,
                 )
@@ -96,6 +97,7 @@ fun GameCover(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameCoverWithTitlePreview() {
     GamedgeTheme {
@@ -108,6 +110,7 @@ private fun GameCoverWithTitlePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameCoverWithoutTitlePreview() {
     GamedgeTheme {

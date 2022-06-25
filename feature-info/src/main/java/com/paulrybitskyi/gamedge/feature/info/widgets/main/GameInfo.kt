@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.main
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -389,6 +390,7 @@ private enum class GameInfoItem(val id: Int) {
 // TODO (02.01.2022): Currently, preview height is limited to 2k DP.
 // Try to increase this value in the future to showcase all the UI.
 @Preview(heightDp = 2000)
+@Preview(heightDp = 2000, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameInfoSuccessStateWithMaxUiElementsPreview() {
     GamedgeTheme {
@@ -411,6 +413,7 @@ private fun GameInfoSuccessStateWithMaxUiElementsPreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameInfoSuccessStateWithMinUiElementsPreview() {
     val game = buildFakeGameModel()
@@ -450,6 +453,7 @@ private fun GameInfoSuccessStateWithMinUiElementsPreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameInfoEmptyStatePreview() {
     GamedgeTheme {
@@ -472,6 +476,7 @@ private fun GameInfoEmptyStatePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameInfoLoadingStatePreview() {
     GamedgeTheme {

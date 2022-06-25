@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.widgets.header.artworks
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -87,6 +88,7 @@ private fun Artwork(
 }
 
 @Preview(heightDp = 240)
+@Preview(heightDp = 240, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ArtworksPreview() {
     GamedgeTheme {

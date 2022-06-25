@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.search
 
+import android.content.res.Configuration
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -130,6 +131,7 @@ private fun GamesSearch(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesSearchSuccessStatePreview() {
     GamedgeTheme {
@@ -182,6 +184,7 @@ private fun GamesSearchSuccessStatePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesSearchEmptyStatePreview() {
     GamedgeTheme {
@@ -206,6 +209,7 @@ private fun GamesSearchEmptyStatePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesSearchLoadingStatePreview() {
     GamedgeTheme {

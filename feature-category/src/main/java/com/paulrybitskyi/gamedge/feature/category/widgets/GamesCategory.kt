@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -195,6 +196,7 @@ private fun VerticalGrid(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesCategorySuccessStatePreview() {
     val games = buildList {
@@ -224,6 +226,7 @@ private fun GamesCategorySuccessStatePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesCategoryEmptyStatePreview() {
     GamedgeTheme {
@@ -241,6 +244,7 @@ private fun GamesCategoryEmptyStatePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesCategoryLoadingStatePreview() {
     GamedgeTheme {

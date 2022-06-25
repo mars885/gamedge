@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -67,7 +68,14 @@ fun Info(
 
 @Preview(
     widthDp = 300,
-    showBackground = true
+    showBackground = true,
+    backgroundColor = 0xfaf9f7,
+)
+@Preview(
+    widthDp = 300,
+    showBackground = true,
+    backgroundColor = 0x1c2028,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 private fun InfoWithSingleLineTitlePreview() {
@@ -81,7 +89,14 @@ private fun InfoWithSingleLineTitlePreview() {
 
 @Preview(
     widthDp = 300,
-    showBackground = true
+    showBackground = true,
+    backgroundColor = 0xfaf9f7,
+)
+@Preview(
+    widthDp = 300,
+    showBackground = true,
+    backgroundColor = 0x1c2028,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 private fun InfoWithMultiLineTitlePreview() {

@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
+import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -110,7 +111,7 @@ private fun ImageViewer(
     onImageChanged: (imageIndex: Int) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    StatusBarColorHandler()
+    SystemBarsColorHandler()
     BackHandler(onBack = onBackPressed)
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -144,7 +145,7 @@ private fun ImageViewer(
 }
 
 @Composable
-private fun StatusBarColorHandler() {
+private fun SystemBarsColorHandler() {
     val systemUiController = rememberSystemUiController()
     val defaultStatusBarColor = GamedgeTheme.colors.statusBar
     val defaultNavigationBarColor = GamedgeTheme.colors.navBar
@@ -263,6 +264,7 @@ private fun ImageItem(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ImageViewerPreview() {
     GamedgeTheme {

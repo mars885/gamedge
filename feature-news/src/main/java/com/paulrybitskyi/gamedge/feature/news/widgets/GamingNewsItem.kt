@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.news.widgets
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -119,6 +120,7 @@ private fun Timestamp(publicationDate: String) {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamingNewsItemWithImagePreview() {
     GamedgeTheme {
@@ -137,6 +139,7 @@ private fun GamingNewsItemWithImagePreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamingNewsItemWithoutImagePreview() {
     GamedgeTheme {

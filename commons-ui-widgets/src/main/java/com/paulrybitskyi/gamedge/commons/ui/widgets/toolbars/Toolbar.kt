@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -126,6 +127,7 @@ private fun Button(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ToolbarPreviewWithTitle() {
     GamedgeTheme {
@@ -136,6 +138,7 @@ private fun ToolbarPreviewWithTitle() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ToolbarPreviewWithLongTitle() {
     GamedgeTheme {
@@ -146,6 +149,7 @@ private fun ToolbarPreviewWithLongTitle() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ToolbarPreviewWithBothIcons() {
     GamedgeTheme {
@@ -158,6 +162,7 @@ private fun ToolbarPreviewWithBothIcons() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ToolbarPreviewWithLeftIcon() {
     GamedgeTheme {
@@ -169,6 +174,7 @@ private fun ToolbarPreviewWithLeftIcon() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ToolbarPreviewWithRightIcon() {
     GamedgeTheme {
