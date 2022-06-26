@@ -125,7 +125,7 @@ private fun GamingNews(
                         onRefreshRequested = onRefreshRequested,
                     ) {
                         if (finiteUiState == FiniteUiState.Empty) {
-                            EmptyState(Modifier.matchParentSize())
+                            EmptyState(modifier = Modifier.matchParentSize())
                         } else {
                             SuccessState(
                                 news = uiState.news,

@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsPadding
+import com.google.accompanist.insets.systemBarsPadding
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
@@ -126,14 +127,23 @@ private fun GameInfo(
         AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
             when (finiteUiState) {
                 FiniteUiState.Empty -> {
-                    EmptyState(modifier = Modifier.align(Alignment.Center))
+                    EmptyState(
+                        modifier = Modifier
+                            .systemBarsPadding()
+                            .align(Alignment.Center),
+                    )
                 }
                 FiniteUiState.Loading -> {
-                    LoadingState(modifier = Modifier.align(Alignment.Center))
+                    LoadingState(
+                        modifier = Modifier
+                            .systemBarsPadding()
+                            .align(Alignment.Center),
+                    )
                 }
                 FiniteUiState.Success -> {
                     SuccessState(
                         gameInfo = checkNotNull(uiState.game),
+                        modifier = Modifier.navigationBarsPadding(),
                         onArtworkClicked = onArtworkClicked,
                         onBackButtonClicked = onBackButtonClicked,
                         onCoverClicked = onCoverClicked,
@@ -167,6 +177,7 @@ private fun EmptyState(modifier: Modifier) {
 @Composable
 private fun SuccessState(
     gameInfo: GameInfoUiModel,
+    modifier: Modifier,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
@@ -180,6 +191,7 @@ private fun SuccessState(
     Column(modifier = Modifier.fillMaxWidth()) {
         Content(
             gameInfo = gameInfo,
+            modifier = modifier,
             onArtworkClicked = onArtworkClicked,
             onBackButtonClicked = onBackButtonClicked,
             onCoverClicked = onCoverClicked,
@@ -196,6 +208,7 @@ private fun SuccessState(
 @Composable
 private fun Content(
     gameInfo: GameInfoUiModel,
+    modifier: Modifier,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
@@ -207,7 +220,7 @@ private fun Content(
     onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
     LazyColumn(
-        modifier = Modifier.navigationBarsPadding(),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
         headerItem(
