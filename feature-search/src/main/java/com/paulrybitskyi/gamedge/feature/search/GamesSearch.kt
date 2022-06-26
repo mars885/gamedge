@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -29,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
@@ -88,6 +90,7 @@ private fun GamesSearch(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
+        modifier = Modifier.navigationBarsPadding(),
         topBar = {
             SearchToolbar(
                 queryText = uiState.queryText,

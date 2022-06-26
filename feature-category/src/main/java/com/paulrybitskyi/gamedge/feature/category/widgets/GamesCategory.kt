@@ -82,6 +82,7 @@ private fun GamesCategory(
     onBottomReached: () -> Unit,
 ) {
     Scaffold(
+        modifier = Modifier.navigationBarsPadding(),
         topBar = {
             Toolbar(
                 title = uiState.title,
@@ -104,9 +105,7 @@ private fun GamesCategory(
                 FiniteUiState.Success -> {
                     SuccessState(
                         uiState = uiState,
-                        modifier = Modifier
-                            .matchParentSize()
-                            .navigationBarsPadding(),
+                        modifier = Modifier.matchParentSize(),
                         onGameClicked = onGameClicked,
                         onBottomReached = onBottomReached,
                     )
