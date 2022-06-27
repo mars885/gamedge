@@ -52,9 +52,7 @@ fun GameCover(
     hasRoundedShape: Boolean = true,
     onCoverClicked: (() -> Unit)? = null,
 ) {
-    val cardModifier = Modifier
-        .size(width = DefaultCoverWidth, height = DefaultCoverHeight)
-        .then(modifier)
+    val cardModifier = modifier.size(width = DefaultCoverWidth, height = DefaultCoverHeight)
     val shape = if (hasRoundedShape) GamedgeTheme.shapes.medium else RectangleShape
     val backgroundColor = Color.Transparent
     val content: @Composable () -> Unit = {
