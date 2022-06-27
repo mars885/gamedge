@@ -33,6 +33,9 @@ internal data class GameInfoHeaderUiModel(
     val gameCategory: String,
 ) {
 
+    val hasCoverImageUrl: Boolean
+        get() = (coverImageUrl != null)
+
     val hasDeveloperName: Boolean
         get() = (developerName != null)
 }

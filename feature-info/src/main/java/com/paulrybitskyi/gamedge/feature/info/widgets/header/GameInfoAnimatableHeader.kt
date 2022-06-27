@@ -265,7 +265,7 @@ internal fun GameInfoAnimatableHeader(
             modifier = Modifier
                 .layoutId(ConstraintIdCover)
                 .drawOnTop(),
-            onCoverClicked = onCoverClicked,
+            onCoverClicked = if (headerInfo.hasCoverImageUrl) onCoverClicked else null,
         )
 
         FloatingActionButton(
