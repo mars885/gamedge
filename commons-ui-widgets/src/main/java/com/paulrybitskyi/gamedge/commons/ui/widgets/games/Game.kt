@@ -56,7 +56,6 @@ fun Game(
             GameCover(
                 title = null,
                 imageUrl = game.coverImageUrl,
-                onCoverClicked = onClick,
             )
 
             Details(

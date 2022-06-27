@@ -197,7 +197,7 @@ internal fun GameInfoHeader(
             title = null,
             imageUrl = headerInfo.coverImageUrl,
             modifier = Modifier.layoutId(ConstraintIdCover),
-            onCoverClicked = onCoverClicked,
+            onCoverClicked = if (headerInfo.hasCoverImageUrl) onCoverClicked else null,
         )
 
         FloatingActionButton(

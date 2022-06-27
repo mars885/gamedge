@@ -48,18 +48,16 @@ val DefaultCoverHeight = 153.dp
 fun GameCover(
     title: String?,
     imageUrl: String?,
-    onCoverClicked: () -> Unit,
     modifier: Modifier = Modifier,
     hasRoundedShape: Boolean = true,
+    onCoverClicked: (() -> Unit)? = null,
 ) {
-    GamedgeCard(
-        onClick = onCoverClicked,
-        modifier = Modifier
-            .size(width = DefaultCoverWidth, height = DefaultCoverHeight)
-            .then(modifier),
-        shape = if (hasRoundedShape) GamedgeTheme.shapes.medium else RectangleShape,
-        backgroundColor = Color.Transparent,
-    ) {
+    val cardModifier = Modifier
+        .size(width = DefaultCoverWidth, height = DefaultCoverHeight)
+        .then(modifier)
+    val shape = if (hasRoundedShape) GamedgeTheme.shapes.medium else RectangleShape
+    val backgroundColor = Color.Transparent
+    val content: @Composable () -> Unit = {
         Box {
             var imageState by remember { mutableStateOf<State>(State.Empty) }
             // Not using derivedStateOf here because rememberSaveable does not support derivedStateOf?
@@ -93,6 +91,23 @@ fun GameCover(
                 )
             }
         }
+    }
+
+    if (onCoverClicked != null) {
+        GamedgeCard(
+            onClick = onCoverClicked,
+            modifier = cardModifier,
+            shape = shape,
+            backgroundColor = backgroundColor,
+            content = content,
+        )
+    } else {
+        GamedgeCard(
+            modifier = cardModifier,
+            shape = shape,
+            backgroundColor = backgroundColor,
+            content = content,
+        )
     }
 }
 
