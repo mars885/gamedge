@@ -120,11 +120,6 @@ private enum class BottomNavigationItemModel(
     val titleId: Int,
     val screen: Screen,
 ) {
-    NEWS(
-        iconId = R.drawable.newspaper,
-        titleId = R.string.gaming_news_toolbar_title,
-        screen = Screen.News,
-    ),
     DISCOVER(
         iconId = R.drawable.compass_rose,
         titleId = R.string.games_discovery_toolbar_title,
@@ -134,5 +129,15 @@ private enum class BottomNavigationItemModel(
         iconId = R.drawable.heart,
         titleId = R.string.liked_games_toolbar_title,
         screen = Screen.Likes,
+    ),
+    NEWS(
+        iconId = R.drawable.newspaper,
+        titleId = R.string.gaming_news_toolbar_title,
+        screen = Screen.News,
+    ),
+    SETTINGS(
+        iconId = R.drawable.cog_outline,
+        titleId = R.string.settings_toolbar_title,
+        screen = Screen.Settings,
     ),
 }

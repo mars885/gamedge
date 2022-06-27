@@ -42,6 +42,7 @@ import com.paulrybitskyi.gamedge.feature.news.GamingNewsRoute
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNews
 import com.paulrybitskyi.gamedge.feature.search.GamesSearch
 import com.paulrybitskyi.gamedge.feature.search.GamesSearchRoute
+import com.paulrybitskyi.gamedge.feature.settings.Settings
 
 @Composable
 internal fun AppNavigation(
@@ -54,10 +55,6 @@ internal fun AppNavigation(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
     ) {
-        newsScreen(
-            navController = navController,
-            modifier = modifier,
-        )
         discoverScreen(
             navController = navController,
             modifier = modifier,
@@ -66,41 +63,15 @@ internal fun AppNavigation(
             navController = navController,
             modifier = modifier,
         )
-        gamesSearchScreen(navController)
-        gamesCategoryScreen(navController)
-        gameInfoScreen(navController)
-        imageViewerScreen(navController)
-    }
-}
-
-private fun NavGraphBuilder.newsScreen(
-    navController: NavHostController,
-    modifier: Modifier,
-) {
-    composable(
-        route = Screen.News.route,
-        enterTransition = { null },
-        exitTransition = {
-            when (Screen.forRoute(targetState.destination.requireRoute())) {
-                Screen.GamesSearch -> OvershootScaling.exit()
-                else -> null
-            }
-        },
-        popEnterTransition = {
-            when (Screen.forRoute(initialState.destination.requireRoute())) {
-                Screen.GamesSearch -> OvershootScaling.popEnter()
-                else -> null
-            }
-        },
-        popExitTransition = { null },
-    ) {
-        GamingNews(modifier) { route ->
-            when (route) {
-                is GamingNewsRoute.Search -> {
-                    navController.navigate(Screen.GamesSearch.route)
-                }
-            }
-        }
+        newsScreen(
+            navController = navController,
+            modifier = modifier,
+        )
+        settingsScreen(modifier = modifier)
+        gamesSearchScreen(navController = navController)
+        gamesCategoryScreen(navController = navController)
+        gameInfoScreen(navController = navController)
+        imageViewerScreen(navController = navController)
     }
 }
 
@@ -178,6 +149,45 @@ private fun NavGraphBuilder.likesScreen(
                 }
             }
         }
+    }
+}
+
+private fun NavGraphBuilder.newsScreen(
+    navController: NavHostController,
+    modifier: Modifier,
+) {
+    composable(
+        route = Screen.News.route,
+        enterTransition = { null },
+        exitTransition = {
+            when (Screen.forRoute(targetState.destination.requireRoute())) {
+                Screen.GamesSearch -> OvershootScaling.exit()
+                else -> null
+            }
+        },
+        popEnterTransition = {
+            when (Screen.forRoute(initialState.destination.requireRoute())) {
+                Screen.GamesSearch -> OvershootScaling.popEnter()
+                else -> null
+            }
+        },
+        popExitTransition = { null },
+    ) {
+        GamingNews(modifier) { route ->
+            when (route) {
+                is GamingNewsRoute.Search -> {
+                    navController.navigate(Screen.GamesSearch.route)
+                }
+            }
+        }
+    }
+}
+
+private fun NavGraphBuilder.settingsScreen(modifier: Modifier) {
+    composable(
+        route = Screen.Settings.route,
+    ) {
+        Settings(modifier)
     }
 }
 

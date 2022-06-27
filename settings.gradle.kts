@@ -20,6 +20,7 @@ include(":feature-image-viewer")
 include(":feature-likes")
 include(":feature-news")
 include(":feature-search")
+include(":feature-settings")
 
 pluginManagement {
     repositories {

@@ -40,6 +40,7 @@ import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.LocalUrlOpener
+import com.paulrybitskyi.gamedge.commons.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.commons.ui.widgets.AnimatedContentContainer
@@ -73,6 +74,7 @@ private fun GamingNews(
     val urlOpener = LocalUrlOpener.current
     val context = LocalContext.current
 
+    NavBarColorHandler()
     CommandsHandler(viewModel = viewModel) { command ->
         when (command) {
             is GamingNewsCommand.OpenUrl -> {

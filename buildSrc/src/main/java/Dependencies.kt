@@ -81,6 +81,7 @@ object deps {
         const val featureLikes = ":feature-likes"
         const val featureNews = ":feature-news"
         const val featureSearch = ":feature-search"
+        const val featureSettings = ":feature-settings"
     }
 
     object kotlin {

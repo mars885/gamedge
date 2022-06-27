@@ -150,7 +150,7 @@ private fun SystemBarsColorHandler() {
     val defaultStatusBarColor = GamedgeTheme.colors.statusBar
     val defaultNavigationBarColor = GamedgeTheme.colors.navBar
 
-    DisposableEffect(Unit) {
+    DisposableEffect(defaultStatusBarColor, defaultNavigationBarColor) {
         // We want to make the system bars translucent when viewing images
         with(systemUiController) {
             // Making the status bar transparent causes it to use the color

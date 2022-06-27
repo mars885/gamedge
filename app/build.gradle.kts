@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(project(deps.local.domain))
     implementation(project(deps.local.core))
     implementation(project(deps.local.commonsUi))
     implementation(project(deps.local.commonsUiWidgets))
@@ -50,6 +51,7 @@ dependencies {
     implementation(project(deps.local.featureLikes))
     implementation(project(deps.local.featureNews))
     implementation(project(deps.local.featureSearch))
+    implementation(project(deps.local.featureSettings))
 
     implementation(deps.androidX.splash)
 

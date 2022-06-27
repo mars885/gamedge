@@ -21,9 +21,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.coroutineScope
 import com.paulrybitskyi.commons.ktx.intentFor
 import com.paulrybitskyi.gamedge.commons.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.commons.ui.LocalTextSharer
@@ -32,7 +36,12 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.sharers.TextSharer
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
+import com.paulrybitskyi.gamedge.domain.settings.entities.Settings
+import com.paulrybitskyi.gamedge.domain.settings.entities.Theme
+import com.paulrybitskyi.gamedge.domain.settings.usecases.ObserveThemeUseCase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -49,10 +58,21 @@ class MainActivity : ComponentActivity() {
     @Inject lateinit var textSharer: TextSharer
     @Inject lateinit var networkStateProvider: NetworkStateProvider
 
+    @Inject lateinit var observeThemeUseCase: ObserveThemeUseCase
+
+    private var loadedTheme: Theme? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        val splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition {
+            loadedTheme == null
+        }
 
         super.onCreate(savedInstanceState)
+
+        lifecycle.coroutineScope.launch {
+            loadedTheme = observeThemeUseCase.execute().first()
+        }
 
         // To be able to draw behind system bars & change their colors
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -61,12 +81,25 @@ class MainActivity : ComponentActivity() {
             CompositionLocalProvider(LocalUrlOpener provides urlOpener) {
                 CompositionLocalProvider(LocalTextSharer provides textSharer) {
                     CompositionLocalProvider(LocalNetworkStateProvider provides networkStateProvider) {
-                        GamedgeTheme {
+                        GamedgeTheme(useDarkTheme = shouldUseDarkTheme()) {
                             MainScreen()
                         }
                     }
                 }
             }
+        }
+    }
+
+    @Composable
+    private fun shouldUseDarkTheme(): Boolean {
+        val themeState = observeThemeUseCase.execute().collectAsState(
+            initial = Settings.DEFAULT.theme,
+        )
+
+        return when (themeState.value) {
+            Theme.LIGHT -> false
+            Theme.DARK -> true
+            Theme.SYSTEM -> isSystemInDarkTheme()
         }
     }
 }

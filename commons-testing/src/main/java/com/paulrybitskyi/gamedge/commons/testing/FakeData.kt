@@ -24,6 +24,8 @@ import com.paulrybitskyi.gamedge.data.commons.DataPagination
 import com.paulrybitskyi.gamedge.data.games.DataCategory
 import com.paulrybitskyi.gamedge.data.games.DataCompany
 import com.paulrybitskyi.gamedge.data.games.DataGame
+import com.paulrybitskyi.gamedge.data.settings.DataSettings
+import com.paulrybitskyi.gamedge.data.settings.DataTheme
 import com.paulrybitskyi.gamedge.domain.articles.DomainArticle
 import com.paulrybitskyi.gamedge.domain.articles.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
@@ -42,6 +44,8 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshCompanyDevelopedGa
 import com.paulrybitskyi.gamedge.domain.games.usecases.RefreshSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ToggleGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.domain.settings.DomainSettings
+import com.paulrybitskyi.gamedge.domain.settings.DomainTheme
 import com.paulrybitskyi.gamedge.commons.api.Error as ApiError
 import com.paulrybitskyi.gamedge.data.commons.entities.Error as DataError
 import com.paulrybitskyi.gamedge.domain.commons.entities.Error as DomainError
@@ -167,6 +171,13 @@ val DATA_OAUTH_CREDENTIALS = DataOauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",
     tokenTtl = 5000L,
+)
+
+val DOMAIN_SETTINGS = DomainSettings(
+    theme = DomainTheme.DARK,
+)
+val DATA_SETTINGS = DataSettings(
+    theme = DataTheme.DARK,
 )
 
 val DOMAIN_PAGINATION = DomainPagination(offset = 0, limit = 20)

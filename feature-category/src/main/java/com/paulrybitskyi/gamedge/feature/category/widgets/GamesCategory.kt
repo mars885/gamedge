@@ -38,6 +38,7 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.commons.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
@@ -64,6 +65,7 @@ private fun GamesCategory(
     viewModel: GamesCategoryViewModel,
     onRoute: (Route) -> Unit,
 ) {
+    NavBarColorHandler()
     CommandsHandler(viewModel = viewModel)
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
     GamesCategory(

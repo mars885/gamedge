@@ -30,9 +30,10 @@ import java.net.URLEncoder
 internal val START_SCREEN = Screen.Discover
 
 internal sealed class Screen(val route: String) {
-    object News : Screen("news")
     object Discover : Screen("discover")
     object Likes : Screen("likes")
+    object News : Screen("news")
+    object Settings : Screen("settings")
     object GamesSearch : Screen("games-search")
 
     object GamesCategory : Screen("games-category/{${Parameters.CATEGORY}}") {
@@ -98,9 +99,10 @@ internal sealed class Screen(val route: String) {
 
         fun forRoute(route: String): Screen {
             return when (route) {
-                News.route -> News
                 Discover.route -> Discover
                 Likes.route -> Likes
+                News.route -> News
+                Settings.route -> Settings
                 GamesSearch.route -> GamesSearch
                 GamesCategory.route -> GamesCategory
                 GameInfo.route -> GameInfo
