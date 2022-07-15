@@ -60,23 +60,37 @@ class MainActivity : ComponentActivity() {
 
     @Inject lateinit var observeThemeUseCase: ObserveThemeUseCase
 
-    private var loadedTheme: Theme? = null
+    private var appTheme: Theme? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
-        splashScreen.setKeepOnScreenCondition {
-            loadedTheme == null
-        }
-
+        setupSplashScreen()
         super.onCreate(savedInstanceState)
+        loadAppTheme()
+        setupSystemBars()
+        setupCompose()
+    }
 
-        lifecycle.coroutineScope.launch {
-            loadedTheme = observeThemeUseCase.execute().first()
+    private fun setupSplashScreen() {
+        // Waiting until the app's theme is loaded first before
+        // displaying the dashboard to prevent the user from seeing
+        // the app blinking as a result of the theme change
+        installSplashScreen().setKeepOnScreenCondition {
+            appTheme == null
         }
+    }
 
+    private fun loadAppTheme() {
+        lifecycle.coroutineScope.launch {
+            appTheme = observeThemeUseCase.execute().first()
+        }
+    }
+
+    private fun setupSystemBars() {
         // To be able to draw behind system bars & change their colors
         WindowCompat.setDecorFitsSystemWindows(window, false)
+    }
 
+    private fun setupCompose() {
         setContent {
             CompositionLocalProvider(LocalUrlOpener provides urlOpener) {
                 CompositionLocalProvider(LocalTextSharer provides textSharer) {
