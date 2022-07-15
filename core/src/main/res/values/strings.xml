@@ -27,6 +27,7 @@
     <string name="artwork">Artwork</string>
     <string name="cover">Cover</string>
     <string name="screenshot">Screenshot</string>
+    <string name="version_name_template">v%s</string>
 
     <string name="action_share_via">Share via…</string>
 

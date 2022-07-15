@@ -19,12 +19,15 @@ package com.paulrybitskyi.gamedge.commons.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paulrybitskyi.commons.ktx.showLongToast
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Command
 import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
+import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.commons.ui.theme.navBar
 
 @Composable
 fun CommandsHandler(
@@ -52,5 +55,15 @@ fun RoutesHandler(
     LaunchedEffect(viewModel) {
         viewModel.routeFlow
             .collect(onRoute)
+    }
+}
+
+@Composable
+fun NavBarColorHandler() {
+    val systemUiController = rememberSystemUiController()
+    val navBarColor = GamedgeTheme.colors.navBar
+
+    LaunchedEffect(navBarColor) {
+        systemUiController.setNavigationBarColor(navBarColor)
     }
 }
