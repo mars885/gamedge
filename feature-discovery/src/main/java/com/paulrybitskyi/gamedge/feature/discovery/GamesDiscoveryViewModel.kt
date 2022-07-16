@@ -40,6 +40,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -69,8 +70,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
     private val currentItems: List<GamesDiscoveryItemUiModel>
         get() = _items.value
 
-    val items: StateFlow<List<GamesDiscoveryItemUiModel>>
-        get() = _items
+    val items: StateFlow<List<GamesDiscoveryItemUiModel>> = _items.asStateFlow()
 
     init {
         initDiscoveryItemsData()

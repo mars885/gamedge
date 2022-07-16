@@ -27,6 +27,7 @@ import com.paulrybitskyi.gamedge.domain.settings.usecases.SaveSettingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -50,8 +51,7 @@ internal class SettingsViewModel @Inject constructor(
     private val currentUiState: SettingsUiState
         get() = _uiState.value
 
-    val uiState: StateFlow<SettingsUiState>
-        get() = _uiState
+    val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
 
     init {
         observeSettings()

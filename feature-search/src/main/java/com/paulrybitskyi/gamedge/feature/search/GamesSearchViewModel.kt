@@ -38,6 +38,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -84,8 +85,7 @@ internal class GamesSearchViewModel @Inject constructor(
     private val currentUiState: GamesSearchUiState
         get() = _uiState.value
 
-    val uiState: StateFlow<GamesSearchUiState>
-        get() = _uiState
+    val uiState: StateFlow<GamesSearchUiState> = _uiState.asStateFlow()
 
     init {
         restoreState()
