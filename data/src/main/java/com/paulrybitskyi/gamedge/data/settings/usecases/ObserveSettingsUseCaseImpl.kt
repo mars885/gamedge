@@ -36,7 +36,7 @@ internal class ObserveSettingsUseCaseImpl @Inject constructor(
     private val settingsMapper: SettingsMapper,
 ) : ObserveSettingsUseCase {
 
-    override fun execute(): Flow<Settings> {
+    override fun execute(params: Unit): Flow<Settings> {
         return localDataStore.observeSettings()
             .flowOn(dispatcherProvider.main)
             .map(settingsMapper::mapToDomainSettings)

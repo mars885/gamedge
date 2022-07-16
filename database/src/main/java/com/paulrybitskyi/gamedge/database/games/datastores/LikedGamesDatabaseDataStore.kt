@@ -52,11 +52,11 @@ internal class LikedGamesDatabaseDataStore @Inject constructor(
         return likedGamesTable.isGameLiked(gameId)
     }
 
-    override suspend fun observeGameLikeState(gameId: Int): Flow<Boolean> {
+    override fun observeGameLikeState(gameId: Int): Flow<Boolean> {
         return likedGamesTable.observeGameLikeState(gameId)
     }
 
-    override suspend fun observeLikedGames(pagination: Pagination): Flow<List<Game>> {
+    override fun observeLikedGames(pagination: Pagination): Flow<List<Game>> {
          return likedGamesTable.observeLikedGames(
             offset = pagination.offset,
             limit = pagination.limit

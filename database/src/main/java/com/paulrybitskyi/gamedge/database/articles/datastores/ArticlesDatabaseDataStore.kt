@@ -47,7 +47,7 @@ internal class ArticlesDatabaseDataStore @Inject constructor(
         )
     }
 
-    override suspend fun observeArticles(pagination: Pagination): Flow<List<DataArticle>> {
+    override fun observeArticles(pagination: Pagination): Flow<List<DataArticle>> {
         return articlesTable.observeArticles(
             offset = pagination.offset,
             limit = pagination.limit

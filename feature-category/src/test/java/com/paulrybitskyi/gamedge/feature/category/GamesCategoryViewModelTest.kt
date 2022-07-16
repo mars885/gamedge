@@ -37,7 +37,6 @@ import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.finiteUiState
 import com.paulrybitskyi.gamedge.feature.category.widgets.isRefreshing
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
@@ -114,8 +113,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Emits correct ui states when observing games`() {
         runTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+            every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            every { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.uiState.test {
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
@@ -129,8 +128,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Logs error when games observing use case throws error`() {
         runTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+            every { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             advanceUntilIdle()
 
@@ -141,8 +140,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Dispatches toast showing command when games observing use case throws error`() {
         runTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+            every { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.commandFlow.test {
                 assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
@@ -153,8 +152,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Emits correct ui states when refreshing games`() {
         runTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+            every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            every { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.uiState.test {
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
@@ -169,8 +168,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Logs error when games refreshing use case throws error`() {
         runTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            every { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             advanceUntilIdle()
 
@@ -181,8 +180,8 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Dispatches toast showing command when games refreshing use case throws error`() {
         runTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            every { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)

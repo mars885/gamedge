@@ -44,7 +44,7 @@ internal class RefreshMostAnticipatedGamesUseCaseImpl @Inject constructor(
     private val mappers: RefreshGamesUseCaseMappers
 ) : RefreshMostAnticipatedGamesUseCase {
 
-    override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
+    override fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
         val throttlerKey = throttlerTools.keyProvider.provideMostAnticipatedGamesKey(params.pagination)
 
         return flow {

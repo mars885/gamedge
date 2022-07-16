@@ -43,11 +43,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 private const val MAX_ARTICLE_COUNT = 100
 private const val ARTICLES_REFRESH_INITIAL_DELAY = 500L
@@ -91,23 +92,22 @@ internal class GamingNewsViewModel @Inject constructor(
     private fun observeArticles() {
         if (isObservingArticles) return
 
-        viewModelScope.launch {
-            observeArticlesUseCase.execute(observerUseCaseParams)
-                .map(gamingNewsItemUiModelMapper::mapToUiModels)
-                .flowOn(dispatcherProvider.computation)
-                .map { news -> currentUiState.toSuccessState(news) }
-                .onError {
-                    logger.error(logTag, "Failed to load articles.", it)
-                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(currentUiState.toEmptyState())
-                }
-                .onStart {
-                    isObservingArticles = true
-                    emit(currentUiState.toLoadingState())
-                }
-                .onCompletion { isObservingArticles = false }
-                .collect { emittedUiState -> _uiState.update { emittedUiState } }
-        }
+        observeArticlesUseCase.execute(observerUseCaseParams)
+            .map(gamingNewsItemUiModelMapper::mapToUiModels)
+            .flowOn(dispatcherProvider.computation)
+            .map { news -> currentUiState.toSuccessState(news) }
+            .onError {
+                logger.error(logTag, "Failed to load articles.", it)
+                dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+                emit(currentUiState.toEmptyState())
+            }
+            .onStart {
+                isObservingArticles = true
+                emit(currentUiState.toLoadingState())
+            }
+            .onCompletion { isObservingArticles = false }
+            .onEach { emittedUiState -> _uiState.update { emittedUiState } }
+            .launchIn(viewModelScope)
     }
 
     fun onSearchButtonClicked() {
@@ -125,29 +125,28 @@ internal class GamingNewsViewModel @Inject constructor(
     }
 
     private fun refreshArticles(isFirstRefresh: Boolean) {
-        viewModelScope.launch {
-            refreshArticlesUseCase.execute(refresherUseCaseParams)
-                .resultOrError()
-                .map { currentUiState }
-                .onError {
-                    logger.error(logTag, "Failed to refresh articles.", it)
-                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+        refreshArticlesUseCase.execute(refresherUseCaseParams)
+            .resultOrError()
+            .map { currentUiState }
+            .onError {
+                logger.error(logTag, "Failed to refresh articles.", it)
+                dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+            }
+            .onStart {
+                // Adding the delay on the first refresh to wait until the cached
+                // articles are loaded and not overload the UI with loaders
+                if (isFirstRefresh) {
+                    delay(ARTICLES_REFRESH_INITIAL_DELAY)
                 }
-                .onStart {
-                    // Adding the delay on the first refresh to wait until the cached
-                    // articles are loaded and not overload the UI with loaders
-                    if (isFirstRefresh) {
-                        delay(ARTICLES_REFRESH_INITIAL_DELAY)
-                    }
 
-                    emit(currentUiState.enableRefreshing())
-                    // Adding a delay to prevent the SwipeRefresh from disappearing quickly
-                    delay(ARTICLES_REFRESH_DEFAULT_DELAY)
-                }
-                .onCompletion {
-                    emit(currentUiState.disableRefreshing())
-                }
-                .collect { emittedUiState -> _uiState.update { emittedUiState } }
-        }
+                emit(currentUiState.enableRefreshing())
+                // Adding a delay to prevent the SwipeRefresh from disappearing quickly
+                delay(ARTICLES_REFRESH_DEFAULT_DELAY)
+            }
+            .onCompletion {
+                emit(currentUiState.disableRefreshing())
+            }
+            .onEach { emittedUiState -> _uiState.update { emittedUiState } }
+            .launchIn(viewModelScope)
     }
 }

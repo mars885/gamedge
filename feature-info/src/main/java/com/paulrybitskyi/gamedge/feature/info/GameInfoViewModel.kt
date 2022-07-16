@@ -145,7 +145,7 @@ internal class GameInfoViewModel @Inject constructor(
             .resultOrError()
     }
 
-    private suspend fun observeGameLikeState(game: Game): Flow<Boolean> {
+    private fun observeGameLikeState(game: Game): Flow<Boolean> {
         return useCases.observeGameLikeStateUseCase
             .execute(ObserveGameLikeStateUseCase.Params(game.id))
     }

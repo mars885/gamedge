@@ -26,8 +26,8 @@ import com.paulrybitskyi.gamedge.database.articles.datastores.ArticlesDatabaseDa
 import com.paulrybitskyi.gamedge.database.articles.datastores.mapToDatabaseArticles
 import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -69,7 +69,7 @@ internal class ArticlesDatabaseDataStoreTest {
         runTest {
             val databaseArticles = articleMapper.mapToDatabaseArticles(DATA_ARTICLES)
 
-            coEvery { articlesTable.observeArticles(any(), any()) } returns flowOf(databaseArticles)
+            every { articlesTable.observeArticles(any(), any()) } returns flowOf(databaseArticles)
 
             SUT.observeArticles(DATA_PAGINATION).test {
                 assertThat(awaitItem()).isEqualTo(DATA_ARTICLES)

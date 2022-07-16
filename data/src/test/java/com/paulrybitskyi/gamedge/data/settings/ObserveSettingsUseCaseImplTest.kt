@@ -23,8 +23,9 @@ import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.data.settings.datastores.SettingsLocalDataStore
 import com.paulrybitskyi.gamedge.data.settings.usecases.ObserveSettingsUseCaseImpl
 import com.paulrybitskyi.gamedge.data.settings.usecases.commons.SettingsMapper
+import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -53,7 +54,7 @@ internal class ObserveSettingsUseCaseImplTest {
     @Test
     fun `Emits settings from local data store`() {
         runTest {
-            coEvery { settingsLocalDataStore.observeSettings() } returns flowOf(DATA_SETTINGS)
+            every { settingsLocalDataStore.observeSettings() } returns flowOf(DATA_SETTINGS)
 
             SUT.execute().test {
                 assertThat(awaitItem()).isEqualTo(settingsMapper.mapToDomainSettings(DATA_SETTINGS))

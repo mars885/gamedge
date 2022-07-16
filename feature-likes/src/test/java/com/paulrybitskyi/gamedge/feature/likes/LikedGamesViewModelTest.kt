@@ -31,15 +31,13 @@ import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelUiMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.finiteUiState
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.likes.ObserveLikedGamesUseCase
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.MockK
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -48,17 +46,11 @@ internal class LikedGamesViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
-    @MockK private lateinit var observeLikedGamesUseCase: ObserveLikedGamesUseCase
+    private val observeLikedGamesUseCase = mockk<ObserveLikedGamesUseCase>(relaxed = true)
 
-    private lateinit var logger: FakeLogger
-    private lateinit var SUT: LikedGamesViewModel
-
-    @Before
-    fun setup() {
-        MockKAnnotations.init(this)
-
-        logger = FakeLogger()
-        SUT = LikedGamesViewModel(
+    private val logger = FakeLogger()
+    private val SUT by lazy {
+        LikedGamesViewModel(
             observeLikedGamesUseCase = observeLikedGamesUseCase,
             likedGameModelUiMapper = FakeGameModelUiMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
@@ -71,7 +63,7 @@ internal class LikedGamesViewModelTest {
     @Test
     fun `Emits correct ui states when loading data`() {
         runTest {
-            coEvery { observeLikedGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            every { observeLikedGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.uiState.test {
                 val emptyState = awaitItem()
@@ -89,8 +81,9 @@ internal class LikedGamesViewModelTest {
     @Test
     fun `Logs error when liked games loading fails`() {
         runTest {
-            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
+            SUT
             advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty()
@@ -100,7 +93,7 @@ internal class LikedGamesViewModelTest {
     @Test
     fun `Dispatches toast showing command when liked games loading fails`() {
         runTest {
-            coEvery { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { observeLikedGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)

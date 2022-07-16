@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,4 +18,6 @@ package com.paulrybitskyi.gamedge.domain.commons.usecases
 
 import kotlinx.coroutines.flow.Flow
 
-interface ObservableUseCase<In, Out> : UseCase<In, Flow<Out>>
+interface ObservableUseCase<In, Out> {
+    fun execute(params: In): Flow<Out>
+}

@@ -22,7 +22,7 @@ import com.paulrybitskyi.gamedge.commons.testing.OBSERVE_GAME_LIKE_STATE_USE_CAS
 import com.paulrybitskyi.gamedge.data.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ObserveGameLikeStateUseCaseImpl
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -45,13 +45,13 @@ internal class ObserveGameLikeStateUseCaseImplTest {
     @Test
     fun `Emits game like state successfully`() {
         runTest {
-            coEvery { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(true)
+            every { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(true)
             SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).test {
                 assertThat(awaitItem()).isTrue()
                 awaitComplete()
             }
 
-            coEvery { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(false)
+            every { likedGamesLocalDataStore.observeGameLikeState(any()) } returns flowOf(false)
             SUT.execute(OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS).test {
                 assertThat(awaitItem()).isFalse()
                 awaitComplete()

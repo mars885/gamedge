@@ -16,9 +16,7 @@
 
 package com.paulrybitskyi.gamedge.domain.settings.usecases
 
+import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
 import com.paulrybitskyi.gamedge.domain.settings.entities.Theme
-import kotlinx.coroutines.flow.Flow
 
-interface ObserveThemeUseCase {
-    fun execute(): Flow<Theme>
-}
+interface ObserveThemeUseCase : ObservableUseCase<Unit, Theme>

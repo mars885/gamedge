@@ -27,8 +27,8 @@ interface GamesLocalDataStore {
     suspend fun getCompanyDevelopedGames(company: DataCompany, pagination: Pagination): List<DataGame>
     suspend fun getSimilarGames(game: DataGame, pagination: Pagination): List<DataGame>
     suspend fun searchGames(searchQuery: String, pagination: Pagination): List<DataGame>
-    suspend fun observePopularGames(pagination: Pagination): Flow<List<DataGame>>
-    suspend fun observeRecentlyReleasedGames(pagination: Pagination): Flow<List<DataGame>>
-    suspend fun observeComingSoonGames(pagination: Pagination): Flow<List<DataGame>>
-    suspend fun observeMostAnticipatedGames(pagination: Pagination): Flow<List<DataGame>>
+    fun observePopularGames(pagination: Pagination): Flow<List<DataGame>>
+    fun observeRecentlyReleasedGames(pagination: Pagination): Flow<List<DataGame>>
+    fun observeComingSoonGames(pagination: Pagination): Flow<List<DataGame>>
+    fun observeMostAnticipatedGames(pagination: Pagination): Flow<List<DataGame>>
 }

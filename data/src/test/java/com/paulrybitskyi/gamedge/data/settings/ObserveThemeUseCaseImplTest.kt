@@ -20,9 +20,10 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_SETTINGS
 import com.paulrybitskyi.gamedge.data.settings.usecases.ObserveThemeUseCaseImpl
+import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import com.paulrybitskyi.gamedge.domain.settings.usecases.ObserveSettingsUseCase
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -47,7 +48,7 @@ internal class ObserveThemeUseCaseImplTest {
     @Test
     fun `Emits theme of settings that is emitted by another use case`() {
         runTest {
-            coEvery { observeSettingsUseCase.execute() } returns flowOf(DOMAIN_SETTINGS)
+            every { observeSettingsUseCase.execute() } returns flowOf(DOMAIN_SETTINGS)
 
             SUT.execute().test {
                 assertThat(awaitItem()).isEqualTo(DOMAIN_SETTINGS.theme)
@@ -59,7 +60,7 @@ internal class ObserveThemeUseCaseImplTest {
     @Test
     fun `Emits theme once if multiple events contain the same theme`() {
         runTest {
-            coEvery { observeSettingsUseCase.execute() } returns flowOf(DOMAIN_SETTINGS, DOMAIN_SETTINGS)
+            every { observeSettingsUseCase.execute() } returns flowOf(DOMAIN_SETTINGS, DOMAIN_SETTINGS)
 
             SUT.execute().test {
                 assertThat(awaitItem()).isEqualTo(DOMAIN_SETTINGS.theme)
