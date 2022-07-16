@@ -28,7 +28,7 @@ import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelUiMapper
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModelMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.finiteUiState
 import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.SearchGamesUseCase
@@ -54,7 +54,7 @@ internal class GamesSearchViewModelTest {
     private val SUT by lazy {
         GamesSearchViewModel(
             searchGamesUseCase = searchGamesUseCase,
-            gameModelUiMapper = FakeGameModelUiMapper(),
+            uiModelMapper = FakeGameUiModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
@@ -235,7 +235,7 @@ internal class GamesSearchViewModelTest {
         }
     }
 
-    private class FakeGameModelUiMapper : GameModelUiMapper {
+    private class FakeGameUiModelMapper : GameUiModelMapper {
 
         override fun mapToUiModel(game: DomainGame): GameUiModel {
             return GameUiModel(

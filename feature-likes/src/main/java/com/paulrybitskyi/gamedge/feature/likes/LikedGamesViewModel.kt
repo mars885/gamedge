@@ -20,7 +20,7 @@ import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelUiMapper
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModelMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToUiModels
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toEmptyState
@@ -57,7 +57,7 @@ private const val SUBSEQUENT_EMISSION_DELAY = 500L
 @HiltViewModel
 internal class LikedGamesViewModel @Inject constructor(
     private val observeLikedGamesUseCase: ObserveLikedGamesUseCase,
-    private val likedGameModelUiMapper: GameModelUiMapper,
+    private val uiModelMapper: GameUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
@@ -95,7 +95,7 @@ internal class LikedGamesViewModel @Inject constructor(
         if (isObservingGames) return
 
         gamesObservingJob = observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
-            .map(likedGameModelUiMapper::mapToUiModels)
+            .map(uiModelMapper::mapToUiModels)
             .flowOn(dispatcherProvider.computation)
             .map { games -> currentUiState.toSuccessState(games) }
             .onError {

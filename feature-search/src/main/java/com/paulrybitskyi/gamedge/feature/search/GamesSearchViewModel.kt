@@ -22,7 +22,7 @@ import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModel
-import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameModelUiMapper
+import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GameUiModelMapper
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.mapToUiModels
 import com.paulrybitskyi.gamedge.commons.ui.widgets.games.toSuccessState
@@ -52,7 +52,7 @@ private const val KEY_CONFIRMED_SEARCH_QUERY = "confirmed_search_query"
 @HiltViewModel
 internal class GamesSearchViewModel @Inject constructor(
     private val searchGamesUseCase: SearchGamesUseCase,
-    private val gameModelUiMapper: GameModelUiMapper,
+    private val uiModelMapper: GameUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
@@ -161,7 +161,7 @@ internal class GamesSearchViewModel @Inject constructor(
             flowOf(createGamesEmptyUiState())
         } else {
             searchGamesUseCase.execute(useCaseParams)
-                .map(gameModelUiMapper::mapToUiModels)
+                .map(uiModelMapper::mapToUiModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { games ->
                     currentUiState.gamesUiState.toSuccessState(
