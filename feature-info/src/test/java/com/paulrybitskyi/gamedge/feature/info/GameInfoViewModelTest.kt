@@ -49,7 +49,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -58,15 +57,11 @@ internal class GameInfoViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
-    private lateinit var useCases: GameInfoUseCases
-    private lateinit var logger: FakeLogger
-    private lateinit var SUT: GameInfoViewModel
+    private val useCases = setupUseCases()
+    private val logger = FakeLogger()
 
-    @Before
-    fun setup() {
-        useCases = setupUseCases()
-        logger = FakeLogger()
-        SUT = GameInfoViewModel(
+    private val SUT by lazy {
+        GameInfoViewModel(
             savedStateHandle = setupSavedStateHandle(),
             transitionAnimationDuration = 0L,
             useCases = useCases,
@@ -119,6 +114,7 @@ internal class GameInfoViewModelTest {
         runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_API))
 
+            SUT
             advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty()
@@ -171,6 +167,7 @@ internal class GameInfoViewModelTest {
         runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_NOT_FOUND))
 
+            SUT
             advanceUntilIdle()
 
             SUT.commandFlow.test {
@@ -222,6 +219,7 @@ internal class GameInfoViewModelTest {
         runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_NOT_FOUND))
 
+            SUT
             advanceUntilIdle()
 
             SUT.commandFlow.test {
@@ -288,6 +286,7 @@ internal class GameInfoViewModelTest {
         runTest {
             coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_NOT_FOUND))
 
+            SUT
             advanceUntilIdle()
 
             SUT.commandFlow.test {

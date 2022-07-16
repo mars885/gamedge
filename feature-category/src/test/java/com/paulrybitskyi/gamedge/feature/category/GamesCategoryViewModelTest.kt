@@ -36,16 +36,13 @@ import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModelUiMap
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.finiteUiState
 import com.paulrybitskyi.gamedge.feature.category.widgets.isRefreshing
-import io.mockk.MockKAnnotations
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Provider
@@ -55,18 +52,12 @@ internal class GamesCategoryViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
-    @MockK private lateinit var observePopularGamesUseCase: ObservePopularGamesUseCase
-    @MockK private lateinit var refreshPopularGamesUseCase: RefreshPopularGamesUseCase
+    private val observePopularGamesUseCase = mockk<ObservePopularGamesUseCase>(relaxed = true)
+    private val refreshPopularGamesUseCase = mockk<RefreshPopularGamesUseCase>(relaxed = true)
 
-    private lateinit var logger: FakeLogger
-    private lateinit var SUT: GamesCategoryViewModel
-
-    @Before
-    fun setup() {
-        MockKAnnotations.init(this)
-
-        logger = FakeLogger()
-        SUT = GamesCategoryViewModel(
+    private val logger = FakeLogger()
+    private val SUT by lazy {
+        GamesCategoryViewModel(
             savedStateHandle = setupSavedStateHandle(),
             stringProvider = FakeStringProvider(),
             transitionAnimationDuration = 0L,
@@ -131,6 +122,7 @@ internal class GamesCategoryViewModelTest {
             every { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
             every { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
+            SUT
             advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty()
@@ -171,6 +163,7 @@ internal class GamesCategoryViewModelTest {
             every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
             every { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
+            SUT
             advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty()
