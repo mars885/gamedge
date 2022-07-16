@@ -27,6 +27,7 @@ import com.paulrybitskyi.gamedge.data.auth.datastores.local.ProtoOauthCredential
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -71,7 +72,7 @@ internal class AuthFileDataStoreTest {
     @Test
     fun `Retrieves credentials successfully`() {
         runTest {
-            coEvery { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
+            every { protoDataStore.data } returns flowOf(PROTO_OAUTH_CREDENTIALS)
 
             assertThat(SUT.getOauthCredentials()).isEqualTo(DATA_OAUTH_CREDENTIALS)
         }
@@ -80,7 +81,7 @@ internal class AuthFileDataStoreTest {
     @Test
     fun `Retrieves null credentials successfully`() {
         runTest {
-            coEvery { protoDataStore.data } returns flowOf()
+            every { protoDataStore.data } returns flowOf()
 
             assertThat(SUT.getOauthCredentials()).isNull()
         }

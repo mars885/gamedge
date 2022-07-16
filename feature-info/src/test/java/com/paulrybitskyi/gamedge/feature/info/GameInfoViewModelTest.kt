@@ -83,7 +83,7 @@ internal class GameInfoViewModelTest {
         return GameInfoUseCases(
             getGameUseCase = mockk(),
             observeGameLikeStateUseCase = mockk {
-                coEvery { execute(any()) } returns flowOf(true)
+                every { execute(any()) } returns flowOf(true)
             },
             toggleGameLikeStateUseCase = mockk(),
             getCompanyDevelopedGamesUseCase = mockk {

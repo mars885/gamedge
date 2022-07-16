@@ -30,7 +30,7 @@ internal class ObserveGameLikeStateUseCaseImpl @Inject constructor(
     private val likedGamesLocalDataStore: LikedGamesLocalDataStore
 ) : ObserveGameLikeStateUseCase {
 
-    override suspend fun execute(params: Params): Flow<Boolean> {
+    override fun execute(params: Params): Flow<Boolean> {
         return likedGamesLocalDataStore.observeGameLikeState(params.gameId)
     }
 }

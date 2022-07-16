@@ -23,12 +23,13 @@ import com.paulrybitskyi.gamedge.commons.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.core.Constants
+import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import com.paulrybitskyi.gamedge.domain.settings.entities.Settings
 import com.paulrybitskyi.gamedge.domain.settings.entities.Theme
 import com.paulrybitskyi.gamedge.domain.settings.usecases.ObserveSettingsUseCase
 import com.paulrybitskyi.gamedge.domain.settings.usecases.SaveSettingsUseCase
-import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -57,7 +58,7 @@ internal class SettingsViewModelTest {
     @Test
     fun `Emits correct ui states when initialization starts`() {
         runTest {
-            coEvery { observeSettingsUseCase.execute() } returns flowOf(DOMAIN_SETTINGS)
+            every { observeSettingsUseCase.execute() } returns flowOf(DOMAIN_SETTINGS)
 
             SUT.uiState.test {
                 val loadingState = awaitItem()
@@ -109,7 +110,7 @@ internal class SettingsViewModelTest {
             val defaultSettings = DOMAIN_SETTINGS.copy(theme = Theme.LIGHT)
             val newSettings = defaultSettings.copy(theme = Theme.DARK)
 
-            coEvery { observeSettingsUseCase.execute() } returns flowOf(defaultSettings)
+            every { observeSettingsUseCase.execute() } returns flowOf(defaultSettings)
 
             SUT.onThemePicked(newSettings.theme)
 

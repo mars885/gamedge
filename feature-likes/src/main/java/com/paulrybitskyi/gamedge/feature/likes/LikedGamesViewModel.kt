@@ -44,8 +44,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -92,30 +94,29 @@ internal class LikedGamesViewModel @Inject constructor(
     private fun observeGames() {
         if (isObservingGames) return
 
-        gamesObservingJob = viewModelScope.launch {
-            observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
-                .map(likedGameModelUiMapper::mapToUiModels)
-                .flowOn(dispatcherProvider.computation)
-                .map { games -> currentUiState.toSuccessState(games) }
-                .onError {
-                    logger.error(logTag, "Failed to load liked games.", it)
-                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(currentUiState.toEmptyState())
-                }
-                .onStart {
-                    isObservingGames = true
-                    emit(currentUiState.toLoadingState())
+        gamesObservingJob = observeLikedGamesUseCase.execute(observeGamesUseCaseParams)
+            .map(likedGameModelUiMapper::mapToUiModels)
+            .flowOn(dispatcherProvider.computation)
+            .map { games -> currentUiState.toSuccessState(games) }
+            .onError {
+                logger.error(logTag, "Failed to load liked games.", it)
+                dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+                emit(currentUiState.toEmptyState())
+            }
+            .onStart {
+                isObservingGames = true
+                emit(currentUiState.toLoadingState())
 
-                    // Delaying to give a sense of "loading" since progress indicators
-                    // do not have the time to fully show themselves
-                    if (isSubsequentEmission()) delay(SUBSEQUENT_EMISSION_DELAY)
-                }
-                .onCompletion { isObservingGames = false }
-                .collect { emittedUiState ->
-                    configureNextLoad(emittedUiState)
-                    _uiState.update { emittedUiState }
-                }
-        }
+                // Delaying to give a sense of "loading" since progress indicators
+                // do not have the time to fully show themselves
+                if (isSubsequentEmission()) delay(SUBSEQUENT_EMISSION_DELAY)
+            }
+            .onCompletion { isObservingGames = false }
+            .onEach { emittedUiState ->
+                configureNextLoad(emittedUiState)
+                _uiState.update { emittedUiState }
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun isSubsequentEmission(): Boolean {

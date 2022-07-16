@@ -39,7 +39,7 @@ internal class ObservePopularGamesUseCaseImpl @Inject constructor(
     private val gameMapper: GameMapper
 ) : ObservePopularGamesUseCase {
 
-    override suspend fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
+    override fun execute(params: ObserveGamesUseCaseParams): Flow<List<Game>> {
         return gamesLocalDataStore
             .observePopularGames(params.pagination.toDataPagination())
             .map(gameMapper::mapToDomainGames)

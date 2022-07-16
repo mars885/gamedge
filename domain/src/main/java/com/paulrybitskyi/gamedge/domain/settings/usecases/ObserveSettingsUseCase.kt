@@ -16,9 +16,7 @@
 
 package com.paulrybitskyi.gamedge.domain.settings.usecases
 
+import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
 import com.paulrybitskyi.gamedge.domain.settings.entities.Settings
-import kotlinx.coroutines.flow.Flow
 
-interface ObserveSettingsUseCase {
-    fun execute(): Flow<Settings>
-}
+interface ObserveSettingsUseCase : ObservableUseCase<Unit, Settings>

@@ -32,15 +32,13 @@ import com.paulrybitskyi.gamedge.domain.articles.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.gamedge.feature.news.mapping.GamingNewsItemUiModelMapper
 import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNewsItemUiModel
 import com.paulrybitskyi.gamedge.feature.news.widgets.finiteUiState
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.MockK
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -49,18 +47,12 @@ internal class GamingNewsViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
-    @MockK private lateinit var observeArticlesUseCase: ObserveArticlesUseCase
-    @MockK private lateinit var refreshArticlesUseCase: RefreshArticlesUseCase
+    private val observeArticlesUseCase = mockk<ObserveArticlesUseCase>(relaxed = true)
+    private val refreshArticlesUseCase = mockk<RefreshArticlesUseCase>(relaxed = true)
 
-    private lateinit var logger: FakeLogger
-    private lateinit var SUT: GamingNewsViewModel
-
-    @Before
-    fun setup() {
-        MockKAnnotations.init(this)
-
-        logger = FakeLogger()
-        SUT = GamingNewsViewModel(
+    private val logger = FakeLogger()
+    private val SUT by lazy {
+        GamingNewsViewModel(
             observeArticlesUseCase = observeArticlesUseCase,
             refreshArticlesUseCase = refreshArticlesUseCase,
             gamingNewsItemUiModelMapper = FakeGamingNewsItemUiModelMapper(),
@@ -73,7 +65,7 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Emits correct ui states when loading data`() {
         runTest {
-            coEvery { observeArticlesUseCase.execute(any()) } returns flowOf(DOMAIN_ARTICLES)
+            every { observeArticlesUseCase.execute(any()) } returns flowOf(DOMAIN_ARTICLES)
 
             SUT.uiState.test {
                 val emptyState = awaitItem()
@@ -91,8 +83,9 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Logs error when articles observing use case throws error`() {
         runTest {
-            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
+            SUT
             advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty()
@@ -102,7 +95,7 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Dispatches toast showing command when articles observing use case throws error`() {
         runTest {
-            coEvery { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { observeArticlesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
@@ -147,8 +140,9 @@ internal class GamingNewsViewModelTest {
     @Test
     fun `Emits correct ui states when refreshing data`() {
         runTest {
-            coEvery { refreshArticlesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_ARTICLES))
+            every { refreshArticlesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_ARTICLES))
 
+            SUT
             advanceUntilIdle()
 
             SUT.uiState.test {

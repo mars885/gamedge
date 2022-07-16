@@ -90,7 +90,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         }
     }
 
-    override suspend fun observePopularGames(pagination: Pagination): Flow<List<DataGame>> {
+    override fun observePopularGames(pagination: Pagination): Flow<List<DataGame>> {
         return gamesTable.observePopularGames(
             minReleaseDateTimestamp = queryTimestampProvider.getPopularGamesMinReleaseDate(),
             offset = pagination.offset,
@@ -99,7 +99,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGamesFlow()
     }
 
-    override suspend fun observeRecentlyReleasedGames(pagination: Pagination): Flow<List<DataGame>> {
+    override fun observeRecentlyReleasedGames(pagination: Pagination): Flow<List<DataGame>> {
         return gamesTable.observeRecentlyReleasedGames(
             minReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMinReleaseDate(),
             maxReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMaxReleaseDate(),
@@ -109,7 +109,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGamesFlow()
     }
 
-    override suspend fun observeComingSoonGames(pagination: Pagination): Flow<List<DataGame>> {
+    override fun observeComingSoonGames(pagination: Pagination): Flow<List<DataGame>> {
         return gamesTable.observeComingSoonGames(
             minReleaseDateTimestamp = queryTimestampProvider.getComingSoonGamesMinReleaseDate(),
             offset = pagination.offset,
@@ -118,7 +118,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGamesFlow()
     }
 
-    override suspend fun observeMostAnticipatedGames(pagination: Pagination): Flow<List<DataGame>> {
+    override fun observeMostAnticipatedGames(pagination: Pagination): Flow<List<DataGame>> {
         return gamesTable.observeMostAnticipatedGames(
             minReleaseDateTimestamp = queryTimestampProvider.getMostAnticipatedGamesMinReleaseDate(),
             offset = pagination.offset,

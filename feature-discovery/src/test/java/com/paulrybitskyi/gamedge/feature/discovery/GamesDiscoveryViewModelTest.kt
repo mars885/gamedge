@@ -32,16 +32,13 @@ import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularG
 import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameUiModelMapper
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameUiModel
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.MockK
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -50,18 +47,12 @@ internal class GamesDiscoveryViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
-    @MockK private lateinit var observePopularGamesUseCase: ObservePopularGamesUseCase
-    @MockK private lateinit var refreshPopularGamesUseCase: RefreshPopularGamesUseCase
+    private val observePopularGamesUseCase = mockk<ObservePopularGamesUseCase>(relaxed = true)
+    private val refreshPopularGamesUseCase = mockk<RefreshPopularGamesUseCase>(relaxed = true)
 
-    private lateinit var logger: FakeLogger
-    private lateinit var SUT: GamesDiscoveryViewModel
-
-    @Before
-    fun setup() {
-        MockKAnnotations.init(this)
-
-        logger = FakeLogger()
-        SUT = GamesDiscoveryViewModel(
+    private val logger = FakeLogger()
+    private val SUT by lazy {
+        GamesDiscoveryViewModel(
             useCases = setupUseCases(),
             itemGameModelMapper = FakeGamesDiscoveryItemGameUiModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
@@ -76,25 +67,25 @@ internal class GamesDiscoveryViewModelTest {
             observeGamesUseCasesMap = mapOf(
                 GamesDiscoveryKey.Type.POPULAR to observePopularGamesUseCase,
                 GamesDiscoveryKey.Type.RECENTLY_RELEASED to mockk {
-                    coEvery { execute(any()) } returns flowOf(DOMAIN_GAMES)
+                    every { execute(any()) } returns flowOf(DOMAIN_GAMES)
                 },
                 GamesDiscoveryKey.Type.COMING_SOON to mockk {
-                    coEvery { execute(any()) } returns flowOf(DOMAIN_GAMES)
+                    every { execute(any()) } returns flowOf(DOMAIN_GAMES)
                 },
                 GamesDiscoveryKey.Type.MOST_ANTICIPATED to mockk {
-                    coEvery { execute(any()) } returns flowOf(DOMAIN_GAMES)
+                    every { execute(any()) } returns flowOf(DOMAIN_GAMES)
                 }
             ),
             refreshGamesUseCasesMap = mapOf(
                 GamesDiscoveryKey.Type.POPULAR to refreshPopularGamesUseCase,
                 GamesDiscoveryKey.Type.RECENTLY_RELEASED to mockk {
-                    coEvery { execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+                    every { execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
                 },
                 GamesDiscoveryKey.Type.COMING_SOON to mockk {
-                    coEvery { execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+                    every { execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
                 },
                 GamesDiscoveryKey.Type.MOST_ANTICIPATED to mockk {
-                    coEvery { execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+                    every { execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
                 }
             )
         )
@@ -103,9 +94,10 @@ internal class GamesDiscoveryViewModelTest {
     @Test
     fun `Logs error when games observing use case throws error`() {
         runTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+            every { observePopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
+            SUT
             advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty()
@@ -115,9 +107,10 @@ internal class GamesDiscoveryViewModelTest {
     @Test
     fun `Logs error when games refreshing use case throws error`() {
         runTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            every { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
+            SUT
             advanceUntilIdle()
 
             assertThat(logger.errorMessage).isNotEmpty()
@@ -127,8 +120,8 @@ internal class GamesDiscoveryViewModelTest {
     @Test
     fun `Dispatches toast showing command when games refreshing use case throws error`() {
         runTest {
-            coEvery { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            every { refreshPopularGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
 
             SUT.commandFlow.test {
                 assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)

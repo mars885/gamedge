@@ -16,8 +16,14 @@
 
 package com.paulrybitskyi.gamedge.domain.commons.extensions
 
+import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
 import com.paulrybitskyi.gamedge.domain.commons.usecases.UseCase
+import kotlinx.coroutines.flow.Flow
 
 suspend fun <Out> UseCase<Unit, Out>.execute(): Out {
+    return execute(Unit)
+}
+
+fun <Out> ObservableUseCase<Unit, Out>.execute(): Flow<Out> {
     return execute(Unit)
 }

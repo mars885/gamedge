@@ -26,7 +26,7 @@ import com.paulrybitskyi.gamedge.data.articles.usecases.ObserveArticlesUseCaseIm
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.ArticleMapper
 import com.paulrybitskyi.gamedge.data.articles.usecases.commons.mapToDomainArticles
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -55,7 +55,7 @@ internal class ObserveArticlesUseCaseImplTest {
     @Test
     fun `Emits articles from local data store`() {
         runTest {
-            coEvery { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
+            every { articlesLocalDataStore.observeArticles(any()) } returns flowOf(DATA_ARTICLES)
 
             SUT.execute(OBSERVE_ARTICLES_USE_CASE_PARAMS).test {
                 assertThat(awaitItem()).isEqualTo(articleMapper.mapToDomainArticles(DATA_ARTICLES))

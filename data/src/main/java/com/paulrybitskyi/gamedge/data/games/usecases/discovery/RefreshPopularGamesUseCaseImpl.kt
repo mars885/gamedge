@@ -44,7 +44,7 @@ internal class RefreshPopularGamesUseCaseImpl @Inject constructor(
     private val mappers: RefreshGamesUseCaseMappers
 ) : RefreshPopularGamesUseCase {
 
-    override suspend fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
+    override fun execute(params: RefreshGamesUseCaseParams): Flow<DomainResult<List<Game>>> {
         val throttlerKey = throttlerTools.keyProvider.providePopularGamesKey(params.pagination)
 
         return flow {

@@ -39,7 +39,7 @@ internal class ObserveArticlesUseCaseImpl @Inject constructor(
     private val articleMapper: ArticleMapper
 ) : ObserveArticlesUseCase {
 
-    override suspend fun execute(params: Params): Flow<List<Article>> {
+    override fun execute(params: Params): Flow<List<Article>> {
         return articlesLocalDataStore
             .observeArticles(params.pagination.toDataPagination())
             .map(articleMapper::mapToDomainArticles)

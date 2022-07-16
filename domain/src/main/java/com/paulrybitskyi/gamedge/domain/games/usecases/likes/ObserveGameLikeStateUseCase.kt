@@ -16,10 +16,9 @@
 
 package com.paulrybitskyi.gamedge.domain.games.usecases.likes
 
-import com.paulrybitskyi.gamedge.domain.commons.usecases.UseCase
-import kotlinx.coroutines.flow.Flow
+import com.paulrybitskyi.gamedge.domain.commons.usecases.ObservableUseCase
 
-interface ObserveGameLikeStateUseCase : UseCase<ObserveGameLikeStateUseCase.Params, Flow<Boolean>> {
+interface ObserveGameLikeStateUseCase : ObservableUseCase<ObserveGameLikeStateUseCase.Params, Boolean> {
 
     data class Params(val gameId: Int)
 }

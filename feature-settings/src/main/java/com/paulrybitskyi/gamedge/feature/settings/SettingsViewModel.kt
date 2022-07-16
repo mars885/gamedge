@@ -20,6 +20,7 @@ import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.core.Constants
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
+import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import com.paulrybitskyi.gamedge.domain.settings.entities.Settings
 import com.paulrybitskyi.gamedge.domain.settings.entities.Theme
 import com.paulrybitskyi.gamedge.domain.settings.usecases.ObserveSettingsUseCase

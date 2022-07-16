@@ -26,7 +26,7 @@ import com.paulrybitskyi.gamedge.data.games.usecases.commons.GameMapper
 import com.paulrybitskyi.gamedge.data.games.usecases.commons.mapToDomainGames
 import com.paulrybitskyi.gamedge.data.games.usecases.likes.ObserveLikedGamesUseCaseImpl
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -55,7 +55,7 @@ internal class ObserveLikedGamesUseCaseImplTest {
     @Test
     fun `Emits liked games successfully`() {
         runTest {
-            coEvery { likedGamesLocalDataStore.observeLikedGames(any()) } returns flowOf(DATA_GAMES)
+            every { likedGamesLocalDataStore.observeLikedGames(any()) } returns flowOf(DATA_GAMES)
 
             SUT.execute(OBSERVE_GAMES_USE_CASE_PARAMS).test {
                 assertThat(awaitItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))

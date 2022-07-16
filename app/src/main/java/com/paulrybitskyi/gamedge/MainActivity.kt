@@ -36,6 +36,7 @@ import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.sharers.TextSharer
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
+import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import com.paulrybitskyi.gamedge.domain.settings.entities.Settings
 import com.paulrybitskyi.gamedge.domain.settings.entities.Theme
 import com.paulrybitskyi.gamedge.domain.settings.usecases.ObserveThemeUseCase

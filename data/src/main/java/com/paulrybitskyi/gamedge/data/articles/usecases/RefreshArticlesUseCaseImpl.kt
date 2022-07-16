@@ -44,7 +44,7 @@ internal class RefreshArticlesUseCaseImpl @Inject constructor(
     private val mappers: RefreshArticlesUseCaseMappers
 ) : RefreshArticlesUseCase {
 
-    override suspend fun execute(params: Params): Flow<DomainResult<List<Article>>> {
+    override fun execute(params: Params): Flow<DomainResult<List<Article>>> {
         val throttlerKey = throttlerTools.keyProvider.provideArticlesKey(params.pagination)
 
         return flow {

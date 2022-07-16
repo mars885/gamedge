@@ -43,11 +43,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class GamesDiscoveryViewModel @Inject constructor(
@@ -95,20 +96,19 @@ internal class GamesDiscoveryViewModel @Inject constructor(
     private fun observeGames() {
         if (isObservingGames) return
 
-        viewModelScope.launch {
-            combine(
-                flows = GamesDiscoveryCategory.values().map { observeGames(it) },
-                transform = { it.toList() }
-            )
-            .map { games -> currentItems.toSuccessState(games) }
-            .onError { logger.error(logTag, "Failed to observe games.", it) }
-            .onStart { isObservingGames = true }
-            .onCompletion { isObservingGames = false }
-            .collect { emittedItems -> _items.update { emittedItems } }
-        }
+        combine(
+            flows = GamesDiscoveryCategory.values().map(::observeGames),
+            transform = { it.toList() }
+        )
+        .map { games -> currentItems.toSuccessState(games) }
+        .onError { logger.error(logTag, "Failed to observe games.", it) }
+        .onStart { isObservingGames = true }
+        .onCompletion { isObservingGames = false }
+        .onEach { emittedItems -> _items.update { emittedItems } }
+        .launchIn(viewModelScope)
     }
 
-    private suspend fun observeGames(category: GamesDiscoveryCategory): Flow<List<GamesDiscoveryItemGameUiModel>> {
+    private fun observeGames(category: GamesDiscoveryCategory): Flow<List<GamesDiscoveryItemGameUiModel>> {
         return useCases.getObservableUseCase(category.toKeyType())
             .execute(observeGamesUseCaseParams)
             .map(itemGameModelMapper::mapToUiModels)
@@ -118,29 +118,28 @@ internal class GamesDiscoveryViewModel @Inject constructor(
     private fun refreshGames() {
         if (isRefreshingGames) return
 
-        viewModelScope.launch {
-            combine(
-                flows = GamesDiscoveryCategory.values().map { refreshGames(it) },
-                transform = { it.toList() }
-            )
-            .map { currentItems }
-            .onError {
-                logger.error(logTag, "Failed to refresh games.", it)
-                dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-            }
-            .onStart {
-                isRefreshingGames = true
-                emit(currentItems.showProgressBar())
-            }
-            .onCompletion {
-                isRefreshingGames = false
-                emit(currentItems.hideProgressBar())
-            }
-            .collect { emittedItems -> _items.update { emittedItems } }
+        combine(
+            flows = GamesDiscoveryCategory.values().map(::refreshGames),
+            transform = { it.toList() }
+        )
+        .map { currentItems }
+        .onError {
+            logger.error(logTag, "Failed to refresh games.", it)
+            dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
         }
+        .onStart {
+            isRefreshingGames = true
+            emit(currentItems.showProgressBar())
+        }
+        .onCompletion {
+            isRefreshingGames = false
+            emit(currentItems.hideProgressBar())
+        }
+        .onEach { emittedItems -> _items.update { emittedItems } }
+        .launchIn(viewModelScope)
     }
 
-    private suspend fun refreshGames(category: GamesDiscoveryCategory): Flow<List<Game>> {
+    private fun refreshGames(category: GamesDiscoveryCategory): Flow<List<Game>> {
         return useCases.getRefreshableUseCase(category.toKeyType())
             .execute(refreshGamesUseCaseParams)
             .resultOrError()

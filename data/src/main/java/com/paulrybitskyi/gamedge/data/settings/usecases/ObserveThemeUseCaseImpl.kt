@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.data.settings.usecases
 
+import com.paulrybitskyi.gamedge.domain.commons.extensions.execute
 import com.paulrybitskyi.gamedge.domain.settings.entities.Theme
 import com.paulrybitskyi.gamedge.domain.settings.usecases.ObserveSettingsUseCase
 import com.paulrybitskyi.gamedge.domain.settings.usecases.ObserveThemeUseCase
@@ -32,7 +33,7 @@ internal class ObserveThemeUseCaseImpl @Inject constructor(
     private val observeSettingsUseCase: ObserveSettingsUseCase,
 ) : ObserveThemeUseCase {
 
-    override fun execute(): Flow<Theme> {
+    override fun execute(params: Unit): Flow<Theme> {
         return observeSettingsUseCase.execute()
             .map { settings -> settings.theme }
             .distinctUntilChanged()

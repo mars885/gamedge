@@ -31,6 +31,7 @@ import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -128,7 +129,7 @@ internal class GamesDatabaseDataStoreTest {
         runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
-            coEvery { gamesTable.observePopularGames(any(), any(), any()) } returns flowOf(dbGames)
+            every { gamesTable.observePopularGames(any(), any(), any()) } returns flowOf(dbGames)
 
             SUT.observePopularGames(DATA_PAGINATION).test {
                 assertThat(awaitItem()).isEqualTo(DATA_GAMES)
@@ -142,7 +143,7 @@ internal class GamesDatabaseDataStoreTest {
         runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
-            coEvery { gamesTable.observeRecentlyReleasedGames(any(), any(), any(), any()) } returns flowOf(dbGames)
+            every { gamesTable.observeRecentlyReleasedGames(any(), any(), any(), any()) } returns flowOf(dbGames)
 
             SUT.observeRecentlyReleasedGames(DATA_PAGINATION).test {
                 assertThat(awaitItem()).isEqualTo(DATA_GAMES)
@@ -156,7 +157,7 @@ internal class GamesDatabaseDataStoreTest {
         runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
-            coEvery { gamesTable.observeComingSoonGames(any(), any(), any()) } returns flowOf(dbGames)
+            every { gamesTable.observeComingSoonGames(any(), any(), any()) } returns flowOf(dbGames)
 
             SUT.observeComingSoonGames(DATA_PAGINATION).test {
                 assertThat(awaitItem()).isEqualTo(DATA_GAMES)
@@ -170,7 +171,7 @@ internal class GamesDatabaseDataStoreTest {
         runTest {
             val dbGames = gameMapper.mapToDatabaseGames(DATA_GAMES)
 
-            coEvery { gamesTable.observeMostAnticipatedGames(any(), any(), any()) } returns flowOf(dbGames)
+            every { gamesTable.observeMostAnticipatedGames(any(), any(), any()) } returns flowOf(dbGames)
 
             SUT.observeMostAnticipatedGames(DATA_PAGINATION).test {
                 assertThat(awaitItem()).isEqualTo(DATA_GAMES)

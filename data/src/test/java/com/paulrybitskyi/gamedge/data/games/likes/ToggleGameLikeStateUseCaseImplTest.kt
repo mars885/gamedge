@@ -83,11 +83,11 @@ internal class ToggleGameLikeStateUseCaseImplTest {
             return likedGameIds.contains(gameId)
         }
 
-        override suspend fun observeGameLikeState(gameId: Int): Flow<Boolean> {
+        override fun observeGameLikeState(gameId: Int): Flow<Boolean> {
             return flowOf() // no-op
         }
 
-        override suspend fun observeLikedGames(pagination: Pagination): Flow<List<Game>> {
+        override fun observeLikedGames(pagination: Pagination): Flow<List<Game>> {
             return flowOf() // no-op
         }
     }
