@@ -58,7 +58,7 @@ private const val ARTICLES_REFRESH_DEFAULT_DELAY = 1000L
 internal class GamingNewsViewModel @Inject constructor(
     private val observeArticlesUseCase: ObserveArticlesUseCase,
     private val refreshArticlesUseCase: RefreshArticlesUseCase,
-    private val gamingNewsItemUiModelMapper: GamingNewsItemUiModelMapper,
+    private val uiModelMapper: GamingNewsItemUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
@@ -93,7 +93,7 @@ internal class GamingNewsViewModel @Inject constructor(
         if (isObservingArticles) return
 
         observeArticlesUseCase.execute(observerUseCaseParams)
-            .map(gamingNewsItemUiModelMapper::mapToUiModels)
+            .map(uiModelMapper::mapToUiModels)
             .flowOn(dispatcherProvider.computation)
             .map { news -> currentUiState.toSuccessState(news) }
             .onError {

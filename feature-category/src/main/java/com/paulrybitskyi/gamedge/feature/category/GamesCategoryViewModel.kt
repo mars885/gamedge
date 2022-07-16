@@ -32,7 +32,7 @@ import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffset
 import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
-import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModelUiMapper
+import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
 import com.paulrybitskyi.gamedge.feature.category.widgets.mapToUiModels
@@ -63,7 +63,7 @@ internal class GamesCategoryViewModel @Inject constructor(
     @TransitionAnimationDuration
     transitionAnimationDuration: Long,
     private val useCases: GamesCategoryUseCases,
-    private val gameCategoryModelUiMapper: GameCategoryModelUiMapper,
+    private val uiModelMapper: GameCategoryUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger
@@ -115,7 +115,7 @@ internal class GamesCategoryViewModel @Inject constructor(
         gamesObservingJob = viewModelScope.launch {
             useCases.getObservableUseCase(gamesCategoryKeyType)
                 .execute(observeGamesUseCaseParams)
-                .map(gameCategoryModelUiMapper::mapToUiModels)
+                .map(uiModelMapper::mapToUiModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { games -> currentUiState.toSuccessState(games) }
                 .onError {

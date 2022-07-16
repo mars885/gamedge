@@ -53,7 +53,7 @@ import kotlinx.coroutines.flow.update
 @HiltViewModel
 internal class GamesDiscoveryViewModel @Inject constructor(
     private val useCases: GamesDiscoveryUseCases,
-    private val itemGameModelMapper: GamesDiscoveryItemGameUiModelMapper,
+    private val uiModelMapper: GamesDiscoveryItemGameUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
@@ -111,7 +111,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
     private fun observeGames(category: GamesDiscoveryCategory): Flow<List<GamesDiscoveryItemGameUiModel>> {
         return useCases.getObservableUseCase(category.toKeyType())
             .execute(observeGamesUseCaseParams)
-            .map(itemGameModelMapper::mapToUiModels)
+            .map(uiModelMapper::mapToUiModels)
             .flowOn(dispatcherProvider.computation)
     }
 

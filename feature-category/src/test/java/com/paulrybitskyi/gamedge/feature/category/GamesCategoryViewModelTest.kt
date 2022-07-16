@@ -32,7 +32,7 @@ import com.paulrybitskyi.gamedge.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
-import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryModelUiMapper
+import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.finiteUiState
 import com.paulrybitskyi.gamedge.feature.category.widgets.isRefreshing
@@ -62,7 +62,7 @@ internal class GamesCategoryViewModelTest {
             stringProvider = FakeStringProvider(),
             transitionAnimationDuration = 0L,
             useCases = setupUseCases(),
-            gameCategoryModelUiMapper = FakeGameCategoryModelUiMapper(),
+            uiModelMapper = FakeGameCategoryUiModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,
@@ -213,7 +213,7 @@ internal class GamesCategoryViewModelTest {
         }
     }
 
-    private class FakeGameCategoryModelUiMapper : GameCategoryModelUiMapper {
+    private class FakeGameCategoryUiModelMapper : GameCategoryUiModelMapper {
 
         override fun mapToUiModel(game: DomainGame): GameCategoryUiModel {
             return GameCategoryUiModel(

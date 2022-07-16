@@ -43,7 +43,7 @@ import javax.inject.Inject
 internal class SettingsViewModel @Inject constructor(
     private val saveSettingsUseCase: SaveSettingsUseCase,
     private val observeSettingsUseCase: ObserveSettingsUseCase,
-    private val settingsModelUiMapper: SettingsModelUiMapper,
+    private val uiModelMapper: SettingsUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
 ) : BaseViewModel() {
 
@@ -71,7 +71,7 @@ internal class SettingsViewModel @Inject constructor(
     private fun observeSettings() {
         observeSettingsUseCase.execute()
             .map { settings ->
-                val sections = settingsModelUiMapper.mapToUiModels(settings)
+                val sections = uiModelMapper.mapToUiModels(settings)
                 val selectedThemeName = settings.theme.name
 
                 sections to selectedThemeName

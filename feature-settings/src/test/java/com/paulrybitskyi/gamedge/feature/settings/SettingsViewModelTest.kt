@@ -50,7 +50,7 @@ internal class SettingsViewModelTest {
         SettingsViewModel(
             saveSettingsUseCase = saveSettingsUseCase,
             observeSettingsUseCase = observeSettingsUseCase,
-            settingsModelUiMapper = FakeSettingsModelUiMapper(),
+            uiModelMapper = FakeSettingsUiModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
         )
     }
@@ -66,7 +66,7 @@ internal class SettingsViewModelTest {
 
                 assertThat(loadingState.finiteUiState).isEqualTo(FiniteUiState.Loading)
                 assertThat(resultState.finiteUiState).isEqualTo(FiniteUiState.Success)
-                assertThat(resultState.sections).hasSize(FakeSettingsModelUiMapper.SECTION_ITEM_COUNT)
+                assertThat(resultState.sections).hasSize(FakeSettingsUiModelMapper.SECTION_ITEM_COUNT)
                 assertThat(resultState.selectedThemeName).isEqualTo(DOMAIN_SETTINGS.theme.name)
             }
         }
@@ -159,7 +159,7 @@ internal class SettingsViewModelTest {
         )
     }
 
-    private class FakeSettingsModelUiMapper : SettingsModelUiMapper {
+    private class FakeSettingsUiModelMapper : SettingsUiModelMapper {
 
         companion object {
             const val SECTION_ITEM_COUNT = 3

@@ -54,7 +54,7 @@ internal class GamesDiscoveryViewModelTest {
     private val SUT by lazy {
         GamesDiscoveryViewModel(
             useCases = setupUseCases(),
-            itemGameModelMapper = FakeGamesDiscoveryItemGameUiModelMapper(),
+            uiModelMapper = FakeGamesDiscoveryItemGameUiModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),

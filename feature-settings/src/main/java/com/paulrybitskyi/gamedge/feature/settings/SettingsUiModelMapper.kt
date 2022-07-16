@@ -22,15 +22,15 @@ import com.paulrybitskyi.gamedge.domain.settings.entities.Settings
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
-internal interface SettingsModelUiMapper {
+internal interface SettingsUiModelMapper {
     fun mapToUiModels(settings: Settings): List<SettingsSectionUiModel>
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
-internal class SettingsModelUiMapperImpl @Inject constructor(
+internal class SettingsUiModelMapperImpl @Inject constructor(
     private val stringProvider: StringProvider,
     private val versionNameProvider: VersionNameProvider,
-) : SettingsModelUiMapper {
+) : SettingsUiModelMapper {
 
     override fun mapToUiModels(settings: Settings): List<SettingsSectionUiModel> {
         return listOf(

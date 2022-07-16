@@ -55,7 +55,7 @@ internal class GamingNewsViewModelTest {
         GamingNewsViewModel(
             observeArticlesUseCase = observeArticlesUseCase,
             refreshArticlesUseCase = refreshArticlesUseCase,
-            gamingNewsItemUiModelMapper = FakeGamingNewsItemUiModelMapper(),
+            uiModelMapper = FakeGamingNewsItemUiModelMapper(),
             dispatcherProvider = FakeDispatcherProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,
