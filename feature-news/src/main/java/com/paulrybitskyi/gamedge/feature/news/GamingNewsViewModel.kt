@@ -41,6 +41,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
@@ -72,8 +73,7 @@ internal class GamingNewsViewModel @Inject constructor(
     private val currentUiState: GamingNewsUiState
         get() = _uiState.value
 
-    val uiState: StateFlow<GamingNewsUiState>
-        get() = _uiState
+    val uiState: StateFlow<GamingNewsUiState> = _uiState.asStateFlow()
 
     init {
         initUseCaseParams()

@@ -52,6 +52,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOf
@@ -90,8 +91,7 @@ internal class GameInfoViewModel @Inject constructor(
     private val currentUiState: GameInfoUiState
         get() = _uiState.value
 
-    val uiState: StateFlow<GameInfoUiState>
-        get() = _uiState
+    val uiState: StateFlow<GameInfoUiState> = _uiState.asStateFlow()
 
     init {
         observeGameData(resultEmissionDelay = transitionAnimationDuration)

@@ -42,6 +42,7 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
@@ -73,8 +74,7 @@ internal class LikedGamesViewModel @Inject constructor(
     private val currentUiState: GamesUiState
         get() = _uiState.value
 
-    val uiState: StateFlow<GamesUiState>
-        get() = _uiState
+    val uiState: StateFlow<GamesUiState> = _uiState.asStateFlow()
 
     init {
         observeGames()

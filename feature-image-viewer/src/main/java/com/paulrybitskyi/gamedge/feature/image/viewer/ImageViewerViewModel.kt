@@ -25,6 +25,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -50,8 +51,7 @@ internal class ImageViewerViewModel @Inject constructor(
     private val currentUiState: ImageViewerUiState
         get() = _uiState.value
 
-    val uiState: StateFlow<ImageViewerUiState>
-        get() = _uiState
+    val uiState: StateFlow<ImageViewerUiState> = _uiState.asStateFlow()
 
     init {
         title = savedStateHandle.get<String>(PARAM_TITLE)
