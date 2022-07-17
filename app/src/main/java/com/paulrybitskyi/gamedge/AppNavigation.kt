@@ -26,23 +26,23 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
-import com.paulrybitskyi.gamedge.commons.ui.HorizontalSliding
-import com.paulrybitskyi.gamedge.commons.ui.OvershootScaling
+import com.paulrybitskyi.gamedge.common.ui.HorizontalSliding
+import com.paulrybitskyi.gamedge.common.ui.OvershootScaling
 import com.paulrybitskyi.gamedge.feature.category.GamesCategoryRoute
 import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategory
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryRoute
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscovery
 import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewer
 import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerRoute
-import com.paulrybitskyi.gamedge.feature.info.GameInfoRoute
-import com.paulrybitskyi.gamedge.feature.info.widgets.main.GameInfo
-import com.paulrybitskyi.gamedge.feature.likes.LikedGames
-import com.paulrybitskyi.gamedge.feature.likes.LikedGamesRoute
-import com.paulrybitskyi.gamedge.feature.news.GamingNewsRoute
-import com.paulrybitskyi.gamedge.feature.news.widgets.GamingNews
-import com.paulrybitskyi.gamedge.feature.search.GamesSearch
-import com.paulrybitskyi.gamedge.feature.search.GamesSearchRoute
-import com.paulrybitskyi.gamedge.feature.settings.Settings
+import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoRoute
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfo
+import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGames
+import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesRoute
+import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsRoute
+import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.GamingNews
+import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearch
+import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchRoute
+import com.paulrybitskyi.gamedge.feature.settings.presentation.Settings
 
 @Composable
 internal fun AppNavigation(

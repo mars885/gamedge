@@ -25,7 +25,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = CategorySerializer::class)
-internal enum class Category(val rawValue: Int) {
+enum class Category(val rawValue: Int) {
     UNKNOWN(rawValue = -1),
     MAIN_GAME(rawValue = 0),
     DLC(rawValue = 1),

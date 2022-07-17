@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @ApicalypseClass
 @Serializable
-internal data class Company(
+data class Company(
     @Apicalypse(Schema.ID)
     @SerialName(Schema.ID)
     val id: Int,

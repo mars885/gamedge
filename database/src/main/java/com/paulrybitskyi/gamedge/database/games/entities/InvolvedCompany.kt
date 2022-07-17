@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.database.games.entities
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class InvolvedCompany(
+data class InvolvedCompany(
     val company: Company,
     val isDeveloper: Boolean,
     val isPublisher: Boolean,

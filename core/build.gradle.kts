@@ -28,7 +28,7 @@ android {
 }
 
 dependencies {
-    implementation(project(deps.local.domain))
+    implementation(project(deps.local.commonDomain))
 
     implementation(deps.kotlin.coroutines)
     implementation(deps.kotlin.serialization)
@@ -50,7 +50,7 @@ dependencies {
 
     coreLibraryDesugaring(deps.misc.desugaredLibs)
 
-    testImplementation(project(deps.local.commonsTesting))
+    testImplementation(project(deps.local.commonTesting))
     testImplementation(deps.testing.jUnit)
     testImplementation(deps.testing.truth)
     testImplementation(deps.testing.mockk)

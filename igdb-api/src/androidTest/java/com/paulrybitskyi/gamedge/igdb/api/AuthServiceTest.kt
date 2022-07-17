@@ -19,8 +19,8 @@ package com.paulrybitskyi.gamedge.igdb.api
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.commons.api.Error
-import com.paulrybitskyi.gamedge.commons.testing.utils.startSafe
+import com.paulrybitskyi.gamedge.common.api.Error
+import com.paulrybitskyi.gamedge.common.testing.utils.startSafe
 import com.paulrybitskyi.gamedge.igdb.api.auth.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthService
 import dagger.hilt.android.testing.HiltAndroidRule

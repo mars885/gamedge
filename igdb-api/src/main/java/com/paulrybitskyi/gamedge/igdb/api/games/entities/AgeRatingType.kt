@@ -25,7 +25,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = AgeRatingTypeSerializer::class)
-internal enum class AgeRatingType(val rawValue: Int) {
+enum class AgeRatingType(val rawValue: Int) {
     UNKNOWN(rawValue = -1),
     THREE(rawValue = 1),
     SEVEN(rawValue = 2),

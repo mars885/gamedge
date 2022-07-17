@@ -53,17 +53,17 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mxalbert.zoomable.OverZoomConfig
 import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
-import com.paulrybitskyi.gamedge.commons.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.commons.ui.RoutesHandler
-import com.paulrybitskyi.gamedge.commons.ui.LocalNetworkStateProvider
-import com.paulrybitskyi.gamedge.commons.ui.LocalTextSharer
-import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
-import com.paulrybitskyi.gamedge.commons.ui.images.defaultImageRequest
-import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.commons.ui.theme.navBar
-import com.paulrybitskyi.gamedge.commons.ui.theme.statusBar
-import com.paulrybitskyi.gamedge.commons.ui.widgets.Info
-import com.paulrybitskyi.gamedge.commons.ui.widgets.toolbars.Toolbar
+import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
+import com.paulrybitskyi.gamedge.common.ui.LocalNetworkStateProvider
+import com.paulrybitskyi.gamedge.common.ui.LocalTextSharer
+import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
+import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.common.ui.theme.navBar
+import com.paulrybitskyi.gamedge.common.ui.theme.statusBar
+import com.paulrybitskyi.gamedge.common.ui.widgets.Info
+import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
 
 private const val ZoomScaleMin = 0.5f
 private const val ZoomScaleMax = 5f

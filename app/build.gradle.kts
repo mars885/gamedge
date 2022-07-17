@@ -37,10 +37,11 @@ android {
 }
 
 dependencies {
-    implementation(project(deps.local.domain))
+    implementation(project(deps.local.commonDomain))
+    implementation(project(deps.local.commonData))
     implementation(project(deps.local.core))
-    implementation(project(deps.local.commonsUi))
-    implementation(project(deps.local.commonsUiWidgets))
+    implementation(project(deps.local.commonUi))
+    implementation(project(deps.local.commonUiWidgets))
     implementation(project(deps.local.igdbApi))
     implementation(project(deps.local.gamespotApi))
     implementation(project(deps.local.database))

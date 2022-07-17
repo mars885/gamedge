@@ -19,6 +19,6 @@ package com.paulrybitskyi.gamedge.database.games.entities
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class Mode(
+data class Mode(
     val name: String,
 )

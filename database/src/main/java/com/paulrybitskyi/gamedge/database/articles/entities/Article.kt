@@ -27,7 +27,7 @@ import androidx.room.Index
         Index(Article.Schema.PUBLICATION_DATE)
     ]
 )
-internal data class Article(
+data class Article(
     @ColumnInfo(name = Schema.ID) val id: Int,
     @ColumnInfo(name = Schema.TITLE) val title: String,
     @ColumnInfo(name = Schema.LEDE) val lede: String,

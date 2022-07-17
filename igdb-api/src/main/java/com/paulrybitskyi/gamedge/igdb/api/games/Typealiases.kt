@@ -35,21 +35,21 @@ import com.paulrybitskyi.gamedge.igdb.api.games.entities.Video
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Website
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.WebsiteCategory
 
-internal typealias ApiAgeRating = AgeRating
-internal typealias ApiAgeRatingCategory = AgeRatingCategory
-internal typealias ApiAgeRatingType = AgeRatingType
-internal typealias ApiCompany = Company
-internal typealias ApiGame = Game
-internal typealias ApiGenre = Genre
-internal typealias ApiCategory = Category
-internal typealias ApiImage = Image
-internal typealias ApiVideo = Video
-internal typealias ApiReleaseDate = ReleaseDate
-internal typealias ApiInvolvedCompany = InvolvedCompany
-internal typealias ApiKeyword = Keyword
-internal typealias ApiMode = Mode
-internal typealias ApiPlatform = Platform
-internal typealias ApiPlayerPerspective = PlayerPerspective
-internal typealias ApiTheme = Theme
-internal typealias ApiWebsite = Website
-internal typealias ApiWebsiteCategory = WebsiteCategory
+typealias ApiAgeRating = AgeRating
+typealias ApiAgeRatingCategory = AgeRatingCategory
+typealias ApiAgeRatingType = AgeRatingType
+typealias ApiCompany = Company
+typealias ApiGame = Game
+typealias ApiGenre = Genre
+typealias ApiCategory = Category
+typealias ApiImage = Image
+typealias ApiVideo = Video
+typealias ApiReleaseDate = ReleaseDate
+typealias ApiInvolvedCompany = InvolvedCompany
+typealias ApiKeyword = Keyword
+typealias ApiMode = Mode
+typealias ApiPlatform = Platform
+typealias ApiPlayerPerspective = PlayerPerspective
+typealias ApiTheme = Theme
+typealias ApiWebsite = Website
+typealias ApiWebsiteCategory = WebsiteCategory

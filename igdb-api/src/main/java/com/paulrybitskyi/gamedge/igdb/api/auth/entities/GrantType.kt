@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.auth.entities
 
-internal enum class GrantType(val rawType: String) {
+enum class GrantType(val rawType: String) {
     AUTHORIZATION_CODE("authorization_code"),
     CLIENT_CREDENTIALS("client_credentials")
 }

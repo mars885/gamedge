@@ -23,6 +23,10 @@ plugins {
 }
 
 android {
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+
     buildFeatures {
         compose = true
     }
@@ -33,10 +37,15 @@ android {
 }
 
 dependencies {
-    implementation(project(deps.local.domain))
+    implementation(project(deps.local.commonDomain))
+    implementation(project(deps.local.commonData))
     implementation(project(deps.local.core))
-    implementation(project(deps.local.commonsUi))
-    implementation(project(deps.local.commonsUiWidgets))
+    implementation(project(deps.local.commonUi))
+    implementation(project(deps.local.commonUiWidgets))
+    implementation(project(deps.local.gamespotApi))
+    implementation(project(deps.local.database))
+
+    implementation(deps.androidX.prefsDataStore)
 
     implementation(deps.kotlin.coroutines)
 
@@ -60,7 +69,9 @@ dependencies {
     implementation(deps.misc.hiltBinder)
     ksp(deps.misc.hiltBinderCompiler)
 
-    testImplementation(project(deps.local.commonsTesting))
+    coreLibraryDesugaring(deps.misc.desugaredLibs)
+
+    testImplementation(project(deps.local.commonTesting))
     testImplementation(deps.testing.jUnit)
     testImplementation(deps.testing.truth)
     testImplementation(deps.testing.mockk)

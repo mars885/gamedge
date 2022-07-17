@@ -17,9 +17,9 @@
 package com.paulrybitskyi.gamedge.gamespot.api
 
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.Gamespot
-import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.GamespotFieldsSerializer
-import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.GamespotFieldsSerializerImpl
+import com.paulrybitskyi.gamedge.gamespot.api.common.serialization.Gamespot
+import com.paulrybitskyi.gamedge.gamespot.api.common.serialization.GamespotFieldsSerializer
+import com.paulrybitskyi.gamedge.gamespot.api.common.serialization.GamespotFieldsSerializerImpl
 import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test

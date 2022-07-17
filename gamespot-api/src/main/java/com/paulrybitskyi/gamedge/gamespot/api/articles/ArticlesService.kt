@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api.articles
 
-import com.paulrybitskyi.gamedge.commons.api.ApiResult
+import com.paulrybitskyi.gamedge.common.api.ApiResult
 import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.Article
-import com.paulrybitskyi.gamedge.gamespot.api.commons.Response
+import com.paulrybitskyi.gamedge.gamespot.api.common.Response
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
 

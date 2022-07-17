@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.gamespot.api
 
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotErrorMessageExtractor
+import com.paulrybitskyi.gamedge.gamespot.api.common.GamespotErrorMessageExtractor
 import kotlinx.serialization.json.Json
 import org.junit.Before
 import org.junit.Test

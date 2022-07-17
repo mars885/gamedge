@@ -22,8 +22,8 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapEither
 import com.github.michaelbull.result.mapError
-import com.paulrybitskyi.gamedge.domain.commons.DomainException
-import com.paulrybitskyi.gamedge.domain.commons.entities.Error
+import com.paulrybitskyi.gamedge.common.domain.common.DomainException
+import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch

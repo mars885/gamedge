@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @ApicalypseClass
 @Serializable
-internal data class Keyword(
+data class Keyword(
     @Apicalypse(Schema.NAME)
     @SerialName(Schema.NAME)
     val name: String,

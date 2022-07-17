@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.database.games.entities
 
-internal enum class AgeRatingType {
+enum class AgeRatingType {
     UNKNOWN,
     THREE,
     SEVEN,

@@ -20,7 +20,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class OauthCredentials(
+data class OauthCredentials(
     @SerialName(Schema.ACCESS_TOKEN)
     val accessToken: String,
     @SerialName(Schema.TOKEN_TYPE)

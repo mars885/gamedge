@@ -17,11 +17,16 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_VIDEO
 import com.paulrybitskyi.gamedge.core.factories.YoutubeMediaUrlFactoryImpl
 import com.paulrybitskyi.gamedge.core.factories.YoutubeThumbnailSize
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Video
 import org.junit.Before
 import org.junit.Test
+
+private val VIDEO = Video(
+    id = "id",
+    name = "name",
+)
 
 internal class YoutubeMediaUrlFactoryImplTest {
 
@@ -35,26 +40,26 @@ internal class YoutubeMediaUrlFactoryImplTest {
     @Test
     fun `Creates thumbnail image urls correctly`() {
         for (ytThumbnailSize in YoutubeThumbnailSize.values()) {
-            assertThat(SUT.createThumbnailUrl(DOMAIN_VIDEO, ytThumbnailSize))
-                .isEqualTo("https://img.youtube.com/vi/${DOMAIN_VIDEO.id}/${ytThumbnailSize.rawSize}.jpg")
+            assertThat(SUT.createThumbnailUrl(VIDEO, ytThumbnailSize))
+                .isEqualTo("https://img.youtube.com/vi/${VIDEO.id}/${ytThumbnailSize.rawSize}.jpg")
         }
     }
 
     @Test
     fun `Returns null when video id is blank while creating thumbnail image url`() {
-        assertThat(SUT.createThumbnailUrl(DOMAIN_VIDEO.copy(id = "   "), YoutubeThumbnailSize.MEDIUM)).isNull()
+        assertThat(SUT.createThumbnailUrl(VIDEO.copy(id = "   "), YoutubeThumbnailSize.MEDIUM)).isNull()
     }
 
     @Test
     fun `Creates video urls correctly`() {
         for (ytThumbnailSize in YoutubeThumbnailSize.values()) {
-            assertThat(SUT.createVideoUrl(DOMAIN_VIDEO))
-                .isEqualTo("https://youtu.be/${DOMAIN_VIDEO.id}")
+            assertThat(SUT.createVideoUrl(VIDEO))
+                .isEqualTo("https://youtu.be/${VIDEO.id}")
         }
     }
 
     @Test
     fun `Returns null when video id is blank while creating video url`() {
-        assertThat(SUT.createVideoUrl(DOMAIN_VIDEO.copy(id = "   "))).isNull()
+        assertThat(SUT.createVideoUrl(VIDEO.copy(id = "   "))).isNull()
     }
 }

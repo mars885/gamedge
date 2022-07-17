@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core.factories
 
-import com.paulrybitskyi.gamedge.domain.games.entities.Video
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Video
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 

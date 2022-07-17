@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
 import androidx.compose.runtime.Immutable
-import com.paulrybitskyi.gamedge.commons.ui.widgets.FiniteUiState
+import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 
 @Immutable
 internal data class GamesCategoryUiState(

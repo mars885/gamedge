@@ -25,7 +25,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = ReleaseDateCategorySerializer::class)
-internal enum class ReleaseDateCategory(val rawValue: Int) {
+enum class ReleaseDateCategory(val rawValue: Int) {
     UNKNOWN(rawValue = -1),
 
     YYYY_MMMM_DD(rawValue = 0),

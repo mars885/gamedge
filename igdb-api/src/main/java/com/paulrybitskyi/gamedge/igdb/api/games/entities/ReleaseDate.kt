@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @ApicalypseClass
 @Serializable
-internal data class ReleaseDate(
+data class ReleaseDate(
     @Apicalypse(Schema.DATE)
     @SerialName(Schema.DATE)
     val date: Long? = null,

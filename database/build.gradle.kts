@@ -25,7 +25,7 @@ plugins {
 
 android {
     defaultConfig {
-        testInstrumentationRunner = "com.paulrybitskyi.gamedge.commons.testing.GamedgeTestRunner"
+        testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -40,14 +40,10 @@ android {
 }
 
 dependencies {
-    implementation(project(deps.local.data))
-    implementation(project(deps.local.commonsData))
     implementation(project(deps.local.core))
 
     implementation(deps.kotlin.coroutines)
     implementation(deps.kotlin.serialization)
-
-    implementation(deps.misc.kotlinResult)
 
     implementation(deps.androidX.room)
     implementation(deps.androidX.roomKtx)
@@ -59,14 +55,14 @@ dependencies {
     implementation(deps.misc.hiltBinder)
     ksp(deps.misc.hiltBinderCompiler)
 
-    testImplementation(project(deps.local.commonsTesting))
+    testImplementation(project(deps.local.commonTesting))
     testImplementation(deps.testing.jUnit)
     testImplementation(deps.testing.truth)
     testImplementation(deps.testing.mockk)
     testImplementation(deps.testing.coroutines)
     testImplementation(deps.testing.turbine)
 
-    androidTestImplementation(project(deps.local.commonsTesting))
+    androidTestImplementation(project(deps.local.commonTesting))
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
     androidTestImplementation(deps.testing.truth)
