@@ -26,6 +26,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
 
@@ -50,11 +51,13 @@ internal class ImageViewerViewModelTest {
         )
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `Throws error when image urls are not provided`() {
         every { savedStateHandle.get<String>(PARAM_IMAGE_URLS) } returns null
 
-        SUT
+        assertThrows(IllegalStateException::class.java) {
+            SUT
+        }
     }
 
     @Test

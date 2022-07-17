@@ -21,7 +21,6 @@ import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.utils.asSuccess
 import com.paulrybitskyi.gamedge.core.utils.onSuccess
-import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.common.data.common.ErrorMapper
 import com.paulrybitskyi.gamedge.common.data.common.utils.toDataPagination
 import com.paulrybitskyi.gamedge.common.data.games.datastores.GamesDataStores
@@ -51,10 +50,9 @@ internal class SearchGamesUseCaseImpl @Inject constructor(
     private val errorMapper: ErrorMapper,
 ) : SearchGamesUseCase {
 
-    override suspend fun execute(params: Params): Flow<List<Game>> {
+    override suspend fun execute(params: Params): Flow<DomainResult<List<Game>>> {
         return flow { emit(searchGames(params)) }
             .flowOn(dispatcherProvider.computation)
-            .resultOrError()
     }
 
     private suspend fun searchGames(params: Params): DomainResult<List<Game>> {

@@ -33,6 +33,7 @@ import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
 import com.paulrybitskyi.gamedge.common.domain.common.entities.nextOffset
+import com.paulrybitskyi.gamedge.core.utils.resultOrError
 import com.paulrybitskyi.gamedge.feature.search.R
 import com.paulrybitskyi.gamedge.feature.search.domain.SearchGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -162,6 +163,7 @@ internal class GamesSearchViewModel @Inject constructor(
             flowOf(createGamesEmptyUiState())
         } else {
             searchGamesUseCase.execute(useCaseParams)
+                .resultOrError()
                 .map(uiModelMapper::mapToUiModels)
                 .flowOn(dispatcherProvider.computation)
                 .map { games ->

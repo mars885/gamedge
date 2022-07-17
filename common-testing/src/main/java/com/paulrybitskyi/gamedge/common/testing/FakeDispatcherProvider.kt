@@ -18,12 +18,12 @@ package com.paulrybitskyi.gamedge.common.testing
 
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 
-class FakeDispatcherProvider : DispatcherProvider {
-
-    private val testDispatcher = UnconfinedTestDispatcher()
-
+class FakeDispatcherProvider(
+    testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
+) : DispatcherProvider {
     override val main: CoroutineDispatcher = testDispatcher
     override val io: CoroutineDispatcher = testDispatcher
     override val computation: CoroutineDispatcher = testDispatcher
