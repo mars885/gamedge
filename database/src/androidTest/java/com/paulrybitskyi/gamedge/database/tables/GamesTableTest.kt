@@ -300,7 +300,7 @@ internal class GamesTableTest {
             val expectedGames = gamesToSave
                 .filter { it.usersRating != null }
                 .filter { it.releaseDate != null }
-                .filter { it.releaseDate != null && it.releaseDate > minReleaseDateTimestamp }
+                .filter { it.releaseDate != null && it.releaseDate!! > minReleaseDateTimestamp }
                 .sortedByDescending(DatabaseGame::totalRating)
 
             SUT.observePopularGames(
@@ -370,7 +370,7 @@ internal class GamesTableTest {
 
             val expectedGames = gamesToSave
                 .filter { it.releaseDate != null }
-                .filter { it.releaseDate != null && it.releaseDate > minReleaseDateTimestamp }
+                .filter { it.releaseDate != null && it.releaseDate!! > minReleaseDateTimestamp }
                 .sortedByDescending(DatabaseGame::releaseDate)
 
             SUT.observeRecentlyReleasedGames(
@@ -398,8 +398,8 @@ internal class GamesTableTest {
 
             val expectedGames = gamesToSave
                 .filter { it.releaseDate != null }
-                .filter { it.releaseDate != null && it.releaseDate > minReleaseDateTimestamp }
-                .filter { it.releaseDate != null && it.releaseDate < maxReleaseDateTimestamp }
+                .filter { it.releaseDate != null && it.releaseDate!! > minReleaseDateTimestamp }
+                .filter { it.releaseDate != null && it.releaseDate!! < maxReleaseDateTimestamp }
                 .sortedByDescending(DatabaseGame::releaseDate)
 
             SUT.observeRecentlyReleasedGames(
@@ -467,7 +467,7 @@ internal class GamesTableTest {
 
             val expectedGames = gamesToSave
                 .filter { it.releaseDate != null }
-                .filter { it.releaseDate != null && it.releaseDate > minReleaseDateTimestamp }
+                .filter { it.releaseDate != null && it.releaseDate!! > minReleaseDateTimestamp }
                 .sortedBy(DatabaseGame::releaseDate)
 
             SUT.observeComingSoonGames(
@@ -535,7 +535,7 @@ internal class GamesTableTest {
 
             val expectedGames = gamesToSave
                 .filter { it.releaseDate != null }
-                .filter { it.releaseDate != null && it.releaseDate > minReleaseDateTimestamp }
+                .filter { it.releaseDate != null && it.releaseDate!! > minReleaseDateTimestamp }
                 .sortedByDescending(DatabaseGame::hypeCount)
 
             SUT.observeMostAnticipatedGames(
@@ -562,7 +562,7 @@ internal class GamesTableTest {
 
             val expectedGames = gamesToSave
                 .filter { it.releaseDate != null }
-                .filter { it.releaseDate != null && it.releaseDate > minReleaseDateTimestamp }
+                .filter { it.releaseDate != null && it.releaseDate!! > minReleaseDateTimestamp }
                 .filter { it.hypeCount != null }
                 .sortedByDescending(DatabaseGame::hypeCount)
 
