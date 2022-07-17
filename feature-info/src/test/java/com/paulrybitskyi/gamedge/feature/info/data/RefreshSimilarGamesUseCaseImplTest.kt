@@ -127,9 +127,7 @@ internal class RefreshSimilarGamesUseCaseImplTest {
     fun `Does not save remote games into local data store when refresh is unsuccessful`() {
         runTest {
             coEvery { throttler.canRefreshSimilarGames(any()) } returns false
-            coEvery { gamesRemoteDataStore.getSimilarGames(any(), any()) } returns Err(
-                DATA_ERROR_UNKNOWN
-            )
+            coEvery { gamesRemoteDataStore.getSimilarGames(any(), any()) } returns Err(DATA_ERROR_UNKNOWN)
 
             SUT.execute(REFRESH_SIMILAR_GAMES_USE_CASE_PARAMS).firstOrNull()
 
@@ -164,9 +162,7 @@ internal class RefreshSimilarGamesUseCaseImplTest {
     fun `Does not update games last refresh time when refresh is unsuccessful`() {
         runTest {
             coEvery { throttler.canRefreshSimilarGames(any()) } returns false
-            coEvery { gamesRemoteDataStore.getSimilarGames(any(), any()) } returns Err(
-                DATA_ERROR_UNKNOWN
-            )
+            coEvery { gamesRemoteDataStore.getSimilarGames(any(), any()) } returns Err(DATA_ERROR_UNKNOWN)
 
             SUT.execute(REFRESH_SIMILAR_GAMES_USE_CASE_PARAMS).firstOrNull()
 

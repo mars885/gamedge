@@ -131,9 +131,7 @@ internal class RefreshCompanyDevelopedGamesUseCaseImplTest {
     fun `Does not save remote games into local data store when refresh is unsuccessful`() {
         runTest {
             coEvery { throttler.canRefreshCompanyDevelopedGames(any()) } returns false
-            coEvery { gamesRemoteDataStore.getCompanyDevelopedGames(any(), any()) } returns Err(
-                DATA_ERROR_UNKNOWN
-            )
+            coEvery { gamesRemoteDataStore.getCompanyDevelopedGames(any(), any()) } returns Err(DATA_ERROR_UNKNOWN)
 
             SUT.execute(REFRESH_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS).firstOrNull()
 
@@ -170,9 +168,7 @@ internal class RefreshCompanyDevelopedGamesUseCaseImplTest {
     fun `Does not update games last refresh time when refresh is unsuccessful`() {
         runTest {
             coEvery { throttler.canRefreshCompanyDevelopedGames(any()) } returns false
-            coEvery { gamesRemoteDataStore.getCompanyDevelopedGames(any(), any()) } returns Err(
-                DATA_ERROR_UNKNOWN
-            )
+            coEvery { gamesRemoteDataStore.getCompanyDevelopedGames(any(), any()) } returns Err(DATA_ERROR_UNKNOWN)
 
             SUT.execute(REFRESH_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS).firstOrNull()
 

@@ -55,9 +55,7 @@ internal class ObserveMostAnticipatedGamesUseCaseImplTest {
     @Test
     fun `Emits games successfully`() {
         runTest {
-            every { gamesLocalDataStore.observeMostAnticipatedGames(any()) } returns flowOf(
-                DATA_GAMES
-            )
+            every { gamesLocalDataStore.observeMostAnticipatedGames(any()) } returns flowOf(DATA_GAMES)
 
             SUT.execute(ObserveGamesUseCaseParams()).test {
                 assertThat(awaitItem()).isEqualTo(gameMapper.mapToDomainGames(DATA_GAMES))

@@ -128,9 +128,7 @@ internal class RefreshMostAnticipatedGamesUseCaseImplTest {
     fun `Does not save remote games into local data store when refresh is unsuccessful`() {
         runTest {
             coEvery { throttler.canRefreshGames(any()) } returns false
-            coEvery { gamesRemoteDataStore.getMostAnticipatedGames(any()) } returns Err(
-                DATA_ERROR_UNKNOWN
-            )
+            coEvery { gamesRemoteDataStore.getMostAnticipatedGames(any()) } returns Err(DATA_ERROR_UNKNOWN)
 
             SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).firstOrNull()
 
@@ -165,9 +163,7 @@ internal class RefreshMostAnticipatedGamesUseCaseImplTest {
     fun `Does not update games last refresh time when refresh is unsuccessful`() {
         runTest {
             coEvery { throttler.canRefreshGames(any()) } returns false
-            coEvery { gamesRemoteDataStore.getMostAnticipatedGames(any()) } returns Err(
-                DATA_ERROR_UNKNOWN
-            )
+            coEvery { gamesRemoteDataStore.getMostAnticipatedGames(any()) } returns Err(DATA_ERROR_UNKNOWN)
 
             SUT.execute(REFRESH_GAMES_USE_CASE_PARAMS).firstOrNull()
 
