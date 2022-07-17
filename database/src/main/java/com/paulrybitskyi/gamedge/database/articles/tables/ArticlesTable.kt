@@ -24,15 +24,15 @@ import com.paulrybitskyi.gamedge.database.articles.entities.Article
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-internal interface ArticlesTable {
+interface ArticlesTable {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveArticles(articles: List<Article>)
 
     @Query(
         """
-        SELECT * FROM ${Article.Schema.TABLE_NAME} 
-        ORDER BY ${Article.Schema.PUBLICATION_DATE} DESC 
+        SELECT * FROM ${Article.Schema.TABLE_NAME}
+        ORDER BY ${Article.Schema.PUBLICATION_DATE} DESC
         LIMIT :offset, :limit
         """
     )

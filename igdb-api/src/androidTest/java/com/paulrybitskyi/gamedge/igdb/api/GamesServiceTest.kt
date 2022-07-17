@@ -19,10 +19,10 @@ package com.paulrybitskyi.gamedge.igdb.api
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.commons.api.Error
-import com.paulrybitskyi.gamedge.commons.testing.DATA_OAUTH_CREDENTIALS
-import com.paulrybitskyi.gamedge.commons.testing.utils.startSafe
-import com.paulrybitskyi.gamedge.data.auth.datastores.local.AuthLocalDataStore
+import com.paulrybitskyi.gamedge.common.api.Error
+import com.paulrybitskyi.gamedge.common.testing.utils.startSafe
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
+import com.paulrybitskyi.gamedge.igdb.api.common.CredentialsStore
 import com.paulrybitskyi.gamedge.igdb.api.games.ApiCategory
 import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesService
@@ -38,6 +38,12 @@ import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 
+private val OAUTH_CREDENTIALS = OauthCredentials(
+    accessToken = "access_token",
+    tokenType = "token_type",
+    tokenTtl = 5000L,
+)
+
 @HiltAndroidTest
 internal class GamesServiceTest {
 
@@ -45,7 +51,7 @@ internal class GamesServiceTest {
     var hiltRule = HiltAndroidRule(this)
 
     @Inject lateinit var mockWebServer: MockWebServer
-    @Inject lateinit var authLocalDataStore: AuthLocalDataStore
+    @Inject lateinit var credentialsStore: CredentialsStore
     @Inject lateinit var gamesService: GamesService
 
     @Before
@@ -54,7 +60,7 @@ internal class GamesServiceTest {
         mockWebServer.startSafe()
 
         runBlocking {
-            authLocalDataStore.saveOauthCredentials(DATA_OAUTH_CREDENTIALS)
+            credentialsStore.saveOauthCredentials(OAUTH_CREDENTIALS)
         }
     }
 

@@ -19,8 +19,8 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.commons.testing.FakeStringProvider
-import com.paulrybitskyi.gamedge.commons.testing.MainCoroutineRule
+import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
+import com.paulrybitskyi.gamedge.common.testing.MainCoroutineRule
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher

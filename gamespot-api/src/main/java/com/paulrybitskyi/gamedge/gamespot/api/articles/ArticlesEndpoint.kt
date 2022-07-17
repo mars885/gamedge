@@ -17,17 +17,17 @@
 package com.paulrybitskyi.gamedge.gamespot.api.articles
 
 import com.github.michaelbull.result.map
-import com.paulrybitskyi.gamedge.commons.api.ApiResult
+import com.paulrybitskyi.gamedge.common.api.ApiResult
 import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.Article
-import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotQueryParamsFactory
-import com.paulrybitskyi.gamedge.gamespot.api.commons.QUERY_PARAM_LIMIT
-import com.paulrybitskyi.gamedge.gamespot.api.commons.QUERY_PARAM_OFFSET
-import com.paulrybitskyi.gamedge.gamespot.api.commons.Response
+import com.paulrybitskyi.gamedge.gamespot.api.common.GamespotQueryParamsFactory
+import com.paulrybitskyi.gamedge.gamespot.api.common.QUERY_PARAM_LIMIT
+import com.paulrybitskyi.gamedge.gamespot.api.common.QUERY_PARAM_OFFSET
+import com.paulrybitskyi.gamedge.gamespot.api.common.Response
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton
 
-internal interface ArticlesEndpoint {
+interface ArticlesEndpoint {
     suspend fun getArticles(offset: Int, limit: Int): ApiResult<List<Article>>
 }
 

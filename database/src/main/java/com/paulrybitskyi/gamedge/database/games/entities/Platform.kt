@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.database.games.entities
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class Platform(
+data class Platform(
     val abbreviation: String?,
     val name: String,
 )

@@ -17,9 +17,9 @@
 package com.paulrybitskyi.gamedge.igdb.api.extractors
 
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.CompositeErrorMessageExtractor
-import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.IgdbErrorMessageExtractor
-import com.paulrybitskyi.gamedge.igdb.api.commons.errorextractors.TwitchErrorMessageExtractor
+import com.paulrybitskyi.gamedge.igdb.api.common.errorextractors.CompositeErrorMessageExtractor
+import com.paulrybitskyi.gamedge.igdb.api.common.errorextractors.IgdbErrorMessageExtractor
+import com.paulrybitskyi.gamedge.igdb.api.common.errorextractors.TwitchErrorMessageExtractor
 import kotlinx.serialization.json.Json
 import org.junit.Before
 import org.junit.Test

@@ -23,7 +23,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 
 private const val GRID_SPAN_COUNT = 3
 private const val ITEM_HEIGHT_TO_WIDTH_RATIO = 1.366f

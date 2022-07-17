@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @ApicalypseClass
 @Serializable
-internal data class Video(
+data class Video(
     @Apicalypse(Schema.ID)
     @SerialName(Schema.ID)
     val id: String,

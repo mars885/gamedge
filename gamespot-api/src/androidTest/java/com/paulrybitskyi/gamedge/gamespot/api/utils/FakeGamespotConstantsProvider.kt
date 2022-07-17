@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api.utils
 
-import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotConstantsProvider
+import com.paulrybitskyi.gamedge.gamespot.api.common.GamespotConstantsProvider
 import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Inject
 

@@ -17,12 +17,12 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.commons.testing.DOMAIN_GAME
+import com.paulrybitskyi.gamedge.common.testing.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.domain.games.DomainAgeRating
-import com.paulrybitskyi.gamedge.domain.games.DomainAgeRatingCategory
-import com.paulrybitskyi.gamedge.domain.games.DomainAgeRatingType
+import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRating
+import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRatingCategory
+import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRatingType
 import org.junit.Before
 import org.junit.Test
 

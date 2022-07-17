@@ -25,7 +25,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = AgeRatingCategorySerializer::class)
-internal enum class AgeRatingCategory(val rawValue: Int) {
+enum class AgeRatingCategory(val rawValue: Int) {
     UNKNOWN(rawValue = -1),
     ESRB(rawValue = 1),
     PEGI(rawValue = 2);

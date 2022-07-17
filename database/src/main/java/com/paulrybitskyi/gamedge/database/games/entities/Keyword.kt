@@ -19,6 +19,6 @@ package com.paulrybitskyi.gamedge.database.games.entities
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class Keyword(
+data class Keyword(
     val name: String,
 )

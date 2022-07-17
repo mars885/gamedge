@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery
 
-import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.ObservableGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.RefreshableGamesUseCase
 import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey.Type
 import javax.inject.Inject
 

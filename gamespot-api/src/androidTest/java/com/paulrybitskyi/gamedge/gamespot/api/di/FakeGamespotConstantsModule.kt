@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api.di
 
-import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotConstantsProvider
-import com.paulrybitskyi.gamedge.gamespot.api.commons.di.GamespotConstantsModule
+import com.paulrybitskyi.gamedge.gamespot.api.common.GamespotConstantsProvider
+import com.paulrybitskyi.gamedge.gamespot.api.common.di.GamespotConstantsModule
 import com.paulrybitskyi.gamedge.gamespot.api.utils.FakeGamespotConstantsProvider
 import dagger.Binds
 import dagger.Module

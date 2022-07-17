@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @ApicalypseClass
 @Serializable
-internal data class PlayerPerspective(
+data class PlayerPerspective(
     @Apicalypse(Schema.NAME)
     @SerialName(Schema.NAME)
     val name: String,

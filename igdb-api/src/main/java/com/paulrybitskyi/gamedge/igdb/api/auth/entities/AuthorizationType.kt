@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.auth.entities
 
-internal enum class AuthorizationType(val rawType: String) {
+enum class AuthorizationType(val rawType: String) {
     BASIC("Basic"),
     BEARER("Bearer");
 

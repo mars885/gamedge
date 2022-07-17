@@ -18,7 +18,7 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery
 
-import com.paulrybitskyi.gamedge.commons.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.base.events.Route
 
 sealed class GamesDiscoveryRoute : Route {
     object Search : GamesDiscoveryRoute()

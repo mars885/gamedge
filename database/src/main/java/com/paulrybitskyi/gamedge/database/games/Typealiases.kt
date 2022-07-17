@@ -36,22 +36,22 @@ import com.paulrybitskyi.gamedge.database.games.entities.Video
 import com.paulrybitskyi.gamedge.database.games.entities.Website
 import com.paulrybitskyi.gamedge.database.games.entities.WebsiteCategory
 
-internal typealias DatabaseGame = Game
-internal typealias DatabaseCategory = Category
-internal typealias DatabaseImage = Image
-internal typealias DatabaseReleaseDate = ReleaseDate
-internal typealias DatabaseReleaseDateCategory = ReleaseDateCategory
-internal typealias DatabaseAgeRating = AgeRating
-internal typealias DatabaseAgeRatingCategory = AgeRatingCategory
-internal typealias DatabaseAgeRatingType = AgeRatingType
-internal typealias DatabaseVideo = Video
-internal typealias DatabaseGenre = Genre
-internal typealias DatabasePlatform = Platform
-internal typealias DatabasePlayerPerspective = PlayerPerspective
-internal typealias DatabaseTheme = Theme
-internal typealias DatabaseMode = Mode
-internal typealias DatabaseKeyword = Keyword
-internal typealias DatabaseInvolvedCompany = InvolvedCompany
-internal typealias DatabaseCompany = Company
-internal typealias DatabaseWebsite = Website
-internal typealias DatabaseWebsiteCategory = WebsiteCategory
+typealias DatabaseGame = Game
+typealias DatabaseCategory = Category
+typealias DatabaseImage = Image
+typealias DatabaseReleaseDate = ReleaseDate
+typealias DatabaseReleaseDateCategory = ReleaseDateCategory
+typealias DatabaseAgeRating = AgeRating
+typealias DatabaseAgeRatingCategory = AgeRatingCategory
+typealias DatabaseAgeRatingType = AgeRatingType
+typealias DatabaseVideo = Video
+typealias DatabaseGenre = Genre
+typealias DatabasePlatform = Platform
+typealias DatabasePlayerPerspective = PlayerPerspective
+typealias DatabaseTheme = Theme
+typealias DatabaseMode = Mode
+typealias DatabaseKeyword = Keyword
+typealias DatabaseInvolvedCompany = InvolvedCompany
+typealias DatabaseCompany = Company
+typealias DatabaseWebsite = Website
+typealias DatabaseWebsiteCategory = WebsiteCategory

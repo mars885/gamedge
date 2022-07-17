@@ -16,16 +16,16 @@
 
 package com.paulrybitskyi.gamedge.feature.category.di
 
-import com.paulrybitskyi.gamedge.domain.games.ObservableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.RefreshableGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveComingSoonGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveMostAnticipatedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObservePopularGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.ObserveRecentlyReleasedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshComingSoonGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshMostAnticipatedGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshPopularGamesUseCase
-import com.paulrybitskyi.gamedge.domain.games.usecases.discovery.RefreshRecentlyReleasedGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.ObservableGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.RefreshableGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObserveComingSoonGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObserveMostAnticipatedGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObservePopularGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObserveRecentlyReleasedGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshComingSoonGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshMostAnticipatedGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshPopularGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshRecentlyReleasedGamesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

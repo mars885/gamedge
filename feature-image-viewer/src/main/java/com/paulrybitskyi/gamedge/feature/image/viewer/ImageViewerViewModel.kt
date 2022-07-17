@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
+import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.fromCsv
 import dagger.hilt.android.lifecycle.HiltViewModel

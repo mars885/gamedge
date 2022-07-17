@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.utils
 
-import com.paulrybitskyi.gamedge.igdb.api.commons.TwitchConstantsProvider
+import com.paulrybitskyi.gamedge.igdb.api.common.TwitchConstantsProvider
 import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Inject
 

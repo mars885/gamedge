@@ -25,14 +25,14 @@ import com.paulrybitskyi.gamedge.database.games.entities.LikedGame
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-internal interface LikedGamesTable {
+interface LikedGamesTable {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveLikedGame(likedGame: LikedGame)
 
     @Query(
         """
-        DELETE FROM ${LikedGame.Schema.TABLE_NAME} 
+        DELETE FROM ${LikedGame.Schema.TABLE_NAME}
         WHERE ${LikedGame.Schema.GAME_ID} = :gameId
         """
     )
@@ -40,7 +40,7 @@ internal interface LikedGamesTable {
 
     @Query(
         """
-        SELECT COUNT(*) FROM ${LikedGame.Schema.TABLE_NAME} 
+        SELECT COUNT(*) FROM ${LikedGame.Schema.TABLE_NAME}
         WHERE ${LikedGame.Schema.GAME_ID} = :gameId
         """
     )
@@ -48,7 +48,7 @@ internal interface LikedGamesTable {
 
     @Query(
         """
-        SELECT COUNT(*) FROM ${LikedGame.Schema.TABLE_NAME} 
+        SELECT COUNT(*) FROM ${LikedGame.Schema.TABLE_NAME}
         WHERE ${LikedGame.Schema.GAME_ID} = :gameId
         """
     )
@@ -56,10 +56,10 @@ internal interface LikedGamesTable {
 
     @Query(
         """
-        SELECT g.* FROM ${Game.Schema.TABLE_NAME} AS g 
-        INNER JOIN ${LikedGame.Schema.TABLE_NAME} AS lg 
-        ON lg.${LikedGame.Schema.GAME_ID} = g.${Game.Schema.ID} 
-        ORDER BY lg.${LikedGame.Schema.LIKE_TIMESTAMP} DESC 
+        SELECT g.* FROM ${Game.Schema.TABLE_NAME} AS g
+        INNER JOIN ${LikedGame.Schema.TABLE_NAME} AS lg
+        ON lg.${LikedGame.Schema.GAME_ID} = g.${Game.Schema.ID}
+        ORDER BY lg.${LikedGame.Schema.LIKE_TIMESTAMP} DESC
         LIMIT :offset, :limit
         """
     )

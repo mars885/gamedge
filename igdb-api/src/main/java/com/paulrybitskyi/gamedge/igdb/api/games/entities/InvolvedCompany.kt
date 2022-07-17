@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @ApicalypseClass
 @Serializable
-internal data class InvolvedCompany(
+data class InvolvedCompany(
     @Apicalypse(Schema.COMPANY)
     @SerialName(Schema.COMPANY)
     val company: Company,

@@ -16,113 +16,108 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games
 
-import com.paulrybitskyi.gamedge.commons.data.QueryTimestampProvider
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.HYPE_COUNT
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.ID
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.RELEASE_DATE
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.TOTAL_RATING
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.USERS_RATING
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetComingSoonGamesRequest
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetGamesRequest
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetMostAnticipatedGamesRequest
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetPopularGamesRequest
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetRecentlyReleasedGamesRequest
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.SearchGamesRequest
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.ApicalypseQueryBuilderFactory
 import com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.ApicalypseSerializer
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
 internal interface IgdbApiQueryFactory {
-    fun createGamesSearchingQuery(searchQuery: String, offset: Int, limit: Int): String
-    fun createPopularGamesRetrievalQuery(offset: Int, limit: Int): String
-    fun createRecentlyReleasedGamesRetrievalQuery(offset: Int, limit: Int): String
-    fun createComingSoonGamesRetrievalQuery(offset: Int, limit: Int): String
-    fun createMostAnticipatedGamesRetrievalQuery(offset: Int, limit: Int): String
-    fun createGamesRetrievalQuery(gameIds: List<Int>, offset: Int, limit: Int): String
+    fun createGamesSearchingQuery(request: SearchGamesRequest): String
+    fun createPopularGamesRetrievalQuery(request: GetPopularGamesRequest): String
+    fun createRecentlyReleasedGamesRetrievalQuery(request: GetRecentlyReleasedGamesRequest): String
+    fun createComingSoonGamesRetrievalQuery(request: GetComingSoonGamesRequest): String
+    fun createMostAnticipatedGamesRetrievalQuery(request: GetMostAnticipatedGamesRequest): String
+    fun createGamesRetrievalQuery(request: GetGamesRequest): String
 }
 
 @BindType
 internal class IgdbApiQueryFactoryImpl @Inject constructor(
     private val apicalypseQueryBuilderFactory: ApicalypseQueryBuilderFactory,
     private val apicalypseSerializer: ApicalypseSerializer,
-    private val queryTimestampProvider: QueryTimestampProvider
 ) : IgdbApiQueryFactory {
 
     private val gameEntityFields by lazy {
         apicalypseSerializer.serialize(Game::class.java)
     }
 
-    override fun createGamesSearchingQuery(searchQuery: String, offset: Int, limit: Int): String {
+    override fun createGamesSearchingQuery(request: SearchGamesRequest): String {
         return apicalypseQueryBuilderFactory.create()
-            .search(searchQuery)
+            .search(request.searchQuery)
             .select(gameEntityFields)
-            .offset(offset)
-            .limit(limit)
+            .offset(request.offset)
+            .limit(request.limit)
             .build()
     }
 
-    override fun createPopularGamesRetrievalQuery(offset: Int, limit: Int): String {
-        val minReleaseDateTimestamp = queryTimestampProvider.getPopularGamesMinReleaseDate()
-
+    override fun createPopularGamesRetrievalQuery(request: GetPopularGamesRequest): String {
         return apicalypseQueryBuilderFactory.create()
             .select(gameEntityFields)
             .where {
                 USERS_RATING.isNotNull and
-                { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) }
+                { RELEASE_DATE.isLargerThan(request.minReleaseDateTimestamp.toString()) }
             }
-            .offset(offset)
-            .limit(limit)
+            .offset(request.offset)
+            .limit(request.limit)
             .sortDesc(TOTAL_RATING)
             .build()
     }
 
-    override fun createRecentlyReleasedGamesRetrievalQuery(offset: Int, limit: Int): String {
-        val minReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMinReleaseDate()
-        val maxReleaseDateTimestamp = queryTimestampProvider.getRecentlyReleasedGamesMaxReleaseDate()
-
+    override fun createRecentlyReleasedGamesRetrievalQuery(request: GetRecentlyReleasedGamesRequest): String {
         return apicalypseQueryBuilderFactory.create()
             .select(gameEntityFields)
             .where {
-                RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) and
-                { RELEASE_DATE.isSmallerThan(maxReleaseDateTimestamp.toString()) }
+                RELEASE_DATE.isLargerThan(request.minReleaseDateTimestamp.toString()) and
+                { RELEASE_DATE.isSmallerThan(request.maxReleaseDateTimestamp.toString()) }
             }
-            .offset(offset)
-            .limit(limit)
+            .offset(request.offset)
+            .limit(request.limit)
             .sortDesc(RELEASE_DATE)
             .build()
     }
 
-    override fun createComingSoonGamesRetrievalQuery(offset: Int, limit: Int): String {
-        val minReleaseDateTimestamp = queryTimestampProvider.getComingSoonGamesMinReleaseDate()
-
+    override fun createComingSoonGamesRetrievalQuery(request: GetComingSoonGamesRequest): String {
         return apicalypseQueryBuilderFactory.create()
             .select(gameEntityFields)
-            .where { RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) }
-            .offset(offset)
-            .limit(limit)
+            .where { RELEASE_DATE.isLargerThan(request.minReleaseDateTimestamp.toString()) }
+            .offset(request.offset)
+            .limit(request.limit)
             .sortAsc(RELEASE_DATE)
             .build()
     }
 
-    override fun createMostAnticipatedGamesRetrievalQuery(offset: Int, limit: Int): String {
-        val minReleaseDateTimestamp = queryTimestampProvider.getMostAnticipatedGamesMinReleaseDate()
-
+    override fun createMostAnticipatedGamesRetrievalQuery(request: GetMostAnticipatedGamesRequest): String {
         return apicalypseQueryBuilderFactory.create()
             .select(gameEntityFields)
             .where {
-                RELEASE_DATE.isLargerThan(minReleaseDateTimestamp.toString()) and
+                RELEASE_DATE.isLargerThan(request.minReleaseDateTimestamp.toString()) and
                 { HYPE_COUNT.isNotNull }
             }
-            .offset(offset)
-            .limit(limit)
+            .offset(request.offset)
+            .limit(request.limit)
             .sortDesc(HYPE_COUNT)
             .build()
     }
 
-    override fun createGamesRetrievalQuery(gameIds: List<Int>, offset: Int, limit: Int): String {
-        val stringifiedGameIds = gameIds.map(Integer::toString)
+    override fun createGamesRetrievalQuery(request: GetGamesRequest): String {
+        val stringifiedGameIds = request.gameIds.map(Integer::toString)
 
         return apicalypseQueryBuilderFactory.create()
             .select(gameEntityFields)
             .where { ID.containsAnyOf(stringifiedGameIds) }
-            .offset(offset)
-            .limit(limit)
+            .offset(request.offset)
+            .limit(request.limit)
             .build()
     }
 }

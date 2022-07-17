@@ -16,88 +16,70 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games
 
-import com.paulrybitskyi.gamedge.commons.api.ApiResult
+import com.paulrybitskyi.gamedge.common.api.ApiResult
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetComingSoonGamesRequest
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetGamesRequest
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetMostAnticipatedGamesRequest
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetPopularGamesRequest
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetRecentlyReleasedGamesRequest
+import com.paulrybitskyi.gamedge.igdb.api.games.requests.SearchGamesRequest
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton
 
-internal interface GamesEndpoint {
-    suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): ApiResult<List<ApiGame>>
-    suspend fun getPopularGames(offset: Int, limit: Int): ApiResult<List<ApiGame>>
-    suspend fun getRecentlyReleasedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>>
-    suspend fun getComingSoonGames(offset: Int, limit: Int): ApiResult<List<ApiGame>>
-    suspend fun getMostAnticipatedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>>
-    suspend fun getGames(gameIds: List<Int>, offset: Int, limit: Int): ApiResult<List<ApiGame>>
+interface GamesEndpoint {
+    suspend fun searchGames(request: SearchGamesRequest): ApiResult<List<ApiGame>>
+    suspend fun getPopularGames(request: GetPopularGamesRequest): ApiResult<List<ApiGame>>
+    suspend fun getRecentlyReleasedGames(request: GetRecentlyReleasedGamesRequest): ApiResult<List<ApiGame>>
+    suspend fun getComingSoonGames(request: GetComingSoonGamesRequest): ApiResult<List<ApiGame>>
+    suspend fun getMostAnticipatedGames(request: GetMostAnticipatedGamesRequest): ApiResult<List<ApiGame>>
+    suspend fun getGames(request: GetGamesRequest): ApiResult<List<ApiGame>>
 }
 
 @Singleton
 @BindType
 internal class GamesEndpointImpl @Inject constructor(
     private val gamesService: GamesService,
-    private val igdbApiQueryFactory: IgdbApiQueryFactory
+    private val igdbApiQueryFactory: IgdbApiQueryFactory,
 ) : GamesEndpoint {
 
-    override suspend fun searchGames(
-        searchQuery: String,
-        offset: Int,
-        limit: Int
+    override suspend fun searchGames(request: SearchGamesRequest): ApiResult<List<ApiGame>> {
+        return gamesService.getGames(
+            igdbApiQueryFactory.createGamesSearchingQuery(request),
+        )
+    }
+
+    override suspend fun getPopularGames(request: GetPopularGamesRequest): ApiResult<List<ApiGame>> {
+        return gamesService.getGames(
+            igdbApiQueryFactory.createPopularGamesRetrievalQuery(request),
+        )
+    }
+
+    override suspend fun getRecentlyReleasedGames(
+        request: GetRecentlyReleasedGamesRequest
     ): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
-            igdbApiQueryFactory.createGamesSearchingQuery(
-                searchQuery = searchQuery,
-                offset = offset,
-                limit = limit
-            )
+            igdbApiQueryFactory.createRecentlyReleasedGamesRetrievalQuery(request),
         )
     }
 
-    override suspend fun getPopularGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
+    override suspend fun getComingSoonGames(request: GetComingSoonGamesRequest): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
-            igdbApiQueryFactory.createPopularGamesRetrievalQuery(
-                offset = offset,
-                limit = limit
-            )
+            igdbApiQueryFactory.createComingSoonGamesRetrievalQuery(request),
         )
     }
 
-    override suspend fun getRecentlyReleasedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
-        return gamesService.getGames(
-            igdbApiQueryFactory.createRecentlyReleasedGamesRetrievalQuery(
-                offset = offset,
-                limit = limit
-            )
-        )
-    }
-
-    override suspend fun getComingSoonGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
-        return gamesService.getGames(
-            igdbApiQueryFactory.createComingSoonGamesRetrievalQuery(
-                offset = offset,
-                limit = limit
-            )
-        )
-    }
-
-    override suspend fun getMostAnticipatedGames(offset: Int, limit: Int): ApiResult<List<ApiGame>> {
-        return gamesService.getGames(
-            igdbApiQueryFactory.createMostAnticipatedGamesRetrievalQuery(
-                offset = offset,
-                limit = limit
-            )
-        )
-    }
-
-    override suspend fun getGames(
-        gameIds: List<Int>,
-        offset: Int,
-        limit: Int
+    override suspend fun getMostAnticipatedGames(
+        request: GetMostAnticipatedGamesRequest
     ): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
-            igdbApiQueryFactory.createGamesRetrievalQuery(
-                gameIds = gameIds,
-                offset = offset,
-                limit = limit
-            )
+            igdbApiQueryFactory.createMostAnticipatedGamesRetrievalQuery(request),
+        )
+    }
+
+    override suspend fun getGames(request: GetGamesRequest): ApiResult<List<ApiGame>> {
+        return gamesService.getGames(
+            igdbApiQueryFactory.createGamesRetrievalQuery(request),
         )
     }
 }

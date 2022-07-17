@@ -25,7 +25,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = WebsiteCategorySerializer::class)
-internal enum class WebsiteCategory(val rawValue: Int) {
+enum class WebsiteCategory(val rawValue: Int) {
     UNKNOWN(rawValue = -1),
     OFFICIAL(rawValue = 1),
     WIKIA(rawValue = 2),

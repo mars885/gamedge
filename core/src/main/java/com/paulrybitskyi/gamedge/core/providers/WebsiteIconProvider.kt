@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.core.providers
 
 import com.paulrybitskyi.gamedge.core.R
-import com.paulrybitskyi.gamedge.domain.games.entities.Website
-import com.paulrybitskyi.gamedge.domain.games.entities.WebsiteCategory
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Website
+import com.paulrybitskyi.gamedge.common.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 

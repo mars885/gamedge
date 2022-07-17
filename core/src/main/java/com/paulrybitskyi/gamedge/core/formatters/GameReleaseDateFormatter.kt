@@ -18,9 +18,9 @@ package com.paulrybitskyi.gamedge.core.formatters
 
 import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.domain.games.entities.ReleaseDate
-import com.paulrybitskyi.gamedge.domain.games.entities.ReleaseDateCategory
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.common.domain.games.entities.ReleaseDate
+import com.paulrybitskyi.gamedge.common.domain.games.entities.ReleaseDateCategory
 import com.paulrybitskyi.hiltbinder.BindType
 import java.time.Instant
 import java.time.LocalDateTime

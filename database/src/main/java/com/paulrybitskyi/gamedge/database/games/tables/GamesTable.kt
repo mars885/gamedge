@@ -24,14 +24,14 @@ import com.paulrybitskyi.gamedge.database.games.entities.Game
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-internal interface GamesTable {
+interface GamesTable {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveGames(games: List<Game>)
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME} 
+        SELECT * FROM ${Game.Schema.TABLE_NAME}
         WHERE ${Game.Schema.ID} = :id
         """
     )
@@ -39,8 +39,8 @@ internal interface GamesTable {
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME} 
-        WHERE ${Game.Schema.ID} IN (:ids) 
+        SELECT * FROM ${Game.Schema.TABLE_NAME}
+        WHERE ${Game.Schema.ID} IN (:ids)
         LIMIT :offset, :limit
         """
     )
@@ -48,12 +48,12 @@ internal interface GamesTable {
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME} 
-        WHERE LOWER(${Game.Schema.NAME}) LIKE (:searchQuery || '%') 
-        ORDER BY 
+        SELECT * FROM ${Game.Schema.TABLE_NAME}
+        WHERE LOWER(${Game.Schema.NAME}) LIKE (:searchQuery || '%')
+        ORDER BY
             ${Game.Schema.TOTAL_RATING} IS NULL,
             ${Game.Schema.TOTAL_RATING} DESC,
-            ${Game.Schema.ID} ASC 
+            ${Game.Schema.ID} ASC
         LIMIT :offset, :limit
         """
     )
@@ -61,11 +61,11 @@ internal interface GamesTable {
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME} 
-        WHERE ${Game.Schema.USERS_RATING} IS NOT NULL AND 
-        ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
-        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp 
-        ORDER BY ${Game.Schema.TOTAL_RATING} DESC 
+        SELECT * FROM ${Game.Schema.TABLE_NAME}
+        WHERE ${Game.Schema.USERS_RATING} IS NOT NULL AND
+        ${Game.Schema.RELEASE_DATE} IS NOT NULL AND
+        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp
+        ORDER BY ${Game.Schema.TOTAL_RATING} DESC
         LIMIT :offset, :limit
         """
     )
@@ -73,11 +73,11 @@ internal interface GamesTable {
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME} 
-        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
-        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND 
-        ${Game.Schema.RELEASE_DATE} < :maxReleaseDateTimestamp 
-        ORDER BY ${Game.Schema.RELEASE_DATE} DESC 
+        SELECT * FROM ${Game.Schema.TABLE_NAME}
+        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND
+        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND
+        ${Game.Schema.RELEASE_DATE} < :maxReleaseDateTimestamp
+        ORDER BY ${Game.Schema.RELEASE_DATE} DESC
         LIMIT :offset, :limit
         """
     )
@@ -90,10 +90,10 @@ internal interface GamesTable {
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME} 
-        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
-        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp 
-        ORDER BY ${Game.Schema.RELEASE_DATE} ASC 
+        SELECT * FROM ${Game.Schema.TABLE_NAME}
+        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND
+        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp
+        ORDER BY ${Game.Schema.RELEASE_DATE} ASC
         LIMIT :offset, :limit
         """
     )
@@ -101,11 +101,11 @@ internal interface GamesTable {
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME} 
-        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND 
-        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND 
-        ${Game.Schema.HYPE_COUNT} IS NOT NULL 
-        ORDER BY ${Game.Schema.HYPE_COUNT} DESC 
+        SELECT * FROM ${Game.Schema.TABLE_NAME}
+        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND
+        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND
+        ${Game.Schema.HYPE_COUNT} IS NOT NULL
+        ORDER BY ${Game.Schema.HYPE_COUNT} DESC
         LIMIT :offset, :limit
         """
     )

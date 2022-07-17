@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @ApicalypseClass
 @Serializable
-internal data class AgeRating(
+data class AgeRating(
     @Apicalypse(Schema.CATEGORY)
     @SerialName(Schema.CATEGORY)
     val category: AgeRatingCategory,

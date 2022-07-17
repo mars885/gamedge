@@ -27,20 +27,15 @@ plugins {
 }
 
 android {
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
-
     defaultConfig {
-        testInstrumentationRunner = "com.paulrybitskyi.gamedge.commons.testing.GamedgeTestRunner"
+        testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
 
         stringField("GAMESPOT_API_KEY", property("GAMESPOT_API_KEY", ""))
     }
 }
 
 dependencies {
-    implementation(project(deps.local.data))
-    implementation(project(deps.local.commonsApi))
+    api(project(deps.local.commonApi))
     implementation(project(deps.local.core))
 
     implementation(deps.kotlin.coroutines)
@@ -57,15 +52,13 @@ dependencies {
     implementation(deps.misc.hiltBinder)
     ksp(deps.misc.hiltBinderCompiler)
 
-    coreLibraryDesugaring(deps.misc.desugaredLibs)
-
-    testImplementation(project(deps.local.commonsTesting))
+    testImplementation(project(deps.local.commonTesting))
     testImplementation(deps.testing.jUnit)
     testImplementation(deps.testing.truth)
     testImplementation(deps.testing.mockk)
     testImplementation(deps.testing.coroutines)
 
-    androidTestImplementation(project(deps.local.commonsTesting))
+    androidTestImplementation(project(deps.local.commonTesting))
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
     androidTestImplementation(deps.testing.truth)

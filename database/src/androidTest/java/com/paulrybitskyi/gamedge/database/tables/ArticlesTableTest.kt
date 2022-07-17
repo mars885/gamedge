@@ -21,7 +21,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
 import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
-import com.paulrybitskyi.gamedge.database.commons.di.DatabaseModule
+import com.paulrybitskyi.gamedge.database.common.di.DatabaseModule
 import com.paulrybitskyi.gamedge.database.DATABASE_ARTICLES
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @ApicalypseClass
 @Serializable
-internal data class Platform(
+data class Platform(
     @Apicalypse(Schema.ABBREVIATION)
     @SerialName(Schema.ABBREVIATION)
     val abbreviation: String? = null,

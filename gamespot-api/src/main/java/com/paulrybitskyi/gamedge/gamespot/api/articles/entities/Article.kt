@@ -16,12 +16,12 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api.articles.entities
 
-import com.paulrybitskyi.gamedge.gamespot.api.commons.serialization.Gamespot
+import com.paulrybitskyi.gamedge.gamespot.api.common.serialization.Gamespot
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class Article(
+data class Article(
     @Gamespot(Schema.ID)
     @SerialName(Schema.ID)
     val id: Int = -1,

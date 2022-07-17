@@ -28,7 +28,7 @@ import androidx.room.PrimaryKey
         Index(LikedGame.Schema.LIKE_TIMESTAMP)
     ]
 )
-internal data class LikedGame(
+data class LikedGame(
     @ColumnInfo(name = Schema.ID) @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = Schema.GAME_ID) val gameId: Int,
     @ColumnInfo(name = Schema.LIKE_TIMESTAMP) val likeTimestamp: Long

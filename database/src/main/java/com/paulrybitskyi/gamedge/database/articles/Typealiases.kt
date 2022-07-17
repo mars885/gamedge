@@ -19,5 +19,5 @@ package com.paulrybitskyi.gamedge.database.articles
 import com.paulrybitskyi.gamedge.database.articles.entities.Article
 import com.paulrybitskyi.gamedge.database.articles.entities.ImageType
 
-internal typealias DatabaseArticle = Article
-internal typealias DatabaseImageType = ImageType
+typealias DatabaseArticle = Article
+typealias DatabaseImageType = ImageType

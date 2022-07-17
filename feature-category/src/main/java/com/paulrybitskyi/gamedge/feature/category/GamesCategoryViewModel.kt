@@ -18,19 +18,19 @@ package com.paulrybitskyi.gamedge.feature.category
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.paulrybitskyi.gamedge.commons.ui.base.BaseViewModel
-import com.paulrybitskyi.gamedge.commons.ui.base.events.commons.GeneralCommand
-import com.paulrybitskyi.gamedge.commons.ui.di.qualifiers.TransitionAnimationDuration
+import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
+import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
+import com.paulrybitskyi.gamedge.common.ui.di.qualifiers.TransitionAnimationDuration
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
-import com.paulrybitskyi.gamedge.domain.commons.entities.nextLimit
-import com.paulrybitskyi.gamedge.domain.commons.entities.nextOffset
-import com.paulrybitskyi.gamedge.domain.games.commons.ObserveGamesUseCaseParams
-import com.paulrybitskyi.gamedge.domain.games.commons.RefreshGamesUseCaseParams
+import com.paulrybitskyi.gamedge.common.domain.common.entities.nextLimit
+import com.paulrybitskyi.gamedge.common.domain.common.entities.nextOffset
+import com.paulrybitskyi.gamedge.common.domain.games.common.ObserveGamesUseCaseParams
+import com.paulrybitskyi.gamedge.common.domain.games.common.RefreshGamesUseCaseParams
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel

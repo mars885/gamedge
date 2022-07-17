@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.database.games.entities
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class Company(
+data class Company(
     val id: Int,
     val name: String,
     val websiteUrl: String,

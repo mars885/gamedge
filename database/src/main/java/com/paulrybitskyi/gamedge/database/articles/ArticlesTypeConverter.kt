@@ -20,7 +20,7 @@ import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.paulrybitskyi.gamedge.core.JsonConverter
 import com.paulrybitskyi.gamedge.database.articles.entities.ImageType
-import com.paulrybitskyi.gamedge.database.commons.RoomTypeConverter
+import com.paulrybitskyi.gamedge.database.common.RoomTypeConverter
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 

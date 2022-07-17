@@ -25,7 +25,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = ImageTypeSerializer::class)
-internal enum class ImageType(val rawType: String) {
+enum class ImageType(val rawType: String) {
     UNKNOWN("unknown"),
     SQUARE_TINY("square_tiny"),
     SQUARE_SMALL("square_small"),

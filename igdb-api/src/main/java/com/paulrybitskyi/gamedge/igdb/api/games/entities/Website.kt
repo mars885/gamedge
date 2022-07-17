@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @ApicalypseClass
 @Serializable
-internal data class Website(
+data class Website(
     @Apicalypse(Schema.ID)
     @SerialName(Schema.ID)
     val id: Int,

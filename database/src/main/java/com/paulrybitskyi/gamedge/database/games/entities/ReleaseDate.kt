@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.database.games.entities
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ReleaseDate(
+data class ReleaseDate(
     val date: Long?,
     val year: Int?,
     val category: ReleaseDateCategory,

@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.database.tables
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.database.commons.di.DatabaseModule
+import com.paulrybitskyi.gamedge.database.common.di.DatabaseModule
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 import com.paulrybitskyi.gamedge.database.DATABASE_GAMES

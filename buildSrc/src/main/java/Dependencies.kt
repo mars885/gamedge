@@ -50,7 +50,7 @@ object deps {
     object plugins {
 
         private const val gradlePluginVersion = "7.2.0" // also in buildSrc build.gradle.kts file
-        private const val protobufPluginVersion = "0.8.18"
+        private const val protobufPluginVersion = "0.8.18" // also in buildSrc build.gradle.kts file
 
         const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
@@ -61,18 +61,17 @@ object deps {
 
     object local {
 
-        const val domain = ":domain"
-        const val data = ":data"
+        const val core = ":core"
         const val database = ":database"
         const val igdbApi = ":igdb-api"
         const val igdbApicalypse = ":igdb-apicalypse"
-        const val core = ":core"
-        const val commonsData = ":commons-data"
-        const val commonsUi = ":commons-ui"
-        const val commonsUiWidgets = ":commons-ui-widgets"
-        const val commonsTesting = ":commons-testing"
-        const val commonsApi = ":commons-api"
         const val gamespotApi = ":gamespot-api"
+        const val commonDomain = ":common-domain"
+        const val commonData = ":common-data"
+        const val commonUi = ":common-ui"
+        const val commonUiWidgets = ":common-ui-widgets"
+        const val commonApi = ":common-api"
+        const val commonTesting = ":common-testing"
 
         const val featureCategory = ":feature-category"
         const val featureDiscovery = ":feature-discovery"
@@ -105,7 +104,7 @@ object deps {
         const val roomKtx = "androidx.room:room-ktx:${versions.room}"
         const val roomCompiler = "androidx.room:room-compiler:${versions.room}"
         const val prefsDataStore = "androidx.datastore:datastore-preferences:${dataStoreVersion}"
-        const val protoDataStore = "androidx.datastore:datastore-core:${dataStoreVersion}"
+        const val protoDataStore = "androidx.datastore:datastore:${dataStoreVersion}"
     }
 
     object compose {

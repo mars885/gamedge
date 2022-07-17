@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games
 
-import com.paulrybitskyi.gamedge.commons.api.ApiResult
+import com.paulrybitskyi.gamedge.common.api.ApiResult
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game
 import retrofit2.http.Body
 import retrofit2.http.POST

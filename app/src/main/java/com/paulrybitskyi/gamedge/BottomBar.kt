@@ -34,7 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.google.accompanist.insets.navigationBarsPadding
-import com.paulrybitskyi.gamedge.commons.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 
 private const val BOTTOM_BAR_ANIMATION_DURATION = 300
 

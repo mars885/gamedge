@@ -31,7 +31,7 @@ import androidx.room.Index
         Index(Game.Schema.NAME)
     ]
 )
-internal data class Game(
+data class Game(
     @ColumnInfo(name = Schema.ID) val id: Int,
     @ColumnInfo(name = Schema.FOLLOWER_COUNT) val followerCount: Int?,
     @ColumnInfo(name = Schema.HYPE_COUNT) val hypeCount: Int?,

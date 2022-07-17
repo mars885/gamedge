@@ -17,6 +17,7 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    gamedgeProtobuf()
     kotlinKapt()
     ksp()
     daggerHiltAndroid()
@@ -33,10 +34,12 @@ android {
 }
 
 dependencies {
-    implementation(project(deps.local.domain))
+    implementation(project(deps.local.commonDomain))
     implementation(project(deps.local.core))
-    implementation(project(deps.local.commonsUi))
-    implementation(project(deps.local.commonsUiWidgets))
+    implementation(project(deps.local.commonUi))
+    implementation(project(deps.local.commonUiWidgets))
+
+    implementation(deps.androidX.protoDataStore)
 
     implementation(deps.kotlin.coroutines)
 
@@ -57,7 +60,7 @@ dependencies {
     implementation(deps.misc.hiltBinder)
     ksp(deps.misc.hiltBinderCompiler)
 
-    testImplementation(project(deps.local.commonsTesting))
+    testImplementation(project(deps.local.commonTesting))
     testImplementation(deps.testing.jUnit)
     testImplementation(deps.testing.truth)
     testImplementation(deps.testing.mockk)

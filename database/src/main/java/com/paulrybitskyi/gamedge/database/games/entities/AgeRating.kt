@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.database.games.entities
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class AgeRating(
+data class AgeRating(
     val category: AgeRatingCategory,
     val type: AgeRatingType,
 )

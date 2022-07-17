@@ -16,11 +16,11 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.auth
 
-import com.paulrybitskyi.gamedge.commons.api.asConverterFactory
-import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
-import com.paulrybitskyi.gamedge.igdb.api.commons.TwitchConstantsProvider
-import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.Endpoint
-import com.paulrybitskyi.gamedge.igdb.api.commons.di.qualifiers.IgdbApi
+import com.paulrybitskyi.gamedge.common.api.asConverterFactory
+import com.paulrybitskyi.gamedge.common.api.calladapter.ApiResultCallAdapterFactory
+import com.paulrybitskyi.gamedge.igdb.api.common.TwitchConstantsProvider
+import com.paulrybitskyi.gamedge.igdb.api.common.di.qualifiers.Endpoint
+import com.paulrybitskyi.gamedge.igdb.api.common.di.qualifiers.IgdbApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -16,11 +16,11 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api.articles
 
-import com.paulrybitskyi.gamedge.commons.api.asConverterFactory
-import com.paulrybitskyi.gamedge.commons.api.calladapter.ApiResultCallAdapterFactory
-import com.paulrybitskyi.gamedge.gamespot.api.commons.GamespotConstantsProvider
-import com.paulrybitskyi.gamedge.gamespot.api.commons.di.Endpoint
-import com.paulrybitskyi.gamedge.gamespot.api.commons.di.GamespotApi
+import com.paulrybitskyi.gamedge.common.api.asConverterFactory
+import com.paulrybitskyi.gamedge.common.api.calladapter.ApiResultCallAdapterFactory
+import com.paulrybitskyi.gamedge.gamespot.api.common.GamespotConstantsProvider
+import com.paulrybitskyi.gamedge.gamespot.api.common.di.Endpoint
+import com.paulrybitskyi.gamedge.gamespot.api.common.di.GamespotApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

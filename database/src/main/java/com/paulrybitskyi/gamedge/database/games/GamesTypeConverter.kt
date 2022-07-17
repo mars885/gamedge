@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.database.games
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.paulrybitskyi.gamedge.core.JsonConverter
-import com.paulrybitskyi.gamedge.database.commons.RoomTypeConverter
+import com.paulrybitskyi.gamedge.database.common.RoomTypeConverter
 import com.paulrybitskyi.gamedge.database.games.entities.AgeRating
 import com.paulrybitskyi.gamedge.database.games.entities.AgeRatingCategory
 import com.paulrybitskyi.gamedge.database.games.entities.AgeRatingType

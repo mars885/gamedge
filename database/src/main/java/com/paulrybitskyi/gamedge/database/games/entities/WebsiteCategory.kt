@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.database.games.entities
 
-internal enum class WebsiteCategory {
+enum class WebsiteCategory {
     UNKNOWN,
     OFFICIAL,
     WIKIA,

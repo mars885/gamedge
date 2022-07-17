@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.domain.commons.DomainException
-import com.paulrybitskyi.gamedge.domain.commons.entities.Error
+import com.paulrybitskyi.gamedge.common.domain.common.DomainException
+import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 

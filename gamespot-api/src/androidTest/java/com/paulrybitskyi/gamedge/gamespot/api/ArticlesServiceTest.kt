@@ -19,8 +19,8 @@ package com.paulrybitskyi.gamedge.gamespot.api
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.commons.api.Error
-import com.paulrybitskyi.gamedge.commons.testing.utils.startSafe
+import com.paulrybitskyi.gamedge.common.api.Error
+import com.paulrybitskyi.gamedge.common.testing.utils.startSafe
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesService
 import dagger.hilt.android.testing.HiltAndroidRule

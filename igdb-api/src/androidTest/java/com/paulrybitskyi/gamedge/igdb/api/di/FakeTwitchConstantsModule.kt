@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.di
 
-import com.paulrybitskyi.gamedge.igdb.api.commons.TwitchConstantsProvider
-import com.paulrybitskyi.gamedge.igdb.api.commons.di.TwitchConstantsModule
+import com.paulrybitskyi.gamedge.igdb.api.common.TwitchConstantsProvider
+import com.paulrybitskyi.gamedge.igdb.api.common.di.TwitchConstantsModule
 import com.paulrybitskyi.gamedge.igdb.api.utils.FakeTwitchConstantsProvider
 import dagger.Binds
 import dagger.Module
