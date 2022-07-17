@@ -63,7 +63,7 @@ internal class RefreshMostAnticipatedGamesUseCaseImplTest {
         SUT = RefreshMostAnticipatedGamesUseCaseImpl(
             gamesDataStores = GamesDataStores(
                 local = gamesLocalDataStore,
-                remote = gamesRemoteDataStore
+                remote = gamesRemoteDataStore,
             ),
             dispatcherProvider = FakeDispatcherProvider(),
             throttlerTools = GamesRefreshingThrottlerTools(

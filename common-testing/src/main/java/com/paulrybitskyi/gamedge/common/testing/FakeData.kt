@@ -22,6 +22,7 @@ import com.paulrybitskyi.gamedge.common.data.common.DataPagination
 import com.paulrybitskyi.gamedge.common.data.games.DataCategory
 import com.paulrybitskyi.gamedge.common.data.games.DataGame
 import com.paulrybitskyi.gamedge.common.domain.common.DomainPagination
+import com.paulrybitskyi.gamedge.common.domain.common.entities.Error as DomainError
 import com.paulrybitskyi.gamedge.common.domain.games.DomainCategory
 import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.common.api.Error as ApiError
@@ -97,6 +98,7 @@ val DATA_GAMES = listOf(
 val DOMAIN_PAGINATION = DomainPagination(offset = 0, limit = 20)
 val DATA_PAGINATION = DataPagination(offset = 0, limit = 20)
 
+val DOMAIN_ERROR_UNKNOWN = DomainError.Unknown("message")
 val DATA_ERROR_UNKNOWN = DataError.Unknown("message")
 
 val API_ERROR_HTTP = ApiError.HttpError(code = 10, message = "message")

@@ -18,6 +18,8 @@ package com.paulrybitskyi.gamedge.feature.search.presentation
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.FakeDispatcherProvider
@@ -31,11 +33,11 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModelMapper
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.finiteUiState
 import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
+import com.paulrybitskyi.gamedge.common.testing.DOMAIN_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.feature.search.domain.SearchGamesUseCase
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -113,7 +115,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Emits correct ui states when searching for games`() {
         runTest {
-            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.uiState.test {
                 SUT.onSearchConfirmed("god of war")
@@ -145,7 +147,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Does not emit ui states when the current search query is provided`() {
         runTest {
-            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             val gameQuery = "god of war"
 
@@ -176,7 +178,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Dispatches items clearing command when performing new search`() {
         runTest {
-            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.uiState.test {
                 SUT.onSearchConfirmed("god of war")
@@ -190,7 +192,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Logs error when searching games use case throws error`() {
         runTest {
-            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.onSearchConfirmed("god of war")
             advanceUntilIdle()
@@ -202,7 +204,7 @@ internal class GamesSearchViewModelTest {
     @Test
     fun `Dispatches toast showing command when searching games use case throws error`() {
         runTest {
-            coEvery { searchGamesUseCase.execute(any()) } returns flow { throw IllegalStateException("error") }
+            coEvery { searchGamesUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.commandFlow.test {
                 SUT.onSearchConfirmed("god of war")

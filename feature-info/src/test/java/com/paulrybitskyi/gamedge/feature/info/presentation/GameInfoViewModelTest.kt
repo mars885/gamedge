@@ -30,9 +30,9 @@ import com.paulrybitskyi.gamedge.common.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
-import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
 import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.common.testing.DOMAIN_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoHeaderUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinkUiModel
@@ -50,8 +50,6 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
-
-private val ERROR_UNKNOWN = Error.Unknown("message")
 
 internal class GameInfoViewModelTest {
 
@@ -113,7 +111,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Logs error when game fetching use case throws error`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(ERROR_UNKNOWN))
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT
             advanceUntilIdle()
@@ -125,7 +123,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches toast showing command when game fetching use case throws error`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(ERROR_UNKNOWN))
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.commandFlow.test {
                 assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
@@ -154,7 +152,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Logs error when artwork is clicked and game fetching use case throws error when`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(ERROR_UNKNOWN))
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.onArtworkClicked(artworkIndex = 0)
             advanceUntilIdle()
@@ -166,7 +164,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches toast showing command when artwork is clicked and game fetching use case throws error`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(ERROR_UNKNOWN))
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT
             advanceUntilIdle()
@@ -206,7 +204,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Logs error when cover is clicked and game fetching use case throws error when`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(ERROR_UNKNOWN))
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.onCoverClicked()
             advanceUntilIdle()
@@ -218,7 +216,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches toast showing command when cover is clicked and game fetching use case throws error`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(ERROR_UNKNOWN))
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT
             advanceUntilIdle()
@@ -273,7 +271,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Logs error when screenshot is clicked and game fetching use case throws error when`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(ERROR_UNKNOWN))
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.onScreenshotClicked(screenshotIndex = 0)
             advanceUntilIdle()
@@ -285,7 +283,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches toast showing command when screenshot is clicked and game fetching use case throws error`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(ERROR_UNKNOWN))
+            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT
             advanceUntilIdle()
