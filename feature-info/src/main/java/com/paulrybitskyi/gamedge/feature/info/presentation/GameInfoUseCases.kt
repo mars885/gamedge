@@ -16,15 +16,17 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation
 
-import com.paulrybitskyi.gamedge.feature.info.domain.GetCompanyDevelopedGamesUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.GetGameUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.GetSimilarGamesUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.likes.ObserveGameLikeStateUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.likes.ToggleGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetCompanyDevelopedGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetSimilarGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ObserveGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLikeStateUseCase
 import javax.inject.Inject
 
 internal class GameInfoUseCases @Inject constructor(
     val getGameUseCase: GetGameUseCase,
+    val getGameImageUrlsUseCase: GetGameImageUrlsUseCase,
     val observeGameLikeStateUseCase: ObserveGameLikeStateUseCase,
     val toggleGameLikeStateUseCase: ToggleGameLikeStateUseCase,
     val getCompanyDevelopedGamesUseCase: GetCompanyDevelopedGamesUseCase,

@@ -23,7 +23,6 @@ import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.di.qualifiers.TransitionAnimationDuration
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.combine
@@ -33,11 +32,13 @@ import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Company
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.R
-import com.paulrybitskyi.gamedge.feature.info.domain.GetCompanyDevelopedGamesUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.GetGameUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.GetSimilarGamesUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.likes.ObserveGameLikeStateUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.likes.ToggleGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameImageType
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetCompanyDevelopedGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetSimilarGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ObserveGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinkUiModel
@@ -54,7 +55,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -74,7 +74,6 @@ internal class GameInfoViewModel @Inject constructor(
     transitionAnimationDuration: Long,
     private val useCases: GameInfoUseCases,
     private val uiModelMapper: GameInfoUiModelMapper,
-    private val gameUrlFactory: ImageViewerGameUrlFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
@@ -170,30 +169,31 @@ internal class GameInfoViewModel @Inject constructor(
     fun onArtworkClicked(artworkIndex: Int) {
         navigateToImageViewer(
             title = stringProvider.getString(R.string.artwork),
+            imageType = GameImageType.ARTWORK,
             initialPosition = artworkIndex,
-            gameImageUrlsProvider = gameUrlFactory::createArtworkImageUrls
         )
     }
 
     private fun navigateToImageViewer(
         title: String,
+        imageType: GameImageType,
         initialPosition: Int = 0,
-        gameImageUrlsProvider: (Game) -> List<String>
     ) {
         viewModelScope.launch {
-            val game = getGame()
-                .onError {
-                    logger.error(logTag, "Failed to get the game.", it)
-                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                }
-                .firstOrNull()
-                ?: return@launch
-
-            val imageUrls = gameImageUrlsProvider(game)
-                .takeIf(List<String>::isNotEmpty)
-                ?: return@launch
-
-            route(GameInfoRoute.ImageViewer(title, initialPosition, imageUrls))
+            useCases.getGameImageUrlsUseCase.execute(
+                GetGameImageUrlsUseCase.Params(
+                    gameId = gameId,
+                    imageType = imageType,
+                )
+            )
+            .resultOrError()
+            .onError {
+                logger.error(logTag, "Failed to get the image urls of type = $imageType.", it)
+                dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+            }
+            .collect { imageUrls ->
+                route(GameInfoRoute.ImageViewer(title, initialPosition, imageUrls))
+            }
         }
     }
 
@@ -204,11 +204,7 @@ internal class GameInfoViewModel @Inject constructor(
     fun onCoverClicked() {
         navigateToImageViewer(
             title = stringProvider.getString(R.string.cover),
-            gameImageUrlsProvider = { game ->
-                gameUrlFactory.createCoverImageUrl(game)
-                    ?.let(::listOf)
-                    ?: emptyList()
-            }
+            imageType = GameImageType.COVER,
         )
     }
 
@@ -226,8 +222,8 @@ internal class GameInfoViewModel @Inject constructor(
     fun onScreenshotClicked(screenshotIndex: Int) {
         navigateToImageViewer(
             title = stringProvider.getString(R.string.screenshot),
+            imageType = GameImageType.SCREENSHOT,
             initialPosition = screenshotIndex,
-            gameImageUrlsProvider = gameUrlFactory::createScreenshotImageUrls
         )
     }
 

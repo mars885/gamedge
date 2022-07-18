@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.domain.likes
+package com.paulrybitskyi.gamedge.feature.info.domain.usecases
 
+import com.paulrybitskyi.gamedge.common.domain.common.DomainResult
 import com.paulrybitskyi.gamedge.common.domain.common.usecases.UseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.likes.ToggleGameLikeStateUseCase.Params
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase.Params
+import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameImageType
+import kotlinx.coroutines.flow.Flow
 
-internal interface ToggleGameLikeStateUseCase : UseCase<Params, Unit> {
+internal interface GetGameImageUrlsUseCase : UseCase<Params, Flow<DomainResult<List<String>>>> {
 
-    data class Params(val gameId: Int)
+    data class Params(
+        val gameId: Int,
+        val imageType: GameImageType,
+    )
 }

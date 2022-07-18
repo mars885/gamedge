@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,9 @@ import com.paulrybitskyi.gamedge.common.data.games.datastores.local.GamesLocalDa
 import com.paulrybitskyi.gamedge.common.data.games.usecases.common.GameMapper
 import com.paulrybitskyi.gamedge.common.data.games.usecases.common.mapToDomainGames
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.info.domain.GetSimilarGamesUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.GetSimilarGamesUseCase.Params
-import com.paulrybitskyi.gamedge.feature.info.domain.RefreshSimilarGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetSimilarGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetSimilarGamesUseCase.Params
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.RefreshSimilarGamesUseCase
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.domain.likes
+package com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes
 
 import com.paulrybitskyi.gamedge.common.domain.common.usecases.ObservableUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.likes.ObserveGameLikeStateUseCase.Params
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ObserveGameLikeStateUseCase.Params
 
 internal interface ObserveGameLikeStateUseCase : ObservableUseCase<Params, Boolean> {
 
