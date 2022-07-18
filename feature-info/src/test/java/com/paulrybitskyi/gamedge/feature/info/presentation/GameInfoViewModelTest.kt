@@ -29,8 +29,6 @@ import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.common.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
-import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.common.testing.DOMAIN_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
@@ -65,7 +63,6 @@ internal class GameInfoViewModelTest {
             transitionAnimationDuration = 0L,
             useCases = useCases,
             uiModelMapper = FakeGameInfoUiModelMapper(),
-            gameUrlFactory = FakeGameUrlFactory(),
             dispatcherProvider = FakeDispatcherProvider(),
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
@@ -76,6 +73,7 @@ internal class GameInfoViewModelTest {
     private fun setupUseCases(): GameInfoUseCases {
         return GameInfoUseCases(
             getGameUseCase = mockk(),
+            getGameImageUrlsUseCase = mockk(),
             observeGameLikeStateUseCase = mockk {
                 every { execute(any()) } returns flowOf(true)
             },
@@ -134,7 +132,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to image viewer screen when artwork is clicked`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
+            coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Ok(listOf()))
 
             val artworkIndex = 10
 
@@ -150,9 +148,9 @@ internal class GameInfoViewModelTest {
     }
 
     @Test
-    fun `Logs error when artwork is clicked and game fetching use case throws error when`() {
+    fun `Logs error when artwork is clicked and image url use case throws error when`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.onArtworkClicked(artworkIndex = 0)
             advanceUntilIdle()
@@ -162,9 +160,9 @@ internal class GameInfoViewModelTest {
     }
 
     @Test
-    fun `Dispatches toast showing command when artwork is clicked and game fetching use case throws error`() {
+    fun `Dispatches toast showing command when artwork is clicked and image url use case throws error`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT
             advanceUntilIdle()
@@ -191,7 +189,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to image viewer screen when cover is clicked`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
+            coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Ok(listOf()))
 
             SUT.routeFlow.test {
                 SUT.onCoverClicked()
@@ -202,9 +200,9 @@ internal class GameInfoViewModelTest {
     }
 
     @Test
-    fun `Logs error when cover is clicked and game fetching use case throws error when`() {
+    fun `Logs error when cover is clicked and image url use case throws error when`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.onCoverClicked()
             advanceUntilIdle()
@@ -214,9 +212,9 @@ internal class GameInfoViewModelTest {
     }
 
     @Test
-    fun `Dispatches toast showing command when cover is clicked and game fetching use case throws error`() {
+    fun `Dispatches toast showing command when cover is clicked and image url use case throws error`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT
             advanceUntilIdle()
@@ -253,7 +251,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to image viewer screen when screenshot is clicked`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
+            coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Ok(listOf()))
 
             val screenshotIndex = 10
 
@@ -269,9 +267,9 @@ internal class GameInfoViewModelTest {
     }
 
     @Test
-    fun `Logs error when screenshot is clicked and game fetching use case throws error when`() {
+    fun `Logs error when screenshot is clicked and image url use case throws error when`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.onScreenshotClicked(screenshotIndex = 0)
             advanceUntilIdle()
@@ -281,9 +279,9 @@ internal class GameInfoViewModelTest {
     }
 
     @Test
-    fun `Dispatches toast showing command when screenshot is clicked and game fetching use case throws error`() {
+    fun `Dispatches toast showing command when screenshot is clicked and image url use case throws error`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT
             advanceUntilIdle()
@@ -392,21 +390,6 @@ internal class GameInfoViewModelTest {
                 otherCompanyGames = null,
                 similarGames = null
             )
-        }
-    }
-
-    private class FakeGameUrlFactory : ImageViewerGameUrlFactory {
-
-        override fun createCoverImageUrl(game: DomainGame): String {
-            return "cover_image_url"
-        }
-
-        override fun createArtworkImageUrls(game: DomainGame): List<String> {
-            return listOf("url", "url", "url")
-        }
-
-        override fun createScreenshotImageUrls(game: DomainGame): List<String> {
-            return listOf("url", "url", "url")
         }
     }
 }

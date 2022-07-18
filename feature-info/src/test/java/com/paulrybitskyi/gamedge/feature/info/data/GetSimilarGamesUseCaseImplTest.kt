@@ -26,7 +26,7 @@ import com.paulrybitskyi.gamedge.common.data.games.datastores.local.GamesLocalDa
 import com.paulrybitskyi.gamedge.common.data.games.usecases.common.GameMapper
 import com.paulrybitskyi.gamedge.common.data.games.usecases.common.mapToDomainGames
 import com.paulrybitskyi.gamedge.feature.info.GET_SIMILAR_GAMES_USE_CASE_PARAMS
-import com.paulrybitskyi.gamedge.feature.info.domain.RefreshSimilarGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.RefreshSimilarGamesUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK

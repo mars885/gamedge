@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
+ * Copyright 2022 Paul Rybitskyi, paul.rybitskyi.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.domain
+package com.paulrybitskyi.gamedge.feature.info.domain.usecases
 
+import com.paulrybitskyi.gamedge.common.domain.common.DomainResult
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
 import com.paulrybitskyi.gamedge.common.domain.common.usecases.UseCase
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Company
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.feature.info.domain.GetCompanyDevelopedGamesUseCase.Params
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.RefreshSimilarGamesUseCase.Params
 import kotlinx.coroutines.flow.Flow
 
-internal interface GetCompanyDevelopedGamesUseCase : UseCase<Params, Flow<List<Game>>> {
+internal interface RefreshSimilarGamesUseCase : UseCase<Params, Flow<DomainResult<List<Game>>>> {
 
     data class Params(
-        val company: Company,
+        val game: Game,
         val pagination: Pagination
     )
 }

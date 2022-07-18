@@ -112,7 +112,7 @@ fun <T> Flow<Result<T, Error>>.resultOrError(): Flow<T> {
         if (it is Ok) return@map it.value
         if (it is Err) throw DomainException(it.error)
 
-        throw IllegalStateException("The result is neither Ok nor Err.")
+        error("The result is neither Ok nor Err.")
     }
 }
 

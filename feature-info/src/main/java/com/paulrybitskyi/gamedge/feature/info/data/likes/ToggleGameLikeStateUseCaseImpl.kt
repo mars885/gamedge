@@ -17,8 +17,8 @@
 package com.paulrybitskyi.gamedge.feature.info.data.likes
 
 import com.paulrybitskyi.gamedge.common.data.games.datastores.local.LikedGamesLocalDataStore
-import com.paulrybitskyi.gamedge.feature.info.domain.likes.ToggleGameLikeStateUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.likes.ToggleGameLikeStateUseCase.Params
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLikeStateUseCase.Params
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton

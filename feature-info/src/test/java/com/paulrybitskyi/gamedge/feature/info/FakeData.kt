@@ -19,13 +19,13 @@ package com.paulrybitskyi.gamedge.feature.info
 import com.paulrybitskyi.gamedge.common.testing.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.common.testing.DOMAIN_PAGINATION
 import com.paulrybitskyi.gamedge.common.domain.games.DomainCompany
-import com.paulrybitskyi.gamedge.feature.info.domain.GetCompanyDevelopedGamesUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.GetGameUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.GetSimilarGamesUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.RefreshCompanyDevelopedGamesUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.RefreshSimilarGamesUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.likes.ObserveGameLikeStateUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.likes.ToggleGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetCompanyDevelopedGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetSimilarGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.RefreshCompanyDevelopedGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.RefreshSimilarGamesUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ObserveGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLikeStateUseCase
 
 private val DOMAIN_COMPANY = DomainCompany(
     id = 1,
