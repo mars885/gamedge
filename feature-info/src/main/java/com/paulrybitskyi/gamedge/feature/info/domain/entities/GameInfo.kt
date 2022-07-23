@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.presentation
+package com.paulrybitskyi.gamedge.feature.info.domain.entities
 
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameInfoUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLikeStateUseCase
-import javax.inject.Inject
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 
-internal class GameInfoUseCases @Inject constructor(
-    val getGameInfoUseCase: GetGameInfoUseCase,
-    val getGameImageUrlsUseCase: GetGameImageUrlsUseCase,
-    val toggleGameLikeStateUseCase: ToggleGameLikeStateUseCase,
+data class GameInfo(
+    val game: Game,
+    val isGameLiked: Boolean,
+    val companyGames: List<Game>,
+    val similarGames: List<Game>,
 )

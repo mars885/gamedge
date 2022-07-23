@@ -21,7 +21,6 @@ import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.common.testing.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.FakeLogger
@@ -29,8 +28,9 @@ import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.common.testing.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.common.testing.DOMAIN_ERROR_UNKNOWN
+import com.paulrybitskyi.gamedge.feature.info.GAME_INFO
+import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameInfo
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoHeaderUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinkUiModel
@@ -42,6 +42,7 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -72,18 +73,9 @@ internal class GameInfoViewModelTest {
 
     private fun setupUseCases(): GameInfoUseCases {
         return GameInfoUseCases(
-            getGameUseCase = mockk(),
-            getGameImageUrlsUseCase = mockk(),
-            observeGameLikeStateUseCase = mockk {
-                every { execute(any()) } returns flowOf(true)
-            },
-            toggleGameLikeStateUseCase = mockk(),
-            getCompanyDevelopedGamesUseCase = mockk {
-                coEvery { execute(any()) } returns flowOf(emptyList())
-            },
-            getSimilarGamesUseCase = mockk {
-                coEvery { execute(any()) } returns flowOf(emptyList())
-            }
+            getGameInfoUseCase = mockk(relaxed = true),
+            getGameImageUrlsUseCase = mockk(relaxed = true),
+            toggleGameLikeStateUseCase = mockk(relaxed = true),
         )
     }
 
@@ -96,7 +88,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Emits correct ui states when loading data`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAME))
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
 
             SUT.uiState.test {
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
@@ -109,7 +101,9 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Logs error when game fetching use case throws error`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery {
+                useCases.getGameInfoUseCase.execute(any())
+            } returns flow { throw IllegalStateException() }
 
             SUT
             advanceUntilIdle()
@@ -121,7 +115,9 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches toast showing command when game fetching use case throws error`() {
         runTest {
-            coEvery { useCases.getGameUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
+            coEvery {
+                useCases.getGameInfoUseCase.execute(any())
+            } returns flow { throw IllegalStateException() }
 
             SUT.commandFlow.test {
                 assertThat(awaitItem()).isInstanceOf(GeneralCommand.ShowLongToast::class.java)
@@ -361,12 +357,7 @@ internal class GameInfoViewModelTest {
 
     private class FakeGameInfoUiModelMapper : GameInfoUiModelMapper {
 
-        override fun mapToUiModel(
-            game: Game,
-            isLiked: Boolean,
-            companyGames: List<Game>,
-            similarGames: List<Game>
-        ): GameInfoUiModel {
+        override fun mapToUiModel(gameInfo: GameInfo): GameInfoUiModel {
             return GameInfoUiModel(
                 id = 1,
                 headerModel = GameInfoHeaderUiModel(
