@@ -52,8 +52,8 @@ internal class RefreshComingSoonGamesUseCaseImpl @Inject constructor(
                 emit(gamesDataStores.remote.getComingSoonGames(params.pagination.toDataPagination()))
             }
         }
-        .onEachSuccess {
-            gamesDataStores.local.saveGames(it)
+        .onEachSuccess { games ->
+            gamesDataStores.local.saveGames(games)
             throttlerTools.throttler.updateGamesLastRefreshTime(throttlerKey)
         }
         .flowOn(dispatcherProvider.main)
