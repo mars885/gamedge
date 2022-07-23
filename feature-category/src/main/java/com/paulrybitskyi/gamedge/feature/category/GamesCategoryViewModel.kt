@@ -47,8 +47,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -112,28 +114,27 @@ internal class GamesCategoryViewModel @Inject constructor(
     private fun observeGames(resultEmissionDelay: Long = 0L) {
         if (isObservingGames) return
 
-        gamesObservingJob = viewModelScope.launch {
-            useCases.getObservableUseCase(gamesCategoryKeyType)
-                .execute(observeGamesUseCaseParams)
-                .map(uiModelMapper::mapToUiModels)
-                .flowOn(dispatcherProvider.computation)
-                .map { games -> currentUiState.toSuccessState(games) }
-                .onError {
-                    logger.error(logTag, "Failed to observe ${gamesCategory.name} games.", it)
-                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                    emit(currentUiState.toEmptyState())
-                }
-                .onStart {
-                    isObservingGames = true
-                    emit(currentUiState.toLoadingState())
-                    delay(resultEmissionDelay)
-                }
-                .onCompletion { isObservingGames = false }
-                .collect { emittedUiState ->
-                    configureNextLoad(emittedUiState)
-                    _uiState.update { emittedUiState }
-                }
-        }
+        gamesObservingJob = useCases.getObservableUseCase(gamesCategoryKeyType)
+            .execute(observeGamesUseCaseParams)
+            .map(uiModelMapper::mapToUiModels)
+            .flowOn(dispatcherProvider.computation)
+            .map { games -> currentUiState.toSuccessState(games) }
+            .onError {
+                logger.error(logTag, "Failed to observe ${gamesCategory.name} games.", it)
+                dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+                emit(currentUiState.toEmptyState())
+            }
+            .onStart {
+                isObservingGames = true
+                emit(currentUiState.toLoadingState())
+                delay(resultEmissionDelay)
+            }
+            .onCompletion { isObservingGames = false }
+            .onEach { emittedUiState ->
+                configureNextLoad(emittedUiState)
+                _uiState.update { emittedUiState }
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun configureNextLoad(uiState: GamesCategoryUiState) {
@@ -152,22 +153,21 @@ internal class GamesCategoryViewModel @Inject constructor(
     private fun refreshGames() {
         if (isRefreshingGames) return
 
-        gamesRefreshingJob = viewModelScope.launch {
-            useCases.getRefreshableUseCase(gamesCategoryKeyType)
-                .execute(refreshGamesUseCaseParams)
-                .resultOrError()
-                .map { currentUiState }
-                .onError {
-                    logger.error(logTag, "Failed to refresh ${gamesCategory.name} games.", it)
-                    dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
-                }
-                .onStart {
-                    isRefreshingGames = true
-                    emit(currentUiState.toLoadingState())
-                }
-                .onCompletion { isRefreshingGames = false }
-                .collect { emittedUiState -> _uiState.update { emittedUiState } }
-        }
+        gamesRefreshingJob = useCases.getRefreshableUseCase(gamesCategoryKeyType)
+            .execute(refreshGamesUseCaseParams)
+            .resultOrError()
+            .map { currentUiState }
+            .onError {
+                logger.error(logTag, "Failed to refresh ${gamesCategory.name} games.", it)
+                dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
+            }
+            .onStart {
+                isRefreshingGames = true
+                emit(currentUiState.toLoadingState())
+            }
+            .onCompletion { isRefreshingGames = false }
+            .onEach { emittedUiState -> _uiState.update { emittedUiState } }
+            .launchIn(viewModelScope)
     }
 
     fun onToolbarLeftButtonClicked() {

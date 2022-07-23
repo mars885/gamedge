@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main
 
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameInfo
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetailsUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.mappers.GameInfoOtherCompanyGamesUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.mappers.GameInfoSimilarGamesUiModelMapper
@@ -34,12 +35,7 @@ import javax.inject.Inject
 
 internal interface GameInfoUiModelMapper {
 
-    fun mapToUiModel(
-        game: Game,
-        isLiked: Boolean,
-        companyGames: List<Game>,
-        similarGames: List<Game>,
-    ): GameInfoUiModel
+    fun mapToUiModel(gameInfo: GameInfo): GameInfoUiModel
 }
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
@@ -55,23 +51,19 @@ internal class GameInfoUiModelMapperImpl @Inject constructor(
     private val similarGamesModelMapper: GameInfoSimilarGamesUiModelMapper,
 ) : GameInfoUiModelMapper {
 
-    override fun mapToUiModel(
-        game: Game,
-        isLiked: Boolean,
-        companyGames: List<Game>,
-        similarGames: List<Game>,
-    ): GameInfoUiModel {
+    override fun mapToUiModel(gameInfo: GameInfo): GameInfoUiModel {
+
         return GameInfoUiModel(
-            id = game.id,
-            headerModel = headerModelMapper.mapToUiModel(game, isLiked),
-            videoModels = videoModelMapper.mapToUiModels(game.videos),
-            screenshotModels = screenshotModelMapper.mapToUiModels(game.screenshots),
-            summary = game.summary,
-            detailsModel = detailsModelMapper.mapToUiModel(game),
-            linkModels = linkModelMapper.mapToUiModels(game.websites),
-            companyModels = companyModelMapper.mapToUiModels(game.involvedCompanies),
-            otherCompanyGames = game.createOtherCompanyGamesUiModel(companyGames),
-            similarGames = similarGamesModelMapper.mapToUiModel(similarGames),
+            id = gameInfo.game.id,
+            headerModel = headerModelMapper.mapToUiModel(gameInfo.game, gameInfo.isGameLiked),
+            videoModels = videoModelMapper.mapToUiModels(gameInfo.game.videos),
+            screenshotModels = screenshotModelMapper.mapToUiModels(gameInfo.game.screenshots),
+            summary = gameInfo.game.summary,
+            detailsModel = detailsModelMapper.mapToUiModel(gameInfo.game),
+            linkModels = linkModelMapper.mapToUiModels(gameInfo.game.websites),
+            companyModels = companyModelMapper.mapToUiModels(gameInfo.game.involvedCompanies),
+            otherCompanyGames = gameInfo.game.createOtherCompanyGamesUiModel(gameInfo.companyGames),
+            similarGames = similarGamesModelMapper.mapToUiModel(gameInfo.similarGames),
         )
     }
 

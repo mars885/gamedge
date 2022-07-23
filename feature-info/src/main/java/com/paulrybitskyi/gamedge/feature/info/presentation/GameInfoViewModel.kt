@@ -25,19 +25,12 @@ import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.core.utils.combine
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.core.utils.resultOrError
-import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Company
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameImageType
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetCompanyDevelopedGamesUseCase
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetSimilarGamesUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ObserveGameLikeStateUseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameInfoUseCase
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLikeStateUseCase
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
@@ -51,12 +44,9 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.toSucces
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
@@ -84,8 +74,6 @@ internal class GameInfoViewModel @Inject constructor(
 
     private val gameId = checkNotNull(savedStateHandle.get<Int>(PARAM_GAME_ID))
 
-    private val relatedGamesUseCasePagination = Pagination()
-
     private val _uiState = MutableStateFlow(GameInfoUiState(isLoading = false, game = null))
 
     private val currentUiState: GameInfoUiState
@@ -94,35 +82,20 @@ internal class GameInfoViewModel @Inject constructor(
     val uiState: StateFlow<GameInfoUiState> = _uiState.asStateFlow()
 
     init {
-        observeGameData(resultEmissionDelay = transitionAnimationDuration)
+        observeGameInfo(resultEmissionDelay = transitionAnimationDuration)
     }
 
-    private fun observeGameData(resultEmissionDelay: Long) {
+    private fun observeGameInfo(resultEmissionDelay: Long) {
         if (isObservingGameData) return
 
         viewModelScope.launch {
-            observeGameDataInternal(resultEmissionDelay)
+            observeGameInfoInternal(resultEmissionDelay)
         }
     }
 
-    private suspend fun observeGameDataInternal(resultEmissionDelay: Long) {
-        getGame()
-            .flatMapConcat { game ->
-                combine(
-                    flowOf(game),
-                    observeGameLikeState(game),
-                    getCompanyGames(game),
-                    getSimilarGames(game)
-                )
-            }
-            .map { (game, isGameLiked, companyGames, similarGames) ->
-                uiModelMapper.mapToUiModel(
-                    game,
-                    isGameLiked,
-                    companyGames,
-                    similarGames
-                )
-            }
+    private suspend fun observeGameInfoInternal(resultEmissionDelay: Long) {
+        useCases.getGameInfoUseCase.execute(GetGameInfoUseCase.Params(gameId))
+            .map(uiModelMapper::mapToUiModel)
             .flowOn(dispatcherProvider.computation)
             .map { game -> currentUiState.toSuccessState(game) }
             .onError {
@@ -137,33 +110,6 @@ internal class GameInfoViewModel @Inject constructor(
             }
             .onCompletion { isObservingGameData = false }
             .collect { emittedUiState -> _uiState.update { emittedUiState } }
-    }
-
-    private suspend fun getGame(): Flow<Game> {
-        return useCases.getGameUseCase
-            .execute(GetGameUseCase.Params(gameId))
-            .resultOrError()
-    }
-
-    private fun observeGameLikeState(game: Game): Flow<Boolean> {
-        return useCases.observeGameLikeStateUseCase
-            .execute(ObserveGameLikeStateUseCase.Params(game.id))
-    }
-
-    private suspend fun getCompanyGames(game: Game): Flow<List<Game>> {
-        val company = game.developerCompany
-            ?.takeIf(Company::hasDevelopedGames)
-            ?: return flowOf(emptyList())
-
-        return useCases.getCompanyDevelopedGamesUseCase
-            .execute(GetCompanyDevelopedGamesUseCase.Params(company, relatedGamesUseCasePagination))
-    }
-
-    private suspend fun getSimilarGames(game: Game): Flow<List<Game>> {
-        if (!game.hasSimilarGames) return flowOf(emptyList())
-
-        return useCases.getSimilarGamesUseCase
-            .execute(GetSimilarGamesUseCase.Params(game, relatedGamesUseCasePagination))
     }
 
     fun onArtworkClicked(artworkIndex: Int) {

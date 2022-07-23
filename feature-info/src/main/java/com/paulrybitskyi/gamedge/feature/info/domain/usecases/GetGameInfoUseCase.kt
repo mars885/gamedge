@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.presentation
+package com.paulrybitskyi.gamedge.feature.info.domain.usecases
 
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameInfoUseCase
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLikeStateUseCase
-import javax.inject.Inject
+import com.paulrybitskyi.gamedge.common.domain.common.usecases.UseCase
+import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameInfo
+import kotlinx.coroutines.flow.Flow
 
-internal class GameInfoUseCases @Inject constructor(
-    val getGameInfoUseCase: GetGameInfoUseCase,
-    val getGameImageUrlsUseCase: GetGameImageUrlsUseCase,
-    val toggleGameLikeStateUseCase: ToggleGameLikeStateUseCase,
-)
+internal interface GetGameInfoUseCase : UseCase<GetGameInfoUseCase.Params, Flow<GameInfo>> {
+
+    data class Params(val gameId: Int)
+}
