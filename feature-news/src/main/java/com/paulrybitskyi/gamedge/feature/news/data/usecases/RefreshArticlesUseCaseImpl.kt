@@ -52,8 +52,8 @@ internal class RefreshArticlesUseCaseImpl @Inject constructor(
                 emit(articlesDataStores.remote.getArticles(params.pagination.toDataPagination()))
             }
         }
-        .onEachSuccess {
-            articlesDataStores.local.saveArticles(it)
+        .onEachSuccess { articles ->
+            articlesDataStores.local.saveArticles(articles)
             throttlerTools.throttler.updateArticlesLastRefreshTime(throttlerKey)
         }
         .flowOn(dispatcherProvider.main)

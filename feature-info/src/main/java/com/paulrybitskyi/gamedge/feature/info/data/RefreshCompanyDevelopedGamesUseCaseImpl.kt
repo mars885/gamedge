@@ -61,8 +61,8 @@ internal class RefreshCompanyDevelopedGamesUseCaseImpl @Inject constructor(
                 emit(gamesDataStores.remote.getCompanyDevelopedGames(dataCompany, dataPagination))
             }
         }
-        .onEachSuccess {
-            gamesDataStores.local.saveGames(it)
+        .onEachSuccess { games ->
+            gamesDataStores.local.saveGames(games)
             throttlerTools.throttler.updateGamesLastRefreshTime(throttlerKey)
         }
         .flowOn(dispatcherProvider.main)
