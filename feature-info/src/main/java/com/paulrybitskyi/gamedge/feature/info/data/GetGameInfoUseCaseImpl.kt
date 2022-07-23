@@ -27,14 +27,19 @@ import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetCompanyDevelope
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameUseCase
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetSimilarGamesUseCase
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ObserveGameLikeStateUseCase
+import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
 private val RELATED_GAMES_PAGINATION = Pagination()
 
-internal class GetGameInfoUseCaseImpl(
+@Singleton
+@BindType
+internal class GetGameInfoUseCaseImpl @Inject constructor(
     private val getGameUseCase: GetGameUseCase,
     private val observeGameLikeStateUseCase: ObserveGameLikeStateUseCase,
     private val getCompanyDevelopedGamesUseCase: GetCompanyDevelopedGamesUseCase,
