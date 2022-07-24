@@ -17,9 +17,9 @@
 package com.paulrybitskyi.gamedge.feature.settings.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.core.Constants
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.execute
 import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Settings
 import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Theme

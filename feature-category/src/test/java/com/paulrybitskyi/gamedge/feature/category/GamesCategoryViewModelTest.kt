@@ -20,8 +20,7 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.DOMAIN_GAMES
-import com.paulrybitskyi.gamedge.common.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.FakeLogger
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
@@ -31,6 +30,7 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshPopularGamesUseCase
+import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel

@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.feature.search.presentation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.commons.utils.observeChanges
+import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
@@ -28,12 +29,11 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.games.mapToUiModels
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.toSuccessState
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.core.providers.DispatcherProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
 import com.paulrybitskyi.gamedge.common.domain.common.entities.nextOffset
-import com.paulrybitskyi.gamedge.core.utils.resultOrError
+import com.paulrybitskyi.gamedge.common.domain.common.extensions.resultOrError
 import com.paulrybitskyi.gamedge.feature.search.R
 import com.paulrybitskyi.gamedge.feature.search.domain.SearchGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

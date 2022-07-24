@@ -16,14 +16,9 @@
 
 package com.paulrybitskyi.gamedge.feature.settings
 
-import com.paulrybitskyi.gamedge.feature.settings.data.DataSettings
-import com.paulrybitskyi.gamedge.feature.settings.data.DataTheme
 import com.paulrybitskyi.gamedge.feature.settings.domain.DomainSettings
 import com.paulrybitskyi.gamedge.feature.settings.domain.DomainTheme
 
 internal val DOMAIN_SETTINGS = DomainSettings(
     theme = DomainTheme.DARK,
-)
-internal val DATA_SETTINGS = DataSettings(
-    theme = DataTheme.DARK,
 )

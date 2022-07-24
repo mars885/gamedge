@@ -24,12 +24,12 @@ import com.paulrybitskyi.gamedge.common.api.isServerError
 import com.paulrybitskyi.gamedge.common.api.isUnknownError
 import com.paulrybitskyi.gamedge.common.api.networkErrorMessage
 import com.paulrybitskyi.gamedge.common.api.unknownErrorMessage
-import com.paulrybitskyi.gamedge.common.data.common.entities.Error
+import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
 import javax.inject.Inject
 
 class ApiErrorMapper @Inject constructor() {
 
-    fun mapToDataError(apiError: ApiError): Error = with(apiError) {
+    fun mapToDomainError(apiError: ApiError): Error = with(apiError) {
         return when {
             isServerError -> Error.ApiError.ServiceUnavailable
             isHttpError -> Error.ApiError.ClientError(httpErrorMessage)

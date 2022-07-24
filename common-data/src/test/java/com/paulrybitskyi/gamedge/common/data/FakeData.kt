@@ -16,22 +16,19 @@
 
 package com.paulrybitskyi.gamedge.common.data
 
-import com.paulrybitskyi.gamedge.common.data.auth.DataOauthCredentials
-import com.paulrybitskyi.gamedge.common.data.games.DataCompany
-import com.paulrybitskyi.gamedge.common.domain.games.common.RefreshGamesUseCaseParams
+import com.paulrybitskyi.gamedge.common.domain.auth.entities.OauthCredentials
+import com.paulrybitskyi.gamedge.common.domain.games.DomainCompany
 
-internal val DATA_OAUTH_CREDENTIALS = DataOauthCredentials(
+internal val DOMAIN_OAUTH_CREDENTIALS = OauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",
     tokenTtl = 5000L,
 )
 
-internal val DATA_COMPANY = DataCompany(
+internal val DOMAIN_COMPANY = DomainCompany(
     id = 1,
     name = "name",
     websiteUrl = "website_url",
     logo = null,
     developedGames = listOf(1, 2, 3),
 )
-
-internal val REFRESH_GAMES_USE_CASE_PARAMS = RefreshGamesUseCaseParams()

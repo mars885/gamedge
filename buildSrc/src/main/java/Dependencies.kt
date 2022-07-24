@@ -71,6 +71,7 @@ object deps {
         const val commonUi = ":common-ui"
         const val commonUiWidgets = ":common-ui-widgets"
         const val commonApi = ":common-api"
+        const val commonTestingDomain = ":common-testing-domain"
         const val commonTesting = ":common-testing"
 
         const val featureCategory = ":feature-category"
@@ -142,8 +143,10 @@ object deps {
 
         private const val protobufVersion = "3.21.1"
 
-        const val daggerHilt = "com.google.dagger:hilt-android:${versions.daggerHilt}"
-        const val daggerHiltCompiler = "com.google.dagger:hilt-android-compiler:${versions.daggerHilt}"
+        const val daggerHiltCore = "com.google.dagger:hilt-core:${versions.daggerHilt}"
+        const val daggerHiltCoreCompiler = "com.google.dagger:hilt-compiler:${versions.daggerHilt}"
+        const val daggerHiltAndroid = "com.google.dagger:hilt-android:${versions.daggerHilt}"
+        const val daggerHiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${versions.daggerHilt}"
         const val protobuf = "com.google.protobuf:protobuf-javalite:${protobufVersion}"
         const val protobufCompiler = "com.google.protobuf:protoc:${protobufVersion}"
     }

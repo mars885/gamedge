@@ -20,6 +20,7 @@ import com.paulrybitskyi.gamedge.core.providers.TimestampProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Singleton
 
 private val POPULAR_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(@Suppress("MagicNumber") 90L)
 private val RECENTLY_RELEASED_GAMES_MIN_RELEASE_DATE_DURATION = TimeUnit.DAYS.toSeconds(@Suppress("MagicNumber") 30L)
@@ -32,6 +33,7 @@ internal interface DiscoveryGamesReleaseDatesProvider {
     fun getMostAnticipatedGamesMinReleaseDate(): Long
 }
 
+@Singleton
 @BindType
 internal class DiscoveryGamesReleaseDatesProviderImpl @Inject constructor(
     private val timestampProvider: TimestampProvider,

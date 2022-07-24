@@ -18,8 +18,7 @@ package com.paulrybitskyi.gamedge.feature.likes.presentation
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.DOMAIN_GAMES
-import com.paulrybitskyi.gamedge.common.testing.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.FakeLogger
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
@@ -30,6 +29,7 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModelMapper
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.finiteUiState
 import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
+import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.feature.likes.domain.ObserveLikedGamesUseCase
 import io.mockk.every
 import io.mockk.mockk
