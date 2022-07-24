@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.feature.settings.presentation
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.MainCoroutineRule
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.core.Constants
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.execute

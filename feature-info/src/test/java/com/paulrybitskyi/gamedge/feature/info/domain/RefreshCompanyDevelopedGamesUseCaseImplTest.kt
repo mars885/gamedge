@@ -31,6 +31,7 @@ import com.paulrybitskyi.gamedge.common.domain.games.common.throttling.GamesRefr
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesRemoteDataStore
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.info.REFRESH_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.RefreshCompanyDevelopedGamesUseCaseImpl
 import io.mockk.MockKAnnotations
@@ -40,9 +41,13 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 internal class RefreshCompanyDevelopedGamesUseCaseImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
     @MockK private lateinit var gamesRemoteDataStore: GamesRemoteDataStore

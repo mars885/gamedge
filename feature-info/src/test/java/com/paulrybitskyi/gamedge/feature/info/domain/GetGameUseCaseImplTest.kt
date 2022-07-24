@@ -24,6 +24,7 @@ import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.info.GET_GAME_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameUseCaseImpl
 import io.mockk.MockKAnnotations
@@ -31,9 +32,13 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 internal class GetGameUseCaseImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
 

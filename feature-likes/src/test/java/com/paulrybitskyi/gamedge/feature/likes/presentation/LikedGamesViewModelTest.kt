@@ -22,7 +22,7 @@ import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.FakeLogger
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
-import com.paulrybitskyi.gamedge.common.testing.MainCoroutineRule
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel

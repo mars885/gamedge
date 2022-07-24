@@ -20,12 +20,14 @@ import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.info.TOGGLE_GAME_LIKE_STATE_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLikeStateUseCaseImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 private const val GAME_ID = 100
@@ -33,6 +35,9 @@ private const val GAME_ID = 100
 private val USE_CASE_PARAMS = TOGGLE_GAME_LIKE_STATE_USE_CASE_PARAMS.copy(gameId = GAME_ID)
 
 internal class ToggleGameLikeStateUseCaseImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var likedGamesLocalDataStore: FakeLikedGamesLocalDataStore
     private lateinit var SUT: ToggleGameLikeStateUseCaseImpl

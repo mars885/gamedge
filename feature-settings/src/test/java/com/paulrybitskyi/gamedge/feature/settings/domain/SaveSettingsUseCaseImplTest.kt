@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.settings.domain
 
 import com.google.common.truth.Truth.assertThat
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.settings.DOMAIN_SETTINGS
 import com.paulrybitskyi.gamedge.feature.settings.domain.datastores.SettingsLocalDataStore
 import com.paulrybitskyi.gamedge.feature.settings.domain.usecases.SaveSettingsUseCaseImpl
@@ -26,9 +27,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 internal class SaveSettingsUseCaseImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var settingsLocalDataStore: SettingsLocalDataStore
     private lateinit var SUT: SaveSettingsUseCaseImpl

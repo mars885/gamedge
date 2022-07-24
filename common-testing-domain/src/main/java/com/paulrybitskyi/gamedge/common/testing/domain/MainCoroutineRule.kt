@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.common.testing
+package com.paulrybitskyi.gamedge.common.testing.domain
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestDispatcher

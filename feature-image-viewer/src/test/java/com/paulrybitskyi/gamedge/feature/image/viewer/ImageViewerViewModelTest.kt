@@ -20,7 +20,7 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
-import com.paulrybitskyi.gamedge.common.testing.MainCoroutineRule
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher

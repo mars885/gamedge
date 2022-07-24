@@ -23,15 +23,20 @@ import com.paulrybitskyi.gamedge.common.domain.games.common.ObserveGamesUseCaseP
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObserveMostAnticipatedGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 internal class ObserveMostAnticipatedGamesUseCaseImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
 

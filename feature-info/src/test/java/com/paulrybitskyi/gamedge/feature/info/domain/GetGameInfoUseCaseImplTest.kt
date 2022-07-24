@@ -24,6 +24,7 @@ import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.domain.common.DomainException
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.feature.info.GAME_INFO
 import com.paulrybitskyi.gamedge.feature.info.INVOLVED_COMPANY
@@ -40,11 +41,15 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 private val USE_CASE_PARAMS = GetGameInfoUseCase.Params(gameId = 0)
 
 internal class GetGameInfoUseCaseImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var getGameUseCase: GetGameUseCase
     @MockK private lateinit var observeGameLikeStateUseCase: ObserveGameLikeStateUseCase

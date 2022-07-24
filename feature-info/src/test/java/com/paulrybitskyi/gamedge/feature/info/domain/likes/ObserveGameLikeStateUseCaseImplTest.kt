@@ -20,6 +20,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.LikedGamesLocalDataStore
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.info.OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ObserveGameLikeStateUseCaseImpl
 import io.mockk.MockKAnnotations
@@ -28,9 +29,13 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 internal class ObserveGameLikeStateUseCaseImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var likedGamesLocalDataStore: LikedGamesLocalDataStore
 

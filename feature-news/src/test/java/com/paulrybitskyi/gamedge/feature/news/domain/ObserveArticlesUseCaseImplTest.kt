@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.feature.news.domain
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
 import com.paulrybitskyi.gamedge.feature.news.DOMAIN_ARTICLES
 import com.paulrybitskyi.gamedge.feature.news.domain.datastores.ArticlesLocalDataStore
@@ -30,11 +31,15 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 private val USE_CASE_PARAMS = ObserveArticlesUseCase.Params(PAGINATION)
 
 internal class ObserveArticlesUseCaseImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var articlesLocalDataStore: ArticlesLocalDataStore
 

@@ -33,6 +33,7 @@ import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataSt
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshComingSoonGamesUseCaseImpl
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -40,9 +41,13 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 internal class RefreshComingSoonGamesUseCaseImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var gamesLocalDataStore: GamesLocalDataStore
     @MockK private lateinit var gamesRemoteDataStore: GamesRemoteDataStore

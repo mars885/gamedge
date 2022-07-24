@@ -24,6 +24,7 @@ import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
 import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameImageType
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase
@@ -35,6 +36,7 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 private val USE_CASE_PARAMS = GetGameImageUrlsUseCase.Params(
@@ -43,6 +45,9 @@ private val USE_CASE_PARAMS = GetGameImageUrlsUseCase.Params(
 )
 
 internal class GetGameImageUrlsUseCaseImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var getGameUseCase: GetGameUseCase
     @MockK private lateinit var gameUrlFactory: ImageViewerGameUrlFactory
