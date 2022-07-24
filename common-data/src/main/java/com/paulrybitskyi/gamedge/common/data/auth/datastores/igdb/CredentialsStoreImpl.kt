@@ -35,7 +35,7 @@ internal class CredentialsStoreImpl @Inject constructor(
 
     override suspend fun saveOauthCredentials(oauthCredentials: OauthCredentials) {
         authLocalDataStore.saveOauthCredentials(
-            igdbAuthMapper.mapToDataOauthCredentials(oauthCredentials),
+            igdbAuthMapper.mapToDomainOauthCredentials(oauthCredentials),
         )
     }
 

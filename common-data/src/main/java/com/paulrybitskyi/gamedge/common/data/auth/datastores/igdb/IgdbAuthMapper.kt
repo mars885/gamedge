@@ -30,7 +30,7 @@ internal class IgdbAuthMapper @Inject constructor() {
         )
     }
 
-    fun mapToDataOauthCredentials(apiOauthCredentials: ApiOauthCredentials): OauthCredentials {
+    fun mapToDomainOauthCredentials(apiOauthCredentials: ApiOauthCredentials): OauthCredentials {
         return OauthCredentials(
             accessToken = apiOauthCredentials.accessToken,
             tokenType = apiOauthCredentials.tokenType,

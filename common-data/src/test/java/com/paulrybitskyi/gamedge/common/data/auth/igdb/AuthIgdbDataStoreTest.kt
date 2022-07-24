@@ -71,7 +71,7 @@ internal class AuthIgdbDataStoreTest {
             val result = SUT.getOauthCredentials()
 
             assertThat(result.get())
-                .isEqualTo(igdbAuthMapper.mapToDataOauthCredentials(API_OAUTH_CREDENTIALS))
+                .isEqualTo(igdbAuthMapper.mapToDomainOauthCredentials(API_OAUTH_CREDENTIALS))
         }
     }
 

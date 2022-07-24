@@ -37,6 +37,6 @@ internal class AuthIgdbDataStore @Inject constructor(
     override suspend fun getOauthCredentials(): DomainResult<OauthCredentials> {
         return authEndpoint
             .getOauthCredentials()
-            .mapEither(igdbAuthMapper::mapToDataOauthCredentials, apiErrorMapper::mapToDomainError)
+            .mapEither(igdbAuthMapper::mapToDomainOauthCredentials, apiErrorMapper::mapToDomainError)
     }
 }
