@@ -20,7 +20,7 @@ plugins {
     kotlinKapt()
     ksp()
     kotlinxSerialization()
-    daggerHiltAndroid() // does not compile instrumented tests without the plugin
+    daggerHiltAndroid()
 }
 
 android {
