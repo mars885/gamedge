@@ -29,7 +29,7 @@ internal class FakeCredentialsStore @Inject constructor() : CredentialsStore {
     private var oauthCredentials: OauthCredentials? = null
 
     override suspend fun saveOauthCredentials(oauthCredentials: OauthCredentials) {
-        this.oauthCredentials = oauthCredentials;
+        this.oauthCredentials = oauthCredentials
     }
 
     override suspend fun getLocalOauthCredentials(): OauthCredentials? {
