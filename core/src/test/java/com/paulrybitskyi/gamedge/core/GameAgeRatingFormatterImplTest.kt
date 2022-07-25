@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.DOMAIN_GAME
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRating

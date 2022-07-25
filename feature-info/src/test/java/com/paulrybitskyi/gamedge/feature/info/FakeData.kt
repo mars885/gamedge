@@ -16,11 +16,11 @@
 
 package com.paulrybitskyi.gamedge.feature.info
 
-import com.paulrybitskyi.gamedge.common.testing.DOMAIN_GAME
-import com.paulrybitskyi.gamedge.common.testing.DOMAIN_PAGINATION
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
 import com.paulrybitskyi.gamedge.common.domain.games.DomainCompany
 import com.paulrybitskyi.gamedge.common.domain.games.entities.InvolvedCompany
-import com.paulrybitskyi.gamedge.common.testing.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameInfo
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetCompanyDevelopedGamesUseCase
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameUseCase
@@ -57,11 +57,11 @@ internal val TOGGLE_GAME_LIKE_STATE_USE_CASE_PARAMS = ToggleGameLikeStateUseCase
 internal val GET_GAME_USE_CASE_PARAMS = GetGameUseCase.Params(gameId = 10)
 internal val GET_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS = GetCompanyDevelopedGamesUseCase.Params(
     COMPANY,
-    DOMAIN_PAGINATION,
+    PAGINATION,
 )
 internal val REFRESH_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS = RefreshCompanyDevelopedGamesUseCase.Params(
     COMPANY,
-    DOMAIN_PAGINATION,
+    PAGINATION,
 )
-internal val GET_SIMILAR_GAMES_USE_CASE_PARAMS = GetSimilarGamesUseCase.Params(DOMAIN_GAME, DOMAIN_PAGINATION)
-internal val REFRESH_SIMILAR_GAMES_USE_CASE_PARAMS = RefreshSimilarGamesUseCase.Params(DOMAIN_GAME, DOMAIN_PAGINATION)
+internal val GET_SIMILAR_GAMES_USE_CASE_PARAMS = GetSimilarGamesUseCase.Params(DOMAIN_GAME, PAGINATION)
+internal val REFRESH_SIMILAR_GAMES_USE_CASE_PARAMS = RefreshSimilarGamesUseCase.Params(DOMAIN_GAME, PAGINATION)

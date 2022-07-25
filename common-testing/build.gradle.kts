@@ -21,8 +21,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(deps.local.commonDomain))
-    implementation(project(deps.local.commonData))
+    api(project(deps.local.commonTestingDomain))
     implementation(project(deps.local.core))
     implementation(project(deps.local.commonApi))
 
@@ -36,5 +35,5 @@ dependencies {
     implementation(deps.testing.mockWebServer)
 
     implementation(deps.testing.daggerHilt)
-    kapt(deps.google.daggerHiltCompiler)
+    kapt(deps.google.daggerHiltAndroidCompiler)
 }

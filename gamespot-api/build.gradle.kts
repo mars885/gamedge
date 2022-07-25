@@ -23,7 +23,7 @@ plugins {
     kotlinKapt()
     ksp()
     kotlinxSerialization()
-    daggerHiltAndroid() // does not compile instrumented tests without the plugin
+    daggerHiltAndroid()
 }
 
 android {
@@ -46,8 +46,8 @@ dependencies {
 
     implementation(deps.misc.kotlinResult)
 
-    implementation(deps.google.daggerHilt)
-    kapt(deps.google.daggerHiltCompiler)
+    implementation(deps.google.daggerHiltAndroid)
+    kapt(deps.google.daggerHiltAndroidCompiler)
 
     implementation(deps.misc.hiltBinder)
     ksp(deps.misc.hiltBinderCompiler)
@@ -65,5 +65,5 @@ dependencies {
     androidTestImplementation(deps.testing.mockWebServer)
 
     androidTestImplementation(deps.testing.daggerHilt)
-    kaptAndroidTest(deps.google.daggerHiltCompiler)
+    kaptAndroidTest(deps.google.daggerHiltAndroidCompiler)
 }

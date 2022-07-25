@@ -16,19 +16,10 @@
 
 package com.paulrybitskyi.gamedge.core.utils
 
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.map
-import com.github.michaelbull.result.mapEither
-import com.github.michaelbull.result.mapError
-import com.paulrybitskyi.gamedge.common.domain.common.DomainException
-import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 
 data class Tuple4<T1, T2, T3, T4>(
@@ -85,34 +76,6 @@ fun <T1, T2, T3, T4, T5> combine(
 ): Flow<Tuple5<T1, T2, T3, T4, T5>> {
     return combine(f1, f2, f3, f4, f5) { t1, t2, t3, t4, t5 ->
         Tuple5(t1, t2, t3, t4, t5)
-    }
-}
-
-fun <S1, E1, S2, E2> Flow<Result<S1, E1>>.mapResult(
-    success: (S1) -> S2,
-    failure: (E1) -> E2
-): Flow<Result<S2, E2>> {
-    return map { it.mapEither(success, failure) }
-}
-
-fun <S1, S2, E1> Flow<Result<S1, E1>>.mapSuccess(
-    success: (S1) -> S2
-): Flow<Result<S2, E1>> {
-    return map { it.map(success) }
-}
-
-fun <S1, E1, E2> Flow<Result<S1, E1>>.mapError(
-    failure: (E1) -> E2
-): Flow<Result<S1, E2>> {
-    return map { it.mapError(failure) }
-}
-
-fun <T> Flow<Result<T, Error>>.resultOrError(): Flow<T> {
-    return map {
-        if (it is Ok) return@map it.value
-        if (it is Err) throw DomainException(it.error)
-
-        error("The result is neither Ok nor Err.")
     }
 }
 

@@ -19,17 +19,18 @@ package com.paulrybitskyi.gamedge.common.data.auth.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.paulrybitskyi.gamedge.common.data.auth.Constants
-import com.paulrybitskyi.gamedge.common.data.auth.datastores.local.file.ProtoOauthCredentials
-import com.paulrybitskyi.gamedge.common.data.auth.datastores.local.file.ProtoOauthCredentialsSerializer
+import com.paulrybitskyi.gamedge.common.data.auth.datastores.file.ProtoOauthCredentials
+import com.paulrybitskyi.gamedge.common.data.auth.datastores.file.ProtoOauthCredentialsSerializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
+private const val AUTH_PREFERENCES_DATA_STORE_NAME = "auth.pb"
+
 private val Context.authProtoDataStore by dataStore(
-    fileName = Constants.AUTH_PREFERENCES_DATA_STORE_NAME,
+    fileName = AUTH_PREFERENCES_DATA_STORE_NAME,
     serializer = ProtoOauthCredentialsSerializer
 )
 

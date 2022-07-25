@@ -24,10 +24,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.snapshotFlow
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.coroutineScope
 import com.paulrybitskyi.commons.ktx.intentFor
 import com.paulrybitskyi.gamedge.common.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.common.ui.LocalTextSharer
@@ -41,8 +42,7 @@ import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Settings
 import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Theme
 import com.paulrybitskyi.gamedge.feature.settings.domain.usecases.ObserveThemeUseCase
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.filterNotNull
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -61,12 +61,11 @@ class MainActivity : ComponentActivity() {
 
     @Inject lateinit var observeThemeUseCase: ObserveThemeUseCase
 
-    private var appTheme: Theme? = null
+    private var shouldKeepSplashOpen = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setupSplashScreen()
         super.onCreate(savedInstanceState)
-        loadAppTheme()
         setupSystemBars()
         setupCompose()
     }
@@ -75,15 +74,7 @@ class MainActivity : ComponentActivity() {
         // Waiting until the app's theme is loaded first before
         // displaying the dashboard to prevent the user from seeing
         // the app blinking as a result of the theme change
-        installSplashScreen().setKeepOnScreenCondition {
-            appTheme == null
-        }
-    }
-
-    private fun loadAppTheme() {
-        lifecycle.coroutineScope.launch {
-            appTheme = observeThemeUseCase.execute().first()
-        }
+        installSplashScreen().setKeepOnScreenCondition(::shouldKeepSplashOpen)
     }
 
     private fun setupSystemBars() {
@@ -107,11 +98,20 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun shouldUseDarkTheme(): Boolean {
-        val themeState = observeThemeUseCase.execute().collectAsState(
-            initial = Settings.DEFAULT.theme,
-        )
+        val themeState = observeThemeUseCase.execute().collectAsState(initial = null)
+        val theme = (themeState.value ?: Settings.DEFAULT.theme)
 
-        return when (themeState.value) {
+        LaunchedEffect(Unit) {
+            snapshotFlow { themeState.value }
+                .filterNotNull()
+                .collect {
+                    if (shouldKeepSplashOpen) {
+                        shouldKeepSplashOpen = false
+                    }
+                }
+        }
+
+        return when (theme) {
             Theme.LIGHT -> false
             Theme.DARK -> true
             Theme.SYSTEM -> isSystemInDarkTheme()

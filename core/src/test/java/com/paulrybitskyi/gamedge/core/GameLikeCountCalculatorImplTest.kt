@@ -17,7 +17,7 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.DOMAIN_GAME
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
 import org.junit.Before
 import org.junit.Test
 

@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.feature.settings.data.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.paulrybitskyi.gamedge.feature.settings.data.Constants
 import com.paulrybitskyi.gamedge.feature.settings.data.datastores.ProtoSettings
 import com.paulrybitskyi.gamedge.feature.settings.data.datastores.ProtoSettingsSerializer
 import dagger.Module
@@ -28,8 +27,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
+private const val SETTINGS_PREFERENCES_DATA_STORE_NAME = "settings.pb"
+
 private val Context.settingsProtoDataStore by dataStore(
-    fileName = Constants.SETTINGS_PREFERENCES_DATA_STORE_NAME,
+    fileName = SETTINGS_PREFERENCES_DATA_STORE_NAME,
     serializer = ProtoSettingsSerializer,
 )
 
