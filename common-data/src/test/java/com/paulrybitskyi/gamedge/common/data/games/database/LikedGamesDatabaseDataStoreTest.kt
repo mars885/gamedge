@@ -25,8 +25,8 @@ import com.paulrybitskyi.gamedge.common.data.games.datastores.database.LikedGame
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.LikedGamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.mapToDatabaseGames
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
-import com.paulrybitskyi.gamedge.database.games.DatabaseGame
-import com.paulrybitskyi.gamedge.database.games.entities.LikedGame
+import com.paulrybitskyi.gamedge.database.games.entities.DbGame
+import com.paulrybitskyi.gamedge.database.games.entities.DbLikedGame
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -114,10 +114,10 @@ internal class LikedGamesDatabaseDataStoreTest {
 
     private class FakeLikedGamesTable : LikedGamesTable {
 
-        var likedGamesMap = mutableMapOf<Int, LikedGame>()
-        var dbGamesToObserve = listOf<DatabaseGame>()
+        var likedGamesMap = mutableMapOf<Int, DbLikedGame>()
+        var dbGamesToObserve = listOf<DbGame>()
 
-        override suspend fun saveLikedGame(likedGame: LikedGame) {
+        override suspend fun saveLikedGame(likedGame: DbLikedGame) {
             likedGamesMap[likedGame.gameId] = likedGame
         }
 
@@ -133,15 +133,15 @@ internal class LikedGamesDatabaseDataStoreTest {
             return flowOf(likedGamesMap.contains(gameId))
         }
 
-        override fun observeLikedGames(offset: Int, limit: Int): Flow<List<DatabaseGame>> {
+        override fun observeLikedGames(offset: Int, limit: Int): Flow<List<DbGame>> {
             return flowOf(dbGamesToObserve)
         }
     }
 
     private class FakeLikedGameFactory : LikedGameFactory {
 
-        override fun createLikedGame(gameId: Int): LikedGame {
-            return LikedGame(
+        override fun createLikedGame(gameId: Int): DbLikedGame {
+            return DbLikedGame(
                 id = 1,
                 gameId = gameId,
                 likeTimestamp = 500L

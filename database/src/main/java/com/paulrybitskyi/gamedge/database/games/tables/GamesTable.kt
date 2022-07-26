@@ -20,64 +20,64 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.paulrybitskyi.gamedge.database.games.entities.Game
+import com.paulrybitskyi.gamedge.database.games.entities.DbGame
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GamesTable {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveGames(games: List<Game>)
+    suspend fun saveGames(games: List<DbGame>)
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME}
-        WHERE ${Game.Schema.ID} = :id
+        SELECT * FROM ${DbGame.Schema.TABLE_NAME}
+        WHERE ${DbGame.Schema.ID} = :id
         """
     )
-    suspend fun getGame(id: Int): Game?
+    suspend fun getGame(id: Int): DbGame?
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME}
-        WHERE ${Game.Schema.ID} IN (:ids)
+        SELECT * FROM ${DbGame.Schema.TABLE_NAME}
+        WHERE ${DbGame.Schema.ID} IN (:ids)
         LIMIT :offset, :limit
         """
     )
-    suspend fun getGames(ids: List<Int>, offset: Int, limit: Int): List<Game>
+    suspend fun getGames(ids: List<Int>, offset: Int, limit: Int): List<DbGame>
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME}
-        WHERE LOWER(${Game.Schema.NAME}) LIKE (:searchQuery || '%')
+        SELECT * FROM ${DbGame.Schema.TABLE_NAME}
+        WHERE LOWER(${DbGame.Schema.NAME}) LIKE (:searchQuery || '%')
         ORDER BY
-            ${Game.Schema.TOTAL_RATING} IS NULL,
-            ${Game.Schema.TOTAL_RATING} DESC,
-            ${Game.Schema.ID} ASC
+            ${DbGame.Schema.TOTAL_RATING} IS NULL,
+            ${DbGame.Schema.TOTAL_RATING} DESC,
+            ${DbGame.Schema.ID} ASC
         LIMIT :offset, :limit
         """
     )
-    suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): List<Game>
+    suspend fun searchGames(searchQuery: String, offset: Int, limit: Int): List<DbGame>
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME}
-        WHERE ${Game.Schema.USERS_RATING} IS NOT NULL AND
-        ${Game.Schema.RELEASE_DATE} IS NOT NULL AND
-        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp
-        ORDER BY ${Game.Schema.TOTAL_RATING} DESC
+        SELECT * FROM ${DbGame.Schema.TABLE_NAME}
+        WHERE ${DbGame.Schema.USERS_RATING} IS NOT NULL AND
+        ${DbGame.Schema.RELEASE_DATE} IS NOT NULL AND
+        ${DbGame.Schema.RELEASE_DATE} > :minReleaseDateTimestamp
+        ORDER BY ${DbGame.Schema.TOTAL_RATING} DESC
         LIMIT :offset, :limit
         """
     )
-    fun observePopularGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<Game>>
+    fun observePopularGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<DbGame>>
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME}
-        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND
-        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND
-        ${Game.Schema.RELEASE_DATE} < :maxReleaseDateTimestamp
-        ORDER BY ${Game.Schema.RELEASE_DATE} DESC
+        SELECT * FROM ${DbGame.Schema.TABLE_NAME}
+        WHERE ${DbGame.Schema.RELEASE_DATE} IS NOT NULL AND
+        ${DbGame.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND
+        ${DbGame.Schema.RELEASE_DATE} < :maxReleaseDateTimestamp
+        ORDER BY ${DbGame.Schema.RELEASE_DATE} DESC
         LIMIT :offset, :limit
         """
     )
@@ -86,28 +86,28 @@ interface GamesTable {
         maxReleaseDateTimestamp: Long,
         offset: Int,
         limit: Int
-    ): Flow<List<Game>>
+    ): Flow<List<DbGame>>
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME}
-        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND
-        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp
-        ORDER BY ${Game.Schema.RELEASE_DATE} ASC
+        SELECT * FROM ${DbGame.Schema.TABLE_NAME}
+        WHERE ${DbGame.Schema.RELEASE_DATE} IS NOT NULL AND
+        ${DbGame.Schema.RELEASE_DATE} > :minReleaseDateTimestamp
+        ORDER BY ${DbGame.Schema.RELEASE_DATE} ASC
         LIMIT :offset, :limit
         """
     )
-    fun observeComingSoonGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<Game>>
+    fun observeComingSoonGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<DbGame>>
 
     @Query(
         """
-        SELECT * FROM ${Game.Schema.TABLE_NAME}
-        WHERE ${Game.Schema.RELEASE_DATE} IS NOT NULL AND
-        ${Game.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND
-        ${Game.Schema.HYPE_COUNT} IS NOT NULL
-        ORDER BY ${Game.Schema.HYPE_COUNT} DESC
+        SELECT * FROM ${DbGame.Schema.TABLE_NAME}
+        WHERE ${DbGame.Schema.RELEASE_DATE} IS NOT NULL AND
+        ${DbGame.Schema.RELEASE_DATE} > :minReleaseDateTimestamp AND
+        ${DbGame.Schema.HYPE_COUNT} IS NOT NULL
+        ORDER BY ${DbGame.Schema.HYPE_COUNT} DESC
         LIMIT :offset, :limit
         """
     )
-    fun observeMostAnticipatedGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<Game>>
+    fun observeMostAnticipatedGames(minReleaseDateTimestamp: Long, offset: Int, limit: Int): Flow<List<DbGame>>
 }

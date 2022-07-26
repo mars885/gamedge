@@ -21,10 +21,10 @@ import com.github.michaelbull.result.getError
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.api.Error
 import com.paulrybitskyi.gamedge.common.testing.startSafe
-import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.common.CredentialsStore
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiCategory
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiCategory
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesService
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -38,7 +38,7 @@ import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 
-private val OAUTH_CREDENTIALS = OauthCredentials(
+private val OAUTH_CREDENTIALS = ApiOauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",
     tokenTtl = 5000L,

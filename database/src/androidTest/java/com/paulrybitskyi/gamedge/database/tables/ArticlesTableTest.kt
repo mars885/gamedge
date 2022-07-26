@@ -22,7 +22,7 @@ import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.database.articles.DatabaseArticle
 import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
 import com.paulrybitskyi.gamedge.database.common.di.DatabaseModule
-import com.paulrybitskyi.gamedge.database.DATABASE_ARTICLES
+import com.paulrybitskyi.gamedge.database.DB_ARTICLES
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -59,11 +59,11 @@ internal class ArticlesTableTest {
     @Test
     fun saves_and_observes_sorted_articles() {
         runTest {
-            SUT.saveArticles(DATABASE_ARTICLES)
+            SUT.saveArticles(DB_ARTICLES)
 
-            val expectedArticles = DATABASE_ARTICLES.sortedByDescending(DatabaseArticle::publicationDate)
+            val expectedArticles = DB_ARTICLES.sortedByDescending(DatabaseArticle::publicationDate)
 
-            SUT.observeArticles(offset = 0, limit = DATABASE_ARTICLES.size).test {
+            SUT.observeArticles(offset = 0, limit = DB_ARTICLES.size).test {
                 assertThat(awaitItem()).isEqualTo(expectedArticles)
             }
         }

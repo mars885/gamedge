@@ -16,12 +16,12 @@
 
 package com.paulrybitskyi.gamedge.common.testing.domain
 
-import com.paulrybitskyi.gamedge.common.domain.common.DomainPagination
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
-import com.paulrybitskyi.gamedge.common.domain.games.DomainCategory
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
+import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Category
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 
-val DOMAIN_GAME = DomainGame(
+val DOMAIN_GAME = Game(
     id = 1,
     followerCount = null,
     hypeCount = null,
@@ -32,7 +32,7 @@ val DOMAIN_GAME = DomainGame(
     name = "name",
     summary = null,
     storyline = null,
-    category = DomainCategory.UNKNOWN,
+    category = Category.UNKNOWN,
     cover = null,
     releaseDates = listOf(),
     ageRatings = listOf(),
@@ -57,4 +57,4 @@ val DOMAIN_GAMES = listOf(
 
 val DOMAIN_ERROR_UNKNOWN = Error.Unknown("message")
 
-val PAGINATION = DomainPagination(offset = 0, limit = 20)
+val PAGINATION = Pagination(offset = 0, limit = 20)

@@ -18,7 +18,5 @@ package com.paulrybitskyi.gamedge.common.domain.common
 
 import com.github.michaelbull.result.Result
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
-import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
 
-typealias DomainPagination = Pagination
 typealias DomainResult<T> = Result<T, Error>

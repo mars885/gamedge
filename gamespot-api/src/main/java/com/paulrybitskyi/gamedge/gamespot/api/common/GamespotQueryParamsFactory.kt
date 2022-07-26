@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.gamespot.api.common
 
-import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.Article
+import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.common.serialization.GamespotFieldsSerializer
 
 internal interface GamespotQueryParamsFactory {
@@ -39,7 +39,7 @@ internal class GamespotQueryParamsFactoryImpl(
     }
 
     private val articleEntityFields by lazy {
-        gamespotFieldsSerializer.serializeFields(Article::class.java)
+        gamespotFieldsSerializer.serializeFields(ApiArticle::class.java)
     }
 
     override fun createArticlesQueryParams(
@@ -53,7 +53,7 @@ internal class GamespotQueryParamsFactoryImpl(
             )
             put(
                 QUERY_PARAM_SORT,
-                createSortQueryParamValue(Article.Schema.PUBLICATION_DATE, SortOrder.DESC)
+                createSortQueryParamValue(ApiArticle.Schema.PUBLICATION_DATE, SortOrder.DESC)
             )
 
             action()

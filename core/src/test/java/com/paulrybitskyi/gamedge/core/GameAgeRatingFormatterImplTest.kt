@@ -17,12 +17,12 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.google.common.truth.Truth.assertThat
+import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRating
+import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRatingCategory
+import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRatingType
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatterImpl
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRating
-import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRatingCategory
-import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRatingType
 import org.junit.Before
 import org.junit.Test
 
@@ -41,7 +41,7 @@ internal class GameAgeRatingFormatterImplTest {
     fun `Returns properly formatted string with age rating`() {
         val game = DOMAIN_GAME.copy(
             ageRatings = listOf(
-                DomainAgeRating(DomainAgeRatingCategory.PEGI, DomainAgeRatingType.AO)
+                AgeRating(AgeRatingCategory.PEGI, AgeRatingType.AO)
             )
         )
 
@@ -61,8 +61,8 @@ internal class GameAgeRatingFormatterImplTest {
     fun `Returns not available string when game does not contain valid ratings`() {
         val game = DOMAIN_GAME.copy(
             ageRatings = listOf(
-                DomainAgeRating(DomainAgeRatingCategory.UNKNOWN, DomainAgeRatingType.AO),
-                DomainAgeRating(DomainAgeRatingCategory.PEGI, DomainAgeRatingType.UNKNOWN)
+                AgeRating(AgeRatingCategory.UNKNOWN, AgeRatingType.AO),
+                AgeRating(AgeRatingCategory.PEGI, AgeRatingType.UNKNOWN)
             )
         )
 

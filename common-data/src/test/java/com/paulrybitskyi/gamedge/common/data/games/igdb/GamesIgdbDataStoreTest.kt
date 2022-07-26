@@ -33,8 +33,8 @@ import com.paulrybitskyi.gamedge.common.data.games.datastores.igdb.GamesIgdbData
 import com.paulrybitskyi.gamedge.common.data.games.datastores.igdb.IgdbGameMapper
 import com.paulrybitskyi.gamedge.common.data.games.datastores.igdb.mapToDomainGames
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK

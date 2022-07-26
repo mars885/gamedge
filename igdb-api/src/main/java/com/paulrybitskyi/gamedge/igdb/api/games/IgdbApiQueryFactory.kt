@@ -16,12 +16,12 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.games
 
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.HYPE_COUNT
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.ID
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.RELEASE_DATE
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.TOTAL_RATING
-import com.paulrybitskyi.gamedge.igdb.api.games.entities.Game.Schema.USERS_RATING
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame.Schema.HYPE_COUNT
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame.Schema.ID
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame.Schema.RELEASE_DATE
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame.Schema.TOTAL_RATING
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame.Schema.USERS_RATING
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetComingSoonGamesRequest
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetGamesRequest
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetMostAnticipatedGamesRequest
@@ -49,7 +49,7 @@ internal class IgdbApiQueryFactoryImpl @Inject constructor(
 ) : IgdbApiQueryFactory {
 
     private val gameEntityFields by lazy {
-        apicalypseSerializer.serialize(Game::class.java)
+        apicalypseSerializer.serialize(ApiGame::class.java)
     }
 
     override fun createGamesSearchingQuery(request: SearchGamesRequest): String {

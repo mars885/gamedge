@@ -18,9 +18,9 @@ package com.paulrybitskyi.gamedge.common.data.games.datastores.database
 
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.LikedGamesLocalDataStore
-import com.paulrybitskyi.gamedge.database.games.DatabaseGame
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.database.games.entities.DbGame
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
@@ -55,7 +55,7 @@ internal class LikedGamesDatabaseDataStore @Inject constructor(
         return likedGamesTable.observeGameLikeState(gameId)
     }
 
-    override fun observeLikedGames(pagination: Pagination): Flow<List<DomainGame>> {
+    override fun observeLikedGames(pagination: Pagination): Flow<List<Game>> {
          return likedGamesTable.observeLikedGames(
             offset = pagination.offset,
             limit = pagination.limit
@@ -63,7 +63,7 @@ internal class LikedGamesDatabaseDataStore @Inject constructor(
          .toDataGamesFlow()
     }
 
-    private fun Flow<List<DatabaseGame>>.toDataGamesFlow(): Flow<List<DomainGame>> {
+    private fun Flow<List<DbGame>>.toDataGamesFlow(): Flow<List<Game>> {
         return distinctUntilChanged()
             .map(dbGameMapper::mapToDomainGames)
             .flowOn(dispatcherProvider.computation)
