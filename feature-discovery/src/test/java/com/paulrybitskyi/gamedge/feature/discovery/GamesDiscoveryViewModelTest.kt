@@ -19,13 +19,13 @@ package com.paulrybitskyi.gamedge.feature.discovery
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.FakeLogger
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
@@ -178,7 +178,7 @@ internal class GamesDiscoveryViewModelTest {
 
     private class FakeGamesDiscoveryItemGameUiModelMapper : GamesDiscoveryItemGameUiModelMapper {
 
-        override fun mapToUiModel(game: DomainGame): GamesDiscoveryItemGameUiModel {
+        override fun mapToUiModel(game: Game): GamesDiscoveryItemGameUiModel {
             return GamesDiscoveryItemGameUiModel(
                 id = game.id,
                 title = game.name,

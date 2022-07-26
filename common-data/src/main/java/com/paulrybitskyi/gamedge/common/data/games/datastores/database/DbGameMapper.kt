@@ -16,175 +16,175 @@
 
 package com.paulrybitskyi.gamedge.common.data.games.datastores.database
 
-import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRating
-import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRatingCategory
-import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRatingType
-import com.paulrybitskyi.gamedge.common.domain.games.DomainCategory
-import com.paulrybitskyi.gamedge.common.domain.games.DomainCompany
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGenre
-import com.paulrybitskyi.gamedge.common.domain.games.DomainImage
-import com.paulrybitskyi.gamedge.common.domain.games.DomainInvolvedCompany
-import com.paulrybitskyi.gamedge.common.domain.games.DomainKeyword
-import com.paulrybitskyi.gamedge.common.domain.games.DomainMode
-import com.paulrybitskyi.gamedge.common.domain.games.DomainPlatform
-import com.paulrybitskyi.gamedge.common.domain.games.DomainPlayerPerspective
-import com.paulrybitskyi.gamedge.common.domain.games.DomainReleaseDate
-import com.paulrybitskyi.gamedge.common.domain.games.DomainReleaseDateCategory
-import com.paulrybitskyi.gamedge.common.domain.games.DomainTheme
-import com.paulrybitskyi.gamedge.common.domain.games.DomainVideo
-import com.paulrybitskyi.gamedge.common.domain.games.DomainWebsite
-import com.paulrybitskyi.gamedge.common.domain.games.DomainWebsiteCategory
-import com.paulrybitskyi.gamedge.database.games.DatabaseAgeRating
-import com.paulrybitskyi.gamedge.database.games.DatabaseAgeRatingCategory
-import com.paulrybitskyi.gamedge.database.games.DatabaseAgeRatingType
-import com.paulrybitskyi.gamedge.database.games.DatabaseCategory
-import com.paulrybitskyi.gamedge.database.games.DatabaseCompany
-import com.paulrybitskyi.gamedge.database.games.DatabaseGame
-import com.paulrybitskyi.gamedge.database.games.DatabaseGenre
-import com.paulrybitskyi.gamedge.database.games.DatabaseImage
-import com.paulrybitskyi.gamedge.database.games.DatabaseInvolvedCompany
-import com.paulrybitskyi.gamedge.database.games.DatabaseKeyword
-import com.paulrybitskyi.gamedge.database.games.DatabaseMode
-import com.paulrybitskyi.gamedge.database.games.DatabasePlatform
-import com.paulrybitskyi.gamedge.database.games.DatabasePlayerPerspective
-import com.paulrybitskyi.gamedge.database.games.DatabaseReleaseDate
-import com.paulrybitskyi.gamedge.database.games.DatabaseReleaseDateCategory
-import com.paulrybitskyi.gamedge.database.games.DatabaseTheme
-import com.paulrybitskyi.gamedge.database.games.DatabaseVideo
-import com.paulrybitskyi.gamedge.database.games.DatabaseWebsite
-import com.paulrybitskyi.gamedge.database.games.DatabaseWebsiteCategory
+import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRating
+import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRatingCategory
+import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRatingType
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Category
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Company
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Genre
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Image
+import com.paulrybitskyi.gamedge.common.domain.games.entities.InvolvedCompany
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Keyword
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Mode
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Platform
+import com.paulrybitskyi.gamedge.common.domain.games.entities.PlayerPerspective
+import com.paulrybitskyi.gamedge.common.domain.games.entities.ReleaseDate
+import com.paulrybitskyi.gamedge.common.domain.games.entities.ReleaseDateCategory
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Theme
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Video
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Website
+import com.paulrybitskyi.gamedge.common.domain.games.entities.WebsiteCategory
+import com.paulrybitskyi.gamedge.database.games.entities.DbAgeRating
+import com.paulrybitskyi.gamedge.database.games.entities.DbAgeRatingCategory
+import com.paulrybitskyi.gamedge.database.games.entities.DbAgeRatingType
+import com.paulrybitskyi.gamedge.database.games.entities.DbCategory
+import com.paulrybitskyi.gamedge.database.games.entities.DbCompany
+import com.paulrybitskyi.gamedge.database.games.entities.DbGame
+import com.paulrybitskyi.gamedge.database.games.entities.DbGenre
+import com.paulrybitskyi.gamedge.database.games.entities.DbImage
+import com.paulrybitskyi.gamedge.database.games.entities.DbInvolvedCompany
+import com.paulrybitskyi.gamedge.database.games.entities.DbKeyword
+import com.paulrybitskyi.gamedge.database.games.entities.DbMode
+import com.paulrybitskyi.gamedge.database.games.entities.DbPlatform
+import com.paulrybitskyi.gamedge.database.games.entities.DbPlayerPerspective
+import com.paulrybitskyi.gamedge.database.games.entities.DbReleaseDate
+import com.paulrybitskyi.gamedge.database.games.entities.DbReleaseDateCategory
+import com.paulrybitskyi.gamedge.database.games.entities.DbTheme
+import com.paulrybitskyi.gamedge.database.games.entities.DbVideo
+import com.paulrybitskyi.gamedge.database.games.entities.DbWebsite
+import com.paulrybitskyi.gamedge.database.games.entities.DbWebsiteCategory
 import javax.inject.Inject
 
 internal class DbGameMapper @Inject constructor() {
 
-    fun mapToDomainGame(databaseGame: DatabaseGame): DomainGame {
-        return DomainGame(
-            id = databaseGame.id,
-            followerCount = databaseGame.followerCount,
-            hypeCount = databaseGame.hypeCount,
-            releaseDate = databaseGame.releaseDate,
-            criticsRating = databaseGame.criticsRating,
-            usersRating = databaseGame.usersRating,
-            totalRating = databaseGame.totalRating,
-            name = databaseGame.name,
-            summary = databaseGame.summary,
-            storyline = databaseGame.storyline,
-            category = databaseGame.category.toDomainCategory(),
-            cover = databaseGame.cover?.toDomainImage(),
-            releaseDates = databaseGame.releaseDates.toDomainReleaseDates(),
-            ageRatings = databaseGame.ageRatings.toDomainAgeRatings(),
-            videos = databaseGame.videos.toDomainVideos(),
-            artworks = databaseGame.artworks.toDomainImages(),
-            screenshots = databaseGame.screenshots.toDomainImages(),
-            genres = databaseGame.genres.toDomainGenres(),
-            platforms = databaseGame.platforms.toDomainPlatforms(),
-            playerPerspectives = databaseGame.playerPerspectives.toDomainPlayerPerspectives(),
-            themes = databaseGame.themes.toDomainThemes(),
-            modes = databaseGame.modes.toDomainModes(),
-            keywords = databaseGame.keywords.toDomainKeywords(),
-            involvedCompanies = databaseGame.involvedCompanies.toDomainInvolvedCompanies(),
-            websites = databaseGame.websites.toDomainWebsites(),
-            similarGames = databaseGame.similarGames,
+    fun mapToDomainGame(dbGame: DbGame): Game {
+        return Game(
+            id = dbGame.id,
+            followerCount = dbGame.followerCount,
+            hypeCount = dbGame.hypeCount,
+            releaseDate = dbGame.releaseDate,
+            criticsRating = dbGame.criticsRating,
+            usersRating = dbGame.usersRating,
+            totalRating = dbGame.totalRating,
+            name = dbGame.name,
+            summary = dbGame.summary,
+            storyline = dbGame.storyline,
+            category = dbGame.category.toDomainCategory(),
+            cover = dbGame.cover?.toDomainImage(),
+            releaseDates = dbGame.releaseDates.toDomainReleaseDates(),
+            ageRatings = dbGame.ageRatings.toDomainAgeRatings(),
+            videos = dbGame.videos.toDomainVideos(),
+            artworks = dbGame.artworks.toDomainImages(),
+            screenshots = dbGame.screenshots.toDomainImages(),
+            genres = dbGame.genres.toDomainGenres(),
+            platforms = dbGame.platforms.toDomainPlatforms(),
+            playerPerspectives = dbGame.playerPerspectives.toDomainPlayerPerspectives(),
+            themes = dbGame.themes.toDomainThemes(),
+            modes = dbGame.modes.toDomainModes(),
+            keywords = dbGame.keywords.toDomainKeywords(),
+            involvedCompanies = dbGame.involvedCompanies.toDomainInvolvedCompanies(),
+            websites = dbGame.websites.toDomainWebsites(),
+            similarGames = dbGame.similarGames,
         )
     }
 
-    private fun DatabaseCategory.toDomainCategory(): DomainCategory {
-        return DomainCategory.valueOf(name)
+    private fun DbCategory.toDomainCategory(): Category {
+        return Category.valueOf(name)
     }
 
-    private fun DatabaseImage.toDomainImage(): DomainImage {
-        return DomainImage(
+    private fun DbImage.toDomainImage(): Image {
+        return Image(
             id = id,
             width = width,
             height = height,
         )
     }
 
-    private fun List<DatabaseImage>.toDomainImages(): List<DomainImage> {
+    private fun List<DbImage>.toDomainImages(): List<Image> {
         return map { it.toDomainImage() }
     }
 
-    private fun List<DatabaseReleaseDate>.toDomainReleaseDates(): List<DomainReleaseDate> {
+    private fun List<DbReleaseDate>.toDomainReleaseDates(): List<ReleaseDate> {
         return map {
-            DomainReleaseDate(
+            ReleaseDate(
                 date = it.date,
                 year = it.year,
-                category = DomainReleaseDateCategory.valueOf(it.category.name),
+                category = ReleaseDateCategory.valueOf(it.category.name),
             )
         }
     }
 
-    private fun List<DatabaseAgeRating>.toDomainAgeRatings(): List<DomainAgeRating> {
+    private fun List<DbAgeRating>.toDomainAgeRatings(): List<AgeRating> {
         return map {
-            DomainAgeRating(
-                category = DomainAgeRatingCategory.valueOf(it.category.name),
-                type = DomainAgeRatingType.valueOf(it.type.name),
+            AgeRating(
+                category = AgeRatingCategory.valueOf(it.category.name),
+                type = AgeRatingType.valueOf(it.type.name),
             )
         }
     }
 
-    private fun List<DatabaseVideo>.toDomainVideos(): List<DomainVideo> {
+    private fun List<DbVideo>.toDomainVideos(): List<Video> {
         return map {
-            DomainVideo(
+            Video(
                 id = it.id,
                 name = it.name,
             )
         }
     }
 
-    private fun List<DatabaseGenre>.toDomainGenres(): List<DomainGenre> {
+    private fun List<DbGenre>.toDomainGenres(): List<Genre> {
         return map {
-            DomainGenre(
+            Genre(
                 name = it.name
             )
         }
     }
 
-    private fun List<DatabasePlatform>.toDomainPlatforms(): List<DomainPlatform> {
+    private fun List<DbPlatform>.toDomainPlatforms(): List<Platform> {
         return map {
-            DomainPlatform(
+            Platform(
                 abbreviation = it.abbreviation,
                 name = it.name,
             )
         }
     }
 
-    private fun List<DatabasePlayerPerspective>.toDomainPlayerPerspectives(): List<DomainPlayerPerspective> {
+    private fun List<DbPlayerPerspective>.toDomainPlayerPerspectives(): List<PlayerPerspective> {
         return map {
-            DomainPlayerPerspective(
+            PlayerPerspective(
                 name = it.name,
             )
         }
     }
 
-    private fun List<DatabaseTheme>.toDomainThemes(): List<DomainTheme> {
+    private fun List<DbTheme>.toDomainThemes(): List<Theme> {
         return map {
-            DomainTheme(
+            Theme(
                 name = it.name,
             )
         }
     }
 
-    private fun List<DatabaseMode>.toDomainModes(): List<DomainMode> {
+    private fun List<DbMode>.toDomainModes(): List<Mode> {
         return map {
-            DomainMode(
+            Mode(
                 name = it.name,
             )
         }
     }
 
-    private fun List<DatabaseKeyword>.toDomainKeywords(): List<DomainKeyword> {
+    private fun List<DbKeyword>.toDomainKeywords(): List<Keyword> {
         return map {
-            DomainKeyword(
+            Keyword(
                 name = it.name,
             )
         }
     }
 
-    private fun List<DatabaseInvolvedCompany>.toDomainInvolvedCompanies(): List<DomainInvolvedCompany> {
+    private fun List<DbInvolvedCompany>.toDomainInvolvedCompanies(): List<InvolvedCompany> {
         return map {
-            DomainInvolvedCompany(
+            InvolvedCompany(
                 company = it.company.toDomainCompany(),
                 isDeveloper = it.isDeveloper,
                 isPublisher = it.isPublisher,
@@ -194,8 +194,8 @@ internal class DbGameMapper @Inject constructor() {
         }
     }
 
-    private fun DatabaseCompany.toDomainCompany(): DomainCompany {
-        return DomainCompany(
+    private fun DbCompany.toDomainCompany(): Company {
+        return Company(
             id = id,
             name = name,
             websiteUrl = websiteUrl,
@@ -204,18 +204,18 @@ internal class DbGameMapper @Inject constructor() {
         )
     }
 
-    private fun List<DatabaseWebsite>.toDomainWebsites(): List<DomainWebsite> {
+    private fun List<DbWebsite>.toDomainWebsites(): List<Website> {
         return map {
-            DomainWebsite(
+            Website(
                 id = it.id,
                 url = it.url,
-                category = DomainWebsiteCategory.valueOf(it.category.name),
+                category = WebsiteCategory.valueOf(it.category.name),
             )
         }
     }
 
-    fun mapToDatabaseGame(domainGame: DomainGame): DatabaseGame {
-        return DatabaseGame(
+    fun mapToDatabaseGame(domainGame: Game): DbGame {
+        return DbGame(
             id = domainGame.id,
             followerCount = domainGame.followerCount,
             hypeCount = domainGame.hypeCount,
@@ -226,122 +226,122 @@ internal class DbGameMapper @Inject constructor() {
             name = domainGame.name,
             summary = domainGame.summary,
             storyline = domainGame.storyline,
-            category = domainGame.category.toDatabaseCategory(),
-            cover = domainGame.cover?.toDatabaseImage(),
-            releaseDates = domainGame.releaseDates.toDatabaseReleaseDates(),
-            ageRatings = domainGame.ageRatings.toDatabaseAgeRatings(),
-            videos = domainGame.videos.toDatabaseVideos(),
-            artworks = domainGame.artworks.toDatabaseImages(),
-            screenshots = domainGame.screenshots.toDatabaseImages(),
-            genres = domainGame.genres.toDatabaseGenres(),
-            platforms = domainGame.platforms.toDatabasePlatforms(),
-            playerPerspectives = domainGame.playerPerspectives.toDatabasePlayerPerspectives(),
-            themes = domainGame.themes.toDatabaseThemes(),
-            modes = domainGame.modes.toDatabaseModes(),
-            keywords = domainGame.keywords.toDatabaseKeywords(),
+            category = domainGame.category.toDbCategory(),
+            cover = domainGame.cover?.toDbImage(),
+            releaseDates = domainGame.releaseDates.toDbReleaseDates(),
+            ageRatings = domainGame.ageRatings.toDbAgeRatings(),
+            videos = domainGame.videos.toDbVideos(),
+            artworks = domainGame.artworks.toDbImages(),
+            screenshots = domainGame.screenshots.toDbImages(),
+            genres = domainGame.genres.toDbGenres(),
+            platforms = domainGame.platforms.toDbPlatforms(),
+            playerPerspectives = domainGame.playerPerspectives.toDbPlayerPerspectives(),
+            themes = domainGame.themes.toDbThemes(),
+            modes = domainGame.modes.toDbModes(),
+            keywords = domainGame.keywords.toDbKeywords(),
             involvedCompanies = domainGame.involvedCompanies.toDatabaseInvolvedCompanies(),
-            websites = domainGame.websites.toDatabaseWebsites(),
+            websites = domainGame.websites.toDbWebsites(),
             similarGames = domainGame.similarGames,
         )
     }
 
-    private fun DomainCategory.toDatabaseCategory(): DatabaseCategory {
-        return DatabaseCategory.valueOf(name)
+    private fun Category.toDbCategory(): DbCategory {
+        return DbCategory.valueOf(name)
     }
 
-    private fun DomainImage.toDatabaseImage(): DatabaseImage {
-        return DatabaseImage(
+    private fun Image.toDbImage(): DbImage {
+        return DbImage(
             id = id,
             width = width,
             height = height,
         )
     }
 
-    private fun List<DomainImage>.toDatabaseImages(): List<DatabaseImage> {
-        return map { it.toDatabaseImage() }
+    private fun List<Image>.toDbImages(): List<DbImage> {
+        return map { it.toDbImage() }
     }
 
-    private fun List<DomainReleaseDate>.toDatabaseReleaseDates(): List<DatabaseReleaseDate> {
+    private fun List<ReleaseDate>.toDbReleaseDates(): List<DbReleaseDate> {
         return map {
-            DatabaseReleaseDate(
+            DbReleaseDate(
                 date = it.date,
                 year = it.year,
-                category = DatabaseReleaseDateCategory.valueOf(it.category.name),
+                category = DbReleaseDateCategory.valueOf(it.category.name),
             )
         }
     }
 
-    private fun List<DomainAgeRating>.toDatabaseAgeRatings(): List<DatabaseAgeRating> {
+    private fun List<AgeRating>.toDbAgeRatings(): List<DbAgeRating> {
         return map {
-            DatabaseAgeRating(
-                category = DatabaseAgeRatingCategory.valueOf(it.category.name),
-                type = DatabaseAgeRatingType.valueOf(it.type.name),
+            DbAgeRating(
+                category = DbAgeRatingCategory.valueOf(it.category.name),
+                type = DbAgeRatingType.valueOf(it.type.name),
             )
         }
     }
 
-    private fun List<DomainVideo>.toDatabaseVideos(): List<DatabaseVideo> {
+    private fun List<Video>.toDbVideos(): List<DbVideo> {
         return map {
-            DatabaseVideo(
+            DbVideo(
                 id = it.id,
                 name = it.name,
             )
         }
     }
 
-    private fun List<DomainGenre>.toDatabaseGenres(): List<DatabaseGenre> {
+    private fun List<Genre>.toDbGenres(): List<DbGenre> {
         return map {
-            DatabaseGenre(
+            DbGenre(
                 name = it.name,
             )
         }
     }
 
-    private fun List<DomainPlatform>.toDatabasePlatforms(): List<DatabasePlatform> {
+    private fun List<Platform>.toDbPlatforms(): List<DbPlatform> {
         return map {
-            DatabasePlatform(
+            DbPlatform(
                 abbreviation = it.abbreviation,
                 name = it.name,
             )
         }
     }
 
-    private fun List<DomainPlayerPerspective>.toDatabasePlayerPerspectives(): List<DatabasePlayerPerspective> {
+    private fun List<PlayerPerspective>.toDbPlayerPerspectives(): List<DbPlayerPerspective> {
         return map {
-            DatabasePlayerPerspective(
+            DbPlayerPerspective(
                 name = it.name,
             )
         }
     }
 
-    private fun List<DomainTheme>.toDatabaseThemes(): List<DatabaseTheme> {
+    private fun List<Theme>.toDbThemes(): List<DbTheme> {
         return map {
-            DatabaseTheme(
+            DbTheme(
                 name = it.name,
             )
         }
     }
 
-    private fun List<DomainMode>.toDatabaseModes(): List<DatabaseMode> {
+    private fun List<Mode>.toDbModes(): List<DbMode> {
         return map {
-            DatabaseMode(
+            DbMode(
                 name = it.name,
             )
         }
     }
 
-    private fun List<DomainKeyword>.toDatabaseKeywords(): List<DatabaseKeyword> {
+    private fun List<Keyword>.toDbKeywords(): List<DbKeyword> {
         return map {
-            DatabaseKeyword(
+            DbKeyword(
                 name = it.name,
             )
         }
     }
 
-    private fun List<DomainInvolvedCompany>.toDatabaseInvolvedCompanies(): List<DatabaseInvolvedCompany> {
+    private fun List<InvolvedCompany>.toDatabaseInvolvedCompanies(): List<DbInvolvedCompany> {
         return map {
-            DatabaseInvolvedCompany(
-                company = it.company.toDatabaseCompany(),
+            DbInvolvedCompany(
+                company = it.company.toDbCompany(),
                 isDeveloper = it.isDeveloper,
                 isPublisher = it.isPublisher,
                 isPorter = it.isPorter,
@@ -350,31 +350,31 @@ internal class DbGameMapper @Inject constructor() {
         }
     }
 
-    private fun DomainCompany.toDatabaseCompany(): DatabaseCompany {
-        return DatabaseCompany(
+    private fun Company.toDbCompany(): DbCompany {
+        return DbCompany(
             id = id,
             name = name,
             websiteUrl = websiteUrl,
-            logo = logo?.toDatabaseImage(),
+            logo = logo?.toDbImage(),
             developedGames = developedGames,
         )
     }
 
-    private fun List<DomainWebsite>.toDatabaseWebsites(): List<DatabaseWebsite> {
+    private fun List<Website>.toDbWebsites(): List<DbWebsite> {
         return map {
-            DatabaseWebsite(
+            DbWebsite(
                 id = it.id,
                 url = it.url,
-                category = DatabaseWebsiteCategory.valueOf(it.category.name),
+                category = DbWebsiteCategory.valueOf(it.category.name),
             )
         }
     }
 }
 
-internal fun DbGameMapper.mapToDomainGames(databaseGames: List<DatabaseGame>): List<DomainGame> {
-    return databaseGames.map(::mapToDomainGame)
+internal fun DbGameMapper.mapToDomainGames(dbGames: List<DbGame>): List<Game> {
+    return dbGames.map(::mapToDomainGame)
 }
 
-internal fun DbGameMapper.mapToDatabaseGames(domainGames: List<DomainGame>): List<DatabaseGame> {
+internal fun DbGameMapper.mapToDatabaseGames(domainGames: List<Game>): List<DbGame> {
     return domainGames.map(::mapToDatabaseGame)
 }

@@ -21,8 +21,8 @@ import com.github.michaelbull.result.getError
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.api.Error
 import com.paulrybitskyi.gamedge.common.testing.startSafe
-import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesService
+import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.ApiArticle
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking

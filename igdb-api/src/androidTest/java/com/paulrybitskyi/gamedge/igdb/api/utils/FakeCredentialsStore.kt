@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.utils
 
-import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.common.CredentialsStore
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
@@ -26,17 +26,17 @@ import javax.inject.Singleton
 @BindType
 internal class FakeCredentialsStore @Inject constructor() : CredentialsStore {
 
-    private var oauthCredentials: OauthCredentials? = null
+    private var oauthCredentials: ApiOauthCredentials? = null
 
-    override suspend fun saveOauthCredentials(oauthCredentials: OauthCredentials) {
+    override suspend fun saveOauthCredentials(oauthCredentials: ApiOauthCredentials) {
         this.oauthCredentials = oauthCredentials
     }
 
-    override suspend fun getLocalOauthCredentials(): OauthCredentials? {
+    override suspend fun getLocalOauthCredentials(): ApiOauthCredentials? {
         return oauthCredentials
     }
 
-    override suspend fun getRemoteOauthCredentials(): OauthCredentials? {
+    override suspend fun getRemoteOauthCredentials(): ApiOauthCredentials? {
         return oauthCredentials
     }
 }

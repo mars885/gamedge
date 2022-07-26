@@ -31,8 +31,8 @@ import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.GamespotA
 import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.ArticlePublicationDateMapper
 import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.ArticlesGamespotDataStore
 import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.mapToDomainArticles
-import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesEndpoint
+import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.ApiArticle
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK

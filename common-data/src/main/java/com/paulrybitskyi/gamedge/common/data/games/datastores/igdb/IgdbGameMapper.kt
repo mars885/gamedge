@@ -16,46 +16,46 @@
 
 package com.paulrybitskyi.gamedge.common.data.games.datastores.igdb
 
-import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRating
-import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRatingCategory
-import com.paulrybitskyi.gamedge.common.domain.games.DomainAgeRatingType
-import com.paulrybitskyi.gamedge.common.domain.games.DomainCategory
-import com.paulrybitskyi.gamedge.common.domain.games.DomainCompany
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGenre
-import com.paulrybitskyi.gamedge.common.domain.games.DomainImage
-import com.paulrybitskyi.gamedge.common.domain.games.DomainInvolvedCompany
-import com.paulrybitskyi.gamedge.common.domain.games.DomainKeyword
-import com.paulrybitskyi.gamedge.common.domain.games.DomainMode
-import com.paulrybitskyi.gamedge.common.domain.games.DomainPlatform
-import com.paulrybitskyi.gamedge.common.domain.games.DomainPlayerPerspective
-import com.paulrybitskyi.gamedge.common.domain.games.DomainReleaseDate
-import com.paulrybitskyi.gamedge.common.domain.games.DomainReleaseDateCategory
-import com.paulrybitskyi.gamedge.common.domain.games.DomainTheme
-import com.paulrybitskyi.gamedge.common.domain.games.DomainVideo
-import com.paulrybitskyi.gamedge.common.domain.games.DomainWebsite
-import com.paulrybitskyi.gamedge.common.domain.games.DomainWebsiteCategory
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiAgeRating
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiCategory
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiCompany
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiGenre
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiImage
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiInvolvedCompany
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiKeyword
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiMode
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiPlatform
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiPlayerPerspective
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiReleaseDate
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiTheme
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiVideo
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiWebsite
+import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRating
+import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRatingCategory
+import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRatingType
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Category
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Company
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Genre
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Image
+import com.paulrybitskyi.gamedge.common.domain.games.entities.InvolvedCompany
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Keyword
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Mode
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Platform
+import com.paulrybitskyi.gamedge.common.domain.games.entities.PlayerPerspective
+import com.paulrybitskyi.gamedge.common.domain.games.entities.ReleaseDate
+import com.paulrybitskyi.gamedge.common.domain.games.entities.ReleaseDateCategory
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Theme
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Video
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Website
+import com.paulrybitskyi.gamedge.common.domain.games.entities.WebsiteCategory
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiAgeRating
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiCategory
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiCompany
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGenre
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiImage
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiInvolvedCompany
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiKeyword
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiMode
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiPlatform
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiPlayerPerspective
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiReleaseDate
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiTheme
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiVideo
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiWebsite
 import javax.inject.Inject
 
 internal class IgdbGameMapper @Inject constructor() {
 
-    fun mapToDomainGame(apiGame: ApiGame): DomainGame {
-        return DomainGame(
+    fun mapToDomainGame(apiGame: ApiGame): Game {
+        return Game(
             id = apiGame.id,
             followerCount = apiGame.followerCount,
             hypeCount = apiGame.hypeCount,
@@ -85,102 +85,102 @@ internal class IgdbGameMapper @Inject constructor() {
         )
     }
 
-    private fun ApiCategory.toDomainCategory(): DomainCategory {
-        return DomainCategory.valueOf(name)
+    private fun ApiCategory.toDomainCategory(): Category {
+        return Category.valueOf(name)
     }
 
-    private fun ApiImage.toDomainImage(): DomainImage {
-        return DomainImage(
+    private fun ApiImage.toDomainImage(): Image {
+        return Image(
             id = id,
             width = width,
             height = height,
         )
     }
 
-    private fun List<ApiImage>.toDomainImages(): List<DomainImage> {
+    private fun List<ApiImage>.toDomainImages(): List<Image> {
         return map { it.toDomainImage() }
     }
 
-    private fun List<ApiVideo>.toDomainVideos(): List<DomainVideo> {
+    private fun List<ApiVideo>.toDomainVideos(): List<Video> {
         return map {
-            DomainVideo(
+            Video(
                 id = it.id,
                 name = it.name,
             )
         }
     }
 
-    private fun List<ApiReleaseDate>.toDomainReleaseDates(): List<DomainReleaseDate> {
+    private fun List<ApiReleaseDate>.toDomainReleaseDates(): List<ReleaseDate> {
         return map {
-            DomainReleaseDate(
+            ReleaseDate(
                 date = it.date,
                 year = it.year,
-                category = DomainReleaseDateCategory.valueOf(it.category.name),
+                category = ReleaseDateCategory.valueOf(it.category.name),
             )
         }
     }
 
-    private fun List<ApiAgeRating>.toDomainAgeRatings(): List<DomainAgeRating> {
+    private fun List<ApiAgeRating>.toDomainAgeRatings(): List<AgeRating> {
         return map {
-            DomainAgeRating(
-                category = DomainAgeRatingCategory.valueOf(it.category.name),
-                type = DomainAgeRatingType.valueOf(it.type.name),
+            AgeRating(
+                category = AgeRatingCategory.valueOf(it.category.name),
+                type = AgeRatingType.valueOf(it.type.name),
             )
         }
     }
 
-    private fun List<ApiGenre>.toDomainGenres(): List<DomainGenre> {
+    private fun List<ApiGenre>.toDomainGenres(): List<Genre> {
         return map {
-            DomainGenre(
+            Genre(
                 name = it.name,
             )
         }
     }
 
-    private fun List<ApiPlatform>.toDomainPlatforms(): List<DomainPlatform> {
+    private fun List<ApiPlatform>.toDomainPlatforms(): List<Platform> {
         return map {
-            DomainPlatform(
+            Platform(
                 abbreviation = it.abbreviation,
                 name = it.name,
             )
         }
     }
 
-    private fun List<ApiPlayerPerspective>.toDomainPlayerPerspectives(): List<DomainPlayerPerspective> {
+    private fun List<ApiPlayerPerspective>.toDomainPlayerPerspectives(): List<PlayerPerspective> {
         return map {
-            DomainPlayerPerspective(
+            PlayerPerspective(
                 name = it.name,
             )
         }
     }
 
-    private fun List<ApiTheme>.toDomainThemes(): List<DomainTheme> {
+    private fun List<ApiTheme>.toDomainThemes(): List<Theme> {
         return map {
-            DomainTheme(
+            Theme(
                 name = it.name,
             )
         }
     }
 
-    private fun List<ApiMode>.toDomainModes(): List<DomainMode> {
+    private fun List<ApiMode>.toDomainModes(): List<Mode> {
         return map {
-            DomainMode(
+            Mode(
                 name = it.name,
             )
         }
     }
 
-    private fun List<ApiKeyword>.toDomainKeywords(): List<DomainKeyword> {
+    private fun List<ApiKeyword>.toDomainKeywords(): List<Keyword> {
         return map {
-            DomainKeyword(
+            Keyword(
                 name = it.name,
             )
         }
     }
 
-    private fun List<ApiInvolvedCompany>.toDomainInvolvedCompanies(): List<DomainInvolvedCompany> {
+    private fun List<ApiInvolvedCompany>.toDomainInvolvedCompanies(): List<InvolvedCompany> {
         return map {
-            DomainInvolvedCompany(
+            InvolvedCompany(
                 company = it.company.toDomainCompany(),
                 isDeveloper = it.isDeveloper,
                 isPublisher = it.isPublisher,
@@ -190,8 +190,8 @@ internal class IgdbGameMapper @Inject constructor() {
         }
     }
 
-    private fun ApiCompany.toDomainCompany(): DomainCompany {
-        return DomainCompany(
+    private fun ApiCompany.toDomainCompany(): Company {
+        return Company(
             id = id,
             name = name,
             websiteUrl = websiteUrl,
@@ -200,17 +200,17 @@ internal class IgdbGameMapper @Inject constructor() {
         )
     }
 
-    private fun List<ApiWebsite>.toDomainWebsites(): List<DomainWebsite> {
+    private fun List<ApiWebsite>.toDomainWebsites(): List<Website> {
         return map {
-            DomainWebsite(
+            Website(
                 id = it.id,
                 url = it.url,
-                category = DomainWebsiteCategory.valueOf(it.category.name),
+                category = WebsiteCategory.valueOf(it.category.name),
             )
         }
     }
 }
 
-internal fun IgdbGameMapper.mapToDomainGames(apiGames: List<ApiGame>): List<DomainGame> {
+internal fun IgdbGameMapper.mapToDomainGames(apiGames: List<ApiGame>): List<Game> {
     return apiGames.map(::mapToDomainGame)
 }

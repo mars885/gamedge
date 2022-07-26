@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.database.articles
 
-import com.paulrybitskyi.gamedge.database.articles.entities.Article
-import com.paulrybitskyi.gamedge.database.articles.entities.ImageType
+import com.paulrybitskyi.gamedge.database.articles.entities.DbArticle
+import com.paulrybitskyi.gamedge.database.articles.entities.DbImageType
 
-typealias DatabaseArticle = Article
-typealias DatabaseImageType = ImageType
+typealias DatabaseArticle = DbArticle
+typealias DatabaseImageType = DbImageType

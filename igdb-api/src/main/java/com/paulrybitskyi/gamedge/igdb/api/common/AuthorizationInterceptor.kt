@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.igdb.api.common
 
 import com.paulrybitskyi.gamedge.common.api.HttpHeaders
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
-import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiAuthorizationType
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -31,7 +31,7 @@ internal class AuthorizationInterceptor(
 
     override fun intercept(chain: Interceptor.Chain): Response = runBlocking {
         val authorizationHeader = authorizer.buildAuthorizationHeader(
-            type = AuthorizationType.BEARER,
+            type = ApiAuthorizationType.BEARER,
             token = getAccessToken(),
         )
         val authorizedRequest = chain.request()

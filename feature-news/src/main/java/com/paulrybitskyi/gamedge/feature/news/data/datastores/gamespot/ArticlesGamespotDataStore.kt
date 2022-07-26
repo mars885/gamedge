@@ -24,8 +24,8 @@ import com.paulrybitskyi.gamedge.common.domain.common.DomainResult
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
 import com.paulrybitskyi.gamedge.feature.news.domain.datastores.ArticlesRemoteDataStore
 import com.paulrybitskyi.gamedge.feature.news.domain.entities.Article
-import com.paulrybitskyi.gamedge.gamespot.api.articles.ApiArticle
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesEndpoint
+import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.ApiArticle
 import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

@@ -22,7 +22,6 @@ import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.DomainResult
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
 import com.paulrybitskyi.gamedge.common.domain.common.usecases.UseCase
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameUseCase.Params
@@ -49,7 +48,7 @@ internal class GetGameUseCaseImpl @Inject constructor(
 
     override suspend fun execute(params: Params): Flow<DomainResult<Game>> {
         return flow { gamesLocalDataStore.getGame(params.gameId)?.let { emit(it) } }
-            .map<DomainGame, DomainResult<Game>>(::Ok)
+            .map<Game, DomainResult<Game>>(::Ok)
             .onEmpty { emit(Err(Error.NotFound("Could not find the game with ID = ${params.gameId}"))) }
             .flowOn(dispatcherProvider.main)
     }

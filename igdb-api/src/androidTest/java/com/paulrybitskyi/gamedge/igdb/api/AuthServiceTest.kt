@@ -21,8 +21,8 @@ import com.github.michaelbull.result.getError
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.api.Error
 import com.paulrybitskyi.gamedge.common.testing.startSafe
-import com.paulrybitskyi.gamedge.igdb.api.auth.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthService
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiOauthCredentials
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking

@@ -19,8 +19,8 @@ package com.paulrybitskyi.gamedge.igdb.api.common
 import com.paulrybitskyi.gamedge.common.api.HttpHeaders
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthHeaderParser
 import com.paulrybitskyi.gamedge.igdb.api.auth.Authorizer
-import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
-import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiAuthorizationType
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiOauthCredentials
 import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
@@ -70,7 +70,7 @@ internal class IgdbAuthenticator @Inject constructor(
             ?.token
     }
 
-    private suspend fun refreshCredentials(): OauthCredentials? {
+    private suspend fun refreshCredentials(): ApiOauthCredentials? {
         return credentialsStore.getRemoteOauthCredentials()
             ?.also { credentials -> credentialsStore.saveOauthCredentials(credentials) }
     }
@@ -80,7 +80,7 @@ internal class IgdbAuthenticator @Inject constructor(
             .header(
                 name = HttpHeaders.AUTHORIZATION,
                 value = authorizer.buildAuthorizationHeader(
-                    type = AuthorizationType.BEARER,
+                    type = ApiAuthorizationType.BEARER,
                     token = newAccessToken,
                 ),
             )

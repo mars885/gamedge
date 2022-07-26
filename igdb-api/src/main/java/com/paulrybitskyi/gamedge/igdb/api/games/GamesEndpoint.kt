@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.igdb.api.games
 
 import com.paulrybitskyi.gamedge.common.api.ApiResult
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetComingSoonGamesRequest
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetGamesRequest
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetMostAnticipatedGamesRequest

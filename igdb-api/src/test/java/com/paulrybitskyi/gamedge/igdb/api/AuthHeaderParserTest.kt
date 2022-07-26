@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.igdb.api
 
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthHeaderParser
-import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiAuthorizationType
 import org.junit.Before
 import org.junit.Test
 
@@ -42,7 +42,7 @@ internal class AuthHeaderParserTest {
 
     @Test
     fun `Returns result with basic auth type`() {
-        val expectedAuthType = AuthorizationType.BASIC
+        val expectedAuthType = ApiAuthorizationType.BASIC
         val actualResult = SUT.parse("Basic $TOKEN")
 
         assertThat(actualResult).isNotNull()
@@ -52,7 +52,7 @@ internal class AuthHeaderParserTest {
 
     @Test
     fun `Returns result with bearer auth type`() {
-        val expectedAuthType = AuthorizationType.BEARER
+        val expectedAuthType = ApiAuthorizationType.BEARER
         val actualResult = SUT.parse("Bearer $TOKEN")
 
         assertThat(actualResult).isNotNull()

@@ -19,10 +19,10 @@ package com.paulrybitskyi.gamedge.common.data.games.datastores.database
 import com.paulrybitskyi.gamedge.common.data.games.common.DiscoveryGamesReleaseDatesProvider
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
-import com.paulrybitskyi.gamedge.common.domain.games.DomainCompany
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
-import com.paulrybitskyi.gamedge.database.games.DatabaseGame
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Company
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.database.games.entities.DbGame
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
@@ -42,7 +42,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
     private val dbGameMapper: DbGameMapper,
 ) : GamesLocalDataStore {
 
-    override suspend fun saveGames(games: List<DomainGame>) {
+    override suspend fun saveGames(games: List<Game>) {
         gamesTable.saveGames(
             withContext(dispatcherProvider.computation) {
                 dbGameMapper.mapToDatabaseGames(games)
@@ -50,7 +50,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         )
     }
 
-    override suspend fun getGame(id: Int): DomainGame? {
+    override suspend fun getGame(id: Int): Game? {
         return gamesTable.getGame(id)
             ?.let { databaseGame ->
                 withContext(dispatcherProvider.computation) {
@@ -59,7 +59,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
             }
     }
 
-    override suspend fun getCompanyDevelopedGames(company: DomainCompany, pagination: Pagination): List<DomainGame> {
+    override suspend fun getCompanyDevelopedGames(company: Company, pagination: Pagination): List<Game> {
         return gamesTable.getGames(
             ids = company.developedGames,
             offset = pagination.offset,
@@ -68,7 +68,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGames()
     }
 
-    override suspend fun getSimilarGames(game: DomainGame, pagination: Pagination): List<DomainGame> {
+    override suspend fun getSimilarGames(game: Game, pagination: Pagination): List<Game> {
         return gamesTable.getGames(
             ids = game.similarGames,
             offset = pagination.offset,
@@ -77,7 +77,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGames()
     }
 
-    override suspend fun searchGames(searchQuery: String, pagination: Pagination): List<DomainGame> {
+    override suspend fun searchGames(searchQuery: String, pagination: Pagination): List<Game> {
         return gamesTable.searchGames(
             searchQuery = searchQuery,
             offset = pagination.offset,
@@ -90,7 +90,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         }
     }
 
-    override fun observePopularGames(pagination: Pagination): Flow<List<DomainGame>> {
+    override fun observePopularGames(pagination: Pagination): Flow<List<Game>> {
         return gamesTable.observePopularGames(
             minReleaseDateTimestamp = discoveryGamesReleaseDatesProvider.getPopularGamesMinReleaseDate(),
             offset = pagination.offset,
@@ -99,7 +99,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGamesFlow()
     }
 
-    override fun observeRecentlyReleasedGames(pagination: Pagination): Flow<List<DomainGame>> {
+    override fun observeRecentlyReleasedGames(pagination: Pagination): Flow<List<Game>> {
         return gamesTable.observeRecentlyReleasedGames(
             minReleaseDateTimestamp = discoveryGamesReleaseDatesProvider.getRecentlyReleasedGamesMinReleaseDate(),
             maxReleaseDateTimestamp = discoveryGamesReleaseDatesProvider.getRecentlyReleasedGamesMaxReleaseDate(),
@@ -109,7 +109,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGamesFlow()
     }
 
-    override fun observeComingSoonGames(pagination: Pagination): Flow<List<DomainGame>> {
+    override fun observeComingSoonGames(pagination: Pagination): Flow<List<Game>> {
         return gamesTable.observeComingSoonGames(
             minReleaseDateTimestamp = discoveryGamesReleaseDatesProvider.getComingSoonGamesMinReleaseDate(),
             offset = pagination.offset,
@@ -118,7 +118,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGamesFlow()
     }
 
-    override fun observeMostAnticipatedGames(pagination: Pagination): Flow<List<DomainGame>> {
+    override fun observeMostAnticipatedGames(pagination: Pagination): Flow<List<Game>> {
         return gamesTable.observeMostAnticipatedGames(
             minReleaseDateTimestamp = discoveryGamesReleaseDatesProvider.getMostAnticipatedGamesMinReleaseDate(),
             offset = pagination.offset,
@@ -127,13 +127,13 @@ internal class GamesDatabaseDataStore @Inject constructor(
         .toDataGamesFlow()
     }
 
-    private suspend fun List<DatabaseGame>.toDataGames(): List<DomainGame> {
+    private suspend fun List<DbGame>.toDataGames(): List<Game> {
         return withContext(dispatcherProvider.computation) {
             dbGameMapper.mapToDomainGames(this@toDataGames)
         }
     }
 
-    private fun Flow<List<DatabaseGame>>.toDataGamesFlow(): Flow<List<DomainGame>> {
+    private fun Flow<List<DbGame>>.toDataGamesFlow(): Flow<List<Game>> {
         return distinctUntilChanged()
             .map(dbGameMapper::mapToDomainGames)
             .flowOn(dispatcherProvider.computation)

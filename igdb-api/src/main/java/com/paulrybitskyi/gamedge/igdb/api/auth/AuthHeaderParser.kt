@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.auth
 
-import com.paulrybitskyi.gamedge.igdb.api.auth.entities.AuthorizationType
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiAuthorizationType
 import javax.inject.Inject
 
 internal class AuthHeaderParser @Inject constructor() {
@@ -34,13 +34,13 @@ internal class AuthHeaderParser @Inject constructor() {
         val token = stringParts[1]
 
         return AuthHeaderParsingResult(
-            type = AuthorizationType.forRawType(rawType),
+            type = ApiAuthorizationType.forRawType(rawType),
             token = token,
         )
     }
 }
 
 internal data class AuthHeaderParsingResult(
-    val type: AuthorizationType,
+    val type: ApiAuthorizationType,
     val token: String?,
 )

@@ -23,11 +23,11 @@ import com.paulrybitskyi.gamedge.common.data.games.common.DiscoveryGamesReleaseD
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.DomainResult
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
-import com.paulrybitskyi.gamedge.common.domain.games.DomainCompany
-import com.paulrybitskyi.gamedge.common.domain.games.DomainGame
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesRemoteDataStore
-import com.paulrybitskyi.gamedge.igdb.api.games.ApiGame
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Company
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
+import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetComingSoonGamesRequest
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetGamesRequest
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetMostAnticipatedGamesRequest
@@ -49,7 +49,7 @@ internal class GamesIgdbDataStore @Inject constructor(
     private val apiErrorMapper: ApiErrorMapper,
 ) : GamesRemoteDataStore {
 
-    override suspend fun searchGames(searchQuery: String, pagination: Pagination): DomainResult<List<DomainGame>> {
+    override suspend fun searchGames(searchQuery: String, pagination: Pagination): DomainResult<List<Game>> {
         return gamesEndpoint
             .searchGames(
                 SearchGamesRequest(
@@ -61,7 +61,7 @@ internal class GamesIgdbDataStore @Inject constructor(
             .toDataStoreResult()
     }
 
-    override suspend fun getPopularGames(pagination: Pagination): DomainResult<List<DomainGame>> {
+    override suspend fun getPopularGames(pagination: Pagination): DomainResult<List<Game>> {
         return gamesEndpoint
             .getPopularGames(
                 GetPopularGamesRequest(
@@ -73,7 +73,7 @@ internal class GamesIgdbDataStore @Inject constructor(
             .toDataStoreResult()
     }
 
-    override suspend fun getRecentlyReleasedGames(pagination: Pagination): DomainResult<List<DomainGame>> {
+    override suspend fun getRecentlyReleasedGames(pagination: Pagination): DomainResult<List<Game>> {
         return gamesEndpoint
             .getRecentlyReleasedGames(
                 GetRecentlyReleasedGamesRequest(
@@ -86,7 +86,7 @@ internal class GamesIgdbDataStore @Inject constructor(
             .toDataStoreResult()
     }
 
-    override suspend fun getComingSoonGames(pagination: Pagination): DomainResult<List<DomainGame>> {
+    override suspend fun getComingSoonGames(pagination: Pagination): DomainResult<List<Game>> {
         return gamesEndpoint
             .getComingSoonGames(
                 GetComingSoonGamesRequest(
@@ -98,7 +98,7 @@ internal class GamesIgdbDataStore @Inject constructor(
             .toDataStoreResult()
     }
 
-    override suspend fun getMostAnticipatedGames(pagination: Pagination): DomainResult<List<DomainGame>> {
+    override suspend fun getMostAnticipatedGames(pagination: Pagination): DomainResult<List<Game>> {
         return gamesEndpoint
             .getMostAnticipatedGames(
                 GetMostAnticipatedGamesRequest(
@@ -111,9 +111,9 @@ internal class GamesIgdbDataStore @Inject constructor(
     }
 
     override suspend fun getCompanyDevelopedGames(
-        company: DomainCompany,
+        company: Company,
         pagination: Pagination
-    ): DomainResult<List<DomainGame>> {
+    ): DomainResult<List<Game>> {
         return gamesEndpoint
             .getGames(
                 GetGamesRequest(
@@ -125,7 +125,7 @@ internal class GamesIgdbDataStore @Inject constructor(
             .toDataStoreResult()
     }
 
-    override suspend fun getSimilarGames(game: DomainGame, pagination: Pagination): DomainResult<List<DomainGame>> {
+    override suspend fun getSimilarGames(game: Game, pagination: Pagination): DomainResult<List<Game>> {
         return gamesEndpoint
             .getGames(
                 GetGamesRequest(
@@ -137,7 +137,7 @@ internal class GamesIgdbDataStore @Inject constructor(
             .toDataStoreResult()
     }
 
-    private suspend fun ApiResult<List<ApiGame>>.toDataStoreResult(): DomainResult<List<DomainGame>> {
+    private suspend fun ApiResult<List<ApiGame>>.toDataStoreResult(): DomainResult<List<Game>> {
         return withContext(dispatcherProvider.computation) {
             mapEither(igdbGameMapper::mapToDomainGames, apiErrorMapper::mapToDomainError)
         }

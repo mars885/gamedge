@@ -27,8 +27,8 @@ import com.paulrybitskyi.gamedge.common.testing.API_ERROR_HTTP
 import com.paulrybitskyi.gamedge.common.testing.API_ERROR_NETWORK
 import com.paulrybitskyi.gamedge.common.testing.API_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.common.data.common.ApiErrorMapper
-import com.paulrybitskyi.gamedge.igdb.api.auth.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthEndpoint
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiOauthCredentials
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK

@@ -22,9 +22,9 @@ import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.database.common.di.DatabaseModule
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
-import com.paulrybitskyi.gamedge.database.DATABASE_GAMES
-import com.paulrybitskyi.gamedge.database.LIKED_GAME
-import com.paulrybitskyi.gamedge.database.LIKED_GAMES
+import com.paulrybitskyi.gamedge.database.DB_GAMES
+import com.paulrybitskyi.gamedge.database.DB_LIKED_GAME
+import com.paulrybitskyi.gamedge.database.DB_LIKED_GAMES
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -62,19 +62,19 @@ internal class LikedGamesTableTest {
     @Test
     fun likes_game_and_verifies_that_it_is_liked() {
         runTest {
-            SUT.saveLikedGame(LIKED_GAME)
+            SUT.saveLikedGame(DB_LIKED_GAME)
 
-            assertThat(SUT.isGameLiked(LIKED_GAME.gameId)).isTrue()
+            assertThat(SUT.isGameLiked(DB_LIKED_GAME.gameId)).isTrue()
         }
     }
 
     @Test
     fun likes_game_unlikes_it_and_verifies_that_it_is_unliked_by_checking() {
         runTest {
-            SUT.saveLikedGame(LIKED_GAME)
-            SUT.deleteLikedGame(LIKED_GAME.gameId)
+            SUT.saveLikedGame(DB_LIKED_GAME)
+            SUT.deleteLikedGame(DB_LIKED_GAME.gameId)
 
-            assertThat(SUT.isGameLiked(LIKED_GAME.gameId)).isFalse()
+            assertThat(SUT.isGameLiked(DB_LIKED_GAME.gameId)).isFalse()
         }
     }
 
@@ -88,9 +88,9 @@ internal class LikedGamesTableTest {
     @Test
     fun likes_game_and_observes_that_it_is_liked() {
         runTest {
-            SUT.saveLikedGame(LIKED_GAME)
+            SUT.saveLikedGame(DB_LIKED_GAME)
 
-            SUT.observeGameLikeState(LIKED_GAME.gameId).test {
+            SUT.observeGameLikeState(DB_LIKED_GAME.gameId).test {
                 assertThat(awaitItem()).isTrue()
             }
         }
@@ -99,10 +99,10 @@ internal class LikedGamesTableTest {
     @Test
     fun likes_game_unlikes_it_and_verifies_that_it_is_unliked_by_observing() {
         runTest {
-            SUT.saveLikedGame(LIKED_GAME)
-            SUT.deleteLikedGame(LIKED_GAME.gameId)
+            SUT.saveLikedGame(DB_LIKED_GAME)
+            SUT.deleteLikedGame(DB_LIKED_GAME.gameId)
 
-            SUT.observeGameLikeState(LIKED_GAME.gameId).test {
+            SUT.observeGameLikeState(DB_LIKED_GAME.gameId).test {
                 assertThat(awaitItem()).isFalse()
             }
         }
@@ -111,12 +111,12 @@ internal class LikedGamesTableTest {
     @Test
     fun likes_games_and_observes_liked_games() {
         runTest {
-            LIKED_GAMES.forEach { SUT.saveLikedGame(it) }
-            gamesTable.saveGames(DATABASE_GAMES)
+            DB_LIKED_GAMES.forEach { SUT.saveLikedGame(it) }
+            gamesTable.saveGames(DB_GAMES)
 
-            val expectedGames = DATABASE_GAMES
+            val expectedGames = DB_GAMES
                 .sortedByDescending { game ->
-                    LIKED_GAMES
+                    DB_LIKED_GAMES
                         .first { likedGame -> likedGame.gameId == game.id }
                         .likeTimestamp
                 }

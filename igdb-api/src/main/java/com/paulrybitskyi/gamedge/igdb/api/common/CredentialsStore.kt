@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.igdb.api.common
 
-import com.paulrybitskyi.gamedge.igdb.api.auth.entities.OauthCredentials
+import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiOauthCredentials
 
 interface CredentialsStore {
-    suspend fun saveOauthCredentials(oauthCredentials: OauthCredentials)
-    suspend fun getLocalOauthCredentials(): OauthCredentials?
-    suspend fun getRemoteOauthCredentials(): OauthCredentials?
+    suspend fun saveOauthCredentials(oauthCredentials: ApiOauthCredentials)
+    suspend fun getLocalOauthCredentials(): ApiOauthCredentials?
+    suspend fun getRemoteOauthCredentials(): ApiOauthCredentials?
 }
