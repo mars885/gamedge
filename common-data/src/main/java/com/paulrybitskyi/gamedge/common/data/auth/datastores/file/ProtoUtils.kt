@@ -17,11 +17,8 @@
 package com.paulrybitskyi.gamedge.common.data.auth.datastores.file
 
 import androidx.datastore.core.Serializer
-import com.paulrybitskyi.gamedge.OauthCredentials
 import java.io.InputStream
 import java.io.OutputStream
-
-internal typealias ProtoOauthCredentials = OauthCredentials
 
 internal fun ProtoOauthCredentials.isNotEmpty(): Boolean {
     return (
