@@ -29,27 +29,36 @@ The aim of this project is to showcase the latest trends in Android development 
 
 ### Videos
 
-<a href="https://user-images.githubusercontent.com/14782808/111520186-88671800-8760-11eb-8995-8e45a5cd9213.mp4">
-<img src="/media/demo1_thumbnail.png" width="32%"/>
-</a>
-<a href="https://user-images.githubusercontent.com/14782808/111520260-9b79e800-8760-11eb-9665-1062ed2b2c24.mp4">
-<img src="/media/demo2_thumbnail.png" width="32%"/>
-</a>
-<a href="https://user-images.githubusercontent.com/14782808/111520365-b187a880-8760-11eb-9dbe-0ffc44635ef8.mp4">
-<img src="/media/demo3_thumbnail.png" width="32%"/>
-</a>
+<details>
+<summary><b>Demo 1</b></summary>
+</p>
+
+https://user-images.githubusercontent.com/14782808/111520186-88671800-8760-11eb-8995-8e45a5cd9213.mp4
+</details>
+<details>
+<summary><b>Demo 2</b></summary>
+</p>
+
+https://user-images.githubusercontent.com/14782808/111520260-9b79e800-8760-11eb-9665-1062ed2b2c24.mp4
+</details>
+<details>
+<summary><b>Demo 3</b></summary>
+</p>
+
+https://user-images.githubusercontent.com/14782808/111520365-b187a880-8760-11eb-9dbe-0ffc44635ef8.mp4
+</details>
 
 ### Screenshots
 
 <p>
-<img src="/media/screenshot1.jpg" width="32%"/>
-<img src="/media/screenshot2.jpg" width="32%"/>
-<img src="/media/screenshot3.jpg" width="32%"/>
+<img src="/media/screenshot1.png" width="32%"/>
+<img src="/media/screenshot2.png" width="32%"/>
+<img src="/media/screenshot3.png" width="32%"/>
 </p>
 <p>
-<img src="/media/screenshot4.jpg" width="32%"/>
-<img src="/media/screenshot5.jpg" width="32%"/>
-<img src="/media/screenshot6.jpg" width="32%"/>
+<img src="/media/screenshot4.png" width="32%"/>
+<img src="/media/screenshot5.png" width="32%"/>
+<img src="/media/screenshot6.png" width="32%"/>
 </p>
 
 ## Tech Stack
