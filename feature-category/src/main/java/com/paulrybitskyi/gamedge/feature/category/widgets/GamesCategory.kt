@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
-import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -77,7 +76,6 @@ private fun GamesCategory(
     )
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun GamesCategory(
     uiState: GamesCategoryUiState,
@@ -97,8 +95,11 @@ private fun GamesCategory(
                 onLeftButtonClick = onBackButtonClicked,
             )
         },
-    ) {
-        AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
+    ) { paddingValues ->
+        AnimatedContentContainer(
+            finiteUiState = uiState.finiteUiState,
+            modifier = Modifier.padding(paddingValues),
+        ) { finiteUiState ->
             when (finiteUiState) {
                 FiniteUiState.Empty -> {
                     EmptyState(modifier = Modifier.align(Alignment.Center))

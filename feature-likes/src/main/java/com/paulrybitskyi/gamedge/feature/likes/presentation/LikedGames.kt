@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.likes.presentation
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -88,9 +89,10 @@ private fun LikedGames(
                 onRightButtonClick = onSearchButtonClicked,
             )
         },
-    ) {
+    ) { paddingValues ->
         Games(
             uiState = uiState,
+            modifier = Modifier.padding(paddingValues),
             onGameClicked = onGameClicked,
             onBottomReached = onBottomReached,
         )

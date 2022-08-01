@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.feature.discovery.widgets
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
@@ -107,13 +108,15 @@ private fun GamesDiscovery(
                 onRightButtonClick = onSearchButtonClicked,
             )
         },
-    ) {
+    ) { paddingValues ->
         var isRefreshing by remember { mutableStateOf(false) }
         val coroutineScope = rememberCoroutineScope()
 
         RefreshableContent(
             isRefreshing = isRefreshing,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
             onRefreshRequested = {
                 isRefreshing = true
 

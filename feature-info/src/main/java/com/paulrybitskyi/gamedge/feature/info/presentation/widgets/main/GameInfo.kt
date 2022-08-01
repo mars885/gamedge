@@ -125,8 +125,11 @@ private fun GameInfo(
     onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
-    Scaffold {
-        AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
+    Scaffold { paddingValues ->
+        AnimatedContentContainer(
+            finiteUiState = uiState.finiteUiState,
+            modifier = Modifier.padding(paddingValues),
+        ) { finiteUiState ->
             when (finiteUiState) {
                 FiniteUiState.Empty -> {
                     EmptyState(

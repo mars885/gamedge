@@ -114,8 +114,11 @@ private fun GamingNews(
                 onRightButtonClick = onSearchButtonClicked,
             )
         },
-    ) {
-        AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
+    ) { paddingValues ->
+        AnimatedContentContainer(
+            finiteUiState = uiState.finiteUiState,
+            modifier = Modifier.padding(paddingValues),
+        ) { finiteUiState ->
             when (finiteUiState) {
                 FiniteUiState.Loading -> {
                     LoadingState(modifier = Modifier.align(Alignment.Center))
