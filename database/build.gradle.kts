@@ -26,12 +26,6 @@ plugins {
 android {
     defaultConfig {
         testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                argument("room.schemaLocation", "$projectDir/schemas")
-            }
-        }
     }
 
     sourceSets {
@@ -44,6 +38,10 @@ android {
         // androidx from groupId=Gamedge) [RestrictedApi]
         disable.add("RestrictedApi")
     }
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {

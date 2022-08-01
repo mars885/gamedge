@@ -34,7 +34,8 @@ import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
         DbLikedGame::class,
         DbArticle::class
     ],
-    version = Constants.VERSION
+    version = Constants.VERSION,
+    exportSchema = true,
 )
 // Seems really strange that I have to specify this annotation here
 // with custom provided type converters
