@@ -59,10 +59,15 @@ allprojects {
         maven { setUrl("https://jitpack.io") }
     }
 
-    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    ktlint {
         version.set(versions.ktlint)
         android.set(true)
         outputToConsole.set(true)
+
+        filter {
+            exclude("**/generated/**")
+        }
+
         reporters {
             reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
         }
