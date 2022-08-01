@@ -65,7 +65,6 @@ allprojects {
         outputToConsole.set(true)
 
         filter {
-            exclude("**/generated/**")
             // https://github.com/JLLeitschuh/ktlint-gradle/issues/266#issuecomment-529527697
             exclude { fileTreeElement -> fileTreeElement.file.path.contains("generated/") }
         }
@@ -88,14 +87,14 @@ subprojects {
     tasks.withType<KotlinCompile>().all {
         kotlinOptions {
             freeCompilerArgs += listOf(
-                "-Xopt-in=kotlinx.coroutines.FlowPreview",
-                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
-                "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                "-Xopt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
-                "-Xopt-in=com.google.accompanist.pager.ExperimentalPagerApi",
+                "-opt-in=kotlinx.coroutines.FlowPreview",
+                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
+                "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
             )
 
             jvmTarget = appConfig.kotlinCompatibilityVersion.toString()
