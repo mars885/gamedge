@@ -54,9 +54,10 @@ ktlint {
     android.set(true)
     outputToConsole.set(true)
 
-    // https://github.com/JLLeitschuh/ktlint-gradle/issues/266#issuecomment-529527697
     filter {
-        exclude { fileTreeElement -> fileTreeElement.file.path.contains("$buildDir/generated/") }
+        exclude("**/generated/**")
+        // https://github.com/JLLeitschuh/ktlint-gradle/issues/266#issuecomment-529527697
+        exclude { fileTreeElement -> fileTreeElement.file.path.contains("generated/") }
     }
 
     reporters {
