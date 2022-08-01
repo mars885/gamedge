@@ -49,6 +49,21 @@ tasks.withType<Detekt>().configureEach {
     reports.html.required.set(true)
 }
 
+ktlint {
+    version.set(versions.ktlint)
+    android.set(true)
+    outputToConsole.set(true)
+
+    // https://github.com/JLLeitschuh/ktlint-gradle/issues/266#issuecomment-529527697
+    filter {
+        exclude { fileTreeElement -> fileTreeElement.file.path.contains("$buildDir/generated/") }
+    }
+
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
+    }
+}
+
 allprojects {
     apply(plugin = PLUGIN_DETEKT)
     apply(plugin = PLUGIN_KTLINT)
@@ -57,20 +72,6 @@ allprojects {
         mavenCentral()
         google()
         maven { setUrl("https://jitpack.io") }
-    }
-
-    ktlint {
-        version.set(versions.ktlint)
-        android.set(true)
-        outputToConsole.set(true)
-
-        filter {
-            exclude("**/generated/**")
-        }
-
-        reporters {
-            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
-        }
     }
 
     // Without the below block, a build failure was happening when
