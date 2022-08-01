@@ -130,7 +130,6 @@ object deps {
 
             const val version = "0.25.0"
 
-            const val insets = "com.google.accompanist:accompanist-insets:$version"
             const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
             const val flowLayout = "com.google.accompanist:accompanist-flowlayout:$version"
             const val pager = "com.google.accompanist:accompanist-pager:$version"

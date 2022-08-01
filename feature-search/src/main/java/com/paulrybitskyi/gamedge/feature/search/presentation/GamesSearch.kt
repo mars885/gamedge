@@ -17,7 +17,13 @@
 package com.paulrybitskyi.gamedge.feature.search.presentation
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,9 +36,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
@@ -99,9 +102,9 @@ private fun GamesSearch(
             SearchToolbar(
                 queryText = uiState.queryText,
                 placeholderText = stringResource(R.string.games_search_toolbar_hint),
-                contentPadding = rememberInsetsPaddingValues(
-                    insets = LocalWindowInsets.current.statusBars,
-                ),
+                contentPadding = WindowInsets.statusBars
+                    .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Vertical)
+                    .asPaddingValues(),
                 focusRequester = focusRequester,
                 onQueryChanged = onQueryChanged,
                 onSearchConfirmed = { query ->

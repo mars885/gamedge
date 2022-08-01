@@ -19,7 +19,12 @@ package com.paulrybitskyi.gamedge.feature.news.presentation.widgets
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -34,8 +39,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
@@ -107,9 +110,9 @@ private fun GamingNews(
         topBar = {
             Toolbar(
                 title = stringResource(R.string.gaming_news_toolbar_title),
-                contentPadding = rememberInsetsPaddingValues(
-                    insets = LocalWindowInsets.current.statusBars,
-                ),
+                contentPadding = WindowInsets.statusBars
+                    .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
+                    .asPaddingValues(),
                 rightButtonIcon = painterResource(R.drawable.magnify),
                 onRightButtonClick = onSearchButtonClicked,
             )

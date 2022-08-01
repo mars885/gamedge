@@ -22,6 +22,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -33,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
-import com.google.accompanist.insets.navigationBarsPadding
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 
 private const val BOTTOM_BAR_ANIMATION_DURATION = 300

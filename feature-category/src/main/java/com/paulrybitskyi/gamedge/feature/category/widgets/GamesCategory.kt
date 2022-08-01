@@ -18,8 +18,14 @@ package com.paulrybitskyi.gamedge.feature.category.widgets
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -34,9 +40,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
@@ -88,9 +91,9 @@ private fun GamesCategory(
         topBar = {
             Toolbar(
                 title = uiState.title,
-                contentPadding = rememberInsetsPaddingValues(
-                    insets = LocalWindowInsets.current.statusBars,
-                ),
+                contentPadding = WindowInsets.statusBars
+                    .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
+                    .asPaddingValues(),
                 leftButtonIcon = painterResource(R.drawable.arrow_left),
                 onLeftButtonClick = onBackButtonClicked,
             )

@@ -31,7 +31,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
-import com.google.accompanist.insets.ProvideWindowInsets
 
 private const val DefaultContentAlpha = 1f
 
@@ -63,18 +62,16 @@ fun GamedgeTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    ProvideWindowInsets {
-        CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
-            CompositionLocalProvider(LocalElevationOverlay provides null) {
-                MaterialTheme(
-                    colors = if (useDarkTheme) darkColors() else lightColors(),
-                    typography = typography,
-                    shapes = shapes,
-                ) {
-                    CompositionLocalProvider(LocalRippleTheme provides GamedgeRippleTheme) {
-                        CompositionLocalProvider(LocalContentAlpha provides DefaultContentAlpha) {
-                            content()
-                        }
+    CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
+        CompositionLocalProvider(LocalElevationOverlay provides null) {
+            MaterialTheme(
+                colors = if (useDarkTheme) darkColors() else lightColors(),
+                typography = typography,
+                shapes = shapes,
+            ) {
+                CompositionLocalProvider(LocalRippleTheme provides GamedgeRippleTheme) {
+                    CompositionLocalProvider(LocalContentAlpha provides DefaultContentAlpha) {
+                        content()
                     }
                 }
             }

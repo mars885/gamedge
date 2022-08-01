@@ -40,7 +40,6 @@ dependencies {
     implementation(deps.compose.activity)
     implementation(deps.compose.runtime)
     implementation(deps.compose.material)
-    implementation(deps.compose.accompanist.insets)
     implementation(deps.compose.accompanist.systemUi)
 
     implementation(deps.commons.core)
