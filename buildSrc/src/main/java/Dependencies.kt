@@ -20,8 +20,8 @@ import org.gradle.api.JavaVersion
 
 object appConfig {
 
-    const val compileSdkVersion = 31
-    const val targetSdkVersion = 31
+    const val compileSdkVersion = 32
+    const val targetSdkVersion = 32
     const val minSdkVersion = 21
     const val applicationId = "com.paulrybitskyi.gamedge"
     const val versionCode = 1
@@ -33,10 +33,10 @@ object appConfig {
 
 object versions {
 
-    const val kotlin = "1.6.10" // also in buildSrc build.gradle.kts file
-    const val compose = "1.1.1"
+    const val kotlin = "1.7.0" // also in buildSrc build.gradle.kts file
+    const val compose = "1.2.0"
     const val gradleVersionsPlugin = "0.42.0"
-    const val kspPlugin = "1.6.10-1.0.4"
+    const val kspPlugin = "1.7.0-1.0.6"
     const val daggerHilt = "2.42"
     const val detektPlugin = "1.20.0"
     const val ktlintPlugin = "10.3.0"
@@ -128,7 +128,7 @@ object deps {
 
         object accompanist {
 
-            const val version = "0.23.1"
+            const val version = "0.25.0"
 
             const val insets = "com.google.accompanist:accompanist-insets:$version"
             const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"

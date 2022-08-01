@@ -79,9 +79,6 @@ allprojects {
 subprojects {
 
     tasks.withType<KotlinCompile>().all {
-        sourceCompatibility = appConfig.javaCompatibilityVersion.toString()
-        targetCompatibility = appConfig.javaCompatibilityVersion.toString()
-
         kotlinOptions {
             freeCompilerArgs += listOf(
                 "-Xopt-in=kotlinx.coroutines.FlowPreview",

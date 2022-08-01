@@ -17,12 +17,9 @@
 package com.paulrybitskyi.gamedge.feature.settings.data.datastores
 
 import androidx.datastore.core.Serializer
-import com.paulrybitskyi.gamedge.Settings
 import com.paulrybitskyi.gamedge.feature.settings.domain.DomainSettings
 import java.io.InputStream
 import java.io.OutputStream
-
-internal typealias ProtoSettings = Settings
 
 @Suppress("BlockingMethodInNonBlockingContext")
 internal object ProtoSettingsSerializer : Serializer<ProtoSettings> {
