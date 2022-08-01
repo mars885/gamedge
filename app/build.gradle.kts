@@ -62,7 +62,6 @@ dependencies {
     implementation(deps.compose.material)
     implementation(deps.compose.runtime)
     implementation(deps.compose.navigation)
-    implementation(deps.compose.accompanist.insets)
     implementation(deps.compose.accompanist.navigationAnimations)
 
     implementation(deps.commons.core)

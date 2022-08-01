@@ -49,7 +49,6 @@ dependencies {
     implementation(deps.compose.runtime)
     implementation(deps.compose.constraintLayout)
     implementation(deps.compose.hilt)
-    implementation(deps.compose.accompanist.insets)
     implementation(deps.compose.accompanist.flowLayout)
     implementation(deps.compose.accompanist.pager)
 

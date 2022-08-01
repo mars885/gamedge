@@ -19,9 +19,14 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -45,8 +50,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter.State
 import coil.size.Size
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -129,9 +132,9 @@ private fun ImageViewer(
             Toolbar(
                 title = uiState.toolbarTitle,
                 modifier = Modifier.align(Alignment.TopCenter),
-                contentPadding = rememberInsetsPaddingValues(
-                    insets = LocalWindowInsets.current.statusBars,
-                ),
+                contentPadding = WindowInsets.statusBars
+                    .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
+                    .asPaddingValues(),
                 backgroundColor = GamedgeTheme.colors.statusBar,
                 contentColor = LocalContentColor.current,
                 elevation = 0.dp,

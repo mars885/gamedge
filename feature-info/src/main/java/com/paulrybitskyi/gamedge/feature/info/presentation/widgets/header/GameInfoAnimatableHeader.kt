@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
@@ -67,7 +68,6 @@ import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.Transition
 import androidx.constraintlayout.compose.Visibility
-import com.google.accompanist.insets.statusBarsPadding
 import com.paulrybitskyi.commons.ktx.statusBarHeight
 import com.paulrybitskyi.gamedge.common.ui.clickable
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
