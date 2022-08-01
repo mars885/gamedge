@@ -63,6 +63,13 @@ allprojects {
         version.set(versions.ktlint)
         android.set(true)
         outputToConsole.set(true)
+
+        filter {
+            exclude("**/generated/**")
+            // https://github.com/JLLeitschuh/ktlint-gradle/issues/266#issuecomment-529527697
+            exclude { fileTreeElement -> fileTreeElement.file.path.contains("generated/") }
+        }
+
         reporters {
             reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
         }
@@ -79,9 +86,6 @@ allprojects {
 subprojects {
 
     tasks.withType<KotlinCompile>().all {
-        sourceCompatibility = appConfig.javaCompatibilityVersion.toString()
-        targetCompatibility = appConfig.javaCompatibilityVersion.toString()
-
         kotlinOptions {
             freeCompilerArgs += listOf(
                 "-Xopt-in=kotlinx.coroutines.FlowPreview",

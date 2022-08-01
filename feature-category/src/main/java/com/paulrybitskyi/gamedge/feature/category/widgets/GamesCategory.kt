@@ -20,9 +20,9 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -95,8 +95,11 @@ private fun GamesCategory(
                 onLeftButtonClick = onBackButtonClicked,
             )
         },
-    ) {
-        AnimatedContentContainer(uiState.finiteUiState) { finiteUiState ->
+    ) { paddingValues ->
+        AnimatedContentContainer(
+            finiteUiState = uiState.finiteUiState,
+            modifier = Modifier.padding(paddingValues),
+        ) { finiteUiState ->
             when (finiteUiState) {
                 FiniteUiState.Empty -> {
                     EmptyState(modifier = Modifier.align(Alignment.Center))
@@ -162,7 +165,7 @@ private fun VerticalGrid(
     val gridSpanCount = gridConfig.spanCount
     val lastIndex = games.lastIndex
 
-    LazyVerticalGrid(cells = GridCells.Fixed(gridConfig.spanCount)) {
+    LazyVerticalGrid(columns = GridCells.Fixed(gridConfig.spanCount)) {
         itemsIndexed(items = games) { index, game ->
             if (index == lastIndex) {
                 LaunchedEffect(lastIndex) {

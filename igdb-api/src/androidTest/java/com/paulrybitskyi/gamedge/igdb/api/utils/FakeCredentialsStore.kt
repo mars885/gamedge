@@ -18,12 +18,10 @@ package com.paulrybitskyi.gamedge.igdb.api.utils
 
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.common.CredentialsStore
-import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-@BindType
 internal class FakeCredentialsStore @Inject constructor() : CredentialsStore {
 
     private var oauthCredentials: ApiOauthCredentials? = null

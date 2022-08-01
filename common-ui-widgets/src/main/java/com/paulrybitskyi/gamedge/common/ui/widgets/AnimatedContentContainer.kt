@@ -34,11 +34,12 @@ private const val AnimationDuration = 500
 @Composable
 fun AnimatedContentContainer(
     finiteUiState: FiniteUiState,
+    modifier: Modifier = Modifier,
     exitTransition: ExitTransition = fadeOut(animationSpec = tween(AnimationDuration)),
     enterTransition: EnterTransition = fadeIn(animationSpec = tween(AnimationDuration)),
     content: @Composable BoxScope.(FiniteUiState) -> Unit,
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
         AnimatedContent(
             targetState = finiteUiState,
             transitionSpec = {

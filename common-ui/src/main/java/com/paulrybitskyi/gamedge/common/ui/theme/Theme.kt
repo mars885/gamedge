@@ -16,7 +16,7 @@
 
 package com.paulrybitskyi.gamedge.common.ui.theme
 
-import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.LocalContentAlpha
@@ -64,7 +64,7 @@ fun GamedgeTheme(
     content: @Composable () -> Unit
 ) {
     ProvideWindowInsets {
-        CompositionLocalProvider(LocalOverScrollConfiguration provides null) {
+        CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
             CompositionLocalProvider(LocalElevationOverlay provides null) {
                 MaterialTheme(
                     colors = if (useDarkTheme) darkColors() else lightColors(),
