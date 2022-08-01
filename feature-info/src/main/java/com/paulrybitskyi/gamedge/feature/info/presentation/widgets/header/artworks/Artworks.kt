@@ -36,8 +36,7 @@ import com.paulrybitskyi.gamedge.feature.info.R
 @Composable
 internal fun Artworks(
     artworks: List<GameInfoArtworkUiModel>,
-    @Suppress("UnusedPrivateMember")
-    isScrollingEnabled: Boolean, // todo
+    isScrollingEnabled: Boolean,
     modifier: Modifier,
     onArtworkChanged: (artworkIndex: Int) -> Unit,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
@@ -54,6 +53,7 @@ internal fun Artworks(
         modifier = modifier,
         state = pagerState,
         key = { page -> artworks[page].id },
+        userScrollEnabled = isScrollingEnabled,
     ) { page ->
         Artwork(
             artwork = artworks[page],
