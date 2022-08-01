@@ -78,7 +78,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
 
                 getByName(BUILD_TYPE_RELEASE) {
                     sourceSets {
-                        getByName(BUILD_TYPE_DEBUG) {
+                        getByName(BUILD_TYPE_RELEASE) {
                             java.srcDir(file("build/generated/ksp/$BUILD_TYPE_RELEASE/java"))
                             java.srcDir(file("build/generated/ksp/$BUILD_TYPE_RELEASE/kotlin"))
                         }
