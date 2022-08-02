@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -295,7 +296,7 @@ private fun LazyListScope.headerItem(
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
 ) {
-    item(key = GameInfoItem.Header.id) {
+    gameInfoItem(item = GameInfoItem.Header) {
         GameInfoHeader(
             headerInfo = model,
             onArtworkClicked = onArtworkClicked,
@@ -310,7 +311,7 @@ private fun LazyListScope.videosItem(
     videos: List<GameInfoVideoUiModel>,
     onVideoClicked: (GameInfoVideoUiModel) -> Unit,
 ) {
-    item(key = GameInfoItem.Videos.id) {
+    gameInfoItem(item = GameInfoItem.Videos) {
         GameInfoVideos(
             videos = videos,
             onVideClicked = onVideoClicked,
@@ -322,7 +323,7 @@ private fun LazyListScope.screenshotsItem(
     screenshots: List<GameInfoScreenshotUiModel>,
     onScreenshotClicked: (screenshotIndex: Int) -> Unit,
 ) {
-    item(key = GameInfoItem.Screenshots.id) {
+    gameInfoItem(item = GameInfoItem.Screenshots) {
         GameInfoScreenshots(
             screenshots = screenshots,
             onScreenshotClicked = onScreenshotClicked,
@@ -331,13 +332,13 @@ private fun LazyListScope.screenshotsItem(
 }
 
 private fun LazyListScope.summaryItem(model: String) {
-    item(key = GameInfoItem.Summary.id) {
+    gameInfoItem(item = GameInfoItem.Summary) {
         GameInfoSummary(summary = model)
     }
 }
 
 private fun LazyListScope.detailsItem(model: GameInfoDetailsUiModel) {
-    item(key = GameInfoItem.Details.id) {
+    gameInfoItem(item = GameInfoItem.Details) {
         GameInfoDetails(details = model)
     }
 }
@@ -346,7 +347,7 @@ private fun LazyListScope.linksItem(
     model: List<GameInfoLinkUiModel>,
     onLinkClicked: (GameInfoLinkUiModel) -> Unit,
 ) {
-    item(key = GameInfoItem.Links.id) {
+    gameInfoItem(item = GameInfoItem.Links) {
         GameInfoLinks(
             links = model,
             onLinkClicked = onLinkClicked,
@@ -358,7 +359,7 @@ private fun LazyListScope.companiesItem(
     model: List<GameInfoCompanyUiModel>,
     onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
 ) {
-    item(key = GameInfoItem.Companies.id) {
+    gameInfoItem(item = GameInfoItem.Companies) {
         GameInfoCompanies(
             companies = model,
             onCompanyClicked = onCompanyClicked,
@@ -370,10 +371,10 @@ private fun LazyListScope.relatedGamesItem(
     model: GameInfoRelatedGamesUiModel,
     onGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
-    item(
-        key = when (model.type) {
-            GameInfoRelatedGamesType.OTHER_COMPANY_GAMES -> GameInfoItem.OtherCompanyGames.id
-            GameInfoRelatedGamesType.SIMILAR_GAMES -> GameInfoItem.SimilarGames.id
+    gameInfoItem(
+        item = when (model.type) {
+            GameInfoRelatedGamesType.OTHER_COMPANY_GAMES -> GameInfoItem.OtherCompanyGames
+            GameInfoRelatedGamesType.SIMILAR_GAMES -> GameInfoItem.SimilarGames
         }
     ) {
         val categoryGames = remember(model.items) {
@@ -393,16 +394,33 @@ private fun LazyListScope.relatedGamesItem(
     }
 }
 
-private enum class GameInfoItem(val id: Int) {
-    Header(id = 1),
-    Videos(id = 2),
-    Screenshots(id = 3),
-    Summary(id = 4),
-    Details(id = 5),
-    Links(id = 6),
-    Companies(id = 7),
-    OtherCompanyGames(id = 8),
-    SimilarGames(id = 9),
+private fun LazyListScope.gameInfoItem(
+    item: GameInfoItem,
+    content: @Composable LazyItemScope.() -> Unit,
+) {
+    item(
+        key = item.key,
+        contentType = item.contentType,
+        content = content,
+    )
+}
+
+private enum class GameInfoItem(
+    val key: Int,
+    val contentType: Int,
+) {
+    Header(key = 1, contentType = 1),
+    Videos(key = 2, contentType = 2),
+    Screenshots(key = 3, contentType = 3),
+    Summary(key = 4, contentType = 4),
+    Details(key = 5, contentType = 5),
+    Links(key = 6, contentType = 6),
+    Companies(key = 7, contentType = 7),
+    // Both other & similar games is the same composable
+    // filled with different data. That's why contentType
+    // is the same for them two.
+    OtherCompanyGames(key = 8, contentType = 8),
+    SimilarGames(key = 9, contentType = 8),
 }
 
 // TODO (02.01.2022): Currently, preview height is limited to 2k DP.
