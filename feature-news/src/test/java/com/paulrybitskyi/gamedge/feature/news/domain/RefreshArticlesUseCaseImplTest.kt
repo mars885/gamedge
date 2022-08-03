@@ -22,7 +22,6 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_ERROR_UNKNOWN
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.testing.domain.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.feature.news.DOMAIN_ARTICLES
@@ -68,7 +67,7 @@ internal class RefreshArticlesUseCaseImplTest {
                 local = articlesLocalDataStore,
                 remote = articlesRemoteDataStore
             ),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             throttlerTools = ArticlesRefreshingThrottlerTools(
                 throttler = throttler,
                 keyProvider = keyProvider

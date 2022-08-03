@@ -18,7 +18,6 @@ package com.paulrybitskyi.gamedge.feature.news.domain
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
 import com.paulrybitskyi.gamedge.feature.news.DOMAIN_ARTICLES
@@ -51,7 +50,7 @@ internal class ObserveArticlesUseCaseImplTest {
 
         SUT = ObserveArticlesUseCaseImpl(
             articlesLocalDataStore = articlesLocalDataStore,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
         )
     }
 

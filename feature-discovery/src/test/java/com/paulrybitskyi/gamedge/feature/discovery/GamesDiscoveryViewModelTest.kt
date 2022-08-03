@@ -28,7 +28,6 @@ import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshPopularGamesUseCase
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameUiModelMapper
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameUiModel
@@ -55,7 +54,7 @@ internal class GamesDiscoveryViewModelTest {
         GamesDiscoveryViewModel(
             useCases = setupUseCases(),
             uiModelMapper = FakeGamesDiscoveryItemGameUiModelMapper(),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger

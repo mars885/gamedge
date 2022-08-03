@@ -32,7 +32,7 @@ import com.paulrybitskyi.gamedge.common.data.common.ApiErrorMapper
 import com.paulrybitskyi.gamedge.common.data.games.datastores.igdb.GamesIgdbDataStore
 import com.paulrybitskyi.gamedge.common.data.games.datastores.igdb.IgdbGameMapper
 import com.paulrybitskyi.gamedge.common.data.games.datastores.igdb.mapToDomainGames
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.igdb.api.games.GamesEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame
 import io.mockk.MockKAnnotations
@@ -40,6 +40,7 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 private val API_GAMES = listOf(
@@ -49,6 +50,9 @@ private val API_GAMES = listOf(
 )
 
 internal class GamesIgdbDataStoreTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var gamesEndpoint: GamesEndpoint
 
@@ -65,7 +69,7 @@ internal class GamesIgdbDataStoreTest {
         SUT = GamesIgdbDataStore(
             gamesEndpoint = gamesEndpoint,
             releaseDatesProvider = FakeDiscoveryGamesReleaseDatesProvider(),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             igdbGameMapper = igdbGameMapper,
             apiErrorMapper = apiErrorMapper,
         )

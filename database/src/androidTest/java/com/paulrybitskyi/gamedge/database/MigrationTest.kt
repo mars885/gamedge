@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.database
 
 import androidx.room.testing.MigrationTestHelper
-import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -37,8 +36,7 @@ internal class MigrationTest {
     @get:Rule(order = 1)
     val migrationTestHelper = MigrationTestHelper(
         InstrumentationRegistry.getInstrumentation(),
-        GamedgeDatabase::class.java.canonicalName,
-        FrameworkSQLiteOpenHelperFactory()
+        GamedgeDatabase::class.java,
     )
 
     @Inject lateinit var databaseProvider: Provider<GamedgeDatabase>

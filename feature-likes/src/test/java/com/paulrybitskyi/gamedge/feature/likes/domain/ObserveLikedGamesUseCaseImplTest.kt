@@ -21,7 +21,6 @@ import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.domain.games.common.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.LikedGamesLocalDataStore
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -49,7 +48,7 @@ internal class ObserveLikedGamesUseCaseImplTest {
 
         SUT = ObserveLikedGamesUseCaseImpl(
             likedGamesLocalDataStore = likedGamesLocalDataStore,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
         )
     }
 

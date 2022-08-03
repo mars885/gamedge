@@ -22,7 +22,6 @@ import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.core.Constants
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.execute
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.feature.settings.DOMAIN_SETTINGS
 import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Settings
 import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Theme
@@ -51,7 +50,7 @@ internal class SettingsViewModelTest {
             saveSettingsUseCase = saveSettingsUseCase,
             observeSettingsUseCase = observeSettingsUseCase,
             uiModelMapper = FakeSettingsUiModelMapper(),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
         )
     }
 

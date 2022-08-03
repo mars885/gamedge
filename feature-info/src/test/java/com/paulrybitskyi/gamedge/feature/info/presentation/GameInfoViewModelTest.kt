@@ -26,7 +26,6 @@ import com.paulrybitskyi.gamedge.common.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.FakeLogger
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.feature.info.GAME_INFO
@@ -64,7 +63,7 @@ internal class GameInfoViewModelTest {
             transitionAnimationDuration = 0L,
             useCases = useCases,
             uiModelMapper = FakeGameInfoUiModelMapper(),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,

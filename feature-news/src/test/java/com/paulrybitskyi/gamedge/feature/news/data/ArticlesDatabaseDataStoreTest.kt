@@ -18,7 +18,7 @@ package com.paulrybitskyi.gamedge.feature.news.data
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
 import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
 import com.paulrybitskyi.gamedge.feature.news.DOMAIN_ARTICLES
@@ -32,9 +32,13 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 internal class ArticlesDatabaseDataStoreTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var articlesTable: ArticlesTable
 
@@ -48,7 +52,7 @@ internal class ArticlesDatabaseDataStoreTest {
         dbArticleMapper = DbArticleMapper()
         SUT = ArticlesDatabaseDataStore(
             articlesTable = articlesTable,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             dbArticleMapper = dbArticleMapper,
         )
     }

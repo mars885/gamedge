@@ -33,7 +33,6 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModelMapper
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.finiteUiState
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.feature.search.domain.SearchGamesUseCase
 import io.mockk.coEvery
 import io.mockk.every
@@ -57,7 +56,7 @@ internal class GamesSearchViewModelTest {
         GamesSearchViewModel(
             searchGamesUseCase = searchGamesUseCase,
             uiModelMapper = FakeGameUiModelMapper(),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,

@@ -30,14 +30,13 @@ import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObservePopularGamesUseCase
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshPopularGamesUseCase
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.finiteUiState
-import com.paulrybitskyi.gamedge.feature.category.widgets.isRefreshing
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -63,7 +62,7 @@ internal class GamesCategoryViewModelTest {
             transitionAnimationDuration = 0L,
             useCases = setupUseCases(),
             uiModelMapper = FakeGameCategoryUiModelMapper(),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             errorMapper = FakeErrorMapper(),
             logger = logger,
         )
@@ -105,11 +104,9 @@ internal class GamesCategoryViewModelTest {
     fun `Emits correct ui states when observing games`() {
         runTest {
             every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            every { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.uiState.test {
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Loading)
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Success)
                 cancelAndIgnoreRemainingEvents()
             }
@@ -144,14 +141,19 @@ internal class GamesCategoryViewModelTest {
     @Test
     fun `Emits correct ui states when refreshing games`() {
         runTest {
-            every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            every { refreshPopularGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+            every {
+                refreshPopularGamesUseCase.execute(any())
+            } returns flow {
+                // Refresh, for some reason, emits way too fast.
+                // Adding delay to grab all possible states.
+                delay(10)
+                emit(Ok(DOMAIN_GAMES))
+            }
 
             SUT.uiState.test {
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Loading)
-                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Success)
-                assertThat(awaitItem().isRefreshing).isTrue()
+                assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
                 cancelAndIgnoreRemainingEvents()
             }
         }

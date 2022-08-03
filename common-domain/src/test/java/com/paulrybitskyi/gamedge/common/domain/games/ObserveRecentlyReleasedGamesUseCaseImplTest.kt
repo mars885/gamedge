@@ -22,7 +22,6 @@ import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.domain.games.common.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObserveRecentlyReleasedGamesUseCaseImpl
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -48,7 +47,7 @@ internal class ObserveRecentlyReleasedGamesUseCaseImplTest {
 
         SUT = ObserveRecentlyReleasedGamesUseCaseImpl(
             gamesLocalDataStore = gamesLocalDataStore,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
         )
     }
 

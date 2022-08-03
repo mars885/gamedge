@@ -53,8 +53,12 @@ private val GamesCategoryUiState.isInSuccessState: Boolean
 internal val GamesCategoryUiState.isRefreshing: Boolean
     get() = (isLoading && games.isNotEmpty())
 
-internal fun GamesCategoryUiState.toLoadingState(): GamesCategoryUiState {
+internal fun GamesCategoryUiState.enableLoading(): GamesCategoryUiState {
     return copy(isLoading = true)
+}
+
+internal fun GamesCategoryUiState.disableLoading(): GamesCategoryUiState {
+    return copy(isLoading = false)
 }
 
 internal fun GamesCategoryUiState.toEmptyState(): GamesCategoryUiState {

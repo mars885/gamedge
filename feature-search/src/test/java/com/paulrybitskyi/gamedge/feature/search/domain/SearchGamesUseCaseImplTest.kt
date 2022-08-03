@@ -28,7 +28,6 @@ import com.paulrybitskyi.gamedge.common.testing.domain.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesRemoteDataStore
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import io.mockk.MockKAnnotations
@@ -67,7 +66,7 @@ internal class SearchGamesUseCaseImplTest {
                 local = gamesLocalDataStore,
                 remote = gamesRemoteDataStore,
             ),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             networkStateProvider = networkStateProvider,
         )
     }
