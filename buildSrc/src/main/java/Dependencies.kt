@@ -140,7 +140,7 @@ object deps {
 
     object google {
 
-        private const val protobufVersion = "3.21.1"
+        private const val protobufVersion = "3.21.4"
 
         const val daggerHiltCore = "com.google.dagger:hilt-core:${versions.daggerHilt}"
         const val daggerHiltCoreCompiler = "com.google.dagger:hilt-compiler:${versions.daggerHilt}"
