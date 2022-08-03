@@ -41,7 +41,7 @@ object versions {
     const val detektPlugin = "1.21.0"
     const val ktlintPlugin = "10.3.0"
     const val ktlint = "0.45.2"
-    const val coroutines = "1.6.2"
+    const val coroutines = "1.6.4"
     const val room = "2.4.3"
 }
 
