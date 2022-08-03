@@ -107,6 +107,16 @@ subprojects {
             correctErrorTypes = true
         }
     }
+
+    // https://stackoverflow.com/a/70348822/7015881
+    // https://issuetracker.google.com/issues/238425626
+    configurations.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "androidx.lifecycle" && requested.name == "lifecycle-viewmodel-ktx") {
+                useVersion(deps.androidX.viewModel)
+            }
+        }
+    }
 }
 
 tasks {
