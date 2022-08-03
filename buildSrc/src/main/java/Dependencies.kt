@@ -110,7 +110,7 @@ object deps {
 
     object compose {
 
-        private const val navigationVersion = "2.4.2"
+        private const val navigationVersion = "2.5.1"
         private const val constraintLayoutVersion = "1.1.0-alpha02"
         private const val hiltVersion = "1.0.0"
 
