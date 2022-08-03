@@ -95,7 +95,7 @@ object deps {
 
     object androidX {
 
-        private const val splashVersion = "1.0.0-rc01"
+        private const val splashVersion = "1.0.0"
         private const val browserVersion = "1.4.0"
         private const val dataStoreVersion = "1.0.0"
 
