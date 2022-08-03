@@ -37,7 +37,7 @@ object versions {
     const val compose = "1.2.0"
     const val gradleVersionsPlugin = "0.42.0"
     const val kspPlugin = "1.7.0-1.0.6"
-    const val daggerHilt = "2.42"
+    const val daggerHilt = "2.43.1"
     const val detektPlugin = "1.20.0"
     const val ktlintPlugin = "10.3.0"
     const val ktlint = "0.45.2"
