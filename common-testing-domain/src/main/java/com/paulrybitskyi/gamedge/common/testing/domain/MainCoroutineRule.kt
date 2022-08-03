@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.common.testing.domain
 
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -27,7 +26,7 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 class MainCoroutineRule(
-    val dispatcher: TestDispatcher = UnconfinedTestDispatcher(),
+    private val dispatcher: TestDispatcher = UnconfinedTestDispatcher(),
 ) : TestWatcher() {
 
     val dispatcherProvider = object : DispatcherProvider {
