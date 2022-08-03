@@ -25,7 +25,6 @@ import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.domain.common.DomainException
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.feature.info.GAME_INFO
 import com.paulrybitskyi.gamedge.feature.info.INVOLVED_COMPANY
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetCompanyDevelopedGamesUseCase
@@ -67,7 +66,7 @@ internal class GetGameInfoUseCaseImplTest {
             observeGameLikeStateUseCase = observeGameLikeStateUseCase,
             getCompanyDevelopedGamesUseCase = getCompanyDevelopedGamesUseCase,
             getSimilarGamesUseCase = getSimilarGamesUseCase,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
         )
     }
 

@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.feature.settings.domain
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.execute
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.settings.DOMAIN_SETTINGS
 import com.paulrybitskyi.gamedge.feature.settings.domain.datastores.SettingsLocalDataStore
@@ -48,7 +47,7 @@ internal class ObserveSettingsUseCaseImplTest {
 
         SUT = ObserveSettingsUseCaseImpl(
             localDataStore = settingsLocalDataStore,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
         )
     }
 

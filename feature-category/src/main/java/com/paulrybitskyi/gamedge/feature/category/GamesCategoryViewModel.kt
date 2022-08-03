@@ -35,9 +35,10 @@ import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
+import com.paulrybitskyi.gamedge.feature.category.widgets.disableLoading
 import com.paulrybitskyi.gamedge.feature.category.widgets.mapToUiModels
 import com.paulrybitskyi.gamedge.feature.category.widgets.toEmptyState
-import com.paulrybitskyi.gamedge.feature.category.widgets.toLoadingState
+import com.paulrybitskyi.gamedge.feature.category.widgets.enableLoading
 import com.paulrybitskyi.gamedge.feature.category.widgets.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -126,7 +127,6 @@ internal class GamesCategoryViewModel @Inject constructor(
             }
             .onStart {
                 isObservingGames = true
-                emit(currentUiState.toLoadingState())
                 delay(resultEmissionDelay)
             }
             .onCompletion { isObservingGames = false }
@@ -163,9 +163,12 @@ internal class GamesCategoryViewModel @Inject constructor(
             }
             .onStart {
                 isRefreshingGames = true
-                emit(currentUiState.toLoadingState())
+                emit(currentUiState.enableLoading())
             }
-            .onCompletion { isRefreshingGames = false }
+            .onCompletion {
+                isRefreshingGames = false
+                emit(currentUiState.disableLoading())
+            }
             .onEach { emittedUiState -> _uiState.update { emittedUiState } }
             .launchIn(viewModelScope)
     }

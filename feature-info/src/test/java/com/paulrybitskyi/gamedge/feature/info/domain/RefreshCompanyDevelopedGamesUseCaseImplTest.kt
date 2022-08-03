@@ -23,7 +23,6 @@ import com.github.michaelbull.result.get
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.FakeGamesRefreshingThrottlerKeyProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.coVerifyNotCalled
 import com.paulrybitskyi.gamedge.common.domain.games.common.throttling.GamesRefreshingThrottler
@@ -64,7 +63,7 @@ internal class RefreshCompanyDevelopedGamesUseCaseImplTest {
                 local = gamesLocalDataStore,
                 remote = gamesRemoteDataStore
             ),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             throttlerTools = GamesRefreshingThrottlerTools(
                 throttler = throttler,
                 keyProvider = FakeGamesRefreshingThrottlerKeyProvider()

@@ -26,7 +26,7 @@ import com.paulrybitskyi.gamedge.common.testing.API_ERROR_HTTP
 import com.paulrybitskyi.gamedge.common.testing.API_ERROR_NETWORK
 import com.paulrybitskyi.gamedge.common.testing.API_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.common.data.common.ApiErrorMapper
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.GamespotArticleMapper
 import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.ArticlePublicationDateMapper
 import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.ArticlesGamespotDataStore
@@ -38,6 +38,7 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 private val API_ARTICLES = listOf(
@@ -47,6 +48,9 @@ private val API_ARTICLES = listOf(
 )
 
 internal class ArticlesGamespotDataStoreTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var articlesEndpoint: ArticlesEndpoint
 
@@ -62,7 +66,7 @@ internal class ArticlesGamespotDataStoreTest {
         apiErrorMapper = ApiErrorMapper()
         SUT = ArticlesGamespotDataStore(
             articlesEndpoint = articlesEndpoint,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             apiArticleMapper = apiArticleMapper,
             apiErrorMapper = apiErrorMapper,
         )

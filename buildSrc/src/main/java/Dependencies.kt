@@ -37,11 +37,11 @@ object versions {
     const val compose = "1.2.0"
     const val gradleVersionsPlugin = "0.42.0"
     const val kspPlugin = "1.7.0-1.0.6"
-    const val daggerHilt = "2.42"
-    const val detektPlugin = "1.20.0"
+    const val daggerHilt = "2.43.1"
+    const val detektPlugin = "1.21.0"
     const val ktlintPlugin = "10.3.0"
     const val ktlint = "0.45.2"
-    const val coroutines = "1.6.2"
+    const val coroutines = "1.6.4"
     const val room = "2.4.3"
 }
 
@@ -50,7 +50,7 @@ object deps {
     object plugins {
 
         private const val gradlePluginVersion = "7.2.0" // also in buildSrc build.gradle.kts file
-        private const val protobufPluginVersion = "0.8.18" // also in buildSrc build.gradle.kts file
+        private const val protobufPluginVersion = "0.8.19" // also in buildSrc build.gradle.kts file
 
         const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
@@ -95,7 +95,8 @@ object deps {
 
     object androidX {
 
-        private const val splashVersion = "1.0.0-rc01"
+        private const val splashVersion = "1.0.0"
+        const val viewModel = "2.5.1" // to be deleted when the linked issue at use site is fixed
         private const val browserVersion = "1.4.0"
         private const val dataStoreVersion = "1.0.0"
 
@@ -110,7 +111,7 @@ object deps {
 
     object compose {
 
-        private const val navigationVersion = "2.4.2"
+        private const val navigationVersion = "2.5.1"
         private const val constraintLayoutVersion = "1.1.0-alpha02"
         private const val hiltVersion = "1.0.0"
 
@@ -140,7 +141,7 @@ object deps {
 
     object google {
 
-        private const val protobufVersion = "3.21.1"
+        private const val protobufVersion = "3.21.4"
 
         const val daggerHiltCore = "com.google.dagger:hilt-core:${versions.daggerHilt}"
         const val daggerHiltCoreCompiler = "com.google.dagger:hilt-compiler:${versions.daggerHilt}"
@@ -181,7 +182,7 @@ object deps {
         private const val kotlinResultVersion = "1.1.16"
         private const val hiltBinderVersion = "1.1.2"
         private const val coilVersion = "2.1.0"
-        private const val zoomableVersion = "1.4.2"
+        private const val zoomableVersion = "1.5.1"
 
         const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${desugaredLibsVersion}"
         const val kotlinResult = "com.michael-bull.kotlin-result:kotlin-result:${kotlinResultVersion}"
@@ -196,8 +197,8 @@ object deps {
         private const val jUnitVersion = "4.13.2"
         private const val jUnitExtVersion = "1.1.3"
         private const val truthVersion = "1.1.3"
-        private const val mockkVersion = "1.12.4"
-        private const val turbineVersion = "0.8.0"
+        private const val mockkVersion = "1.12.5"
+        private const val turbineVersion = "0.9.0"
         private const val testRunnerVersion = "1.4.0"
         private const val archCoreVersion = "2.1.0"
         private const val mockWebServerVersion = "4.10.0"

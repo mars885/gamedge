@@ -19,7 +19,6 @@ package com.paulrybitskyi.gamedge.feature.info.domain.likes
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.LikedGamesLocalDataStore
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.info.OBSERVE_GAME_LIKE_STATE_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ObserveGameLikeStateUseCaseImpl
@@ -47,7 +46,7 @@ internal class ObserveGameLikeStateUseCaseImplTest {
 
         SUT = ObserveGameLikeStateUseCaseImpl(
             likedGamesLocalDataStore = likedGamesLocalDataStore,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
         )
     }
 

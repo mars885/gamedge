@@ -26,7 +26,7 @@ import com.paulrybitskyi.gamedge.common.data.FakeDiscoveryGamesReleaseDatesProvi
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.DbGameMapper
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.mapToDatabaseGames
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -36,9 +36,13 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 internal class GamesDatabaseDataStoreTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK private lateinit var gamesTable: GamesTable
 
@@ -52,7 +56,7 @@ internal class GamesDatabaseDataStoreTest {
         dbGameMapper = DbGameMapper()
         SUT = GamesDatabaseDataStore(
             gamesTable = gamesTable,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             discoveryGamesReleaseDatesProvider = FakeDiscoveryGamesReleaseDatesProvider(),
             dbGameMapper = dbGameMapper,
         )

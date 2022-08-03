@@ -21,7 +21,6 @@ import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.info.GET_COMPANY_DEVELOPED_GAMES_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetCompanyDevelopedGamesUseCaseImpl
@@ -52,7 +51,7 @@ internal class GetCompanyDevelopedGamesUseCaseImplTest {
         SUT = GetCompanyDevelopedGamesUseCaseImpl(
             refreshCompanyDevelopedGamesUseCase = refreshCompanyDevelopedGamesUseCase,
             gamesLocalDataStore = gamesLocalDataStore,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
         )
     }
 

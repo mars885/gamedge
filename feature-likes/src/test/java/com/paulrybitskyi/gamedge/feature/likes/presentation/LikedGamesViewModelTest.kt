@@ -29,7 +29,6 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModelMapper
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.finiteUiState
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.feature.likes.domain.ObserveLikedGamesUseCase
 import io.mockk.every
 import io.mockk.mockk
@@ -53,7 +52,7 @@ internal class LikedGamesViewModelTest {
         LikedGamesViewModel(
             observeLikedGamesUseCase = observeLikedGamesUseCase,
             uiModelMapper = FakeGameUiModelMapper(),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
             logger = logger,

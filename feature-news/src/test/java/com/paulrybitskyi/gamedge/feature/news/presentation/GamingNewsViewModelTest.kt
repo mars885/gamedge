@@ -22,7 +22,6 @@ import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.FakeLogger
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.feature.news.DOMAIN_ARTICLES
@@ -56,7 +55,7 @@ internal class GamingNewsViewModelTest {
             observeArticlesUseCase = observeArticlesUseCase,
             refreshArticlesUseCase = refreshArticlesUseCase,
             uiModelMapper = FakeGamingNewsItemUiModelMapper(),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             errorMapper = FakeErrorMapper(),
             logger = logger,
         )

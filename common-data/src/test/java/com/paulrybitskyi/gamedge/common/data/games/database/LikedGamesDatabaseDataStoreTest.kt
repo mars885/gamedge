@@ -24,7 +24,7 @@ import com.paulrybitskyi.gamedge.common.data.games.datastores.database.DbGameMap
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.LikedGameFactory
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.LikedGamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.mapToDatabaseGames
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.database.games.entities.DbGame
 import com.paulrybitskyi.gamedge.database.games.entities.DbLikedGame
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
@@ -32,12 +32,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 private const val GAME_ID = 100
 private const val ANOTHER_GAME_ID = 110
 
 internal class LikedGamesDatabaseDataStoreTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var likedGamesTable: FakeLikedGamesTable
     private lateinit var dbGameMapper: DbGameMapper
@@ -50,7 +54,7 @@ internal class LikedGamesDatabaseDataStoreTest {
         SUT = LikedGamesDatabaseDataStore(
             likedGamesTable = likedGamesTable,
             likedGameFactory = FakeLikedGameFactory(),
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             dbGameMapper = dbGameMapper
         )
     }

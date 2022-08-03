@@ -20,7 +20,6 @@ import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeDispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.feature.info.GET_SIMILAR_GAMES_USE_CASE_PARAMS
@@ -52,7 +51,7 @@ internal class GetSimilarGamesUseCaseImplTest {
         SUT = GetSimilarGamesUseCaseImpl(
             refreshSimilarGamesUseCase = refreshSimilarGamesUseCase,
             gamesLocalDataStore = gamesLocalDataStore,
-            dispatcherProvider = FakeDispatcherProvider(),
+            dispatcherProvider = mainCoroutineRule.dispatcherProvider,
         )
     }
 
