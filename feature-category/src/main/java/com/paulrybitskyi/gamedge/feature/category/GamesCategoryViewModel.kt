@@ -101,7 +101,7 @@ internal class GamesCategoryViewModel @Inject constructor(
         }
 
         observeGames(resultEmissionDelay = transitionAnimationDuration)
-        refreshGames()
+        refreshGames(resultEmissionDelay = transitionAnimationDuration)
     }
 
     private fun createEmptyUiState(): GamesCategoryUiState {
@@ -150,7 +150,7 @@ internal class GamesCategoryViewModel @Inject constructor(
         return (!isLoading && games.isNotEmpty())
     }
 
-    private fun refreshGames() {
+    private fun refreshGames(resultEmissionDelay: Long = 0L) {
         if (isRefreshingGames) return
 
         gamesRefreshingJob = useCases.getRefreshableUseCase(gamesCategoryKeyType)
@@ -164,9 +164,14 @@ internal class GamesCategoryViewModel @Inject constructor(
             .onStart {
                 isRefreshingGames = true
                 emit(currentUiState.enableLoading())
+                // Show loading state for some time since it can be too quick
+                delay(resultEmissionDelay)
             }
             .onCompletion {
                 isRefreshingGames = false
+                // Delay disabling loading to avoid quick state changes like
+                // empty, loading, empty, success
+                delay(resultEmissionDelay)
                 emit(currentUiState.disableLoading())
             }
             .onEach { emittedUiState -> _uiState.update { emittedUiState } }
