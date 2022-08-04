@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.feature.info.domain
 
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.get
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
@@ -61,7 +62,7 @@ internal class GetSimilarGamesUseCaseImplTest {
             coEvery { refreshSimilarGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.execute(GET_SIMILAR_GAMES_USE_CASE_PARAMS).test {
-                assertThat(awaitItem()).isEqualTo(DOMAIN_GAMES)
+                assertThat(awaitItem().get()).isEqualTo(DOMAIN_GAMES)
                 awaitComplete()
             }
         }
@@ -74,7 +75,7 @@ internal class GetSimilarGamesUseCaseImplTest {
             coEvery { gamesLocalDataStore.getSimilarGames(any(), any()) } returns DOMAIN_GAMES
 
             SUT.execute(GET_SIMILAR_GAMES_USE_CASE_PARAMS).test {
-                assertThat(awaitItem()).isEqualTo(DOMAIN_GAMES)
+                assertThat(awaitItem().get()).isEqualTo(DOMAIN_GAMES)
                 awaitComplete()
             }
         }

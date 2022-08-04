@@ -81,8 +81,8 @@ internal class GetGameInfoUseCaseImplTest {
 
             coEvery { getGameUseCase.execute(any()) } returns flowOf(Ok(game))
             every { observeGameLikeStateUseCase.execute(any()) } returns flowOf(true)
-            coEvery { getCompanyDevelopedGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
-            coEvery { getSimilarGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
+            coEvery { getCompanyDevelopedGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
+            coEvery { getSimilarGamesUseCase.execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
 
             SUT.execute(USE_CASE_PARAMS).test {
                 assertThat(awaitItem()).isEqualTo(expectedGameInfo)
