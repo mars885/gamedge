@@ -37,7 +37,7 @@ object versions {
     const val compose = "1.2.0"
     const val gradleVersionsPlugin = "0.42.0"
     const val kspPlugin = "1.7.0-1.0.6"
-    const val daggerHilt = "2.43.1"
+    const val daggerHilt = "2.43.2"
     const val detektPlugin = "1.21.0"
     const val ktlintPlugin = "10.3.0"
     const val ktlint = "0.45.2"
@@ -49,7 +49,7 @@ object deps {
 
     object plugins {
 
-        private const val gradlePluginVersion = "7.2.0" // also in buildSrc build.gradle.kts file
+        private const val gradlePluginVersion = "7.2.2" // also in buildSrc build.gradle.kts file
         private const val protobufPluginVersion = "0.8.19" // also in buildSrc build.gradle.kts file
 
         const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
