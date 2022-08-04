@@ -103,17 +103,6 @@ internal class GamingNewsViewModelTest {
     }
 
     @Test
-    fun `Routes to search screen when search button is clicked`() {
-        runTest {
-            SUT.routeFlow.test {
-                SUT.onSearchButtonClicked()
-
-                assertThat(awaitItem()).isInstanceOf(GamingNewsRoute.Search::class.java)
-            }
-        }
-    }
-
-    @Test
     fun `Dispatches url opening command when clicking on news item`() {
         runTest {
             val itemModel = GamingNewsItemUiModel(

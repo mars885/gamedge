@@ -41,10 +41,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalUrlOpener
 import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
@@ -57,14 +55,10 @@ import com.paulrybitskyi.gamedge.feature.news.R
 import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsViewModel
 
 @Composable
-fun GamingNews(
-    modifier: Modifier,
-    onRoute: (Route) -> Unit,
-) {
+fun GamingNews(modifier: Modifier) {
     GamingNews(
         viewModel = hiltViewModel(),
         modifier = modifier,
-        onRoute = onRoute,
     )
 }
 
@@ -72,7 +66,6 @@ fun GamingNews(
 private fun GamingNews(
     viewModel: GamingNewsViewModel,
     modifier: Modifier,
-    onRoute: (Route) -> Unit,
 ) {
     val urlOpener = LocalUrlOpener.current
     val context = LocalContext.current
@@ -87,10 +80,8 @@ private fun GamingNews(
             }
         }
     }
-    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
     GamingNews(
         uiState = viewModel.uiState.collectAsState().value,
-        onSearchButtonClicked = viewModel::onSearchButtonClicked,
         onNewsItemClicked = viewModel::onNewsItemClicked,
         onRefreshRequested = viewModel::onRefreshRequested,
         modifier = modifier,
@@ -100,7 +91,6 @@ private fun GamingNews(
 @Composable
 private fun GamingNews(
     uiState: GamingNewsUiState,
-    onSearchButtonClicked: () -> Unit,
     onNewsItemClicked: (GamingNewsItemUiModel) -> Unit,
     onRefreshRequested: () -> Unit,
     modifier: Modifier = Modifier,
@@ -113,8 +103,6 @@ private fun GamingNews(
                 contentPadding = WindowInsets.statusBars
                     .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
                     .asPaddingValues(),
-                rightButtonIcon = painterResource(R.drawable.magnify),
-                onRightButtonClick = onSearchButtonClicked,
             )
         },
     ) { paddingValues ->
@@ -227,7 +215,6 @@ private fun GamingNewsSuccessStatePreview() {
             uiState = GamingNewsUiState(
                 news = news,
             ),
-            onSearchButtonClicked = {},
             onNewsItemClicked = {},
             onRefreshRequested = {},
         )
@@ -241,7 +228,6 @@ private fun GamingNewsEmptyStatePreview() {
     GamedgeTheme {
         GamingNews(
             uiState = GamingNewsUiState(),
-            onSearchButtonClicked = {},
             onNewsItemClicked = {},
             onRefreshRequested = {},
         )
@@ -255,7 +241,6 @@ private fun GamingNewsLoadingStatePreview() {
     GamedgeTheme {
         GamingNews(
             uiState = GamingNewsUiState(isLoading = true),
-            onSearchButtonClicked = {},
             onNewsItemClicked = {},
             onRefreshRequested = {},
         )

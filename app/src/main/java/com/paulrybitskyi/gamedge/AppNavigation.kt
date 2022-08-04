@@ -38,7 +38,6 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoRoute
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfo
 import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGames
 import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesRoute
-import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsRoute
 import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.GamingNews
 import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearch
 import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchRoute
@@ -63,10 +62,7 @@ internal fun AppNavigation(
             navController = navController,
             modifier = modifier,
         )
-        newsScreen(
-            navController = navController,
-            modifier = modifier,
-        )
+        newsScreen(modifier = modifier)
         settingsScreen(modifier = modifier)
         gamesSearchScreen(navController = navController)
         gamesCategoryScreen(navController = navController)
@@ -152,34 +148,11 @@ private fun NavGraphBuilder.likesScreen(
     }
 }
 
-private fun NavGraphBuilder.newsScreen(
-    navController: NavHostController,
-    modifier: Modifier,
-) {
+private fun NavGraphBuilder.newsScreen(modifier: Modifier) {
     composable(
         route = Screen.News.route,
-        enterTransition = { null },
-        exitTransition = {
-            when (Screen.forRoute(targetState.destination.requireRoute())) {
-                Screen.GamesSearch -> OvershootScaling.exit()
-                else -> null
-            }
-        },
-        popEnterTransition = {
-            when (Screen.forRoute(initialState.destination.requireRoute())) {
-                Screen.GamesSearch -> OvershootScaling.popEnter()
-                else -> null
-            }
-        },
-        popExitTransition = { null },
     ) {
-        GamingNews(modifier) { route ->
-            when (route) {
-                is GamingNewsRoute.Search -> {
-                    navController.navigate(Screen.GamesSearch.route)
-                }
-            }
-        }
+        GamingNews(modifier)
     }
 }
 
