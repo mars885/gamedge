@@ -110,10 +110,6 @@ internal class GamingNewsViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun onSearchButtonClicked() {
-        route(GamingNewsRoute.Search)
-    }
-
     fun onNewsItemClicked(model: GamingNewsItemUiModel) {
         dispatchCommand(GamingNewsCommand.OpenUrl(model.siteDetailUrl))
     }
