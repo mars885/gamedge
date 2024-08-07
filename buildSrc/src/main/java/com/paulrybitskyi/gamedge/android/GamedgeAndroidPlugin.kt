@@ -114,8 +114,11 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     private fun Project.configureAndroidApplicationId() {
         plugins.withId(PLUGIN_ANDROID_APPLICATION) {
             extensions.findByType<BaseAppModuleExtension>()?.run {
+                namespace = appConfig.applicationId
+
                 defaultConfig {
                     applicationId = appConfig.applicationId
+
                 }
 
                 signingConfigs {

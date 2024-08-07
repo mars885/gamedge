@@ -20,6 +20,10 @@ plugins {
     kotlinKapt()
 }
 
+android {
+    namespace = "com.paulrybitskyi.gamedge.common.testing"
+}
+
 dependencies {
     api(project(deps.local.commonTestingDomain))
     implementation(project(deps.local.core))

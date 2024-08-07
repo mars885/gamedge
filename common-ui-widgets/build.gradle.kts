@@ -23,6 +23,8 @@ plugins {
 }
 
 android {
+    namespace = "com.paulrybitskyi.gamedge.common.ui.widgets"
+
     buildFeatures {
         compose = true
     }

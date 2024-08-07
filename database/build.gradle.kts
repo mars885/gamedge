@@ -24,6 +24,8 @@ plugins {
 }
 
 android {
+    namespace = "com.paulrybitskyi.gamedge.database"
+
     defaultConfig {
         testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
     }

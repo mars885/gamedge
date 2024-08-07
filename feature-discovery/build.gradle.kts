@@ -23,6 +23,8 @@ plugins {
 }
 
 android {
+    namespace = "com.paulrybitskyi.gamedge.feature.discovery"
+
     buildFeatures {
         compose = true
     }

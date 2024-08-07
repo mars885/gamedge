@@ -22,6 +22,8 @@ plugins {
 }
 
 android {
+    namespace = "com.paulrybitskyi.gamedge.common.ui"
+
     buildFeatures {
         compose = true
     }

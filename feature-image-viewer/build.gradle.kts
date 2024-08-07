@@ -23,6 +23,8 @@ plugins {
 }
 
 android {
+    namespace = "com.paulrybitskyi.gamedge.feature.image.viewer"
+
     buildFeatures {
         compose = true
     }

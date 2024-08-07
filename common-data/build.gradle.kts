@@ -22,6 +22,10 @@ plugins {
     ksp()
 }
 
+android {
+    namespace = "com.paulrybitskyi.gamedge.common.data"
+}
+
 dependencies {
     implementation(project(deps.local.commonDomain))
     implementation(project(deps.local.core))
