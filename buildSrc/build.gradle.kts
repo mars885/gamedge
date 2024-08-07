@@ -30,6 +30,6 @@ dependencies {
     // because currently it forces 1.10 JavaPoet version, for some odd reason.
     implementation("com.squareup:javapoet:1.13.0")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0")
-    implementation("com.google.protobuf:protobuf-gradle-plugin:0.8.19")
+    implementation("com.google.protobuf:protobuf-gradle-plugin:0.9.4")
     implementation(gradleApi()) // for custom plugins
 }

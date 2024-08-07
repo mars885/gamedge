@@ -50,7 +50,7 @@ object deps {
     object plugins {
 
         private const val androidPluginVersion = "8.3.1" // also in buildSrc build.gradle.kts file
-        private const val protobufPluginVersion = "0.8.19" // also in buildSrc build.gradle.kts file
+        private const val protobufPluginVersion = "0.9.4" // also in buildSrc build.gradle.kts file
 
         const val androidGradle = "com.android.tools.build:gradle:${androidPluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
