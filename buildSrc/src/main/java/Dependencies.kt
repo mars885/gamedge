@@ -49,12 +49,11 @@ object deps {
 
     object plugins {
 
-        private const val gradlePluginVersion = "7.2.2" // also in buildSrc build.gradle.kts file
+        private const val androidPluginVersion = "7.2.2" // also in buildSrc build.gradle.kts file
         private const val protobufPluginVersion = "0.8.19" // also in buildSrc build.gradle.kts file
 
-        const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
+        const val androidGradle = "com.android.tools.build:gradle:${androidPluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        const val daggerHiltGradle = "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}"
         const val protobuf = "com.google.protobuf:protobuf-gradle-plugin:$protobufPluginVersion"
         const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${versions.gradleVersionsPlugin}"
     }

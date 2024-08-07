@@ -23,7 +23,7 @@ plugins {
     kotlinKapt()
     ksp()
     kotlinxSerialization()
-    daggerHiltAndroid()
+    daggerHilt()
 }
 
 android {

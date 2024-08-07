@@ -19,7 +19,7 @@ plugins {
     gamedgeAndroid()
     kotlinKapt()
     ksp()
-    daggerHiltAndroid()
+    daggerHilt()
 }
 
 android {

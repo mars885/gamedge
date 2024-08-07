@@ -19,6 +19,8 @@ import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    ksp() version versions.kspPlugin apply false
+    daggerHilt() version versions.daggerHilt apply false
     gradleVersions()
     detekt()
     ktlint()
@@ -33,7 +35,6 @@ buildscript {
     dependencies {
         classpath(deps.plugins.androidGradle)
         classpath(deps.plugins.kotlinGradle)
-        classpath(deps.plugins.daggerHiltGradle)
         classpath(deps.plugins.protobuf)
         classpath(deps.plugins.gradleVersions)
     }
