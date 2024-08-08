@@ -29,6 +29,10 @@ plugins {
 android {
     namespace = "com.paulrybitskyi.gamedge.gamespot.api"
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
 
