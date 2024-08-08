@@ -17,7 +17,7 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
-    gamedgeProtobuf()
+    protobuf()
     kotlinKapt()
     ksp()
     daggerHilt()
@@ -33,6 +33,22 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = versions.compose
     }
+}
+
+protobuf {
+/*    protoc {
+        artifact = deps.google.protobufCompiler
+    }
+
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
+    }*/
 }
 
 dependencies {
@@ -54,6 +70,8 @@ dependencies {
 
     implementation(deps.commons.core)
     implementation(deps.commons.ktx)
+
+    implementation(deps.google.protobuf)
 
     implementation(deps.google.daggerHiltAndroid)
     kapt(deps.google.daggerHiltAndroidCompiler)
