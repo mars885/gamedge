@@ -88,7 +88,7 @@ subprojects {
 
     plugins.withId(PLUGIN_KOTLIN) {
         extensions.findByType<KotlinProjectExtension>()?.run {
-            jvmToolchain(appConfig.kotlinCompatibilityVersion)
+            jvmToolchain(appConfig.jvmToolchainVersion)
         }
     }
 

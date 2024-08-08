@@ -23,6 +23,7 @@ import PLUGIN_ANDROID_APPLICATION
 import PLUGIN_KOTLIN_ANDROID
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.kotlin.dsl.findByType
+import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 import java.util.Properties
 
 class GamedgeAndroidPlugin : Plugin<Project> {
@@ -90,6 +91,11 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                     isMinifyEnabled = true
                     proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
                 }
+            }
+
+            compileOptions {
+                sourceCompatibility = appConfig.javaCompatibilityVersion
+                targetCompatibility = appConfig.javaCompatibilityVersion
             }
 
             // Without the below block, a build failure was happening when running ./gradlew connectedAndroidTest

@@ -16,6 +16,8 @@
 
 @file:Suppress("ClassName")
 
+import org.gradle.api.JavaVersion
+
 object appConfig {
 
     const val compileSdkVersion = 34
@@ -25,7 +27,10 @@ object appConfig {
     const val versionCode = 1
     const val versionName = "1.0.0"
 
-    const val kotlinCompatibilityVersion = 8
+    const val jvmToolchainVersion = 17
+
+    val javaCompatibilityVersion = JavaVersion.VERSION_17
+    val kotlinCompatibilityVersion = JavaVersion.VERSION_17
 }
 
 object versions {
