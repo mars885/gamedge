@@ -23,6 +23,10 @@ plugins {
 
 android {
     namespace = "com.paulrybitskyi.gamedge.common.api"
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
