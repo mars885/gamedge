@@ -92,11 +92,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 }
             }
 
-            compileOptions {
-                sourceCompatibility = appConfig.javaCompatibilityVersion
-                targetCompatibility = appConfig.javaCompatibilityVersion
-            }
-
             // Without the below block, a build failure was happening when running ./gradlew connectedAndroidTest
             // See: https://github.com/Kotlin/kotlinx.coroutines/tree/master/kotlinx-coroutines-debug#debug-agent-and-android
             packagingOptions {

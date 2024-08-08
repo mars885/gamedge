@@ -15,6 +15,7 @@
  */
 
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -85,27 +86,33 @@ allprojects {
 
 subprojects {
 
-    tasks.withType<KotlinCompile>().all {
-        kotlinOptions {
-            freeCompilerArgs += listOf(
-                "-opt-in=kotlinx.coroutines.FlowPreview",
-                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
-                "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
-                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
-                "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
-            )
-
-            jvmTarget = appConfig.kotlinCompatibilityVersion.toString()
+    plugins.withId(PLUGIN_KOTLIN) {
+        extensions.findByType<KotlinProjectExtension>()?.run {
+            jvmToolchain(appConfig.kotlinCompatibilityVersion)
         }
     }
 
     plugins.withId(PLUGIN_KOTLIN_KAPT) {
         extensions.findByType<KaptExtension>()?.run {
             correctErrorTypes = true
+        }
+    }
+
+    tasks.withType<KotlinCompile>().all {
+        compilerOptions {
+            freeCompilerArgs.set(
+                listOf(
+                    "-opt-in=kotlinx.coroutines.FlowPreview",
+                    "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                    "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+                    "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                    "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                    "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
+                    "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
+                )
+            )
         }
     }
 
