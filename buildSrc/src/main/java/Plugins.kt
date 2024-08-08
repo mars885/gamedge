@@ -24,6 +24,7 @@ const val PLUGIN_ANDROID_APPLICATION = "com.android.application"
 const val PLUGIN_ANDROID_LIBRARY = "com.android.library"
 const val PLUGIN_KOTLIN = "kotlin"
 const val PLUGIN_KOTLIN_ANDROID = "kotlin-android"
+const val PLUGIN_JETPACK_COMPOSE = "org.jetbrains.kotlin.plugin.compose"
 const val PLUGIN_KOTLIN_KAPT = "kotlin-kapt"
 const val PLUGIN_KSP = "com.google.devtools.ksp"
 const val PLUGIN_DAGGER_HILT = "com.google.dagger.hilt.android"
@@ -55,6 +56,10 @@ fun PluginDependenciesSpec.kotlin(): PluginDependencySpec {
 
 fun PluginDependenciesSpec.kotlinAndroid(): PluginDependencySpec {
     return id(PLUGIN_KOTLIN_ANDROID)
+}
+
+fun PluginDependenciesSpec.jetpackCompose(): PluginDependencySpec {
+    return id(PLUGIN_JETPACK_COMPOSE)
 }
 
 fun PluginDependenciesSpec.kotlinKapt(): PluginDependencySpec {

@@ -17,6 +17,7 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    jetpackCompose()
     kotlinKapt()
     ksp()
     daggerHilt()
@@ -27,14 +28,6 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = versions.compose
     }
 }
 

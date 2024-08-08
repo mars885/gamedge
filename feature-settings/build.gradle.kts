@@ -17,22 +17,15 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
-    protobuf()
+    jetpackCompose()
     kotlinKapt()
     ksp()
     daggerHilt()
+    protobuf()
 }
 
 android {
     namespace = "com.paulrybitskyi.gamedge.feature.settings"
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = versions.compose
-    }
 }
 
 protobuf {

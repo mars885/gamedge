@@ -17,20 +17,13 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    jetpackCompose()
     kotlinKapt()
     ksp()
 }
 
 android {
     namespace = "com.paulrybitskyi.gamedge.common.ui"
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = versions.compose
-    }
 }
 
 dependencies {

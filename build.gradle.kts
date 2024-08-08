@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    jetpackCompose() version versions.kotlin apply false
     ksp() version versions.kspPlugin apply false
     daggerHilt() version versions.daggerHilt apply false
     gradleVersions()

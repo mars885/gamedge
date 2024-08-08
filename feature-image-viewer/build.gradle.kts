@@ -17,6 +17,7 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    jetpackCompose()
     kotlinKapt()
     ksp()
     daggerHilt()
@@ -24,14 +25,6 @@ plugins {
 
 android {
     namespace = "com.paulrybitskyi.gamedge.feature.image.viewer"
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = versions.compose
-    }
 }
 
 dependencies {
