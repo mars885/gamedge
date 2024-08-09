@@ -25,7 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import com.paulrybitskyi.gamedge.common.ui.R
+import com.paulrybitskyi.gamedge.core.R
 
 @Composable
 fun lightColors(): Colors {
