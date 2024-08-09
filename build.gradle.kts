@@ -45,7 +45,7 @@ buildscript {
 detekt {
     parallel = true
     buildUponDefaultConfig = true
-    config = files("config/detekt/detekt.yml")
+    config.setFrom("config/detekt/detekt.yml")
 }
 
 tasks.withType<Detekt>().configureEach {
@@ -128,8 +128,6 @@ subprojects {
     }
 }
 
-tasks {
-    val clean by registering(Delete::class) {
-        delete(buildDir)
-    }
+val clean by tasks.registering(Delete::class) {
+    delete(layout.buildDirectory)
 }
