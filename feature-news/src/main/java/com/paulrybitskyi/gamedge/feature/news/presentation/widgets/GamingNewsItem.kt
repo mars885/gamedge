@@ -38,7 +38,8 @@ import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.images.secondaryImage
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
-import com.paulrybitskyi.gamedge.feature.news.R
+import com.paulrybitskyi.gamedge.core.R as CoreR
+import com.paulrybitskyi.gamedge.common.ui.widgets.R as CommonUiWidgetsR
 
 @Composable
 internal fun GamingNewsItem(
@@ -93,7 +94,7 @@ private fun Image(
     ) {
         AsyncImage(
             model = defaultImageRequest(imageUrl) {
-                secondaryImage(R.drawable.game_landscape_placeholder)
+                secondaryImage(CommonUiWidgetsR.drawable.game_landscape_placeholder)
             },
             contentDescription = null,
             contentScale = ContentScale.Crop,
@@ -108,7 +109,7 @@ private fun Timestamp(publicationDate: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(R.drawable.clock_outline_16dp),
+            painter = painterResource(CoreR.drawable.clock_outline_16dp),
             contentDescription = null,
             modifier = Modifier.padding(end = GamedgeTheme.spaces.spacing_1_0),
         )
