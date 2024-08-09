@@ -34,6 +34,7 @@ import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.common.domain.common.entities.hasDefaultLimit
 import com.paulrybitskyi.gamedge.common.domain.common.entities.nextLimit
 import com.paulrybitskyi.gamedge.common.domain.games.common.ObserveGamesUseCaseParams
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.likes.R
 import com.paulrybitskyi.gamedge.feature.likes.domain.ObserveLikedGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -86,7 +87,7 @@ internal class LikedGamesViewModel @Inject constructor(
     private fun createDefaultUiState(): GamesUiState {
         return GamesUiState(
             isLoading = false,
-            infoIconId = R.drawable.account_heart_outline,
+            infoIconId = CoreR.drawable.account_heart_outline,
             infoTitle = stringProvider.getString(R.string.liked_games_info_title),
             games = emptyList(),
         )

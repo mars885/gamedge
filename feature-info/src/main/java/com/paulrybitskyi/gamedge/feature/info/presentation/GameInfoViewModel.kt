@@ -25,9 +25,9 @@ import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.di.qualifiers.TransitionAnimationDuration
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
-import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameImageType
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameInfoUseCase
@@ -114,7 +114,7 @@ internal class GameInfoViewModel @Inject constructor(
 
     fun onArtworkClicked(artworkIndex: Int) {
         navigateToImageViewer(
-            title = stringProvider.getString(R.string.artwork),
+            title = stringProvider.getString(CoreR.string.artwork),
             imageType = GameImageType.ARTWORK,
             initialPosition = artworkIndex,
         )
@@ -149,7 +149,7 @@ internal class GameInfoViewModel @Inject constructor(
 
     fun onCoverClicked() {
         navigateToImageViewer(
-            title = stringProvider.getString(R.string.cover),
+            title = stringProvider.getString(CoreR.string.cover),
             imageType = GameImageType.COVER,
         )
     }
@@ -167,7 +167,7 @@ internal class GameInfoViewModel @Inject constructor(
 
     fun onScreenshotClicked(screenshotIndex: Int) {
         navigateToImageViewer(
-            title = stringProvider.getString(R.string.screenshot),
+            title = stringProvider.getString(CoreR.string.screenshot),
             imageType = GameImageType.SCREENSHOT,
             initialPosition = screenshotIndex,
         )
