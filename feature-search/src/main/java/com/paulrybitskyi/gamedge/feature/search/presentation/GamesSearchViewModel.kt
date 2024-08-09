@@ -34,6 +34,7 @@ import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
 import com.paulrybitskyi.gamedge.common.domain.common.entities.nextOffset
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.resultOrError
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.search.R
 import com.paulrybitskyi.gamedge.feature.search.domain.SearchGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -115,7 +116,7 @@ internal class GamesSearchViewModel @Inject constructor(
     private fun createGamesEmptyUiState(): GamesUiState {
         return GamesUiState(
             isLoading = false,
-            infoIconId = R.drawable.magnify,
+            infoIconId = CoreR.drawable.magnify,
             infoTitle = getUiStateInfoTitle(),
             games = emptyList(),
         )
