@@ -51,6 +51,7 @@ import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.images.secondaryImage
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
+import com.paulrybitskyi.gamedge.common.ui.widgets.R as CommonUiWidgetsR
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.utils.GameInfoSectionWithInnerList
 import kotlin.math.roundToInt
@@ -145,7 +146,7 @@ private fun CompanyLogoImage(
     val logoContainerHeightInPx = with(density) { logoContainerSize.height.roundToPx() }
     val painter = rememberAsyncImagePainter(
         model = defaultImageRequest(logoImageUrl) {
-            secondaryImage(R.drawable.game_landscape_placeholder)
+            secondaryImage(CommonUiWidgetsR.drawable.game_landscape_placeholder)
             size(logoImageSize.width, logoImageSize.height)
             transformations(
                 LogoImageTransformation(

@@ -50,6 +50,7 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsCommand
 import com.paulrybitskyi.gamedge.feature.news.R
 import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsViewModel
@@ -75,7 +76,7 @@ private fun GamingNews(
         when (command) {
             is GamingNewsCommand.OpenUrl -> {
                 if (!urlOpener.openUrl(command.url, context)) {
-                    context.showShortToast(context.getString(R.string.url_opener_not_found))
+                    context.showShortToast(context.getString(CoreR.string.url_opener_not_found))
                 }
             }
         }
@@ -150,7 +151,7 @@ private fun EmptyState(modifier: Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Info(
-            icon = painterResource(R.drawable.newspaper_variant_outline),
+            icon = painterResource(CoreR.drawable.newspaper_variant_outline),
             title = stringResource(R.string.gaming_news_info_view_title),
             modifier = Modifier.padding(
                 horizontal = GamedgeTheme.spaces.spacing_7_5,

@@ -48,6 +48,7 @@ import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.common.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryViewModel
 import com.paulrybitskyi.gamedge.feature.discovery.R
@@ -107,7 +108,7 @@ private fun GamesDiscovery(
                 contentPadding = WindowInsets.statusBars
                     .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
                     .asPaddingValues(),
-                rightButtonIcon = painterResource(R.drawable.magnify),
+                rightButtonIcon = painterResource(CoreR.drawable.magnify),
                 onRightButtonClick = onSearchButtonClicked,
             )
         },

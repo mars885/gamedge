@@ -32,6 +32,7 @@ import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.images.secondaryImage
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
+import com.paulrybitskyi.gamedge.common.ui.widgets.R as CommonUiWidgetsR
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.utils.GameInfoSectionWithInnerList
 
@@ -68,7 +69,7 @@ private fun Screenshot(
     ) {
         AsyncImage(
             model = defaultImageRequest(screenshot.url) {
-                secondaryImage(R.drawable.game_landscape_placeholder)
+                secondaryImage(CommonUiWidgetsR.drawable.game_landscape_placeholder)
             },
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),

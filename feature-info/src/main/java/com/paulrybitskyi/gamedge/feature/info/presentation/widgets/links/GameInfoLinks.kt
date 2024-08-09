@@ -35,6 +35,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.common.domain.games.entities.WebsiteCategory
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.utils.GameInfoSection
 import java.util.Locale
@@ -111,7 +112,7 @@ private fun GameInfoLinksPreview() {
                     .replaceFirstChar {
                         if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
                     },
-                iconId = R.drawable.web,
+                iconId = CoreR.drawable.web,
                 url = "url$index",
             )
     }

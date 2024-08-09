@@ -76,6 +76,7 @@ import com.paulrybitskyi.gamedge.common.ui.theme.lightScrim
 import com.paulrybitskyi.gamedge.common.ui.theme.subtitle3
 import com.paulrybitskyi.gamedge.common.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.Artworks
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModel
@@ -198,7 +199,7 @@ internal fun GameInfoAnimatableHeader(
         )
 
         Icon(
-            painter = painterResource(R.drawable.arrow_left),
+            painter = painterResource(CoreR.drawable.arrow_left),
             contentDescription = null,
             modifier = Modifier
                 .layoutId(ConstraintIdBackButton)
@@ -282,7 +283,7 @@ internal fun GameInfoAnimatableHeader(
             Icon(
                 painter = rememberAnimatedVectorPainter(
                     animatedImageVector = AnimatedImageVector.animatedVectorResource(
-                        R.drawable.heart_animated_fill
+                        CoreR.drawable.heart_animated_fill
                     ),
                     atEnd = headerInfo.isLiked,
                 ),
@@ -354,7 +355,7 @@ internal fun GameInfoAnimatableHeader(
         }
 
         Info(
-            icon = painterResource(R.drawable.star_circle_outline),
+            icon = painterResource(CoreR.drawable.star_circle_outline),
             title = headerInfo.rating,
             modifier = Modifier
                 .layoutId(ConstraintIdRating)
@@ -371,7 +372,7 @@ internal fun GameInfoAnimatableHeader(
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
-            icon = painterResource(R.drawable.account_heart_outline),
+            icon = painterResource(CoreR.drawable.account_heart_outline),
             title = headerInfo.likeCount,
             modifier = Modifier
                 .layoutId(ConstraintIdLikeCount)
@@ -380,7 +381,7 @@ internal fun GameInfoAnimatableHeader(
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
-            icon = painterResource(R.drawable.age_rating_outline),
+            icon = painterResource(CoreR.drawable.age_rating_outline),
             title = headerInfo.ageRating,
             modifier = Modifier
                 .layoutId(ConstraintIdAgeRating)
@@ -389,7 +390,7 @@ internal fun GameInfoAnimatableHeader(
             titleTextStyle = GamedgeTheme.typography.caption,
         )
         Info(
-            icon = painterResource(R.drawable.shape_outline),
+            icon = painterResource(CoreR.drawable.shape_outline),
             title = headerInfo.gameCategory,
             modifier = Modifier
                 .layoutId(ConstraintIdGameCategory)

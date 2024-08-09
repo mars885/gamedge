@@ -32,8 +32,8 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
-import com.paulrybitskyi.gamedge.common.ui.widgets.R
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
+import com.paulrybitskyi.gamedge.core.R
 
 @Composable
 fun Games(

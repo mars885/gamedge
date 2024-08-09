@@ -49,6 +49,7 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.categorypreview.GamesCategoryPreview
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoCommand
 import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoViewModel
 import com.paulrybitskyi.gamedge.feature.info.R
@@ -93,7 +94,7 @@ private fun GameInfo(
         when (command) {
             is GameInfoCommand.OpenUrl -> {
                 if (!urlOpener.openUrl(command.url, context)) {
-                    context.showShortToast(context.getString(R.string.url_opener_not_found))
+                    context.showShortToast(context.getString(CoreR.string.url_opener_not_found))
                 }
             }
         }
@@ -174,7 +175,7 @@ private fun LoadingState(modifier: Modifier) {
 @Composable
 private fun EmptyState(modifier: Modifier) {
     Info(
-        icon = painterResource(R.drawable.gamepad_variant_outline),
+        icon = painterResource(CoreR.drawable.gamepad_variant_outline),
         title = stringResource(R.string.game_info_info_view_title),
         modifier = modifier.padding(horizontal = GamedgeTheme.spaces.spacing_7_5),
     )
@@ -588,37 +589,37 @@ private fun buildFakeGameModel(): GameInfoUiModel {
             GameInfoLinkUiModel(
                 id = 1,
                 text = "Steam",
-                iconId = R.drawable.steam,
+                iconId = CoreR.drawable.steam,
                 url = "",
             ),
             GameInfoLinkUiModel(
                 id = 2,
                 text = "Official",
-                iconId = R.drawable.web,
+                iconId = CoreR.drawable.web,
                 url = "",
             ),
             GameInfoLinkUiModel(
                 id = 3,
                 text = "Twitter",
-                iconId = R.drawable.twitter,
+                iconId = CoreR.drawable.twitter,
                 url = "",
             ),
             GameInfoLinkUiModel(
                 id = 4,
                 text = "Subreddit",
-                iconId = R.drawable.reddit,
+                iconId = CoreR.drawable.reddit,
                 url = "",
             ),
             GameInfoLinkUiModel(
                 id = 5,
                 text = "YouTube",
-                iconId = R.drawable.youtube,
+                iconId = CoreR.drawable.youtube,
                 url = "",
             ),
             GameInfoLinkUiModel(
                 id = 6,
                 text = "Twitch",
-                iconId = R.drawable.twitch,
+                iconId = CoreR.drawable.twitch,
                 url = "",
             ),
         ),

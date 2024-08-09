@@ -48,6 +48,7 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.Games
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.finiteUiState
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.search.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -151,7 +152,7 @@ private fun GamesSearchSuccessStatePreview() {
                 queryText = "God of War",
                 gamesUiState = GamesUiState(
                     isLoading = false,
-                    infoIconId = R.drawable.magnify,
+                    infoIconId = CoreR.drawable.magnify,
                     infoTitle = "",
                     games = listOf(
                         GameUiModel(
@@ -204,7 +205,7 @@ private fun GamesSearchEmptyStatePreview() {
                 queryText = "God of War",
                 gamesUiState = GamesUiState(
                     isLoading = false,
-                    infoIconId = R.drawable.magnify,
+                    infoIconId = CoreR.drawable.magnify,
                     infoTitle = "No games found for \n\"God of War\"",
                     games = emptyList(),
                 )
@@ -229,7 +230,7 @@ private fun GamesSearchLoadingStatePreview() {
                 queryText = "God of War",
                 gamesUiState = GamesUiState(
                     isLoading = true,
-                    infoIconId = R.drawable.magnify,
+                    infoIconId = CoreR.drawable.magnify,
                     infoTitle = "",
                     games = emptyList(),
                 )

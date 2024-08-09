@@ -46,6 +46,7 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.R
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
 fun GamesCategoryPreview(
@@ -192,7 +193,7 @@ private fun ConstraintLayoutScope.Content(
 @Composable
 private fun EmptyState(modifier: Modifier) {
     Info(
-        icon = painterResource(R.drawable.google_controller),
+        icon = painterResource(CoreR.drawable.google_controller),
         title = stringResource(R.string.games_category_preview_info_view_title),
         modifier = modifier,
         iconSize = 80.dp,

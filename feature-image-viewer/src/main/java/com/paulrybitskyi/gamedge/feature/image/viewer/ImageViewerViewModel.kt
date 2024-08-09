@@ -19,6 +19,7 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.fromCsv
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -111,8 +112,8 @@ internal class ImageViewerViewModel @Inject constructor(
     fun onToolbarRightButtonClicked() {
         val currentImageUrl = currentUiState.imageUrls[currentUiState.selectedImageUrlIndex]
         val textToShare = stringProvider.getString(
-            R.string.text_sharing_message_template,
-            stringProvider.getString(R.string.image),
+            CoreR.string.text_sharing_message_template,
+            stringProvider.getString(CoreR.string.image),
             currentImageUrl
         )
 

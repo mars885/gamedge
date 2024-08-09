@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.core.R
 
 @Composable
 fun Info(

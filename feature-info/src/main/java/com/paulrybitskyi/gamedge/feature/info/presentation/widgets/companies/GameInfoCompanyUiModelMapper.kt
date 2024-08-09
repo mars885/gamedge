@@ -22,7 +22,7 @@ import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory.Config
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.common.domain.games.entities.InvolvedCompany
-import com.paulrybitskyi.gamedge.feature.info.R
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -60,10 +60,10 @@ internal class GameInfoCompanyUiModelMapperImpl @Inject constructor(
 
     private fun InvolvedCompany.createRolesString(): String {
         return buildList {
-            if (isDeveloper) add(R.string.company_role_developer)
-            if (isPublisher) add(R.string.company_role_publisher)
-            if (isPorter) add(R.string.company_role_porter)
-            if (isSupporting) add(R.string.company_role_supporting)
+            if (isDeveloper) add(CoreR.string.company_role_developer)
+            if (isPublisher) add(CoreR.string.company_role_publisher)
+            if (isPorter) add(CoreR.string.company_role_porter)
+            if (isSupporting) add(CoreR.string.company_role_supporting)
         }
         .joinToString(
             separator = COMPANY_ROLE_SEPARATOR,

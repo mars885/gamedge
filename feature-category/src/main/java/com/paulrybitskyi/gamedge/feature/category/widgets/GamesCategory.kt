@@ -52,6 +52,7 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.category.GamesCategoryViewModel
 import com.paulrybitskyi.gamedge.feature.category.R
 
@@ -94,7 +95,7 @@ private fun GamesCategory(
                 contentPadding = WindowInsets.statusBars
                     .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
                     .asPaddingValues(),
-                leftButtonIcon = painterResource(R.drawable.arrow_left),
+                leftButtonIcon = painterResource(CoreR.drawable.arrow_left),
                 onLeftButtonClick = onBackButtonClicked,
             )
         },
@@ -131,7 +132,7 @@ private fun LoadingState(modifier: Modifier) {
 @Composable
 private fun EmptyState(modifier: Modifier) {
     Info(
-        icon = painterResource(R.drawable.gamepad_variant_outline),
+        icon = painterResource(CoreR.drawable.gamepad_variant_outline),
         title = stringResource(R.string.games_category_info_view_title),
         modifier = modifier.padding(horizontal = GamedgeTheme.spaces.spacing_7_5),
     )
