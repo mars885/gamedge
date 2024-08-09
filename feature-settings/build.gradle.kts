@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import com.google.protobuf.gradle.id
+
 plugins {
     androidLibrary()
     gamedgeAndroid()
@@ -29,7 +31,7 @@ android {
 }
 
 protobuf {
-/*    protoc {
+    protoc {
         artifact = deps.google.protobufCompiler
     }
 
@@ -41,7 +43,7 @@ protobuf {
                 }
             }
         }
-    }*/
+    }
 }
 
 dependencies {

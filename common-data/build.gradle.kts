@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
+import com.google.protobuf.gradle.id
+
 plugins {
     androidLibrary()
     gamedgeAndroid()
-    protobuf()
     kotlinKapt()
     ksp()
+    protobuf()
 }
 
 android {
@@ -27,7 +29,7 @@ android {
 }
 
 protobuf {
-/*    protoc {
+    protoc {
         artifact = deps.google.protobufCompiler
     }
 
@@ -39,7 +41,7 @@ protobuf {
                 }
             }
         }
-    }*/
+    }
 }
 
 dependencies {
