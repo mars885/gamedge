@@ -32,7 +32,6 @@ import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.images.secondaryImage
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.R as CommonUiWidgetsR
-import com.paulrybitskyi.gamedge.feature.info.R
 
 @Composable
 internal fun Artworks(

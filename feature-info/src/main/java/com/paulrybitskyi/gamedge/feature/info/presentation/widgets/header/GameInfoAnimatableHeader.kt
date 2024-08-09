@@ -361,6 +361,7 @@ internal fun GameInfoAnimatableHeader(
                 .layoutId(ConstraintIdRating)
                 .drawOnTop()
                 .clickable {
+                    @Suppress("ForbiddenComment")
                     // TODO: To be removed, only for debugging purposes
                     state = if (state == State.Expanded) {
                         State.Collapsed
