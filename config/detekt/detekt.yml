@@ -183,13 +183,13 @@ coroutines:
   GlobalCoroutineUsage:
     active: false
   InjectDispatcher:
-    active: false
+    active: true
     dispatcherNames:
       - 'IO'
       - 'Default'
       - 'Unconfined'
   RedundantSuspendModifier:
-    active: false
+    active: true
   SleepInsteadOfDelay:
     active: true
   SuspendFunSwallowedCancellation:
@@ -197,7 +197,7 @@ coroutines:
   SuspendFunWithCoroutineScopeReceiver:
     active: false
   SuspendFunWithFlowReturnType:
-    active: false
+    active: true
 
 empty-blocks:
   active: true
@@ -244,7 +244,7 @@ exceptions:
       - 'hashCode'
       - 'toString'
   InstanceOfCheckForException:
-    active: false
+    active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**']
   NotImplementedDeclaration:
     active: false
@@ -335,14 +335,13 @@ naming:
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**']
     functionPattern: '[a-z][a-zA-Z0-9]*'
     excludeClassPattern: '$^'
-
-    ignoreAnnotated: [ 'Composable' ]
+    ignoreAnnotated: ['Composable']
   FunctionParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
   InvalidPackageDeclaration:
-    active: false
+    active: true
     rootPackage: ''
     requireRootInDeclaration: false
   LambdaParameterNaming:
@@ -405,7 +404,7 @@ performance:
 potential-bugs:
   active: true
   AvoidReferentialEquality:
-    active: false
+    active: true
     forbiddenTypePatterns:
       - 'kotlin.String'
   CastNullableToNonNullableType:
@@ -439,9 +438,9 @@ potential-bugs:
   ExplicitGarbageCollectionCall:
     active: true
   HasPlatformType:
-    active: false
+    active: true
   IgnoredReturnValue:
-    active: false
+    active: true
     restrictToConfig: true
     returnValueAnnotations:
       - 'CheckResult'
@@ -535,8 +534,8 @@ style:
   DataClassShouldBeImmutable:
     active: false
   DestructuringDeclarationWithTooManyEntries:
-    active: false
-    maxDestructuringEntries: 3
+    active: true
+    maxDestructuringEntries: 5
   DoubleNegativeLambda:
     active: false
     negativeFunctions:
@@ -787,6 +786,5 @@ style:
     ignoreLateinitVar: false
   WildcardImport:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     excludeImports:
       - 'java.util.*'
