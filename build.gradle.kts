@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
@@ -50,6 +51,14 @@ detekt {
 
 tasks.withType<Detekt>().configureEach {
     reports.html.required.set(true)
+}
+
+tasks.withType<DependencyUpdatesTask> {
+    rejectVersionIf {
+        listOf("alpha", "beta", "rc").any { keyword ->
+            candidate.version.lowercase().contains(keyword)
+        }
+    }
 }
 
 allprojects {
