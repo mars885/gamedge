@@ -39,8 +39,8 @@ object versions {
     const val kspPlugin = "2.0.0-1.0.24"
     const val daggerHilt = "2.51.1"
     const val detektPlugin = "1.23.6"
-    const val ktlintPlugin = "10.3.0"
-    const val ktlint = "0.45.2"
+    const val ktlintPlugin = "12.1.1"
+    const val ktlint = "1.3.1"
     const val coroutines = "1.8.1"
     const val room = "2.6.1"
 }

@@ -75,6 +75,7 @@ allprojects {
         version.set(versions.ktlint)
         android.set(true)
         outputToConsole.set(true)
+        verbose.set(true)
 
         filter {
             // https://github.com/JLLeitschuh/ktlint-gradle/issues/266#issuecomment-529527697
