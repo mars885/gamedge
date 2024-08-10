@@ -42,7 +42,7 @@ object versions {
     const val ktlintPlugin = "10.3.0"
     const val ktlint = "0.45.2"
     const val coroutines = "1.8.1"
-    const val room = "2.4.3"
+    const val room = "2.6.1"
 }
 
 object deps {
