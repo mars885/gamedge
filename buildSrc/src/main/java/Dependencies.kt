@@ -35,14 +35,13 @@ object appConfig {
 object versions {
 
     const val kotlin = "2.0.0" // also in buildSrc build.gradle.kts file
-    const val compose = "1.2.0"
     const val gradleVersionsPlugin = "0.51.0"
     const val kspPlugin = "2.0.0-1.0.24"
     const val daggerHilt = "2.51.1"
     const val detektPlugin = "1.23.6"
     const val ktlintPlugin = "10.3.0"
     const val ktlint = "0.45.2"
-    const val coroutines = "1.6.4"
+    const val coroutines = "1.8.1"
     const val room = "2.4.3"
 }
 
@@ -111,17 +110,18 @@ object deps {
 
     object compose {
 
+        private const val composeVersion = "1.2.0"
         private const val navigationVersion = "2.5.1"
         private const val constraintLayoutVersion = "1.1.0-alpha02"
         private const val hiltVersion = "1.0.0"
 
-        const val ui = "androidx.compose.ui:ui:${versions.compose}"
-        const val tooling = "androidx.compose.ui:ui-tooling:${versions.compose}"
-        const val animation = "androidx.compose.animation:animation-graphics:${versions.compose}"
-        const val foundation = "androidx.compose.foundation:foundation:${versions.compose}"
-        const val activity = "androidx.activity:activity-compose:${versions.compose}"
-        const val material = "androidx.compose.material:material:${versions.compose}"
-        const val runtime = "androidx.compose.runtime:runtime:${versions.compose}"
+        const val ui = "androidx.compose.ui:ui:$composeVersion"
+        const val tooling = "androidx.compose.ui:ui-tooling:$composeVersion"
+        const val animation = "androidx.compose.animation:animation-graphics:$composeVersion"
+        const val foundation = "androidx.compose.foundation:foundation:$composeVersion"
+        const val activity = "androidx.activity:activity-compose:$composeVersion"
+        const val material = "androidx.compose.material:material:$composeVersion"
+        const val runtime = "androidx.compose.runtime:runtime:$composeVersion"
 
         const val navigation = "androidx.navigation:navigation-compose:$navigationVersion"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:$constraintLayoutVersion"
