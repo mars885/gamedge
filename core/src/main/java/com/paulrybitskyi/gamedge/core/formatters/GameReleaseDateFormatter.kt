@@ -57,7 +57,7 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
             ReleaseDateCategory.YYYYQ3,
             ReleaseDateCategory.YYYYQ4 -> date.formatDateWithYearAndQuarter()
 
-            else -> throw IllegalStateException("Unknown category: $category.")
+            else -> error("Unknown category: $category.")
         }
     }
 
@@ -119,7 +119,7 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
                 ReleaseDateCategory.YYYYQ3 -> R.string.year_quarter_third
                 ReleaseDateCategory.YYYYQ4 -> R.string.year_quarter_fourth
 
-                else -> throw IllegalStateException("Unknown category $this.")
+                else -> error("Unknown category $this.")
             }
         )
     }

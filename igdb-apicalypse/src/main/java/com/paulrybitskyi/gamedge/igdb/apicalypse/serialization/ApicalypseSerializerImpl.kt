@@ -106,7 +106,7 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
             }
 
             // All other types are unsupported for now
-            else -> throw IllegalStateException(
+            else -> error(
                 "Serialization for a class \"${type.simpleName}\" is unsupported at the moment."
             )
         }

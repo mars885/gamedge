@@ -200,7 +200,7 @@ internal class RelativeDateFormatterImplTest {
                 R.plurals.past_relative_timestamp_minute -> "$quantity minutes ago"
                 R.plurals.past_relative_timestamp_second -> "$quantity seconds ago"
 
-                else -> throw IllegalStateException()
+                else -> error("Unknown string resource ID: $id.")
             }
         }
     }

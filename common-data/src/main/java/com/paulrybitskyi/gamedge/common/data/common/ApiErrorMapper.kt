@@ -36,7 +36,7 @@ class ApiErrorMapper @Inject constructor() {
             isNetworkError -> Error.ApiError.NetworkError(networkErrorMessage)
             isUnknownError -> Error.ApiError.Unknown(unknownErrorMessage)
 
-            else -> throw IllegalStateException("Could not map the api error $this to a data error.")
+            else -> error("Could not map the api error $this to a data error.")
         }
     }
 }
