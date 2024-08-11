@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.settings.presentation
 
-import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Theme
 import com.paulrybitskyi.gamedge.feature.settings.R
+import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Theme
 
 internal val Theme.uiTextRes: Int
     get() = when (this) {

@@ -26,7 +26,7 @@ data class ApiOauthCredentials(
     @SerialName(Schema.TOKEN_TYPE)
     val tokenType: String,
     @SerialName(Schema.TOKEN_TTL)
-    val tokenTtl: Long
+    val tokenTtl: Long,
 ) {
 
     object Schema {

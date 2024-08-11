@@ -22,17 +22,17 @@ import com.paulrybitskyi.commons.window.anims.WindowAnimations
 
 internal fun CustomTabsIntent.Builder.setAnimations(
     context: Context,
-    windowAnimations: WindowAnimations
+    windowAnimations: WindowAnimations,
 ): CustomTabsIntent.Builder {
     setStartAnimations(
         context,
         windowAnimations.windowBEnterAnimation,
-        windowAnimations.windowAExitAnimation
+        windowAnimations.windowAExitAnimation,
     )
     setExitAnimations(
         context,
         windowAnimations.windowAEnterAnimation,
-        windowAnimations.windowBExitAnimation
+        windowAnimations.windowBExitAnimation,
     )
 
     return this

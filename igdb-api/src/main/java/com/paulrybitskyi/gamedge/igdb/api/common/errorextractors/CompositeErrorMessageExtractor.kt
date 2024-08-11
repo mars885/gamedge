@@ -26,7 +26,7 @@ private const val UNKNOWN_ERROR_TEMPLATE = "Unknown Error: %s"
 @BindType(withQualifier = true)
 @IgdbApi
 internal class CompositeErrorMessageExtractor @Inject constructor(
-    private val errorMessageExtractors: Set<@JvmSuppressWildcards ErrorMessageExtractor>
+    private val errorMessageExtractors: Set<@JvmSuppressWildcards ErrorMessageExtractor>,
 ) : ErrorMessageExtractor {
 
     override fun extract(responseBody: String): String {
@@ -42,7 +42,7 @@ internal class CompositeErrorMessageExtractor @Inject constructor(
 
         return String.format(
             UNKNOWN_ERROR_TEMPLATE,
-            responseBody
+            responseBody,
         )
     }
 }

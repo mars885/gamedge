@@ -24,7 +24,7 @@ import javax.inject.Provider
 
 internal class GamesCategoryUseCases @Inject constructor(
     private val observeGamesUseCasesMap: Map<Type, @JvmSuppressWildcards Provider<ObservableGamesUseCase>>,
-    private val refreshGamesUseCasesMap: Map<Type, @JvmSuppressWildcards Provider<RefreshableGamesUseCase>>
+    private val refreshGamesUseCasesMap: Map<Type, @JvmSuppressWildcards Provider<RefreshableGamesUseCase>>,
 ) {
 
     fun getObservableUseCase(keyType: Type): ObservableGamesUseCase {

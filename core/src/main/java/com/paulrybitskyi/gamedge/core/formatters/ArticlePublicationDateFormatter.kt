@@ -35,7 +35,7 @@ interface ArticlePublicationDateFormatter {
 internal class ArticlePublicationDateFormatterImpl @Inject constructor(
     private val relativeDateFormatter: RelativeDateFormatter,
     private val timeProvider: TimeProvider,
-    private val timeFormatProvider: TimeFormatProvider
+    private val timeFormatProvider: TimeFormatProvider,
 ) : ArticlePublicationDateFormatter {
 
     private companion object {
@@ -49,7 +49,7 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
     override fun formatPublicationDate(timestamp: Long): String {
         val dateTime = LocalDateTime.ofInstant(
             Instant.ofEpochMilli(timestamp),
-            ZoneId.systemDefault()
+            ZoneId.systemDefault(),
         )
 
         return if (shouldFormatAsRelativeDate(dateTime)) {
@@ -79,7 +79,6 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
         val hasYearDiff = (yearDiffCount > 0)
 
         return when (timeFormatProvider.getTimeFormat()) {
-
             TimeFormat.TWENTY_FOUR_HOURS -> if (hasYearDiff) {
                 ABS_DATE_24_HOUR_PATTERN_WITH_YEAR
             } else {

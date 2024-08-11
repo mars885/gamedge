@@ -34,11 +34,11 @@ internal object TestDatabaseModule {
     @Provides
     @Singleton
     fun provideGamedgeDatabase(
-        typeConverters: Set<@JvmSuppressWildcards RoomTypeConverter>
+        typeConverters: Set<@JvmSuppressWildcards RoomTypeConverter>,
     ): GamedgeDatabase {
         return Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
-            GamedgeDatabase::class.java
+            GamedgeDatabase::class.java,
         )
         .addTypeConverters(typeConverters)
         .addMigrations(*MIGRATIONS)

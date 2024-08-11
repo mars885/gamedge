@@ -50,10 +50,10 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
-import com.paulrybitskyi.gamedge.core.R as CoreR
-import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsCommand
 import com.paulrybitskyi.gamedge.feature.news.R
+import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsCommand
 import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsViewModel
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
 fun GamingNews(modifier: Modifier) {
@@ -171,7 +171,7 @@ private fun SuccessState(
         items(items = news, key = GamingNewsItemUiModel::id) { itemModel ->
             GamingNewsItem(
                 model = itemModel,
-                onClick = { onNewsItemClicked(itemModel) }
+                onClick = { onNewsItemClicked(itemModel) },
             )
         }
     }

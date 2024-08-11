@@ -40,6 +40,6 @@ internal fun GamesUiState.toSuccessState(
     return copy(
         isLoading = false,
         infoTitle = infoTitle,
-        games = games
+        games = games,
     )
 }

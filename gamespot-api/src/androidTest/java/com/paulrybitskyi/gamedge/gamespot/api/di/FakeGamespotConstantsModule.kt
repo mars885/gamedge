@@ -27,7 +27,7 @@ import dagger.hilt.testing.TestInstallIn
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [GamespotConstantsModule::class]
+    replaces = [GamespotConstantsModule::class],
 )
 internal interface FakeGamespotConstantsModule {
 

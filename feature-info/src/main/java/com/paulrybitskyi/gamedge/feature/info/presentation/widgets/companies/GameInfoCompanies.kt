@@ -51,10 +51,10 @@ import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.images.secondaryImage
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
-import com.paulrybitskyi.gamedge.common.ui.widgets.R as CommonUiWidgetsR
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.utils.GameInfoSectionWithInnerList
 import kotlin.math.roundToInt
+import com.paulrybitskyi.gamedge.common.ui.widgets.R as CommonUiWidgetsR
 
 private val LogoMaxWidth = 268.dp
 private val LogoMaxHeight = 150.dp
@@ -152,7 +152,7 @@ private fun CompanyLogoImage(
                 LogoImageTransformation(
                     logoContainerWidth = logoContainerWidthInPx,
                     logoContainerHeight = logoContainerHeightInPx,
-                )
+                ),
             )
         },
     )
@@ -224,7 +224,7 @@ private class LogoImageTransformation(
                     TARGET_BITMAP_SCALE_FACTOR,
                     TARGET_BITMAP_SCALE_FACTOR,
                     targetCenterX,
-                    targetCenterY
+                    targetCenterY,
                 )
 
                 drawBitmap(input, sourceOffsetLeft, sourceOffsetTop, null)

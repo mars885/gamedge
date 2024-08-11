@@ -23,9 +23,9 @@ import com.paulrybitskyi.gamedge.common.api.Error
 import com.paulrybitskyi.gamedge.common.testing.startSafe
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiOauthCredentials
 import com.paulrybitskyi.gamedge.igdb.api.common.CredentialsStore
+import com.paulrybitskyi.gamedge.igdb.api.games.GamesService
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiCategory
 import com.paulrybitskyi.gamedge.igdb.api.games.entities.ApiGame
-import com.paulrybitskyi.gamedge.igdb.api.games.GamesService
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
@@ -100,8 +100,8 @@ internal class GamesServiceTest {
                             "title": "Syntax Error"
                           }
                         ]
-                        """.trimIndent()
-                    )
+                        """.trimIndent(),
+                    ),
             )
 
             val error = gamesService.getGames("").getError()
@@ -119,7 +119,7 @@ internal class GamesServiceTest {
             mockWebServer.enqueue(
                 MockResponse()
                     .setResponseCode(400)
-                    .setBody(errorBody)
+                    .setBody(errorBody),
             )
 
             val error = gamesService.getGames("").getError()
@@ -157,8 +157,8 @@ internal class GamesServiceTest {
                                 "total_rating": 70.0
                             }
                         ]
-                        """.trimIndent()
-                    )
+                        """.trimIndent(),
+                    ),
             )
 
             val parsedGames = gamesService.getGames("").get()
@@ -171,7 +171,7 @@ internal class GamesServiceTest {
                     hypeCount = 1,
                     name = "Gloam",
                     usersRating = 99.1794871794872,
-                    totalRating = 99.1794871794872
+                    totalRating = 99.1794871794872,
                 ),
                 ApiGame(
                     id = 126356,
@@ -179,8 +179,8 @@ internal class GamesServiceTest {
                     releaseDate = 1613692800L,
                     name = "Survival Vacancy",
                     usersRating = 70.0,
-                    totalRating = 70.0
-                )
+                    totalRating = 70.0,
+                ),
             )
 
             assertThat(parsedGames).isEqualTo(expectedGames)
@@ -204,7 +204,7 @@ internal class GamesServiceTest {
             mockWebServer.enqueue(
                 MockResponse()
                     .setResponseCode(200)
-                    .setBody("{}")
+                    .setBody("{}"),
             )
 
             val error = gamesService.getGames("").getError()
@@ -218,7 +218,7 @@ internal class GamesServiceTest {
         runBlocking {
             mockWebServer.enqueue(
                 MockResponse()
-                    .setSocketPolicy(SocketPolicy.DISCONNECT_AT_START)
+                    .setSocketPolicy(SocketPolicy.DISCONNECT_AT_START),
             )
 
             val error = gamesService.getGames("").getError()

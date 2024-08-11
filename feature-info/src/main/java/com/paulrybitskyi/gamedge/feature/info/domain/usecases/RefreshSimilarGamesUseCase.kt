@@ -37,7 +37,7 @@ internal interface RefreshSimilarGamesUseCase : UseCase<Params, Flow<DomainResul
 
     data class Params(
         val game: Game,
-        val pagination: Pagination
+        val pagination: Pagination,
     )
 }
 
@@ -53,7 +53,7 @@ internal class RefreshSimilarGamesUseCaseImpl @Inject constructor(
         val throttlerKey = withContext(dispatcherProvider.computation) {
             throttlerTools.keyProvider.provideSimilarGamesKey(
                 params.game,
-                params.pagination
+                params.pagination,
             )
         }
 

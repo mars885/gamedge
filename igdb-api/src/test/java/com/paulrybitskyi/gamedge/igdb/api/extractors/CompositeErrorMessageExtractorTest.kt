@@ -33,8 +33,8 @@ internal class CompositeErrorMessageExtractorTest {
         SUT = CompositeErrorMessageExtractor(
             setOf(
                 TwitchErrorMessageExtractor(Json),
-                IgdbErrorMessageExtractor(Json)
-            )
+                IgdbErrorMessageExtractor(Json),
+            ),
         )
     }
 

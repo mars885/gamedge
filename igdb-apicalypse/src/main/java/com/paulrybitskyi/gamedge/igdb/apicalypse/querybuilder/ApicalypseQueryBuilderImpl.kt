@@ -20,7 +20,7 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.WhereC
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.WhereClauseBuilderFactory
 
 internal class ApicalypseQueryBuilderImpl(
-    private val whereClauseBuilderFactory: WhereClauseBuilderFactory
+    private val whereClauseBuilderFactory: WhereClauseBuilderFactory,
 ) : ApicalypseQueryBuilder {
 
     private val queryBuilder = StringBuilder()

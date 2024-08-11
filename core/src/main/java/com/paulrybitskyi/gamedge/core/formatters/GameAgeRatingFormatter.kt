@@ -16,11 +16,11 @@
 
 package com.paulrybitskyi.gamedge.core.formatters
 
-import com.paulrybitskyi.gamedge.core.R
-import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRatingCategory
 import com.paulrybitskyi.gamedge.common.domain.games.entities.AgeRatingType
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
+import com.paulrybitskyi.gamedge.core.R
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -30,7 +30,7 @@ interface GameAgeRatingFormatter {
 
 @BindType
 internal class GameAgeRatingFormatterImpl @Inject constructor(
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
 ) : GameAgeRatingFormatter {
 
     override fun formatAgeRating(game: Game): String {
@@ -46,7 +46,7 @@ internal class GameAgeRatingFormatterImpl @Inject constructor(
         return stringProvider.getString(
             R.string.age_rating_template,
             ageRating.category.title,
-            ageRating.type.title
+            ageRating.type.title,
         )
     }
 }

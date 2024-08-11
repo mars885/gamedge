@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.common.data.common
 
 import com.paulrybitskyi.gamedge.common.api.httpErrorMessage
-import com.paulrybitskyi.gamedge.common.api.Error as ApiError
 import com.paulrybitskyi.gamedge.common.api.isHttpError
 import com.paulrybitskyi.gamedge.common.api.isNetworkError
 import com.paulrybitskyi.gamedge.common.api.isServerError
@@ -26,6 +25,7 @@ import com.paulrybitskyi.gamedge.common.api.networkErrorMessage
 import com.paulrybitskyi.gamedge.common.api.unknownErrorMessage
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Error
 import javax.inject.Inject
+import com.paulrybitskyi.gamedge.common.api.Error as ApiError
 
 class ApiErrorMapper @Inject constructor() {
 

@@ -21,7 +21,7 @@ import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Inject
 
 internal class FakeGamespotConstantsProvider @Inject constructor(
-    mockWebServer: MockWebServer
+    mockWebServer: MockWebServer,
 ) : GamespotConstantsProvider {
 
     override val apiKey: String = "api_key"

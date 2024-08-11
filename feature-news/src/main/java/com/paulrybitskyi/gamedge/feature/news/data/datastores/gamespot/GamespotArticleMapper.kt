@@ -33,7 +33,7 @@ internal class GamespotArticleMapper @Inject constructor(
             lede = apiArticle.lede,
             imageUrls = apiArticle.imageUrls.toDataImageUrls(),
             publicationDate = publicationDateMapper.mapToTimestamp(apiArticle.publicationDate),
-            siteDetailUrl = apiArticle.siteDetailUrl
+            siteDetailUrl = apiArticle.siteDetailUrl,
         )
     }
 

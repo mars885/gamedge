@@ -49,8 +49,8 @@ internal class SettingsUiModelMapperImpl @Inject constructor(
                     id = SettingItem.THEME.id,
                     title = stringProvider.getString(R.string.settings_item_theme_title),
                     description = stringProvider.getString(settings.theme.uiTextRes),
-                )
-            )
+                ),
+            ),
         )
     }
 
@@ -69,8 +69,8 @@ internal class SettingsUiModelMapperImpl @Inject constructor(
                     title = stringProvider.getString(R.string.settings_item_version_title),
                     description = versionNameProvider.getVersionName(),
                     isClickable = false,
-                )
-            )
+                ),
+            ),
         )
     }
 }

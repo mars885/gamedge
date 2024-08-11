@@ -25,13 +25,13 @@ import androidx.room.PrimaryKey
     tableName = DbLikedGame.Schema.TABLE_NAME,
     indices = [
         Index(DbLikedGame.Schema.GAME_ID),
-        Index(DbLikedGame.Schema.LIKE_TIMESTAMP)
-    ]
+        Index(DbLikedGame.Schema.LIKE_TIMESTAMP),
+    ],
 )
 data class DbLikedGame(
     @ColumnInfo(name = Schema.ID) @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = Schema.GAME_ID) val gameId: Int,
-    @ColumnInfo(name = Schema.LIKE_TIMESTAMP) val likeTimestamp: Long
+    @ColumnInfo(name = Schema.LIKE_TIMESTAMP) val likeTimestamp: Long,
 ) {
 
     object Schema {

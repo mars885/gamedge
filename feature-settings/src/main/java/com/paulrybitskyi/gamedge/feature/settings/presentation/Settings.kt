@@ -55,9 +55,9 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.dialogs.GamedgeDialog
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
-import com.paulrybitskyi.gamedge.core.R as CoreR
-import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Theme
 import com.paulrybitskyi.gamedge.feature.settings.R
+import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Theme
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
 fun Settings(modifier: Modifier) {
@@ -335,7 +335,7 @@ private fun SettingsSuccessStatePreview() {
                                 title = "Title 2",
                                 description = "Description 2",
                             ),
-                        )
+                        ),
                     ),
                     SettingsSectionUiModel(
                         id = 2,
@@ -356,8 +356,8 @@ private fun SettingsSuccessStatePreview() {
                                 title = "Title 3",
                                 description = "Description 3",
                             ),
-                        )
-                    )
+                        ),
+                    ),
                 ),
                 selectedThemeName = null,
                 isThemePickerVisible = false,

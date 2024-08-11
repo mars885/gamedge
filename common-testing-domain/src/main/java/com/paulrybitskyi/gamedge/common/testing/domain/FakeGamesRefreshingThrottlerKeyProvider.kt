@@ -41,7 +41,7 @@ class FakeGamesRefreshingThrottlerKeyProvider : GamesRefreshingThrottlerKeyProvi
 
     override fun provideCompanyDevelopedGamesKey(
         company: Company,
-        pagination: Pagination
+        pagination: Pagination,
     ): String {
         return "provideCompanyDevelopedGamesKey"
     }

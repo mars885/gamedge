@@ -49,7 +49,7 @@ internal class ArticlePublicationDateFormatterImplTest {
         SUT = ArticlePublicationDateFormatterImpl(
             relativeDateFormatter = relativeDateFormatter,
             timeProvider = timeProvider,
-            timeFormatProvider = timeFormatProvider
+            timeFormatProvider = timeFormatProvider,
         )
 
         every { relativeDateFormatter.formatRelativeDate(any()) } returns RELATIVE_DATE

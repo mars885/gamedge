@@ -27,7 +27,7 @@ import dagger.hilt.testing.TestInstallIn
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [TwitchConstantsModule::class]
+    replaces = [TwitchConstantsModule::class],
 )
 internal interface FakeTwitchConstantsModule {
 

@@ -22,7 +22,7 @@ object ApicalypseQueryBuilderFactory {
 
     fun create(): ApicalypseQueryBuilder {
         return ApicalypseQueryBuilderImpl(
-            whereClauseBuilderFactory = WhereClauseBuilderFactory
+            whereClauseBuilderFactory = WhereClauseBuilderFactory,
         )
     }
 }

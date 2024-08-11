@@ -39,7 +39,7 @@ internal interface GetCompanyDevelopedGamesUseCase : UseCase<Params, Flow<Domain
 
     data class Params(
         val company: Company,
-        val pagination: Pagination
+        val pagination: Pagination,
     )
 }
 

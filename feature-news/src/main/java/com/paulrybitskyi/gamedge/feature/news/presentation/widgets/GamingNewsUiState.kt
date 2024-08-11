@@ -49,7 +49,7 @@ internal fun GamingNewsUiState.toLoadingState(): GamingNewsUiState {
 }
 
 internal fun GamingNewsUiState.toSuccessState(
-    news: List<GamingNewsItemUiModel>
+    news: List<GamingNewsItemUiModel>,
 ): GamingNewsUiState {
     return copy(isLoading = false, news = news)
 }

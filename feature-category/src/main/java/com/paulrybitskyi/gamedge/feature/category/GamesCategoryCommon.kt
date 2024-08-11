@@ -16,8 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.category
 
-import com.paulrybitskyi.gamedge.common.ui.R as CommonUiR
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
+import com.paulrybitskyi.gamedge.common.ui.R as CommonUiR
 
 internal val GamesCategory.titleId: Int
     get() = when (this) {

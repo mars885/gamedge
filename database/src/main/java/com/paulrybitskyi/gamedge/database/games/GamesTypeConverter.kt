@@ -44,7 +44,7 @@ import javax.inject.Inject
 @BindType(contributesTo = BindType.Collection.SET)
 @Suppress("TooManyFunctions")
 internal class GamesTypeConverter @Inject constructor(
-    private val jsonConverter: JsonConverter
+    private val jsonConverter: JsonConverter,
 ) : RoomTypeConverter {
 
     @TypeConverter

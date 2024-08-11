@@ -21,18 +21,18 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_ERROR_UNKNOWN
-import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
-import com.paulrybitskyi.gamedge.common.testing.domain.FakeGamesRefreshingThrottlerKeyProvider
-import com.paulrybitskyi.gamedge.common.testing.domain.coVerifyNotCalled
+import com.paulrybitskyi.gamedge.common.domain.REFRESH_GAMES_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.common.domain.games.common.throttling.GamesRefreshingThrottler
 import com.paulrybitskyi.gamedge.common.domain.games.common.throttling.GamesRefreshingThrottlerTools
-import com.paulrybitskyi.gamedge.common.domain.REFRESH_GAMES_USE_CASE_PARAMS
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesDataStores
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesLocalDataStore
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.GamesRemoteDataStore
 import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshPopularGamesUseCaseImpl
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_ERROR_UNKNOWN
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.common.testing.domain.FakeGamesRefreshingThrottlerKeyProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
+import com.paulrybitskyi.gamedge.common.testing.domain.coVerifyNotCalled
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -61,7 +61,7 @@ internal class RefreshPopularGamesUseCaseImplTest {
         SUT = RefreshPopularGamesUseCaseImpl(
             gamesDataStores = GamesDataStores(
                 local = gamesLocalDataStore,
-                remote = gamesRemoteDataStore
+                remote = gamesRemoteDataStore,
             ),
             throttlerTools = GamesRefreshingThrottlerTools(
                 throttler = throttler,

@@ -16,14 +16,14 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.mappers
 
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesType
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesUiModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -43,7 +43,7 @@ internal class GameInfoOtherCompanyGamesUiModelMapperImpl @Inject constructor(
 
     override fun mapToUiModel(
         companyGames: List<Game>,
-        currentGame: Game
+        currentGame: Game,
     ): GameInfoRelatedGamesUiModel? {
         return companyGames
             .filter { it.id != currentGame.id }
@@ -52,7 +52,7 @@ internal class GameInfoOtherCompanyGamesUiModelMapperImpl @Inject constructor(
                 GameInfoRelatedGamesUiModel(
                     type = GameInfoRelatedGamesType.OTHER_COMPANY_GAMES,
                     title = currentGame.createOtherCompanyGamesModelTitle(),
-                    items = games.toRelatedGameUiModels()
+                    items = games.toRelatedGameUiModels(),
                 )
             }
     }
@@ -63,7 +63,7 @@ internal class GameInfoOtherCompanyGamesUiModelMapperImpl @Inject constructor(
 
         val title = stringProvider.getString(
             R.string.game_info_other_company_games_title_template,
-            developerName
+            developerName,
         )
 
         return title
@@ -76,7 +76,7 @@ internal class GameInfoOtherCompanyGamesUiModelMapperImpl @Inject constructor(
                 title = it.name,
                 coverUrl = it.cover?.let { cover ->
                     igdbImageUrlFactory.createUrl(cover, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_COVER))
-                }
+                },
             )
         }
     }

@@ -34,7 +34,8 @@ enum class ApiCategory(val rawValue: Int) {
     STANDALONE_EXPANSION(rawValue = 4),
     MOD(rawValue = 5),
     EPISODE(rawValue = 6),
-    SEASON(rawValue = 7);
+    SEASON(rawValue = 7),
+    ;
 
     internal companion object {
 
@@ -48,7 +49,7 @@ internal object CategorySerializer : KSerializer<ApiCategory> {
 
     override val descriptor = PrimitiveSerialDescriptor(
         checkNotNull(CategorySerializer::class.qualifiedName),
-        PrimitiveKind.INT
+        PrimitiveKind.INT,
     )
 
     override fun serialize(encoder: Encoder, value: ApiCategory) {

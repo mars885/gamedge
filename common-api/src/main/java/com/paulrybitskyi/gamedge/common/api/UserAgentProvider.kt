@@ -31,7 +31,7 @@ interface UserAgentProvider {
 @BindType
 internal class UserAgentProviderImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
 ) : UserAgentProvider {
 
     override fun getUserAgent(): String {

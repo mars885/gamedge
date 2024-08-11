@@ -77,7 +77,7 @@ internal class GetGameInfoUseCaseImpl @Inject constructor(
 
     private fun observeGameLikeState(gameId: Int): Flow<Boolean> {
         return observeGameLikeStateUseCase.execute(
-            ObserveGameLikeStateUseCase.Params(gameId)
+            ObserveGameLikeStateUseCase.Params(gameId),
         )
     }
 

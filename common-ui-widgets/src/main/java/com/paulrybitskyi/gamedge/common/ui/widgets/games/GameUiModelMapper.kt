@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.common.ui.widgets.games
 
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -30,7 +30,7 @@ interface GameUiModelMapper {
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GameUiModelMapperImpl @Inject constructor(
     private val igdbImageUrlFactory: IgdbImageUrlFactory,
-    private val gameReleaseDateFormatter: GameReleaseDateFormatter
+    private val gameReleaseDateFormatter: GameReleaseDateFormatter,
 ) : GameUiModelMapper {
 
     override fun mapToUiModel(game: Game): GameUiModel {

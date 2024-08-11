@@ -25,7 +25,7 @@ internal data class GamingNewsItemUiModel(
     val title: String,
     val lede: String,
     val publicationDate: String,
-    val siteDetailUrl: String
+    val siteDetailUrl: String,
 ) {
 
     val hasImageUrl: Boolean

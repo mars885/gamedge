@@ -20,7 +20,7 @@ private const val DEFAULT_PAGE_SIZE = 20
 
 data class Pagination(
     val offset: Int = 0,
-    val limit: Int = DEFAULT_PAGE_SIZE
+    val limit: Int = DEFAULT_PAGE_SIZE,
 )
 
 fun Pagination.hasDefaultLimit(): Boolean {

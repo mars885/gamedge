@@ -43,41 +43,41 @@ internal interface UseCasesModule {
 
     @Binds
     fun bindObserveComingSoonGamesUseCase(
-        binding: ObserveComingSoonGamesUseCaseImpl
+        binding: ObserveComingSoonGamesUseCaseImpl,
     ): ObserveComingSoonGamesUseCase
 
     @Binds
     fun bindObserveMostAnticipatedGamesUseCase(
-        binding: ObserveMostAnticipatedGamesUseCaseImpl
+        binding: ObserveMostAnticipatedGamesUseCaseImpl,
     ): ObserveMostAnticipatedGamesUseCase
 
     @Binds
     fun bindObservePopularGamesUseCase(
-        binding: ObservePopularGamesUseCaseImpl
+        binding: ObservePopularGamesUseCaseImpl,
     ): ObservePopularGamesUseCase
 
     @Binds
     fun bindObserveRecentlyReleasedGamesUseCase(
-        binding: ObserveRecentlyReleasedGamesUseCaseImpl
+        binding: ObserveRecentlyReleasedGamesUseCaseImpl,
     ): ObserveRecentlyReleasedGamesUseCase
 
     @Binds
     fun bindRefreshComingSoonGamesUseCase(
-        binding: RefreshComingSoonGamesUseCaseImpl
+        binding: RefreshComingSoonGamesUseCaseImpl,
     ): RefreshComingSoonGamesUseCase
 
     @Binds
     fun bindRefreshMostAnticipatedGamesUseCase(
-        binding: RefreshMostAnticipatedGamesUseCaseImpl
+        binding: RefreshMostAnticipatedGamesUseCaseImpl,
     ): RefreshMostAnticipatedGamesUseCase
 
     @Binds
     fun bindRefreshPopularGamesUseCase(
-        binding: RefreshPopularGamesUseCaseImpl
+        binding: RefreshPopularGamesUseCaseImpl,
     ): RefreshPopularGamesUseCase
 
     @Binds
     fun bindRefreshRecentlyReleasedGamesUseCase(
-        binding: RefreshRecentlyReleasedGamesUseCaseImpl
+        binding: RefreshRecentlyReleasedGamesUseCaseImpl,
     ): RefreshRecentlyReleasedGamesUseCase
 }

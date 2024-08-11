@@ -24,7 +24,7 @@ import javax.inject.Inject
 internal val AUTH_TOKEN_TTL_DEDUCTION = TimeUnit.DAYS.toMillis(@Suppress("MagicNumber") 7)
 
 internal class AuthExpiryTimeCalculator @Inject constructor(
-    private val timestampProvider: TimestampProvider
+    private val timestampProvider: TimestampProvider,
 ) {
 
     fun calculateExpiryTime(oauthCredentials: OauthCredentials): Long {

@@ -51,7 +51,7 @@ fun Game(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(GamedgeTheme.spaces.spacing_3_5)
+                .padding(GamedgeTheme.spaces.spacing_3_5),
         ) {
             GameCover(
                 title = null,

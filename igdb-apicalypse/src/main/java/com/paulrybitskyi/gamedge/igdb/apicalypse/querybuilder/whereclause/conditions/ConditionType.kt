@@ -18,5 +18,5 @@ package com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.condi
 
 internal enum class ConditionType(val separator: String) {
     AND(" & "),
-    OR(" | ")
+    OR(" | "),
 }

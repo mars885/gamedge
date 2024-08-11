@@ -22,5 +22,5 @@ import kotlinx.serialization.Serializable
 data class DbImage(
     val id: String,
     val width: Int?,
-    val height: Int?
+    val height: Int?,
 )

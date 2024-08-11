@@ -82,7 +82,8 @@ private fun NavGraphBuilder.discoverScreen(
             when (Screen.forRoute(targetState.destination.requireRoute())) {
                 Screen.GamesSearch -> OvershootScaling.exit()
                 Screen.GamesCategory,
-                Screen.GameInfo -> HorizontalSliding.exit()
+                Screen.GameInfo,
+                -> HorizontalSliding.exit()
                 else -> null
             }
         },
@@ -90,7 +91,8 @@ private fun NavGraphBuilder.discoverScreen(
             when (Screen.forRoute(initialState.destination.requireRoute())) {
                 Screen.GamesSearch -> OvershootScaling.popEnter()
                 Screen.GamesCategory,
-                Screen.GameInfo -> HorizontalSliding.popEnter()
+                Screen.GameInfo,
+                -> HorizontalSliding.popEnter()
                 else -> null
             }
         },
@@ -171,7 +173,8 @@ private fun NavGraphBuilder.gamesSearchScreen(navController: NavHostController) 
             when (Screen.forRoute(initialState.destination.requireRoute())) {
                 Screen.News,
                 Screen.Discover,
-                Screen.Likes -> OvershootScaling.enter()
+                Screen.Likes,
+                -> OvershootScaling.enter()
                 else -> null
             }
         },
@@ -191,7 +194,8 @@ private fun NavGraphBuilder.gamesSearchScreen(navController: NavHostController) 
             when (Screen.forRoute(targetState.destination.requireRoute())) {
                 Screen.News,
                 Screen.Discover,
-                Screen.Likes -> OvershootScaling.popExit()
+                Screen.Likes,
+                -> OvershootScaling.popExit()
                 else -> null
             }
         },
@@ -265,21 +269,24 @@ private fun NavGraphBuilder.gameInfoScreen(navController: NavHostController) {
                 Screen.Likes,
                 Screen.GamesSearch,
                 Screen.GamesCategory,
-                Screen.GameInfo -> HorizontalSliding.enter()
+                Screen.GameInfo,
+                -> HorizontalSliding.enter()
                 else -> null
             }
         },
         exitTransition = {
             when (Screen.forRoute(targetState.destination.requireRoute())) {
                 Screen.ImageViewer,
-                Screen.GameInfo -> HorizontalSliding.exit()
+                Screen.GameInfo,
+                -> HorizontalSliding.exit()
                 else -> null
             }
         },
         popEnterTransition = {
             when (Screen.forRoute(initialState.destination.requireRoute())) {
                 Screen.ImageViewer,
-                Screen.GameInfo -> HorizontalSliding.popEnter()
+                Screen.GameInfo,
+                -> HorizontalSliding.popEnter()
                 else -> null
             }
         },
@@ -289,7 +296,8 @@ private fun NavGraphBuilder.gameInfoScreen(navController: NavHostController) {
                 Screen.Likes,
                 Screen.GamesSearch,
                 Screen.GamesCategory,
-                Screen.GameInfo -> HorizontalSliding.popExit()
+                Screen.GameInfo,
+                -> HorizontalSliding.popExit()
                 else -> null
             }
         },
@@ -302,7 +310,7 @@ private fun NavGraphBuilder.gameInfoScreen(navController: NavHostController) {
                             title = route.title,
                             initialPosition = route.initialPosition,
                             imageUrls = route.imageUrls,
-                        )
+                        ),
                     )
                 }
                 is GameInfoRoute.Info -> {
@@ -331,7 +339,7 @@ private fun NavGraphBuilder.imageViewerScreen(navController: NavHostController) 
             navArgument(Screen.ImageViewer.Parameters.IMAGE_URLS) {
                 type = NavType.StringType
                 nullable = true
-            }
+            },
         ),
         enterTransition = {
             when (Screen.forRoute(initialState.destination.requireRoute())) {

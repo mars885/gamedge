@@ -21,15 +21,15 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getError
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
+import com.paulrybitskyi.gamedge.common.data.common.ApiErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.API_ERROR_HTTP
 import com.paulrybitskyi.gamedge.common.testing.API_ERROR_NETWORK
 import com.paulrybitskyi.gamedge.common.testing.API_ERROR_UNKNOWN
-import com.paulrybitskyi.gamedge.common.data.common.ApiErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
-import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.GamespotArticleMapper
+import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
 import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.ArticlePublicationDateMapper
 import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.ArticlesGamespotDataStore
+import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.GamespotArticleMapper
 import com.paulrybitskyi.gamedge.feature.news.data.datastores.gamespot.mapToDomainArticles
 import com.paulrybitskyi.gamedge.gamespot.api.articles.ArticlesEndpoint
 import com.paulrybitskyi.gamedge.gamespot.api.articles.entities.ApiArticle
@@ -44,7 +44,7 @@ import org.junit.Test
 private val API_ARTICLES = listOf(
     ApiArticle(publicationDate = "2020-03-02 12:14:16"),
     ApiArticle(publicationDate = "2020-03-02 12:14:16"),
-    ApiArticle(publicationDate = "2020-03-02 12:14:16")
+    ApiArticle(publicationDate = "2020-03-02 12:14:16"),
 )
 
 internal class ArticlesGamespotDataStoreTest {

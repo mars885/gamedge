@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 enum class TimeFormat {
     TWENTY_FOUR_HOURS,
-    TWELVE_HOURS
+    TWELVE_HOURS,
 }
 
 interface TimeFormatProvider {
@@ -33,7 +33,7 @@ interface TimeFormatProvider {
 
 @BindType
 internal class TimeFormatProviderImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : TimeFormatProvider {
 
     override fun getTimeFormat(): TimeFormat {

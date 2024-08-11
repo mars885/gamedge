@@ -172,7 +172,7 @@ private fun ConstraintLayoutScope.Content(
                     start = parent.start,
                     end = parent.end,
                     startMargin = infoHorizontalMargin,
-                    endMargin = infoHorizontalMargin
+                    endMargin = infoHorizontalMargin,
                 )
             },
         )

@@ -72,7 +72,7 @@ val Colors.navBar: Color
             R.color.light_colorNavigationBar
         } else {
             R.color.dark_colorNavigationBar
-        }
+        },
     )
 
 val Colors.lightScrim: Color

@@ -25,24 +25,22 @@ import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.di.qualifiers.TransitionAnimationDuration
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
-import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameImageType
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameInfoUseCase
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLikeStateUseCase
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinkUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiState
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.toEmptyState
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.toLoadingState
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.toSuccessState
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -53,6 +51,8 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 private const val PARAM_GAME_ID = "game-id"
 
@@ -67,7 +67,7 @@ internal class GameInfoViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
-    private val logger: Logger
+    private val logger: Logger,
 ) : BaseViewModel() {
 
     private var isObservingGameData = false
@@ -130,7 +130,7 @@ internal class GameInfoViewModel @Inject constructor(
                 GetGameImageUrlsUseCase.Params(
                     gameId = gameId,
                     imageType = imageType,
-                )
+                ),
             )
             .resultOrError()
             .onError {

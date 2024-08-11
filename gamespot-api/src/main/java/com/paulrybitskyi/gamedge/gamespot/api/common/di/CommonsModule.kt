@@ -28,8 +28,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 import okhttp3.OkHttpClient
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -40,7 +40,7 @@ internal object CommonsModule {
     @GamespotApi
     fun provideOkHttpClient(
         okHttpClient: OkHttpClient,
-        userAgentInterceptor: UserAgentInterceptor
+        userAgentInterceptor: UserAgentInterceptor,
     ): OkHttpClient {
         return okHttpClient.newBuilder()
             .addInterceptorAsFirstInChain(userAgentInterceptor)
@@ -50,7 +50,7 @@ internal object CommonsModule {
     @Provides
     @GamespotApi
     fun provideApiResultCallAdapterFactory(
-        @GamespotApi errorMessageExtractor: ErrorMessageExtractor
+        @GamespotApi errorMessageExtractor: ErrorMessageExtractor,
     ): ApiResultCallAdapterFactory {
         return ApiResultCallAdapterFactory(errorMessageExtractor)
     }
@@ -58,11 +58,11 @@ internal object CommonsModule {
     @Provides
     fun provideGamespotQueryParamsBuilder(
         gamespotFieldsSerializer: GamespotFieldsSerializer,
-        gamespotConstantsProvider: GamespotConstantsProvider
+        gamespotConstantsProvider: GamespotConstantsProvider,
     ): GamespotQueryParamsFactory {
         return GamespotQueryParamsFactoryImpl(
             gamespotFieldsSerializer = gamespotFieldsSerializer,
-            apiKey = gamespotConstantsProvider.apiKey
+            apiKey = gamespotConstantsProvider.apiKey,
         )
     }
 }

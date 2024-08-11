@@ -24,6 +24,6 @@ import javax.inject.Qualifier
     AnnotationTarget.CLASS,
     AnnotationTarget.FIELD,
     AnnotationTarget.FUNCTION,
-    AnnotationTarget.VALUE_PARAMETER
+    AnnotationTarget.VALUE_PARAMETER,
 )
 annotation class TransitionAnimationDuration

@@ -41,7 +41,8 @@ enum class ApiWebsiteCategory(val rawValue: Int) {
     SUBREDDIT(rawValue = 14),
     EPIC_GAMES(rawValue = 16),
     GOG(rawValue = 17),
-    DISCORD(rawValue = 18);
+    DISCORD(rawValue = 18),
+    ;
 
     internal companion object {
 
@@ -55,7 +56,7 @@ internal object WebsiteCategorySerializer : KSerializer<ApiWebsiteCategory> {
 
     override val descriptor = PrimitiveSerialDescriptor(
         checkNotNull(WebsiteCategorySerializer::class.qualifiedName),
-        PrimitiveKind.INT
+        PrimitiveKind.INT,
     )
 
     override fun serialize(encoder: Encoder, value: ApiWebsiteCategory) {

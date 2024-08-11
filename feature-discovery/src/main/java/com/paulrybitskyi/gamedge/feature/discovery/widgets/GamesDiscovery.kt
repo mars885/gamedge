@@ -48,13 +48,13 @@ import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.common.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
-import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryCategory
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryViewModel
 import com.paulrybitskyi.gamedge.feature.discovery.R
 import com.paulrybitskyi.gamedge.feature.discovery.titleId
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 // Intentional delay to keep the swipe refresh visible
 // because as soon as it is let go, it disappears instantaneously.

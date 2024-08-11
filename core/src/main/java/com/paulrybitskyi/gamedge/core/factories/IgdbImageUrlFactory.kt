@@ -34,12 +34,12 @@ enum class IgdbImageSize(internal val rawSize: String) {
     MICRO("micro"),
 
     HD("720p"),
-    FULL_HD("1080p")
+    FULL_HD("1080p"),
 }
 
 enum class IgdbImageExtension(internal val rawExtension: String) {
     JPG("jpg"),
-    PNG("png")
+    PNG("png"),
 }
 
 interface IgdbImageUrlFactory {
@@ -47,7 +47,7 @@ interface IgdbImageUrlFactory {
     data class Config(
         val size: IgdbImageSize,
         val extension: IgdbImageExtension = IgdbImageExtension.JPG,
-        val withRetinaSize: Boolean = false
+        val withRetinaSize: Boolean = false,
     )
 
     fun createUrl(image: Image, config: Config): String?
@@ -55,7 +55,7 @@ interface IgdbImageUrlFactory {
 
 fun IgdbImageUrlFactory.createUrls(
     images: List<Image>,
-    config: IgdbImageUrlFactory.Config
+    config: IgdbImageUrlFactory.Config,
 ): List<String> {
     if (images.isEmpty()) return emptyList()
 
@@ -79,7 +79,7 @@ internal class IgdbImageUrlFactoryImpl @Inject constructor() : IgdbImageUrlFacto
             IMAGE_URL_TEMPLATE,
             constructType(config),
             image.id,
-            config.extension.rawExtension
+            config.extension.rawExtension,
         )
     }
 

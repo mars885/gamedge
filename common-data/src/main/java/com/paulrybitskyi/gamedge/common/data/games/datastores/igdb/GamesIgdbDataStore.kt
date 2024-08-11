@@ -35,9 +35,9 @@ import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetPopularGamesRequest
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.GetRecentlyReleasedGamesRequest
 import com.paulrybitskyi.gamedge.igdb.api.games.requests.SearchGamesRequest
 import com.paulrybitskyi.hiltbinder.BindType
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlinx.coroutines.withContext
 
 @Singleton
 @BindType
@@ -56,7 +56,7 @@ internal class GamesIgdbDataStore @Inject constructor(
                     searchQuery = searchQuery,
                     offset = pagination.offset,
                     limit = pagination.limit,
-                )
+                ),
             )
             .toDataStoreResult()
     }
@@ -68,7 +68,7 @@ internal class GamesIgdbDataStore @Inject constructor(
                     minReleaseDateTimestamp = releaseDatesProvider.getPopularGamesMinReleaseDate(),
                     offset = pagination.offset,
                     limit = pagination.limit,
-                )
+                ),
             )
             .toDataStoreResult()
     }
@@ -81,7 +81,7 @@ internal class GamesIgdbDataStore @Inject constructor(
                     maxReleaseDateTimestamp = releaseDatesProvider.getRecentlyReleasedGamesMaxReleaseDate(),
                     offset = pagination.offset,
                     limit = pagination.limit,
-                )
+                ),
             )
             .toDataStoreResult()
     }
@@ -93,7 +93,7 @@ internal class GamesIgdbDataStore @Inject constructor(
                     minReleaseDateTimestamp = releaseDatesProvider.getComingSoonGamesMinReleaseDate(),
                     offset = pagination.offset,
                     limit = pagination.limit,
-                )
+                ),
             )
             .toDataStoreResult()
     }
@@ -105,14 +105,14 @@ internal class GamesIgdbDataStore @Inject constructor(
                     minReleaseDateTimestamp = releaseDatesProvider.getMostAnticipatedGamesMinReleaseDate(),
                     offset = pagination.offset,
                     limit = pagination.limit,
-                )
+                ),
             )
             .toDataStoreResult()
     }
 
     override suspend fun getCompanyDevelopedGames(
         company: Company,
-        pagination: Pagination
+        pagination: Pagination,
     ): DomainResult<List<Game>> {
         return gamesEndpoint
             .getGames(
@@ -120,7 +120,7 @@ internal class GamesIgdbDataStore @Inject constructor(
                     gameIds = company.developedGames,
                     offset = pagination.offset,
                     limit = pagination.limit,
-                )
+                ),
             )
             .toDataStoreResult()
     }
@@ -132,7 +132,7 @@ internal class GamesIgdbDataStore @Inject constructor(
                     gameIds = game.similarGames,
                     offset = pagination.offset,
                     limit = pagination.limit,
-                )
+                ),
             )
             .toDataStoreResult()
     }

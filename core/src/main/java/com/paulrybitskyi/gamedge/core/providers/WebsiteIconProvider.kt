@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.core.providers
 
-import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.common.domain.games.entities.WebsiteCategory
+import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -48,7 +48,8 @@ internal class WebsiteIconProviderImpl @Inject constructor() : WebsiteIconProvid
             WebsiteCategory.UNKNOWN,
             WebsiteCategory.OFFICIAL,
             WebsiteCategory.WIKIA,
-            WebsiteCategory.EPIC_GAMES -> R.drawable.web
+            WebsiteCategory.EPIC_GAMES,
+            -> R.drawable.web
         }
     }
 }

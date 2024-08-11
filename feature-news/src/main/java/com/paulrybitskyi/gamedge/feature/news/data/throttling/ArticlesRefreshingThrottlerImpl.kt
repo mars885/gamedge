@@ -33,7 +33,7 @@ import javax.inject.Singleton
 @BindType
 internal class ArticlesRefreshingThrottlerImpl @Inject constructor(
     private val articlesPreferences: DataStore<Preferences>,
-    private val timestampProvider: TimestampProvider
+    private val timestampProvider: TimestampProvider,
 ) : ArticlesRefreshingThrottler {
 
     private companion object {

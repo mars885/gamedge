@@ -25,7 +25,7 @@ enum class YoutubeThumbnailSize(internal val rawSize: String) {
     MEDIUM("mqdefault"), // 320x180
     HIGH("hqdefault"), // 480x360
     STANDARD_DEFINITION("sddefault"), // 640x480
-    MAX("maxresdefault") // 1052x592
+    MAX("maxresdefault"), // 1052x592
 }
 
 interface YoutubeMediaUrlFactory {

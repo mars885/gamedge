@@ -122,7 +122,7 @@ subprojects {
                     "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
                     "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
                     "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
-                )
+                ),
             )
         }
     }

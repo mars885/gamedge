@@ -21,10 +21,10 @@ import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.common.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.FakeLogger
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_ERROR_UNKNOWN
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
@@ -36,8 +36,8 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInf
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.finiteUiState
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -369,7 +369,7 @@ internal class GameInfoViewModelTest {
                     rating = "rating",
                     likeCount = "like_count",
                     ageRating = "age_rating",
-                    gameCategory = "game_category"
+                    gameCategory = "game_category",
                 ),
                 videoModels = emptyList(),
                 screenshotModels = emptyList(),
@@ -378,7 +378,7 @@ internal class GameInfoViewModelTest {
                 linkModels = emptyList(),
                 companyModels = emptyList(),
                 otherCompanyGames = null,
-                similarGames = null
+                similarGames = null,
             )
         }
     }

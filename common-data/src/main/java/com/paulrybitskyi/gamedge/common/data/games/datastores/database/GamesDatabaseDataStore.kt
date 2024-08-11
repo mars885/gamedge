@@ -25,13 +25,13 @@ import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.database.games.entities.DbGame
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import com.paulrybitskyi.hiltbinder.BindType
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 @BindType
@@ -46,7 +46,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         gamesTable.saveGames(
             withContext(dispatcherProvider.computation) {
                 dbGameMapper.mapToDatabaseGames(games)
-            }
+            },
         )
     }
 
@@ -63,7 +63,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         return gamesTable.getGames(
             ids = company.developedGames,
             offset = pagination.offset,
-            limit = pagination.limit
+            limit = pagination.limit,
         )
         .toDataGames()
     }
@@ -72,7 +72,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         return gamesTable.getGames(
             ids = game.similarGames,
             offset = pagination.offset,
-            limit = pagination.limit
+            limit = pagination.limit,
         )
         .toDataGames()
     }
@@ -81,7 +81,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         return gamesTable.searchGames(
             searchQuery = searchQuery,
             offset = pagination.offset,
-            limit = pagination.limit
+            limit = pagination.limit,
         )
         .let { databaseGames ->
             withContext(dispatcherProvider.computation) {
@@ -94,7 +94,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         return gamesTable.observePopularGames(
             minReleaseDateTimestamp = discoveryGamesReleaseDatesProvider.getPopularGamesMinReleaseDate(),
             offset = pagination.offset,
-            limit = pagination.limit
+            limit = pagination.limit,
         )
         .toDataGamesFlow()
     }
@@ -104,7 +104,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
             minReleaseDateTimestamp = discoveryGamesReleaseDatesProvider.getRecentlyReleasedGamesMinReleaseDate(),
             maxReleaseDateTimestamp = discoveryGamesReleaseDatesProvider.getRecentlyReleasedGamesMaxReleaseDate(),
             offset = pagination.offset,
-            limit = pagination.limit
+            limit = pagination.limit,
         )
         .toDataGamesFlow()
     }
@@ -113,7 +113,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         return gamesTable.observeComingSoonGames(
             minReleaseDateTimestamp = discoveryGamesReleaseDatesProvider.getComingSoonGamesMinReleaseDate(),
             offset = pagination.offset,
-            limit = pagination.limit
+            limit = pagination.limit,
         )
         .toDataGamesFlow()
     }
@@ -122,7 +122,7 @@ internal class GamesDatabaseDataStore @Inject constructor(
         return gamesTable.observeMostAnticipatedGames(
             minReleaseDateTimestamp = discoveryGamesReleaseDatesProvider.getMostAnticipatedGamesMinReleaseDate(),
             offset = pagination.offset,
-            limit = pagination.limit
+            limit = pagination.limit,
         )
         .toDataGamesFlow()
     }

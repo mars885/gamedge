@@ -19,28 +19,28 @@ package com.paulrybitskyi.gamedge.common.api.calladapter
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.paulrybitskyi.gamedge.common.api.ApiResult
-import com.paulrybitskyi.gamedge.common.api.Error as ApiError
 import com.paulrybitskyi.gamedge.common.api.ErrorMessageExtractor
 import com.paulrybitskyi.gamedge.common.api.enqueue
-import java.io.IOException
-import java.lang.reflect.Type
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
+import java.lang.reflect.Type
+import com.paulrybitskyi.gamedge.common.api.Error as ApiError
 
 class ApiResultCall<T>(
     private val delegate: Call<T>,
     private val successType: Type,
-    private val errorMessageExtractor: ErrorMessageExtractor
+    private val errorMessageExtractor: ErrorMessageExtractor,
 ) : Call<ApiResult<T>> {
 
     override fun enqueue(callback: Callback<ApiResult<T>>) {
         delegate.enqueue(
             onResponse = { _, response -> callback.onResponse(this, Response.success(response.toApiResult())) },
-            onFailure = { _, throwable -> callback.onResponse(this, Response.success(throwable.toApiResult())) }
+            onFailure = { _, throwable -> callback.onResponse(this, Response.success(throwable.toApiResult())) },
         )
     }
 
@@ -71,7 +71,7 @@ class ApiResultCall<T>(
             when (this) {
                 is IOException -> ApiError.NetworkError(this)
                 else -> ApiError.UnknownError(this)
-            }
+            },
         )
     }
 

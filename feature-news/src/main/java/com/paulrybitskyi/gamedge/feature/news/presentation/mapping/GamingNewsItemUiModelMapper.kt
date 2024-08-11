@@ -29,7 +29,7 @@ internal interface GamingNewsItemUiModelMapper {
 
 @BindType(installIn = BindType.Component.VIEW_MODEL)
 internal class GamingNewsItemUiModelMapperImpl @Inject constructor(
-    private val publicationDateFormatter: ArticlePublicationDateFormatter
+    private val publicationDateFormatter: ArticlePublicationDateFormatter,
 ) : GamingNewsItemUiModelMapper {
 
     override fun mapToUiModel(article: Article): GamingNewsItemUiModel {
@@ -39,7 +39,7 @@ internal class GamingNewsItemUiModelMapperImpl @Inject constructor(
             title = article.title,
             lede = article.lede,
             publicationDate = article.formatPublicationDate(),
-            siteDetailUrl = article.siteDetailUrl
+            siteDetailUrl = article.siteDetailUrl,
         )
     }
 

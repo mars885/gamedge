@@ -39,7 +39,7 @@ data class ApiArticle(
     val publicationDate: String = "",
     @Gamespot(Schema.SITE_DETAIL_URL)
     @SerialName(Schema.SITE_DETAIL_URL)
-    val siteDetailUrl: String = ""
+    val siteDetailUrl: String = "",
 ) {
 
     object Schema {

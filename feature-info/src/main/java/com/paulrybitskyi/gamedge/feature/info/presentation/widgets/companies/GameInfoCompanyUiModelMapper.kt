@@ -16,15 +16,15 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies
 
+import com.paulrybitskyi.gamedge.common.domain.games.entities.InvolvedCompany
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageExtension
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory.Config
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.common.domain.games.entities.InvolvedCompany
-import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 internal interface GameInfoCompanyUiModelMapper {
     fun mapToUiModel(company: InvolvedCompany): GameInfoCompanyUiModel
@@ -48,7 +48,7 @@ internal class GameInfoCompanyUiModelMapperImpl @Inject constructor(
             logoHeight = company.company.logo?.height,
             websiteUrl = company.company.websiteUrl,
             name = company.company.name,
-            roles = company.createRolesString()
+            roles = company.createRolesString(),
         )
     }
 
@@ -67,7 +67,7 @@ internal class GameInfoCompanyUiModelMapperImpl @Inject constructor(
         }
         .joinToString(
             separator = COMPANY_ROLE_SEPARATOR,
-            transform = stringProvider::getString
+            transform = stringProvider::getString,
         )
     }
 }

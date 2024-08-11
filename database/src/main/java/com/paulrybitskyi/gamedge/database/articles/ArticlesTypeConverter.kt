@@ -27,7 +27,7 @@ import javax.inject.Inject
 @ProvidedTypeConverter
 @BindType(contributesTo = BindType.Collection.SET)
 internal class ArticlesTypeConverter @Inject constructor(
-    private val jsonConverter: JsonConverter
+    private val jsonConverter: JsonConverter,
 ) : RoomTypeConverter {
 
     @TypeConverter

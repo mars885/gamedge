@@ -25,5 +25,5 @@ data class GameUiModel(
     val name: String,
     val releaseDate: String,
     val developerName: String?,
-    val description: String?
+    val description: String?,
 )

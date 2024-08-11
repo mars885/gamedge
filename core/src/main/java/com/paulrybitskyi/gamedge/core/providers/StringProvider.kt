@@ -30,7 +30,7 @@ interface StringProvider {
 
 @BindType
 internal class StringProviderImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : StringProvider {
 
     override fun getString(id: Int, vararg args: Any): String {

@@ -31,7 +31,7 @@ interface RelativeDateFormatter {
 @BindType
 internal class RelativeDateFormatterImpl @Inject constructor(
     private val timeProvider: TimeProvider,
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
 ) : RelativeDateFormatter {
 
     override fun formatRelativeDate(dateTime: LocalDateTime): String {

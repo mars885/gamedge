@@ -48,7 +48,7 @@ internal object GamesEndpointModule {
         @IgdbApi okHttpClient: OkHttpClient,
         @IgdbApi callAdapterFactory: ApiResultCallAdapterFactory,
         json: Json,
-        igdbConstantsProvider: IgdbConstantsProvider
+        igdbConstantsProvider: IgdbConstantsProvider,
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)

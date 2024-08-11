@@ -25,5 +25,5 @@ enum class DbCategory {
     STANDALONE_EXPANSION,
     MOD,
     EPISODE,
-    SEASON
+    SEASON,
 }

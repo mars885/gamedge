@@ -17,10 +17,10 @@
 package com.paulrybitskyi.gamedge.feature.info
 
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Company
+import com.paulrybitskyi.gamedge.common.domain.games.entities.InvolvedCompany
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
 import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
-import com.paulrybitskyi.gamedge.common.domain.games.entities.InvolvedCompany
 import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameInfo
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetCompanyDevelopedGamesUseCase
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameUseCase

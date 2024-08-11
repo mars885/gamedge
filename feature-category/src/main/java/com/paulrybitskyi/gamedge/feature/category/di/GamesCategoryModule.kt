@@ -40,7 +40,7 @@ internal object GamesCategoryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.POPULAR)
     fun providePopularGamesObserverUseCase(
-        observePopularGamesUseCase: ObservePopularGamesUseCase
+        observePopularGamesUseCase: ObservePopularGamesUseCase,
     ): ObservableGamesUseCase {
         return observePopularGamesUseCase
     }
@@ -49,7 +49,7 @@ internal object GamesCategoryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.POPULAR)
     fun providePopularGamesRefresherUseCase(
-        refreshPopularGamesUseCase: RefreshPopularGamesUseCase
+        refreshPopularGamesUseCase: RefreshPopularGamesUseCase,
     ): RefreshableGamesUseCase {
         return refreshPopularGamesUseCase
     }
@@ -58,7 +58,7 @@ internal object GamesCategoryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.RECENTLY_RELEASED)
     fun provideRecentlyReleasedGamesObserverUseCase(
-        observeRecentlyReleasedGamesUseCase: ObserveRecentlyReleasedGamesUseCase
+        observeRecentlyReleasedGamesUseCase: ObserveRecentlyReleasedGamesUseCase,
     ): ObservableGamesUseCase {
         return observeRecentlyReleasedGamesUseCase
     }
@@ -67,7 +67,7 @@ internal object GamesCategoryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.RECENTLY_RELEASED)
     fun provideRecentlyReleasedGamesRefresherUseCase(
-        refreshRecentlyReleasedGamesUseCase: RefreshRecentlyReleasedGamesUseCase
+        refreshRecentlyReleasedGamesUseCase: RefreshRecentlyReleasedGamesUseCase,
     ): RefreshableGamesUseCase {
         return refreshRecentlyReleasedGamesUseCase
     }
@@ -76,7 +76,7 @@ internal object GamesCategoryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.COMING_SOON)
     fun provideComingSoonGamesObserverUseCase(
-        observeComingSoonGamesUseCase: ObserveComingSoonGamesUseCase
+        observeComingSoonGamesUseCase: ObserveComingSoonGamesUseCase,
     ): ObservableGamesUseCase {
         return observeComingSoonGamesUseCase
     }
@@ -85,7 +85,7 @@ internal object GamesCategoryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.COMING_SOON)
     fun provideComingSoonGamesRefresherUseCase(
-        refreshComingSoonGamesUseCase: RefreshComingSoonGamesUseCase
+        refreshComingSoonGamesUseCase: RefreshComingSoonGamesUseCase,
     ): RefreshableGamesUseCase {
         return refreshComingSoonGamesUseCase
     }
@@ -94,7 +94,7 @@ internal object GamesCategoryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.MOST_ANTICIPATED)
     fun provideMostAnticipatedGamesObserverUseCase(
-        observeMostAnticipatedGamesUseCase: ObserveMostAnticipatedGamesUseCase
+        observeMostAnticipatedGamesUseCase: ObserveMostAnticipatedGamesUseCase,
     ): ObservableGamesUseCase {
         return observeMostAnticipatedGamesUseCase
     }
@@ -103,7 +103,7 @@ internal object GamesCategoryModule {
     @IntoMap
     @GamesCategoryKey(GamesCategoryKey.Type.MOST_ANTICIPATED)
     fun provideMostAnticipatedGamesRefresherUseCase(
-        refreshMostAnticipatedGamesUseCase: RefreshMostAnticipatedGamesUseCase
+        refreshMostAnticipatedGamesUseCase: RefreshMostAnticipatedGamesUseCase,
     ): RefreshableGamesUseCase {
         return refreshMostAnticipatedGamesUseCase
     }

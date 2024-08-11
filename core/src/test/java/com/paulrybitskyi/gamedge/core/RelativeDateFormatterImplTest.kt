@@ -42,7 +42,7 @@ internal class RelativeDateFormatterImplTest {
         stringProvider = FakeStringProvider()
         SUT = RelativeDateFormatterImpl(
             timeProvider = timeProvider,
-            stringProvider = stringProvider
+            stringProvider = stringProvider,
         )
     }
 

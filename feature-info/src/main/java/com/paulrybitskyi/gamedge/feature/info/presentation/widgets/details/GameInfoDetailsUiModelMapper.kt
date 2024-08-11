@@ -53,7 +53,7 @@ internal class GameInfoDetailsUiModelMapperImpl @Inject constructor() :
             platformsText = game.platformsToText(),
             modesText = game.modesToText(),
             playerPerspectivesText = game.playerPerspectivesToText(),
-            themesText = game.themesToText()
+            themesText = game.themesToText(),
         )
     }
 

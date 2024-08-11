@@ -29,8 +29,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Authenticator
-import javax.inject.Singleton
 import okhttp3.OkHttpClient
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -53,7 +53,7 @@ internal object CommonsModule {
     @Provides
     @IgdbApi
     fun provideApiResultCallAdapterFactory(
-        @IgdbApi errorMessageExtractor: ErrorMessageExtractor
+        @IgdbApi errorMessageExtractor: ErrorMessageExtractor,
     ): ApiResultCallAdapterFactory {
         return ApiResultCallAdapterFactory(errorMessageExtractor)
     }
@@ -62,12 +62,12 @@ internal object CommonsModule {
     fun provideAuthorizationInterceptor(
         credentialsStore: CredentialsStore,
         authorizer: Authorizer,
-        twitchConstantsProvider: TwitchConstantsProvider
+        twitchConstantsProvider: TwitchConstantsProvider,
     ): AuthorizationInterceptor {
         return AuthorizationInterceptor(
             credentialsStore = credentialsStore,
             authorizer = authorizer,
-            clientId = twitchConstantsProvider.clientId
+            clientId = twitchConstantsProvider.clientId,
         )
     }
 }

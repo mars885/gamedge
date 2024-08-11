@@ -22,5 +22,5 @@ import kotlinx.serialization.Serializable
 data class DbWebsite(
     val id: Int,
     val url: String,
-    val category: DbWebsiteCategory
+    val category: DbWebsiteCategory,
 )

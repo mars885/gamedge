@@ -28,17 +28,17 @@ abstract class BaseViewModel : ViewModel(), Loggable {
 
     override val logTag: String = javaClass.simpleName
 
-    private val _commandChannel = Channel<Command>(Channel.BUFFERED)
-    private val _routeChannel = Channel<Route>(Channel.BUFFERED)
+    private val commandChannel = Channel<Command>(Channel.BUFFERED)
+    private val routeChannel = Channel<Route>(Channel.BUFFERED)
 
-    val commandFlow: Flow<Command> = _commandChannel.receiveAsFlow()
-    val routeFlow: Flow<Route> = _routeChannel.receiveAsFlow()
+    val commandFlow: Flow<Command> = commandChannel.receiveAsFlow()
+    val routeFlow: Flow<Route> = routeChannel.receiveAsFlow()
 
     protected fun dispatchCommand(command: Command) {
-        _commandChannel.trySend(command)
+        commandChannel.trySend(command)
     }
 
     protected fun route(route: Route) {
-        _routeChannel.trySend(route)
+        routeChannel.trySend(route)
     }
 }

@@ -34,7 +34,7 @@ interface LikedGamesTable {
         """
         DELETE FROM ${DbLikedGame.Schema.TABLE_NAME}
         WHERE ${DbLikedGame.Schema.GAME_ID} = :gameId
-        """
+        """,
     )
     suspend fun deleteLikedGame(gameId: Int)
 
@@ -42,7 +42,7 @@ interface LikedGamesTable {
         """
         SELECT COUNT(*) FROM ${DbLikedGame.Schema.TABLE_NAME}
         WHERE ${DbLikedGame.Schema.GAME_ID} = :gameId
-        """
+        """,
     )
     suspend fun isGameLiked(gameId: Int): Boolean
 
@@ -50,7 +50,7 @@ interface LikedGamesTable {
         """
         SELECT COUNT(*) FROM ${DbLikedGame.Schema.TABLE_NAME}
         WHERE ${DbLikedGame.Schema.GAME_ID} = :gameId
-        """
+        """,
     )
     fun observeGameLikeState(gameId: Int): Flow<Boolean>
 
@@ -61,7 +61,7 @@ interface LikedGamesTable {
         ON lg.${DbLikedGame.Schema.GAME_ID} = g.${DbGame.Schema.ID}
         ORDER BY lg.${DbLikedGame.Schema.LIKE_TIMESTAMP} DESC
         LIMIT :offset, :limit
-        """
+        """,
     )
     fun observeLikedGames(offset: Int, limit: Int): Flow<List<DbGame>>
 }

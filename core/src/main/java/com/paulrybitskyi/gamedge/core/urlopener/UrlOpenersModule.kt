@@ -29,7 +29,7 @@ internal object UrlOpenersModule {
     fun provideUrlOpeners(
         @UrlOpenerKey(UrlOpenerKey.Type.NATIVE_APP) nativeAppUrlOpener: UrlOpener,
         @UrlOpenerKey(UrlOpenerKey.Type.CUSTOM_TAB) customTabUrlOpener: UrlOpener,
-        @UrlOpenerKey(UrlOpenerKey.Type.BROWSER) browserUrlOpener: UrlOpener
+        @UrlOpenerKey(UrlOpenerKey.Type.BROWSER) browserUrlOpener: UrlOpener,
     ): List<UrlOpener> {
         return listOf(nativeAppUrlOpener, customTabUrlOpener, browserUrlOpener)
     }

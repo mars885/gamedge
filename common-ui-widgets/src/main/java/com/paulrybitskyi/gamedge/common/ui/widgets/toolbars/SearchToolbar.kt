@@ -116,7 +116,7 @@ fun SearchToolbar(
                 onClearButtonClicked = {
                     focusRequester.requestFocus()
                     onClearButtonClicked?.invoke()
-                }
+                },
             )
         }
     }
@@ -156,7 +156,7 @@ private fun Input(
             TextFieldValue(
                 text = queryText,
                 selection = TextRange(queryText.length),
-            )
+            ),
         )
     }
     val textFieldValue = textFieldValueState.copy(text = queryText)

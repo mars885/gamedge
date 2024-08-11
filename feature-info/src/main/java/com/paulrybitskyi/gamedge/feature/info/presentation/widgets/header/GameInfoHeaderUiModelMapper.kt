@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header
 
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.core.GameLikeCountCalculator
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
@@ -23,7 +24,6 @@ import com.paulrybitskyi.gamedge.core.formatters.GameAgeRatingFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameCategoryFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameRatingFormatter
 import com.paulrybitskyi.gamedge.core.formatters.GameReleaseDateFormatter
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.mapToUiModels
@@ -56,7 +56,7 @@ internal class GameInfoHeaderUiModelMapperImpl @Inject constructor(
             rating = game.formatRating(),
             likeCount = game.calculateLikeCount(),
             ageRating = game.formatAgeRating(),
-            gameCategory = game.formatCategory()
+            gameCategory = game.formatCategory(),
         )
     }
 

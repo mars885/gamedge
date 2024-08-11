@@ -41,7 +41,7 @@ internal class CoilInitializer @Inject constructor(
                         .maxSizePercent(MEMORY_CACHE_MAX_HEAP_PERCENTAGE)
                         .build()
                 }
-                .build()
+                .build(),
         )
     }
 

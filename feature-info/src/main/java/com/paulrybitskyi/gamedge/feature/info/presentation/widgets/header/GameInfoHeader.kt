@@ -64,10 +64,10 @@ import com.paulrybitskyi.gamedge.common.ui.theme.lightScrim
 import com.paulrybitskyi.gamedge.common.ui.theme.subtitle3
 import com.paulrybitskyi.gamedge.common.ui.widgets.GameCover
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
-import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.Artworks
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModel
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 private const val ConstraintIdArtworks = "artworks"
 private const val ConstraintIdArtworksScrim = "artworks_scrim"
@@ -213,7 +213,7 @@ internal fun GameInfoHeader(
             Icon(
                 painter = rememberAnimatedVectorPainter(
                     animatedImageVector = AnimatedImageVector.animatedVectorResource(
-                        CoreR.drawable.heart_animated_fill
+                        CoreR.drawable.heart_animated_fill,
                     ),
                     atEnd = headerInfo.isLiked,
                 ),

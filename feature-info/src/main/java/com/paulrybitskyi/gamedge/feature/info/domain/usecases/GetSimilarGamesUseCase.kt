@@ -38,7 +38,7 @@ internal interface GetSimilarGamesUseCase : UseCase<Params, Flow<DomainResult<Li
 
     data class Params(
         val game: Game,
-        val pagination: Pagination
+        val pagination: Pagination,
     )
 }
 

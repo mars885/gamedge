@@ -24,8 +24,8 @@ import com.paulrybitskyi.gamedge.common.domain.common.extensions.mapSuccess
 import com.paulrybitskyi.gamedge.common.domain.common.usecases.UseCase
 import com.paulrybitskyi.gamedge.core.factories.ImageViewerGameUrlFactory
 import com.paulrybitskyi.gamedge.core.utils.onError
-import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase.Params
 import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameImageType
+import com.paulrybitskyi.gamedge.feature.info.domain.usecases.GetGameImageUrlsUseCase.Params
 import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn

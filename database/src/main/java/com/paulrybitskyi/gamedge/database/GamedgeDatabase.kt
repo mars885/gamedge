@@ -32,7 +32,7 @@ import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
     entities = [
         DbGame::class,
         DbLikedGame::class,
-        DbArticle::class
+        DbArticle::class,
     ],
     version = Constants.VERSION,
     exportSchema = true,
@@ -41,7 +41,7 @@ import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
 // with custom provided type converters
 @TypeConverters(
     GamesTypeConverter::class,
-    ArticlesTypeConverter::class
+    ArticlesTypeConverter::class,
 )
 internal abstract class GamedgeDatabase : RoomDatabase() {
     abstract val gamesTable: GamesTable

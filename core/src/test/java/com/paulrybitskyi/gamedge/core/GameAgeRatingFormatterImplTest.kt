@@ -41,8 +41,8 @@ internal class GameAgeRatingFormatterImplTest {
     fun `Returns properly formatted string with age rating`() {
         val game = DOMAIN_GAME.copy(
             ageRatings = listOf(
-                AgeRating(AgeRatingCategory.PEGI, AgeRatingType.AO)
-            )
+                AgeRating(AgeRatingCategory.PEGI, AgeRatingType.AO),
+            ),
         )
 
         SUT.formatAgeRating(game)
@@ -62,8 +62,8 @@ internal class GameAgeRatingFormatterImplTest {
         val game = DOMAIN_GAME.copy(
             ageRatings = listOf(
                 AgeRating(AgeRatingCategory.UNKNOWN, AgeRatingType.AO),
-                AgeRating(AgeRatingCategory.PEGI, AgeRatingType.UNKNOWN)
-            )
+                AgeRating(AgeRatingCategory.PEGI, AgeRatingType.UNKNOWN),
+            ),
         )
 
         SUT.formatAgeRating(game)

@@ -17,9 +17,9 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.google.common.truth.Truth.assertThat
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Video
 import com.paulrybitskyi.gamedge.core.factories.YoutubeMediaUrlFactoryImpl
 import com.paulrybitskyi.gamedge.core.factories.YoutubeThumbnailSize
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Video
 import org.junit.Before
 import org.junit.Test
 

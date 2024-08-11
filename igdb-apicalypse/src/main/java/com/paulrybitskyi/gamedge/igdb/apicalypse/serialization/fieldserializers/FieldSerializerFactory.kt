@@ -20,7 +20,7 @@ internal object FieldSerializerFactory {
 
     fun create(
         fieldChain: List<String>,
-        children: List<FieldSerializer>
+        children: List<FieldSerializer>,
     ): FieldSerializer {
         return if (children.isEmpty()) {
             SingleFieldSerializerImpl(fieldChain)

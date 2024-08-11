@@ -60,7 +60,7 @@ object GamedgeTheme {
 @Composable
 fun GamedgeTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
         CompositionLocalProvider(LocalElevationOverlay provides null) {

@@ -21,9 +21,9 @@ import com.paulrybitskyi.gamedge.common.domain.common.DomainResult
 import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.onEachSuccess
 import com.paulrybitskyi.gamedge.common.domain.common.usecases.ObservableUseCase
-import com.paulrybitskyi.gamedge.feature.news.domain.throttling.ArticlesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.feature.news.domain.datastores.ArticlesDataStores
 import com.paulrybitskyi.gamedge.feature.news.domain.entities.Article
+import com.paulrybitskyi.gamedge.feature.news.domain.throttling.ArticlesRefreshingThrottlerTools
 import com.paulrybitskyi.gamedge.feature.news.domain.usecases.RefreshArticlesUseCase.Params
 import com.paulrybitskyi.hiltbinder.BindType
 import kotlinx.coroutines.flow.Flow

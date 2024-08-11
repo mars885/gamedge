@@ -27,14 +27,14 @@ interface AuthEndpoint {
 internal class AuthEndpointImpl(
     private val authService: AuthService,
     private val clientId: String,
-    private val clientSecret: String
+    private val clientSecret: String,
 ) : AuthEndpoint {
 
     override suspend fun getOauthCredentials(): ApiResult<ApiOauthCredentials> {
         return authService.getOauthCredentials(
             clientId = clientId,
             clientSecret = clientSecret,
-            grantType = ApiGrantType.CLIENT_CREDENTIALS.rawType
+            grantType = ApiGrantType.CLIENT_CREDENTIALS.rawType,
         )
     }
 }

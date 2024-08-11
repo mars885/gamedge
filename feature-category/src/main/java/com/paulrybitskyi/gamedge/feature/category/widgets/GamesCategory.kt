@@ -52,9 +52,9 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
-import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.category.GamesCategoryViewModel
 import com.paulrybitskyi.gamedge.feature.category.R
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
 fun GamesCategory(onRoute: (Route) -> Unit) {
@@ -193,7 +193,7 @@ private fun VerticalGrid(
                 modifier = Modifier
                     .size(
                         width = gridConfig.itemWidthInDp,
-                        height = gridConfig.itemHeightInDp
+                        height = gridConfig.itemHeightInDp,
                     )
                     .padding(paddingValues),
                 hasRoundedShape = false,
@@ -214,7 +214,7 @@ private fun GamesCategorySuccessStatePreview() {
                     id = index + 1,
                     title = "Popular Game",
                     coverUrl = null,
-                )
+                ),
             )
         }
     }

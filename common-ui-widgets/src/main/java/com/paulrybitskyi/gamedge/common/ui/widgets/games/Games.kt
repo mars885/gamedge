@@ -105,7 +105,7 @@ private fun SuccessState(
         ) {
             itemsIndexed(
                 items = games,
-                key = { _, game -> game.id }
+                key = { _, game -> game.id },
             ) { index, game ->
                 if (index == lastIndex) {
                     LaunchedEffect(lastIndex) {
@@ -150,7 +150,7 @@ private fun GamesSuccessStatePreview() {
             releaseDate = "Sep 28, 2021 (a month ago)",
             developerName = "Mobius Digital",
             description = "Some very very very very very very very very very long description",
-        )
+        ),
     )
 
     GamedgeTheme {

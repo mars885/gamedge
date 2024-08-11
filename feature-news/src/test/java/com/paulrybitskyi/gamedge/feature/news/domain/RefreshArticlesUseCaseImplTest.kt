@@ -65,12 +65,12 @@ internal class RefreshArticlesUseCaseImplTest {
         SUT = RefreshArticlesUseCaseImpl(
             articlesDataStores = ArticlesDataStores(
                 local = articlesLocalDataStore,
-                remote = articlesRemoteDataStore
+                remote = articlesRemoteDataStore,
             ),
             dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             throttlerTools = ArticlesRefreshingThrottlerTools(
                 throttler = throttler,
-                keyProvider = keyProvider
+                keyProvider = keyProvider,
             ),
         )
 

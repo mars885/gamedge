@@ -27,6 +27,6 @@ internal interface AuthService {
     suspend fun getOauthCredentials(
         @Query("client_id") clientId: String,
         @Query("client_secret") clientSecret: String,
-        @Query("grant_type") grantType: String
+        @Query("grant_type") grantType: String,
     ): ApiResult<ApiOauthCredentials>
 }

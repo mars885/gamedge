@@ -48,7 +48,7 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("field5")
             val field5: String,
             @Apicalypse("field6")
-            val field6: Float
+            val field6: Float,
         )
 
         assertThat(SUT.serialize(Entity::class.java))
@@ -59,7 +59,7 @@ internal class ApicalypseSerializerImplTest {
     fun `Throws exception if entity does not have @ApicalypseClass annotation`() {
         data class Entity(
             val field1: Int,
-            val field2: Float
+            val field2: Float,
         )
 
         assertThrows(IllegalArgumentException::class.java) {
@@ -72,7 +72,7 @@ internal class ApicalypseSerializerImplTest {
         @ApicalypseClass
         data class Entity(
             @Apicalypse("")
-            val field1: Int
+            val field1: Int,
         )
 
         assertThrows(IllegalArgumentException::class.java) {
@@ -85,7 +85,7 @@ internal class ApicalypseSerializerImplTest {
         @ApicalypseClass
         data class Entity(
             @Apicalypse("   ")
-            val field1: Int
+            val field1: Int,
         )
 
         assertThrows(IllegalArgumentException::class.java) {
@@ -99,7 +99,7 @@ internal class ApicalypseSerializerImplTest {
         data class Entity(
             @Apicalypse("field1")
             val field1: Int,
-            val field2: Float
+            val field2: Float,
         )
 
         assertThat(SUT.serialize(Entity::class.java)).isEqualTo("field1")
@@ -110,7 +110,7 @@ internal class ApicalypseSerializerImplTest {
         @ApicalypseClass
         data class Child1(
             @Apicalypse("field1")
-            val field1: Int
+            val field1: Int,
         )
 
         @ApicalypseClass
@@ -118,7 +118,7 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("field1")
             val field1: Int,
             @Apicalypse("field2")
-            val field2: String
+            val field2: String,
         )
 
         @ApicalypseClass
@@ -128,7 +128,7 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("field2")
             val field2: String,
             @Apicalypse("field3")
-            val field3: Double
+            val field3: Double,
         )
 
         @ApicalypseClass
@@ -140,13 +140,13 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("child2")
             val child2: Child2,
             @Apicalypse("child3")
-            val child3: Child3
+            val child3: Child3,
         )
 
         assertThat(SUT.serialize(Parent::class.java))
             .isEqualTo(
                 "parent, child1.field1, child2.field1, child2.field2, child3.field1, child3.field2, " +
-                "child3.field3"
+                "child3.field3",
             )
     }
 
@@ -156,7 +156,7 @@ internal class ApicalypseSerializerImplTest {
         @ApicalypseClass
         data class Grandchild1(
             @Apicalypse("field1")
-            val field1: Int
+            val field1: Int,
         )
 
         @ApicalypseClass
@@ -164,7 +164,7 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("field1")
             val field1: String,
             @Apicalypse("field2")
-            val field2: String
+            val field2: String,
         )
 
         @ApicalypseClass
@@ -174,13 +174,13 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("field2")
             val field2: String,
             @Apicalypse("field3")
-            val field3: String
+            val field3: String,
         )
 
         @ApicalypseClass
         data class Child1(
             @Apicalypse("kid1")
-            val child1: Grandchild1
+            val child1: Grandchild1,
         )
 
         @ApicalypseClass
@@ -188,7 +188,7 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("kid1")
             val child1: Grandchild1,
             @Apicalypse("kid2")
-            val child2: Grandchild2
+            val child2: Grandchild2,
         )
 
         @ApicalypseClass
@@ -198,7 +198,7 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("kid2")
             val child2: Grandchild2,
             @Apicalypse("kid3")
-            val child3: Grandchild3
+            val child3: Grandchild3,
         )
 
         @ApicalypseClass
@@ -210,14 +210,14 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("child2")
             val child2: Child2,
             @Apicalypse("child3")
-            val child3: Child3
+            val child3: Child3,
         )
 
         assertThat(SUT.serialize(Parent::class.java))
             .isEqualTo(
                 "parent, child1.kid1.field1, child2.kid1.field1, child2.kid2.field1, child2.kid2.field2, " +
                 "child3.kid1.field1, child3.kid2.field1, child3.kid2.field2, child3.kid3.field1, " +
-                "child3.kid3.field2, child3.kid3.field3"
+                "child3.kid3.field2, child3.kid3.field3",
             )
     }
 
@@ -228,7 +228,7 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("field1")
             val field1: Int,
             @Apicalypse("field2")
-            val field2: List<String>
+            val field2: List<String>,
         )
 
         assertThat(SUT.serialize(Entity::class.java)).isEqualTo("field1, field2")
@@ -241,7 +241,7 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("field1")
             val field1: Int,
             @Apicalypse("field2")
-            val field2: Set<String>
+            val field2: Set<String>,
         )
 
         assertThat(SUT.serialize(Entity::class.java)).isEqualTo("field1, field2")
@@ -254,7 +254,7 @@ internal class ApicalypseSerializerImplTest {
             @Apicalypse("field1")
             val field1: Int,
             @Apicalypse("field2")
-            val field2: Map<String, String>
+            val field2: Map<String, String>,
         )
 
         assertThrows(IllegalStateException::class.java) {

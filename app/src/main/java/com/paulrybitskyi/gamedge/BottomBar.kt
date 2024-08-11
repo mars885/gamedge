@@ -35,11 +35,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.feature.settings.R as FeatureSettingsR
+import com.paulrybitskyi.gamedge.core.R as CoreR
 import com.paulrybitskyi.gamedge.feature.discovery.R as FeatureDiscoveryR
 import com.paulrybitskyi.gamedge.feature.likes.R as FeatureLikesR
 import com.paulrybitskyi.gamedge.feature.news.R as FeatureNewsR
-import com.paulrybitskyi.gamedge.core.R as CoreR
+import com.paulrybitskyi.gamedge.feature.settings.R as FeatureSettingsR
 
 private const val BOTTOM_BAR_ANIMATION_DURATION = 300
 
