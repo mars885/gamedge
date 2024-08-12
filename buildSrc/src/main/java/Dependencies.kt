@@ -85,9 +85,8 @@ object deps {
 
     object kotlin {
 
-        private const val serializationVersion = "1.3.3"
+        private const val serializationVersion = "1.7.1"
 
-        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
         const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"
     }
