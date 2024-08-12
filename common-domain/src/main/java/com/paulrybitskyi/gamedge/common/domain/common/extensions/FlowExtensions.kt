@@ -16,8 +16,6 @@
 
 package com.paulrybitskyi.gamedge.common.domain.common.extensions
 
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapEither
@@ -38,9 +36,9 @@ fun <T> Flow<DomainResult<T>>.onEachFailure(action: suspend (Error) -> Unit): Fl
 }
 
 fun <T> Flow<DomainResult<T>>.resultOrError(): Flow<T> {
-    return map {
-        if (it is Ok) return@map it.value
-        if (it is Err) throw DomainException(it.error)
+    return map { result ->
+        if (result.isOk) return@map result.value
+        if (result.isErr) throw DomainException(result.error)
 
         error("The result is neither Ok nor Err.")
     }
