@@ -155,7 +155,7 @@ object deps {
 
         private const val okHttpVersion = "4.12.0"
         private const val retrofitVersion = "2.11.0"
-        private const val retrofitKotlinxSerializationConverterVersion = "0.8.0"
+        private const val retrofitKotlinxSerializationConverterVersion = "1.0.0"
 
         const val okHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
         const val retrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
