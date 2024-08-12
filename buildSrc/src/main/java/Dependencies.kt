@@ -111,7 +111,7 @@ object deps {
 
         private const val composeVersion = "1.6.8"
         private const val activityVersion = "1.9.1"
-        private const val navigationVersion = "2.5.1"
+        private const val navigationVersion = "2.7.7"
         private const val constraintLayoutVersion = "1.1.0-alpha02"
         private const val hiltVersion = "1.0.0"
 
