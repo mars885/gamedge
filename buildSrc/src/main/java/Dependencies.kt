@@ -180,7 +180,7 @@ object deps {
 
         private const val desugaredLibsVersion = "2.0.4"
         private const val kotlinResultVersion = "2.0.0"
-        private const val hiltBinderVersion = "1.1.2"
+        private const val hiltBinderVersion = "1.1.3"
         private const val coilVersion = "2.1.0"
         private const val zoomableVersion = "1.5.1"
 
