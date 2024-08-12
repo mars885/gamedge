@@ -197,7 +197,7 @@ object deps {
         private const val jUnitVersion = "4.13.2"
         private const val jUnitExtVersion = "1.1.3"
         private const val truthVersion = "1.1.3"
-        private const val mockkVersion = "1.12.5"
+        private const val mockkVersion = "1.13.12"
         private const val turbineVersion = "0.9.0"
         private const val testRunnerVersion = "1.4.0"
         private const val archCoreVersion = "2.1.0"
