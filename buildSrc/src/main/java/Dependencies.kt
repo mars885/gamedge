@@ -37,7 +37,7 @@ object versions {
     const val kotlin = "2.0.0" // also in buildSrc build.gradle.kts file
     const val gradleVersionsPlugin = "0.51.0"
     const val kspPlugin = "2.0.0-1.0.24"
-    const val daggerHilt = "2.51.1"
+    const val daggerHilt = "2.52"
     const val detektPlugin = "1.23.6"
     const val ktlintPlugin = "12.1.1"
     const val ktlint = "1.3.1"
