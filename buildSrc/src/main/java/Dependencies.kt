@@ -109,7 +109,8 @@ object deps {
 
     object compose {
 
-        private const val composeVersion = "1.2.0"
+        private const val composeVersion = "1.6.8"
+        private const val activityVersion = "1.9.1"
         private const val navigationVersion = "2.5.1"
         private const val constraintLayoutVersion = "1.1.0-alpha02"
         private const val hiltVersion = "1.0.0"
@@ -118,10 +119,10 @@ object deps {
         const val tooling = "androidx.compose.ui:ui-tooling:$composeVersion"
         const val animation = "androidx.compose.animation:animation-graphics:$composeVersion"
         const val foundation = "androidx.compose.foundation:foundation:$composeVersion"
-        const val activity = "androidx.activity:activity-compose:$composeVersion"
         const val material = "androidx.compose.material:material:$composeVersion"
         const val runtime = "androidx.compose.runtime:runtime:$composeVersion"
 
+        const val activity = "androidx.activity:activity-compose:$activityVersion"
         const val navigation = "androidx.navigation:navigation-compose:$navigationVersion"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:$constraintLayoutVersion"
         const val hilt = "androidx.hilt:hilt-navigation-compose:$hiltVersion"
