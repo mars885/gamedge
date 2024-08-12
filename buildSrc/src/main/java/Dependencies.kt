@@ -113,7 +113,7 @@ object deps {
         private const val activityVersion = "1.9.1"
         private const val navigationVersion = "2.7.7"
         private const val constraintLayoutVersion = "1.1.0-alpha14"
-        private const val hiltVersion = "1.0.0"
+        private const val hiltVersion = "1.2.0"
 
         const val ui = "androidx.compose.ui:ui:$composeVersion"
         const val tooling = "androidx.compose.ui:ui-tooling:$composeVersion"
