@@ -182,7 +182,7 @@ object deps {
         private const val kotlinResultVersion = "2.0.0"
         private const val hiltBinderVersion = "1.1.3"
         private const val coilVersion = "2.7.0"
-        private const val zoomableVersion = "1.5.1"
+        private const val zoomableVersion = "1.6.1"
 
         const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${desugaredLibsVersion}"
         const val kotlinResult = "com.michael-bull.kotlin-result:kotlin-result:${kotlinResultVersion}"
