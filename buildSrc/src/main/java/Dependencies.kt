@@ -93,7 +93,7 @@ object deps {
 
     object androidX {
 
-        private const val splashVersion = "1.0.0"
+        private const val splashVersion = "1.0.1"
         const val viewModel = "2.5.1" // to be deleted when the linked issue at use site is fixed
         private const val browserVersion = "1.4.0"
         private const val dataStoreVersion = "1.0.0"
