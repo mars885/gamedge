@@ -199,7 +199,7 @@ object deps {
         private const val truthVersion = "1.4.4"
         private const val mockkVersion = "1.13.12"
         private const val turbineVersion = "1.1.0"
-        private const val testRunnerVersion = "1.4.0"
+        private const val testRunnerVersion = "1.6.1"
         private const val archCoreVersion = "2.1.0"
         private const val mockWebServerVersion = "4.10.0"
 
