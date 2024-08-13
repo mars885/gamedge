@@ -25,10 +25,6 @@ plugins {
 
 android {
     namespace = "com.paulrybitskyi.gamedge.feature.news"
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
@@ -62,8 +58,6 @@ dependencies {
 
     implementation(deps.misc.hiltBinder)
     ksp(deps.misc.hiltBinderCompiler)
-
-    coreLibraryDesugaring(deps.misc.desugaredLibs)
 
     testImplementation(project(deps.local.commonTesting))
     testImplementation(deps.testing.jUnit)

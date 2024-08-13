@@ -23,12 +23,6 @@ plugins {
     daggerHilt()
 }
 
-android {
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
-}
-
 dependencies {
     implementation(project(deps.local.commonDomain))
     implementation(project(deps.local.commonData))
@@ -65,8 +59,6 @@ dependencies {
 
     implementation(deps.misc.hiltBinder)
     ksp(deps.misc.hiltBinderCompiler)
-
-    coreLibraryDesugaring(deps.misc.desugaredLibs)
 
     testImplementation(deps.testing.jUnit)
     androidTestImplementation(deps.testing.jUnitExt)

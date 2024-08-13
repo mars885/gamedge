@@ -38,6 +38,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     override fun apply(project: Project) = with(project) {
         setupPlugins()
         configurePlugins()
+        addDesugaringDependency()
     }
 
     private fun Project.setupPlugins() {
@@ -96,6 +97,8 @@ class GamedgeAndroidPlugin : Plugin<Project> {
             compileOptions {
                 sourceCompatibility = appConfig.javaCompatibilityVersion
                 targetCompatibility = appConfig.javaCompatibilityVersion
+
+                isCoreLibraryDesugaringEnabled = true
             }
 
             // Without the below block, a build failure was happening when running ./gradlew connectedAndroidTest
@@ -119,7 +122,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
 
                 defaultConfig {
                     applicationId = appConfig.applicationId
-
                 }
 
                 signingConfigs {
@@ -159,5 +161,9 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     @Suppress("UNCHECKED_CAST")
     private fun <T> Properties.getValue(key: String): T {
         return (get(key) as T)
+    }
+
+    private fun Project.addDesugaringDependency() {
+        dependencies.add("coreLibraryDesugaring", deps.misc.desugaredLibs)
     }
 }
