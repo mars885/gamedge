@@ -106,6 +106,7 @@ internal class GamesCategoryViewModelTest {
             every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.uiState.test {
+                skipItems(count = 2) // skip refreshing use case
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Success)
                 cancelAndIgnoreRemainingEvents()

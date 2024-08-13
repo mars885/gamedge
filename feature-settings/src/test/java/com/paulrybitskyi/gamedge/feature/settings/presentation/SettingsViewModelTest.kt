@@ -89,6 +89,8 @@ internal class SettingsViewModelTest {
     @Test
     fun `Hides theme picker when theme gets picked`() {
         runTest {
+            every { observeSettingsUseCase.execute() } returns flowOf(DOMAIN_SETTINGS)
+
             SUT.onSettingClicked(createSettingUiModel(SettingItem.THEME))
 
             SUT.uiState.test {

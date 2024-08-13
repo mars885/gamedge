@@ -127,6 +127,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to image viewer screen when artwork is clicked`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Ok(listOf()))
 
             val artworkIndex = 10
@@ -145,6 +146,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Logs error when artwork is clicked and image url use case throws error when`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.onArtworkClicked(artworkIndex = 0)
@@ -157,6 +159,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches toast showing command when artwork is clicked and image url use case throws error`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT
@@ -173,6 +176,8 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to previous screen when back button is clicked`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
+
             SUT.routeFlow.test {
                 SUT.onBackButtonClicked()
 
@@ -184,6 +189,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to image viewer screen when cover is clicked`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Ok(listOf()))
 
             SUT.routeFlow.test {
@@ -197,6 +203,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Logs error when cover is clicked and image url use case throws error when`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.onCoverClicked()
@@ -209,6 +216,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches toast showing command when cover is clicked and image url use case throws error`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT
@@ -225,6 +233,8 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches url opening command when video is clicked`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
+
             val video = GameInfoVideoUiModel(
                 id = "1",
                 thumbnailUrl = "thumbnail_url",
@@ -246,6 +256,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to image viewer screen when screenshot is clicked`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Ok(listOf()))
 
             val screenshotIndex = 10
@@ -264,6 +275,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Logs error when screenshot is clicked and image url use case throws error when`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT.onScreenshotClicked(screenshotIndex = 0)
@@ -276,6 +288,7 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches toast showing command when screenshot is clicked and image url use case throws error`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Err(DOMAIN_ERROR_UNKNOWN))
 
             SUT
@@ -292,6 +305,8 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches url opening command when game link is clicked`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
+
             val link = GameInfoLinkUiModel(
                 id = 1,
                 text = "text",
@@ -313,6 +328,8 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Dispatches url opening command when company is clicked`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
+
             val company = GameInfoCompanyUiModel(
                 id = 1,
                 logoWidth = null,
@@ -337,6 +354,8 @@ internal class GameInfoViewModelTest {
     @Test
     fun `Routes to game info when related game is clicked`() {
         runTest {
+            coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
+
             val relatedGame = GameInfoRelatedGameUiModel(
                 id = 1,
                 title = "title",
