@@ -60,7 +60,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 versionCode = appConfig.versionCode
                 versionName = appConfig.versionName
 
-                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
             }
 
             buildTypes {

@@ -26,10 +26,6 @@ plugins {
 android {
     namespace = "com.paulrybitskyi.gamedge.database"
 
-    defaultConfig {
-        testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
-    }
-
     sourceSets {
         getByName("androidTest").assets.srcDirs("$projectDir/schemas")
     }
