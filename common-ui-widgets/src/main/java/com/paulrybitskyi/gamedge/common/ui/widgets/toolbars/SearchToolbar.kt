@@ -59,7 +59,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.common.ui.widgets.R
+import com.paulrybitskyi.gamedge.core.R
 
 private const val ClearButtonAnimationDuration = 100
 
@@ -116,7 +116,7 @@ fun SearchToolbar(
                 onClearButtonClicked = {
                     focusRequester.requestFocus()
                     onClearButtonClicked?.invoke()
-                }
+                },
             )
         }
     }
@@ -156,7 +156,7 @@ private fun Input(
             TextFieldValue(
                 text = queryText,
                 selection = TextRange(queryText.length),
-            )
+            ),
         )
     }
     val textFieldValue = textFieldValueState.copy(text = queryText)

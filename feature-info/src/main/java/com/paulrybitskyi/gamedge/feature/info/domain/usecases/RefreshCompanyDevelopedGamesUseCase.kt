@@ -38,7 +38,7 @@ internal interface RefreshCompanyDevelopedGamesUseCase : UseCase<Params, Flow<Do
 
     data class Params(
         val company: Company,
-        val pagination: Pagination
+        val pagination: Pagination,
     )
 }
 
@@ -54,7 +54,7 @@ internal class RefreshCompanyDevelopedGamesUseCaseImpl @Inject constructor(
         val throttlerKey = withContext(dispatcherProvider.computation) {
             throttlerTools.keyProvider.provideCompanyDevelopedGamesKey(
                 params.company,
-                params.pagination
+                params.pagination,
             )
         }
 

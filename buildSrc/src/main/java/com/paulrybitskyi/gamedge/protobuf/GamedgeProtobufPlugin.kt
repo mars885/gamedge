@@ -19,11 +19,6 @@ package com.paulrybitskyi.gamedge.protobuf
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import PLUGIN_PROTOBUF
-import com.google.protobuf.gradle.generateProtoTasks
-import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
-import org.gradle.kotlin.dsl.invoke
 
 @Suppress("DEPRECATION")
 class GamedgeProtobufPlugin : Plugin<Project> {
@@ -39,7 +34,7 @@ class GamedgeProtobufPlugin : Plugin<Project> {
     }
 
     private fun Project.configurePlugin() {
-        protobuf {
+/*        protobuf {
             protoc {
                 artifact = deps.google.protobufCompiler
             }
@@ -53,7 +48,7 @@ class GamedgeProtobufPlugin : Plugin<Project> {
                     }
                 }
             }
-        }
+        }*/
     }
 
     private fun Project.addProtobufDependency() {

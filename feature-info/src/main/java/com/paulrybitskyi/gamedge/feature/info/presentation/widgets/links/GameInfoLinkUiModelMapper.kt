@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links
 
-import com.paulrybitskyi.gamedge.core.providers.WebsiteIconProvider
-import com.paulrybitskyi.gamedge.core.providers.WebsiteNameProvider
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.common.domain.games.entities.WebsiteCategory
+import com.paulrybitskyi.gamedge.core.providers.WebsiteIconProvider
+import com.paulrybitskyi.gamedge.core.providers.WebsiteNameProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 

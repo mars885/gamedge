@@ -29,6 +29,6 @@ internal interface CoreModule {
 
     @Binds
     fun bindGamesRefreshingThrottlerKeyProvider(
-        binding: GamesRefreshingThrottlerKeyProviderImpl
+        binding: GamesRefreshingThrottlerKeyProviderImpl,
     ): GamesRefreshingThrottlerKeyProvider
 }

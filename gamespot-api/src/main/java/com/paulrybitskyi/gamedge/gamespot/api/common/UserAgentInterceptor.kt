@@ -18,12 +18,12 @@ package com.paulrybitskyi.gamedge.gamespot.api.common
 
 import com.paulrybitskyi.gamedge.common.api.HttpHeaders
 import com.paulrybitskyi.gamedge.common.api.UserAgentProvider
-import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
 internal class UserAgentInterceptor @Inject constructor(
-    private val userAgentProvider: UserAgentProvider
+    private val userAgentProvider: UserAgentProvider,
 ) : Interceptor {
 
     private val userAgent by lazy {

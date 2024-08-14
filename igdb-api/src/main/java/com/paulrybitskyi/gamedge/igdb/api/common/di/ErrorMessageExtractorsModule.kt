@@ -32,13 +32,13 @@ internal interface ErrorMessageExtractorsModule {
     @IntoSet
     fun bindTwitchErrorMessageExtractorToSet(
         @ErrorMessageExtractorKey(ErrorMessageExtractorKey.Type.TWITCH)
-        errorMessageExtractor: ErrorMessageExtractor
+        errorMessageExtractor: ErrorMessageExtractor,
     ): ErrorMessageExtractor
 
     @Binds
     @IntoSet
     fun bindIgdbErrorMessageExtractorToSet(
         @ErrorMessageExtractorKey(ErrorMessageExtractorKey.Type.IGDB)
-        errorMessageExtractor: ErrorMessageExtractor
+        errorMessageExtractor: ErrorMessageExtractor,
     ): ErrorMessageExtractor
 }

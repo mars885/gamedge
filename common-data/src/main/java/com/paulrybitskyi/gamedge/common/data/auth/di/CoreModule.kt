@@ -31,7 +31,7 @@ private const val AUTH_PREFERENCES_DATA_STORE_NAME = "auth.pb"
 
 private val Context.authProtoDataStore by dataStore(
     fileName = AUTH_PREFERENCES_DATA_STORE_NAME,
-    serializer = ProtoOauthCredentialsSerializer
+    serializer = ProtoOauthCredentialsSerializer,
 )
 
 @Module
@@ -40,7 +40,7 @@ internal object CoreModule {
 
     @Provides
     fun provideAuthProtoDataStore(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): DataStore<ProtoOauthCredentials> {
         return context.authProtoDataStore
     }

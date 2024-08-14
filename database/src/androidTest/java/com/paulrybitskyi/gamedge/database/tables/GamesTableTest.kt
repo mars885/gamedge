@@ -19,10 +19,10 @@ package com.paulrybitskyi.gamedge.database.tables
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.database.common.di.DatabaseModule
-import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import com.paulrybitskyi.gamedge.database.DB_GAMES
+import com.paulrybitskyi.gamedge.database.common.di.DatabaseModule
 import com.paulrybitskyi.gamedge.database.games.entities.DbGame
+import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -85,8 +85,8 @@ internal class GamesTableTest {
                 SUT.getGames(
                     ids = DB_GAMES.map(DbGame::id),
                     offset = 0,
-                    limit = DB_GAMES.size
-                )
+                    limit = DB_GAMES.size,
+                ),
             ).isEqualTo(DB_GAMES)
         }
     }
@@ -100,8 +100,8 @@ internal class GamesTableTest {
                 SUT.getGames(
                     ids = listOf(100, 200, 300),
                     offset = 0,
-                    limit = DB_GAMES.size
-                )
+                    limit = DB_GAMES.size,
+                ),
             ).isEqualTo(emptyList<DbGame>())
         }
     }
@@ -117,8 +117,8 @@ internal class GamesTableTest {
                 SUT.getGames(
                     ids = expectedGames.map(DbGame::id),
                     offset = 0,
-                    limit = expectedGames.size
-                )
+                    limit = expectedGames.size,
+                ),
             ).isEqualTo(expectedGames)
         }
     }
@@ -135,8 +135,8 @@ internal class GamesTableTest {
                 SUT.searchGames(
                     searchQuery = "Game",
                     offset = 0,
-                    limit = DB_GAMES.size
-                )
+                    limit = DB_GAMES.size,
+                ),
             ).isEqualTo(expectedGames)
         }
     }
@@ -153,8 +153,8 @@ internal class GamesTableTest {
                 SUT.searchGames(
                     searchQuery = "game",
                     offset = 0,
-                    limit = DB_GAMES.size
-                )
+                    limit = DB_GAMES.size,
+                ),
             ).isEqualTo(expectedGames)
         }
     }
@@ -168,8 +168,8 @@ internal class GamesTableTest {
                 SUT.searchGames(
                     searchQuery = "shadow of the colossus",
                     offset = 0,
-                    limit = DB_GAMES.size
-                )
+                    limit = DB_GAMES.size,
+                ),
             ).isEqualTo(emptyList<DbGame>())
         }
     }
@@ -183,8 +183,8 @@ internal class GamesTableTest {
                 SUT.searchGames(
                     searchQuery = "endgame",
                     offset = 0,
-                    limit = DB_GAMES.size
-                )
+                    limit = DB_GAMES.size,
+                ),
             ).isEqualTo(emptyList<DbGame>())
         }
     }
@@ -204,15 +204,15 @@ internal class GamesTableTest {
 
             val expectedGames = gamesToSave.sortedWith(
                 compareByDescending(DbGame::totalRating)
-                    .thenBy(DbGame::id)
+                    .thenBy(DbGame::id),
             )
 
             assertThat(
                 SUT.searchGames(
                     searchQuery = "Game",
                     offset = 0,
-                    limit = DB_GAMES.size
-                )
+                    limit = DB_GAMES.size,
+                ),
             ).isEqualTo(expectedGames)
         }
     }
@@ -228,7 +228,7 @@ internal class GamesTableTest {
             SUT.observePopularGames(
                 minReleaseDateTimestamp = 50L,
                 offset = 0,
-                limit = DB_GAMES.size
+                limit = DB_GAMES.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -252,7 +252,7 @@ internal class GamesTableTest {
             SUT.observePopularGames(
                 minReleaseDateTimestamp = 50L,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -278,7 +278,7 @@ internal class GamesTableTest {
             SUT.observePopularGames(
                 minReleaseDateTimestamp = 50L,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -306,7 +306,7 @@ internal class GamesTableTest {
             SUT.observePopularGames(
                 minReleaseDateTimestamp = minReleaseDateTimestamp,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -325,7 +325,7 @@ internal class GamesTableTest {
                 minReleaseDateTimestamp = 50L,
                 maxReleaseDateTimestamp = 1000L,
                 offset = 0,
-                limit = DB_GAMES.size
+                limit = DB_GAMES.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -350,7 +350,7 @@ internal class GamesTableTest {
                 minReleaseDateTimestamp = 50L,
                 maxReleaseDateTimestamp = 1000L,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -377,7 +377,7 @@ internal class GamesTableTest {
                 minReleaseDateTimestamp = minReleaseDateTimestamp,
                 maxReleaseDateTimestamp = 1000L,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -406,7 +406,7 @@ internal class GamesTableTest {
                 minReleaseDateTimestamp = minReleaseDateTimestamp,
                 maxReleaseDateTimestamp = maxReleaseDateTimestamp,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -423,7 +423,7 @@ internal class GamesTableTest {
             SUT.observeComingSoonGames(
                 minReleaseDateTimestamp = 50L,
                 offset = 0,
-                limit = DB_GAMES.size
+                limit = DB_GAMES.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -447,7 +447,7 @@ internal class GamesTableTest {
             SUT.observeComingSoonGames(
                 minReleaseDateTimestamp = 50L,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -473,7 +473,7 @@ internal class GamesTableTest {
             SUT.observeComingSoonGames(
                 minReleaseDateTimestamp = minReleaseDateTimestamp,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -491,7 +491,7 @@ internal class GamesTableTest {
             SUT.observeMostAnticipatedGames(
                 minReleaseDateTimestamp = 50L,
                 offset = 0,
-                limit = DB_GAMES.size
+                limit = DB_GAMES.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -515,7 +515,7 @@ internal class GamesTableTest {
             SUT.observeMostAnticipatedGames(
                 minReleaseDateTimestamp = 50L,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -541,7 +541,7 @@ internal class GamesTableTest {
             SUT.observeMostAnticipatedGames(
                 minReleaseDateTimestamp = minReleaseDateTimestamp,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }
@@ -569,7 +569,7 @@ internal class GamesTableTest {
             SUT.observeMostAnticipatedGames(
                 minReleaseDateTimestamp = minReleaseDateTimestamp,
                 offset = 0,
-                limit = gamesToSave.size
+                limit = gamesToSave.size,
             ).test {
                 assertThat(awaitItem()).isEqualTo(expectedGames)
             }

@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos
 
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Video
 import com.paulrybitskyi.gamedge.core.factories.YoutubeMediaUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.YoutubeThumbnailSize
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Video
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
@@ -37,7 +37,7 @@ internal class GameInfoVideoUiModelMapperImpl @Inject constructor(
     override fun mapToUiModel(video: Video): GameInfoVideoUiModel? {
         val thumbnailUrl = youtubeMediaUrlFactory.createThumbnailUrl(
             video,
-            YoutubeThumbnailSize.MEDIUM
+            YoutubeThumbnailSize.MEDIUM,
         )
         val videoUrl = youtubeMediaUrlFactory.createVideoUrl(video)
         val videoTitle = video.name ?: stringProvider.getString(

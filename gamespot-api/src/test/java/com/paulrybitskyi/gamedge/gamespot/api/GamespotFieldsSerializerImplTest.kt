@@ -47,7 +47,7 @@ internal class GamespotFieldsSerializerImplTest {
             @Gamespot("field5")
             val field5: String,
             @Gamespot("field6")
-            val field6: Float
+            val field6: Float,
         )
 
         assertThat(SUT.serializeFields(Entity::class.java))
@@ -59,7 +59,7 @@ internal class GamespotFieldsSerializerImplTest {
         data class Entity(
             val field1: Int,
             val field2: String,
-            val field3: Double
+            val field3: Double,
         )
 
         assertThat(SUT.serializeFields(Entity::class.java)).isEmpty()
@@ -69,7 +69,7 @@ internal class GamespotFieldsSerializerImplTest {
     fun `Throws exception if name of field is empty`() {
         data class Entity(
             @Gamespot("")
-            val field1: Int
+            val field1: Int,
         )
 
         assertThrows(IllegalArgumentException::class.java) {
@@ -81,7 +81,7 @@ internal class GamespotFieldsSerializerImplTest {
     fun `Throws exception if name of field is blank`() {
         data class Entity(
             @Gamespot("   ")
-            val field1: Int
+            val field1: Int,
         )
 
         assertThrows(IllegalArgumentException::class.java) {

@@ -21,7 +21,7 @@ import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Inject
 
 internal class FakeIgdbConstantsProvider @Inject constructor(
-    mockWebServer: MockWebServer
+    mockWebServer: MockWebServer,
 ) : IgdbConstantsProvider {
 
     override val apiBaseUrl: String = mockWebServer.url("/").toString()

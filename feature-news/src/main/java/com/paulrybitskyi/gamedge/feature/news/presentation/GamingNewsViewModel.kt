@@ -18,13 +18,13 @@ package com.paulrybitskyi.gamedge.feature.news.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
+import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
+import com.paulrybitskyi.gamedge.common.domain.common.extensions.resultOrError
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.utils.onError
-import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
-import com.paulrybitskyi.gamedge.common.domain.common.extensions.resultOrError
 import com.paulrybitskyi.gamedge.feature.news.domain.usecases.ObserveArticlesUseCase
 import com.paulrybitskyi.gamedge.feature.news.domain.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.gamedge.feature.news.presentation.mapping.GamingNewsItemUiModelMapper
@@ -37,7 +37,6 @@ import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.toEmptyState
 import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.toLoadingState
 import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -49,6 +48,7 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
 private const val MAX_ARTICLE_COUNT = 100
 private const val ARTICLES_REFRESH_INITIAL_DELAY = 500L
@@ -61,7 +61,7 @@ internal class GamingNewsViewModel @Inject constructor(
     private val uiModelMapper: GamingNewsItemUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
-    private val logger: Logger
+    private val logger: Logger,
 ) : BaseViewModel() {
 
     private var isObservingArticles = false

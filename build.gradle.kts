@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    jetpackCompose() version versions.kotlin apply false
+    ksp() version versions.kspPlugin apply false
+    daggerHilt() version versions.daggerHilt apply false
     gradleVersions()
     detekt()
     ktlint()
@@ -33,7 +38,6 @@ buildscript {
     dependencies {
         classpath(deps.plugins.androidGradle)
         classpath(deps.plugins.kotlinGradle)
-        classpath(deps.plugins.daggerHiltGradle)
         classpath(deps.plugins.protobuf)
         classpath(deps.plugins.gradleVersions)
     }
@@ -42,11 +46,19 @@ buildscript {
 detekt {
     parallel = true
     buildUponDefaultConfig = true
-    config = files("config/detekt/detekt.yml")
+    config.setFrom("config/detekt/detekt.yml")
 }
 
 tasks.withType<Detekt>().configureEach {
     reports.html.required.set(true)
+}
+
+tasks.withType<DependencyUpdatesTask> {
+    rejectVersionIf {
+        listOf("alpha", "beta", "rc").any { keyword ->
+            candidate.version.lowercase().contains(keyword)
+        }
+    }
 }
 
 allprojects {
@@ -63,6 +75,7 @@ allprojects {
         version.set(versions.ktlint)
         android.set(true)
         outputToConsole.set(true)
+        verbose.set(true)
 
         filter {
             // https://github.com/JLLeitschuh/ktlint-gradle/issues/266#issuecomment-529527697
@@ -84,27 +97,33 @@ allprojects {
 
 subprojects {
 
-    tasks.withType<KotlinCompile>().all {
-        kotlinOptions {
-            freeCompilerArgs += listOf(
-                "-opt-in=kotlinx.coroutines.FlowPreview",
-                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
-                "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
-                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
-                "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
-            )
-
-            jvmTarget = appConfig.kotlinCompatibilityVersion.toString()
+    plugins.withId(PLUGIN_KOTLIN) {
+        extensions.findByType<KotlinProjectExtension>()?.run {
+            jvmToolchain(appConfig.jvmToolchainVersion)
         }
     }
 
     plugins.withId(PLUGIN_KOTLIN_KAPT) {
         extensions.findByType<KaptExtension>()?.run {
             correctErrorTypes = true
+        }
+    }
+
+    tasks.withType<KotlinCompile>().all {
+        compilerOptions {
+            freeCompilerArgs.set(
+                listOf(
+                    "-opt-in=kotlinx.coroutines.FlowPreview",
+                    "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                    "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+                    "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                    "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                    "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
+                    "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
+                ),
+            )
         }
     }
 
@@ -119,8 +138,6 @@ subprojects {
     }
 }
 
-tasks {
-    val clean by registering(Delete::class) {
-        delete(buildDir)
-    }
+val clean by tasks.registering(Delete::class) {
+    delete(layout.buildDirectory)
 }

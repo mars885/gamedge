@@ -22,13 +22,13 @@ import com.paulrybitskyi.gamedge.gamespot.api.common.serialization.GamespotField
 internal interface GamespotQueryParamsFactory {
 
     fun createArticlesQueryParams(
-        action: MutableMap<String, String>.() -> Unit
+        action: MutableMap<String, String>.() -> Unit,
     ): Map<String, String>
 }
 
 internal class GamespotQueryParamsFactoryImpl(
     private val gamespotFieldsSerializer: GamespotFieldsSerializer,
-    private val apiKey: String
+    private val apiKey: String,
 ) : GamespotQueryParamsFactory {
 
     private companion object {
@@ -43,17 +43,17 @@ internal class GamespotQueryParamsFactoryImpl(
     }
 
     override fun createArticlesQueryParams(
-        action: MutableMap<String, String>.() -> Unit
+        action: MutableMap<String, String>.() -> Unit,
     ): Map<String, String> {
         return createGeneralQueryParams {
             put(QUERY_PARAM_FIELDS, articleEntityFields)
             put(
                 QUERY_PARAM_FILTER,
-                createFilterQueryParamValue(ARTICLE_FIELD_CATEGORIES, ARTICLE_CATEGORY_ID_GAMES)
+                createFilterQueryParamValue(ARTICLE_FIELD_CATEGORIES, ARTICLE_CATEGORY_ID_GAMES),
             )
             put(
                 QUERY_PARAM_SORT,
-                createSortQueryParamValue(ApiArticle.Schema.PUBLICATION_DATE, SortOrder.DESC)
+                createSortQueryParamValue(ApiArticle.Schema.PUBLICATION_DATE, SortOrder.DESC),
             )
 
             action()
@@ -69,7 +69,7 @@ internal class GamespotQueryParamsFactoryImpl(
     }
 
     private fun createGeneralQueryParams(
-        action: MutableMap<String, String>.() -> Unit
+        action: MutableMap<String, String>.() -> Unit,
     ): Map<String, String> {
         return buildMap {
             put(QUERY_PARAM_API_KEY, apiKey)

@@ -38,7 +38,7 @@ internal interface SearchGamesUseCase : UseCase<Params, Flow<DomainResult<List<G
 
     data class Params(
         val searchQuery: String,
-        val pagination: Pagination = Pagination()
+        val pagination: Pagination = Pagination(),
     )
 }
 

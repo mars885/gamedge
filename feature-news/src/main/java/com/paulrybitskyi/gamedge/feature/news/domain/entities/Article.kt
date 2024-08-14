@@ -22,5 +22,5 @@ internal data class Article(
     val lede: String,
     val imageUrls: Map<ImageType, String>,
     val publicationDate: Long,
-    val siteDetailUrl: String
+    val siteDetailUrl: String,
 )

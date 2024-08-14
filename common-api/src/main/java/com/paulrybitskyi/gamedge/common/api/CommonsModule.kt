@@ -20,10 +20,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Provider
-import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import javax.inject.Provider
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -32,7 +32,7 @@ internal object CommonsModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        httpLoggingInterceptor: Provider<HttpLoggingInterceptor>
+        httpLoggingInterceptor: Provider<HttpLoggingInterceptor>,
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .apply {

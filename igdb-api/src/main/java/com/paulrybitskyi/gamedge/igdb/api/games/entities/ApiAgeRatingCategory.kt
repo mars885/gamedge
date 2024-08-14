@@ -28,7 +28,8 @@ import kotlinx.serialization.encoding.Encoder
 enum class ApiAgeRatingCategory(val rawValue: Int) {
     UNKNOWN(rawValue = -1),
     ESRB(rawValue = 1),
-    PEGI(rawValue = 2);
+    PEGI(rawValue = 2),
+    ;
 
     internal companion object {
 
@@ -42,7 +43,7 @@ internal object AgeRatingCategorySerializer : KSerializer<ApiAgeRatingCategory> 
 
     override val descriptor = PrimitiveSerialDescriptor(
         checkNotNull(AgeRatingCategorySerializer::class.qualifiedName),
-        PrimitiveKind.INT
+        PrimitiveKind.INT,
     )
 
     override fun serialize(encoder: Encoder, value: ApiAgeRatingCategory) {

@@ -27,7 +27,7 @@ interface TextSharer : ContentSharer<String>
 
 @BindType
 internal class TextSharerImpl @Inject constructor(
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
 ) : TextSharer {
 
     private companion object {
@@ -45,8 +45,8 @@ internal class TextSharerImpl @Inject constructor(
         context.startActivity(
             Intent.createChooser(
                 textSharingIntent,
-                stringProvider.getString(R.string.action_share_via)
-            )
+                stringProvider.getString(R.string.action_share_via),
+            ),
         )
     }
 }

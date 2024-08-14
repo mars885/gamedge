@@ -35,7 +35,7 @@ private val MIGRATION_FROM_1_TO_2 = object : Migration(1, 2) {
                 keywords TEXT NOT NULL, involved_companies TEXT NOT NULL,
                 websites TEXT NOT NULL, similar_games TEXT NOT NULL, PRIMARY KEY(id)
             )
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         execSQL("INSERT INTO new_games SELECT * FROM games")
@@ -51,5 +51,5 @@ private val MIGRATION_FROM_1_TO_2 = object : Migration(1, 2) {
 }
 
 internal val MIGRATIONS = arrayOf<Migration>(
-    MIGRATION_FROM_1_TO_2
+    MIGRATION_FROM_1_TO_2,
 )

@@ -28,7 +28,7 @@ interface ImageViewerGameUrlFactory {
 
 @BindType
 internal class ImageViewerGameUrlFactoryImpl @Inject constructor(
-    private val igdbImageUrlFactory: IgdbImageUrlFactory
+    private val igdbImageUrlFactory: IgdbImageUrlFactory,
 ) : ImageViewerGameUrlFactory {
 
     private companion object {
@@ -49,7 +49,7 @@ internal class ImageViewerGameUrlFactoryImpl @Inject constructor(
     override fun createScreenshotImageUrls(game: Game): List<String> {
         return igdbImageUrlFactory.createUrls(
             game.screenshots,
-            IgdbImageUrlFactory.Config(IMAGE_SIZE)
+            IgdbImageUrlFactory.Config(IMAGE_SIZE),
         )
     }
 }

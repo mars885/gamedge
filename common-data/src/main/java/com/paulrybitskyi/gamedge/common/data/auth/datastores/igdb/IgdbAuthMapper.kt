@@ -26,7 +26,7 @@ internal class IgdbAuthMapper @Inject constructor() {
         return ApiOauthCredentials(
             accessToken = oauthCredentials.accessToken,
             tokenType = oauthCredentials.tokenType,
-            tokenTtl = oauthCredentials.tokenTtl
+            tokenTtl = oauthCredentials.tokenTtl,
         )
     }
 
@@ -34,7 +34,7 @@ internal class IgdbAuthMapper @Inject constructor() {
         return OauthCredentials(
             accessToken = apiOauthCredentials.accessToken,
             tokenType = apiOauthCredentials.tokenType,
-            tokenTtl = apiOauthCredentials.tokenTtl
+            tokenTtl = apiOauthCredentials.tokenTtl,
         )
     }
 }

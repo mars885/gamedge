@@ -20,7 +20,7 @@ import com.paulrybitskyi.gamedge.common.domain.auth.entities.OauthCredentials
 import javax.inject.Inject
 
 internal class ProtoAuthMapper @Inject constructor(
-    private val authExpiryTimeCalculator: AuthExpiryTimeCalculator
+    private val authExpiryTimeCalculator: AuthExpiryTimeCalculator,
 ) {
 
     fun mapToProtoOauthCredentials(oauthCredentials: OauthCredentials): ProtoOauthCredentials {
@@ -36,7 +36,7 @@ internal class ProtoAuthMapper @Inject constructor(
         return OauthCredentials(
             accessToken = oauthCredentials.accessToken,
             tokenType = oauthCredentials.tokenType,
-            tokenTtl = oauthCredentials.tokenTtl
+            tokenTtl = oauthCredentials.tokenTtl,
         )
     }
 }

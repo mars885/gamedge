@@ -25,5 +25,5 @@ enum class Category {
     STANDALONE_EXPANSION,
     MOD,
     EPISODE,
-    SEASON
+    SEASON,
 }

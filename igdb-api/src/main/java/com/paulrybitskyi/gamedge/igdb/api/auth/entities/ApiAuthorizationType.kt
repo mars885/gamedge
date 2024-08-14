@@ -18,7 +18,8 @@ package com.paulrybitskyi.gamedge.igdb.api.auth.entities
 
 enum class ApiAuthorizationType(val rawType: String) {
     BASIC("Basic"),
-    BEARER("Bearer");
+    BEARER("Bearer"),
+    ;
 
     companion object {
 

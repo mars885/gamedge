@@ -17,23 +17,14 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    jetpackCompose()
     kotlinKapt()
     ksp()
-    daggerHiltAndroid()
+    daggerHilt()
 }
 
 android {
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = versions.compose
-    }
+    namespace = "com.paulrybitskyi.gamedge.feature.news"
 }
 
 dependencies {
@@ -67,8 +58,6 @@ dependencies {
 
     implementation(deps.misc.hiltBinder)
     ksp(deps.misc.hiltBinderCompiler)
-
-    coreLibraryDesugaring(deps.misc.desugaredLibs)
 
     testImplementation(project(deps.local.commonTesting))
     testImplementation(deps.testing.jUnit)

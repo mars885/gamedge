@@ -52,6 +52,8 @@ import com.paulrybitskyi.gamedge.common.ui.theme.darkScrim
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.utils.GameInfoSectionWithInnerList
+import com.paulrybitskyi.gamedge.common.ui.widgets.R as CommonUiWidgetsR
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
 internal fun GameInfoVideos(
@@ -92,14 +94,14 @@ private fun Video(
             ) {
                 AsyncImage(
                     model = defaultImageRequest(video.thumbnailUrl) {
-                        secondaryImage(R.drawable.game_landscape_placeholder)
+                        secondaryImage(CommonUiWidgetsR.drawable.game_landscape_placeholder)
                     },
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
                 )
                 Icon(
-                    painter = painterResource(R.drawable.play),
+                    painter = painterResource(CoreR.drawable.play),
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.Center)

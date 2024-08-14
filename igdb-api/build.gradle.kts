@@ -23,15 +23,21 @@ plugins {
     kotlinKapt()
     ksp()
     kotlinxSerialization()
-    daggerHiltAndroid()
+    daggerHilt()
 }
 
 android {
+    namespace = "com.paulrybitskyi.gamedge.igdb.api"
+
     defaultConfig {
-        testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
+        testInstrumentationRunner = appConfig.instrumentationRunner
 
         stringField("TWITCH_APP_CLIENT_ID", property("TWITCH_APP_CLIENT_ID", ""))
         stringField("TWITCH_APP_CLIENT_SECRET", property("TWITCH_APP_CLIENT_SECRET", ""))
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 

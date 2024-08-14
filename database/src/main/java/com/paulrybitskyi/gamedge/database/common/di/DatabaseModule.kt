@@ -39,12 +39,12 @@ internal object DatabaseModule {
     @Suppress("SpreadOperator")
     fun provideGamedgeDatabase(
         @ApplicationContext context: Context,
-        typeConverters: Set<@JvmSuppressWildcards RoomTypeConverter>
+        typeConverters: Set<@JvmSuppressWildcards RoomTypeConverter>,
     ): GamedgeDatabase {
         return Room.databaseBuilder(
             context,
             GamedgeDatabase::class.java,
-            Constants.DATABASE_NAME
+            Constants.DATABASE_NAME,
         )
         .addTypeConverters(typeConverters)
         .addMigrations(*MIGRATIONS)

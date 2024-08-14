@@ -23,7 +23,7 @@ internal fun List<GameInfoRelatedGameUiModel>.mapToCategoryUiModels(): List<Game
         GamesCategoryPreviewItemUiModel(
             id = it.id,
             title = it.title,
-            coverUrl = it.coverUrl
+            coverUrl = it.coverUrl,
         )
     }
 }
@@ -32,6 +32,6 @@ internal fun GamesCategoryPreviewItemUiModel.mapToInfoRelatedGameUiModel(): Game
     return GameInfoRelatedGameUiModel(
         id = id,
         title = title,
-        coverUrl = coverUrl
+        coverUrl = coverUrl,
     )
 }

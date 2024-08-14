@@ -18,9 +18,9 @@ package com.paulrybitskyi.gamedge.feature.likes.domain
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.domain.games.common.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.common.domain.games.datastores.LikedGamesLocalDataStore
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import io.mockk.MockKAnnotations
 import io.mockk.every

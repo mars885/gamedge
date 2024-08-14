@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.core.formatters
 
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Category
 import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Category
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ interface GameCategoryFormatter {
 
 @BindType
 internal class GameCategoryFormatterImpl @Inject constructor(
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
 ) : GameCategoryFormatter {
 
     override fun formatCategory(category: Category): String {
@@ -43,8 +43,9 @@ internal class GameCategoryFormatterImpl @Inject constructor(
 
                 Category.DLC,
                 Category.EXPANSION,
-                Category.STANDALONE_EXPANSION -> R.string.game_category_dlc
-            }
+                Category.STANDALONE_EXPANSION,
+                -> R.string.game_category_dlc
+            },
         )
     }
 }

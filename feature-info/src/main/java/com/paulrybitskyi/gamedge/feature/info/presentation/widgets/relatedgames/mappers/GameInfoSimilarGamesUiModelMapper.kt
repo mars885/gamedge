@@ -16,14 +16,14 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.mappers
 
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesType
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesUiModel
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -54,7 +54,7 @@ internal class GameInfoSimilarGamesUiModelMapperImpl @Inject constructor(
                 title = it.name,
                 coverUrl = it.cover?.let { cover ->
                     igdbImageUrlFactory.createUrl(cover, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_COVER))
-                }
+                },
             )
         }
     }

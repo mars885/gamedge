@@ -79,7 +79,7 @@ internal class ArticlesServiceTest {
             mockWebServer.enqueue(
                 MockResponse()
                     .setResponseCode(400)
-                    .setBody("{\"error\": \"Invalid API Key\"}")
+                    .setBody("{\"error\": \"Invalid API Key\"}"),
             )
 
             val error = articlesService.getArticles(emptyMap()).getError()
@@ -97,7 +97,7 @@ internal class ArticlesServiceTest {
             mockWebServer.enqueue(
                 MockResponse()
                     .setResponseCode(400)
-                    .setBody(errorBody)
+                    .setBody(errorBody),
             )
 
             val error = articlesService.getArticles(emptyMap()).getError()
@@ -133,8 +133,8 @@ internal class ArticlesServiceTest {
                                 }
                             ]
                         }
-                        """.trimIndent()
-                    )
+                        """.trimIndent(),
+                    ),
             )
 
             val parsedArticles = articlesService.getArticles(emptyMap()).get()!!.results
@@ -144,15 +144,15 @@ internal class ArticlesServiceTest {
                     publicationDate = "2021-03-06 10:26:00",
                     title = "Will GTA Online Get Cross-Play?",
                     lede = "lede1",
-                    siteDetailUrl = "site_detail_url1"
+                    siteDetailUrl = "site_detail_url1",
                 ),
                 ApiArticle(
                     id = 6488487,
                     publicationDate = "2021-03-06 10:00:00",
                     title = "How Games Make It Fun To Be The Villain",
                     lede = "lede2",
-                    siteDetailUrl = "site_detail_url2"
-                )
+                    siteDetailUrl = "site_detail_url2",
+                ),
             )
 
             assertThat(parsedArticles).isEqualTo(expectedArticles)
@@ -181,8 +181,8 @@ internal class ArticlesServiceTest {
                         {
                             "results": 50
                         }
-                        """.trimIndent()
-                    )
+                        """.trimIndent(),
+                    ),
             )
 
             val error = articlesService.getArticles(emptyMap()).getError()
@@ -196,7 +196,7 @@ internal class ArticlesServiceTest {
         runBlocking {
             mockWebServer.enqueue(
                 MockResponse()
-                    .setSocketPolicy(SocketPolicy.DISCONNECT_AT_START)
+                    .setSocketPolicy(SocketPolicy.DISCONNECT_AT_START),
             )
 
             val error = articlesService.getArticles(emptyMap()).getError()

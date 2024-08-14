@@ -27,7 +27,7 @@ import dagger.hilt.testing.TestInstallIn
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [IgdbConstantsModule::class]
+    replaces = [IgdbConstantsModule::class],
 )
 internal interface FakeIgdbConstantsModule {
 

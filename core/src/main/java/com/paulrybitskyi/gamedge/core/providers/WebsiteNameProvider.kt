@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.core.providers
 
-import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Website
 import com.paulrybitskyi.gamedge.common.domain.games.entities.WebsiteCategory
+import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ interface WebsiteNameProvider {
 
 @BindType
 internal class WebsiteNameProviderImpl @Inject constructor(
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
 ) : WebsiteNameProvider {
 
     @Suppress("ComplexMethod")
@@ -51,7 +51,7 @@ internal class WebsiteNameProviderImpl @Inject constructor(
                 WebsiteCategory.EPIC_GAMES -> R.string.website_epic_games
                 WebsiteCategory.GOG -> R.string.website_gog
                 WebsiteCategory.DISCORD -> R.string.website_discord
-            }
+            },
         )
     }
 }

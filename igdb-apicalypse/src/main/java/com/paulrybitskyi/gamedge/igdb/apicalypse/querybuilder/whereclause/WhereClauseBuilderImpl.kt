@@ -20,7 +20,7 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.condit
 import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.conditions.ConditionType
 
 internal class WhereClauseBuilderImpl(
-    private val conditionBuilderFactory: ConditionBuilderFactory
+    private val conditionBuilderFactory: ConditionBuilderFactory,
 ) : WhereClauseBuilder {
 
     private val clauseBuilder = StringBuilder()

@@ -57,7 +57,7 @@ internal class GamesEndpointImpl @Inject constructor(
     }
 
     override suspend fun getRecentlyReleasedGames(
-        request: GetRecentlyReleasedGamesRequest
+        request: GetRecentlyReleasedGamesRequest,
     ): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
             igdbApiQueryFactory.createRecentlyReleasedGamesRetrievalQuery(request),
@@ -71,7 +71,7 @@ internal class GamesEndpointImpl @Inject constructor(
     }
 
     override suspend fun getMostAnticipatedGames(
-        request: GetMostAnticipatedGamesRequest
+        request: GetMostAnticipatedGamesRequest,
     ): ApiResult<List<ApiGame>> {
         return gamesService.getGames(
             igdbApiQueryFactory.createMostAnticipatedGamesRetrievalQuery(request),

@@ -38,12 +38,13 @@ import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.images.secondaryImage
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
-import com.paulrybitskyi.gamedge.feature.news.R
+import com.paulrybitskyi.gamedge.common.ui.widgets.R as CommonUiWidgetsR
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
 internal fun GamingNewsItem(
     model: GamingNewsItemUiModel,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     GamedgeCard(
         onClick = onClick,
@@ -55,7 +56,7 @@ internal fun GamingNewsItem(
                     imageUrl = checkNotNull(model.imageUrl),
                     modifier = Modifier
                         .height(168.dp)
-                        .padding(bottom = GamedgeTheme.spaces.spacing_3_5)
+                        .padding(bottom = GamedgeTheme.spaces.spacing_3_5),
                 )
             }
 
@@ -82,7 +83,7 @@ internal fun GamingNewsItem(
 @Composable
 private fun Image(
     imageUrl: String,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     GamedgeCard(
         modifier = Modifier
@@ -93,7 +94,7 @@ private fun Image(
     ) {
         AsyncImage(
             model = defaultImageRequest(imageUrl) {
-                secondaryImage(R.drawable.game_landscape_placeholder)
+                secondaryImage(CommonUiWidgetsR.drawable.game_landscape_placeholder)
             },
             contentDescription = null,
             contentScale = ContentScale.Crop,
@@ -105,10 +106,10 @@ private fun Image(
 private fun Timestamp(publicationDate: String) {
     Row(
         modifier = Modifier.padding(top = GamedgeTheme.spaces.spacing_2_5),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            painter = painterResource(R.drawable.clock_outline_16dp),
+            painter = painterResource(CoreR.drawable.clock_outline_16dp),
             contentDescription = null,
             modifier = Modifier.padding(end = GamedgeTheme.spaces.spacing_1_0),
         )
@@ -133,7 +134,7 @@ private fun GamingNewsItemWithImagePreview() {
                 publicationDate = "3 mins ago",
                 siteDetailUrl = "url",
             ),
-            onClick = {}
+            onClick = {},
         )
     }
 }
@@ -152,7 +153,7 @@ private fun GamingNewsItemWithoutImagePreview() {
                 publicationDate = "3 mins ago",
                 siteDetailUrl = "url",
             ),
-            onClick = {}
+            onClick = {},
         )
     }
 }

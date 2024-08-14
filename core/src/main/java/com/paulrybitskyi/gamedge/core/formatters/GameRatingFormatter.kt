@@ -28,7 +28,7 @@ interface GameRatingFormatter {
 
 @BindType
 internal class GameRatingFormatterImpl @Inject constructor(
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
 ) : GameRatingFormatter {
 
     private companion object {
@@ -43,7 +43,7 @@ internal class GameRatingFormatterImpl @Inject constructor(
 
         return stringProvider.getString(
             R.string.rating_template,
-            rating.roundToInt().coerceIn(MIN_RATING, MAX_RATING)
+            rating.roundToInt().coerceIn(MIN_RATING, MAX_RATING),
         )
     }
 }

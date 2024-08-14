@@ -44,7 +44,7 @@ internal object ArticlesEndpointModule {
         @GamespotApi okHttpClient: OkHttpClient,
         @GamespotApi callAdapterFactory: ApiResultCallAdapterFactory,
         json: Json,
-        gamespotConstantsProvider: GamespotConstantsProvider
+        gamespotConstantsProvider: GamespotConstantsProvider,
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)

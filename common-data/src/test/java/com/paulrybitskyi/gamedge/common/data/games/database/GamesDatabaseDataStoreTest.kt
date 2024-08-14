@@ -18,15 +18,15 @@ package com.paulrybitskyi.gamedge.common.data.games.database
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
-import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
-import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
 import com.paulrybitskyi.gamedge.common.data.DOMAIN_COMPANY
 import com.paulrybitskyi.gamedge.common.data.FakeDiscoveryGamesReleaseDatesProvider
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.DbGameMapper
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.GamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.mapToDatabaseGames
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAME
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
+import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
 import com.paulrybitskyi.gamedge.database.games.tables.GamesTable
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery

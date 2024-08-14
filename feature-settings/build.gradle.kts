@@ -14,22 +14,35 @@
  * limitations under the License.
  */
 
+import com.google.protobuf.gradle.id
+
 plugins {
     androidLibrary()
     gamedgeAndroid()
-    gamedgeProtobuf()
+    jetpackCompose()
     kotlinKapt()
     ksp()
-    daggerHiltAndroid()
+    daggerHilt()
+    protobuf()
 }
 
 android {
-    buildFeatures {
-        compose = true
+    namespace = "com.paulrybitskyi.gamedge.feature.settings"
+}
+
+protobuf {
+    protoc {
+        artifact = deps.google.protobufCompiler
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = versions.compose
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
     }
 }
 
@@ -52,6 +65,8 @@ dependencies {
 
     implementation(deps.commons.core)
     implementation(deps.commons.ktx)
+
+    implementation(deps.google.protobuf)
 
     implementation(deps.google.daggerHiltAndroid)
     kapt(deps.google.daggerHiltAndroidCompiler)

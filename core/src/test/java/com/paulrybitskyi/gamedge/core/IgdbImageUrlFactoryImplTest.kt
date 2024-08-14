@@ -17,11 +17,11 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.google.common.truth.Truth.assertThat
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Image
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageExtension
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactoryImpl
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Image
 import org.junit.Before
 import org.junit.Test
 import java.util.Locale
@@ -47,7 +47,7 @@ internal class IgdbImageUrlFactoryImplTest {
             for (igdbImageSize in IgdbImageSize.values()) {
                 val config = IgdbImageUrlFactory.Config(
                     size = igdbImageSize,
-                    extension = imageExtension
+                    extension = imageExtension,
                 )
 
                 val expectedUrl = String.format(
@@ -55,7 +55,7 @@ internal class IgdbImageUrlFactoryImplTest {
                     "https://images.igdb.com/igdb/image/upload/t_%s/%s.%s",
                     config.size.rawSize,
                     IMAGE.id,
-                    config.extension.rawExtension
+                    config.extension.rawExtension,
                 )
 
                 assertThat(SUT.createUrl(IMAGE, config)).isEqualTo(expectedUrl)
@@ -70,7 +70,7 @@ internal class IgdbImageUrlFactoryImplTest {
                 val config = IgdbImageUrlFactory.Config(
                     size = igdbImageSize,
                     extension = imageExtension,
-                    withRetinaSize = true
+                    withRetinaSize = true,
                 )
 
                 val expectedUrl = String.format(
@@ -78,7 +78,7 @@ internal class IgdbImageUrlFactoryImplTest {
                     "https://images.igdb.com/igdb/image/upload/t_%s/%s.%s",
                     (config.size.rawSize + "_2x"),
                     IMAGE.id,
-                    config.extension.rawExtension
+                    config.extension.rawExtension,
                 )
 
                 assertThat(SUT.createUrl(IMAGE, config)).isEqualTo(expectedUrl)
@@ -89,7 +89,7 @@ internal class IgdbImageUrlFactoryImplTest {
     @Test
     fun `Returns null when image id is blank while creating image url`() {
         val config = IgdbImageUrlFactory.Config(
-            size = IgdbImageSize.BIG_COVER
+            size = IgdbImageSize.BIG_COVER,
         )
 
         assertThat(SUT.createUrl(IMAGE.copy(id = "   "), config)).isNull()

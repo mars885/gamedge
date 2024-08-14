@@ -27,7 +27,7 @@ internal val DB_ARTICLE = DatabaseArticle(
     lede = "lede",
     imageUrls = mapOf(),
     publicationDate = 0L,
-    siteDetailUrl = "site_detail_url"
+    siteDetailUrl = "site_detail_url",
 )
 internal val DB_ARTICLES = listOf(
     DB_ARTICLE.copy(id = 1, publicationDate = 10L, title = "Article1"),
@@ -63,7 +63,7 @@ internal val DB_GAME = DbGame(
     keywords = listOf(),
     involvedCompanies = listOf(),
     websites = listOf(),
-    similarGames = listOf()
+    similarGames = listOf(),
 )
 internal val DB_GAMES = listOf(
     DB_GAME.copy(
@@ -72,7 +72,7 @@ internal val DB_GAMES = listOf(
         hypeCount = 1,
         releaseDate = 100L,
         usersRating = 5.0,
-        totalRating = 10.0
+        totalRating = 10.0,
     ),
     DB_GAME.copy(
         id = 2,
@@ -80,7 +80,7 @@ internal val DB_GAMES = listOf(
         hypeCount = 2,
         releaseDate = 200L,
         usersRating = 10.0,
-        totalRating = 20.0
+        totalRating = 20.0,
     ),
     DB_GAME.copy(
         id = 3,
@@ -88,7 +88,7 @@ internal val DB_GAMES = listOf(
         hypeCount = 3,
         releaseDate = 300L,
         usersRating = 15.0,
-        totalRating = 30.0
+        totalRating = 30.0,
     ),
     DB_GAME.copy(
         id = 4,
@@ -96,7 +96,7 @@ internal val DB_GAMES = listOf(
         hypeCount = 4,
         releaseDate = 400L,
         usersRating = 20.0,
-        totalRating = 40.0
+        totalRating = 40.0,
     ),
     DB_GAME.copy(
         id = 5,
@@ -104,8 +104,8 @@ internal val DB_GAMES = listOf(
         hypeCount = 5,
         releaseDate = 500L,
         usersRating = 25.0,
-        totalRating = 50.0
-    )
+        totalRating = 50.0,
+    ),
 )
 
 internal val DB_LIKED_GAME = DbLikedGame(id = 1, gameId = DB_GAME.id, likeTimestamp = 0L)
@@ -114,5 +114,5 @@ internal val DB_LIKED_GAMES = listOf(
     DbLikedGame(id = 2, gameId = DB_GAMES[1].id, likeTimestamp = 2000L),
     DbLikedGame(id = 3, gameId = DB_GAMES[2].id, likeTimestamp = 3000L),
     DbLikedGame(id = 4, gameId = DB_GAMES[3].id, likeTimestamp = 4000L),
-    DbLikedGame(id = 5, gameId = DB_GAMES[4].id, likeTimestamp = 5000L)
+    DbLikedGame(id = 5, gameId = DB_GAMES[4].id, likeTimestamp = 5000L),
 )

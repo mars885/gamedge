@@ -23,10 +23,10 @@ import com.github.michaelbull.result.getError
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.data.auth.datastores.igdb.AuthIgdbDataStore
 import com.paulrybitskyi.gamedge.common.data.auth.datastores.igdb.IgdbAuthMapper
+import com.paulrybitskyi.gamedge.common.data.common.ApiErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.API_ERROR_HTTP
 import com.paulrybitskyi.gamedge.common.testing.API_ERROR_NETWORK
 import com.paulrybitskyi.gamedge.common.testing.API_ERROR_UNKNOWN
-import com.paulrybitskyi.gamedge.common.data.common.ApiErrorMapper
 import com.paulrybitskyi.gamedge.igdb.api.auth.AuthEndpoint
 import com.paulrybitskyi.gamedge.igdb.api.auth.entities.ApiOauthCredentials
 import io.mockk.MockKAnnotations
@@ -39,7 +39,7 @@ import org.junit.Test
 private val API_OAUTH_CREDENTIALS = ApiOauthCredentials(
     accessToken = "access_token",
     tokenType = "token_type",
-    tokenTtl = 500L
+    tokenTtl = 500L,
 )
 
 internal class AuthIgdbDataStoreTest {

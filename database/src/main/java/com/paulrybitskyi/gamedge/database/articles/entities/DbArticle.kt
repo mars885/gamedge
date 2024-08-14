@@ -24,8 +24,8 @@ import androidx.room.Index
     tableName = DbArticle.Schema.TABLE_NAME,
     primaryKeys = [DbArticle.Schema.ID],
     indices = [
-        Index(DbArticle.Schema.PUBLICATION_DATE)
-    ]
+        Index(DbArticle.Schema.PUBLICATION_DATE),
+    ],
 )
 data class DbArticle(
     @ColumnInfo(name = Schema.ID) val id: Int,
@@ -33,7 +33,7 @@ data class DbArticle(
     @ColumnInfo(name = Schema.LEDE) val lede: String,
     @ColumnInfo(name = Schema.IMAGE_URLS) val imageUrls: Map<DbImageType, String>,
     @ColumnInfo(name = Schema.PUBLICATION_DATE) val publicationDate: Long,
-    @ColumnInfo(name = Schema.SITE_DETAIL_URL) val siteDetailUrl: String
+    @ColumnInfo(name = Schema.SITE_DETAIL_URL) val siteDetailUrl: String,
 ) {
 
     object Schema {

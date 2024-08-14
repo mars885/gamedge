@@ -79,7 +79,7 @@ internal class AuthServiceTest {
             mockWebServer.enqueue(
                 MockResponse()
                     .setResponseCode(400)
-                    .setBody("{\"message\": \"invalid client secret\"}")
+                    .setBody("{\"message\": \"invalid client secret\"}"),
             )
 
             val error = authService.getOauthCredentials("", "", "").getError()
@@ -97,7 +97,7 @@ internal class AuthServiceTest {
             mockWebServer.enqueue(
                 MockResponse()
                     .setResponseCode(400)
-                    .setBody(errorBody)
+                    .setBody(errorBody),
             )
 
             val error = authService.getOauthCredentials("", "", "").getError()
@@ -120,15 +120,15 @@ internal class AuthServiceTest {
                            "expires_in": 5643175,
                            "token_type": "bearer"
                         }
-                        """.trimIndent()
-                    )
+                        """.trimIndent(),
+                    ),
             )
 
             val parsedCredentials = authService.getOauthCredentials("", "", "").get()
             val expectedCredentials = ApiOauthCredentials(
                 accessToken = "token",
                 tokenType = "bearer",
-                tokenTtl = 5643175L
+                tokenTtl = 5643175L,
             )
 
             assertThat(parsedCredentials).isEqualTo(expectedCredentials)
@@ -152,7 +152,7 @@ internal class AuthServiceTest {
             mockWebServer.enqueue(
                 MockResponse()
                     .setResponseCode(200)
-                    .setBody("{}")
+                    .setBody("{}"),
             )
 
             val error = authService.getOauthCredentials("", "", "").getError()
@@ -166,7 +166,7 @@ internal class AuthServiceTest {
         runBlocking {
             mockWebServer.enqueue(
                 MockResponse()
-                    .setSocketPolicy(SocketPolicy.DISCONNECT_AT_START)
+                    .setSocketPolicy(SocketPolicy.DISCONNECT_AT_START),
             )
 
             val error = authService.getOauthCredentials("", "", "").getError()

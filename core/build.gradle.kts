@@ -22,9 +22,7 @@ plugins {
 }
 
 android {
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
+    namespace = "com.paulrybitskyi.gamedge.core"
 }
 
 dependencies {
@@ -47,8 +45,6 @@ dependencies {
 
     implementation(deps.misc.hiltBinder)
     ksp(deps.misc.hiltBinderCompiler)
-
-    coreLibraryDesugaring(deps.misc.desugaredLibs)
 
     testImplementation(project(deps.local.commonTesting))
     testImplementation(deps.testing.jUnit)

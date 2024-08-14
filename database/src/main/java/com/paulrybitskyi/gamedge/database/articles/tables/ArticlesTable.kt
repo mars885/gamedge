@@ -34,7 +34,7 @@ interface ArticlesTable {
         SELECT * FROM ${DbArticle.Schema.TABLE_NAME}
         ORDER BY ${DbArticle.Schema.PUBLICATION_DATE} DESC
         LIMIT :offset, :limit
-        """
+        """,
     )
     fun observeArticles(offset: Int, limit: Int): Flow<List<DbArticle>>
 }

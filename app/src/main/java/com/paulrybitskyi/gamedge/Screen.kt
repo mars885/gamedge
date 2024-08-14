@@ -60,7 +60,7 @@ internal sealed class Screen(val route: String) {
         "image-viewer?" +
         "${Parameters.TITLE}={${Parameters.TITLE}}&" +
         "${Parameters.INITIAL_POSITION}={${Parameters.INITIAL_POSITION}}&" +
-        "${Parameters.IMAGE_URLS}={${Parameters.IMAGE_URLS}}"
+        "${Parameters.IMAGE_URLS}={${Parameters.IMAGE_URLS}}",
     ) {
         object Parameters {
             const val TITLE = "title"

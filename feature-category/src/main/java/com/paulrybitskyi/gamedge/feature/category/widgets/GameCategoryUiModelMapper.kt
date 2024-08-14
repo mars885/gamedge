@@ -16,9 +16,9 @@
 
 package com.paulrybitskyi.gamedge.feature.category.widgets
 
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageSize
 import com.paulrybitskyi.gamedge.core.factories.IgdbImageUrlFactory
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -37,7 +37,7 @@ internal class GameCategoryUiModelMapperImpl @Inject constructor(
             title = game.name,
             coverUrl = game.cover?.let { cover ->
                 igdbImageUrlFactory.createUrl(cover, IgdbImageUrlFactory.Config(IgdbImageSize.BIG_COVER))
-            }
+            },
         )
     }
 }

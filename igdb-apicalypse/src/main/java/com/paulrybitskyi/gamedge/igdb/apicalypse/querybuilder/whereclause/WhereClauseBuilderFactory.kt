@@ -22,7 +22,7 @@ internal object WhereClauseBuilderFactory {
 
     fun newBuilder(): WhereClauseBuilder {
         return WhereClauseBuilderImpl(
-            conditionBuilderFactory = createConditionBuilderFactory()
+            conditionBuilderFactory = createConditionBuilderFactory(),
         )
     }
 

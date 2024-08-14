@@ -18,10 +18,10 @@ package com.paulrybitskyi.gamedge.feature.settings.presentation
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import com.paulrybitskyi.gamedge.common.domain.common.extensions.execute
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.core.Constants
-import com.paulrybitskyi.gamedge.common.domain.common.extensions.execute
 import com.paulrybitskyi.gamedge.feature.settings.DOMAIN_SETTINGS
 import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Settings
 import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Theme
@@ -89,6 +89,8 @@ internal class SettingsViewModelTest {
     @Test
     fun `Hides theme picker when theme gets picked`() {
         runTest {
+            every { observeSettingsUseCase.execute() } returns flowOf(DOMAIN_SETTINGS)
+
             SUT.onSettingClicked(createSettingUiModel(SettingItem.THEME))
 
             SUT.uiState.test {
@@ -172,7 +174,7 @@ internal class SettingsViewModelTest {
                             id = index,
                             title = "title$index",
                             items = emptyList(),
-                        )
+                        ),
                     )
                 }
             }

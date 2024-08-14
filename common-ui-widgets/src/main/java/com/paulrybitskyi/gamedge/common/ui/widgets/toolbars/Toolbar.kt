@@ -40,7 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.common.ui.widgets.R
+import com.paulrybitskyi.gamedge.core.R
 
 @Composable
 fun Toolbar(
@@ -54,7 +54,7 @@ fun Toolbar(
     leftButtonIcon: Painter? = null,
     rightButtonIcon: Painter? = null,
     onLeftButtonClick: (() -> Unit)? = null,
-    onRightButtonClick: (() -> Unit)? = null
+    onRightButtonClick: (() -> Unit)? = null,
 ) {
     Surface(
         modifier = Modifier
@@ -77,7 +77,7 @@ fun Toolbar(
             if (leftButtonIcon != null) {
                 Button(
                     icon = leftButtonIcon,
-                    onClick = { onLeftButtonClick?.invoke() }
+                    onClick = { onLeftButtonClick?.invoke() },
                 )
             }
 
@@ -94,7 +94,7 @@ fun Toolbar(
             if (rightButtonIcon != null) {
                 Button(
                     icon = rightButtonIcon,
-                    onClick = { onRightButtonClick?.invoke() }
+                    onClick = { onRightButtonClick?.invoke() },
                 )
             }
         }
@@ -132,7 +132,7 @@ private fun Button(
 private fun ToolbarPreviewWithTitle() {
     GamedgeTheme {
         Toolbar(
-            title = "Toolbar"
+            title = "Toolbar",
         )
     }
 }
@@ -143,7 +143,7 @@ private fun ToolbarPreviewWithTitle() {
 private fun ToolbarPreviewWithLongTitle() {
     GamedgeTheme {
         Toolbar(
-            title = "Toolbar toolbar toolbar toolbar toolbar toolbar toolbar toolbar"
+            title = "Toolbar toolbar toolbar toolbar toolbar toolbar toolbar toolbar",
         )
     }
 }
@@ -156,7 +156,7 @@ private fun ToolbarPreviewWithBothIcons() {
         Toolbar(
             title = "Toolbar",
             leftButtonIcon = painterResource(R.drawable.arrow_left),
-            rightButtonIcon = painterResource(R.drawable.magnify)
+            rightButtonIcon = painterResource(R.drawable.magnify),
         )
     }
 }
@@ -180,7 +180,7 @@ private fun ToolbarPreviewWithRightIcon() {
     GamedgeTheme {
         Toolbar(
             title = "Toolbar",
-            rightButtonIcon = painterResource(R.drawable.magnify)
+            rightButtonIcon = painterResource(R.drawable.magnify),
         )
     }
 }

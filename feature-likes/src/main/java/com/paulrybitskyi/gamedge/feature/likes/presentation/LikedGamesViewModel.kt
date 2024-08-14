@@ -18,6 +18,9 @@ package com.paulrybitskyi.gamedge.feature.likes.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
+import com.paulrybitskyi.gamedge.common.domain.common.entities.hasDefaultLimit
+import com.paulrybitskyi.gamedge.common.domain.common.entities.nextLimit
+import com.paulrybitskyi.gamedge.common.domain.games.common.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
@@ -31,13 +34,9 @@ import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
-import com.paulrybitskyi.gamedge.common.domain.common.entities.hasDefaultLimit
-import com.paulrybitskyi.gamedge.common.domain.common.entities.nextLimit
-import com.paulrybitskyi.gamedge.common.domain.games.common.ObserveGamesUseCaseParams
 import com.paulrybitskyi.gamedge.feature.likes.R
 import com.paulrybitskyi.gamedge.feature.likes.domain.ObserveLikedGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
@@ -52,6 +51,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 private const val SUBSEQUENT_EMISSION_DELAY = 500L
 
@@ -62,7 +63,7 @@ internal class LikedGamesViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
-    private val logger: Logger
+    private val logger: Logger,
 ) : BaseViewModel() {
 
     private var isObservingGames = false
@@ -86,7 +87,7 @@ internal class LikedGamesViewModel @Inject constructor(
     private fun createDefaultUiState(): GamesUiState {
         return GamesUiState(
             isLoading = false,
-            infoIconId = R.drawable.account_heart_outline,
+            infoIconId = CoreR.drawable.account_heart_outline,
             infoTitle = stringProvider.getString(R.string.liked_games_info_title),
             games = emptyList(),
         )
@@ -153,7 +154,7 @@ internal class LikedGamesViewModel @Inject constructor(
         if (!hasMoreGamesToLoad) return
 
         observeGamesUseCaseParams = observeGamesUseCaseParams.copy(
-            observeGamesUseCaseParams.pagination.nextLimit()
+            observeGamesUseCaseParams.pagination.nextLimit(),
         )
 
         viewModelScope.launch {

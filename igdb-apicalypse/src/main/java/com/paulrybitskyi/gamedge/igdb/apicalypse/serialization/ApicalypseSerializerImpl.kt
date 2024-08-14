@@ -33,7 +33,7 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
             .fieldSerializers(fieldChain = mutableListOf())
             .joinToString(
                 separator = Constants.FIELD_SEPARATOR,
-                transform = FieldSerializer::serialize
+                transform = FieldSerializer::serialize,
             )
     }
 
@@ -41,7 +41,7 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
         if (!clazz.isAnnotationPresent(ApicalypseClass::class.java)) {
             throw IllegalArgumentException(
                 "The provided class, \"${clazz.simpleName}\', does not have the " +
-                "\"${ApicalypseClass::class.simpleName}\" annotation present."
+                "\"${ApicalypseClass::class.simpleName}\" annotation present.",
             )
         }
     }
@@ -73,7 +73,7 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
         val childSerializers = childSerializers(fieldChain)
         val fieldSerializer = FieldSerializerFactory.create(
             fieldChain = fieldChain.toList(),
-            children = childSerializers
+            children = childSerializers,
         )
 
         fieldChain.remove(fieldName)
@@ -89,7 +89,7 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
         if (name.isBlank()) {
             throw IllegalArgumentException(
                 "The field \"${field.name}\" of the class \"${field.declaringClass.simpleName}\" " +
-                "is annotated with an invalid name \"$name\"."
+                "is annotated with an invalid name \"$name\".",
             )
         }
     }
@@ -106,8 +106,8 @@ internal class ApicalypseSerializerImpl : ApicalypseSerializer {
             }
 
             // All other types are unsupported for now
-            else -> throw IllegalStateException(
-                "Serialization for a class \"${type.simpleName}\" is unsupported at the moment."
+            else -> error(
+                "Serialization for a class \"${type.simpleName}\" is unsupported at the moment.",
             )
         }
     }

@@ -24,11 +24,11 @@ import javax.inject.Qualifier
     AnnotationTarget.CLASS,
     AnnotationTarget.FIELD,
     AnnotationTarget.FUNCTION,
-    AnnotationTarget.VALUE_PARAMETER
+    AnnotationTarget.VALUE_PARAMETER,
 )
 internal annotation class Endpoint(val type: Type) {
 
     enum class Type {
-        ARTICLES
+        ARTICLES,
     }
 }

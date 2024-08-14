@@ -38,7 +38,8 @@ enum class ApiAgeRatingType(val rawValue: Int) {
     E10(rawValue = 9),
     T(rawValue = 10),
     M(rawValue = 11),
-    AO(rawValue = 12);
+    AO(rawValue = 12),
+    ;
 
     internal companion object {
 
@@ -52,7 +53,7 @@ internal object AgeRatingTypeSerializer : KSerializer<ApiAgeRatingType> {
 
     override val descriptor = PrimitiveSerialDescriptor(
         checkNotNull(AgeRatingTypeSerializer::class.qualifiedName),
-        PrimitiveKind.INT
+        PrimitiveKind.INT,
     )
 
     override fun serialize(encoder: Encoder, value: ApiAgeRatingType) {

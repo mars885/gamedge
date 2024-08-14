@@ -23,14 +23,20 @@ plugins {
     kotlinKapt()
     ksp()
     kotlinxSerialization()
-    daggerHiltAndroid()
+    daggerHilt()
 }
 
 android {
+    namespace = "com.paulrybitskyi.gamedge.gamespot.api"
+
     defaultConfig {
-        testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
+        testInstrumentationRunner = appConfig.instrumentationRunner
 
         stringField("GAMESPOT_API_KEY", property("GAMESPOT_API_KEY", ""))
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 

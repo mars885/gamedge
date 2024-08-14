@@ -20,5 +20,5 @@ internal enum class GamesCategory {
     POPULAR,
     RECENTLY_RELEASED,
     COMING_SOON,
-    MOST_ANTICIPATED
+    MOST_ANTICIPATED,
 }

@@ -23,34 +23,34 @@ import com.paulrybitskyi.gamedge.database.articles.tables.ArticlesTable
 import com.paulrybitskyi.gamedge.feature.news.domain.datastores.ArticlesLocalDataStore
 import com.paulrybitskyi.gamedge.feature.news.domain.entities.Article
 import com.paulrybitskyi.hiltbinder.BindType
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 @BindType
 internal class ArticlesDatabaseDataStore @Inject constructor(
     private val articlesTable: ArticlesTable,
     private val dispatcherProvider: DispatcherProvider,
-    private val dbArticleMapper: DbArticleMapper
+    private val dbArticleMapper: DbArticleMapper,
 ) : ArticlesLocalDataStore {
 
     override suspend fun saveArticles(articles: List<Article>) {
         articlesTable.saveArticles(
             withContext(dispatcherProvider.computation) {
                 dbArticleMapper.mapToDatabaseArticles(articles)
-            }
+            },
         )
     }
 
     override fun observeArticles(pagination: Pagination): Flow<List<Article>> {
         return articlesTable.observeArticles(
             offset = pagination.offset,
-            limit = pagination.limit
+            limit = pagination.limit,
         )
         .toDataArticlesFlow()
     }

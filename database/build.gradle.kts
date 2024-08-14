@@ -20,12 +20,14 @@ plugins {
     kotlinKapt()
     ksp()
     kotlinxSerialization()
-    daggerHiltAndroid()
+    daggerHilt()
 }
 
 android {
+    namespace = "com.paulrybitskyi.gamedge.database"
+
     defaultConfig {
-        testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
+        testInstrumentationRunner = appConfig.instrumentationRunner
     }
 
     sourceSets {

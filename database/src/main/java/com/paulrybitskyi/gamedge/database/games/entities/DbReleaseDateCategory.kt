@@ -27,5 +27,5 @@ enum class DbReleaseDateCategory {
     YYYYQ3,
     YYYYQ4,
 
-    TBD
+    TBD,
 }

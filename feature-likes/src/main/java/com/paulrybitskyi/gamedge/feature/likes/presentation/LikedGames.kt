@@ -41,6 +41,7 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.games.Games
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
 import com.paulrybitskyi.gamedge.feature.likes.R
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
 fun LikedGames(
@@ -88,7 +89,7 @@ private fun LikedGames(
                 contentPadding = WindowInsets.statusBars
                     .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
                     .asPaddingValues(),
-                rightButtonIcon = painterResource(R.drawable.magnify),
+                rightButtonIcon = painterResource(CoreR.drawable.magnify),
                 onRightButtonClick = onSearchButtonClicked,
             )
         },
@@ -110,7 +111,7 @@ private fun LikedGamesPreview() {
         LikedGames(
             uiState = GamesUiState(
                 isLoading = false,
-                infoIconId = R.drawable.gamepad_variant_outline,
+                infoIconId = CoreR.drawable.gamepad_variant_outline,
                 infoTitle = "No Games\nNo Games",
                 games = emptyList(),
             ),

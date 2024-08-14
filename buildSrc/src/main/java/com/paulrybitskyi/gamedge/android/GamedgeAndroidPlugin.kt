@@ -16,12 +16,14 @@
 
 package com.paulrybitskyi.gamedge.android
 
-import com.android.build.gradle.BaseExtension
-import org.gradle.api.Plugin
-import org.gradle.api.Project
 import PLUGIN_ANDROID_APPLICATION
 import PLUGIN_KOTLIN_ANDROID
+import appConfig
+import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import deps
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 import org.gradle.kotlin.dsl.findByType
 import java.util.Properties
 
@@ -37,6 +39,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     override fun apply(project: Project) = with(project) {
         setupPlugins()
         configurePlugins()
+        addDesugaringDependency()
     }
 
     private fun Project.setupPlugins() {
@@ -57,8 +60,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 targetSdk = appConfig.targetSdkVersion
                 versionCode = appConfig.versionCode
                 versionName = appConfig.versionName
-
-                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             }
 
             buildTypes {
@@ -95,6 +96,8 @@ class GamedgeAndroidPlugin : Plugin<Project> {
             compileOptions {
                 sourceCompatibility = appConfig.javaCompatibilityVersion
                 targetCompatibility = appConfig.javaCompatibilityVersion
+
+                isCoreLibraryDesugaringEnabled = true
             }
 
             // Without the below block, a build failure was happening when running ./gradlew connectedAndroidTest
@@ -103,6 +106,8 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 // for JNA and JNA-platform
                 resources.excludes.add("META-INF/AL2.0")
                 resources.excludes.add("META-INF/LGPL2.1")
+                resources.excludes.add("META-INF/LICENSE.md")
+                resources.excludes.add("META-INF/LICENSE-notice.md")
                 // for byte-buddy
                 resources.excludes.add("META-INF/licenses/ASM")
                 resources.pickFirsts.add("win32-x86-64/attach_hotspot_windows.dll")
@@ -114,6 +119,8 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     private fun Project.configureAndroidApplicationId() {
         plugins.withId(PLUGIN_ANDROID_APPLICATION) {
             extensions.findByType<BaseAppModuleExtension>()?.run {
+                namespace = appConfig.applicationId
+
                 defaultConfig {
                     applicationId = appConfig.applicationId
                 }
@@ -155,5 +162,9 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     @Suppress("UNCHECKED_CAST")
     private fun <T> Properties.getValue(key: String): T {
         return (get(key) as T)
+    }
+
+    private fun Project.addDesugaringDependency() {
+        dependencies.add("coreLibraryDesugaring", deps.misc.desugaredLibs)
     }
 }

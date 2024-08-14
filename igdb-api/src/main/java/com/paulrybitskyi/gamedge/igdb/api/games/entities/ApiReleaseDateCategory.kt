@@ -36,7 +36,8 @@ enum class ApiReleaseDateCategory(val rawValue: Int) {
     YYYYQ3(rawValue = 5),
     YYYYQ4(rawValue = 6),
 
-    TBD(rawValue = 7);
+    TBD(rawValue = 7),
+    ;
 
     internal companion object {
 
@@ -50,7 +51,7 @@ internal object ReleaseDateCategorySerializer : KSerializer<ApiReleaseDateCatego
 
     override val descriptor = PrimitiveSerialDescriptor(
         checkNotNull(ReleaseDateCategorySerializer::class.qualifiedName),
-        PrimitiveKind.INT
+        PrimitiveKind.INT,
     )
 
     override fun serialize(encoder: Encoder, value: ApiReleaseDateCategory) {

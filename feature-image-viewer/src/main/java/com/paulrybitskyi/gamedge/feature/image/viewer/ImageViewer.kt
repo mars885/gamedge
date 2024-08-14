@@ -57,9 +57,9 @@ import com.mxalbert.zoomable.OverZoomConfig
 import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.common.ui.LocalTextSharer
+import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
 import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
@@ -67,6 +67,7 @@ import com.paulrybitskyi.gamedge.common.ui.theme.navBar
 import com.paulrybitskyi.gamedge.common.ui.theme.statusBar
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 private const val ZoomScaleMin = 0.5f
 private const val ZoomScaleMax = 5f
@@ -138,8 +139,8 @@ private fun ImageViewer(
                 backgroundColor = GamedgeTheme.colors.statusBar,
                 contentColor = LocalContentColor.current,
                 elevation = 0.dp,
-                leftButtonIcon = painterResource(R.drawable.arrow_left),
-                rightButtonIcon = painterResource(R.drawable.share_variant),
+                leftButtonIcon = painterResource(CoreR.drawable.arrow_left),
+                rightButtonIcon = painterResource(CoreR.drawable.share_variant),
                 onLeftButtonClick = onBackPressed,
                 onRightButtonClick = onToolbarRightBtnClicked,
             )
@@ -218,13 +219,13 @@ private fun ImageItem(
 
         if (imageState is State.Error) {
             Info(
-                icon = painterResource(R.drawable.alert_circle_outline),
+                icon = painterResource(CoreR.drawable.alert_circle_outline),
                 title = stringResource(
                     if (!LocalNetworkStateProvider.current.isNetworkAvailable) {
-                        R.string.error_no_network_message
+                        CoreR.string.error_no_network_message
                     } else {
-                        R.string.error_unknown_message
-                    }
+                        CoreR.string.error_unknown_message
+                    },
                 ),
                 modifier = Modifier
                     .align(Alignment.Center)

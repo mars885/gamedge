@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 class GamesDiscoveryUseCases @Inject constructor(
     private val observeGamesUseCasesMap: Map<Type, @JvmSuppressWildcards ObservableGamesUseCase>,
-    private val refreshGamesUseCasesMap: Map<Type, @JvmSuppressWildcards RefreshableGamesUseCase>
+    private val refreshGamesUseCasesMap: Map<Type, @JvmSuppressWildcards RefreshableGamesUseCase>,
 ) {
 
     fun getObservableUseCase(keyType: Type): ObservableGamesUseCase {

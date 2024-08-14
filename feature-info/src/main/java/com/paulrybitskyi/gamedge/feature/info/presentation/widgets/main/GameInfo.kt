@@ -39,9 +39,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalUrlOpener
 import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
+import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.AnimatedContentContainer
@@ -49,28 +49,29 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.categorypreview.GamesCategoryPreview
+import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoCommand
 import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoViewModel
-import com.paulrybitskyi.gamedge.feature.info.R
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetails
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.screenshots.GameInfoScreenshots
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.GameInfoSummary
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetailsUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoHeaderUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinkUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanies
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetails
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetailsUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoHeader
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoHeaderUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinkUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinks
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesType
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.mapToCategoryUiModels
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.mapToInfoRelatedGameUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesType
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.screenshots.GameInfoScreenshotUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.screenshots.GameInfoScreenshots
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideos
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
 fun GameInfo(onRoute: (Route) -> Unit) {
@@ -93,7 +94,7 @@ private fun GameInfo(
         when (command) {
             is GameInfoCommand.OpenUrl -> {
                 if (!urlOpener.openUrl(command.url, context)) {
-                    context.showShortToast(context.getString(R.string.url_opener_not_found))
+                    context.showShortToast(context.getString(CoreR.string.url_opener_not_found))
                 }
             }
         }
@@ -174,7 +175,7 @@ private fun LoadingState(modifier: Modifier) {
 @Composable
 private fun EmptyState(modifier: Modifier) {
     Info(
-        icon = painterResource(R.drawable.gamepad_variant_outline),
+        icon = painterResource(CoreR.drawable.gamepad_variant_outline),
         title = stringResource(R.string.game_info_info_view_title),
         modifier = modifier.padding(horizontal = GamedgeTheme.spaces.spacing_7_5),
     )
@@ -375,7 +376,7 @@ private fun LazyListScope.relatedGamesItem(
         item = when (model.type) {
             GameInfoRelatedGamesType.OTHER_COMPANY_GAMES -> GameInfoItem.OtherCompanyGames
             GameInfoRelatedGamesType.SIMILAR_GAMES -> GameInfoItem.SimilarGames
-        }
+        },
     ) {
         val categoryGames = remember(model.items) {
             model.items.mapToCategoryUiModels()
@@ -416,6 +417,7 @@ private enum class GameInfoItem(
     Details(key = 5, contentType = 5),
     Links(key = 6, contentType = 6),
     Companies(key = 7, contentType = 7),
+
     // Both other & similar games is the same composable
     // filled with different data. That's why contentType
     // is the same for them two.
@@ -588,37 +590,37 @@ private fun buildFakeGameModel(): GameInfoUiModel {
             GameInfoLinkUiModel(
                 id = 1,
                 text = "Steam",
-                iconId = R.drawable.steam,
+                iconId = CoreR.drawable.steam,
                 url = "",
             ),
             GameInfoLinkUiModel(
                 id = 2,
                 text = "Official",
-                iconId = R.drawable.web,
+                iconId = CoreR.drawable.web,
                 url = "",
             ),
             GameInfoLinkUiModel(
                 id = 3,
                 text = "Twitter",
-                iconId = R.drawable.twitter,
+                iconId = CoreR.drawable.twitter,
                 url = "",
             ),
             GameInfoLinkUiModel(
                 id = 4,
                 text = "Subreddit",
-                iconId = R.drawable.reddit,
+                iconId = CoreR.drawable.reddit,
                 url = "",
             ),
             GameInfoLinkUiModel(
                 id = 5,
                 text = "YouTube",
-                iconId = R.drawable.youtube,
+                iconId = CoreR.drawable.youtube,
                 url = "",
             ),
             GameInfoLinkUiModel(
                 id = 6,
                 text = "Twitch",
-                iconId = R.drawable.twitch,
+                iconId = CoreR.drawable.twitch,
                 url = "",
             ),
         ),

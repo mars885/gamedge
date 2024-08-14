@@ -30,7 +30,8 @@ enum class ApiImageType(val rawType: String) {
     SQUARE_TINY("square_tiny"),
     SQUARE_SMALL("square_small"),
     SCREEN_TINY("screen_tiny"),
-    ORIGINAL("original");
+    ORIGINAL("original"),
+    ;
 
     internal companion object {
 
@@ -44,7 +45,7 @@ internal object ImageTypeSerializer : KSerializer<ApiImageType> {
 
     override val descriptor = PrimitiveSerialDescriptor(
         checkNotNull(ImageTypeSerializer::class.qualifiedName),
-        PrimitiveKind.STRING
+        PrimitiveKind.STRING,
     )
 
     override fun serialize(encoder: Encoder, value: ApiImageType) {

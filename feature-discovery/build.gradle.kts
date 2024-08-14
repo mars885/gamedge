@@ -17,19 +17,14 @@
 plugins {
     androidLibrary()
     gamedgeAndroid()
+    jetpackCompose()
     kotlinKapt()
     ksp()
-    daggerHiltAndroid()
+    daggerHilt()
 }
 
 android {
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = versions.compose
-    }
+    namespace = "com.paulrybitskyi.gamedge.feature.discovery"
 }
 
 dependencies {

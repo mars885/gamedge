@@ -38,19 +38,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
-import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.OnLifecycleEvent
+import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
-import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.SearchToolbar
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.Games
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GamesUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.finiteUiState
+import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.SearchToolbar
 import com.paulrybitskyi.gamedge.feature.search.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 private const val KeyboardPopupIntentionalDelay = 300L
 
@@ -151,7 +152,7 @@ private fun GamesSearchSuccessStatePreview() {
                 queryText = "God of War",
                 gamesUiState = GamesUiState(
                     isLoading = false,
-                    infoIconId = R.drawable.magnify,
+                    infoIconId = CoreR.drawable.magnify,
                     infoTitle = "",
                     games = listOf(
                         GameUiModel(
@@ -182,7 +183,7 @@ private fun GamesSearchSuccessStatePreview() {
                                     "very very very very very very very very long description",
                         ),
                     ),
-                )
+                ),
             ),
             onSearchConfirmed = {},
             onBackButtonClicked = {},
@@ -204,10 +205,10 @@ private fun GamesSearchEmptyStatePreview() {
                 queryText = "God of War",
                 gamesUiState = GamesUiState(
                     isLoading = false,
-                    infoIconId = R.drawable.magnify,
+                    infoIconId = CoreR.drawable.magnify,
                     infoTitle = "No games found for \n\"God of War\"",
                     games = emptyList(),
-                )
+                ),
             ),
             onSearchConfirmed = {},
             onBackButtonClicked = {},
@@ -229,10 +230,10 @@ private fun GamesSearchLoadingStatePreview() {
                 queryText = "God of War",
                 gamesUiState = GamesUiState(
                     isLoading = true,
-                    infoIconId = R.drawable.magnify,
+                    infoIconId = CoreR.drawable.magnify,
                     infoTitle = "",
                     games = emptyList(),
-                )
+                ),
             ),
             onSearchConfirmed = {},
             onBackButtonClicked = {},

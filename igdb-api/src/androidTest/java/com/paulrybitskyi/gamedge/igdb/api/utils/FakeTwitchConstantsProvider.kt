@@ -21,7 +21,7 @@ import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Inject
 
 internal class FakeTwitchConstantsProvider @Inject constructor(
-    mockWebServer: MockWebServer
+    mockWebServer: MockWebServer,
 ) : TwitchConstantsProvider {
 
     override val clientId: String = "client_id"

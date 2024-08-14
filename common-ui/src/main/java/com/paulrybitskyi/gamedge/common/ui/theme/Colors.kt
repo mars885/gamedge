@@ -25,7 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import com.paulrybitskyi.gamedge.common.ui.R
+import com.paulrybitskyi.gamedge.core.R
 
 @Composable
 fun lightColors(): Colors {
@@ -72,7 +72,7 @@ val Colors.navBar: Color
             R.color.light_colorNavigationBar
         } else {
             R.color.dark_colorNavigationBar
-        }
+        },
     )
 
 val Colors.lightScrim: Color

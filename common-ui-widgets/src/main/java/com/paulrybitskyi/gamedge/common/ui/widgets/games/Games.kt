@@ -32,8 +32,8 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
-import com.paulrybitskyi.gamedge.common.ui.widgets.R
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
+import com.paulrybitskyi.gamedge.core.R
 
 @Composable
 fun Games(
@@ -105,7 +105,7 @@ private fun SuccessState(
         ) {
             itemsIndexed(
                 items = games,
-                key = { _, game -> game.id }
+                key = { _, game -> game.id },
             ) { index, game ->
                 if (index == lastIndex) {
                     LaunchedEffect(lastIndex) {
@@ -150,7 +150,7 @@ private fun GamesSuccessStatePreview() {
             releaseDate = "Sep 28, 2021 (a month ago)",
             developerName = "Mobius Digital",
             description = "Some very very very very very very very very very long description",
-        )
+        ),
     )
 
     GamedgeTheme {

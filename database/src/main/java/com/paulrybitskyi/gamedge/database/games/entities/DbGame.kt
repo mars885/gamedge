@@ -28,8 +28,8 @@ import androidx.room.Index
         Index(DbGame.Schema.RELEASE_DATE),
         Index(DbGame.Schema.USERS_RATING),
         Index(DbGame.Schema.TOTAL_RATING),
-        Index(DbGame.Schema.NAME)
-    ]
+        Index(DbGame.Schema.NAME),
+    ],
 )
 data class DbGame(
     @ColumnInfo(name = Schema.ID) val id: Int,

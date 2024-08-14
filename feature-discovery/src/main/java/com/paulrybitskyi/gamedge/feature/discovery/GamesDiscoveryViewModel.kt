@@ -19,15 +19,15 @@ package com.paulrybitskyi.gamedge.feature.discovery
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.resultOrError
+import com.paulrybitskyi.gamedge.common.domain.games.common.ObserveGamesUseCaseParams
+import com.paulrybitskyi.gamedge.common.domain.games.common.RefreshGamesUseCaseParams
+import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
-import com.paulrybitskyi.gamedge.common.domain.games.common.ObserveGamesUseCaseParams
-import com.paulrybitskyi.gamedge.common.domain.games.common.RefreshGamesUseCaseParams
-import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameUiModelMapper
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.mapToUiModels
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameUiModel
@@ -36,7 +36,6 @@ import com.paulrybitskyi.gamedge.feature.discovery.widgets.hideProgressBar
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.showProgressBar
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -49,6 +48,7 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
 @HiltViewModel
 internal class GamesDiscoveryViewModel @Inject constructor(
@@ -57,7 +57,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
-    private val logger: Logger
+    private val logger: Logger,
 ) : BaseViewModel() {
 
     private var isObservingGames = false
@@ -98,7 +98,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
 
         combine(
             flows = GamesDiscoveryCategory.values().map(::observeGames),
-            transform = { it.toList() }
+            transform = { it.toList() },
         )
         .map { games -> currentItems.toSuccessState(games) }
         .onError { logger.error(logTag, "Failed to observe games.", it) }
@@ -120,7 +120,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
 
         combine(
             flows = GamesDiscoveryCategory.values().map(::refreshGames),
-            transform = { it.toList() }
+            transform = { it.toList() },
         )
         .map { currentItems }
         .onError {

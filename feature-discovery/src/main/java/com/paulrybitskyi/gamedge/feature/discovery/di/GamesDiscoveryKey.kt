@@ -27,6 +27,6 @@ annotation class GamesDiscoveryKey(val type: Type) {
         POPULAR,
         RECENTLY_RELEASED,
         COMING_SOON,
-        MOST_ANTICIPATED
+        MOST_ANTICIPATED,
     }
 }

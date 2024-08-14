@@ -54,6 +54,7 @@ import com.paulrybitskyi.gamedge.feature.discovery.R
 import com.paulrybitskyi.gamedge.feature.discovery.titleId
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 // Intentional delay to keep the swipe refresh visible
 // because as soon as it is let go, it disappears instantaneously.
@@ -107,7 +108,7 @@ private fun GamesDiscovery(
                 contentPadding = WindowInsets.statusBars
                     .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
                     .asPaddingValues(),
-                rightButtonIcon = painterResource(R.drawable.magnify),
+                rightButtonIcon = painterResource(CoreR.drawable.magnify),
                 onRightButtonClick = onSearchButtonClicked,
             )
         },

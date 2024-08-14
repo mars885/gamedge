@@ -20,5 +20,5 @@ import javax.inject.Inject
 
 internal class ArticlesDataStores @Inject constructor(
     val local: ArticlesLocalDataStore,
-    val remote: ArticlesRemoteDataStore
+    val remote: ArticlesRemoteDataStore,
 )

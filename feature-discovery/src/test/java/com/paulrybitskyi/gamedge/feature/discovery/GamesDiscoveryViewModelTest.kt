@@ -20,14 +20,14 @@ import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObservePopularGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.common.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.FakeLogger
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
-import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObservePopularGamesUseCase
-import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.feature.discovery.di.GamesDiscoveryKey
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameUiModelMapper
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameUiModel
@@ -57,7 +57,7 @@ internal class GamesDiscoveryViewModelTest {
             dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             stringProvider = FakeStringProvider(),
             errorMapper = FakeErrorMapper(),
-            logger = logger
+            logger = logger,
         )
     }
 
@@ -73,7 +73,7 @@ internal class GamesDiscoveryViewModelTest {
                 },
                 GamesDiscoveryKey.Type.MOST_ANTICIPATED to mockk {
                     every { execute(any()) } returns flowOf(DOMAIN_GAMES)
-                }
+                },
             ),
             refreshGamesUseCasesMap = mapOf(
                 GamesDiscoveryKey.Type.POPULAR to refreshPopularGamesUseCase,
@@ -85,8 +85,8 @@ internal class GamesDiscoveryViewModelTest {
                 },
                 GamesDiscoveryKey.Type.MOST_ANTICIPATED to mockk {
                     every { execute(any()) } returns flowOf(Ok(DOMAIN_GAMES))
-                }
-            )
+                },
+            ),
         )
     }
 
@@ -161,7 +161,7 @@ internal class GamesDiscoveryViewModelTest {
             val item = GamesDiscoveryItemGameUiModel(
                 id = 1,
                 title = "title",
-                coverUrl = null
+                coverUrl = null,
             )
 
             SUT.routeFlow.test {
@@ -181,7 +181,7 @@ internal class GamesDiscoveryViewModelTest {
             return GamesDiscoveryItemGameUiModel(
                 id = game.id,
                 title = game.name,
-                coverUrl = null
+                coverUrl = null,
             )
         }
     }

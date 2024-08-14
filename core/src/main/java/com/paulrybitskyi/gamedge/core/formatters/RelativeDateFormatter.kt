@@ -31,7 +31,7 @@ interface RelativeDateFormatter {
 @BindType
 internal class RelativeDateFormatterImpl @Inject constructor(
     private val timeProvider: TimeProvider,
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
 ) : RelativeDateFormatter {
 
     override fun formatRelativeDate(dateTime: LocalDateTime): String {
@@ -64,7 +64,7 @@ internal class RelativeDateFormatterImpl @Inject constructor(
         val secondCount = ChronoUnit.SECONDS.between(currentDateTime, dateTime).toInt()
         if (secondCount > 0L) return getQuantityString(R.plurals.future_relative_timestamp_second, secondCount)
 
-        throw IllegalStateException("Could not format the future date $dateTime in a relative way.")
+        error("Could not format the future date $dateTime in a relative way.")
     }
 
     private fun formatPastDate(dateTime: LocalDateTime, currentDateTime: LocalDateTime): String {
@@ -86,7 +86,7 @@ internal class RelativeDateFormatterImpl @Inject constructor(
         val secondCount = ChronoUnit.SECONDS.between(dateTime, currentDateTime).toInt()
         if (secondCount > 0L) return getQuantityString(R.plurals.past_relative_timestamp_second, secondCount)
 
-        throw IllegalStateException("Could not format the past date $dateTime in a relative way.")
+        error("Could not format the past date $dateTime in a relative way.")
     }
 
     private fun getQuantityString(id: Int, quantity: Int): String {

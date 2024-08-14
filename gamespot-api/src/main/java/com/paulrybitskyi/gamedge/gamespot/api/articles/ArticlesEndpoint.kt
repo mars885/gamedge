@@ -35,7 +35,7 @@ interface ArticlesEndpoint {
 @BindType
 internal class ArticlesEndpointImpl @Inject constructor(
     private val articlesService: ArticlesService,
-    private val queryParamsFactory: GamespotQueryParamsFactory
+    private val queryParamsFactory: GamespotQueryParamsFactory,
 ) : ArticlesEndpoint {
 
     override suspend fun getArticles(offset: Int, limit: Int): ApiResult<List<ApiArticle>> {

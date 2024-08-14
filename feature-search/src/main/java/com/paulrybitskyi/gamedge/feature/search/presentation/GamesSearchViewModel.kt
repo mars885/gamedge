@@ -20,6 +20,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.commons.utils.observeChanges
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
+import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
+import com.paulrybitskyi.gamedge.common.domain.common.entities.nextOffset
+import com.paulrybitskyi.gamedge.common.domain.common.extensions.resultOrError
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
@@ -31,13 +34,9 @@ import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
-import com.paulrybitskyi.gamedge.common.domain.common.entities.Pagination
-import com.paulrybitskyi.gamedge.common.domain.common.entities.nextOffset
-import com.paulrybitskyi.gamedge.common.domain.common.extensions.resultOrError
 import com.paulrybitskyi.gamedge.feature.search.R
 import com.paulrybitskyi.gamedge.feature.search.domain.SearchGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -47,6 +46,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 private const val KEY_CURRENT_SEARCH_QUERY = "current_search_query"
 private const val KEY_CONFIRMED_SEARCH_QUERY = "confirmed_search_query"
@@ -59,7 +60,7 @@ internal class GamesSearchViewModel @Inject constructor(
     private val stringProvider: StringProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
     private var hasMoreGamesToLoad = false
@@ -75,7 +76,9 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
     private var pagination: Pagination
-        set(value) { useCaseParams = useCaseParams.copy(pagination = value) }
+        set(value) {
+            useCaseParams = useCaseParams.copy(pagination = value)
+        }
         get() = useCaseParams.pagination
 
     private var useCaseParams = SearchGamesUseCase.Params(searchQuery = "")
@@ -115,7 +118,7 @@ internal class GamesSearchViewModel @Inject constructor(
     private fun createGamesEmptyUiState(): GamesUiState {
         return GamesUiState(
             isLoading = false,
-            infoIconId = R.drawable.magnify,
+            infoIconId = CoreR.drawable.magnify,
             infoTitle = getUiStateInfoTitle(),
             games = emptyList(),
         )

@@ -16,11 +16,11 @@
 
 package com.paulrybitskyi.gamedge.core.formatters
 
-import com.paulrybitskyi.gamedge.core.R
-import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.common.domain.games.entities.ReleaseDate
 import com.paulrybitskyi.gamedge.common.domain.games.entities.ReleaseDateCategory
+import com.paulrybitskyi.gamedge.core.R
+import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import java.time.Instant
 import java.time.LocalDateTime
@@ -35,7 +35,7 @@ interface GameReleaseDateFormatter {
 @BindType
 internal class GameReleaseDateFormatterImpl @Inject constructor(
     private val stringProvider: StringProvider,
-    private val relativeDateFormatter: RelativeDateFormatter
+    private val relativeDateFormatter: RelativeDateFormatter,
 ) : GameReleaseDateFormatter {
 
     private companion object {
@@ -55,9 +55,10 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
             ReleaseDateCategory.YYYYQ1,
             ReleaseDateCategory.YYYYQ2,
             ReleaseDateCategory.YYYYQ3,
-            ReleaseDateCategory.YYYYQ4 -> date.formatDateWithYearAndQuarter()
+            ReleaseDateCategory.YYYYQ4,
+            -> date.formatDateWithYearAndQuarter()
 
-            else -> throw IllegalStateException("Unknown category: $category.")
+            else -> error("Unknown category: $category.")
         }
     }
 
@@ -95,7 +96,7 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
     private fun ReleaseDate.toLocalDateTime(): LocalDateTime {
         return LocalDateTime.ofInstant(
             Instant.ofEpochSecond(checkNotNull(date)),
-            ZoneId.systemDefault()
+            ZoneId.systemDefault(),
         )
     }
 
@@ -107,7 +108,7 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
         return stringProvider.getString(
             R.string.year_with_quarter_template,
             checkNotNull(year),
-            category.getQuarterString()
+            category.getQuarterString(),
         )
     }
 
@@ -119,8 +120,8 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
                 ReleaseDateCategory.YYYYQ3 -> R.string.year_quarter_third
                 ReleaseDateCategory.YYYYQ4 -> R.string.year_quarter_fourth
 
-                else -> throw IllegalStateException("Unknown category $this.")
-            }
+                else -> error("Unknown category $this.")
+            },
         )
     }
 }

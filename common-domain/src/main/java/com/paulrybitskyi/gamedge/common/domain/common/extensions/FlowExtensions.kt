@@ -16,8 +16,6 @@
 
 package com.paulrybitskyi.gamedge.common.domain.common.extensions
 
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapEither
@@ -38,9 +36,9 @@ fun <T> Flow<DomainResult<T>>.onEachFailure(action: suspend (Error) -> Unit): Fl
 }
 
 fun <T> Flow<DomainResult<T>>.resultOrError(): Flow<T> {
-    return map {
-        if (it is Ok) return@map it.value
-        if (it is Err) throw DomainException(it.error)
+    return map { result ->
+        if (result.isOk) return@map result.value
+        if (result.isErr) throw DomainException(result.error)
 
         error("The result is neither Ok nor Err.")
     }
@@ -48,19 +46,19 @@ fun <T> Flow<DomainResult<T>>.resultOrError(): Flow<T> {
 
 fun <S1, E1, S2, E2> Flow<Result<S1, E1>>.mapResult(
     success: (S1) -> S2,
-    failure: (E1) -> E2
+    failure: (E1) -> E2,
 ): Flow<Result<S2, E2>> {
     return map { it.mapEither(success, failure) }
 }
 
 fun <S1, S2, E1> Flow<Result<S1, E1>>.mapSuccess(
-    success: (S1) -> S2
+    success: (S1) -> S2,
 ): Flow<Result<S2, E1>> {
     return map { it.map(success) }
 }
 
 fun <S1, E1, E2> Flow<Result<S1, E1>>.mapError(
-    failure: (E1) -> E2
+    failure: (E1) -> E2,
 ): Flow<Result<S1, E2>> {
     return map { it.mapError(failure) }
 }

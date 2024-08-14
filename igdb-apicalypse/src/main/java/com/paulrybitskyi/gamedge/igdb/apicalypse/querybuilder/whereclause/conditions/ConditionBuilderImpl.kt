@@ -21,7 +21,7 @@ import com.paulrybitskyi.gamedge.igdb.apicalypse.querybuilder.whereclause.WhereC
 
 internal class ConditionBuilderImpl(
     private val conditionType: ConditionType,
-    private val whereClauseBuilderFactory: WhereClauseBuilderFactory
+    private val whereClauseBuilderFactory: WhereClauseBuilderFactory,
 ) : ConditionBuilder {
 
     private val conditionBuilder = StringBuilder()

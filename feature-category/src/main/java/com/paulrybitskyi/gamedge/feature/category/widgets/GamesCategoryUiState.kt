@@ -66,7 +66,7 @@ internal fun GamesCategoryUiState.toEmptyState(): GamesCategoryUiState {
 }
 
 internal fun GamesCategoryUiState.toSuccessState(
-    games: List<GameCategoryUiModel>
+    games: List<GameCategoryUiModel>,
 ): GamesCategoryUiState {
     return copy(isLoading = false, games = games)
 }

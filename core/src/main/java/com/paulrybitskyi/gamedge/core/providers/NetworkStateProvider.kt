@@ -29,7 +29,7 @@ interface NetworkStateProvider {
 
 @BindType
 internal class NetworkStateProviderImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : NetworkStateProvider {
 
     override val isNetworkAvailable: Boolean

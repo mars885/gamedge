@@ -10,4 +10,15 @@ max_line_length = 120
 indent_size = 2
 
 [*.{kt,kts}]
-disabled_rules=filename,import-ordering
+ktlint_standard_annotation = disabled
+ktlint_standard_no-empty-first-line-in-class-body = disabled
+ktlint_standard_blank-line-before-declaration = disabled
+ktlint_standard_multiline-expression-wrapping = disabled
+ktlint_standard_string-template-indent = disabled
+ktlint_standard_spacing-between-declarations-with-annotations = disabled
+ktlint_standard_function-signature = disabled
+ktlint_standard_class-signature = disabled
+ktlint_standard_function-naming = disabled
+ktlint_standard_filename = disabled
+ktlint_standard_property-naming = disabled
+ktlint_standard_enum-wrapping = disabled

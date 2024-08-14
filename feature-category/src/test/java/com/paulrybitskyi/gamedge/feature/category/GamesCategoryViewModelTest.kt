@@ -21,18 +21,18 @@ import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
-import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObservePopularGamesUseCase
+import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.common.testing.FakeErrorMapper
 import com.paulrybitskyi.gamedge.common.testing.FakeLogger
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
-import com.paulrybitskyi.gamedge.common.domain.games.usecases.ObservePopularGamesUseCase
-import com.paulrybitskyi.gamedge.common.domain.games.usecases.RefreshPopularGamesUseCase
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
-import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
+import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
 import com.paulrybitskyi.gamedge.feature.category.widgets.finiteUiState
 import io.mockk.every
 import io.mockk.mockk
@@ -80,14 +80,14 @@ internal class GamesCategoryViewModelTest {
                 GamesCategoryKey.Type.POPULAR to Provider { observePopularGamesUseCase },
                 GamesCategoryKey.Type.RECENTLY_RELEASED to Provider(::mockk),
                 GamesCategoryKey.Type.COMING_SOON to Provider(::mockk),
-                GamesCategoryKey.Type.MOST_ANTICIPATED to Provider(::mockk)
+                GamesCategoryKey.Type.MOST_ANTICIPATED to Provider(::mockk),
             ),
             refreshGamesUseCasesMap = mapOf(
                 GamesCategoryKey.Type.POPULAR to Provider { refreshPopularGamesUseCase },
                 GamesCategoryKey.Type.RECENTLY_RELEASED to Provider(::mockk),
                 GamesCategoryKey.Type.COMING_SOON to Provider(::mockk),
-                GamesCategoryKey.Type.MOST_ANTICIPATED to Provider(::mockk)
-            )
+                GamesCategoryKey.Type.MOST_ANTICIPATED to Provider(::mockk),
+            ),
         )
     }
 
@@ -106,6 +106,7 @@ internal class GamesCategoryViewModelTest {
             every { observePopularGamesUseCase.execute(any()) } returns flowOf(DOMAIN_GAMES)
 
             SUT.uiState.test {
+                skipItems(count = 2) // skip refreshing use case
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Empty)
                 assertThat(awaitItem().finiteUiState).isEqualTo(FiniteUiState.Success)
                 cancelAndIgnoreRemainingEvents()
@@ -201,7 +202,7 @@ internal class GamesCategoryViewModelTest {
             val game = GameCategoryUiModel(
                 id = 1,
                 title = "title",
-                coverUrl = null
+                coverUrl = null,
             )
 
             SUT.routeFlow.test {

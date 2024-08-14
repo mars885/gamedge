@@ -14,12 +14,34 @@
  * limitations under the License.
  */
 
+import com.google.protobuf.gradle.id
+
 plugins {
     androidLibrary()
     gamedgeAndroid()
-    gamedgeProtobuf()
     kotlinKapt()
     ksp()
+    protobuf()
+}
+
+android {
+    namespace = "com.paulrybitskyi.gamedge.common.data"
+}
+
+protobuf {
+    protoc {
+        artifact = deps.google.protobufCompiler
+    }
+
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -32,6 +54,7 @@ dependencies {
 
     implementation(deps.androidX.prefsDataStore)
     implementation(deps.androidX.protoDataStore)
+    implementation(deps.google.protobuf)
 
     implementation(deps.misc.kotlinResult)
 

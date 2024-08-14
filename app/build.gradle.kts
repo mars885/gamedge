@@ -17,23 +17,10 @@
 plugins {
     androidApplication()
     gamedgeAndroid()
+    jetpackCompose()
     kotlinKapt()
     ksp()
-    daggerHiltAndroid()
-}
-
-android {
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = versions.compose
-    }
+    daggerHilt()
 }
 
 dependencies {
@@ -73,9 +60,8 @@ dependencies {
     implementation(deps.misc.hiltBinder)
     ksp(deps.misc.hiltBinderCompiler)
 
-    coreLibraryDesugaring(deps.misc.desugaredLibs)
-
     testImplementation(deps.testing.jUnit)
+
     androidTestImplementation(deps.testing.jUnitExt)
 }
 

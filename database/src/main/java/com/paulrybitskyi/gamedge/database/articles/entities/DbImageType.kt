@@ -21,5 +21,5 @@ enum class DbImageType {
     SQUARE_TINY,
     SQUARE_SMALL,
     SCREEN_TINY,
-    ORIGINAL
+    ORIGINAL,
 }

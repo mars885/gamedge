@@ -20,41 +20,41 @@ import org.gradle.api.JavaVersion
 
 object appConfig {
 
-    const val compileSdkVersion = 32
-    const val targetSdkVersion = 32
+    const val compileSdkVersion = 34
+    const val targetSdkVersion = 34
     const val minSdkVersion = 21
     const val applicationId = "com.paulrybitskyi.gamedge"
     const val versionCode = 1
     const val versionName = "1.0.0"
+    const val instrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
 
-    val javaCompatibilityVersion = JavaVersion.VERSION_11
-    val kotlinCompatibilityVersion = JavaVersion.VERSION_11
+    const val jvmToolchainVersion = 17
+
+    val javaCompatibilityVersion = JavaVersion.VERSION_17
 }
 
 object versions {
 
-    const val kotlin = "1.7.0" // also in buildSrc build.gradle.kts file
-    const val compose = "1.2.0"
-    const val gradleVersionsPlugin = "0.42.0"
-    const val kspPlugin = "1.7.0-1.0.6"
-    const val daggerHilt = "2.43.2"
-    const val detektPlugin = "1.21.0"
-    const val ktlintPlugin = "10.3.0"
-    const val ktlint = "0.45.2"
-    const val coroutines = "1.6.4"
-    const val room = "2.4.3"
+    const val kotlin = "2.0.10" // also in buildSrc build.gradle.kts file
+    const val gradleVersionsPlugin = "0.51.0"
+    const val kspPlugin = "2.0.10-1.0.24"
+    const val daggerHilt = "2.52"
+    const val detektPlugin = "1.23.6"
+    const val ktlintPlugin = "12.1.1"
+    const val ktlint = "1.3.1"
+    const val coroutines = "1.8.1"
+    const val room = "2.6.1"
 }
 
 object deps {
 
     object plugins {
 
-        private const val gradlePluginVersion = "7.2.2" // also in buildSrc build.gradle.kts file
-        private const val protobufPluginVersion = "0.8.19" // also in buildSrc build.gradle.kts file
+        private const val androidPluginVersion = "8.3.1" // also in buildSrc build.gradle.kts file
+        private const val protobufPluginVersion = "0.9.4" // also in buildSrc build.gradle.kts file
 
-        const val androidGradle = "com.android.tools.build:gradle:${gradlePluginVersion}"
+        const val androidGradle = "com.android.tools.build:gradle:${androidPluginVersion}"
         const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        const val daggerHiltGradle = "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}"
         const val protobuf = "com.google.protobuf:protobuf-gradle-plugin:$protobufPluginVersion"
         const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${versions.gradleVersionsPlugin}"
     }
@@ -86,19 +86,18 @@ object deps {
 
     object kotlin {
 
-        private const val serializationVersion = "1.3.3"
+        private const val serializationVersion = "1.7.1"
 
-        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
         const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"
     }
 
     object androidX {
 
-        private const val splashVersion = "1.0.0"
+        private const val splashVersion = "1.0.1"
         const val viewModel = "2.5.1" // to be deleted when the linked issue at use site is fixed
-        private const val browserVersion = "1.4.0"
-        private const val dataStoreVersion = "1.0.0"
+        private const val browserVersion = "1.8.0"
+        private const val dataStoreVersion = "1.1.1"
 
         const val splash = "androidx.core:core-splashscreen:$splashVersion"
         const val browser = "androidx.browser:browser:${browserVersion}"
@@ -111,25 +110,27 @@ object deps {
 
     object compose {
 
-        private const val navigationVersion = "2.5.1"
-        private const val constraintLayoutVersion = "1.1.0-alpha02"
-        private const val hiltVersion = "1.0.0"
+        private const val composeVersion = "1.6.8"
+        private const val activityVersion = "1.9.1"
+        private const val navigationVersion = "2.7.7"
+        private const val constraintLayoutVersion = "1.1.0-alpha13"
+        private const val hiltVersion = "1.2.0"
 
-        const val ui = "androidx.compose.ui:ui:${versions.compose}"
-        const val tooling = "androidx.compose.ui:ui-tooling:${versions.compose}"
-        const val animation = "androidx.compose.animation:animation-graphics:${versions.compose}"
-        const val foundation = "androidx.compose.foundation:foundation:${versions.compose}"
-        const val activity = "androidx.activity:activity-compose:${versions.compose}"
-        const val material = "androidx.compose.material:material:${versions.compose}"
-        const val runtime = "androidx.compose.runtime:runtime:${versions.compose}"
+        const val ui = "androidx.compose.ui:ui:$composeVersion"
+        const val tooling = "androidx.compose.ui:ui-tooling:$composeVersion"
+        const val animation = "androidx.compose.animation:animation-graphics:$composeVersion"
+        const val foundation = "androidx.compose.foundation:foundation:$composeVersion"
+        const val material = "androidx.compose.material:material:$composeVersion"
+        const val runtime = "androidx.compose.runtime:runtime:$composeVersion"
 
+        const val activity = "androidx.activity:activity-compose:$activityVersion"
         const val navigation = "androidx.navigation:navigation-compose:$navigationVersion"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:$constraintLayoutVersion"
         const val hilt = "androidx.hilt:hilt-navigation-compose:$hiltVersion"
 
         object accompanist {
 
-            const val version = "0.25.0"
+            const val version = "0.34.0"
 
             const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
             const val flowLayout = "com.google.accompanist:accompanist-flowlayout:$version"
@@ -141,7 +142,7 @@ object deps {
 
     object google {
 
-        private const val protobufVersion = "3.21.4"
+        private const val protobufVersion = "4.27.3"
 
         const val daggerHiltCore = "com.google.dagger:hilt-core:${versions.daggerHilt}"
         const val daggerHiltCoreCompiler = "com.google.dagger:hilt-compiler:${versions.daggerHilt}"
@@ -153,9 +154,9 @@ object deps {
 
     object square {
 
-        private const val okHttpVersion = "4.10.0"
-        private const val retrofitVersion = "2.9.0"
-        private const val retrofitKotlinxSerializationConverterVersion = "0.8.0"
+        private const val okHttpVersion = "4.12.0"
+        private const val retrofitVersion = "2.11.0"
+        private const val retrofitKotlinxSerializationConverterVersion = "1.0.0"
 
         const val okHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
         const val retrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
@@ -178,11 +179,11 @@ object deps {
 
     object misc {
 
-        private const val desugaredLibsVersion = "1.1.5"
-        private const val kotlinResultVersion = "1.1.16"
-        private const val hiltBinderVersion = "1.1.2"
-        private const val coilVersion = "2.1.0"
-        private const val zoomableVersion = "1.5.1"
+        private const val desugaredLibsVersion = "2.0.4"
+        private const val kotlinResultVersion = "2.0.0"
+        private const val hiltBinderVersion = "1.1.3"
+        private const val coilVersion = "2.7.0"
+        private const val zoomableVersion = "1.6.1"
 
         const val desugaredLibs = "com.android.tools:desugar_jdk_libs:${desugaredLibsVersion}"
         const val kotlinResult = "com.michael-bull.kotlin-result:kotlin-result:${kotlinResultVersion}"
@@ -195,13 +196,13 @@ object deps {
     object testing {
 
         private const val jUnitVersion = "4.13.2"
-        private const val jUnitExtVersion = "1.1.3"
-        private const val truthVersion = "1.1.3"
-        private const val mockkVersion = "1.12.5"
-        private const val turbineVersion = "0.9.0"
-        private const val testRunnerVersion = "1.4.0"
-        private const val archCoreVersion = "2.1.0"
-        private const val mockWebServerVersion = "4.10.0"
+        private const val jUnitExtVersion = "1.2.1"
+        private const val truthVersion = "1.4.4"
+        private const val mockkVersion = "1.13.12"
+        private const val turbineVersion = "1.1.0"
+        private const val testRunnerVersion = "1.6.1"
+        private const val archCoreVersion = "2.2.0"
+        private const val mockWebServerVersion = "4.12.0"
 
         const val jUnit = "junit:junit:$jUnitVersion"
         const val jUnitExt = "androidx.test.ext:junit:$jUnitExtVersion"

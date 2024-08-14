@@ -34,6 +34,7 @@ import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.utils.GameInfoSectionWithInnerList
+import com.paulrybitskyi.gamedge.common.ui.widgets.R as CommonUiWidgetsR
 
 @Composable
 internal fun GameInfoScreenshots(
@@ -68,7 +69,7 @@ private fun Screenshot(
     ) {
         AsyncImage(
             model = defaultImageRequest(screenshot.url) {
-                secondaryImage(R.drawable.game_landscape_placeholder)
+                secondaryImage(CommonUiWidgetsR.drawable.game_landscape_placeholder)
             },
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),

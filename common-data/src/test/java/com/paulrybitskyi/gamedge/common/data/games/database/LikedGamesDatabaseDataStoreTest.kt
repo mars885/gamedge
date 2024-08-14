@@ -18,13 +18,13 @@ package com.paulrybitskyi.gamedge.common.data.games.database
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
-import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.DbGameMapper
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.LikedGameFactory
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.LikedGamesDatabaseDataStore
 import com.paulrybitskyi.gamedge.common.data.games.datastores.database.mapToDatabaseGames
+import com.paulrybitskyi.gamedge.common.testing.domain.DOMAIN_GAMES
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
+import com.paulrybitskyi.gamedge.common.testing.domain.PAGINATION
 import com.paulrybitskyi.gamedge.database.games.entities.DbGame
 import com.paulrybitskyi.gamedge.database.games.entities.DbLikedGame
 import com.paulrybitskyi.gamedge.database.games.tables.LikedGamesTable
@@ -55,7 +55,7 @@ internal class LikedGamesDatabaseDataStoreTest {
             likedGamesTable = likedGamesTable,
             likedGameFactory = FakeLikedGameFactory(),
             dispatcherProvider = mainCoroutineRule.dispatcherProvider,
-            dbGameMapper = dbGameMapper
+            dbGameMapper = dbGameMapper,
         )
     }
 
@@ -148,7 +148,7 @@ internal class LikedGamesDatabaseDataStoreTest {
             return DbLikedGame(
                 id = 1,
                 gameId = gameId,
-                likeTimestamp = 500L
+                likeTimestamp = 500L,
             )
         }
     }

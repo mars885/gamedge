@@ -19,7 +19,7 @@ package com.paulrybitskyi.gamedge.igdb.apicalypse.serialization.fieldserializers
 import com.paulrybitskyi.gamedge.igdb.apicalypse.Constants
 
 internal class CompositeFieldSerializer(
-    private val children: List<FieldSerializer>
+    private val children: List<FieldSerializer>,
 ) : FieldSerializer {
 
     override fun serialize(): String {

@@ -31,7 +31,7 @@ import javax.inject.Singleton
 internal interface ObserveArticlesUseCase : ObservableUseCase<Params, List<Article>> {
 
     data class Params(
-        val pagination: Pagination = Pagination()
+        val pagination: Pagination = Pagination(),
     )
 }
 

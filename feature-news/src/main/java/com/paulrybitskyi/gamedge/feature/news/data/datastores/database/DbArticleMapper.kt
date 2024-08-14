@@ -31,7 +31,7 @@ internal class DbArticleMapper @Inject constructor() {
             lede = dataArticle.lede,
             imageUrls = dataArticle.imageUrls.toDatabaseImageUrls(),
             publicationDate = dataArticle.publicationDate,
-            siteDetailUrl = dataArticle.siteDetailUrl
+            siteDetailUrl = dataArticle.siteDetailUrl,
         )
     }
 
@@ -48,7 +48,7 @@ internal class DbArticleMapper @Inject constructor() {
             lede = databaseArticle.lede,
             imageUrls = databaseArticle.imageUrls.toDomainImageUrls(),
             publicationDate = databaseArticle.publicationDate,
-            siteDetailUrl = databaseArticle.siteDetailUrl
+            siteDetailUrl = databaseArticle.siteDetailUrl,
         )
     }
 

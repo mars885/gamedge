@@ -18,14 +18,14 @@ package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main
 
 import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameInfo
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetailsUiModelMapper
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.mappers.GameInfoOtherCompanyGamesUiModelMapper
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.mappers.GameInfoSimilarGamesUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.mapToUiModels
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetailsUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoHeaderUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinkUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.mappers.GameInfoOtherCompanyGamesUiModelMapper
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.mappers.GameInfoSimilarGamesUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.screenshots.GameInfoScreenshotUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.screenshots.mapToUiModels
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModelMapper
@@ -52,7 +52,6 @@ internal class GameInfoUiModelMapperImpl @Inject constructor(
 ) : GameInfoUiModelMapper {
 
     override fun mapToUiModel(gameInfo: GameInfo): GameInfoUiModel {
-
         return GameInfoUiModel(
             id = gameInfo.game.id,
             headerModel = headerModelMapper.mapToUiModel(gameInfo.game, gameInfo.isGameLiked),

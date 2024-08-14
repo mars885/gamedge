@@ -136,7 +136,7 @@ internal class DbGameMapper @Inject constructor() {
     private fun List<DbGenre>.toDomainGenres(): List<Genre> {
         return map {
             Genre(
-                name = it.name
+                name = it.name,
             )
         }
     }

@@ -22,7 +22,6 @@ import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.fromCsv
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,6 +30,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
+import com.paulrybitskyi.gamedge.core.R as CoreR
 
 internal const val PARAM_TITLE = "title"
 internal const val PARAM_INITIAL_POSITION = "initial-position"
@@ -104,16 +105,16 @@ internal class ImageViewerViewModel @Inject constructor(
             R.string.image_viewer_toolbar_title_template,
             title,
             (currentUiState.selectedImageUrlIndex + 1),
-            currentUiState.imageUrls.size
+            currentUiState.imageUrls.size,
         )
     }
 
     fun onToolbarRightButtonClicked() {
         val currentImageUrl = currentUiState.imageUrls[currentUiState.selectedImageUrlIndex]
         val textToShare = stringProvider.getString(
-            R.string.text_sharing_message_template,
-            stringProvider.getString(R.string.image),
-            currentImageUrl
+            CoreR.string.text_sharing_message_template,
+            stringProvider.getString(CoreR.string.image),
+            currentImageUrl,
         )
 
         dispatchCommand(ImageViewerCommand.ShareText(textToShare))
