@@ -26,6 +26,7 @@ object appConfig {
     const val applicationId = "com.paulrybitskyi.gamedge"
     const val versionCode = 1
     const val versionName = "1.0.0"
+    const val instrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
 
     const val jvmToolchainVersion = 17
 

@@ -26,6 +26,10 @@ plugins {
 android {
     namespace = "com.paulrybitskyi.gamedge.database"
 
+    defaultConfig {
+        testInstrumentationRunner = appConfig.instrumentationRunner
+    }
+
     sourceSets {
         getByName("androidTest").assets.srcDirs("$projectDir/schemas")
     }

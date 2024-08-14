@@ -61,6 +61,7 @@ dependencies {
     ksp(deps.misc.hiltBinderCompiler)
 
     testImplementation(deps.testing.jUnit)
+
     androidTestImplementation(deps.testing.jUnitExt)
 }
 

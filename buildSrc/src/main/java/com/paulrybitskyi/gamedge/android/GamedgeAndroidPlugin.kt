@@ -16,14 +16,15 @@
 
 package com.paulrybitskyi.gamedge.android
 
-import com.android.build.gradle.BaseExtension
-import org.gradle.api.Plugin
-import org.gradle.api.Project
 import PLUGIN_ANDROID_APPLICATION
 import PLUGIN_KOTLIN_ANDROID
+import appConfig
+import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import deps
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 import org.gradle.kotlin.dsl.findByType
-import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 import java.util.Properties
 
 class GamedgeAndroidPlugin : Plugin<Project> {
@@ -59,8 +60,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 targetSdk = appConfig.targetSdkVersion
                 versionCode = appConfig.versionCode
                 versionName = appConfig.versionName
-
-                testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
             }
 
             buildTypes {

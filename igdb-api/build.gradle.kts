@@ -29,13 +29,15 @@ plugins {
 android {
     namespace = "com.paulrybitskyi.gamedge.igdb.api"
 
-    buildFeatures {
-        buildConfig = true
-    }
-
     defaultConfig {
+        testInstrumentationRunner = appConfig.instrumentationRunner
+
         stringField("TWITCH_APP_CLIENT_ID", property("TWITCH_APP_CLIENT_ID", ""))
         stringField("TWITCH_APP_CLIENT_SECRET", property("TWITCH_APP_CLIENT_SECRET", ""))
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 

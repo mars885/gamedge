@@ -29,12 +29,14 @@ plugins {
 android {
     namespace = "com.paulrybitskyi.gamedge.gamespot.api"
 
-    buildFeatures {
-        buildConfig = true
+    defaultConfig {
+        testInstrumentationRunner = appConfig.instrumentationRunner
+
+        stringField("GAMESPOT_API_KEY", property("GAMESPOT_API_KEY", ""))
     }
 
-    defaultConfig {
-        stringField("GAMESPOT_API_KEY", property("GAMESPOT_API_KEY", ""))
+    buildFeatures {
+        buildConfig = true
     }
 }
 
