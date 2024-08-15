@@ -70,10 +70,16 @@ fun GamesCategoryPreview(
             Title(
                 title = title,
                 modifier = Modifier.constrainAs(titleRef) {
+                    val endAnchor = when {
+                        isProgressBarVisible -> progressBarRef.start
+                        isMoreButtonVisible -> moreBtnRef.start
+                        else -> parent.end
+                    }
+
                     width = Dimension.fillToConstraints
                     top.linkTo(parent.top, titleRefMargin)
                     start.linkTo(parent.start, titleRefMargin)
-                    end.linkTo(progressBarRef.start, titleRefMargin)
+                    end.linkTo(endAnchor, titleRefMargin)
                 },
             )
 
