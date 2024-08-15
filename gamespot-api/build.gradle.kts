@@ -30,8 +30,6 @@ android {
     namespace = "com.paulrybitskyi.gamedge.gamespot.api"
 
     defaultConfig {
-        testInstrumentationRunner = appConfig.instrumentationRunner
-
         stringField("GAMESPOT_API_KEY", property("GAMESPOT_API_KEY", ""))
     }
 
@@ -64,7 +62,6 @@ dependencies {
     testImplementation(deps.testing.mockk)
     testImplementation(deps.testing.coroutines)
 
-    androidTestImplementation(project(deps.local.commonTesting))
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
     androidTestImplementation(deps.testing.truth)

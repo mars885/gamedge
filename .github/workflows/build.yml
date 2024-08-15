@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  JDK_JAVA_DISTRIBUTION: 'temurin'
+  JDK_JAVA_VERSION: '17'
+  AVD_API_LEVEL: 30
+
 jobs:
   static-analysis:
     name: Static Analysis
@@ -14,30 +19,16 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: ${{ env.JDK_JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JDK_JAVA_VERSION }}
 
-      - name: Generate a Cache Key
-        run: ./checksum.sh checksum.txt
-
-      - name: Copy CI Gradle Properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
-      - name: Cache Gradle Folders
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches/
-            ~/.gradle/wrapper/
-          key: cache-gradle-${{ runner.os }}-${{ hashFiles('checksum.txt') }}
-          restore-keys: |
-            cache-gradle-${{ runner.os }}-
-            cache-gradle-
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Run Static Analysis Tools
         run: ./gradlew lint detekt ktlintCheck --continue
@@ -49,30 +40,16 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: ${{ env.JDK_JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JDK_JAVA_VERSION }}
 
-      - name: Generate a Cache Key
-        run: ./checksum.sh checksum.txt
-
-      - name: Copy CI Gradle Properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
-      - name: Cache Gradle Folders
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches/
-            ~/.gradle/wrapper/
-          key: cache-gradle-${{ runner.os }}-${{ hashFiles('checksum.txt') }}
-          restore-keys: |
-            cache-gradle-${{ runner.os }}-
-            cache-gradle-
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Run Unit Tests
         run: ./gradlew test
@@ -84,13 +61,13 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: ${{ env.JDK_JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JDK_JAVA_VERSION }}
 
       - name: Enable KVM
         run: |
@@ -98,28 +75,37 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Generate a Cache Key
-        run: ./checksum.sh checksum.txt
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
 
-      - name: Copy CI Gradle Properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
-      - name: Cache Gradle Folders
-        uses: actions/cache@v2
+      - name: Cache AVD
+        uses: actions/cache@v4
+        id: avd-cache
         with:
           path: |
-            ~/.gradle/caches/
-            ~/.gradle/wrapper/
-          key: cache-gradle-${{ runner.os }}-${{ hashFiles('checksum.txt') }}
-          restore-keys: |
-            cache-gradle-${{ runner.os }}-
-            cache-gradle-
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ env.AVD_API_LEVEL }}
+
+      - name: Create AVD & Generate Snapshot
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ env.AVD_API_LEVEL }}
+          target: google_apis # https://github.com/ReactiveCircus/android-emulator-runner/issues/106
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot."
 
       - name: Run Instrumentation Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
+          api-level: ${{ env.AVD_API_LEVEL }}
           target: google_apis # https://github.com/ReactiveCircus/android-emulator-runner/issues/106
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
           script: ./gradlew connectedAndroidTest
 
   assemble:
@@ -129,30 +115,16 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: ${{ env.JDK_JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JDK_JAVA_VERSION }}
 
-      - name: Generate a Cache Key
-        run: ./checksum.sh checksum.txt
-
-      - name: Copy CI Gradle Properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
-      - name: Cache Gradle Folders
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches/
-            ~/.gradle/wrapper/
-          key: cache-gradle-${{ runner.os }}-${{ hashFiles('checksum.txt') }}
-          restore-keys: |
-            cache-gradle-${{ runner.os }}-
-            cache-gradle-
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
