@@ -30,8 +30,6 @@ android {
     namespace = "com.paulrybitskyi.gamedge.igdb.api"
 
     defaultConfig {
-        testInstrumentationRunner = appConfig.instrumentationRunner
-
         stringField("TWITCH_APP_CLIENT_ID", property("TWITCH_APP_CLIENT_ID", ""))
         stringField("TWITCH_APP_CLIENT_SECRET", property("TWITCH_APP_CLIENT_SECRET", ""))
     }
@@ -66,7 +64,6 @@ dependencies {
     testImplementation(deps.testing.mockk)
     testImplementation(deps.testing.coroutines)
 
-    androidTestImplementation(project(deps.local.commonTesting))
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
     androidTestImplementation(deps.testing.truth)

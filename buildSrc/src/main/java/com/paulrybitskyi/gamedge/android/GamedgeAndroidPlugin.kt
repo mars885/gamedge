@@ -39,7 +39,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     override fun apply(project: Project) = with(project) {
         setupPlugins()
         configurePlugins()
-        addDesugaringDependency()
+        addDependencies()
     }
 
     private fun Project.setupPlugins() {
@@ -60,6 +60,8 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 targetSdk = appConfig.targetSdkVersion
                 versionCode = appConfig.versionCode
                 versionName = appConfig.versionName
+
+                testInstrumentationRunner = appConfig.instrumentationRunner
             }
 
             buildTypes {
@@ -164,7 +166,8 @@ class GamedgeAndroidPlugin : Plugin<Project> {
         return (get(key) as T)
     }
 
-    private fun Project.addDesugaringDependency() {
+    private fun Project.addDependencies() {
         dependencies.add("coreLibraryDesugaring", deps.misc.desugaredLibs)
+        dependencies.add("androidTestImplementation", project(deps.local.commonTesting))
     }
 }

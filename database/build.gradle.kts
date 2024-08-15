@@ -26,10 +26,6 @@ plugins {
 android {
     namespace = "com.paulrybitskyi.gamedge.database"
 
-    defaultConfig {
-        testInstrumentationRunner = appConfig.instrumentationRunner
-    }
-
     sourceSets {
         getByName("androidTest").assets.srcDirs("$projectDir/schemas")
     }
@@ -69,7 +65,6 @@ dependencies {
     testImplementation(deps.testing.coroutines)
     testImplementation(deps.testing.turbine)
 
-    androidTestImplementation(project(deps.local.commonTesting))
     androidTestImplementation(deps.testing.testRunner)
     androidTestImplementation(deps.testing.jUnitExt)
     androidTestImplementation(deps.testing.truth)
