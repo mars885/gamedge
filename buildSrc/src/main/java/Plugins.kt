@@ -14,33 +14,24 @@
  * limitations under the License.
  */
 
-import org.gradle.kotlin.dsl.version
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
-const val PLUGIN_GAMEDGE_ANDROID = "com.paulrybitskyi.gamedge.android"
-const val PLUGIN_GAMEDGE_PROTOBUF = "com.paulrybitskyi.gamedge.protobuf"
 const val PLUGIN_ANDROID_APPLICATION = "com.android.application"
 const val PLUGIN_ANDROID_LIBRARY = "com.android.library"
 const val PLUGIN_KOTLIN = "kotlin"
 const val PLUGIN_KOTLIN_ANDROID = "kotlin-android"
+const val PLUGIN_PROTOBUF = "com.google.protobuf"
 const val PLUGIN_JETPACK_COMPOSE = "org.jetbrains.kotlin.plugin.compose"
 const val PLUGIN_KOTLIN_KAPT = "kotlin-kapt"
 const val PLUGIN_KSP = "com.google.devtools.ksp"
 const val PLUGIN_DAGGER_HILT = "com.google.dagger.hilt.android"
-const val PLUGIN_PROTOBUF = "com.google.protobuf"
 const val PLUGIN_KOTLINX_SERIALIZATION = "org.jetbrains.kotlin.plugin.serialization"
 const val PLUGIN_GRADLE_VERSIONS = "com.github.ben-manes.versions"
 const val PLUGIN_DETEKT = "io.gitlab.arturbosch.detekt"
 const val PLUGIN_KTLINT = "org.jlleitschuh.gradle.ktlint"
-
-fun PluginDependenciesSpec.gamedgeAndroid(): PluginDependencySpec {
-    return id(PLUGIN_GAMEDGE_ANDROID)
-}
-
-fun PluginDependenciesSpec.gamedgeProtobuf(): PluginDependencySpec {
-    return id(PLUGIN_GAMEDGE_PROTOBUF)
-}
+const val PLUGIN_GAMEDGE_ANDROID = "com.paulrybitskyi.gamedge.android"
+const val PLUGIN_GAMEDGE_PROTOBUF = "com.paulrybitskyi.gamedge.protobuf"
 
 fun PluginDependenciesSpec.androidApplication(): PluginDependencySpec {
     return id(PLUGIN_ANDROID_APPLICATION)
@@ -56,6 +47,10 @@ fun PluginDependenciesSpec.kotlin(): PluginDependencySpec {
 
 fun PluginDependenciesSpec.kotlinAndroid(): PluginDependencySpec {
     return id(PLUGIN_KOTLIN_ANDROID)
+}
+
+fun PluginDependenciesSpec.protobuf(): PluginDependencySpec {
+    return id(PLUGIN_PROTOBUF)
 }
 
 fun PluginDependenciesSpec.jetpackCompose(): PluginDependencySpec {
@@ -74,22 +69,26 @@ fun PluginDependenciesSpec.daggerHilt(): PluginDependencySpec {
     return id(PLUGIN_DAGGER_HILT)
 }
 
-fun PluginDependenciesSpec.protobuf(): PluginDependencySpec {
-    return id(PLUGIN_PROTOBUF)
-}
-
 fun PluginDependenciesSpec.kotlinxSerialization(): PluginDependencySpec {
-    return (id(PLUGIN_KOTLINX_SERIALIZATION) version versions.kotlin)
+    return id(PLUGIN_KOTLINX_SERIALIZATION)
 }
 
 fun PluginDependenciesSpec.gradleVersions(): PluginDependencySpec {
-    return (id(PLUGIN_GRADLE_VERSIONS) version versions.gradleVersionsPlugin)
+    return id(PLUGIN_GRADLE_VERSIONS)
 }
 
 fun PluginDependenciesSpec.detekt(): PluginDependencySpec {
-    return (id(PLUGIN_DETEKT) version versions.detektPlugin)
+    return id(PLUGIN_DETEKT)
 }
 
 fun PluginDependenciesSpec.ktlint(): PluginDependencySpec {
-    return (id(PLUGIN_KTLINT) version versions.ktlintPlugin)
+    return id(PLUGIN_KTLINT)
+}
+
+fun PluginDependenciesSpec.gamedgeAndroid(): PluginDependencySpec {
+    return id(PLUGIN_GAMEDGE_ANDROID)
+}
+
+fun PluginDependenciesSpec.gamedgeProtobuf(): PluginDependencySpec {
+    return id(PLUGIN_GAMEDGE_PROTOBUF)
 }
