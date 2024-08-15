@@ -36,9 +36,9 @@ object appConfig {
 object versions {
 
     const val kotlin = "2.0.10" // also in buildSrc build.gradle.kts file
-    const val gradleVersionsPlugin = "0.51.0"
     const val kspPlugin = "2.0.10-1.0.24"
     const val daggerHilt = "2.52"
+    const val gradleVersionsPlugin = "0.51.0"
     const val detektPlugin = "1.23.6"
     const val ktlintPlugin = "12.1.1"
     const val ktlint = "1.3.1"
@@ -47,17 +47,6 @@ object versions {
 }
 
 object deps {
-
-    object plugins {
-
-        private const val androidPluginVersion = "8.3.1" // also in buildSrc build.gradle.kts file
-        private const val protobufPluginVersion = "0.9.4" // also in buildSrc build.gradle.kts file
-
-        const val androidGradle = "com.android.tools.build:gradle:${androidPluginVersion}"
-        const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        const val protobuf = "com.google.protobuf:protobuf-gradle-plugin:$protobufPluginVersion"
-        const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${versions.gradleVersionsPlugin}"
-    }
 
     object local {
 

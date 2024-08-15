@@ -21,26 +21,19 @@ import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    androidApplication() apply false
+    androidLibrary() apply false
+    kotlinAndroid() apply false
+    protobuf() apply false
+
     jetpackCompose() version versions.kotlin apply false
     ksp() version versions.kspPlugin apply false
     daggerHilt() version versions.daggerHilt apply false
-    gradleVersions()
-    detekt()
-    ktlint()
-}
+    kotlinxSerialization() version versions.kotlin apply false
 
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
-    }
-
-    dependencies {
-        classpath(deps.plugins.androidGradle)
-        classpath(deps.plugins.kotlinGradle)
-        classpath(deps.plugins.protobuf)
-        classpath(deps.plugins.gradleVersions)
-    }
+    gradleVersions() version versions.gradleVersionsPlugin apply true
+    detekt() version versions.detektPlugin apply true
+    ktlint() version versions.ktlintPlugin apply true
 }
 
 detekt {
@@ -96,7 +89,6 @@ allprojects {
 }
 
 subprojects {
-
     plugins.withId(PLUGIN_KOTLIN) {
         extensions.findByType<KotlinProjectExtension>()?.run {
             jvmToolchain(appConfig.jvmToolchainVersion)
