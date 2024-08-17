@@ -15,10 +15,11 @@
  */
 
 plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    kotlinKapt()
-    ksp()
+    id(libs.plugins.androidLibrary.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -26,32 +27,32 @@ android {
 }
 
 dependencies {
-    implementation(project(deps.local.commonDomain))
+    implementation(project(localModules.commonDomain))
 
-    implementation(deps.kotlin.coroutines)
-    implementation(deps.kotlin.serialization)
+    implementation(libs.coroutines)
+    implementation(libs.kotlinxSerialization)
 
-    implementation(deps.androidX.browser)
+    implementation(libs.browser)
 
-    implementation(deps.commons.core)
-    implementation(deps.commons.ktx)
-    implementation(deps.commons.network)
-    implementation(deps.commons.windowAnims)
+    implementation(libs.commonsCore)
+    implementation(libs.commonsKtx)
+    implementation(libs.commonsNetwork)
+    implementation(libs.commonsWindowAnims)
 
-    implementation(deps.misc.kotlinResult)
+    implementation(libs.kotlinResult)
 
-    implementation(deps.google.daggerHiltAndroid)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltAndroid)
+    kapt(libs.daggerHiltAndroidCompiler)
 
-    implementation(deps.misc.hiltBinder)
-    ksp(deps.misc.hiltBinderCompiler)
+    implementation(libs.hiltBinder)
+    ksp(libs.hiltBinderCompiler)
 
-    testImplementation(project(deps.local.commonTesting))
-    testImplementation(deps.testing.jUnit)
-    testImplementation(deps.testing.truth)
-    testImplementation(deps.testing.mockk)
-    testImplementation(deps.testing.coroutines)
+    testImplementation(project(localModules.commonTesting))
+    testImplementation(libs.jUnit)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutinesTesting)
 
-    androidTestImplementation(deps.testing.testRunner)
-    androidTestImplementation(deps.testing.jUnitExt)
+    androidTestImplementation(libs.testRunner)
+    androidTestImplementation(libs.jUnitExt)
 }

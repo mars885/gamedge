@@ -15,13 +15,13 @@
  */
 
 plugins {
-    kotlin()
+    id(libs.plugins.kotlinJvm.get().pluginId)
 }
 
 dependencies {
-    implementation(project(deps.local.commonDomain))
+    implementation(project(localModules.commonDomain))
 
-    implementation(deps.testing.jUnit)
-    implementation(deps.testing.mockk)
-    implementation(deps.testing.coroutines)
+    implementation(libs.jUnit)
+    implementation(libs.mockk)
+    implementation(libs.coroutinesTesting)
 }

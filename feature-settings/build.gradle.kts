@@ -17,13 +17,14 @@
 import com.google.protobuf.gradle.id
 
 plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    jetpackCompose()
-    kotlinKapt()
-    ksp()
-    daggerHilt()
-    protobuf()
+    id(libs.plugins.androidLibrary.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+    id(libs.plugins.protobuf.get().pluginId)
+
+    alias(libs.plugins.jetpackCompose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.daggerHilt)
 }
 
 android {
@@ -32,7 +33,7 @@ android {
 
 protobuf {
     protoc {
-        artifact = deps.google.protobufCompiler
+        artifact = libs.protobufCompiler.get().toString()
     }
 
     generateProtoTasks {
@@ -47,40 +48,40 @@ protobuf {
 }
 
 dependencies {
-    implementation(project(deps.local.commonDomain))
-    implementation(project(deps.local.core))
-    implementation(project(deps.local.commonUi))
-    implementation(project(deps.local.commonUiWidgets))
+    implementation(project(localModules.commonDomain))
+    implementation(project(localModules.core))
+    implementation(project(localModules.commonUi))
+    implementation(project(localModules.commonUiWidgets))
 
-    implementation(deps.androidX.protoDataStore)
+    implementation(libs.protoDataStore)
 
-    implementation(deps.kotlin.coroutines)
+    implementation(libs.coroutines)
 
-    implementation(deps.compose.ui)
-    implementation(deps.compose.tooling)
-    implementation(deps.compose.foundation)
-    implementation(deps.compose.material)
-    implementation(deps.compose.runtime)
-    implementation(deps.compose.hilt)
+    implementation(libs.composeUi)
+    implementation(libs.composeTooling)
+    implementation(libs.composeFoundation)
+    implementation(libs.composeMaterial)
+    implementation(libs.composeRuntime)
+    implementation(libs.composeHilt)
 
-    implementation(deps.commons.core)
-    implementation(deps.commons.ktx)
+    implementation(libs.commonsCore)
+    implementation(libs.commonsKtx)
 
-    implementation(deps.google.protobuf)
+    implementation(libs.protobuf)
 
-    implementation(deps.google.daggerHiltAndroid)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltAndroid)
+    kapt(libs.daggerHiltAndroidCompiler)
 
-    implementation(deps.misc.hiltBinder)
-    ksp(deps.misc.hiltBinderCompiler)
+    implementation(libs.hiltBinder)
+    ksp(libs.hiltBinderCompiler)
 
-    testImplementation(project(deps.local.commonTesting))
-    testImplementation(deps.testing.jUnit)
-    testImplementation(deps.testing.truth)
-    testImplementation(deps.testing.mockk)
-    testImplementation(deps.testing.coroutines)
-    testImplementation(deps.testing.turbine)
+    testImplementation(project(localModules.commonTesting))
+    testImplementation(libs.jUnit)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutinesTesting)
+    testImplementation(libs.turbine)
 
-    androidTestImplementation(deps.testing.testRunner)
-    androidTestImplementation(deps.testing.jUnitExt)
+    androidTestImplementation(libs.testRunner)
+    androidTestImplementation(libs.jUnitExt)
 }

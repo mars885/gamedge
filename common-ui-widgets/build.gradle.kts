@@ -15,12 +15,13 @@
  */
 
 plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    jetpackCompose()
-    kotlinKapt()
-    ksp()
-    daggerHilt()
+    id(libs.plugins.androidLibrary.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+
+    alias(libs.plugins.jetpackCompose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.daggerHilt)
 }
 
 android {
@@ -28,27 +29,27 @@ android {
 }
 
 dependencies {
-    implementation(project(deps.local.commonDomain))
-    implementation(project(deps.local.core))
-    implementation(project(deps.local.commonUi))
+    implementation(project(localModules.commonDomain))
+    implementation(project(localModules.core))
+    implementation(project(localModules.commonUi))
 
-    implementation(deps.compose.ui)
-    implementation(deps.compose.tooling)
-    implementation(deps.compose.foundation)
-    implementation(deps.compose.activity)
-    implementation(deps.compose.material)
-    implementation(deps.compose.runtime)
-    implementation(deps.compose.constraintLayout)
-    implementation(deps.compose.accompanist.swipeRefresh)
+    implementation(libs.composeUi)
+    implementation(libs.composeTooling)
+    implementation(libs.composeFoundation)
+    implementation(libs.composeActivity)
+    implementation(libs.composeMaterial)
+    implementation(libs.composeRuntime)
+    implementation(libs.composeConstraintLayout)
+    implementation(libs.accompanistSwipeRefresh)
 
-    implementation(deps.misc.coil)
+    implementation(libs.coil)
 
-    implementation(deps.google.daggerHiltAndroid)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltAndroid)
+    kapt(libs.daggerHiltAndroidCompiler)
 
-    implementation(deps.misc.hiltBinder)
-    ksp(deps.misc.hiltBinderCompiler)
+    implementation(libs.hiltBinder)
+    ksp(libs.hiltBinderCompiler)
 
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
+    testImplementation(libs.jUnit)
+    androidTestImplementation(libs.jUnitExt)
 }

@@ -15,9 +15,9 @@
  */
 
 plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    kotlinKapt()
+    id(libs.plugins.androidLibrary.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
 }
 
 android {
@@ -25,19 +25,19 @@ android {
 }
 
 dependencies {
-    api(project(deps.local.commonTestingDomain))
-    implementation(project(deps.local.core))
-    implementation(project(deps.local.commonApi))
+    api(project(localModules.commonTestingDomain))
+    implementation(project(localModules.core))
+    implementation(project(localModules.commonApi))
 
     // Unit tests
-    implementation(deps.testing.jUnit)
-    implementation(deps.testing.mockk)
-    implementation(deps.testing.coroutines)
+    implementation(libs.jUnit)
+    implementation(libs.mockk)
+    implementation(libs.coroutinesTesting)
 
     // Instrumentation tests
-    implementation(deps.testing.testRunner)
-    implementation(deps.testing.mockWebServer)
+    implementation(libs.testRunner)
+    implementation(libs.mockWebServer)
 
-    implementation(deps.testing.daggerHilt)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltTesting)
+    kapt(libs.daggerHiltAndroidCompiler)
 }

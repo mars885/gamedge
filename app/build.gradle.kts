@@ -15,54 +15,55 @@
  */
 
 plugins {
-    androidApplication()
-    gamedgeAndroid()
-    jetpackCompose()
-    kotlinKapt()
-    ksp()
-    daggerHilt()
+    id(libs.plugins.androidApplication.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+
+    alias(libs.plugins.jetpackCompose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.daggerHilt)
 }
 
 dependencies {
-    implementation(project(deps.local.commonDomain))
-    implementation(project(deps.local.commonData))
-    implementation(project(deps.local.core))
-    implementation(project(deps.local.commonUi))
-    implementation(project(deps.local.commonUiWidgets))
-    implementation(project(deps.local.igdbApi))
-    implementation(project(deps.local.gamespotApi))
-    implementation(project(deps.local.database))
-    implementation(project(deps.local.featureCategory))
-    implementation(project(deps.local.featureDiscovery))
-    implementation(project(deps.local.featureInfo))
-    implementation(project(deps.local.featureImageViewer))
-    implementation(project(deps.local.featureLikes))
-    implementation(project(deps.local.featureNews))
-    implementation(project(deps.local.featureSearch))
-    implementation(project(deps.local.featureSettings))
+    implementation(project(localModules.commonDomain))
+    implementation(project(localModules.commonData))
+    implementation(project(localModules.core))
+    implementation(project(localModules.commonUi))
+    implementation(project(localModules.commonUiWidgets))
+    implementation(project(localModules.igdbApi))
+    implementation(project(localModules.gamespotApi))
+    implementation(project(localModules.database))
+    implementation(project(localModules.featureCategory))
+    implementation(project(localModules.featureDiscovery))
+    implementation(project(localModules.featureInfo))
+    implementation(project(localModules.featureImageViewer))
+    implementation(project(localModules.featureLikes))
+    implementation(project(localModules.featureNews))
+    implementation(project(localModules.featureSearch))
+    implementation(project(localModules.featureSettings))
 
-    implementation(deps.androidX.splash)
+    implementation(libs.splash)
 
-    implementation(deps.compose.ui)
-    implementation(deps.compose.tooling)
-    implementation(deps.compose.foundation)
-    implementation(deps.compose.material)
-    implementation(deps.compose.runtime)
-    implementation(deps.compose.navigation)
-    implementation(deps.compose.accompanist.navigationAnimations)
+    implementation(libs.composeUi)
+    implementation(libs.composeTooling)
+    implementation(libs.composeFoundation)
+    implementation(libs.composeMaterial)
+    implementation(libs.composeRuntime)
+    implementation(libs.composeNavigation)
+    implementation(libs.accompanistNavigationAnimations)
 
-    implementation(deps.commons.core)
-    implementation(deps.commons.ktx)
+    implementation(libs.commonsCore)
+    implementation(libs.commonsKtx)
 
-    implementation(deps.google.daggerHiltAndroid)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltAndroid)
+    kapt(libs.daggerHiltAndroidCompiler)
 
-    implementation(deps.misc.hiltBinder)
-    ksp(deps.misc.hiltBinderCompiler)
+    implementation(libs.hiltBinder)
+    ksp(libs.hiltBinderCompiler)
 
-    testImplementation(deps.testing.jUnit)
+    testImplementation(libs.jUnit)
 
-    androidTestImplementation(deps.testing.jUnitExt)
+    androidTestImplementation(libs.jUnitExt)
 }
 
 val installGitHook by tasks.registering(Copy::class) {

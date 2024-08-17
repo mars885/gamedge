@@ -15,10 +15,10 @@
  */
 
 plugins {
-    kotlin()
+    id(libs.plugins.kotlinJvm.get().pluginId)
 }
 
 dependencies {
-    testImplementation(deps.testing.jUnit)
-    testImplementation(deps.testing.truth)
+    testImplementation(libs.jUnit)
+    testImplementation(libs.truth)
 }

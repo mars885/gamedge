@@ -15,21 +15,21 @@
  */
 
 plugins {
-    kotlin()
-    kotlinKapt()
+    id(libs.plugins.kotlinJvm.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
 }
 
 dependencies {
-    implementation(deps.kotlin.coroutines)
-    implementation(deps.misc.kotlinResult)
+    implementation(libs.coroutines)
+    implementation(libs.kotlinResult)
 
-    implementation(deps.google.daggerHiltCore)
-    kapt(deps.google.daggerHiltCoreCompiler)
+    implementation(libs.daggerHiltCore)
+    kapt(libs.daggerHiltCoreCompiler)
 
-    testImplementation(project(deps.local.commonTestingDomain))
-    testImplementation(deps.testing.jUnit)
-    testImplementation(deps.testing.truth)
-    testImplementation(deps.testing.mockk)
-    testImplementation(deps.testing.coroutines)
-    testImplementation(deps.testing.turbine)
+    testImplementation(project(localModules.commonTestingDomain))
+    testImplementation(libs.jUnit)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutinesTesting)
+    testImplementation(libs.turbine)
 }
