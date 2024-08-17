@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.android
+package com.paulrybitskyi.gamedge.plugins
 
-import PLUGIN_ANDROID_APPLICATION
-import PLUGIN_KOTLIN_ANDROID
 import appConfig
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.paulrybitskyi.gamedge.extensions.libs
 import deps
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -43,7 +42,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     }
 
     private fun Project.setupPlugins() {
-        plugins.apply(PLUGIN_KOTLIN_ANDROID)
+        plugins.apply(libs.plugins.kotlinAndroid.get().pluginId)
     }
 
     private fun Project.configurePlugins() {
@@ -119,7 +118,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     }
 
     private fun Project.configureAndroidApplicationId() {
-        plugins.withId(PLUGIN_ANDROID_APPLICATION) {
+        plugins.withId(libs.plugins.androidApplication.get().pluginId) {
             extensions.findByType<BaseAppModuleExtension>()?.run {
                 namespace = appConfig.applicationId
 

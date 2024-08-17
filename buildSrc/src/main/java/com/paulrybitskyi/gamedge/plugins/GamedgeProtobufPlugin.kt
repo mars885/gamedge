@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.protobuf
+package com.paulrybitskyi.gamedge.plugins
 
+import com.paulrybitskyi.gamedge.extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import PLUGIN_PROTOBUF
 
 @Suppress("DEPRECATION")
 class GamedgeProtobufPlugin : Plugin<Project> {
@@ -30,7 +30,7 @@ class GamedgeProtobufPlugin : Plugin<Project> {
     }
 
     private fun Project.setupPlugin() {
-        plugins.apply(PLUGIN_PROTOBUF)
+        plugins.apply(libs.plugins.protobuf.get().pluginId)
     }
 
     private fun Project.configurePlugin() {

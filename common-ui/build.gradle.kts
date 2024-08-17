@@ -15,11 +15,12 @@
  */
 
 plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    jetpackCompose()
-    kotlinKapt()
-    ksp()
+    id(libs.plugins.androidLibrary.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+
+    alias(libs.plugins.jetpackCompose)
+    alias(libs.plugins.ksp)
 }
 
 android {

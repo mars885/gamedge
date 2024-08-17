@@ -15,12 +15,13 @@
  */
 
 plugins {
-    androidApplication()
-    gamedgeAndroid()
-    jetpackCompose()
-    kotlinKapt()
-    ksp()
-    daggerHilt()
+    id(libs.plugins.androidApplication.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+
+    alias(libs.plugins.jetpackCompose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.daggerHilt)
 }
 
 dependencies {

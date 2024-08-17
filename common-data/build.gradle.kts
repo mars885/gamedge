@@ -17,11 +17,12 @@
 import com.google.protobuf.gradle.id
 
 plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    kotlinKapt()
-    ksp()
-    protobuf()
+    id(libs.plugins.androidLibrary.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+    id(libs.plugins.protobuf.get().pluginId)
+
+    alias(libs.plugins.ksp)
 }
 
 android {

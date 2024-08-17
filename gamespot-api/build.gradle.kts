@@ -18,12 +18,13 @@ import com.paulrybitskyi.gamedge.extensions.property
 import com.paulrybitskyi.gamedge.extensions.stringField
 
 plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    kotlinKapt()
-    ksp()
-    kotlinxSerialization()
-    daggerHilt()
+    id(libs.plugins.androidLibrary.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.daggerHilt)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 android {

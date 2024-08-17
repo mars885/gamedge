@@ -17,6 +17,10 @@
 package com.paulrybitskyi.gamedge.extensions
 
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.the
+
+val Project.libs
+    get() = the<org.gradle.accessors.dm.LibrariesForLibs>()
 
 @Suppress("UNCHECKED_CAST")
 fun <T> Project.property(key: String, default: T): T {

@@ -21,19 +21,25 @@ import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    androidApplication() apply false
-    androidLibrary() apply false
-    kotlinAndroid() apply false
-    protobuf() apply false
+    // See https://github.com/gradle/gradle/issues/20084#issuecomment-1060822638
+    // for why it has to be done this way
+    id(libs.plugins.androidApplication.get().pluginId) apply false
+    id(libs.plugins.androidLibrary.get().pluginId) apply false
+    id(libs.plugins.kotlinJvm.get().pluginId) apply false
+    id(libs.plugins.kotlinAndroid.get().pluginId) apply false
+    id(libs.plugins.kotlinKapt.get().pluginId) apply false
+    id(libs.plugins.protobuf.get().pluginId) apply false
+    id(libs.plugins.gamedgeAndroid.get().pluginId) apply false
+    id(libs.plugins.gamedgeProtobuf.get().pluginId) apply false
 
-    jetpackCompose() version versions.kotlin apply false
-    ksp() version versions.kspPlugin apply false
-    daggerHilt() version versions.daggerHilt apply false
-    kotlinxSerialization() version versions.kotlin apply false
+    alias(libs.plugins.jetpackCompose) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.daggerHilt) apply false
+    alias(libs.plugins.kotlinxSerialization) apply false
 
-    gradleVersions() version versions.gradleVersionsPlugin apply true
-    detekt() version versions.detektPlugin apply true
-    ktlint() version versions.ktlintPlugin apply true
+    alias(libs.plugins.gradleVersions) apply true
+    alias(libs.plugins.detekt) apply true
+    alias(libs.plugins.ktlint) apply true
 }
 
 detekt {
@@ -55,8 +61,8 @@ tasks.withType<DependencyUpdatesTask> {
 }
 
 allprojects {
-    apply(plugin = PLUGIN_DETEKT)
-    apply(plugin = PLUGIN_KTLINT)
+    apply(plugin = rootProject.libs.plugins.detekt.get().pluginId)
+    apply(plugin = rootProject.libs.plugins.ktlint.get().pluginId)
 
     repositories {
         mavenCentral()
@@ -65,7 +71,7 @@ allprojects {
     }
 
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-        version.set(versions.ktlint)
+        version.set(rootProject.libs.versions.ktlint.get())
         android.set(true)
         outputToConsole.set(true)
         verbose.set(true)
@@ -89,13 +95,13 @@ allprojects {
 }
 
 subprojects {
-    plugins.withId(PLUGIN_KOTLIN) {
+    plugins.withId(rootProject.libs.plugins.kotlinJvm.get().pluginId) {
         extensions.findByType<KotlinProjectExtension>()?.run {
             jvmToolchain(appConfig.jvmToolchainVersion)
         }
     }
 
-    plugins.withId(PLUGIN_KOTLIN_KAPT) {
+    plugins.withId(rootProject.libs.plugins.kotlinKapt.get().pluginId) {
         extensions.findByType<KaptExtension>()?.run {
             correctErrorTypes = true
         }

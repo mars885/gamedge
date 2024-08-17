@@ -17,13 +17,14 @@
 import com.google.protobuf.gradle.id
 
 plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    jetpackCompose()
-    kotlinKapt()
-    ksp()
-    daggerHilt()
-    protobuf()
+    id(libs.plugins.androidLibrary.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+    id(libs.plugins.protobuf.get().pluginId)
+
+    alias(libs.plugins.jetpackCompose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.daggerHilt)
 }
 
 android {

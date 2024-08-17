@@ -15,8 +15,8 @@
  */
 
 plugins {
-    kotlin()
-    kotlinKapt()
+    id(libs.plugins.kotlinJvm.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
 }
 
 dependencies {

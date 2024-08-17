@@ -15,9 +15,9 @@
  */
 
 plugins {
-    androidLibrary()
-    gamedgeAndroid()
-    kotlinKapt()
+    id(libs.plugins.androidLibrary.get().pluginId)
+    id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
 }
 
 android {

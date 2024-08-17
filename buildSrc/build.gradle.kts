@@ -23,13 +23,27 @@ repositories {
     google()
 }
 
+gradlePlugin {
+    plugins {
+        create("com.paulrybitskyi.gamedge.android") {
+            id = "com.paulrybitskyi.gamedge.android"
+            implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeAndroidPlugin"
+        }
+        create("com.paulrybitskyi.gamedge.protobuf") {
+            id = "com.paulrybitskyi.gamedge.protobuf"
+            implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeProtobufPlugin"
+        }
+    }
+}
+
 dependencies {
-    implementation("com.android.tools.build:gradle:8.3.1")
-    // https://github.com/google/dagger/issues/3068#issuecomment-999118496
-    // Needs to be checked whether JavaPoet is still needed after AGP is updated
-    // because currently it forces 1.10 JavaPoet version, for some odd reason.
-    implementation("com.squareup:javapoet:1.13.0")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.10")
-    implementation("com.google.protobuf:protobuf-gradle-plugin:0.9.4")
+    // Enabling the usage of the version catalog to be used inside the buildSrc. Parenthesis
+    // (libs) are used to avoid a strange "Unresolved reference to version catalog" IDE error.
+    // For more info, see https://github.com/gradle/gradle/issues/15383#issuecomment-779893192
+    implementation(files((libs).javaClass.superclass.protectionDomain.codeSource.location))
+
+    implementation(libs.androidPlugin)
+    implementation(libs.kotlinPlugin)
+    implementation(libs.protobufPlugin)
     implementation(gradleApi()) // for custom plugins
 }
