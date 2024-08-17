@@ -2,7 +2,7 @@
 
 ![Min API](https://img.shields.io/badge/API-21%2B-orange.svg?style=flat)
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](http://developer.android.com/index.html)
-[![Build](https://github.com/mars885/gamedge/workflows/Build/badge.svg?branch=master)](https://github.com/mars885/gamedge/actions)
+[![Build](https://github.com/mars885/gamedge/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/mars885/gamedge/actions)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 An Android application for browsing video games and checking the latest gaming news from around the world.
