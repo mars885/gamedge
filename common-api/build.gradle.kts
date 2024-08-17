@@ -31,22 +31,22 @@ android {
 }
 
 dependencies {
-    implementation(project(deps.local.core))
+    implementation(project(libs.versions.localCore.get()))
 
-    implementation(deps.kotlin.serialization)
+    implementation(libs.kotlinxSerialization)
 
-    implementation(deps.square.okHttpLoggingInterceptor)
-    implementation(deps.square.retrofit)
-    implementation(deps.square.retrofitKotlinxSerializationConverter)
+    implementation(libs.okHttpLoggingInterceptor)
+    implementation(libs.retrofit)
+    implementation(libs.retrofitKotlinxSerializationConverter)
 
-    implementation(deps.misc.kotlinResult)
+    implementation(libs.kotlinResult)
 
-    implementation(deps.google.daggerHiltAndroid)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltAndroid)
+    kapt(libs.daggerHiltAndroidCompiler)
 
-    implementation(deps.misc.hiltBinder)
-    ksp(deps.misc.hiltBinderCompiler)
+    implementation(libs.hiltBinder)
+    ksp(libs.hiltBinderCompiler)
 
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
+    testImplementation(libs.jUnit)
+    androidTestImplementation(libs.jUnitExt)
 }

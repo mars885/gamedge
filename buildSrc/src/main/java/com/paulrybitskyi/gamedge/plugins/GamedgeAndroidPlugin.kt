@@ -20,7 +20,6 @@ import appConfig
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.paulrybitskyi.gamedge.extensions.libs
-import deps
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.findByType
@@ -166,7 +165,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     }
 
     private fun Project.addDependencies() {
-        dependencies.add("coreLibraryDesugaring", deps.misc.desugaredLibs)
-        dependencies.add("androidTestImplementation", project(deps.local.commonTesting))
+        dependencies.add("coreLibraryDesugaring", libs.desugaredJdk.get())
+        dependencies.add("androidTestImplementation", project(libs.versions.localCommonTesting.get()))
     }
 }

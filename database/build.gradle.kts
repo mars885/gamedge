@@ -44,36 +44,36 @@ ksp {
 }
 
 dependencies {
-    implementation(project(deps.local.core))
+    implementation(project(libs.versions.localCore.get()))
 
-    implementation(deps.kotlin.coroutines)
-    implementation(deps.kotlin.serialization)
+    implementation(libs.coroutines)
+    implementation(libs.kotlinxSerialization)
 
-    implementation(deps.androidX.room)
-    implementation(deps.androidX.roomKtx)
-    ksp(deps.androidX.roomCompiler)
+    implementation(libs.room)
+    implementation(libs.roomKtx)
+    ksp(libs.roomCompiler)
 
-    implementation(deps.google.daggerHiltAndroid)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltAndroid)
+    kapt(libs.daggerHiltAndroidCompiler)
 
-    implementation(deps.misc.hiltBinder)
-    ksp(deps.misc.hiltBinderCompiler)
+    implementation(libs.hiltBinder)
+    ksp(libs.hiltBinderCompiler)
 
-    testImplementation(project(deps.local.commonTesting))
-    testImplementation(deps.testing.jUnit)
-    testImplementation(deps.testing.truth)
-    testImplementation(deps.testing.mockk)
-    testImplementation(deps.testing.coroutines)
-    testImplementation(deps.testing.turbine)
+    testImplementation(project(libs.versions.localCommonTesting.get()))
+    testImplementation(libs.jUnit)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutinesTesting)
+    testImplementation(libs.turbine)
 
-    androidTestImplementation(deps.testing.testRunner)
-    androidTestImplementation(deps.testing.jUnitExt)
-    androidTestImplementation(deps.testing.truth)
-    androidTestImplementation(deps.testing.archCore)
-    androidTestImplementation(deps.testing.coroutines)
-    androidTestImplementation(deps.testing.turbine)
-    androidTestImplementation(deps.testing.room)
+    androidTestImplementation(libs.testRunner)
+    androidTestImplementation(libs.jUnitExt)
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.archCore)
+    androidTestImplementation(libs.coroutinesTesting)
+    androidTestImplementation(libs.turbine)
+    androidTestImplementation(libs.roomTesting)
 
-    androidTestImplementation(deps.testing.daggerHilt)
-    kaptAndroidTest(deps.google.daggerHiltAndroidCompiler)
+    androidTestImplementation(libs.daggerHiltTesting)
+    kaptAndroidTest(libs.daggerHiltAndroidCompiler)
 }

@@ -19,9 +19,9 @@ plugins {
 }
 
 dependencies {
-    implementation(project(deps.local.commonDomain))
+    implementation(project(libs.versions.localCommonDomain.get()))
 
-    implementation(deps.testing.jUnit)
-    implementation(deps.testing.mockk)
-    implementation(deps.testing.coroutines)
+    implementation(libs.jUnit)
+    implementation(libs.mockk)
+    implementation(libs.coroutinesTesting)
 }

@@ -25,19 +25,19 @@ android {
 }
 
 dependencies {
-    api(project(deps.local.commonTestingDomain))
-    implementation(project(deps.local.core))
-    implementation(project(deps.local.commonApi))
+    api(project(libs.versions.localCommonTestingDomain.get()))
+    implementation(project(libs.versions.localCore.get()))
+    implementation(project(libs.versions.localCommonApi.get()))
 
     // Unit tests
-    implementation(deps.testing.jUnit)
-    implementation(deps.testing.mockk)
-    implementation(deps.testing.coroutines)
+    implementation(libs.jUnit)
+    implementation(libs.mockk)
+    implementation(libs.coroutinesTesting)
 
     // Instrumentation tests
-    implementation(deps.testing.testRunner)
-    implementation(deps.testing.mockWebServer)
+    implementation(libs.testRunner)
+    implementation(libs.mockWebServer)
 
-    implementation(deps.testing.daggerHilt)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltTesting)
+    kapt(libs.daggerHiltAndroidCompiler)
 }

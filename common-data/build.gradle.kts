@@ -31,7 +31,7 @@ android {
 
 protobuf {
     protoc {
-        artifact = deps.google.protobufCompiler
+        artifact = libs.protobufCompiler.get().toString()
     }
 
     generateProtoTasks {
@@ -46,32 +46,32 @@ protobuf {
 }
 
 dependencies {
-    implementation(project(deps.local.commonDomain))
-    implementation(project(deps.local.core))
-    implementation(project(deps.local.igdbApi))
-    implementation(project(deps.local.database))
+    implementation(project(libs.versions.localCommonDomain.get()))
+    implementation(project(libs.versions.localCore.get()))
+    implementation(project(libs.versions.localIgdbApi.get()))
+    implementation(project(libs.versions.localDatabase.get()))
 
-    implementation(deps.kotlin.coroutines)
+    implementation(libs.coroutines)
 
-    implementation(deps.androidX.prefsDataStore)
-    implementation(deps.androidX.protoDataStore)
-    implementation(deps.google.protobuf)
+    implementation(libs.prefsDataStore)
+    implementation(libs.protoDataStore)
+    implementation(libs.protobuf)
 
-    implementation(deps.misc.kotlinResult)
+    implementation(libs.kotlinResult)
 
-    implementation(deps.google.daggerHiltAndroid)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltAndroid)
+    kapt(libs.daggerHiltAndroidCompiler)
 
-    implementation(deps.misc.hiltBinder)
-    ksp(deps.misc.hiltBinderCompiler)
+    implementation(libs.hiltBinder)
+    ksp(libs.hiltBinderCompiler)
 
-    testImplementation(project(deps.local.commonTesting))
-    testImplementation(deps.testing.jUnit)
-    testImplementation(deps.testing.truth)
-    testImplementation(deps.testing.mockk)
-    testImplementation(deps.testing.coroutines)
-    testImplementation(deps.testing.turbine)
+    testImplementation(project(libs.versions.localCommonTesting.get()))
+    testImplementation(libs.jUnit)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutinesTesting)
+    testImplementation(libs.turbine)
 
-    androidTestImplementation(deps.testing.testRunner)
-    androidTestImplementation(deps.testing.jUnitExt)
+    androidTestImplementation(libs.testRunner)
+    androidTestImplementation(libs.jUnitExt)
 }

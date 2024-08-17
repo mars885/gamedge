@@ -27,32 +27,32 @@ android {
 }
 
 dependencies {
-    implementation(project(deps.local.commonDomain))
+    implementation(project(libs.versions.localCommonDomain.get()))
 
-    implementation(deps.kotlin.coroutines)
-    implementation(deps.kotlin.serialization)
+    implementation(libs.coroutines)
+    implementation(libs.kotlinxSerialization)
 
-    implementation(deps.androidX.browser)
+    implementation(libs.browser)
 
-    implementation(deps.commons.core)
-    implementation(deps.commons.ktx)
-    implementation(deps.commons.network)
-    implementation(deps.commons.windowAnims)
+    implementation(libs.commonsCore)
+    implementation(libs.commonsKtx)
+    implementation(libs.commonsNetwork)
+    implementation(libs.commonsWindowAnims)
 
-    implementation(deps.misc.kotlinResult)
+    implementation(libs.kotlinResult)
 
-    implementation(deps.google.daggerHiltAndroid)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltAndroid)
+    kapt(libs.daggerHiltAndroidCompiler)
 
-    implementation(deps.misc.hiltBinder)
-    ksp(deps.misc.hiltBinderCompiler)
+    implementation(libs.hiltBinder)
+    ksp(libs.hiltBinderCompiler)
 
-    testImplementation(project(deps.local.commonTesting))
-    testImplementation(deps.testing.jUnit)
-    testImplementation(deps.testing.truth)
-    testImplementation(deps.testing.mockk)
-    testImplementation(deps.testing.coroutines)
+    testImplementation(project(libs.versions.localCommonTesting.get()))
+    testImplementation(libs.jUnit)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutinesTesting)
 
-    androidTestImplementation(deps.testing.testRunner)
-    androidTestImplementation(deps.testing.jUnitExt)
+    androidTestImplementation(libs.testRunner)
+    androidTestImplementation(libs.jUnitExt)
 }

@@ -130,7 +130,7 @@ subprojects {
     configurations.all {
         resolutionStrategy.eachDependency {
             if (requested.group == "androidx.lifecycle" && requested.name == "lifecycle-viewmodel-ktx") {
-                useVersion(deps.androidX.viewModel)
+                useVersion(rootProject.libs.versions.viewModel.get())
             }
         }
     }

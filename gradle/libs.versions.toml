@@ -2,7 +2,6 @@
 kotlin = "2.0.10"
 daggerHilt = "2.52"
 ktlint = "1.3.1"
-coroutines = "1.8.1"
 room = "2.6.1"
 
 # Plugins
@@ -13,7 +12,31 @@ gradleVersionsPlugin = "0.51.0"
 detektPlugin = "1.23.6"
 ktlintPlugin = "12.1.1"
 
-# Kotlix
+# Local
+localCore = ":core"
+localDatabase = ":database"
+localIgdbApi = ":igdb-api"
+localIgdbApicalypse = ":igdb-apicalypse"
+localGamespotApi = ":gamespot-api"
+localCommonDomain = ":common-domain"
+localCommonData = ":common-data"
+localCommonUi = ":common-ui"
+localCommonUiWidgets = ":common-ui-widgets"
+localCommonApi = ":common-api"
+localCommonTestingDomain = ":common-testing-domain"
+localCommonTesting = ":common-testing"
+
+localFeatureCategory = ":feature-category"
+localFeatureDiscovery = ":feature-discovery"
+localFeatureInfo = ":feature-info"
+localFeatureImageViewer = ":feature-image-viewer"
+localFeatureLikes = ":feature-likes"
+localFeatureNews = ":feature-news"
+localFeatureSearch = ":feature-search"
+localFeatureSettings = ":feature-settings"
+
+# Kotlin
+coroutines = "1.8.1"
 serialization = "1.7.1"
 
 # AndroidX
@@ -27,7 +50,7 @@ compose = "1.6.8"
 activity = "1.9.1"
 navigation = "2.7.7"
 constraintLayout = "1.1.0-alpha13"
-hilt = "1.2.0"
+composeHilt = "1.2.0"
 accompanist = "0.34.0"
 
 # Google
@@ -40,13 +63,13 @@ retrofit = "2.11.0"
 retrofitKotlinxSerializationConverter = "1.0.0"
 
 # Commons
-core = "1.0.4"
-ktx = "1.0.4"
-network = "1.0.3"
-windowAnims = "1.0.2"
+commonsCore = "1.0.4"
+commonsKtx = "1.0.4"
+commonsNetwork = "1.0.3"
+commonsWindowAnims = "1.0.2"
 
 # Misc
-desugaredLibs = "2.0.4"
+desugaredJdk = "2.0.4"
 kotlinResult = "2.0.0"
 hiltBinder = "1.1.3"
 coil = "2.7.0"
@@ -80,8 +103,81 @@ gamedgeAndroid = { id = "com.paulrybitskyi.gamedge.android" }
 gamedgeProtobuf = { id = "com.paulrybitskyi.gamedge.protobuf" }
 
 [libraries]
+# Plugins
 androidPlugin = { module = "com.android.tools.build:gradle", version.ref = "androidPlugin" }
 kotlinPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 protobufPlugin = { module = "com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobufPlugin" }
 
+# Kotlin
+coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinxSerialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+
+# AndroidX
+splash = { module = "androidx.core:core-splashscreen", version.ref = "splash" }
+browser = { module = "androidx.browser:browser", version.ref = "browser" }
+room = { module = "androidx.room:room-runtime", version.ref = "room" }
+roomKtx = { module = "androidx.room:room-ktx", version.ref = "room" }
+roomCompiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+prefsDataStore = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
+protoDataStore = { module = "androidx.datastore:datastore", version.ref = "dataStore" }
+
+# Compose
+composeUi = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+composeTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+composeAnimation = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
+composeFoundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+composeMaterial = { module = "androidx.compose.material:material", version.ref = "compose" }
+composeRuntime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
+
+composeActivity = { module = "androidx.activity:activity-compose", version.ref = "activity" }
+composeNavigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
+composeConstraintLayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintLayout" }
+composeHilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "composeHilt" }
+
+accompanistSwipeRefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
+accompanistFlowLayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
+accompanistPager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
+accompanistSystemUi = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+accompanistNavigationAnimations = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
+
+# Google
+daggerHiltCore = { module = "com.google.dagger:hilt-core", version.ref = "daggerHilt" }
+daggerHiltCoreCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "daggerHilt" }
+daggerHiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "daggerHilt" }
+daggerHiltAndroidCompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "daggerHilt" }
+protobuf = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
+protobufCompiler = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
+
+# Square
+okHttpLoggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okHttp" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofitScalarsConverter = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit" }
+retrofitKotlinxSerializationConverter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationConverter" }
 javaPoet = { module = "com.squareup:javapoet", version.ref = "javaPoet" }
+
+# Commons
+commonsCore = { module = "com.paulrybitskyi.commons:commons-core", version.ref = "commonsCore" }
+commonsKtx = { module = "com.paulrybitskyi.commons:commons-ktx", version.ref = "commonsKtx" }
+commonsNetwork = { module = "com.paulrybitskyi.commons:commons-network", version.ref = "commonsNetwork" }
+commonsWindowAnims = { module = "com.paulrybitskyi.commons:commons-window-anims", version.ref = "commonsWindowAnims" }
+
+# Misc
+desugaredJdk = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugaredJdk" }
+kotlinResult = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref = "kotlinResult" }
+hiltBinder = { module = "com.paulrybitskyi:hilt-binder", version.ref = "hiltBinder" }
+hiltBinderCompiler = { module = "com.paulrybitskyi:hilt-binder-compiler", version.ref = "hiltBinder" }
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+zoomable = { module = "com.mxalbert.zoomable:zoomable", version.ref = "zoomable" }
+
+# Testing
+jUnit = { module = "junit:junit", version.ref = "jUnit" }
+jUnitExt = { module = "androidx.test.ext:junit", version.ref = "jUnitExt" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+coroutinesTesting = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+testRunner = { module = "androidx.test:runner", version.ref = "testRunner" }
+archCore = { module = "androidx.arch.core:core-testing", version.ref = "archCore" }
+daggerHiltTesting = { module = "com.google.dagger:hilt-android-testing", version.ref = "daggerHilt" }
+roomTesting = { module = "androidx.room:room-testing", version.ref = "room" }
+mockWebServer = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "mockWebServer" }

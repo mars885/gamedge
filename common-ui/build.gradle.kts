@@ -28,27 +28,27 @@ android {
 }
 
 dependencies {
-    implementation(project(deps.local.core))
+    implementation(project(libs.versions.localCore.get()))
 
-    implementation(deps.compose.ui)
-    implementation(deps.compose.tooling)
-    implementation(deps.compose.foundation)
-    implementation(deps.compose.activity)
-    implementation(deps.compose.runtime)
-    implementation(deps.compose.material)
-    implementation(deps.compose.accompanist.systemUi)
+    implementation(libs.composeUi)
+    implementation(libs.composeTooling)
+    implementation(libs.composeFoundation)
+    implementation(libs.composeActivity)
+    implementation(libs.composeRuntime)
+    implementation(libs.composeMaterial)
+    implementation(libs.accompanistSystemUi)
 
-    implementation(deps.commons.core)
-    implementation(deps.commons.ktx)
+    implementation(libs.commonsCore)
+    implementation(libs.commonsKtx)
 
-    implementation(deps.misc.coil)
+    implementation(libs.coil)
 
-    implementation(deps.google.daggerHiltAndroid)
-    kapt(deps.google.daggerHiltAndroidCompiler)
+    implementation(libs.daggerHiltAndroid)
+    kapt(libs.daggerHiltAndroidCompiler)
 
-    implementation(deps.misc.hiltBinder)
-    ksp(deps.misc.hiltBinderCompiler)
+    implementation(libs.hiltBinder)
+    ksp(libs.hiltBinderCompiler)
 
-    testImplementation(deps.testing.jUnit)
-    androidTestImplementation(deps.testing.jUnitExt)
+    testImplementation(libs.jUnit)
+    androidTestImplementation(libs.jUnitExt)
 }

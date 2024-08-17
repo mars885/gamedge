@@ -52,6 +52,6 @@ class GamedgeProtobufPlugin : Plugin<Project> {
     }
 
     private fun Project.addProtobufDependency() {
-        dependencies.add("implementation", deps.google.protobuf)
+        dependencies.add("implementation", libs.protobuf.get())
     }
 }

@@ -20,16 +20,16 @@ plugins {
 }
 
 dependencies {
-    implementation(deps.kotlin.coroutines)
-    implementation(deps.misc.kotlinResult)
+    implementation(libs.coroutines)
+    implementation(libs.kotlinResult)
 
-    implementation(deps.google.daggerHiltCore)
-    kapt(deps.google.daggerHiltCoreCompiler)
+    implementation(libs.daggerHiltCore)
+    kapt(libs.daggerHiltCoreCompiler)
 
-    testImplementation(project(deps.local.commonTestingDomain))
-    testImplementation(deps.testing.jUnit)
-    testImplementation(deps.testing.truth)
-    testImplementation(deps.testing.mockk)
-    testImplementation(deps.testing.coroutines)
-    testImplementation(deps.testing.turbine)
+    testImplementation(project(libs.versions.localCommonTestingDomain.get()))
+    testImplementation(libs.jUnit)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines)
+    testImplementation(libs.turbine)
 }
