@@ -1,8 +1,13 @@
 [versions]
+compileSdk = "34"
+targetSdk = "34"
+minSdk = "21"
+appVersionCode = "1"
+appVersionName = "1.0.0"
+jvmToolchain = "17"
+
 kotlin = "2.0.10"
 daggerHilt = "2.52"
-ktlint = "1.3.1"
-room = "2.6.1"
 
 # Plugins
 androidPlugin = "8.3.1"
@@ -43,6 +48,7 @@ serialization = "1.7.1"
 splash = "1.0.1"
 viewModel = "2.5.1" # to be deleted when the linked issue at use site is fixed
 browser = "1.8.0"
+room = "2.6.1"
 dataStore = "1.1.1"
 
 # Compose
@@ -74,6 +80,7 @@ kotlinResult = "2.0.0"
 hiltBinder = "1.1.3"
 coil = "2.7.0"
 zoomable = "1.6.1"
+ktlint = "1.3.1"
 
 # Testing
 jUnit = "4.13.2"

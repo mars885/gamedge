@@ -97,7 +97,7 @@ allprojects {
 subprojects {
     plugins.withId(rootProject.libs.plugins.kotlinJvm.get().pluginId) {
         extensions.findByType<KotlinProjectExtension>()?.run {
-            jvmToolchain(appConfig.jvmToolchainVersion)
+            jvmToolchain(rootProject.libs.versions.jvmToolchain.get().toInt())
         }
     }
 

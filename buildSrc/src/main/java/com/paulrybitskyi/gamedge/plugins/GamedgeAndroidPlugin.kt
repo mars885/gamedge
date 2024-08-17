@@ -16,10 +16,10 @@
 
 package com.paulrybitskyi.gamedge.plugins
 
-import appConfig
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.paulrybitskyi.gamedge.extensions.libs
+import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.findByType
@@ -28,6 +28,7 @@ import java.util.Properties
 class GamedgeAndroidPlugin : Plugin<Project> {
 
     private companion object {
+        const val APPLICATION_ID = "com.paulrybitskyi.gamedge"
         const val BUILD_TYPE_DEBUG = "debug"
         const val BUILD_TYPE_RELEASE = "release"
         const val SIGNING_CONFIG_RELEASE = "release"
@@ -51,15 +52,15 @@ class GamedgeAndroidPlugin : Plugin<Project> {
 
     private fun Project.configureAndroidCommonInfo() {
         extensions.findByType<BaseExtension>()?.run {
-            compileSdkVersion(appConfig.compileSdkVersion)
+            compileSdkVersion(libs.versions.compileSdk.get().toInt())
 
             defaultConfig {
-                minSdk = appConfig.minSdkVersion
-                targetSdk = appConfig.targetSdkVersion
-                versionCode = appConfig.versionCode
-                versionName = appConfig.versionName
+                minSdk = libs.versions.minSdk.get().toInt()
+                targetSdk = libs.versions.targetSdk.get().toInt()
+                versionCode = libs.versions.appVersionCode.get().toInt()
+                versionName = libs.versions.appVersionName.get()
 
-                testInstrumentationRunner = appConfig.instrumentationRunner
+                testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
             }
 
             buildTypes {
@@ -94,8 +95,10 @@ class GamedgeAndroidPlugin : Plugin<Project> {
             }
 
             compileOptions {
-                sourceCompatibility = appConfig.javaCompatibilityVersion
-                targetCompatibility = appConfig.javaCompatibilityVersion
+                val javaVersion = JavaVersion.toVersion(libs.versions.jvmToolchain.get().toInt())
+
+                sourceCompatibility = javaVersion
+                targetCompatibility = javaVersion
 
                 isCoreLibraryDesugaringEnabled = true
             }
@@ -119,10 +122,10 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     private fun Project.configureAndroidApplicationId() {
         plugins.withId(libs.plugins.androidApplication.get().pluginId) {
             extensions.findByType<BaseAppModuleExtension>()?.run {
-                namespace = appConfig.applicationId
+                namespace = APPLICATION_ID
 
                 defaultConfig {
-                    applicationId = appConfig.applicationId
+                    applicationId = APPLICATION_ID
                 }
 
                 signingConfigs {
