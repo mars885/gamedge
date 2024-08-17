@@ -29,9 +29,9 @@ android {
 }
 
 dependencies {
-    implementation(project(libs.versions.localCommonDomain.get()))
-    implementation(project(libs.versions.localCore.get()))
-    implementation(project(libs.versions.localCommonUi.get()))
+    implementation(project(localModules.commonDomain))
+    implementation(project(localModules.core))
+    implementation(project(localModules.commonUi))
 
     implementation(libs.composeUi)
     implementation(libs.composeTooling)

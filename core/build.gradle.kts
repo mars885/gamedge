@@ -27,7 +27,7 @@ android {
 }
 
 dependencies {
-    implementation(project(libs.versions.localCommonDomain.get()))
+    implementation(project(localModules.commonDomain))
 
     implementation(libs.coroutines)
     implementation(libs.kotlinxSerialization)
@@ -47,7 +47,7 @@ dependencies {
     implementation(libs.hiltBinder)
     ksp(libs.hiltBinderCompiler)
 
-    testImplementation(project(libs.versions.localCommonTesting.get()))
+    testImplementation(project(localModules.commonTesting))
     testImplementation(libs.jUnit)
     testImplementation(libs.truth)
     testImplementation(libs.mockk)

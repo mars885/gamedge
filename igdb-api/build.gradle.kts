@@ -41,9 +41,9 @@ android {
 }
 
 dependencies {
-    api(project(libs.versions.localCommonApi.get()))
-    implementation(project(libs.versions.localIgdbApicalypse.get()))
-    implementation(project(libs.versions.localCore.get()))
+    api(project(localModules.commonApi))
+    implementation(project(localModules.igdbApicalypse))
+    implementation(project(localModules.core))
 
     implementation(libs.coroutines)
     implementation(libs.kotlinxSerialization)
@@ -59,7 +59,7 @@ dependencies {
     implementation(libs.hiltBinder)
     ksp(libs.hiltBinderCompiler)
 
-    testImplementation(project(libs.versions.localCommonTesting.get()))
+    testImplementation(project(localModules.commonTesting))
     testImplementation(libs.jUnit)
     testImplementation(libs.truth)
     testImplementation(libs.mockk)

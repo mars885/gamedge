@@ -46,10 +46,10 @@ protobuf {
 }
 
 dependencies {
-    implementation(project(libs.versions.localCommonDomain.get()))
-    implementation(project(libs.versions.localCore.get()))
-    implementation(project(libs.versions.localIgdbApi.get()))
-    implementation(project(libs.versions.localDatabase.get()))
+    implementation(project(localModules.commonDomain))
+    implementation(project(localModules.core))
+    implementation(project(localModules.igdbApi))
+    implementation(project(localModules.database))
 
     implementation(libs.coroutines)
 
@@ -65,7 +65,7 @@ dependencies {
     implementation(libs.hiltBinder)
     ksp(libs.hiltBinderCompiler)
 
-    testImplementation(project(libs.versions.localCommonTesting.get()))
+    testImplementation(project(localModules.commonTesting))
     testImplementation(libs.jUnit)
     testImplementation(libs.truth)
     testImplementation(libs.mockk)

@@ -29,13 +29,13 @@ android {
 }
 
 dependencies {
-    implementation(project(libs.versions.localCommonDomain.get()))
-    implementation(project(libs.versions.localCommonData.get()))
-    implementation(project(libs.versions.localCore.get()))
-    implementation(project(libs.versions.localCommonUi.get()))
-    implementation(project(libs.versions.localCommonUiWidgets.get()))
-    implementation(project(libs.versions.localGamespotApi.get()))
-    implementation(project(libs.versions.localDatabase.get()))
+    implementation(project(localModules.commonDomain))
+    implementation(project(localModules.commonData))
+    implementation(project(localModules.core))
+    implementation(project(localModules.commonUi))
+    implementation(project(localModules.commonUiWidgets))
+    implementation(project(localModules.gamespotApi))
+    implementation(project(localModules.database))
 
     implementation(libs.prefsDataStore)
 
@@ -60,7 +60,7 @@ dependencies {
     implementation(libs.hiltBinder)
     ksp(libs.hiltBinderCompiler)
 
-    testImplementation(project(libs.versions.localCommonTesting.get()))
+    testImplementation(project(localModules.commonTesting))
     testImplementation(libs.jUnit)
     testImplementation(libs.truth)
     testImplementation(libs.mockk)

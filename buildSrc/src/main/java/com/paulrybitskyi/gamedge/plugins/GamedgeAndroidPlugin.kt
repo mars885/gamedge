@@ -169,6 +169,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
 
     private fun Project.addDependencies() {
         dependencies.add("coreLibraryDesugaring", libs.desugaredJdk.get())
-        dependencies.add("androidTestImplementation", project(libs.versions.localCommonTesting.get()))
+        dependencies.add("androidTestImplementation", project(localModules.commonTesting))
     }
 }

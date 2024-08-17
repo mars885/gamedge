@@ -28,7 +28,7 @@ android {
 }
 
 dependencies {
-    implementation(project(libs.versions.localCore.get()))
+    implementation(project(localModules.core))
 
     implementation(libs.composeUi)
     implementation(libs.composeTooling)

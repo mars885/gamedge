@@ -25,9 +25,9 @@ android {
 }
 
 dependencies {
-    api(project(libs.versions.localCommonTestingDomain.get()))
-    implementation(project(libs.versions.localCore.get()))
-    implementation(project(libs.versions.localCommonApi.get()))
+    api(project(localModules.commonTestingDomain))
+    implementation(project(localModules.core))
+    implementation(project(localModules.commonApi))
 
     // Unit tests
     implementation(libs.jUnit)

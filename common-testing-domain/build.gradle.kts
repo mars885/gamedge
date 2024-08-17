@@ -19,7 +19,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(libs.versions.localCommonDomain.get()))
+    implementation(project(localModules.commonDomain))
 
     implementation(libs.jUnit)
     implementation(libs.mockk)
