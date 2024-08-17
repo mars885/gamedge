@@ -30,6 +30,6 @@ dependencies {
     testImplementation(libs.jUnit)
     testImplementation(libs.truth)
     testImplementation(libs.mockk)
-    testImplementation(libs.coroutines)
+    testImplementation(libs.coroutinesTesting)
     testImplementation(libs.turbine)
 }
