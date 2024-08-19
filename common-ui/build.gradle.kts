@@ -33,7 +33,6 @@ dependencies {
     implementation(libs.composeUi)
     implementation(libs.composeTooling)
     implementation(libs.composeFoundation)
-    implementation(libs.composeActivity)
     implementation(libs.composeRuntime)
     implementation(libs.composeMaterial)
     implementation(libs.accompanistSystemUi)
