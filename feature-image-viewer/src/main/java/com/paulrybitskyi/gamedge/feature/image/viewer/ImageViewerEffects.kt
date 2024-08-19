@@ -24,5 +24,5 @@ internal sealed class ImageViewerCommand : Command {
 }
 
 sealed class ImageViewerRoute : Route {
-    object Back : ImageViewerRoute()
+    data object Back : ImageViewerRoute()
 }

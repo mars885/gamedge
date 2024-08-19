@@ -22,7 +22,7 @@ private const val DEFAULT_IMAGE_ID = "default_image_id"
 
 @Immutable
 internal sealed class GameInfoArtworkUiModel {
-    object DefaultImage : GameInfoArtworkUiModel()
+    data object DefaultImage : GameInfoArtworkUiModel()
     data class UrlImage(val id: String, val url: String) : GameInfoArtworkUiModel()
 }
 

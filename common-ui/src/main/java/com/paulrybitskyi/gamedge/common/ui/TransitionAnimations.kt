@@ -42,7 +42,7 @@ sealed interface TransitionAnimations {
     fun popExit(): ExitTransition
 }
 
-object Fading : TransitionAnimations {
+data object Fading : TransitionAnimations {
 
     override fun enter(): EnterTransition {
         return fadeIn(
@@ -71,7 +71,7 @@ object Fading : TransitionAnimations {
     }
 }
 
-object OvershootScaling : TransitionAnimations {
+data object OvershootScaling : TransitionAnimations {
 
     private const val FadingAnimationDuration = 100
 
@@ -153,7 +153,7 @@ object OvershootScaling : TransitionAnimations {
 // zIndex of the entering and exiting animation.
 //
 // The GitHub issue: https://github.com/google/accompanist/issues/1160
-object HorizontalSliding : TransitionAnimations {
+data object HorizontalSliding : TransitionAnimations {
 
     private const val MinAlpha = 0.8f
     private const val MaxOffsetRatio = 0.25f

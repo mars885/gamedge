@@ -30,13 +30,13 @@ import java.net.URLEncoder
 internal val START_SCREEN = Screen.Discover
 
 internal sealed class Screen(val route: String) {
-    object Discover : Screen("discover")
-    object Likes : Screen("likes")
-    object News : Screen("news")
-    object Settings : Screen("settings")
-    object GamesSearch : Screen("games-search")
+    data object Discover : Screen("discover")
+    data object Likes : Screen("likes")
+    data object News : Screen("news")
+    data object Settings : Screen("settings")
+    data object GamesSearch : Screen("games-search")
 
-    object GamesCategory : Screen("games-category/{${Parameters.CATEGORY}}") {
+    data object GamesCategory : Screen("games-category/{${Parameters.CATEGORY}}") {
         object Parameters {
             const val CATEGORY = "category"
         }
@@ -46,7 +46,7 @@ internal sealed class Screen(val route: String) {
         }
     }
 
-    object GameInfo : Screen("game-info/{${Parameters.GAME_ID}}") {
+    data object GameInfo : Screen("game-info/{${Parameters.GAME_ID}}") {
         object Parameters {
             const val GAME_ID = "game-id"
         }
@@ -56,7 +56,7 @@ internal sealed class Screen(val route: String) {
         }
     }
 
-    object ImageViewer : Screen(
+    data object ImageViewer : Screen(
         "image-viewer?" +
         "${Parameters.TITLE}={${Parameters.TITLE}}&" +
         "${Parameters.INITIAL_POSITION}={${Parameters.INITIAL_POSITION}}&" +
