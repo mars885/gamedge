@@ -44,6 +44,7 @@ dependencies {
 
     implementation(libs.splash)
 
+    implementation(platform(libs.composeBom))
     implementation(libs.composeUi)
     implementation(libs.composeTooling)
     implementation(libs.composeFoundation)

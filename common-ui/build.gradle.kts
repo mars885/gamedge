@@ -30,6 +30,7 @@ android {
 dependencies {
     implementation(project(localModules.core))
 
+    implementation(platform(libs.composeBom))
     implementation(libs.composeUi)
     implementation(libs.composeTooling)
     implementation(libs.composeFoundation)

@@ -27,6 +27,7 @@ class GamedgeFeaturePlugin : Plugin<Project> {
         add("implementation", project(localModules.commonUi))
         add("implementation", project(localModules.commonUiWidgets))
         add("implementation", libs.coroutines.get())
+        add("implementation", platform(libs.composeBom.get()))
         add("implementation", libs.composeUi.get())
         add("implementation", libs.composeTooling.get())
         add("implementation", libs.composeFoundation.get())
