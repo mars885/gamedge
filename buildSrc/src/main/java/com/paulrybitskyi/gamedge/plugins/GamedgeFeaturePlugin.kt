@@ -14,7 +14,6 @@ class GamedgeFeaturePlugin : Plugin<Project> {
     private fun Project.setupPlugins(): Unit = with(plugins) {
         apply(libs.plugins.androidLibrary.get().pluginId)
         apply(libs.plugins.gamedgeAndroid.get().pluginId)
-        apply(libs.plugins.kotlinKapt.get().pluginId)
         apply(libs.plugins.jetpackCompose.get().pluginId)
         apply(libs.plugins.ksp.get().pluginId)
         apply(libs.plugins.daggerHilt.get().pluginId)
@@ -46,7 +45,7 @@ class GamedgeFeaturePlugin : Plugin<Project> {
         add("implementation", libs.kotlinResult.get())
         add("implementation", libs.coil.get())
         add("implementation", libs.daggerHiltAndroid.get())
-        add("kapt", libs.daggerHiltAndroidCompiler.get())
+        add("ksp", libs.daggerHiltAndroidCompiler.get())
         add("implementation", libs.hiltBinder.get())
         add("ksp", libs.hiltBinderCompiler.get())
         add("testImplementation", project(localModules.commonTesting))
