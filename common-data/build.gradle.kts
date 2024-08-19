@@ -19,7 +19,6 @@ import com.google.protobuf.gradle.id
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.gamedgeAndroid.get().pluginId)
-    id(libs.plugins.kotlinKapt.get().pluginId)
     id(libs.plugins.protobuf.get().pluginId)
 
     alias(libs.plugins.ksp)
@@ -60,7 +59,7 @@ dependencies {
     implementation(libs.kotlinResult)
 
     implementation(libs.daggerHiltAndroid)
-    kapt(libs.daggerHiltAndroidCompiler)
+    ksp(libs.daggerHiltAndroidCompiler)
 
     implementation(libs.hiltBinder)
     ksp(libs.hiltBinderCompiler)

@@ -17,7 +17,6 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
-import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -27,7 +26,6 @@ plugins {
     id(libs.plugins.androidLibrary.get().pluginId) apply false
     id(libs.plugins.kotlinJvm.get().pluginId) apply false
     id(libs.plugins.kotlinAndroid.get().pluginId) apply false
-    id(libs.plugins.kotlinKapt.get().pluginId) apply false
     id(libs.plugins.protobuf.get().pluginId) apply false
     id(libs.plugins.gamedgeAndroid.get().pluginId) apply false
     id(libs.plugins.gamedgeProtobuf.get().pluginId) apply false
@@ -98,12 +96,6 @@ subprojects {
     plugins.withId(rootProject.libs.plugins.kotlinJvm.get().pluginId) {
         extensions.findByType<KotlinProjectExtension>()?.run {
             jvmToolchain(rootProject.libs.versions.jvmToolchain.get().toInt())
-        }
-    }
-
-    plugins.withId(rootProject.libs.plugins.kotlinKapt.get().pluginId) {
-        extensions.findByType<KaptExtension>()?.run {
-            correctErrorTypes = true
         }
     }
 

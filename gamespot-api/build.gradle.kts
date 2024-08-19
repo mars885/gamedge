@@ -20,7 +20,6 @@ import com.paulrybitskyi.gamedge.extensions.stringField
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.gamedgeAndroid.get().pluginId)
-    id(libs.plugins.kotlinKapt.get().pluginId)
 
     alias(libs.plugins.ksp)
     alias(libs.plugins.daggerHilt)
@@ -52,7 +51,7 @@ dependencies {
     implementation(libs.kotlinResult)
 
     implementation(libs.daggerHiltAndroid)
-    kapt(libs.daggerHiltAndroidCompiler)
+    ksp(libs.daggerHiltAndroidCompiler)
 
     implementation(libs.hiltBinder)
     ksp(libs.hiltBinderCompiler)
@@ -69,5 +68,5 @@ dependencies {
     androidTestImplementation(libs.mockWebServer)
 
     androidTestImplementation(libs.daggerHiltTesting)
-    kaptAndroidTest(libs.daggerHiltAndroidCompiler)
+    kspAndroidTest(libs.daggerHiltAndroidCompiler)
 }

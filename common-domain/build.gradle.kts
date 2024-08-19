@@ -16,7 +16,8 @@
 
 plugins {
     id(libs.plugins.kotlinJvm.get().pluginId)
-    id(libs.plugins.kotlinKapt.get().pluginId)
+
+    alias(libs.plugins.ksp)
 }
 
 dependencies {
@@ -24,7 +25,7 @@ dependencies {
     implementation(libs.kotlinResult)
 
     implementation(libs.daggerHiltCore)
-    kapt(libs.daggerHiltCoreCompiler)
+    ksp(libs.daggerHiltCoreCompiler)
 
     testImplementation(project(localModules.commonTestingDomain))
     testImplementation(libs.jUnit)

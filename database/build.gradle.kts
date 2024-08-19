@@ -17,7 +17,6 @@
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.gamedgeAndroid.get().pluginId)
-    id(libs.plugins.kotlinKapt.get().pluginId)
 
     alias(libs.plugins.ksp)
     alias(libs.plugins.daggerHilt)
@@ -54,7 +53,7 @@ dependencies {
     ksp(libs.roomCompiler)
 
     implementation(libs.daggerHiltAndroid)
-    kapt(libs.daggerHiltAndroidCompiler)
+    ksp(libs.daggerHiltAndroidCompiler)
 
     implementation(libs.hiltBinder)
     ksp(libs.hiltBinderCompiler)
@@ -75,5 +74,5 @@ dependencies {
     androidTestImplementation(libs.roomTesting)
 
     androidTestImplementation(libs.daggerHiltTesting)
-    kaptAndroidTest(libs.daggerHiltAndroidCompiler)
+    kspAndroidTest(libs.daggerHiltAndroidCompiler)
 }

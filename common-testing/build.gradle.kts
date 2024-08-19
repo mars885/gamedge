@@ -17,7 +17,8 @@
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.gamedgeAndroid.get().pluginId)
-    id(libs.plugins.kotlinKapt.get().pluginId)
+
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -39,5 +40,5 @@ dependencies {
     implementation(libs.mockWebServer)
 
     implementation(libs.daggerHiltTesting)
-    kapt(libs.daggerHiltAndroidCompiler)
+    ksp(libs.daggerHiltAndroidCompiler)
 }

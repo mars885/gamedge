@@ -74,7 +74,6 @@ androidApplication = { id = "com.android.application", version.ref = "androidPlu
 androidLibrary = { id = "com.android.library", version.ref = "androidPlugin" }
 kotlinJvm = { id = "kotlin", version.ref = "kotlin" }
 kotlinAndroid = { id = "kotlin-android", version.ref = "kotlin" }
-kotlinKapt = { id = "kotlin-kapt", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 jetpackCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
