@@ -32,10 +32,10 @@ dependencies {
     implementation(project(localModules.core))
     implementation(project(localModules.commonUi))
 
+    implementation(platform(libs.composeBom))
     implementation(libs.composeUi)
     implementation(libs.composeTooling)
     implementation(libs.composeFoundation)
-    implementation(libs.composeActivity)
     implementation(libs.composeMaterial)
     implementation(libs.composeRuntime)
     implementation(libs.composeConstraintLayout)

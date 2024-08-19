@@ -29,8 +29,7 @@ room = "2.6.1"
 dataStore = "1.1.1"
 
 # Compose
-compose = "1.6.8"
-activity = "1.9.1"
+composeBom = "2024.06.00"
 navigation = "2.7.7"
 constraintLayout = "1.1.0-alpha13"
 composeHilt = "1.2.0"
@@ -84,6 +83,7 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektPlugin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
 gamedgeAndroid = { id = "com.paulrybitskyi.gamedge.android" }
 gamedgeProtobuf = { id = "com.paulrybitskyi.gamedge.protobuf" }
+gamedgeFeature = { id = "com.paulrybitskyi.gamedge.feature" }
 
 [libraries]
 # Plugins
@@ -105,14 +105,14 @@ prefsDataStore = { module = "androidx.datastore:datastore-preferences", version.
 protoDataStore = { module = "androidx.datastore:datastore", version.ref = "dataStore" }
 
 # Compose
-composeUi = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-composeTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-composeAnimation = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
-composeFoundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
-composeMaterial = { module = "androidx.compose.material:material", version.ref = "compose" }
-composeRuntime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
+composeBom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+composeUi = { module = "androidx.compose.ui:ui" }
+composeTooling = { module = "androidx.compose.ui:ui-tooling" }
+composeFoundation = { module = "androidx.compose.foundation:foundation" }
+composeMaterial = { module = "androidx.compose.material:material" }
+composeRuntime = { module = "androidx.compose.runtime:runtime" }
+composeAnimation = { module = "androidx.compose.animation:animation-graphics" }
 
-composeActivity = { module = "androidx.activity:activity-compose", version.ref = "activity" }
 composeNavigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 composeConstraintLayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintLayout" }
 composeHilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "composeHilt" }
