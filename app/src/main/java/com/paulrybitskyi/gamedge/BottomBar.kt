@@ -50,7 +50,7 @@ internal fun BottomBar(
 ) {
     val isBottomBarScreenDisplayed = remember(currentScreen) {
         BottomNavigationItemModel
-            .values()
+            .entries
             .any { itemModel -> itemModel.screen == currentScreen }
     }
 
@@ -85,7 +85,7 @@ private fun BottomBarNavigation(
         modifier = Modifier.navigationBarsPadding(),
         backgroundColor = GamedgeTheme.colors.primary,
     ) {
-        for (bottomNavigationItemModel in BottomNavigationItemModel.values()) {
+        for (bottomNavigationItemModel in BottomNavigationItemModel.entries) {
             val itemScreen = bottomNavigationItemModel.screen
 
             BottomNavigationItem(

@@ -101,7 +101,7 @@ private fun Link(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GameInfoLinksPreview() {
-    val links = WebsiteCategory.values()
+    val links = WebsiteCategory.entries
         .filterNot { it == WebsiteCategory.UNKNOWN }
         .mapIndexed { index, websiteCategory ->
             GameInfoLinkUiModel(
