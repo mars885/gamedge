@@ -15,6 +15,8 @@
  */
 
 import com.google.protobuf.gradle.id
+import org.gradle.configurationcache.extensions.capitalized
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
@@ -39,6 +41,19 @@ protobuf {
                 id("java") {
                     option("lite")
                 }
+            }
+        }
+    }
+}
+
+// Fix for https://github.com/google/ksp/issues/1590#issuecomment-1846036028
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        afterEvaluate {
+            val variantName = variant.name.capitalized()
+
+            tasks.getByName<KotlinCompile>("ksp${variantName}Kotlin") {
+                setSource(tasks.getByName("generate${variantName}Proto").outputs)
             }
         }
     }
