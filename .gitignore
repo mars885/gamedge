@@ -13,5 +13,6 @@
 .externalNativeBuild
 .cxx
 /.idea
+/.kotlin
 
 keystore.properties
