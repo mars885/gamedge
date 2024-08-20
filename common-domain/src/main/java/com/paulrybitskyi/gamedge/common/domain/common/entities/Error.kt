@@ -21,7 +21,7 @@ sealed class Error {
     sealed class ApiError : Error() {
         data class ClientError(val message: String) : ApiError()
         data class NetworkError(val message: String) : ApiError()
-        object ServiceUnavailable : ApiError()
+        data object ServiceUnavailable : ApiError()
         data class Unknown(val message: String) : ApiError()
     }
 

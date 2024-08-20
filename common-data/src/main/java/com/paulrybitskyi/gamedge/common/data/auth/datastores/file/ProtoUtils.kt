@@ -29,7 +29,6 @@ internal fun ProtoOauthCredentials.isNotEmpty(): Boolean {
     )
 }
 
-@Suppress("BlockingMethodInNonBlockingContext")
 internal object ProtoOauthCredentialsSerializer : Serializer<ProtoOauthCredentials> {
 
     override val defaultValue: ProtoOauthCredentials

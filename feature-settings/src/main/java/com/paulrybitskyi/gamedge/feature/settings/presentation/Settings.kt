@@ -250,7 +250,7 @@ private fun ThemePickerDialog(
             style = GamedgeTheme.typography.h5,
         )
 
-        for (theme in Theme.values()) {
+        for (theme in Theme.entries) {
             ThemePickerDialogOption(
                 isSelected = (theme.name == uiState.selectedThemeName),
                 themeTitle = stringResource(theme.uiTextRes),

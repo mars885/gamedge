@@ -39,7 +39,7 @@ internal class YoutubeMediaUrlFactoryImplTest {
 
     @Test
     fun `Creates thumbnail image urls correctly`() {
-        for (ytThumbnailSize in YoutubeThumbnailSize.values()) {
+        for (ytThumbnailSize in YoutubeThumbnailSize.entries) {
             assertThat(SUT.createThumbnailUrl(VIDEO, ytThumbnailSize))
                 .isEqualTo("https://img.youtube.com/vi/${VIDEO.id}/${ytThumbnailSize.rawSize}.jpg")
         }
@@ -52,7 +52,7 @@ internal class YoutubeMediaUrlFactoryImplTest {
 
     @Test
     fun `Creates video urls correctly`() {
-        for (ytThumbnailSize in YoutubeThumbnailSize.values()) {
+        for (ytThumbnailSize in YoutubeThumbnailSize.entries) {
             assertThat(SUT.createVideoUrl(VIDEO))
                 .isEqualTo("https://youtu.be/${VIDEO.id}")
         }

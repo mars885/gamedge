@@ -32,5 +32,5 @@ sealed class GameInfoRoute : Route {
         val imageUrls: List<String>,
     ) : GameInfoRoute()
 
-    object Back : GameInfoRoute()
+    data object Back : GameInfoRoute()
 }

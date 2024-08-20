@@ -81,7 +81,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
 
     private fun initDiscoveryItemsData() {
         _items.update {
-            GamesDiscoveryCategory.values().map { category ->
+            GamesDiscoveryCategory.entries.map { category ->
                 GamesDiscoveryItemUiModel(
                     id = category.id,
                     categoryName = category.name,
@@ -97,7 +97,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
         if (isObservingGames) return
 
         combine(
-            flows = GamesDiscoveryCategory.values().map(::observeGames),
+            flows = GamesDiscoveryCategory.entries.map(::observeGames),
             transform = { it.toList() },
         )
         .map { games -> currentItems.toSuccessState(games) }
@@ -119,7 +119,7 @@ internal class GamesDiscoveryViewModel @Inject constructor(
         if (isRefreshingGames) return
 
         combine(
-            flows = GamesDiscoveryCategory.values().map(::refreshGames),
+            flows = GamesDiscoveryCategory.entries.map(::refreshGames),
             transform = { it.toList() },
         )
         .map { currentItems }

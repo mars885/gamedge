@@ -179,7 +179,7 @@ private fun GamesDiscoverySuccessStatePreview() {
         GamesDiscoveryItemGameUiModel(id = index, title = gameTitle, coverUrl = null)
     }
 
-    val items = GamesDiscoveryCategory.values().map { category ->
+    val items = GamesDiscoveryCategory.entries.map { category ->
         GamesDiscoveryItemUiModel(
             id = category.id,
             categoryName = category.name,
@@ -204,7 +204,7 @@ private fun GamesDiscoverySuccessStatePreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun GamesDiscoveryEmptyStatePreview() {
-    val items = GamesDiscoveryCategory.values().map { category ->
+    val items = GamesDiscoveryCategory.entries.map { category ->
         GamesDiscoveryItemUiModel(
             id = category.id,
             categoryName = category.name,

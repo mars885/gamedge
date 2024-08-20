@@ -43,8 +43,8 @@ internal class IgdbImageUrlFactoryImplTest {
 
     @Test
     fun `Creates image urls without retina size correctly`() {
-        for (imageExtension in IgdbImageExtension.values()) {
-            for (igdbImageSize in IgdbImageSize.values()) {
+        for (imageExtension in IgdbImageExtension.entries) {
+            for (igdbImageSize in IgdbImageSize.entries) {
                 val config = IgdbImageUrlFactory.Config(
                     size = igdbImageSize,
                     extension = imageExtension,
@@ -65,8 +65,8 @@ internal class IgdbImageUrlFactoryImplTest {
 
     @Test
     fun `Creates image urls with retina size correctly`() {
-        for (imageExtension in IgdbImageExtension.values()) {
-            for (igdbImageSize in IgdbImageSize.values()) {
+        for (imageExtension in IgdbImageExtension.entries) {
+            for (igdbImageSize in IgdbImageSize.entries) {
                 val config = IgdbImageUrlFactory.Config(
                     size = igdbImageSize,
                     extension = imageExtension,
