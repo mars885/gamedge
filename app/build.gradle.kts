@@ -17,9 +17,8 @@
 plugins {
     id(libs.plugins.androidApplication.get().pluginId)
     id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.gamedgeJetpackCompose.get().pluginId)
     id(libs.plugins.gamedgeDaggerHilt.get().pluginId)
-
-    alias(libs.plugins.jetpackCompose)
 }
 
 dependencies {
@@ -42,13 +41,6 @@ dependencies {
 
     implementation(libs.splash)
 
-    implementation(platform(libs.composeBom))
-    implementation(libs.composeUi)
-    debugImplementation(libs.composeTooling)
-    implementation(libs.composeToolingPreview)
-    implementation(libs.composeFoundation)
-    implementation(libs.composeMaterial)
-    implementation(libs.composeRuntime)
     implementation(libs.composeNavigation)
     implementation(libs.accompanistNavigationAnimations)
 
