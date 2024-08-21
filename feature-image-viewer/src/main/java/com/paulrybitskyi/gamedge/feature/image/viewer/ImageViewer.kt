@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -49,8 +51,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter.State
 import coil.size.Size
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mxalbert.zoomable.OverZoomConfig
 import com.mxalbert.zoomable.Zoomable
@@ -180,7 +180,10 @@ private fun Pager(
     onImageChanged: (imageIndex: Int) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val pagerState = rememberPagerState(initialPage = uiState.selectedImageUrlIndex)
+    val pagerState = rememberPagerState(
+        initialPage = uiState.selectedImageUrlIndex,
+        pageCount = uiState.imageUrls::size,
+    )
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }
@@ -188,10 +191,9 @@ private fun Pager(
     }
 
     HorizontalPager(
-        count = uiState.imageUrls.size,
-        modifier = modifier,
         state = pagerState,
-        itemSpacing = GamedgeTheme.spaces.spacing_2_0,
+        modifier = modifier,
+        pageSpacing = GamedgeTheme.spaces.spacing_2_0,
     ) { pageIndex ->
         ImageItem(
             imageUrl = uiState.imageUrls[pageIndex],
