@@ -17,9 +17,8 @@
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.gamedgeAndroid.get().pluginId)
+    id(libs.plugins.gamedgeJetpackCompose.get().pluginId)
     id(libs.plugins.gamedgeDaggerHilt.get().pluginId)
-
-    alias(libs.plugins.jetpackCompose)
 }
 
 android {
@@ -30,16 +29,6 @@ dependencies {
     implementation(project(localModules.commonDomain))
     implementation(project(localModules.core))
     implementation(project(localModules.commonUi))
-
-    implementation(platform(libs.composeBom))
-    implementation(libs.composeUi)
-    debugImplementation(libs.composeTooling)
-    implementation(libs.composeToolingPreview)
-    implementation(libs.composeFoundation)
-    implementation(libs.composeMaterial)
-    implementation(libs.composeRuntime)
-    implementation(libs.composeConstraintLayout)
-    implementation(libs.accompanistSwipeRefresh)
 
     implementation(libs.coil)
 
