@@ -1,5 +1,6 @@
 package com.paulrybitskyi.gamedge.plugins
 
+import com.paulrybitskyi.gamedge.extensions.addBundle
 import com.paulrybitskyi.gamedge.extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -24,19 +25,11 @@ class GamedgeFeaturePlugin : Plugin<Project> {
         add("implementation", project(localModules.core))
         add("implementation", project(localModules.commonUi))
         add("implementation", project(localModules.commonUiWidgets))
-        add("implementation", libs.coroutines.get())
         add("implementation", libs.composeHilt.get())
         add("implementation", libs.commonsCore.get())
         add("implementation", libs.commonsKtx.get())
-        add("implementation", libs.kotlinResult.get())
         add("implementation", libs.coil.get())
         add("testImplementation", project(localModules.commonTesting))
-        add("testImplementation", libs.jUnit.get())
-        add("testImplementation", libs.truth.get())
-        add("testImplementation", libs.mockk.get())
-        add("testImplementation", libs.coroutinesTesting.get())
-        add("testImplementation", libs.turbine.get())
-        add("androidTestImplementation", libs.testRunner.get())
-        add("androidTestImplementation", libs.jUnitExt.get())
+        addBundle("testImplementation", libs.bundles.testing.get())
     }
 }

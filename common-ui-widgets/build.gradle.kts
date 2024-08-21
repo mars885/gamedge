@@ -31,7 +31,4 @@ dependencies {
     implementation(project(localModules.commonUi))
 
     implementation(libs.coil)
-
-    testImplementation(libs.jUnit)
-    androidTestImplementation(libs.jUnitExt)
 }

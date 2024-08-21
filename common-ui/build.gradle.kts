@@ -32,7 +32,4 @@ dependencies {
     implementation(libs.commonsKtx)
 
     implementation(libs.coil)
-
-    testImplementation(libs.jUnit)
-    androidTestImplementation(libs.jUnitExt)
 }

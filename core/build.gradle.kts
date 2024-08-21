@@ -27,7 +27,6 @@ android {
 dependencies {
     implementation(project(localModules.commonDomain))
 
-    implementation(libs.coroutines)
     implementation(libs.kotlinxSerialization)
 
     implementation(libs.browser)
@@ -37,14 +36,6 @@ dependencies {
     implementation(libs.commonsNetwork)
     implementation(libs.commonsWindowAnims)
 
-    implementation(libs.kotlinResult)
-
     testImplementation(project(localModules.commonTesting))
-    testImplementation(libs.jUnit)
-    testImplementation(libs.truth)
-    testImplementation(libs.mockk)
-    testImplementation(libs.coroutinesTesting)
-
-    androidTestImplementation(libs.testRunner)
-    androidTestImplementation(libs.jUnitExt)
+    testImplementation(libs.bundles.testing)
 }
