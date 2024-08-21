@@ -22,7 +22,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.with
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -56,8 +56,9 @@ fun AnimatedContentContainer(
                     -> enterTransition
                 }
 
-                finalEnterTransition with finalExitTransition
+                finalEnterTransition togetherWith finalExitTransition
             },
+            label = "AnimatedContentContainer",
         ) { targetUiState ->
             Box(modifier = Modifier.fillMaxSize()) {
                 content(targetUiState)
