@@ -78,6 +78,9 @@ fun Info(
     backgroundColor = 0x1c2028,
     uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
+private annotation class InfoPreviews
+
+@InfoPreviews
 @Composable
 private fun InfoWithSingleLineTitlePreview() {
     GamedgeTheme {
@@ -88,17 +91,7 @@ private fun InfoWithSingleLineTitlePreview() {
     }
 }
 
-@Preview(
-    widthDp = 300,
-    showBackground = true,
-    backgroundColor = 0xfaf9f7,
-)
-@Preview(
-    widthDp = 300,
-    showBackground = true,
-    backgroundColor = 0x1c2028,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
+@InfoPreviews
 @Composable
 private fun InfoWithMultiLineTitlePreview() {
     GamedgeTheme {
