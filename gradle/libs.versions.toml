@@ -123,7 +123,6 @@ composeConstraintLayout = { module = "androidx.constraintlayout:constraintlayout
 composeHilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "composeHilt" }
 
 accompanistSwipeRefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
-accompanistFlowLayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
 accompanistSystemUi = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanistNavigationAnimations = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 

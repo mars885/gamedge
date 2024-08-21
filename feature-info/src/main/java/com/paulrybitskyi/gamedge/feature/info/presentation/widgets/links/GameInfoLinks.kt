@@ -16,6 +16,8 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,7 +32,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowRow
 import com.paulrybitskyi.gamedge.common.domain.games.entities.WebsiteCategory
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeCard
@@ -47,8 +48,8 @@ internal fun GameInfoLinks(
     GameInfoSection(title = stringResource(R.string.game_info_links_title)) { paddingValues ->
         FlowRow(
             modifier = Modifier.padding(paddingValues),
-            mainAxisSpacing = GamedgeTheme.spaces.spacing_2_0,
-            crossAxisSpacing = GamedgeTheme.spaces.spacing_3_0,
+            horizontalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_2_0),
+            verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_0),
         ) {
             for (link in links) {
                 Link(

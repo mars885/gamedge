@@ -26,7 +26,6 @@ class GamedgeJetpackComposePlugin : Plugin<Project> {
         add("implementation", libs.composeAnimation.get())
         add("implementation", libs.composeConstraintLayout.get())
         add("implementation", libs.accompanistSwipeRefresh.get())
-        add("implementation", libs.accompanistFlowLayout.get())
         add("implementation", libs.accompanistSystemUi.get())
     }
 }
