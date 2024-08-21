@@ -27,9 +27,5 @@ dependencies {
     kapt(libs.daggerHiltCoreCompiler)
 
     testImplementation(project(localModules.commonTestingDomain))
-    testImplementation(libs.jUnit)
-    testImplementation(libs.truth)
-    testImplementation(libs.mockk)
-    testImplementation(libs.coroutinesTesting)
-    testImplementation(libs.turbine)
+    testImplementation(libs.bundles.testing)
 }

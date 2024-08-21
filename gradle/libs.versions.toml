@@ -169,3 +169,21 @@ archCore = { module = "androidx.arch.core:core-testing", version.ref = "archCore
 daggerHiltTesting = { module = "com.google.dagger:hilt-android-testing", version.ref = "daggerHilt" }
 roomTesting = { module = "androidx.room:room-testing", version.ref = "room" }
 mockWebServer = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "mockWebServer" }
+
+[bundles]
+testing = [
+    "jUnit",
+    "truth",
+    "mockk",
+    "coroutinesTesting",
+    "turbine",
+]
+
+testingAndroid = [
+    "testRunner",
+    "jUnit",
+    "jUnitExt",
+    "truth",
+    "coroutinesTesting",
+    "turbine",
+]

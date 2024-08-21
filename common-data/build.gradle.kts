@@ -31,20 +31,9 @@ dependencies {
     implementation(project(localModules.igdbApi))
     implementation(project(localModules.database))
 
-    implementation(libs.coroutines)
-
     implementation(libs.prefsDataStore)
     implementation(libs.protoDataStore)
 
-    implementation(libs.kotlinResult)
-
     testImplementation(project(localModules.commonTesting))
-    testImplementation(libs.jUnit)
-    testImplementation(libs.truth)
-    testImplementation(libs.mockk)
-    testImplementation(libs.coroutinesTesting)
-    testImplementation(libs.turbine)
-
-    androidTestImplementation(libs.testRunner)
-    androidTestImplementation(libs.jUnitExt)
+    testImplementation(libs.bundles.testing)
 }

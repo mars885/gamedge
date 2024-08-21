@@ -46,10 +46,6 @@ dependencies {
 
     implementation(libs.commonsCore)
     implementation(libs.commonsKtx)
-
-    testImplementation(libs.jUnit)
-
-    androidTestImplementation(libs.jUnitExt)
 }
 
 val installGitHook by tasks.registering(Copy::class) {

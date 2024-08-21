@@ -1,6 +1,7 @@
 package com.paulrybitskyi.gamedge.plugins
 
 import com.android.build.api.dsl.LibraryExtension
+import com.paulrybitskyi.gamedge.extensions.addBundle
 import com.paulrybitskyi.gamedge.extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -33,20 +34,13 @@ class GamedgeRemoteApiPlugin : Plugin<Project> {
         add("api", project(localModules.commonApi))
         add("implementation", project(localModules.core))
 
-        add("implementation", libs.coroutines.get())
         add("implementation", libs.kotlinxSerialization.get())
         add("implementation", libs.retrofit.get())
-        add("implementation", libs.kotlinResult.get())
 
         add("testImplementation", project(localModules.commonTesting))
-        add("testImplementation", libs.jUnit.get())
-        add("testImplementation", libs.truth.get())
-        add("testImplementation", libs.mockk.get())
-        add("testImplementation", libs.coroutinesTesting.get())
+        addBundle("testImplementation", libs.bundles.testing.get())
 
-        add("androidTestImplementation", libs.testRunner.get())
-        add("androidTestImplementation", libs.jUnitExt.get())
-        add("androidTestImplementation", libs.truth.get())
+        addBundle("androidTestImplementation", libs.bundles.testingAndroid.get())
         add("androidTestImplementation", libs.mockWebServer.get())
     }
 }

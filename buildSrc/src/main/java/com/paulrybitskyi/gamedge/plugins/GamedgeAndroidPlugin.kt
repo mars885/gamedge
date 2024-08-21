@@ -151,8 +151,11 @@ class GamedgeAndroidPlugin : Plugin<Project> {
         return (get(key) as T)
     }
 
-    private fun Project.addDependencies() {
-        dependencies.add("coreLibraryDesugaring", libs.desugaredJdk.get())
-        dependencies.add("androidTestImplementation", project(localModules.commonTesting))
+    private fun Project.addDependencies(): Unit = with(dependencies) {
+        add("implementation", libs.coroutines.get())
+        add("implementation", libs.kotlinResult.get())
+
+        add("coreLibraryDesugaring", libs.desugaredJdk.get())
+        add("androidTestImplementation", project(localModules.commonTesting))
     }
 }

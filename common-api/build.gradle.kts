@@ -38,7 +38,4 @@ dependencies {
     implementation(libs.retrofitKotlinxSerializationConverter)
 
     implementation(libs.kotlinResult)
-
-    testImplementation(libs.jUnit)
-    androidTestImplementation(libs.jUnitExt)
 }

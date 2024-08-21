@@ -45,7 +45,6 @@ ksp {
 dependencies {
     implementation(project(localModules.core))
 
-    implementation(libs.coroutines)
     implementation(libs.kotlinxSerialization)
 
     implementation(libs.room)
@@ -53,17 +52,9 @@ dependencies {
     ksp(libs.roomCompiler)
 
     testImplementation(project(localModules.commonTesting))
-    testImplementation(libs.jUnit)
-    testImplementation(libs.truth)
-    testImplementation(libs.mockk)
-    testImplementation(libs.coroutinesTesting)
-    testImplementation(libs.turbine)
+    testImplementation(libs.bundles.testing)
 
-    androidTestImplementation(libs.testRunner)
-    androidTestImplementation(libs.jUnitExt)
-    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.bundles.testingAndroid)
     androidTestImplementation(libs.archCore)
-    androidTestImplementation(libs.coroutinesTesting)
-    androidTestImplementation(libs.turbine)
     androidTestImplementation(libs.roomTesting)
 }
