@@ -20,10 +20,8 @@ import com.paulrybitskyi.gamedge.extensions.stringField
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.gamedgeAndroid.get().pluginId)
-    id(libs.plugins.kotlinKapt.get().pluginId)
+    id(libs.plugins.gamedgeDaggerHilt.get().pluginId)
 
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.daggerHilt)
     alias(libs.plugins.kotlinxSerialization)
 }
 
@@ -50,12 +48,6 @@ dependencies {
     implementation(libs.retrofitKotlinxSerializationConverter)
 
     implementation(libs.kotlinResult)
-
-    implementation(libs.daggerHiltAndroid)
-    kapt(libs.daggerHiltAndroidCompiler)
-
-    implementation(libs.hiltBinder)
-    ksp(libs.hiltBinderCompiler)
 
     testImplementation(project(localModules.commonTesting))
     testImplementation(libs.jUnit)
