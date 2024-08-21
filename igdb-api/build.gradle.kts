@@ -18,11 +18,7 @@ import com.paulrybitskyi.gamedge.extensions.property
 import com.paulrybitskyi.gamedge.extensions.stringField
 
 plugins {
-    id(libs.plugins.androidLibrary.get().pluginId)
-    id(libs.plugins.gamedgeAndroid.get().pluginId)
-    id(libs.plugins.gamedgeDaggerHilt.get().pluginId)
-
-    alias(libs.plugins.kotlinxSerialization)
+    id(libs.plugins.gamedgeRemoteApi.get().pluginId)
 }
 
 android {
@@ -32,33 +28,10 @@ android {
         stringField("TWITCH_APP_CLIENT_ID", property("TWITCH_APP_CLIENT_ID", ""))
         stringField("TWITCH_APP_CLIENT_SECRET", property("TWITCH_APP_CLIENT_SECRET", ""))
     }
-
-    buildFeatures {
-        buildConfig = true
-    }
 }
 
 dependencies {
-    api(project(localModules.commonApi))
     implementation(project(localModules.igdbApicalypse))
-    implementation(project(localModules.core))
 
-    implementation(libs.coroutines)
-    implementation(libs.kotlinxSerialization)
-
-    implementation(libs.retrofit)
     implementation(libs.retrofitScalarsConverter)
-
-    implementation(libs.kotlinResult)
-
-    testImplementation(project(localModules.commonTesting))
-    testImplementation(libs.jUnit)
-    testImplementation(libs.truth)
-    testImplementation(libs.mockk)
-    testImplementation(libs.coroutinesTesting)
-
-    androidTestImplementation(libs.testRunner)
-    androidTestImplementation(libs.jUnitExt)
-    androidTestImplementation(libs.truth)
-    androidTestImplementation(libs.mockWebServer)
 }

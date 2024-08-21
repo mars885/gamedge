@@ -47,7 +47,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
 
     private fun Project.configurePlugins() {
         configureAndroidCommonInfo()
-        configureAndroidApplicationId()
+        configureAndroidApplication()
     }
 
     private fun Project.configureAndroidCommonInfo() = configure<BaseExtension> {
@@ -103,7 +103,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
         }
     }
 
-    private fun Project.configureAndroidApplicationId() {
+    private fun Project.configureAndroidApplication() {
         plugins.withId(libs.plugins.androidApplication.get().pluginId) {
             configure<BaseAppModuleExtension> {
                 namespace = APPLICATION_ID

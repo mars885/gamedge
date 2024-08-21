@@ -19,6 +19,7 @@ plugins {
     id(libs.plugins.gamedgeAndroid.get().pluginId)
     id(libs.plugins.gamedgeDaggerHilt.get().pluginId)
 
+    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinxSerialization)
 }
 

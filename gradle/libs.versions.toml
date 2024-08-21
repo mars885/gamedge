@@ -86,6 +86,7 @@ gamedgeAndroid = { id = "com.paulrybitskyi.gamedge.android" }
 gamedgeProtobuf = { id = "com.paulrybitskyi.gamedge.protobuf" }
 gamedgeJetpackCompose = { id = "com.paulrybitskyi.gamedge.jetpack.compose" }
 gamedgeDaggerHilt = { id = "com.paulrybitskyi.gamedge.dagger.hilt" }
+gamedgeRemoteApi = { id = "com.paulrybitskyi.gamedge.remote.api" }
 gamedgeFeature = { id = "com.paulrybitskyi.gamedge.feature" }
 
 [libraries]
