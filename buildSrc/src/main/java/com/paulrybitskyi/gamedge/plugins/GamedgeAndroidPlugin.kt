@@ -22,7 +22,7 @@ import com.paulrybitskyi.gamedge.extensions.libs
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.findByType
+import org.gradle.kotlin.dsl.configure
 import java.util.Properties
 
 class GamedgeAndroidPlugin : Plugin<Project> {
@@ -50,64 +50,62 @@ class GamedgeAndroidPlugin : Plugin<Project> {
         configureAndroidApplicationId()
     }
 
-    private fun Project.configureAndroidCommonInfo() {
-        extensions.findByType<BaseExtension>()?.run {
-            compileSdkVersion(libs.versions.compileSdk.get().toInt())
+    private fun Project.configureAndroidCommonInfo() = configure<BaseExtension> {
+        compileSdkVersion(libs.versions.compileSdk.get().toInt())
 
-            defaultConfig {
-                minSdk = libs.versions.minSdk.get().toInt()
-                targetSdk = libs.versions.targetSdk.get().toInt()
-                versionCode = libs.versions.appVersionCode.get().toInt()
-                versionName = libs.versions.appVersionName.get()
+        defaultConfig {
+            minSdk = libs.versions.minSdk.get().toInt()
+            targetSdk = libs.versions.targetSdk.get().toInt()
+            versionCode = libs.versions.appVersionCode.get().toInt()
+            versionName = libs.versions.appVersionName.get()
 
-                testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
+            testInstrumentationRunner = "com.paulrybitskyi.gamedge.common.testing.GamedgeTestRunner"
+        }
+
+        buildTypes {
+            getByName(BUILD_TYPE_DEBUG) {
+                // Enabling accessing sites with http schemas for testing (especially
+                // instrumented tests using MockWebServer) and disabling it in the
+                // production to avoid security issues
+                manifestPlaceholders["usesCleartextTraffic"] = true
             }
 
-            buildTypes {
-                getByName(BUILD_TYPE_DEBUG) {
-                    // Enabling accessing sites with http schemas for testing (especially
-                    // instrumented tests using MockWebServer) and disabling it in the
-                    // production to avoid security issues
-                    manifestPlaceholders["usesCleartextTraffic"] = true
-                }
+            getByName(BUILD_TYPE_RELEASE) {
+                debuggable(true)
+                manifestPlaceholders["usesCleartextTraffic"] = false
 
-                getByName(BUILD_TYPE_RELEASE) {
-                    debuggable(true)
-                    manifestPlaceholders["usesCleartextTraffic"] = false
-
-                    isMinifyEnabled = true
-                    proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-                }
+                isMinifyEnabled = true
+                proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             }
+        }
 
-            compileOptions {
-                val javaVersion = JavaVersion.toVersion(libs.versions.jvmToolchain.get().toInt())
+        compileOptions {
+            val javaVersion = JavaVersion.toVersion(libs.versions.jvmToolchain.get().toInt())
 
-                sourceCompatibility = javaVersion
-                targetCompatibility = javaVersion
+            sourceCompatibility = javaVersion
+            targetCompatibility = javaVersion
 
-                isCoreLibraryDesugaringEnabled = true
-            }
+            isCoreLibraryDesugaringEnabled = true
+        }
 
-            // Without the below block, a build failure was happening when running ./gradlew connectedAndroidTest
-            // See: https://github.com/Kotlin/kotlinx.coroutines/tree/master/kotlinx-coroutines-debug#debug-agent-and-android
-            packagingOptions {
-                // for JNA and JNA-platform
-                resources.excludes.add("META-INF/AL2.0")
-                resources.excludes.add("META-INF/LGPL2.1")
-                resources.excludes.add("META-INF/LICENSE.md")
-                resources.excludes.add("META-INF/LICENSE-notice.md")
-                // for byte-buddy
-                resources.excludes.add("META-INF/licenses/ASM")
-                resources.pickFirsts.add("win32-x86-64/attach_hotspot_windows.dll")
-                resources.pickFirsts.add("win32-x86/attach_hotspot_windows.dll")
-            }
+        // Without the below block, a build failure was happening when running ./gradlew connectedAndroidTest
+        // See: https://github.com/Kotlin/kotlinx.coroutines/tree/master/kotlinx-coroutines-debug#debug-agent-and-android
+        packagingOptions {
+            // for JNA and JNA-platform
+            resources.excludes.add("META-INF/AL2.0")
+            resources.excludes.add("META-INF/LGPL2.1")
+            resources.excludes.add("META-INF/LICENSE.md")
+            resources.excludes.add("META-INF/LICENSE-notice.md")
+            // for byte-buddy
+            resources.excludes.add("META-INF/licenses/ASM")
+            resources.pickFirsts.add("win32-x86-64/attach_hotspot_windows.dll")
+            resources.pickFirsts.add("win32-x86/attach_hotspot_windows.dll")
         }
     }
 
     private fun Project.configureAndroidApplicationId() {
         plugins.withId(libs.plugins.androidApplication.get().pluginId) {
-            extensions.findByType<BaseAppModuleExtension>()?.run {
+            configure<BaseAppModuleExtension> {
                 namespace = APPLICATION_ID
 
                 defaultConfig {
