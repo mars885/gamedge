@@ -23,7 +23,7 @@ import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.with
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -79,9 +79,9 @@ internal fun GameInfoSummary(summary: String) {
                         animationSpec = tween(AnimationDuration),
                         expandFrom = Alignment.Top,
                         initialHeight = { collapsedHeight },
-                    ) with ExitTransition.None
+                    ) togetherWith ExitTransition.None
                 } else {
-                    EnterTransition.None with shrinkVertically(
+                    EnterTransition.None togetherWith shrinkVertically(
                         animationSpec = tween(AnimationDuration),
                         shrinkTowards = Alignment.Top,
                         targetHeight = { collapsedHeight },
@@ -90,6 +90,7 @@ internal fun GameInfoSummary(summary: String) {
                     sizeAnimationSpec = { _, _ -> tween(AnimationDuration) },
                 )
             },
+            label = "GameInfoSummary",
         ) { isInExpandedState ->
             Text(
                 text = summary,
