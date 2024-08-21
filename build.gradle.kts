@@ -29,8 +29,6 @@ plugins {
     id(libs.plugins.kotlinAndroid.get().pluginId) apply false
     id(libs.plugins.kotlinKapt.get().pluginId) apply false
     id(libs.plugins.protobuf.get().pluginId) apply false
-    id(libs.plugins.gamedgeAndroid.get().pluginId) apply false
-    id(libs.plugins.gamedgeProtobuf.get().pluginId) apply false
 
     alias(libs.plugins.jetpackCompose) apply false
     alias(libs.plugins.ksp) apply false
