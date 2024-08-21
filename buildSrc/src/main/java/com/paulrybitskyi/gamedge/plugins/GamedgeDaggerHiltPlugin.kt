@@ -23,5 +23,8 @@ class GamedgeDaggerHiltPlugin : Plugin<Project> {
 
         add("implementation", libs.hiltBinder.get())
         add("ksp", libs.hiltBinderCompiler.get())
+
+        add("androidTestImplementation", libs.daggerHiltTesting.get())
+        add("kaptAndroidTest", libs.daggerHiltAndroidCompiler.get())
     }
 }

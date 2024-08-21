@@ -61,7 +61,4 @@ dependencies {
     androidTestImplementation(libs.jUnitExt)
     androidTestImplementation(libs.truth)
     androidTestImplementation(libs.mockWebServer)
-
-    androidTestImplementation(libs.daggerHiltTesting)
-    kaptAndroidTest(libs.daggerHiltAndroidCompiler)
 }

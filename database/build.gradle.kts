@@ -65,7 +65,4 @@ dependencies {
     androidTestImplementation(libs.coroutinesTesting)
     androidTestImplementation(libs.turbine)
     androidTestImplementation(libs.roomTesting)
-
-    androidTestImplementation(libs.daggerHiltTesting)
-    kaptAndroidTest(libs.daggerHiltAndroidCompiler)
 }
