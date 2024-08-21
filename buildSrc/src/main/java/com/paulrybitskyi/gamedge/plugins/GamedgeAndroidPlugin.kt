@@ -65,13 +65,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
 
             buildTypes {
                 getByName(BUILD_TYPE_DEBUG) {
-                    sourceSets {
-                        getByName(BUILD_TYPE_DEBUG) {
-                            java.srcDir(file("build/generated/ksp/$BUILD_TYPE_DEBUG/java"))
-                            java.srcDir(file("build/generated/ksp/$BUILD_TYPE_DEBUG/kotlin"))
-                        }
-                    }
-
                     // Enabling accessing sites with http schemas for testing (especially
                     // instrumented tests using MockWebServer) and disabling it in the
                     // production to avoid security issues
@@ -79,13 +72,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 }
 
                 getByName(BUILD_TYPE_RELEASE) {
-                    sourceSets {
-                        getByName(BUILD_TYPE_RELEASE) {
-                            java.srcDir(file("build/generated/ksp/$BUILD_TYPE_RELEASE/java"))
-                            java.srcDir(file("build/generated/ksp/$BUILD_TYPE_RELEASE/kotlin"))
-                        }
-                    }
-
                     debuggable(true)
                     manifestPlaceholders["usesCleartextTraffic"] = false
 
