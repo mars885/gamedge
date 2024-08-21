@@ -33,6 +33,10 @@ gradlePlugin {
             id = "com.paulrybitskyi.gamedge.protobuf"
             implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeProtobufPlugin"
         }
+        create("com.paulrybitskyi.gamedge.dagger.hilt") {
+            id = "com.paulrybitskyi.gamedge.dagger.hilt"
+            implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeDaggerHiltPlugin"
+        }
         create("com.paulrybitskyi.gamedge.feature") {
             id = "com.paulrybitskyi.gamedge.feature"
             implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeFeaturePlugin"

@@ -17,10 +17,9 @@
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.gamedgeAndroid.get().pluginId)
-    id(libs.plugins.kotlinKapt.get().pluginId)
+    id(libs.plugins.gamedgeDaggerHilt.get().pluginId)
 
     alias(libs.plugins.jetpackCompose)
-    alias(libs.plugins.ksp)
 }
 
 android {
@@ -43,12 +42,6 @@ dependencies {
     implementation(libs.commonsKtx)
 
     implementation(libs.coil)
-
-    implementation(libs.daggerHiltAndroid)
-    kapt(libs.daggerHiltAndroidCompiler)
-
-    implementation(libs.hiltBinder)
-    ksp(libs.hiltBinderCompiler)
 
     testImplementation(libs.jUnit)
     androidTestImplementation(libs.jUnitExt)
