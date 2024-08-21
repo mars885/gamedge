@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.common.ui.widgets.games
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -31,7 +30,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.TextUnit
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.DefaultCoverHeight
@@ -139,8 +138,7 @@ private fun DetailsDescription(description: String) {
     )
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
 private fun GameFullPreview() {
     GamedgeTheme {
@@ -159,8 +157,7 @@ private fun GameFullPreview() {
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
 private fun GameWithoutDeveloperPreview() {
     GamedgeTheme {
@@ -179,8 +176,7 @@ private fun GameWithoutDeveloperPreview() {
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
 private fun GameWithoutDescriptionPreview() {
     GamedgeTheme {
@@ -198,8 +194,7 @@ private fun GameWithoutDescriptionPreview() {
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
 private fun GameMinimalPreview() {
     GamedgeTheme {

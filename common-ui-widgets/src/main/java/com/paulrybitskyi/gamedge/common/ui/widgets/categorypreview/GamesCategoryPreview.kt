@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.common.ui.widgets.categorypreview
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,7 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstrainedLayoutReference
@@ -233,8 +232,7 @@ private fun SuccessState(
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
 private fun GamesCategoryPreviewSuccessStateWithMoreButtonPreview() {
     GamedgeTheme {
@@ -269,8 +267,7 @@ private fun GamesCategoryPreviewSuccessStateWithMoreButtonPreview() {
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
 private fun GamesCategoryPreviewSuccessStateWithoutMoreButtonPreview() {
     GamedgeTheme {
@@ -306,8 +303,7 @@ private fun GamesCategoryPreviewSuccessStateWithoutMoreButtonPreview() {
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
 private fun GamesCategoryPreviewEmptyStatePreview() {
     GamedgeTheme {

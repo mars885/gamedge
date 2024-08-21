@@ -16,14 +16,13 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.theme.subtitle3
 import com.paulrybitskyi.gamedge.feature.info.R
@@ -89,8 +88,7 @@ private fun CategorySection(title: String, value: String) {
     )
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
 private fun GameInfoDetailsPreview() {
     GamedgeTheme {

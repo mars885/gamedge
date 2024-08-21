@@ -32,7 +32,8 @@ dependencies {
 
     implementation(platform(libs.composeBom))
     implementation(libs.composeUi)
-    implementation(libs.composeTooling)
+    debugImplementation(libs.composeTooling)
+    implementation(libs.composeToolingPreview)
     implementation(libs.composeFoundation)
     implementation(libs.composeRuntime)
     implementation(libs.composeMaterial)
