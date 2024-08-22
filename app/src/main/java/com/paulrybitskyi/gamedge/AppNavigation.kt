@@ -23,9 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
 import com.paulrybitskyi.gamedge.common.ui.HorizontalSliding
 import com.paulrybitskyi.gamedge.common.ui.OvershootScaling
 import com.paulrybitskyi.gamedge.feature.category.GamesCategoryRoute
@@ -48,7 +48,7 @@ internal fun AppNavigation(
     navController: NavHostController,
     modifier: Modifier,
 ) {
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = START_SCREEN.route,
         enterTransition = { EnterTransition.None },

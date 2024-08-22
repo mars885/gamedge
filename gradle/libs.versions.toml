@@ -124,7 +124,6 @@ composeHilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = 
 
 accompanistSwipeRefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanistSystemUi = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-accompanistNavigationAnimations = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 
 # Google
 daggerHiltCore = { module = "com.google.dagger:hilt-core", version.ref = "daggerHilt" }
