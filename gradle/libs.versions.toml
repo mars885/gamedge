@@ -122,7 +122,6 @@ composeNavigation = { module = "androidx.navigation:navigation-compose", version
 composeConstraintLayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintLayout" }
 composeHilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "composeHilt" }
 
-accompanistSwipeRefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanistSystemUi = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 
 # Google

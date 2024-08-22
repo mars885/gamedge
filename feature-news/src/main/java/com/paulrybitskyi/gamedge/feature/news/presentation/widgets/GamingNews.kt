@@ -143,7 +143,7 @@ private fun LoadingState(modifier: Modifier) {
 @Composable
 private fun EmptyState(modifier: Modifier) {
     Column(
-        // verticalScroll is to enable SwipeRefresh to work
+        // verticalScroll is to enable PullRefresh to work
         // when the screen is in empty state
         modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
