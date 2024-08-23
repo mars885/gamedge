@@ -6,7 +6,7 @@ appVersionCode = "1"
 appVersionName = "1.0.0"
 jvmToolchain = "17"
 
-kotlin = "2.0.10"
+kotlin = "2.0.20"
 daggerHilt = "2.52"
 
 # Plugins
