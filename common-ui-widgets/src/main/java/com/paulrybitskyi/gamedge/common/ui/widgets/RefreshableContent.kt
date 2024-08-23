@@ -44,7 +44,7 @@ fun RefreshableContent(
         modifier = modifier.pullRefresh(
             state = refreshState,
             enabled = isSwipeEnabled,
-        )
+        ),
     ) {
         content()
 
