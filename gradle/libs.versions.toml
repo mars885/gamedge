@@ -34,7 +34,6 @@ composeBom = "2024.06.00"
 navigation = "2.7.7"
 constraintLayout = "1.1.0-alpha13"
 composeHilt = "1.2.0"
-accompanist = "0.34.0"
 
 # Google
 protobuf = "4.27.3"
@@ -123,8 +122,6 @@ composeAnimation = { module = "androidx.compose.animation:animation-graphics" }
 composeNavigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 composeConstraintLayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintLayout" }
 composeHilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "composeHilt" }
-
-accompanistSystemUi = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 
 # Google
 daggerHiltCore = { module = "com.google.dagger:hilt-core", version.ref = "daggerHilt" }
