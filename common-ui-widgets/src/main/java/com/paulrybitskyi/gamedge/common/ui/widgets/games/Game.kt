@@ -99,7 +99,9 @@ private fun Details(
         if (developerName != null) {
             Text(
                 text = developerName,
-                modifier = Modifier.padding(start = GamedgeTheme.spaces.spacing_3_0),
+                modifier = Modifier
+                    .padding(top = GamedgeTheme.spaces.spacing_0_5)
+                    .padding(start = GamedgeTheme.spaces.spacing_3_0),
                 style = GamedgeTheme.typography.caption,
             )
         }
