@@ -39,6 +39,7 @@ dependencies {
     implementation(project(localModules.featureSearch))
     implementation(project(localModules.featureSettings))
 
+    implementation(libs.activity)
     implementation(libs.splash)
 
     implementation(libs.composeNavigation)

@@ -16,17 +16,10 @@
   ~ limitations under the License.
 -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <style name="GamedgeThemeSplash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/dark_colorPrimary</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_light</item>
-        <item name="postSplashScreenTheme">@style/GamedgeTheme</item>
-    </style>
-
-    <style name="GamedgeTheme" parent="android:Theme.Material.NoActionBar">
-        <item name="android:statusBarColor">@color/colorStatusBar</item>
-        <item name="android:windowBackground">@color/dark_colorPrimary</item>
-        <item name="android:navigationBarColor">@color/dark_colorNavigationBar</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="postSplashScreenTheme">@android:style/Theme.Material.NoActionBar</item>
     </style>
 </resources>

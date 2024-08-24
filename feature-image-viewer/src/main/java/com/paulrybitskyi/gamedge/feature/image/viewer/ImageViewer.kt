@@ -18,14 +18,9 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.LocalContentColor
@@ -42,6 +37,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -51,7 +47,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter.State
 import coil.size.Size
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mxalbert.zoomable.OverZoomConfig
 import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
@@ -60,10 +55,11 @@ import com.paulrybitskyi.gamedge.common.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.common.ui.LocalTextSharer
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.findWindow
 import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
+import com.paulrybitskyi.gamedge.common.ui.rememberWindowInsetsController
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.common.ui.theme.navBar
-import com.paulrybitskyi.gamedge.common.ui.theme.statusBar
+import com.paulrybitskyi.gamedge.common.ui.theme.darkScrim
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
 import com.paulrybitskyi.gamedge.core.R as CoreR
@@ -114,7 +110,9 @@ private fun ImageViewer(
     onImageChanged: (imageIndex: Int) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    SystemBarsColorHandler()
+    val toolbarBackgroundColor = GamedgeTheme.colors.darkScrim
+
+    SystemBarsColorHandler(navBarColor = toolbarBackgroundColor)
     BackHandler(onBack = onBackPressed)
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -132,10 +130,7 @@ private fun ImageViewer(
             Toolbar(
                 title = uiState.toolbarTitle,
                 modifier = Modifier.align(Alignment.TopCenter),
-                contentPadding = WindowInsets.statusBars
-                    .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
-                    .asPaddingValues(),
-                backgroundColor = GamedgeTheme.colors.statusBar,
+                backgroundColor = toolbarBackgroundColor,
                 contentColor = LocalContentColor.current,
                 elevation = 0.dp,
                 leftButtonIcon = painterResource(CoreR.drawable.arrow_left),
@@ -148,26 +143,43 @@ private fun ImageViewer(
 }
 
 @Composable
-private fun SystemBarsColorHandler() {
-    val systemUiController = rememberSystemUiController()
-    val defaultStatusBarColor = GamedgeTheme.colors.statusBar
-    val defaultNavigationBarColor = GamedgeTheme.colors.navBar
+private fun SystemBarsColorHandler(navBarColor: Color) {
+    val window = findWindow()
+    val windowsInsetsController = rememberWindowInsetsController(window = window)
 
-    DisposableEffect(defaultStatusBarColor, defaultNavigationBarColor) {
-        // We want to make the system bars translucent when viewing images
-        with(systemUiController) {
-            // Making the status bar transparent causes it to use the color
-            // of the toolbar (which uses the status bar color)
-            setStatusBarColor(Color.Transparent)
-            // We want the color of the navigation bar to be
-            // the same as the color of the status bar
-            setNavigationBarColor(defaultStatusBarColor)
+    DisposableEffect(windowsInsetsController, window, navBarColor) {
+        if (windowsInsetsController == null || window == null) {
+            return@DisposableEffect onDispose {}
+        }
+
+        val previousStatusBarHasDarkIcons = windowsInsetsController.isAppearanceLightStatusBars
+        val previousNavBarHasDarkButtons = windowsInsetsController.isAppearanceLightNavigationBars
+        val previousStatusBarColor = window.statusBarColor
+        val previousNavBarColor = window.navigationBarColor
+
+        with(windowsInsetsController) {
+            // Make the status bar's icons always white on this screen
+            isAppearanceLightStatusBars = false
+            // Make the nav bar's buttons always white on this screen
+            isAppearanceLightNavigationBars = false
+        }
+
+        with(window) {
+            // Make the status bar transparent for it to use the color of the toolbar
+            statusBarColor = Color.Transparent.toArgb()
+            // Make the nav bar's color the same as the toolbar's color
+            navigationBarColor = navBarColor.toArgb()
         }
 
         onDispose {
-            with(systemUiController) {
-                setStatusBarColor(defaultStatusBarColor)
-                setNavigationBarColor(defaultNavigationBarColor)
+            with(windowsInsetsController) {
+                isAppearanceLightStatusBars = previousStatusBarHasDarkIcons
+                isAppearanceLightNavigationBars = previousNavBarHasDarkButtons
+            }
+
+            with(window) {
+                statusBarColor = previousStatusBarColor
+                navigationBarColor = previousNavBarColor
             }
         }
     }

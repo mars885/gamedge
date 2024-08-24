@@ -17,10 +17,8 @@
 package com.paulrybitskyi.gamedge.feature.search.presentation
 
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.Scaffold
@@ -36,7 +34,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.common.ui.OnLifecycleEvent
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
@@ -67,7 +64,6 @@ private fun GamesSearch(
     viewModel: GamesSearchViewModel,
     onRoute: (Route) -> Unit,
 ) {
-    NavBarColorHandler()
     CommandsHandler(viewModel = viewModel)
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
     GamesSearch(
@@ -97,14 +93,11 @@ private fun GamesSearch(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
-        modifier = Modifier.navigationBarsPadding(),
+        contentWindowInsets = WindowInsets.statusBars,
         topBar = {
             SearchToolbar(
                 queryText = uiState.queryText,
                 placeholderText = stringResource(R.string.games_search_toolbar_hint),
-                contentPadding = WindowInsets.statusBars
-                    .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Vertical)
-                    .asPaddingValues(),
                 focusRequester = focusRequester,
                 onQueryChanged = onQueryChanged,
                 onSearchConfirmed = { query ->
@@ -119,6 +112,7 @@ private fun GamesSearch(
         Games(
             uiState = uiState.gamesUiState,
             modifier = Modifier.padding(paddingValues),
+            contentPadding = WindowInsets.navigationBars.asPaddingValues(),
             onGameClicked = onGameClicked,
             onBottomReached = onBottomReached,
         )

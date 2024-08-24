@@ -18,9 +18,11 @@ package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,7 +43,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalUrlOpener
-import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
@@ -90,7 +91,6 @@ private fun GameInfo(
     val urlOpener = LocalUrlOpener.current
     val context = LocalContext.current
 
-    NavBarColorHandler()
     CommandsHandler(viewModel = viewModel) { command ->
         when (command) {
             is GameInfoCommand.OpenUrl -> {
@@ -151,7 +151,7 @@ private fun GameInfo(
                 FiniteUiState.Success -> {
                     SuccessState(
                         gameInfo = checkNotNull(uiState.game),
-                        modifier = Modifier.navigationBarsPadding(),
+                        contentPadding = WindowInsets.navigationBars.asPaddingValues(),
                         onArtworkClicked = onArtworkClicked,
                         onBackButtonClicked = onBackButtonClicked,
                         onCoverClicked = onCoverClicked,
@@ -185,38 +185,7 @@ private fun EmptyState(modifier: Modifier) {
 @Composable
 private fun SuccessState(
     gameInfo: GameInfoUiModel,
-    modifier: Modifier,
-    onArtworkClicked: (artworkIndex: Int) -> Unit,
-    onBackButtonClicked: () -> Unit,
-    onCoverClicked: () -> Unit,
-    onLikeButtonClicked: () -> Unit,
-    onVideoClicked: (GameInfoVideoUiModel) -> Unit,
-    onScreenshotClicked: (screenshotIndex: Int) -> Unit,
-    onLinkClicked: (GameInfoLinkUiModel) -> Unit,
-    onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
-    onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
-) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Content(
-            gameInfo = gameInfo,
-            modifier = modifier,
-            onArtworkClicked = onArtworkClicked,
-            onBackButtonClicked = onBackButtonClicked,
-            onCoverClicked = onCoverClicked,
-            onLikeButtonClicked = onLikeButtonClicked,
-            onVideoClicked = onVideoClicked,
-            onScreenshotClicked = onScreenshotClicked,
-            onLinkClicked = onLinkClicked,
-            onCompanyClicked = onCompanyClicked,
-            onRelatedGameClicked = onRelatedGameClicked,
-        )
-    }
-}
-
-@Composable
-private fun Content(
-    gameInfo: GameInfoUiModel,
-    modifier: Modifier,
+    contentPadding: PaddingValues,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
@@ -228,7 +197,8 @@ private fun Content(
     onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = contentPadding,
         verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
         headerItem(
