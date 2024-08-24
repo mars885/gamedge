@@ -218,7 +218,7 @@ private fun SettingsSectionItem(
         )
         Text(
             text = sectionItem.description,
-            modifier = Modifier.padding(top = GamedgeTheme.spaces.spacing_0_5),
+            modifier = Modifier.padding(top = GamedgeTheme.spaces.spacing_1_0),
             style = GamedgeTheme.typography.body2,
         )
     }
