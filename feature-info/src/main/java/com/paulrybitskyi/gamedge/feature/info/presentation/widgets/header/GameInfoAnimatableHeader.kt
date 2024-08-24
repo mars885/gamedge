@@ -42,6 +42,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -121,7 +122,6 @@ private enum class State {
 
 // Try out this again when a new version of MotionLayout for compose
 // comes out (as of 12.06.2022, the latest is 1.1.0-alpha02).
-@OptIn(ExperimentalMotionApi::class)
 @Composable
 internal fun GameInfoAnimatableHeader(
     headerInfo: GameInfoHeaderUiModel,
@@ -135,6 +135,7 @@ internal fun GameInfoAnimatableHeader(
     val progress by animateFloatAsState(
         targetValue = if (state == State.Expanded) 0f else 1f,
         animationSpec = tween(3000),
+        label = "GameInfoAnimatableHeaderProgress",
     )
 
     val artworks = headerInfo.artworks
@@ -143,7 +144,7 @@ internal fun GameInfoAnimatableHeader(
         artworks.size == 1 &&
         artworks.single() is GameInfoArtworkUiModel.DefaultImage
     }
-    var selectedArtworkPage by remember { mutableStateOf(0) }
+    var selectedArtworkPage by remember { mutableIntStateOf(0) }
     var secondTitleText by rememberSaveable { mutableStateOf("") }
     val isSecondTitleVisible by remember {
         derivedStateOf {

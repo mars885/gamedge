@@ -30,6 +30,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,7 +50,7 @@ private const val ContentMaxLines = 4
 @Composable
 internal fun GameInfoSummary(summary: String) {
     var hasTextBeenLaidOut by rememberSaveable { mutableStateOf(false) }
-    var collapsedHeight by rememberSaveable { mutableStateOf(0) }
+    var collapsedHeight by rememberSaveable { mutableIntStateOf(0) }
     var isExpanded by rememberSaveable { mutableStateOf(false) }
     var isExpandable by rememberSaveable { mutableStateOf(true) }
     val cardClickableModifier by remember {
