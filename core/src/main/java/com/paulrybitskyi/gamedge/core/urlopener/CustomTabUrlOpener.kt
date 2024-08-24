@@ -85,13 +85,13 @@ internal class CustomTabUrlOpener @Inject constructor(
                     BrowserColors(
                         toolbar = R.color.dark_colorPrimary,
                         secondaryToolbar = R.color.dark_colorSurface,
-                        navigationBar = R.color.dark_colorNavigationBar,
+                        navigationBar = R.color.dark_colorPrimary,
                     )
                 } else {
                     BrowserColors(
                         toolbar = R.color.light_colorPrimary,
                         secondaryToolbar = R.color.light_colorSurface,
-                        navigationBar = R.color.light_colorNavigationBar,
+                        navigationBar = R.color.light_colorPrimary,
                     )
                 }
             }

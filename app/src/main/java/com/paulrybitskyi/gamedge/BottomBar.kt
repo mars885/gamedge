@@ -22,7 +22,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -30,7 +31,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -82,7 +82,7 @@ private fun BottomBarNavigation(
     currentScreen: Screen,
 ) {
     BottomNavigation(
-        modifier = Modifier.navigationBarsPadding(),
+        windowInsets = WindowInsets.navigationBars,
         backgroundColor = GamedgeTheme.colors.primary,
     ) {
         for (bottomNavigationItemModel in BottomNavigationItemModel.entries) {

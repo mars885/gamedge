@@ -16,25 +16,27 @@
 
 package com.paulrybitskyi.gamedge
 
-import android.content.Context
-import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.snapshotFlow
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
-import com.paulrybitskyi.commons.ktx.intentFor
+import com.paulrybitskyi.commons.ktx.getCompatColor
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.execute
 import com.paulrybitskyi.gamedge.common.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.common.ui.LocalTextSharer
 import com.paulrybitskyi.gamedge.common.ui.LocalUrlOpener
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.sharers.TextSharer
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
@@ -48,13 +50,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    companion object {
-
-        fun newIntent(context: Context): Intent {
-            return context.intentFor<MainActivity>()
-        }
-    }
-
     @Inject lateinit var urlOpener: UrlOpener
     @Inject lateinit var textSharer: TextSharer
     @Inject lateinit var networkStateProvider: NetworkStateProvider
@@ -66,7 +61,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setupSplashScreen()
         super.onCreate(savedInstanceState)
-        setupSystemBars()
         setupCompose()
     }
 
@@ -77,20 +71,26 @@ class MainActivity : ComponentActivity() {
         installSplashScreen().setKeepOnScreenCondition(::shouldKeepSplashOpen)
     }
 
-    private fun setupSystemBars() {
-        // To be able to draw behind system bars & change their colors
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-    }
-
     private fun setupCompose() {
         setContent {
-            CompositionLocalProvider(LocalUrlOpener provides urlOpener) {
-                CompositionLocalProvider(LocalTextSharer provides textSharer) {
-                    CompositionLocalProvider(LocalNetworkStateProvider provides networkStateProvider) {
-                        GamedgeTheme(useDarkTheme = shouldUseDarkTheme()) {
-                            MainScreen()
-                        }
-                    }
+            CompositionLocalsSetup {
+                val useDarkTheme = shouldUseDarkTheme()
+
+                EdgeToEdgeHandler(useDarkTheme = useDarkTheme)
+
+                GamedgeTheme(useDarkTheme = useDarkTheme) {
+                    MainScreen()
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun CompositionLocalsSetup(content: @Composable () -> Unit) {
+        CompositionLocalProvider(LocalUrlOpener provides urlOpener) {
+            CompositionLocalProvider(LocalTextSharer provides textSharer) {
+                CompositionLocalProvider(LocalNetworkStateProvider provides networkStateProvider) {
+                    content()
                 }
             }
         }
@@ -115,6 +115,28 @@ class MainActivity : ComponentActivity() {
             Theme.LIGHT -> false
             Theme.DARK -> true
             Theme.SYSTEM -> isSystemInDarkTheme()
+        }
+    }
+
+    @Composable
+    private fun EdgeToEdgeHandler(useDarkTheme: Boolean) {
+        DisposableEffect(useDarkTheme) {
+            enableEdgeToEdge(
+                statusBarStyle = SystemBarStyle.dark(
+                    scrim = getCompatColor(R.color.colorDarkScrim),
+                ),
+                navigationBarStyle = SystemBarStyle.auto(
+                    // The default light scrim, as defined by androidx and the platform.
+                    // Taken from the EdgeToEdge.kt file.
+                    lightScrim = Color.argb(0xe6, 0xFF, 0xFF, 0xFF),
+                    // The default dark scrim, as defined by androidx and the platform.
+                    // Taken from the EdgeToEdge.kt file.
+                    darkScrim = Color.argb(0x80, 0x1b, 0x1b, 0x1b),
+                    detectDarkMode = { useDarkTheme },
+                ),
+            )
+
+            onDispose {}
         }
     }
 }

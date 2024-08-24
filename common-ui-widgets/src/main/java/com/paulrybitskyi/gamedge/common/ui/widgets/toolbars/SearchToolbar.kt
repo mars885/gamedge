@@ -20,12 +20,13 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -56,7 +57,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.core.R
 
@@ -67,7 +67,7 @@ fun SearchToolbar(
     queryText: String,
     placeholderText: String,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
+    windowInsets: WindowInsets = ToolbarDefaults.windowInsets,
     backgroundColor: Color = GamedgeTheme.colors.primary,
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = ToolbarElevation,
@@ -90,7 +90,7 @@ fun SearchToolbar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(contentPadding)
+                .windowInsetsPadding(windowInsets)
                 .height(ToolbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {

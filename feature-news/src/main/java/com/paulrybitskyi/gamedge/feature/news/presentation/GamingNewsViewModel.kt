@@ -136,7 +136,7 @@ internal class GamingNewsViewModel @Inject constructor(
                 }
 
                 emit(currentUiState.enableRefreshing())
-                // Adding a delay to prevent the SwipeRefresh from disappearing quickly
+                // Adding a delay to prevent the PullRefresh from disappearing quickly
                 delay(ARTICLES_REFRESH_DEFAULT_DELAY)
             }
             .onCompletion {

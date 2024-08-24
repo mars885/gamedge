@@ -22,10 +22,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
@@ -45,7 +42,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalUrlOpener
-import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.theme.subtitle3
 import com.paulrybitskyi.gamedge.common.ui.widgets.AnimatedContentContainer
@@ -74,7 +70,6 @@ private fun Settings(
     val urlOpener = LocalUrlOpener.current
     val context = LocalContext.current
 
-    NavBarColorHandler()
     CommandsHandler(viewModel = viewModel) { command ->
         when (command) {
             is SettingsCommand.OpenUrl -> {
@@ -102,14 +97,10 @@ private fun Settings(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
+        contentWindowInsets = WindowInsets.statusBars,
         modifier = modifier,
         topBar = {
-            Toolbar(
-                title = stringResource(R.string.settings_toolbar_title),
-                contentPadding = WindowInsets.statusBars
-                    .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
-                    .asPaddingValues(),
-            )
+            Toolbar(title = stringResource(R.string.settings_toolbar_title))
         },
     ) { paddingValues ->
         AnimatedContentContainer(

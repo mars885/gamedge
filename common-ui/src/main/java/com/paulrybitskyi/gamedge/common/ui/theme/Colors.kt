@@ -59,22 +59,6 @@ fun darkColors(): Colors {
     )
 }
 
-val Colors.statusBar: Color
-    @Composable
-    @ReadOnlyComposable
-    get() = colorResource(R.color.colorStatusBar)
-
-val Colors.navBar: Color
-    @Composable
-    @ReadOnlyComposable
-    get() = colorResource(
-        if (isLight) {
-            R.color.light_colorNavigationBar
-        } else {
-            R.color.dark_colorNavigationBar
-        },
-    )
-
 val Colors.lightScrim: Color
     @Composable
     @ReadOnlyComposable

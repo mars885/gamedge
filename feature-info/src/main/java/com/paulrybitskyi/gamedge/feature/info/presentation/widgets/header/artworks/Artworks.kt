@@ -18,6 +18,8 @@ package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artwo
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
@@ -25,8 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import com.paulrybitskyi.gamedge.common.ui.clickable
 import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.images.secondaryImage
@@ -41,7 +41,7 @@ internal fun Artworks(
     onArtworkChanged: (artworkIndex: Int) -> Unit,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
 ) {
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = artworks::size)
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }
@@ -49,11 +49,10 @@ internal fun Artworks(
     }
 
     HorizontalPager(
-        count = artworks.size,
-        modifier = modifier,
         state = pagerState,
-        key = { page -> artworks[page].id },
+        modifier = modifier,
         userScrollEnabled = isScrollingEnabled,
+        key = { page -> artworks[page].id },
     ) { page ->
         Artwork(
             artwork = artworks[page],
