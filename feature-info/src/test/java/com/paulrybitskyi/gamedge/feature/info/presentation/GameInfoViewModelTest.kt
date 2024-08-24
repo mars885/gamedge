@@ -35,7 +35,6 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameIn
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinkUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModelMapper
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.finiteUiState
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModel
 import io.mockk.coEvery
