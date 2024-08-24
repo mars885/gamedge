@@ -32,14 +32,8 @@ import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
-import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
-import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategoryUiState
-import com.paulrybitskyi.gamedge.feature.category.widgets.disableLoading
-import com.paulrybitskyi.gamedge.feature.category.widgets.enableLoading
 import com.paulrybitskyi.gamedge.feature.category.widgets.mapToUiModels
-import com.paulrybitskyi.gamedge.feature.category.widgets.toEmptyState
-import com.paulrybitskyi.gamedge.feature.category.widgets.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin

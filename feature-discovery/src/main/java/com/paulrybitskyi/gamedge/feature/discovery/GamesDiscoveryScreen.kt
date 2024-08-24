@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.discovery.widgets
+package com.paulrybitskyi.gamedge.feature.discovery
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.WindowInsets
@@ -43,10 +43,9 @@ import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.common.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
-import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryCategory
-import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryViewModel
-import com.paulrybitskyi.gamedge.feature.discovery.R
-import com.paulrybitskyi.gamedge.feature.discovery.titleId
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameUiModel
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.mapToCategoryUiModels
+import com.paulrybitskyi.gamedge.feature.discovery.widgets.mapToDiscoveryUiModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.paulrybitskyi.gamedge.core.R as CoreR
@@ -56,11 +55,11 @@ import com.paulrybitskyi.gamedge.core.R as CoreR
 private const val PullRefreshIntentionalDelay = 300L
 
 @Composable
-fun GamesDiscovery(
+fun GamesDiscoveryScreen(
     modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
-    GamesDiscovery(
+    GamesDiscoveryScreen(
         viewModel = hiltViewModel(),
         modifier = modifier,
         onRoute = onRoute,
@@ -68,14 +67,14 @@ fun GamesDiscovery(
 }
 
 @Composable
-private fun GamesDiscovery(
+private fun GamesDiscoveryScreen(
     viewModel: GamesDiscoveryViewModel,
     modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
     CommandsHandler(viewModel = viewModel)
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
-    GamesDiscovery(
+    GamesDiscoveryScreen(
         items = viewModel.items.collectAsState().value,
         onCategoryMoreButtonClicked = viewModel::onCategoryMoreButtonClicked,
         onSearchButtonClicked = viewModel::onSearchButtonClicked,
@@ -86,7 +85,7 @@ private fun GamesDiscovery(
 }
 
 @Composable
-private fun GamesDiscovery(
+private fun GamesDiscoveryScreen(
     items: List<GamesDiscoveryItemUiModel>,
     onSearchButtonClicked: () -> Unit,
     onCategoryMoreButtonClicked: (category: String) -> Unit,
@@ -159,7 +158,7 @@ private fun CategoryPreviewItems(
 
 @PreviewLightDark
 @Composable
-private fun GamesDiscoverySuccessStatePreview() {
+private fun GamesDiscoveryScreenSuccessStatePreview() {
     val games = listOf(
         "Ghost of Tsushima: Director's Cut",
         "Outer Wilds: Echoes of the Eye",
@@ -181,7 +180,7 @@ private fun GamesDiscoverySuccessStatePreview() {
     }
 
     GamedgeTheme {
-        GamesDiscovery(
+        GamesDiscoveryScreen(
             items = items,
             onSearchButtonClicked = {},
             onCategoryMoreButtonClicked = {},
@@ -193,7 +192,7 @@ private fun GamesDiscoverySuccessStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun GamesDiscoveryEmptyStatePreview() {
+private fun GamesDiscoveryScreenEmptyStatePreview() {
     val items = GamesDiscoveryCategory.entries.map { category ->
         GamesDiscoveryItemUiModel(
             id = category.id,
@@ -205,7 +204,7 @@ private fun GamesDiscoveryEmptyStatePreview() {
     }
 
     GamedgeTheme {
-        GamesDiscovery(
+        GamesDiscoveryScreen(
             items = items,
             onSearchButtonClicked = {},
             onCategoryMoreButtonClicked = {},

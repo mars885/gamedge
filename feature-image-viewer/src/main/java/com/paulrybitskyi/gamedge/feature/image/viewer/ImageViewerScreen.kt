@@ -70,15 +70,15 @@ private const val ZoomOverSnapScaleMin = 1f
 private const val ZoomOverSnapScaleMax = 3f
 
 @Composable
-fun ImageViewer(onRoute: (Route) -> Unit) {
-    ImageViewer(
+fun ImageViewerScreen(onRoute: (Route) -> Unit) {
+    ImageViewerScreen(
         viewModel = hiltViewModel(),
         onRoute = onRoute,
     )
 }
 
 @Composable
-private fun ImageViewer(
+private fun ImageViewerScreen(
     viewModel: ImageViewerViewModel,
     onRoute: (Route) -> Unit,
 ) {
@@ -93,7 +93,7 @@ private fun ImageViewer(
         }
     }
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
-    ImageViewer(
+    ImageViewerScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onBackPressed = viewModel::onBackPressed,
         onToolbarRightBtnClicked = viewModel::onToolbarRightButtonClicked,
@@ -103,7 +103,7 @@ private fun ImageViewer(
 }
 
 @Composable
-private fun ImageViewer(
+private fun ImageViewerScreen(
     uiState: ImageViewerUiState,
     onBackPressed: () -> Unit,
     onToolbarRightBtnClicked: () -> Unit,
@@ -282,9 +282,9 @@ private fun ImageItem(
 
 @PreviewLightDark
 @Composable
-private fun ImageViewerPreview() {
+private fun ImageViewerScreenPreview() {
     GamedgeTheme {
-        ImageViewer(
+        ImageViewerScreen(
             uiState = ImageViewerUiState(
                 toolbarTitle = "Image",
                 imageUrls = emptyList(),

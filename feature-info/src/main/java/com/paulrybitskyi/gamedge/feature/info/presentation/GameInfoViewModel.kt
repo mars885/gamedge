@@ -34,10 +34,6 @@ import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ToggleGameLi
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinkUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModelMapper
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiState
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.toEmptyState
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.toLoadingState
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.toSuccessState
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel

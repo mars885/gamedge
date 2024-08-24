@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.news.presentation.widgets
+package com.paulrybitskyi.gamedge.feature.news.presentation
 
 import androidx.compose.runtime.Immutable
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
+import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.GamingNewsItemUiModel
 
 @Immutable
 internal data class GamingNewsUiState(

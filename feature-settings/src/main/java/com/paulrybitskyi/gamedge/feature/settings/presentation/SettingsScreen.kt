@@ -55,15 +55,15 @@ import com.paulrybitskyi.gamedge.feature.settings.domain.entities.Theme
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
-fun Settings(modifier: Modifier) {
-    Settings(
+fun SettingsScreen(modifier: Modifier) {
+    SettingsScreen(
         viewModel = hiltViewModel(),
         modifier = modifier,
     )
 }
 
 @Composable
-private fun Settings(
+private fun SettingsScreen(
     viewModel: SettingsViewModel,
     modifier: Modifier,
 ) {
@@ -79,7 +79,7 @@ private fun Settings(
             }
         }
     }
-    Settings(
+    SettingsScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onSettingClicked = viewModel::onSettingClicked,
         onThemePicked = viewModel::onThemePicked,
@@ -89,7 +89,7 @@ private fun Settings(
 }
 
 @Composable
-private fun Settings(
+private fun SettingsScreen(
     uiState: SettingsUiState,
     onSettingClicked: (SettingsSectionItemUiModel) -> Unit,
     onThemePicked: (Theme) -> Unit,
@@ -285,9 +285,9 @@ private fun ThemePickerDialogOption(
 
 @PreviewLightDark
 @Composable
-private fun SettingsLoadingStatePreview() {
+private fun SettingsScreenLoadingStatePreview() {
     GamedgeTheme {
-        Settings(
+        SettingsScreen(
             uiState = SettingsUiState(
                 isLoading = false,
                 sections = emptyList(),
@@ -303,9 +303,9 @@ private fun SettingsLoadingStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun SettingsSuccessStatePreview() {
+private fun SettingsScreenSuccessStatePreview() {
     GamedgeTheme {
-        Settings(
+        SettingsScreen(
             uiState = SettingsUiState(
                 isLoading = false,
                 sections = listOf(
