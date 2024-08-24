@@ -52,21 +52,21 @@ import com.paulrybitskyi.gamedge.core.R as CoreR
 private const val KeyboardPopupIntentionalDelay = 300L
 
 @Composable
-fun GamesSearch(onRoute: (Route) -> Unit) {
-    GamesSearch(
+fun GamesSearchScreen(onRoute: (Route) -> Unit) {
+    GamesSearchScreen(
         viewModel = hiltViewModel(),
         onRoute = onRoute,
     )
 }
 
 @Composable
-private fun GamesSearch(
+private fun GamesSearchScreen(
     viewModel: GamesSearchViewModel,
     onRoute: (Route) -> Unit,
 ) {
     CommandsHandler(viewModel = viewModel)
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
-    GamesSearch(
+    GamesSearchScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onSearchConfirmed = viewModel::onSearchConfirmed,
         onBackButtonClicked = viewModel::onToolbarBackButtonClicked,
@@ -78,7 +78,7 @@ private fun GamesSearch(
 }
 
 @Composable
-private fun GamesSearch(
+private fun GamesSearchScreen(
     uiState: GamesSearchUiState,
     onSearchConfirmed: (query: String) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -137,9 +137,9 @@ private fun GamesSearch(
 
 @PreviewLightDark
 @Composable
-private fun GamesSearchSuccessStatePreview() {
+private fun GamesSearchScreenSuccessStatePreview() {
     GamedgeTheme {
-        GamesSearch(
+        GamesSearchScreen(
             uiState = GamesSearchUiState(
                 queryText = "God of War",
                 gamesUiState = GamesUiState(
@@ -189,9 +189,9 @@ private fun GamesSearchSuccessStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun GamesSearchEmptyStatePreview() {
+private fun GamesSearchScreenEmptyStatePreview() {
     GamedgeTheme {
-        GamesSearch(
+        GamesSearchScreen(
             uiState = GamesSearchUiState(
                 queryText = "God of War",
                 gamesUiState = GamesUiState(
@@ -213,9 +213,9 @@ private fun GamesSearchEmptyStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun GamesSearchLoadingStatePreview() {
+private fun GamesSearchScreenLoadingStatePreview() {
     GamedgeTheme {
-        GamesSearch(
+        GamesSearchScreen(
             uiState = GamesSearchUiState(
                 queryText = "God of War",
                 gamesUiState = GamesUiState(

@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main
+package com.paulrybitskyi.gamedge.feature.info.presentation
 
 import androidx.compose.runtime.Immutable
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModel
 
 @Immutable
 internal data class GameInfoUiState(

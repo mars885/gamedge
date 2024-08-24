@@ -39,11 +39,11 @@ import com.paulrybitskyi.gamedge.feature.likes.R
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
-fun LikedGames(
+fun LikedGamesScreen(
     modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
-    LikedGames(
+    LikedGamesScreen(
         viewModel = hiltViewModel(),
         modifier = modifier,
         onRoute = onRoute,
@@ -51,14 +51,14 @@ fun LikedGames(
 }
 
 @Composable
-private fun LikedGames(
+private fun LikedGamesScreen(
     viewModel: LikedGamesViewModel,
     modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
     CommandsHandler(viewModel = viewModel)
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
-    LikedGames(
+    LikedGamesScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onSearchButtonClicked = viewModel::onSearchButtonClicked,
         onGameClicked = viewModel::onGameClicked,
@@ -68,7 +68,7 @@ private fun LikedGames(
 }
 
 @Composable
-private fun LikedGames(
+private fun LikedGamesScreen(
     uiState: GamesUiState,
     onSearchButtonClicked: () -> Unit,
     onGameClicked: (GameUiModel) -> Unit,
@@ -97,9 +97,9 @@ private fun LikedGames(
 
 @PreviewLightDark
 @Composable
-private fun LikedGamesPreview() {
+private fun LikedGamesScreenPreview() {
     GamedgeTheme {
-        LikedGames(
+        LikedGamesScreen(
             uiState = GamesUiState(
                 isLoading = false,
                 infoIconId = CoreR.drawable.gamepad_variant_outline,

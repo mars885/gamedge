@@ -31,10 +31,6 @@ import com.paulrybitskyi.gamedge.core.utils.onError
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.GamesDiscoveryItemGameUiModelMapper
 import com.paulrybitskyi.gamedge.feature.discovery.mapping.mapToUiModels
 import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemGameUiModel
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscoveryItemUiModel
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.hideProgressBar
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.showProgressBar
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
