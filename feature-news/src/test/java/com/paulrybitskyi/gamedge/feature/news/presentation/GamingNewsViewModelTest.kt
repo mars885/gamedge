@@ -30,7 +30,6 @@ import com.paulrybitskyi.gamedge.feature.news.domain.usecases.ObserveArticlesUse
 import com.paulrybitskyi.gamedge.feature.news.domain.usecases.RefreshArticlesUseCase
 import com.paulrybitskyi.gamedge.feature.news.presentation.mapping.GamingNewsItemUiModelMapper
 import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.GamingNewsItemUiModel
-import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.finiteUiState
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow

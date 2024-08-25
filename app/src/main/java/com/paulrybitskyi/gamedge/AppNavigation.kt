@@ -23,32 +23,32 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
 import com.paulrybitskyi.gamedge.common.ui.HorizontalSliding
 import com.paulrybitskyi.gamedge.common.ui.OvershootScaling
 import com.paulrybitskyi.gamedge.feature.category.GamesCategoryRoute
-import com.paulrybitskyi.gamedge.feature.category.widgets.GamesCategory
+import com.paulrybitskyi.gamedge.feature.category.GamesCategoryScreen
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryRoute
-import com.paulrybitskyi.gamedge.feature.discovery.widgets.GamesDiscovery
-import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewer
+import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryScreen
 import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerRoute
+import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerScreen
 import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoRoute
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfo
-import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGames
+import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoScreen
 import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesRoute
-import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.GamingNews
-import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearch
+import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesScreen
+import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsScreen
 import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchRoute
-import com.paulrybitskyi.gamedge.feature.settings.presentation.Settings
+import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchScreen
+import com.paulrybitskyi.gamedge.feature.settings.presentation.SettingsScreen
 
 @Composable
 internal fun AppNavigation(
     navController: NavHostController,
     modifier: Modifier,
 ) {
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = START_SCREEN.route,
         enterTransition = { EnterTransition.None },
@@ -98,7 +98,7 @@ private fun NavGraphBuilder.discoverScreen(
         },
         popExitTransition = { null },
     ) {
-        GamesDiscovery(modifier) { route ->
+        GamesDiscoveryScreen(modifier) { route ->
             when (route) {
                 is GamesDiscoveryRoute.Search -> {
                     navController.navigate(Screen.GamesSearch.route)
@@ -137,7 +137,7 @@ private fun NavGraphBuilder.likesScreen(
         },
         popExitTransition = { null },
     ) {
-        LikedGames(modifier) { route ->
+        LikedGamesScreen(modifier) { route ->
             when (route) {
                 is LikedGamesRoute.Search -> {
                     navController.navigate(Screen.GamesSearch.route)
@@ -154,7 +154,7 @@ private fun NavGraphBuilder.newsScreen(modifier: Modifier) {
     composable(
         route = Screen.News.route,
     ) {
-        GamingNews(modifier)
+        GamingNewsScreen(modifier)
     }
 }
 
@@ -162,7 +162,7 @@ private fun NavGraphBuilder.settingsScreen(modifier: Modifier) {
     composable(
         route = Screen.Settings.route,
     ) {
-        Settings(modifier)
+        SettingsScreen(modifier)
     }
 }
 
@@ -200,7 +200,7 @@ private fun NavGraphBuilder.gamesSearchScreen(navController: NavHostController) 
             }
         },
     ) {
-        GamesSearch { route ->
+        GamesSearchScreen { route ->
             when (route) {
                 is GamesSearchRoute.Info -> {
                     navController.navigate(Screen.GameInfo.createLink(route.gameId))
@@ -244,7 +244,7 @@ private fun NavGraphBuilder.gamesCategoryScreen(navController: NavHostController
             }
         },
     ) {
-        GamesCategory { route ->
+        GamesCategoryScreen { route ->
             when (route) {
                 is GamesCategoryRoute.Info -> {
                     navController.navigate(Screen.GameInfo.createLink(route.gameId))
@@ -302,7 +302,7 @@ private fun NavGraphBuilder.gameInfoScreen(navController: NavHostController) {
             }
         },
     ) {
-        GameInfo { route ->
+        GameInfoScreen { route ->
             when (route) {
                 is GameInfoRoute.ImageViewer -> {
                     navController.navigate(
@@ -356,7 +356,7 @@ private fun NavGraphBuilder.imageViewerScreen(navController: NavHostController) 
             }
         },
     ) {
-        ImageViewer { route ->
+        ImageViewerScreen { route ->
             when (route) {
                 is ImageViewerRoute.Back -> navController.popBackStack()
             }

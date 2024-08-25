@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.category.widgets
+package com.paulrybitskyi.gamedge.feature.category
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
@@ -40,7 +39,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
@@ -51,27 +49,25 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
-import com.paulrybitskyi.gamedge.feature.category.GamesCategoryViewModel
-import com.paulrybitskyi.gamedge.feature.category.R
+import com.paulrybitskyi.gamedge.feature.category.widgets.rememberGamesGridConfig
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
-fun GamesCategory(onRoute: (Route) -> Unit) {
-    GamesCategory(
+fun GamesCategoryScreen(onRoute: (Route) -> Unit) {
+    GamesCategoryScreen(
         viewModel = hiltViewModel(),
         onRoute = onRoute,
     )
 }
 
 @Composable
-private fun GamesCategory(
+private fun GamesCategoryScreen(
     viewModel: GamesCategoryViewModel,
     onRoute: (Route) -> Unit,
 ) {
-    NavBarColorHandler()
     CommandsHandler(viewModel = viewModel)
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
-    GamesCategory(
+    GamesCategoryScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onBackButtonClicked = viewModel::onToolbarLeftButtonClicked,
         onGameClicked = viewModel::onGameClicked,
@@ -80,20 +76,17 @@ private fun GamesCategory(
 }
 
 @Composable
-private fun GamesCategory(
+private fun GamesCategoryScreen(
     uiState: GamesCategoryUiState,
     onBackButtonClicked: () -> Unit,
     onGameClicked: (GameCategoryUiModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
     Scaffold(
-        modifier = Modifier.navigationBarsPadding(),
+        contentWindowInsets = WindowInsets.statusBars,
         topBar = {
             Toolbar(
                 title = uiState.title,
-                contentPadding = WindowInsets.statusBars
-                    .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
-                    .asPaddingValues(),
                 leftButtonIcon = painterResource(CoreR.drawable.arrow_left),
                 onLeftButtonClick = onBackButtonClicked,
             )
@@ -105,15 +98,24 @@ private fun GamesCategory(
         ) { finiteUiState ->
             when (finiteUiState) {
                 FiniteUiState.Empty -> {
-                    EmptyState(modifier = Modifier.align(Alignment.Center))
+                    EmptyState(
+                        modifier = Modifier
+                            .navigationBarsPadding()
+                            .align(Alignment.Center),
+                    )
                 }
                 FiniteUiState.Loading -> {
-                    LoadingState(modifier = Modifier.align(Alignment.Center))
+                    LoadingState(
+                        modifier = Modifier
+                            .navigationBarsPadding()
+                            .align(Alignment.Center),
+                    )
                 }
                 FiniteUiState.Success -> {
                     SuccessState(
                         uiState = uiState,
                         modifier = Modifier.matchParentSize(),
+                        contentPadding = WindowInsets.navigationBars.asPaddingValues(),
                         onGameClicked = onGameClicked,
                         onBottomReached = onBottomReached,
                     )
@@ -141,6 +143,7 @@ private fun EmptyState(modifier: Modifier) {
 private fun SuccessState(
     uiState: GamesCategoryUiState,
     modifier: Modifier,
+    contentPadding: PaddingValues,
     onGameClicked: (GameCategoryUiModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
@@ -151,6 +154,7 @@ private fun SuccessState(
     ) {
         VerticalGrid(
             games = uiState.games,
+            contentPadding = contentPadding,
             onGameClicked = onGameClicked,
             onBottomReached = onBottomReached,
         )
@@ -160,6 +164,7 @@ private fun SuccessState(
 @Composable
 private fun VerticalGrid(
     games: List<GameCategoryUiModel>,
+    contentPadding: PaddingValues,
     onGameClicked: (GameCategoryUiModel) -> Unit,
     onBottomReached: () -> Unit,
 ) {
@@ -168,7 +173,10 @@ private fun VerticalGrid(
     val gridSpanCount = gridConfig.spanCount
     val lastIndex = games.lastIndex
 
-    LazyVerticalGrid(columns = GridCells.Fixed(gridConfig.spanCount)) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(gridConfig.spanCount),
+        contentPadding = contentPadding,
+    ) {
         itemsIndexed(items = games) { index, game ->
             if (index == lastIndex) {
                 LaunchedEffect(lastIndex) {
@@ -204,7 +212,7 @@ private fun VerticalGrid(
 
 @PreviewLightDark
 @Composable
-private fun GamesCategorySuccessStatePreview() {
+private fun GamesCategoryScreenSuccessStatePreview() {
     val games = buildList {
         repeat(15) { index ->
             add(
@@ -218,7 +226,7 @@ private fun GamesCategorySuccessStatePreview() {
     }
 
     GamedgeTheme {
-        GamesCategory(
+        GamesCategoryScreen(
             uiState = GamesCategoryUiState(
                 isLoading = false,
                 title = "Popular",
@@ -233,9 +241,9 @@ private fun GamesCategorySuccessStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun GamesCategoryEmptyStatePreview() {
+private fun GamesCategoryScreenEmptyStatePreview() {
     GamedgeTheme {
-        GamesCategory(
+        GamesCategoryScreen(
             uiState = GamesCategoryUiState(
                 isLoading = false,
                 title = "Popular",
@@ -250,9 +258,9 @@ private fun GamesCategoryEmptyStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun GamesCategoryLoadingStatePreview() {
+private fun GamesCategoryScreenLoadingStatePreview() {
     GamedgeTheme {
-        GamesCategory(
+        GamesCategoryScreen(
             uiState = GamesCategoryUiState(
                 isLoading = true,
                 title = "Popular",

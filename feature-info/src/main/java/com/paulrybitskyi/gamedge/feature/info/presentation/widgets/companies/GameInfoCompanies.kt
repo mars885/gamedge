@@ -187,6 +187,7 @@ private fun CompanyDetails(
             )
             Text(
                 text = roles,
+                modifier = Modifier.padding(top = GamedgeTheme.spaces.spacing_1_0),
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 style = GamedgeTheme.typography.caption,

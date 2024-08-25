@@ -21,11 +21,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 internal fun MainScreen() {
-    val navController = rememberAnimatedNavController()
+    val navController = rememberNavController()
     val currentScreen by navController.currentScreenAsState()
 
     Scaffold(

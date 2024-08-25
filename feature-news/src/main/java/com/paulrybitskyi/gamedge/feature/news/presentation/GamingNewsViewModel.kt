@@ -30,12 +30,6 @@ import com.paulrybitskyi.gamedge.feature.news.domain.usecases.RefreshArticlesUse
 import com.paulrybitskyi.gamedge.feature.news.presentation.mapping.GamingNewsItemUiModelMapper
 import com.paulrybitskyi.gamedge.feature.news.presentation.mapping.mapToUiModels
 import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.GamingNewsItemUiModel
-import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.GamingNewsUiState
-import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.disableRefreshing
-import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.enableRefreshing
-import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.toEmptyState
-import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.toLoadingState
-import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.toSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -136,7 +130,7 @@ internal class GamingNewsViewModel @Inject constructor(
                 }
 
                 emit(currentUiState.enableRefreshing())
-                // Adding a delay to prevent the SwipeRefresh from disappearing quickly
+                // Adding a delay to prevent the PullRefresh from disappearing quickly
                 delay(ARTICLES_REFRESH_DEFAULT_DELAY)
             }
             .onCompletion {

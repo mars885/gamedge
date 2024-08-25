@@ -39,10 +39,10 @@ dependencies {
     implementation(project(localModules.featureSearch))
     implementation(project(localModules.featureSettings))
 
+    implementation(libs.activity)
     implementation(libs.splash)
 
     implementation(libs.composeNavigation)
-    implementation(libs.accompanistNavigationAnimations)
 
     implementation(libs.commonsCore)
     implementation(libs.commonsKtx)

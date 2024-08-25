@@ -17,9 +17,6 @@
 package com.paulrybitskyi.gamedge.feature.likes.presentation
 
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.Scaffold
@@ -31,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
@@ -43,11 +39,11 @@ import com.paulrybitskyi.gamedge.feature.likes.R
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
-fun LikedGames(
+fun LikedGamesScreen(
     modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
-    LikedGames(
+    LikedGamesScreen(
         viewModel = hiltViewModel(),
         modifier = modifier,
         onRoute = onRoute,
@@ -55,15 +51,14 @@ fun LikedGames(
 }
 
 @Composable
-private fun LikedGames(
+private fun LikedGamesScreen(
     viewModel: LikedGamesViewModel,
     modifier: Modifier,
     onRoute: (Route) -> Unit,
 ) {
-    NavBarColorHandler()
     CommandsHandler(viewModel = viewModel)
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
-    LikedGames(
+    LikedGamesScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onSearchButtonClicked = viewModel::onSearchButtonClicked,
         onGameClicked = viewModel::onGameClicked,
@@ -73,7 +68,7 @@ private fun LikedGames(
 }
 
 @Composable
-private fun LikedGames(
+private fun LikedGamesScreen(
     uiState: GamesUiState,
     onSearchButtonClicked: () -> Unit,
     onGameClicked: (GameUiModel) -> Unit,
@@ -81,13 +76,11 @@ private fun LikedGames(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
+        contentWindowInsets = WindowInsets.statusBars,
         modifier = modifier,
         topBar = {
             Toolbar(
                 title = stringResource(R.string.liked_games_toolbar_title),
-                contentPadding = WindowInsets.statusBars
-                    .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
-                    .asPaddingValues(),
                 rightButtonIcon = painterResource(CoreR.drawable.magnify),
                 onRightButtonClick = onSearchButtonClicked,
             )
@@ -104,9 +97,9 @@ private fun LikedGames(
 
 @PreviewLightDark
 @Composable
-private fun LikedGamesPreview() {
+private fun LikedGamesScreenPreview() {
     GamedgeTheme {
-        LikedGames(
+        LikedGamesScreen(
             uiState = GamesUiState(
                 isLoading = false,
                 infoIconId = CoreR.drawable.gamepad_variant_outline,

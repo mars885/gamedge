@@ -17,10 +17,8 @@
 package com.paulrybitskyi.gamedge.feature.search.presentation
 
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.Scaffold
@@ -36,7 +34,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.common.ui.OnLifecycleEvent
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
@@ -55,22 +52,21 @@ import com.paulrybitskyi.gamedge.core.R as CoreR
 private const val KeyboardPopupIntentionalDelay = 300L
 
 @Composable
-fun GamesSearch(onRoute: (Route) -> Unit) {
-    GamesSearch(
+fun GamesSearchScreen(onRoute: (Route) -> Unit) {
+    GamesSearchScreen(
         viewModel = hiltViewModel(),
         onRoute = onRoute,
     )
 }
 
 @Composable
-private fun GamesSearch(
+private fun GamesSearchScreen(
     viewModel: GamesSearchViewModel,
     onRoute: (Route) -> Unit,
 ) {
-    NavBarColorHandler()
     CommandsHandler(viewModel = viewModel)
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
-    GamesSearch(
+    GamesSearchScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onSearchConfirmed = viewModel::onSearchConfirmed,
         onBackButtonClicked = viewModel::onToolbarBackButtonClicked,
@@ -82,7 +78,7 @@ private fun GamesSearch(
 }
 
 @Composable
-private fun GamesSearch(
+private fun GamesSearchScreen(
     uiState: GamesSearchUiState,
     onSearchConfirmed: (query: String) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -97,14 +93,11 @@ private fun GamesSearch(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
-        modifier = Modifier.navigationBarsPadding(),
+        contentWindowInsets = WindowInsets.statusBars,
         topBar = {
             SearchToolbar(
                 queryText = uiState.queryText,
                 placeholderText = stringResource(R.string.games_search_toolbar_hint),
-                contentPadding = WindowInsets.statusBars
-                    .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Vertical)
-                    .asPaddingValues(),
                 focusRequester = focusRequester,
                 onQueryChanged = onQueryChanged,
                 onSearchConfirmed = { query ->
@@ -119,6 +112,7 @@ private fun GamesSearch(
         Games(
             uiState = uiState.gamesUiState,
             modifier = Modifier.padding(paddingValues),
+            contentPadding = WindowInsets.navigationBars.asPaddingValues(),
             onGameClicked = onGameClicked,
             onBottomReached = onBottomReached,
         )
@@ -143,9 +137,9 @@ private fun GamesSearch(
 
 @PreviewLightDark
 @Composable
-private fun GamesSearchSuccessStatePreview() {
+private fun GamesSearchScreenSuccessStatePreview() {
     GamedgeTheme {
-        GamesSearch(
+        GamesSearchScreen(
             uiState = GamesSearchUiState(
                 queryText = "God of War",
                 gamesUiState = GamesUiState(
@@ -195,9 +189,9 @@ private fun GamesSearchSuccessStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun GamesSearchEmptyStatePreview() {
+private fun GamesSearchScreenEmptyStatePreview() {
     GamedgeTheme {
-        GamesSearch(
+        GamesSearchScreen(
             uiState = GamesSearchUiState(
                 queryText = "God of War",
                 gamesUiState = GamesUiState(
@@ -219,9 +213,9 @@ private fun GamesSearchEmptyStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun GamesSearchLoadingStatePreview() {
+private fun GamesSearchScreenLoadingStatePreview() {
     GamedgeTheme {
-        GamesSearch(
+        GamesSearchScreen(
             uiState = GamesSearchUiState(
                 queryText = "God of War",
                 gamesUiState = GamesUiState(

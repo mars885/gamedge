@@ -16,11 +16,14 @@
 
 package com.paulrybitskyi.gamedge.common.ui.widgets
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material.pullrefresh.PullRefreshDefaults
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 
 @Composable
@@ -31,19 +34,25 @@ fun RefreshableContent(
     onRefreshRequested: (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing),
+    val refreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
         onRefresh = onRefreshRequested ?: {},
-        modifier = modifier,
-        swipeEnabled = isSwipeEnabled,
-        indicator = { state, refreshTrigger ->
-            SwipeRefreshIndicator(
-                state = state,
-                refreshTriggerDistance = refreshTrigger,
-                contentColor = GamedgeTheme.colors.secondary,
-                refreshingOffset = GamedgeTheme.spaces.spacing_6_0,
-            )
-        },
-        content = content,
+        refreshingOffset = PullRefreshDefaults.RefreshingOffset + GamedgeTheme.spaces.spacing_1_5,
     )
+
+    Box(
+        modifier = modifier.pullRefresh(
+            state = refreshState,
+            enabled = isSwipeEnabled,
+        ),
+    ) {
+        content()
+
+        PullRefreshIndicator(
+            refreshing = isRefreshing,
+            state = refreshState,
+            modifier = Modifier.align(Alignment.TopCenter),
+            contentColor = GamedgeTheme.colors.secondary,
+        )
+    }
 }

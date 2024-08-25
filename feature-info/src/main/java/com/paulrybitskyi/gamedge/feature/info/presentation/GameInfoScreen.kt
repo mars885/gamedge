@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main
+package com.paulrybitskyi.gamedge.feature.info.presentation
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,7 +43,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalUrlOpener
-import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
@@ -51,8 +52,6 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
 import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.categorypreview.GamesCategoryPreview
 import com.paulrybitskyi.gamedge.feature.info.R
-import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoCommand
-import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoViewModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.GameInfoSummary
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanies
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
@@ -63,6 +62,7 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameIn
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinkUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInfoLinks
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesType
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGamesUiModel
@@ -75,22 +75,21 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameIn
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
-fun GameInfo(onRoute: (Route) -> Unit) {
-    GameInfo(
+fun GameInfoScreen(onRoute: (Route) -> Unit) {
+    GameInfoScreen(
         viewModel = hiltViewModel(),
         onRoute = onRoute,
     )
 }
 
 @Composable
-private fun GameInfo(
+private fun GameInfoScreen(
     viewModel: GameInfoViewModel,
     onRoute: (Route) -> Unit,
 ) {
     val urlOpener = LocalUrlOpener.current
     val context = LocalContext.current
 
-    NavBarColorHandler()
     CommandsHandler(viewModel = viewModel) { command ->
         when (command) {
             is GameInfoCommand.OpenUrl -> {
@@ -101,7 +100,7 @@ private fun GameInfo(
         }
     }
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
-    GameInfo(
+    GameInfoScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onArtworkClicked = viewModel::onArtworkClicked,
         onBackButtonClicked = viewModel::onBackButtonClicked,
@@ -116,7 +115,7 @@ private fun GameInfo(
 }
 
 @Composable
-private fun GameInfo(
+private fun GameInfoScreen(
     uiState: GameInfoUiState,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -151,7 +150,7 @@ private fun GameInfo(
                 FiniteUiState.Success -> {
                     SuccessState(
                         gameInfo = checkNotNull(uiState.game),
-                        modifier = Modifier.navigationBarsPadding(),
+                        contentPadding = WindowInsets.navigationBars.asPaddingValues(),
                         onArtworkClicked = onArtworkClicked,
                         onBackButtonClicked = onBackButtonClicked,
                         onCoverClicked = onCoverClicked,
@@ -185,38 +184,7 @@ private fun EmptyState(modifier: Modifier) {
 @Composable
 private fun SuccessState(
     gameInfo: GameInfoUiModel,
-    modifier: Modifier,
-    onArtworkClicked: (artworkIndex: Int) -> Unit,
-    onBackButtonClicked: () -> Unit,
-    onCoverClicked: () -> Unit,
-    onLikeButtonClicked: () -> Unit,
-    onVideoClicked: (GameInfoVideoUiModel) -> Unit,
-    onScreenshotClicked: (screenshotIndex: Int) -> Unit,
-    onLinkClicked: (GameInfoLinkUiModel) -> Unit,
-    onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
-    onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
-) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Content(
-            gameInfo = gameInfo,
-            modifier = modifier,
-            onArtworkClicked = onArtworkClicked,
-            onBackButtonClicked = onBackButtonClicked,
-            onCoverClicked = onCoverClicked,
-            onLikeButtonClicked = onLikeButtonClicked,
-            onVideoClicked = onVideoClicked,
-            onScreenshotClicked = onScreenshotClicked,
-            onLinkClicked = onLinkClicked,
-            onCompanyClicked = onCompanyClicked,
-            onRelatedGameClicked = onRelatedGameClicked,
-        )
-    }
-}
-
-@Composable
-private fun Content(
-    gameInfo: GameInfoUiModel,
-    modifier: Modifier,
+    contentPadding: PaddingValues,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
@@ -228,7 +196,8 @@ private fun Content(
     onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = contentPadding,
         verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
     ) {
         headerItem(
@@ -431,9 +400,9 @@ private enum class GameInfoItem(
 @Preview(heightDp = 2000)
 @Preview(heightDp = 2000, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun GameInfoSuccessStateWithMaxUiElementsPreview() {
+private fun GameInfoScreenSuccessStateWithMaxUiElementsPreview() {
     GamedgeTheme {
-        GameInfo(
+        GameInfoScreen(
             uiState = GameInfoUiState(
                 isLoading = false,
                 game = buildFakeGameModel(),
@@ -453,7 +422,7 @@ private fun GameInfoSuccessStateWithMaxUiElementsPreview() {
 
 @PreviewLightDark
 @Composable
-private fun GameInfoSuccessStateWithMinUiElementsPreview() {
+private fun GameInfoScreenSuccessStateWithMinUiElementsPreview() {
     val game = buildFakeGameModel()
     val strippedGame = game.copy(
         headerModel = game.headerModel.copy(
@@ -472,7 +441,7 @@ private fun GameInfoSuccessStateWithMinUiElementsPreview() {
     )
 
     GamedgeTheme {
-        GameInfo(
+        GameInfoScreen(
             uiState = GameInfoUiState(
                 isLoading = false,
                 game = strippedGame,
@@ -492,9 +461,9 @@ private fun GameInfoSuccessStateWithMinUiElementsPreview() {
 
 @PreviewLightDark
 @Composable
-private fun GameInfoEmptyStatePreview() {
+private fun GameInfoScreenEmptyStatePreview() {
     GamedgeTheme {
-        GameInfo(
+        GameInfoScreen(
             uiState = GameInfoUiState(
                 isLoading = false,
                 game = null,
@@ -514,9 +483,9 @@ private fun GameInfoEmptyStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun GameInfoLoadingStatePreview() {
+private fun GameInfoScreenLoadingStatePreview() {
     GamedgeTheme {
-        GameInfo(
+        GameInfoScreen(
             uiState = GameInfoUiState(
                 isLoading = true,
                 game = null,

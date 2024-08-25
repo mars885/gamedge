@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.category.widgets
+package com.paulrybitskyi.gamedge.feature.category
 
 import androidx.compose.runtime.Immutable
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState

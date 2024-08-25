@@ -26,11 +26,6 @@
     <color name="light_colorOnSecondary">#611d12</color>
     <color name="light_colorOnBackground">#4d5c69</color>
     <color name="light_colorOnSurface">@color/light_colorOnBackground</color>
-    <!--
-        Has to be darker by default since android:windowLightNavigationBar
-        is allowed only from API Level 27.
-    -->
-    <color name="light_colorNavigationBar">#A1A1A1</color>
 
     <color name="dark_colorPrimary">#2B303C</color>
     <color name="dark_colorPrimaryVariant">#1D212B</color>
@@ -41,9 +36,7 @@
     <color name="dark_colorOnSecondary">#611d12</color>
     <color name="dark_colorOnBackground">#809aaf</color>
     <color name="dark_colorOnSurface">@color/dark_colorOnBackground</color>
-    <color name="dark_colorNavigationBar">#282d38</color>
 
-    <color name="colorStatusBar">@color/colorDarkScrim</color>
     <color name="colorLightScrim">#35000000</color>
     <color name="colorDarkScrim">#66000000</color>
 </resources>

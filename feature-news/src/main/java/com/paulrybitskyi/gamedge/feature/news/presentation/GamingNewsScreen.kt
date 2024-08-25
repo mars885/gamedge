@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package com.paulrybitskyi.gamedge.feature.news.presentation.widgets
+package com.paulrybitskyi.gamedge.feature.news.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,7 +38,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalUrlOpener
-import com.paulrybitskyi.gamedge.common.ui.NavBarColorHandler
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
@@ -50,27 +46,26 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.common.ui.widgets.toolbars.Toolbar
 import com.paulrybitskyi.gamedge.feature.news.R
-import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsCommand
-import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsViewModel
+import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.GamingNewsItem
+import com.paulrybitskyi.gamedge.feature.news.presentation.widgets.GamingNewsItemUiModel
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
-fun GamingNews(modifier: Modifier) {
-    GamingNews(
+fun GamingNewsScreen(modifier: Modifier) {
+    GamingNewsScreen(
         viewModel = hiltViewModel(),
         modifier = modifier,
     )
 }
 
 @Composable
-private fun GamingNews(
+private fun GamingNewsScreen(
     viewModel: GamingNewsViewModel,
     modifier: Modifier,
 ) {
     val urlOpener = LocalUrlOpener.current
     val context = LocalContext.current
 
-    NavBarColorHandler()
     CommandsHandler(viewModel = viewModel) { command ->
         when (command) {
             is GamingNewsCommand.OpenUrl -> {
@@ -80,7 +75,7 @@ private fun GamingNews(
             }
         }
     }
-    GamingNews(
+    GamingNewsScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onNewsItemClicked = viewModel::onNewsItemClicked,
         onRefreshRequested = viewModel::onRefreshRequested,
@@ -89,21 +84,17 @@ private fun GamingNews(
 }
 
 @Composable
-private fun GamingNews(
+private fun GamingNewsScreen(
     uiState: GamingNewsUiState,
     onNewsItemClicked: (GamingNewsItemUiModel) -> Unit,
     onRefreshRequested: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
+        contentWindowInsets = WindowInsets.statusBars,
         modifier = modifier,
         topBar = {
-            Toolbar(
-                title = stringResource(R.string.gaming_news_toolbar_title),
-                contentPadding = WindowInsets.statusBars
-                    .only(WindowInsetsSides.Vertical + WindowInsetsSides.Horizontal)
-                    .asPaddingValues(),
-            )
+            Toolbar(title = stringResource(R.string.gaming_news_toolbar_title))
         },
     ) { paddingValues ->
         AnimatedContentContainer(
@@ -143,7 +134,7 @@ private fun LoadingState(modifier: Modifier) {
 @Composable
 private fun EmptyState(modifier: Modifier) {
     Column(
-        // verticalScroll is to enable SwipeRefresh to work
+        // verticalScroll is to enable PullRefresh to work
         // when the screen is in empty state
         modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
@@ -178,7 +169,7 @@ private fun SuccessState(
 
 @PreviewLightDark
 @Composable
-private fun GamingNewsSuccessStatePreview() {
+private fun GamingNewsScreenSuccessStatePreview() {
     val news = listOf(
         GamingNewsItemUiModel(
             id = 1,
@@ -210,7 +201,7 @@ private fun GamingNewsSuccessStatePreview() {
     )
 
     GamedgeTheme {
-        GamingNews(
+        GamingNewsScreen(
             uiState = GamingNewsUiState(
                 news = news,
             ),
@@ -222,9 +213,9 @@ private fun GamingNewsSuccessStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun GamingNewsEmptyStatePreview() {
+private fun GamingNewsScreenEmptyStatePreview() {
     GamedgeTheme {
-        GamingNews(
+        GamingNewsScreen(
             uiState = GamingNewsUiState(),
             onNewsItemClicked = {},
             onRefreshRequested = {},
@@ -234,9 +225,9 @@ private fun GamingNewsEmptyStatePreview() {
 
 @PreviewLightDark
 @Composable
-private fun GamingNewsLoadingStatePreview() {
+private fun GamingNewsScreenLoadingStatePreview() {
     GamedgeTheme {
-        GamingNews(
+        GamingNewsScreen(
             uiState = GamingNewsUiState(isLoading = true),
             onNewsItemClicked = {},
             onRefreshRequested = {},

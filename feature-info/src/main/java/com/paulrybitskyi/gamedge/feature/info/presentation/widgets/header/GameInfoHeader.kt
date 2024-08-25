@@ -38,6 +38,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -98,7 +99,7 @@ internal fun GameInfoHeader(
 ) {
     val artworks = headerInfo.artworks
     val isPageIndicatorVisible by remember(artworks) { mutableStateOf(artworks.size > 1) }
-    var selectedArtworkPage by rememberSaveable { mutableStateOf(0) }
+    var selectedArtworkPage by rememberSaveable { mutableIntStateOf(0) }
     var secondTitleText by rememberSaveable { mutableStateOf("") }
     val isSecondTitleVisible by remember {
         derivedStateOf {

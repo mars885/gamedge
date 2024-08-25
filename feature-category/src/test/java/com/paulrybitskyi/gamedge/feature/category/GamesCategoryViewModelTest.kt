@@ -31,9 +31,7 @@ import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
-import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModel
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
-import com.paulrybitskyi.gamedge.feature.category.widgets.finiteUiState
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.delay
