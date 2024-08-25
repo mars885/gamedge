@@ -66,9 +66,9 @@ import com.paulrybitskyi.gamedge.core.R as CoreR
 
 private const val ZoomScaleMin = 0.5f
 private const val ZoomScaleMax = 5f
-private const val ZoomScaleInitial = 1f
 private const val ZoomOverSnapScaleMin = 1f
 private const val ZoomOverSnapScaleMax = 3f
+private const val ZoomScaleInitial = 1f
 
 @Composable
 fun ImageViewerScreen(onRoute: (Route) -> Unit) {
