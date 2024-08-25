@@ -53,7 +53,6 @@ val installGitHook by tasks.registering(Copy::class) {
     into(File(rootProject.rootDir, ".git/hooks/"))
 
     // https://github.com/gradle/kotlin-dsl-samples/issues/1412
-    @Suppress("UnstableApiUsage")
     filePermissions {
         unix("rwxr-xr-x")
     }

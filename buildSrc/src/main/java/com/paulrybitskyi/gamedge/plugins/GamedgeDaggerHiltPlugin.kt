@@ -12,7 +12,7 @@ class GamedgeDaggerHiltPlugin : Plugin<Project> {
     }
 
     private fun Project.setupPlugins(): Unit = with(plugins) {
-        apply(libs.plugins.kotlinKapt.get().pluginId)
+        apply(libs.plugins.gamedgeKotlinKapt.get().pluginId)
         apply(libs.plugins.ksp.get().pluginId)
         apply(libs.plugins.daggerHilt.get().pluginId)
     }

@@ -17,8 +17,6 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
-import org.jetbrains.kotlin.gradle.plugin.KaptExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     // See https://github.com/gradle/gradle/issues/20084#issuecomment-1060822638
@@ -94,35 +92,13 @@ allprojects {
 
 subprojects {
     plugins.withId(rootProject.libs.plugins.kotlinJvm.get().pluginId) {
-        extensions.findByType<KotlinProjectExtension>()?.run {
+        configure<KotlinProjectExtension> {
             jvmToolchain(rootProject.libs.versions.jvmToolchain.get().toInt())
         }
     }
 
-    plugins.withId(rootProject.libs.plugins.kotlinKapt.get().pluginId) {
-        extensions.findByType<KaptExtension>()?.run {
-            correctErrorTypes = true
-        }
-    }
-
-    tasks.withType<KotlinCompile>().all {
-        compilerOptions {
-            freeCompilerArgs.set(
-                listOf(
-                    "-opt-in=kotlinx.coroutines.FlowPreview",
-                    "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                    "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
-                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
-                    "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                    "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                    "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
-                    "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
-                ),
-            )
-        }
-    }
-
+    // https://stackoverflow.com/a/70348822/7015881
+    // https://issuetracker.google.com/issues/238425626
     configurations.all {
         resolutionStrategy.eachDependency {
             // https://slack-chats.kotlinlang.org/t/18870077/running-in-to-strange-issue-with-combination-it-seems-of-jet#e9b98248-d6c8-427d-bff2-d0d82e4ab76c
