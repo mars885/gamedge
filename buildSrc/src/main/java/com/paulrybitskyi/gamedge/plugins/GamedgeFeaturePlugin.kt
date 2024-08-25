@@ -17,7 +17,7 @@ class GamedgeFeaturePlugin : Plugin<Project> {
         apply(libs.plugins.gamedgeAndroid.get().pluginId)
         apply(libs.plugins.gamedgeJetpackCompose.get().pluginId)
         apply(libs.plugins.gamedgeDaggerHilt.get().pluginId)
-        apply(libs.plugins.kotlinxSerialization.get().pluginId)
+        apply(libs.plugins.gamedgeKotlinxSerialization.get().pluginId)
     }
 
     private fun Project.addDependencies(): Unit = with(dependencies) {
@@ -26,7 +26,6 @@ class GamedgeFeaturePlugin : Plugin<Project> {
         add("implementation", project(localModules.core))
         add("implementation", project(localModules.commonUi))
         add("implementation", project(localModules.commonUiWidgets))
-        add("implementation", libs.kotlinxSerialization.get())
         add("implementation", libs.composeHilt.get())
         add("implementation", libs.composeNavigation.get())
         add("implementation", libs.commonsCore.get())
