@@ -41,8 +41,9 @@ class GamedgeAndroidPlugin : Plugin<Project> {
         addDependencies()
     }
 
-    private fun Project.setupPlugins() {
-        plugins.apply(libs.plugins.kotlinAndroid.get().pluginId)
+    private fun Project.setupPlugins(): Unit = with(plugins) {
+        apply(libs.plugins.kotlinAndroid.get().pluginId)
+        apply(libs.plugins.gamedgeKotlinCoroutines.get().pluginId)
     }
 
     private fun Project.configurePlugins() {
@@ -151,7 +152,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     }
 
     private fun Project.addDependencies(): Unit = with(dependencies) {
-        add("implementation", libs.coroutines.get())
         add("implementation", libs.kotlinResult.get())
 
         add("coreLibraryDesugaring", libs.desugaredJdk.get())

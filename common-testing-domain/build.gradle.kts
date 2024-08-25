@@ -16,6 +16,7 @@
 
 plugins {
     id(libs.plugins.kotlinJvm.get().pluginId)
+    id(libs.plugins.gamedgeKotlinCoroutines.get().pluginId)
 }
 
 dependencies {
