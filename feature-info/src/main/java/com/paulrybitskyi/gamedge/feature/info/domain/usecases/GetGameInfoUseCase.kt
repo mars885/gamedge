@@ -26,7 +26,6 @@ import com.paulrybitskyi.gamedge.core.utils.combine
 import com.paulrybitskyi.gamedge.feature.info.domain.entities.GameInfo
 import com.paulrybitskyi.gamedge.feature.info.domain.usecases.likes.ObserveGameLikeStateUseCase
 import com.paulrybitskyi.hiltbinder.BindType
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOf
@@ -54,7 +53,6 @@ internal class GetGameInfoUseCaseImpl @Inject constructor(
         private val RELATED_GAMES_PAGINATION = Pagination()
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun execute(params: GetGameInfoUseCase.Params): Flow<GameInfo> {
         return getGameUseCase.execute(GetGameUseCase.Params(params.gameId))
             .resultOrError()
