@@ -17,8 +17,6 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
-import org.jetbrains.kotlin.gradle.plugin.KaptExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     // See https://github.com/gradle/gradle/issues/20084#issuecomment-1060822638
@@ -94,14 +92,8 @@ allprojects {
 
 subprojects {
     plugins.withId(rootProject.libs.plugins.kotlinJvm.get().pluginId) {
-        extensions.findByType<KotlinProjectExtension>()?.run {
+        configure<KotlinProjectExtension> {
             jvmToolchain(rootProject.libs.versions.jvmToolchain.get().toInt())
-        }
-    }
-
-    plugins.withId(rootProject.libs.plugins.kotlinKapt.get().pluginId) {
-        extensions.findByType<KaptExtension>()?.run {
-            correctErrorTypes = true
         }
     }
 

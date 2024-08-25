@@ -33,7 +33,7 @@ class GamedgeJetpackComposePlugin : Plugin<Project> {
     private fun Project.configureTasks() {
         tasks.withType<KotlinCompile>().all {
             compilerOptions {
-                freeCompilerArgs.set(
+                freeCompilerArgs.addAll(
                     listOf(
                         "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
                         "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
