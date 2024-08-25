@@ -68,6 +68,7 @@ private const val ZoomScaleMin = 0.5f
 private const val ZoomScaleMax = 5f
 private const val ZoomOverSnapScaleMin = 1f
 private const val ZoomOverSnapScaleMax = 3f
+private const val ZoomScaleInitial = 1f
 
 @Composable
 fun ImageViewerScreen(onRoute: (Route) -> Unit) {
@@ -220,7 +221,10 @@ private fun ImageItem(
     imageUrl: String,
     onDismiss: () -> Unit,
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
         var imageState by remember { mutableStateOf<State>(State.Empty) }
         val zoomableState = rememberZoomableState(
             minScale = ZoomScaleMin,
@@ -229,6 +233,7 @@ private fun ImageItem(
                 minSnapScale = ZoomOverSnapScaleMin,
                 maxSnapScale = ZoomOverSnapScaleMax,
             ),
+            initialScale = ZoomScaleInitial,
         )
 
         if (imageState is State.Error) {
@@ -241,9 +246,7 @@ private fun ImageItem(
                         CoreR.string.error_unknown_message
                     },
                 ),
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(horizontal = GamedgeTheme.spaces.spacing_7_5),
+                modifier = Modifier.padding(horizontal = GamedgeTheme.spaces.spacing_7_5),
             )
         }
 
