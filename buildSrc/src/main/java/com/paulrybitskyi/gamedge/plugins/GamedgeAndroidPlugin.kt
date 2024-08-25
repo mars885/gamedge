@@ -74,7 +74,6 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 debuggable(true)
                 manifestPlaceholders["usesCleartextTraffic"] = false
 
-                isMinifyEnabled = true
                 proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             }
         }
