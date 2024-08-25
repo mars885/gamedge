@@ -3,12 +3,15 @@ package com.paulrybitskyi.gamedge.plugins
 import com.paulrybitskyi.gamedge.extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class GamedgeJetpackComposePlugin : Plugin<Project> {
 
     override fun apply(project: Project) = with(project) {
         setupPlugins()
         addDependencies()
+        configureTasks()
     }
 
     private fun Project.setupPlugins(): Unit = with(plugins) {
@@ -25,5 +28,20 @@ class GamedgeJetpackComposePlugin : Plugin<Project> {
         add("implementation", libs.composeRuntime.get())
         add("implementation", libs.composeAnimation.get())
         add("implementation", libs.composeConstraintLayout.get())
+    }
+
+    private fun Project.configureTasks() {
+        tasks.withType<KotlinCompile>().all {
+            compilerOptions {
+                freeCompilerArgs.set(
+                    listOf(
+                        "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                        "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
+                        "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+                        "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
+                    ),
+                )
+            }
+        }
     }
 }

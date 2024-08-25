@@ -105,20 +105,6 @@ subprojects {
         }
     }
 
-    tasks.withType<KotlinCompile>().all {
-        compilerOptions {
-            freeCompilerArgs.set(
-                listOf(
-                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
-                    "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                    "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                    "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
-                ),
-            )
-        }
-    }
-
     // https://stackoverflow.com/a/70348822/7015881
     // https://issuetracker.google.com/issues/238425626
     configurations.all {
