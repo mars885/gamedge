@@ -83,6 +83,8 @@ gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVe
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektPlugin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
 gamedgeAndroid = { id = "com.paulrybitskyi.gamedge.android" }
+gamedgeKotlinCoroutines = { id = "com.paulrybitskyi.gamedge.kotlin.coroutines" }
+gamedgeKotlinKapt = { id = "com.paulrybitskyi.gamedge.kotlin.kapt" }
 gamedgeProtobuf = { id = "com.paulrybitskyi.gamedge.protobuf" }
 gamedgeJetpackCompose = { id = "com.paulrybitskyi.gamedge.jetpack.compose" }
 gamedgeDaggerHilt = { id = "com.paulrybitskyi.gamedge.dagger.hilt" }
