@@ -110,9 +110,9 @@ subprojects {
             freeCompilerArgs.set(
                 listOf(
                     "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+                    "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
                     "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
                     "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                    "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
                     "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
                 ),
             )
