@@ -109,7 +109,6 @@ subprojects {
         compilerOptions {
             freeCompilerArgs.set(
                 listOf(
-                    "-opt-in=kotlinx.coroutines.FlowPreview",
                     "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
                     "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
                     "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
