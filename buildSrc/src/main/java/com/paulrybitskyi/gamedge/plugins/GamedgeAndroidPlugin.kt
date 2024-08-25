@@ -71,10 +71,8 @@ class GamedgeAndroidPlugin : Plugin<Project> {
             }
 
             getByName(BUILD_TYPE_RELEASE) {
-                debuggable(true)
                 manifestPlaceholders["usesCleartextTraffic"] = false
 
-                isMinifyEnabled = true
                 proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             }
         }
@@ -133,6 +131,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
 
                 buildTypes {
                     getByName(BUILD_TYPE_RELEASE) {
+                        isMinifyEnabled = true
                         signingConfig = signingConfigs.getByName(SIGNING_CONFIG_RELEASE)
                     }
                 }
