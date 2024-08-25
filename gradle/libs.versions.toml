@@ -27,7 +27,7 @@ splash = "1.0.1"
 browser = "1.8.0"
 room = "2.6.1"
 dataStore = "1.1.1"
-viewModel = "2.5.1" # to be deleted when the linked issue at use site is fixed
+viewModel = "2.8.3" # to be deleted when the linked issue at use site is fixed
 
 # Compose
 composeBom = "2024.06.00"
