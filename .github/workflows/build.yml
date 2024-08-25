@@ -9,7 +9,6 @@ on:
 env:
   JDK_JAVA_DISTRIBUTION: 'temurin'
   JDK_JAVA_VERSION: '17'
-  AVD_API_LEVEL: 30
 
 jobs:
   static-analysis:
@@ -81,9 +80,8 @@ jobs:
       - name: Run Instrumentation Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ env.AVD_API_LEVEL }}
+          api-level: 30
           target: google_apis # https://github.com/ReactiveCircus/android-emulator-runner/issues/106
-          disable-animations: true
           script: ./gradlew connectedAndroidTest
 
   assemble:
