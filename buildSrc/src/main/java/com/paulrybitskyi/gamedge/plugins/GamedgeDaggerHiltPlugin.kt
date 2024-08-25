@@ -12,9 +12,11 @@ class GamedgeDaggerHiltPlugin : Plugin<Project> {
     }
 
     private fun Project.setupPlugins(): Unit = with(plugins) {
+        apply(libs.plugins.daggerHilt.get().pluginId)
+        // KAPT & KSP have to be declared last to avoid build warnings like
+        // https://stackoverflow.com/questions/70550883/warning-the-following-options-were-not-recognized-by-any-processor-dagger-f
         apply(libs.plugins.kotlinKapt.get().pluginId)
         apply(libs.plugins.ksp.get().pluginId)
-        apply(libs.plugins.daggerHilt.get().pluginId)
     }
 
     private fun Project.addDependencies(): Unit = with(dependencies) {
