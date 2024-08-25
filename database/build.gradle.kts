@@ -18,9 +18,9 @@ plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.gamedgeAndroid.get().pluginId)
     id(libs.plugins.gamedgeDaggerHilt.get().pluginId)
+    id(libs.plugins.gamedgeKotlinxSerialization.get().pluginId)
 
     alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlinxSerialization)
 }
 
 android {
@@ -44,8 +44,6 @@ ksp {
 
 dependencies {
     implementation(project(localModules.core))
-
-    implementation(libs.kotlinxSerialization)
 
     implementation(libs.room)
     implementation(libs.roomKtx)
