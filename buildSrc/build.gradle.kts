@@ -41,6 +41,10 @@ gradlePlugin {
             id = "com.paulrybitskyi.gamedge.dagger.hilt"
             implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeDaggerHiltPlugin"
         }
+        create("com.paulrybitskyi.gamedge.kotlinx.serialization") {
+            id = "com.paulrybitskyi.gamedge.kotlinx.serialization"
+            implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeKotlinxSerializationPlugin"
+        }
         create("com.paulrybitskyi.gamedge.remote.api") {
             id = "com.paulrybitskyi.gamedge.remote.api"
             implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeRemoteApiPlugin"

@@ -19,7 +19,7 @@ class GamedgeRemoteApiPlugin : Plugin<Project> {
         apply(libs.plugins.androidLibrary.get().pluginId)
         apply(libs.plugins.gamedgeAndroid.get().pluginId)
         apply(libs.plugins.gamedgeDaggerHilt.get().pluginId)
-        apply(libs.plugins.kotlinxSerialization.get().pluginId)
+        apply(libs.plugins.gamedgeKotlinxSerialization.get().pluginId)
     }
 
     private fun Project.configurePlugins() {
@@ -34,7 +34,6 @@ class GamedgeRemoteApiPlugin : Plugin<Project> {
         add("api", project(localModules.commonApi))
         add("implementation", project(localModules.core))
 
-        add("implementation", libs.kotlinxSerialization.get())
         add("implementation", libs.retrofit.get())
 
         add("testImplementation", project(localModules.commonTesting))
