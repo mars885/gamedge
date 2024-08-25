@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.info.presentation
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.toRoute
 import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
@@ -79,7 +80,7 @@ internal class GameInfoViewModelTest {
 
     private fun setupSavedStateHandle(): SavedStateHandle {
         return mockk(relaxed = true) {
-            every { get<Int>(any()) } returns 1
+            every { toRoute<GameInfoDestination>() } returns GameInfoDestination(gameId = 1)
         }
     }
 

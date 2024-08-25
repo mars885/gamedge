@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.toRoute
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
@@ -26,7 +27,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
 
@@ -38,9 +38,11 @@ internal class ImageViewerViewModelTest {
     val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
     private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true) {
-        every { get<String>(PARAM_TITLE) } returns ""
-        every { get<Int>(PARAM_INITIAL_POSITION) } returns INITIAL_POSITION
-        every { get<String>(PARAM_IMAGE_URLS) } returns "url1,url2,url3"
+        every { toRoute<ImageViewerDestination>() } returns ImageViewerDestination(
+            imageUrls = listOf("url1", "url2", "url3"),
+            title = "",
+            initialPosition = INITIAL_POSITION,
+        )
         every { get<Int>(KEY_SELECTED_POSITION) } returns INITIAL_POSITION
     }
 
@@ -49,15 +51,6 @@ internal class ImageViewerViewModelTest {
             stringProvider = FakeStringProvider(),
             savedStateHandle = savedStateHandle,
         )
-    }
-
-    @Test
-    fun `Throws error when image urls are not provided`() {
-        every { savedStateHandle.get<String>(PARAM_IMAGE_URLS) } returns null
-
-        assertThrows(IllegalStateException::class.java) {
-            SUT
-        }
     }
 
     @Test

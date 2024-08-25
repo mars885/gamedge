@@ -24,71 +24,56 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavController
-import com.paulrybitskyi.gamedge.core.utils.toCsv
-import java.net.URLEncoder
+import com.paulrybitskyi.gamedge.feature.category.GamesCategoryDestination
+import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryDestination
+import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerDestination
+import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoDestination
+import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesDestination
+import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsDestination
+import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchDestination
+import com.paulrybitskyi.gamedge.feature.settings.presentation.SettingsDestination
+import kotlin.reflect.KClass
 
-internal val START_SCREEN = Screen.Discover
+internal val START_SCREEN = Screen.GamesDiscovery
 
-internal sealed class Screen(val route: String) {
-    data object Discover : Screen("discover")
-    data object Likes : Screen("likes")
-    data object News : Screen("news")
-    data object Settings : Screen("settings")
-    data object GamesSearch : Screen("games-search")
+internal sealed class Screen(val routeClass: KClass<*>) {
 
-    data object GamesCategory : Screen("games-category/{${Parameters.CATEGORY}}") {
-        object Parameters {
-            const val CATEGORY = "category"
-        }
+    data object GamesDiscovery : Screen(GamesDiscoveryDestination::class)
+    data object LikedGames : Screen(LikedGamesDestination::class)
+    data object GamingNews : Screen(GamingNewsDestination::class)
+    data object Settings : Screen(SettingsDestination::class)
+    data object GamesSearch : Screen(GamesSearchDestination::class)
+    data object GamesCategory : Screen(GamesCategoryDestination::class) {
 
-        fun createLink(category: String): String {
-            return "games-category/$category"
-        }
-    }
-
-    data object GameInfo : Screen("game-info/{${Parameters.GAME_ID}}") {
-        object Parameters {
-            const val GAME_ID = "game-id"
-        }
-
-        fun createLink(gameId: Int): String {
-            return "game-info/$gameId"
+        fun createRoute(category: String): GamesCategoryDestination {
+            return GamesCategoryDestination(category = category)
         }
     }
 
-    data object ImageViewer : Screen(
-        "image-viewer?" +
-        "${Parameters.TITLE}={${Parameters.TITLE}}&" +
-        "${Parameters.INITIAL_POSITION}={${Parameters.INITIAL_POSITION}}&" +
-        "${Parameters.IMAGE_URLS}={${Parameters.IMAGE_URLS}}",
-    ) {
-        object Parameters {
-            const val TITLE = "title"
-            const val INITIAL_POSITION = "initial-position"
-            const val IMAGE_URLS = "image-urls"
-        }
+    data object GameInfo : Screen(GameInfoDestination::class) {
 
-        fun createLink(
-            title: String?,
-            initialPosition: Int,
+        fun createRoute(gameId: Int): GameInfoDestination {
+            return GameInfoDestination(gameId = gameId)
+        }
+    }
+
+    data object ImageViewer : Screen(ImageViewerDestination::class) {
+
+        fun createRoute(
             imageUrls: List<String>,
-        ): String {
-            val modifiedImageUrls = imageUrls
-                .map { imageUrl -> URLEncoder.encode(imageUrl, "UTF-8") }
-                .toCsv()
-
-            return buildString {
-                append("image-viewer?")
-
-                if (title != null) {
-                    append("${Parameters.TITLE}=$title&")
-                }
-
-                append("${Parameters.INITIAL_POSITION}=$initialPosition&")
-                append("${Parameters.IMAGE_URLS}=$modifiedImageUrls")
-            }
+            title: String? = null,
+            initialPosition: Int = 0,
+        ): ImageViewerDestination {
+            return ImageViewerDestination(
+                imageUrls = imageUrls,
+                title = title,
+                initialPosition = initialPosition,
+            )
         }
     }
+
+    val route: String
+        get() = routeClass.qualifiedName!!
 
     internal companion object {
 
@@ -98,15 +83,15 @@ internal sealed class Screen(val route: String) {
         )
 
         fun forRoute(route: String): Screen {
-            return when (route) {
-                Discover.route -> Discover
-                Likes.route -> Likes
-                News.route -> News
-                Settings.route -> Settings
-                GamesSearch.route -> GamesSearch
-                GamesCategory.route -> GamesCategory
-                GameInfo.route -> GameInfo
-                ImageViewer.route -> ImageViewer
+            return when {
+                route.contains(GamesDiscovery.route) -> GamesDiscovery
+                route.contains(LikedGames.route) -> LikedGames
+                route.contains(GamingNews.route) -> GamingNews
+                route.contains(Settings.route) -> Settings
+                route.contains(GamesSearch.route) -> GamesSearch
+                route.contains(GamesCategory.route) -> GamesCategory
+                route.contains(GameInfo.route) -> GameInfo
+                route.contains(ImageViewer.route) -> ImageViewer
                 else -> error("Cannot find screen for the route: $route.")
             }
         }

@@ -18,9 +18,9 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.core.utils.fromCsv
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,10 +33,6 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
-internal const val PARAM_TITLE = "title"
-internal const val PARAM_INITIAL_POSITION = "initial-position"
-internal const val PARAM_IMAGE_URLS = "image-urls"
-
 internal const val KEY_SELECTED_POSITION = "selected_position"
 
 @HiltViewModel
@@ -45,7 +41,14 @@ internal class ImageViewerViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
-    private val title: String
+    private val args = savedStateHandle
+        .toRoute<ImageViewerDestination>()
+        .let { args ->
+            args.copy(
+                title = args.title
+                    ?: stringProvider.getString(R.string.image_viewer_default_toolbar_title),
+            )
+        }
 
     private val _uiState = MutableStateFlow(createInitialUiState())
 
@@ -55,13 +58,10 @@ internal class ImageViewerViewModel @Inject constructor(
     val uiState: StateFlow<ImageViewerUiState> = _uiState.asStateFlow()
 
     init {
-        title = savedStateHandle.get<String>(PARAM_TITLE)
-            ?: stringProvider.getString(R.string.image_viewer_default_toolbar_title)
-
         _uiState.update {
             it.copy(
                 selectedImageUrlIndex = getSelectedPosition(),
-                imageUrls = parseImageUrls(),
+                imageUrls = args.imageUrls,
             )
         }
 
@@ -77,14 +77,7 @@ internal class ImageViewerViewModel @Inject constructor(
     }
 
     private fun getSelectedPosition(): Int {
-        return savedStateHandle.get(KEY_SELECTED_POSITION)
-            ?: checkNotNull(savedStateHandle.get<Int>(PARAM_INITIAL_POSITION))
-    }
-
-    private fun parseImageUrls(): List<String> {
-        return savedStateHandle.get<String>(PARAM_IMAGE_URLS)
-            ?.fromCsv()
-            ?: error("No image urls provided.")
+        return savedStateHandle[KEY_SELECTED_POSITION] ?: checkNotNull(args.initialPosition)
     }
 
     private fun observeSelectedPositionChanges() {
@@ -93,17 +86,17 @@ internal class ImageViewerViewModel @Inject constructor(
             .distinctUntilChanged()
             .onEach { selectedImageUrlIndex ->
                 _uiState.update { it.copy(toolbarTitle = updateToolbarTitle()) }
-                savedStateHandle.set(KEY_SELECTED_POSITION, selectedImageUrlIndex)
+                savedStateHandle[KEY_SELECTED_POSITION] = selectedImageUrlIndex
             }
             .launchIn(viewModelScope)
     }
 
     private fun updateToolbarTitle(): String {
-        if (currentUiState.imageUrls.size == 1) return title
+        if (currentUiState.imageUrls.size == 1) return args.requireTitle()
 
         return stringProvider.getString(
             R.string.image_viewer_toolbar_title_template,
-            title,
+            args.requireTitle(),
             (currentUiState.selectedImageUrlIndex + 1),
             currentUiState.imageUrls.size,
         )

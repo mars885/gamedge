@@ -123,12 +123,11 @@ subprojects {
         }
     }
 
-    // https://stackoverflow.com/a/70348822/7015881
-    // https://issuetracker.google.com/issues/238425626
+    // https://slack-chats.kotlinlang.org/t/18870077/running-in-to-strange-issue-with-combination-it-seems-of-jet#e9b98248-d6c8-427d-bff2-d0d82e4ab76c
     configurations.all {
         resolutionStrategy.eachDependency {
-            if (requested.group == "androidx.lifecycle" && requested.name == "lifecycle-viewmodel-ktx") {
-                useVersion(rootProject.libs.versions.viewModel.get())
+            if (requested.module.toString() == rootProject.libs.composeFoundation.get().module.toString()) {
+                useVersion(rootProject.libs.versions.composeFoundation.get())
             }
         }
     }

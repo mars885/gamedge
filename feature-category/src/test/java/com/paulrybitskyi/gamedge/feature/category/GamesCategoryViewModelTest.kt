@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.category
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.toRoute
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
@@ -68,7 +69,9 @@ internal class GamesCategoryViewModelTest {
 
     private fun setupSavedStateHandle(): SavedStateHandle {
         return mockk(relaxed = true) {
-            every { get<String>(any()) } returns GamesCategory.POPULAR.name
+            every { toRoute<GamesCategoryDestination>() } returns GamesCategoryDestination(
+                category = GamesCategory.POPULAR.name,
+            )
         }
     }
 

@@ -27,9 +27,9 @@ sealed class GameInfoRoute : Route {
     data class Info(val gameId: Int) : GameInfoRoute()
 
     data class ImageViewer(
+        val imageUrls: List<String>,
         val title: String?,
         val initialPosition: Int,
-        val imageUrls: List<String>,
     ) : GameInfoRoute()
 
     data object Back : GameInfoRoute()

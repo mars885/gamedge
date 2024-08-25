@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.feature.category
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.entities.nextLimit
 import com.paulrybitskyi.gamedge.common.domain.common.entities.nextOffset
@@ -50,8 +51,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-private const val PARAM_GAMES_CATEGORY = "category"
 
 @HiltViewModel
 internal class GamesCategoryViewModel @Inject constructor(
@@ -87,7 +86,9 @@ internal class GamesCategoryViewModel @Inject constructor(
     val uiState: StateFlow<GamesCategoryUiState> = _uiState.asStateFlow()
 
     init {
-        gamesCategory = GamesCategory.valueOf(checkNotNull(savedStateHandle.get<String>(PARAM_GAMES_CATEGORY)))
+        gamesCategory = GamesCategory.valueOf(
+            savedStateHandle.toRoute<GamesCategoryDestination>().category,
+        )
         gamesCategoryKeyType = gamesCategory.toKeyType()
 
         _uiState.update {

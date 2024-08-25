@@ -18,6 +18,7 @@ package com.paulrybitskyi.gamedge.feature.info.presentation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.resultOrError
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
@@ -50,8 +51,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
-private const val PARAM_GAME_ID = "game-id"
-
 @HiltViewModel
 @Suppress("LongParameterList")
 internal class GameInfoViewModel @Inject constructor(
@@ -68,7 +67,7 @@ internal class GameInfoViewModel @Inject constructor(
 
     private var isObservingGameData = false
 
-    private val gameId = checkNotNull(savedStateHandle.get<Int>(PARAM_GAME_ID))
+    private val gameId = checkNotNull(savedStateHandle.toRoute<GameInfoDestination>().gameId)
 
     private val _uiState = MutableStateFlow(GameInfoUiState(isLoading = false, game = null))
 
@@ -134,7 +133,7 @@ internal class GameInfoViewModel @Inject constructor(
                 dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
             }
             .collect { imageUrls ->
-                route(GameInfoRoute.ImageViewer(title, initialPosition, imageUrls))
+                route(GameInfoRoute.ImageViewer(imageUrls, title, initialPosition))
             }
         }
     }
