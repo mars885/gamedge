@@ -35,7 +35,7 @@ constraintLayout = "1.1.0-alpha13"
 composeHilt = "1.2.0"
 
 # Google
-protobuf = "4.27.3"
+protobuf = "4.28.1"
 
 # Square
 javaPoet = "1.13.0"
