@@ -30,7 +30,7 @@ room = "2.6.1"
 dataStore = "1.1.1"
 
 # Compose
-composeBom = "2024.06.00"
+composeBom = "2024.09.01"
 navigation = "2.7.7"
 constraintLayout = "1.1.0-alpha13"
 composeHilt = "1.2.0"
