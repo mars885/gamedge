@@ -1,6 +1,6 @@
 [versions]
-compileSdk = "35"
-targetSdk = "35"
+compileSdk = "34"
+targetSdk = "34"
 minSdk = "21"
 appVersionCode = "1"
 appVersionName = "1.0.0"
@@ -31,7 +31,7 @@ dataStore = "1.1.1"
 # Compose
 composeBom = "2024.09.01"
 navigation = "2.8.0"
-constraintLayout = "1.1.0-beta01"
+constraintLayout = "1.1.0-alpha13"
 composeHilt = "1.2.0"
 
 # Google
