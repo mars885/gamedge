@@ -19,7 +19,7 @@ ktlintPlugin = "12.1.1"
 
 # Kotlin
 coroutines = "1.8.1"
-serialization = "1.7.1"
+serialization = "1.7.2"
 
 # AndroidX
 activity = "1.9.2"
