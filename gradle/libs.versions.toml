@@ -22,7 +22,7 @@ coroutines = "1.8.1"
 serialization = "1.7.1"
 
 # AndroidX
-activity = "1.9.1"
+activity = "1.9.2"
 splash = "1.0.1"
 browser = "1.8.0"
 room = "2.6.1"
