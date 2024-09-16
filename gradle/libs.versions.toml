@@ -18,7 +18,7 @@ detektPlugin = "1.23.7"
 ktlintPlugin = "12.1.1"
 
 # Kotlin
-coroutines = "1.8.1"
+coroutines = "1.9.0"
 serialization = "1.7.2"
 
 # AndroidX
