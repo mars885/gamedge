@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -114,7 +113,6 @@ private fun ImageViewerScreen(
     val toolbarBackgroundColor = GamedgeTheme.colors.darkScrim
 
     SystemBarsColorHandler(navBarColor = toolbarBackgroundColor)
-    BackHandler(onBack = onBackPressed)
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.Black,
