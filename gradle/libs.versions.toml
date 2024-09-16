@@ -31,7 +31,7 @@ dataStore = "1.1.1"
 # Compose
 composeBom = "2024.09.01"
 navigation = "2.8.0"
-constraintLayout = "1.1.0-alpha13"
+constraintLayout = "1.1.0-beta01"
 composeHilt = "1.2.0"
 
 # Google
