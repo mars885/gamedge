@@ -38,7 +38,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -206,7 +206,7 @@ internal fun GameInfoAnimatableHeader(
                 .statusBarsPadding()
                 .size(56.dp)
                 .clickable(
-                    indication = rememberRipple(
+                    indication = ripple(
                         bounded = false,
                         radius = 18.dp,
                     ),

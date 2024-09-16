@@ -206,7 +206,7 @@ private fun Pager(
     HorizontalPager(
         state = pagerState,
         modifier = modifier,
-        beyondBoundsPageCount = 1,
+        beyondViewportPageCount = 1,
         pageSpacing = GamedgeTheme.spaces.spacing_2_0,
     ) { pageIndex ->
         ImageItem(
