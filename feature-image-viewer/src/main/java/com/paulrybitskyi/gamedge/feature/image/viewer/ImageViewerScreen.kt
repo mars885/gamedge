@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -114,7 +113,6 @@ private fun ImageViewerScreen(
     val toolbarBackgroundColor = GamedgeTheme.colors.darkScrim
 
     SystemBarsColorHandler(navBarColor = toolbarBackgroundColor)
-    BackHandler(onBack = onBackPressed)
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.Black,
@@ -206,7 +204,7 @@ private fun Pager(
     HorizontalPager(
         state = pagerState,
         modifier = modifier,
-        beyondBoundsPageCount = 1,
+        beyondViewportPageCount = 1,
         pageSpacing = GamedgeTheme.spaces.spacing_2_0,
     ) { pageIndex ->
         ImageItem(
