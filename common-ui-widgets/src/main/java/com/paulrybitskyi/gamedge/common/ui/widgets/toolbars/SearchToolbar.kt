@@ -177,7 +177,7 @@ private fun Input(
         textStyle = titleTextStyle.copy(color = LocalContentColor.current),
         keyboardOptions = KeyboardOptions(
             capitalization = KeyboardCapitalization.Words,
-            autoCorrect = false,
+            autoCorrectEnabled = false,
             imeAction = ImeAction.Search,
         ),
         keyboardActions = KeyboardActions(

@@ -12,31 +12,31 @@ daggerHilt = "2.52"
 # Plugins
 androidPlugin = "8.5.2"
 protobufPlugin = "0.9.4"
-kspPlugin = "2.0.20-1.0.24"
+kspPlugin = "2.0.20-1.0.25"
 gradleVersionsPlugin = "0.51.0"
-detektPlugin = "1.23.6"
+detektPlugin = "1.23.7"
 ktlintPlugin = "12.1.1"
 
 # Kotlin
-coroutines = "1.8.1"
-serialization = "1.7.1"
+coroutines = "1.9.0"
+serialization = "1.7.2"
 
 # AndroidX
-activity = "1.9.1"
+activity = "1.9.2"
 splash = "1.0.1"
-viewModel = "2.5.1" # to be deleted when the linked issue at use site is fixed
 browser = "1.8.0"
 room = "2.6.1"
 dataStore = "1.1.1"
+viewModel = "2.8.5" # to be deleted when the linked issue at use site is fixed
 
 # Compose
-composeBom = "2024.06.00"
-navigation = "2.7.7"
+composeBom = "2024.09.01"
+navigation = "2.8.0"
 constraintLayout = "1.1.0-alpha13"
 composeHilt = "1.2.0"
 
 # Google
-protobuf = "4.27.3"
+protobuf = "4.28.1"
 
 # Square
 javaPoet = "1.13.0"
@@ -51,11 +51,11 @@ commonsNetwork = "1.0.3"
 commonsWindowAnims = "1.0.2"
 
 # Misc
-desugaredJdk = "2.0.4"
+desugaredJdk = "2.1.2"
 kotlinResult = "2.0.0"
 hiltBinder = "1.1.3"
 coil = "2.7.0"
-zoomable = "1.6.1"
+zoomable = "1.6.2"
 ktlint = "1.3.1"
 
 # Testing
@@ -64,7 +64,7 @@ jUnitExt = "1.2.1"
 truth = "1.4.4"
 mockk = "1.13.12"
 turbine = "1.1.0"
-testRunner = "1.6.1"
+testRunner = "1.6.2"
 archCore = "2.2.0"
 mockWebServer = "4.12.0"
 
