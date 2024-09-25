@@ -32,7 +32,7 @@ viewModel = "2.8.5" # to be deleted when the linked issue at use site is fixed
 # Compose
 composeBom = "2024.09.02"
 navigation = "2.8.1"
-constraintLayout = "1.1.0-alpha13"
+constraintLayout = "1.1.0-beta01"
 composeHilt = "1.2.0"
 
 # Google
