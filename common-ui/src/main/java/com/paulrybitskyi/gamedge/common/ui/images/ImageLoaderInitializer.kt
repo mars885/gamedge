@@ -33,6 +33,10 @@ internal class CoilInitializer @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : ImageLoaderInitializer {
 
+    private companion object {
+        const val MEMORY_CACHE_MAX_HEAP_PERCENTAGE = 0.5
+    }
+
     override fun init() {
         Coil.setImageLoader(
             ImageLoader.Builder(context)
@@ -43,9 +47,5 @@ internal class CoilInitializer @Inject constructor(
                 }
                 .build(),
         )
-    }
-
-    private companion object {
-        const val MEMORY_CACHE_MAX_HEAP_PERCENTAGE = 0.5
     }
 }
