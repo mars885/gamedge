@@ -30,13 +30,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.snapshotFlow
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.paulrybitskyi.commons.ktx.getCompatColor
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.execute
 import com.paulrybitskyi.gamedge.common.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.common.ui.LocalTextSharer
 import com.paulrybitskyi.gamedge.common.ui.LocalUrlOpener
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
-import com.paulrybitskyi.gamedge.core.R
 import com.paulrybitskyi.gamedge.core.providers.NetworkStateProvider
 import com.paulrybitskyi.gamedge.core.sharers.TextSharer
 import com.paulrybitskyi.gamedge.core.urlopener.UrlOpener
@@ -121,9 +119,14 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun EdgeToEdgeHandler(useDarkTheme: Boolean) {
         DisposableEffect(useDarkTheme) {
+            // Default behavior, but we override the dark mode detection
+            // because we enable a user to change a theme in the settings
+            // and it has to be taken into the account here
             enableEdgeToEdge(
-                statusBarStyle = SystemBarStyle.dark(
-                    scrim = getCompatColor(R.color.colorDarkScrim),
+                statusBarStyle = SystemBarStyle.auto(
+                    lightScrim = Color.TRANSPARENT,
+                    darkScrim = Color.TRANSPARENT,
+                    detectDarkMode = { useDarkTheme },
                 ),
                 navigationBarStyle = SystemBarStyle.auto(
                     // The default light scrim, as defined by androidx and the platform.

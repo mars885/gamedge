@@ -210,7 +210,11 @@ private class LogoImageTransformation(
 
     override suspend fun transform(input: Bitmap, size: Size): Bitmap {
         val targetBitmap = Bitmap
-            .createBitmap(logoContainerWidth, logoContainerHeight, input.config)
+            .createBitmap(
+                logoContainerWidth,
+                logoContainerHeight,
+                checkNotNull(input.config) { "The input bitmap must have a config." },
+            )
             .apply { eraseColor(input.calculateFillColor()) }
 
         val targetCenterX = targetBitmap.centerX
