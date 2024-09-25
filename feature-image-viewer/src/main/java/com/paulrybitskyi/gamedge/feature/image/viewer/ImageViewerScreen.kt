@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -41,6 +42,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -53,12 +55,14 @@ import coil.size.Size
 import com.mxalbert.zoomable.OverZoomConfig
 import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
+import com.paulrybitskyi.commons.SdkInfo
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.common.ui.LocalTextSharer
 import com.paulrybitskyi.gamedge.common.ui.OnLifecycleEvent
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.findWindow
 import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.rememberWindowInsetsController
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
@@ -107,28 +111,53 @@ private fun ImageViewerScreen(
     )
 }
 
+@Suppress("DEPRECATION")
+@SuppressLint("NewApi")
 @Composable
 private fun SystemBarsColorHandler() {
-    val windowsInsetsController = rememberWindowInsetsController()
-    val wereStatusBarIconsLight = remember { windowsInsetsController?.areStatusBarIconsLight }
-    val wereNavBarIconsLight = remember { windowsInsetsController?.areNavigationBarIconsLight }
+    val isOnAndroid10OrLater = SdkInfo.IS_AT_LEAST_10
+    val window = findWindow()
+    val windowsInsetsController = rememberWindowInsetsController(window = window)
+    val wereStatusBarIconsDark = remember { windowsInsetsController?.isAppearanceLightStatusBars }
+    val wereNavBarIconsDark = remember { windowsInsetsController?.isAppearanceLightNavigationBars }
+    val wereNavBarContrastEnforced = remember {
+        if (isOnAndroid10OrLater) window?.isNavigationBarContrastEnforced else null
+    }
+    val previousNavBarColor = remember {
+        if (!isOnAndroid10OrLater) window?.navigationBarColor else null
+    }
 
     OnLifecycleEvent(
         onStart = {
-            val delay = 0L
-
             // Make the status bar's icons always white on this screen
-            windowsInsetsController?.setStatusBarIconsLight(true, delay)
+            windowsInsetsController?.isAppearanceLightStatusBars = false
             // Make the nav bar's buttons always white on this screen
-            windowsInsetsController?.setNavigationBarIconsLight(true, delay)
+            windowsInsetsController?.isAppearanceLightNavigationBars = false
+            // Disable the nav bar system color contrast enforcement
+            if (SdkInfo.IS_AT_LEAST_10) {
+                window?.isNavigationBarContrastEnforced = false
+            }
+            // Make the nav bar transparent so that the custom spacer
+            // with the background scrim is properly drawn behind it
+            if (!isOnAndroid10OrLater) {
+                window?.navigationBarColor = Color.Transparent.toArgb()
+            }
         },
         onStop = {
-            if (wereStatusBarIconsLight != null) {
-                windowsInsetsController?.setStatusBarIconsLight(wereStatusBarIconsLight)
+            if (wereStatusBarIconsDark != null) {
+                windowsInsetsController?.isAppearanceLightStatusBars = wereStatusBarIconsDark
             }
 
-            if (wereNavBarIconsLight != null) {
-                windowsInsetsController?.setNavigationBarIconsLight(wereNavBarIconsLight)
+            if (wereNavBarIconsDark != null) {
+                windowsInsetsController?.isAppearanceLightNavigationBars = wereNavBarIconsDark
+            }
+
+            if (wereNavBarContrastEnforced != null && SdkInfo.IS_AT_LEAST_10) {
+                window?.isNavigationBarContrastEnforced = wereNavBarContrastEnforced
+            }
+
+            if (previousNavBarColor != null && !isOnAndroid10OrLater) {
+                window?.navigationBarColor = previousNavBarColor
             }
         },
     )
@@ -172,7 +201,7 @@ private fun ImageViewerScreen(
                     .windowInsetsBottomHeight(WindowInsets.navigationBars)
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-                    .background(toolbarBackgroundColor)
+                    .background(toolbarBackgroundColor),
             )
         }
     }

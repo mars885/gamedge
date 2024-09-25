@@ -125,16 +125,16 @@ private fun GameInfoScreen(
 @Composable
 private fun StatusBarHandler() {
     val windowsInsetsController = rememberWindowInsetsController()
-    val wereStatusBarIconsLight = remember { windowsInsetsController?.areStatusBarIconsLight }
+    val wereStatusBarIconsDark = remember { windowsInsetsController?.isAppearanceLightStatusBars }
 
     OnLifecycleEvent(
         onStart = {
             // Make the status bar's icons always white on this screen
-            windowsInsetsController?.setStatusBarIconsLight(true, delay = 0L)
+            windowsInsetsController?.isAppearanceLightStatusBars = false
         },
         onStop = {
-            if (wereStatusBarIconsLight != null) {
-                windowsInsetsController?.setStatusBarIconsLight(wereStatusBarIconsLight)
+            if (wereStatusBarIconsDark != null) {
+                windowsInsetsController?.isAppearanceLightStatusBars = wereStatusBarIconsDark
             }
         },
     )
@@ -196,7 +196,7 @@ private fun GameInfoScreen(
         modifier = Modifier
             .windowInsetsTopHeight(WindowInsets.statusBars)
             .fillMaxWidth()
-            .background(GamedgeTheme.colors.darkScrim)
+            .background(GamedgeTheme.colors.darkScrim),
     )
 }
 

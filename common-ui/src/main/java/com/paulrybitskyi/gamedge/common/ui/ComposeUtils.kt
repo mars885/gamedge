@@ -42,11 +42,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun textSizeResource(@DimenRes id: Int): TextUnit {
@@ -122,90 +117,14 @@ private tailrec fun Context.findWindow(): Window? {
 @Composable
 fun rememberWindowInsetsController(
     window: Window? = findWindow(),
-): WindowInsetsControllerDecorator? {
+): WindowInsetsControllerCompat? {
     val view = LocalView.current
 
     return remember(view, window) {
         if (window != null) {
-            WindowInsetsControllerDecorator(
-                controller = WindowCompat.getInsetsController(window, view),
-            )
+            WindowCompat.getInsetsController(window, view)
         } else {
             null
-        }
-    }
-}
-
-class WindowInsetsControllerDecorator(
-    private val controller: WindowInsetsControllerCompat,
-) {
-
-    private companion object {
-        const val DEFAULT_DELAY_IN_MILLIS = 0L
-    }
-
-    val areStatusBarIconsLight: Boolean
-        get() = !controller.isAppearanceLightStatusBars
-
-    val areNavigationBarIconsLight: Boolean
-        get() = !controller.isAppearanceLightNavigationBars
-
-    fun setStatusBarIconsLight(isLight: Boolean, delay: Long = DEFAULT_DELAY_IN_MILLIS) {
-        GlobalWindowInsetsControllerDecorator.setStatusBarIconsLight(
-            controller = controller,
-            isLight = isLight,
-            delay = delay,
-        )
-    }
-
-    fun setNavigationBarIconsLight(isLight: Boolean, delay: Long = DEFAULT_DELAY_IN_MILLIS) {
-        GlobalWindowInsetsControllerDecorator.setNavigationBarIconsLight(
-            controller = controller,
-            isLight = isLight,
-            delay = delay,
-        )
-    }
-
-    private object GlobalWindowInsetsControllerDecorator {
-
-        private val coroutineScope = CoroutineScope(Dispatchers.Main.immediate)
-
-        private var statusBarIconsColorJob: Job? = null
-        private var navigationBarIconsColorJob: Job? = null
-
-        fun setStatusBarIconsLight(
-            controller: WindowInsetsControllerCompat,
-            isLight: Boolean,
-            delay: Long,
-        ) {
-            statusBarIconsColorJob = performAction(statusBarIconsColorJob, delay) {
-                controller.isAppearanceLightStatusBars = !isLight
-            }
-        }
-
-        fun setNavigationBarIconsLight(
-            controller: WindowInsetsControllerCompat,
-            isLight: Boolean,
-            delay: Long,
-        ) {
-            navigationBarIconsColorJob = performAction(navigationBarIconsColorJob, delay) {
-                controller.isAppearanceLightNavigationBars = !isLight
-            }
-        }
-
-        private inline fun performAction(
-            job: Job?,
-            delay: Long,
-            crossinline action: () -> Unit
-        ): Job {
-            if (job?.isActive == true) {
-                job.cancel()
-            }
-
-            return coroutineScope.launch {
-                delay(delay)
-                action()
-            }
         }
     }
 }
