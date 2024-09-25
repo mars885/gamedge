@@ -16,8 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.category
 
-import androidx.lifecycle.SavedStateHandle
-import androidx.navigation.toRoute
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
@@ -56,23 +54,15 @@ internal class GamesCategoryViewModelTest {
     private val logger = FakeLogger()
     private val SUT by lazy {
         GamesCategoryViewModel(
-            savedStateHandle = setupSavedStateHandle(),
             stringProvider = FakeStringProvider(),
             transitionAnimationDuration = 0L,
+            destination = GamesCategoryDestination(category = GamesCategory.POPULAR.name),
             useCases = setupUseCases(),
             uiModelMapper = FakeGameCategoryUiModelMapper(),
             dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             errorMapper = FakeErrorMapper(),
             logger = logger,
         )
-    }
-
-    private fun setupSavedStateHandle(): SavedStateHandle {
-        return mockk(relaxed = true) {
-            every { toRoute<GamesCategoryDestination>() } returns GamesCategoryDestination(
-                category = GamesCategory.POPULAR.name,
-            )
-        }
     }
 
     private fun setupUseCases(): GamesCategoryUseCases {

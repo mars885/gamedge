@@ -32,6 +32,7 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.ComposeNavigatorDestinationBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.get
+import androidx.navigation.toRoute
 import com.paulrybitskyi.gamedge.common.ui.HorizontalSliding
 import com.paulrybitskyi.gamedge.common.ui.OvershootScaling
 import com.paulrybitskyi.gamedge.feature.category.GamesCategoryRoute
@@ -244,8 +245,8 @@ private fun NavGraphBuilder.gamesCategoryScreen(navController: NavHostController
                 else -> null
             }
         },
-    ) {
-        GamesCategoryScreen { route ->
+    ) { entry ->
+        GamesCategoryScreen(destination = entry.toRoute()) { route ->
             when (route) {
                 is GamesCategoryRoute.Info -> {
                     navController.navigate(Screen.GameInfo.createRoute(gameId = route.gameId))
@@ -299,8 +300,8 @@ private fun NavGraphBuilder.gameInfoScreen(navController: NavHostController) {
                 else -> null
             }
         },
-    ) {
-        GameInfoScreen { route ->
+    ) { entry ->
+        GameInfoScreen(destination = entry.toRoute()) { route ->
             when (route) {
                 is GameInfoRoute.ImageViewer -> {
                     navController.navigate(
@@ -339,8 +340,8 @@ private fun NavGraphBuilder.imageViewerScreen(navController: NavHostController) 
                 else -> null
             }
         },
-    ) {
-        ImageViewerScreen { route ->
+    ) { entry ->
+        ImageViewerScreen(destination = entry.toRoute()) { route ->
             when (route) {
                 is ImageViewerRoute.Back -> navController.popBackStack()
             }

@@ -53,9 +53,14 @@ import com.paulrybitskyi.gamedge.feature.category.widgets.rememberGamesGridConfi
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
-fun GamesCategoryScreen(onRoute: (Route) -> Unit) {
+fun GamesCategoryScreen(
+    destination: GamesCategoryDestination,
+    onRoute: (Route) -> Unit,
+) {
     GamesCategoryScreen(
-        viewModel = hiltViewModel(),
+        viewModel = hiltViewModel<GamesCategoryViewModel, GamesCategoryViewModel.Factory>(
+            creationCallback = { factory -> factory.create(destination) },
+        ),
         onRoute = onRoute,
     )
 }

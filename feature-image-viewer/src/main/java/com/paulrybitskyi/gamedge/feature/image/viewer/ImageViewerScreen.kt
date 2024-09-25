@@ -78,9 +78,14 @@ private const val ZoomOverSnapScaleMax = 3f
 private const val ZoomScaleInitial = 1f
 
 @Composable
-fun ImageViewerScreen(onRoute: (Route) -> Unit) {
+fun ImageViewerScreen(
+    destination: ImageViewerDestination,
+    onRoute: (Route) -> Unit,
+) {
     ImageViewerScreen(
-        viewModel = hiltViewModel(),
+        viewModel = hiltViewModel<ImageViewerViewModel, ImageViewerViewModel.Factory>(
+            creationCallback = { factory -> factory.create(destination) },
+        ),
         onRoute = onRoute,
     )
 }

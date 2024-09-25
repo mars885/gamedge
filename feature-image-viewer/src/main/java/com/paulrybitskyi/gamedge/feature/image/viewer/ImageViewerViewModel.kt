@@ -18,9 +18,11 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,25 +32,28 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
 internal const val KEY_SELECTED_POSITION = "selected_position"
 
-@HiltViewModel
-internal class ImageViewerViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = ImageViewerViewModel.Factory::class)
+internal class ImageViewerViewModel @AssistedInject constructor(
+    @Assisted
+    destination: ImageViewerDestination,
     private val stringProvider: StringProvider,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
-    private val args = savedStateHandle
-        .toRoute<ImageViewerDestination>()
-        .let { args ->
-            args.copy(
-                title = args.title
-                    ?: stringProvider.getString(R.string.image_viewer_default_toolbar_title),
-            )
-        }
+    @AssistedFactory
+    interface Factory {
+        fun create(destination: ImageViewerDestination): ImageViewerViewModel
+    }
+
+    private val args = destination.copy(
+        title = destination.title ?: stringProvider.getString(
+            R.string.image_viewer_default_toolbar_title,
+        ),
+    )
 
     private val _uiState = MutableStateFlow(createInitialUiState())
 

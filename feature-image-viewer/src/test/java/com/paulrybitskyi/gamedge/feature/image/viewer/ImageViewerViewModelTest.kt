@@ -17,13 +17,10 @@
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.navigation.toRoute
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
-import io.mockk.every
-import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -37,19 +34,17 @@ internal class ImageViewerViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
-    private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true) {
-        every { toRoute<ImageViewerDestination>() } returns ImageViewerDestination(
-            imageUrls = listOf("url1", "url2", "url3"),
-            title = "",
-            initialPosition = INITIAL_POSITION,
-        )
-        every { get<Int>(KEY_SELECTED_POSITION) } returns INITIAL_POSITION
-    }
-
     private val SUT by lazy {
         ImageViewerViewModel(
+            destination = ImageViewerDestination(
+                imageUrls = listOf("url1", "url2", "url3"),
+                title = "",
+                initialPosition = INITIAL_POSITION,
+            ),
             stringProvider = FakeStringProvider(),
-            savedStateHandle = savedStateHandle,
+            savedStateHandle = SavedStateHandle(
+                initialState = mapOf(KEY_SELECTED_POSITION to INITIAL_POSITION),
+            ),
         )
     }
 

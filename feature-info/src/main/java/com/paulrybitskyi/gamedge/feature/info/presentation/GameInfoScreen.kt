@@ -82,9 +82,14 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameIn
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
-fun GameInfoScreen(onRoute: (Route) -> Unit) {
+fun GameInfoScreen(
+    destination: GameInfoDestination,
+    onRoute: (Route) -> Unit,
+) {
     GameInfoScreen(
-        viewModel = hiltViewModel(),
+        viewModel = hiltViewModel<GameInfoViewModel, GameInfoViewModel.Factory>(
+            creationCallback = { factory -> factory.create(destination) },
+        ),
         onRoute = onRoute,
     )
 }

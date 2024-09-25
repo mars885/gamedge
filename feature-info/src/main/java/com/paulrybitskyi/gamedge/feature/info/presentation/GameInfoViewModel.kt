@@ -16,9 +16,7 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.extensions.resultOrError
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
@@ -37,6 +35,9 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.links.GameInf
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfoUiModelMapper
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,15 +49,15 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
-@HiltViewModel
+@HiltViewModel(assistedFactory = GameInfoViewModel.Factory::class)
 @Suppress("LongParameterList")
-internal class GameInfoViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+internal class GameInfoViewModel @AssistedInject constructor(
     @TransitionAnimationDuration
     transitionAnimationDuration: Long,
+    @Assisted
+    private val destination: GameInfoDestination,
     private val useCases: GameInfoUseCases,
     private val uiModelMapper: GameInfoUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
@@ -65,9 +66,12 @@ internal class GameInfoViewModel @Inject constructor(
     private val logger: Logger,
 ) : BaseViewModel() {
 
-    private var isObservingGameData = false
+    @AssistedFactory
+    interface Factory {
+        fun create(destination: GameInfoDestination): GameInfoViewModel
+    }
 
-    private val gameId = checkNotNull(savedStateHandle.toRoute<GameInfoDestination>().gameId)
+    private var isObservingGameData = false
 
     private val _uiState = MutableStateFlow(GameInfoUiState(isLoading = false, game = null))
 
@@ -89,7 +93,7 @@ internal class GameInfoViewModel @Inject constructor(
     }
 
     private suspend fun observeGameInfoInternal(resultEmissionDelay: Long) {
-        useCases.getGameInfoUseCase.execute(GetGameInfoUseCase.Params(gameId))
+        useCases.getGameInfoUseCase.execute(GetGameInfoUseCase.Params(destination.gameId))
             .map(uiModelMapper::mapToUiModel)
             .flowOn(dispatcherProvider.computation)
             .map { game -> currentUiState.toSuccessState(game) }
@@ -123,7 +127,7 @@ internal class GameInfoViewModel @Inject constructor(
         viewModelScope.launch {
             useCases.getGameImageUrlsUseCase.execute(
                 GetGameImageUrlsUseCase.Params(
-                    gameId = gameId,
+                    gameId = destination.gameId,
                     imageType = imageType,
                 ),
             )
@@ -152,7 +156,7 @@ internal class GameInfoViewModel @Inject constructor(
     fun onLikeButtonClicked() {
         viewModelScope.launch {
             useCases.toggleGameLikeStateUseCase
-                .execute(ToggleGameLikeStateUseCase.Params(gameId))
+                .execute(ToggleGameLikeStateUseCase.Params(destination.gameId))
         }
     }
 

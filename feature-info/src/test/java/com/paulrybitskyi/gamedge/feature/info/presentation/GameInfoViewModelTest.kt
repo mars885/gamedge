@@ -16,8 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation
 
-import androidx.lifecycle.SavedStateHandle
-import androidx.navigation.toRoute
 import app.cash.turbine.test
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
@@ -39,7 +37,6 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.main.GameInfo
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.relatedgames.GameInfoRelatedGameUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.videos.GameInfoVideoUiModel
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -59,8 +56,8 @@ internal class GameInfoViewModelTest {
 
     private val SUT by lazy {
         GameInfoViewModel(
-            savedStateHandle = setupSavedStateHandle(),
             transitionAnimationDuration = 0L,
+            destination = GameInfoDestination(gameId = 1),
             useCases = useCases,
             uiModelMapper = FakeGameInfoUiModelMapper(),
             dispatcherProvider = mainCoroutineRule.dispatcherProvider,
@@ -76,12 +73,6 @@ internal class GameInfoViewModelTest {
             getGameImageUrlsUseCase = mockk(relaxed = true),
             toggleGameLikeStateUseCase = mockk(relaxed = true),
         )
-    }
-
-    private fun setupSavedStateHandle(): SavedStateHandle {
-        return mockk(relaxed = true) {
-            every { toRoute<GameInfoDestination>() } returns GameInfoDestination(gameId = 1)
-        }
     }
 
     @Test
