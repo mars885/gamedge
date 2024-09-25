@@ -16,16 +16,21 @@
 
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,7 +41,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -52,9 +56,9 @@ import com.mxalbert.zoomable.rememberZoomableState
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.common.ui.LocalTextSharer
+import com.paulrybitskyi.gamedge.common.ui.OnLifecycleEvent
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
-import com.paulrybitskyi.gamedge.common.ui.findWindow
 import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.rememberWindowInsetsController
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
@@ -93,12 +97,40 @@ private fun ImageViewerScreen(
         }
     }
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
+    SystemBarsColorHandler()
     ImageViewerScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onBackPressed = viewModel::onBackPressed,
         onToolbarRightBtnClicked = viewModel::onToolbarRightButtonClicked,
         onImageChanged = viewModel::onImageChanged,
         onDismiss = viewModel::onBackPressed,
+    )
+}
+
+@Composable
+private fun SystemBarsColorHandler() {
+    val windowsInsetsController = rememberWindowInsetsController()
+    val wereStatusBarIconsLight = remember { windowsInsetsController?.areStatusBarIconsLight }
+    val wereNavBarIconsLight = remember { windowsInsetsController?.areNavigationBarIconsLight }
+
+    OnLifecycleEvent(
+        onStart = {
+            val delay = 0L
+
+            // Make the status bar's icons always white on this screen
+            windowsInsetsController?.setStatusBarIconsLight(true, delay)
+            // Make the nav bar's buttons always white on this screen
+            windowsInsetsController?.setNavigationBarIconsLight(true, delay)
+        },
+        onStop = {
+            if (wereStatusBarIconsLight != null) {
+                windowsInsetsController?.setStatusBarIconsLight(wereStatusBarIconsLight)
+            }
+
+            if (wereNavBarIconsLight != null) {
+                windowsInsetsController?.setNavigationBarIconsLight(wereNavBarIconsLight)
+            }
+        },
     )
 }
 
@@ -112,7 +144,6 @@ private fun ImageViewerScreen(
 ) {
     val toolbarBackgroundColor = GamedgeTheme.colors.darkScrim
 
-    SystemBarsColorHandler(navBarColor = toolbarBackgroundColor)
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.Black,
@@ -125,7 +156,6 @@ private fun ImageViewerScreen(
                 onImageChanged = onImageChanged,
                 onDismiss = onDismiss,
             )
-
             Toolbar(
                 title = uiState.toolbarTitle,
                 modifier = Modifier.align(Alignment.TopCenter),
@@ -137,49 +167,13 @@ private fun ImageViewerScreen(
                 onLeftButtonClick = onBackPressed,
                 onRightButtonClick = onToolbarRightBtnClicked,
             )
-        }
-    }
-}
-
-@Composable
-private fun SystemBarsColorHandler(navBarColor: Color) {
-    val window = findWindow()
-    val windowsInsetsController = rememberWindowInsetsController(window = window)
-
-    DisposableEffect(windowsInsetsController, window, navBarColor) {
-        if (windowsInsetsController == null || window == null) {
-            return@DisposableEffect onDispose {}
-        }
-
-        val previousStatusBarHasDarkIcons = windowsInsetsController.isAppearanceLightStatusBars
-        val previousNavBarHasDarkButtons = windowsInsetsController.isAppearanceLightNavigationBars
-        val previousStatusBarColor = window.statusBarColor
-        val previousNavBarColor = window.navigationBarColor
-
-        with(windowsInsetsController) {
-            // Make the status bar's icons always white on this screen
-            isAppearanceLightStatusBars = false
-            // Make the nav bar's buttons always white on this screen
-            isAppearanceLightNavigationBars = false
-        }
-
-        with(window) {
-            // Make the status bar transparent for it to use the color of the toolbar
-            statusBarColor = Color.Transparent.toArgb()
-            // Make the nav bar's color the same as the toolbar's color
-            navigationBarColor = navBarColor.toArgb()
-        }
-
-        onDispose {
-            with(windowsInsetsController) {
-                isAppearanceLightStatusBars = previousStatusBarHasDarkIcons
-                isAppearanceLightNavigationBars = previousNavBarHasDarkButtons
-            }
-
-            with(window) {
-                statusBarColor = previousStatusBarColor
-                navigationBarColor = previousNavBarColor
-            }
+            Spacer(
+                modifier = Modifier
+                    .windowInsetsBottomHeight(WindowInsets.navigationBars)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .background(toolbarBackgroundColor)
+            )
         }
     }
 }

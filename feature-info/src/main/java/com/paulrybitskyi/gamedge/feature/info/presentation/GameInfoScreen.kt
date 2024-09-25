@@ -17,14 +17,18 @@
 package com.paulrybitskyi.gamedge.feature.info.presentation
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
@@ -43,9 +47,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalUrlOpener
+import com.paulrybitskyi.gamedge.common.ui.OnLifecycleEvent
 import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
 import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.rememberWindowInsetsController
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.common.ui.theme.darkScrim
 import com.paulrybitskyi.gamedge.common.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.GamedgeProgressIndicator
@@ -100,6 +107,7 @@ private fun GameInfoScreen(
         }
     }
     RoutesHandler(viewModel = viewModel, onRoute = onRoute)
+    StatusBarHandler()
     GameInfoScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onArtworkClicked = viewModel::onArtworkClicked,
@@ -111,6 +119,24 @@ private fun GameInfoScreen(
         onLinkClicked = viewModel::onLinkClicked,
         onCompanyClicked = viewModel::onCompanyClicked,
         onRelatedGameClicked = viewModel::onRelatedGameClicked,
+    )
+}
+
+@Composable
+private fun StatusBarHandler() {
+    val windowsInsetsController = rememberWindowInsetsController()
+    val wereStatusBarIconsLight = remember { windowsInsetsController?.areStatusBarIconsLight }
+
+    OnLifecycleEvent(
+        onStart = {
+            // Make the status bar's icons always white on this screen
+            windowsInsetsController?.setStatusBarIconsLight(true, delay = 0L)
+        },
+        onStop = {
+            if (wereStatusBarIconsLight != null) {
+                windowsInsetsController?.setStatusBarIconsLight(wereStatusBarIconsLight)
+            }
+        },
     )
 }
 
@@ -165,6 +191,13 @@ private fun GameInfoScreen(
             }
         }
     }
+
+    Spacer(
+        modifier = Modifier
+            .windowInsetsTopHeight(WindowInsets.statusBars)
+            .fillMaxWidth()
+            .background(GamedgeTheme.colors.darkScrim)
+    )
 }
 
 @Composable
