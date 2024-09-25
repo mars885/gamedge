@@ -39,6 +39,7 @@ class GamedgeJetpackComposePlugin : Plugin<Project> {
                         "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
                         "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
                         "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
+                        "-opt-in=androidx.constraintlayout.compose.ExperimentalMotionApi",
                     ),
                 )
             }
