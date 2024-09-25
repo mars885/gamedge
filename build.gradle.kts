@@ -81,6 +81,13 @@ allprojects {
             reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
         }
     }
+
+    // Without the below block, a build failure was happening when
+    // running ./gradlew connectedAndroidTest.
+    // See: https://github.com/mockito/mockito/issues/2007#issuecomment-689365556
+    configurations.all {
+        resolutionStrategy.force("org.objenesis:objenesis:2.6")
+    }
 }
 
 subprojects {
