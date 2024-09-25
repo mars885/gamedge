@@ -34,9 +34,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.common.ui.DirectionsHandler
 import com.paulrybitskyi.gamedge.common.ui.OnLifecycleEvent
-import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.base.events.Direction
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
@@ -52,20 +52,20 @@ import com.paulrybitskyi.gamedge.core.R as CoreR
 private const val KeyboardPopupIntentionalDelay = 300L
 
 @Composable
-fun GamesSearchScreen(onRoute: (Route) -> Unit) {
+fun GamesSearchScreen(onNavigate: (Direction) -> Unit) {
     GamesSearchScreen(
         viewModel = hiltViewModel(),
-        onRoute = onRoute,
+        onNavigate = onNavigate,
     )
 }
 
 @Composable
 private fun GamesSearchScreen(
     viewModel: GamesSearchViewModel,
-    onRoute: (Route) -> Unit,
+    onNavigate: (Direction) -> Unit,
 ) {
     CommandsHandler(viewModel = viewModel)
-    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
+    DirectionsHandler(viewModel = viewModel, onNavigate = onNavigate)
     GamesSearchScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onSearchConfirmed = viewModel::onSearchConfirmed,

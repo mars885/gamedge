@@ -57,7 +57,7 @@ internal class GameInfoViewModel @AssistedInject constructor(
     @TransitionAnimationDuration
     transitionAnimationDuration: Long,
     @Assisted
-    private val destination: GameInfoDestination,
+    private val route: GameInfoRoute,
     private val useCases: GameInfoUseCases,
     private val uiModelMapper: GameInfoUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
@@ -68,7 +68,7 @@ internal class GameInfoViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(destination: GameInfoDestination): GameInfoViewModel
+        fun create(route: GameInfoRoute): GameInfoViewModel
     }
 
     private var isObservingGameData = false
@@ -93,7 +93,7 @@ internal class GameInfoViewModel @AssistedInject constructor(
     }
 
     private suspend fun observeGameInfoInternal(resultEmissionDelay: Long) {
-        useCases.getGameInfoUseCase.execute(GetGameInfoUseCase.Params(destination.gameId))
+        useCases.getGameInfoUseCase.execute(GetGameInfoUseCase.Params(route.gameId))
             .map(uiModelMapper::mapToUiModel)
             .flowOn(dispatcherProvider.computation)
             .map { game -> currentUiState.toSuccessState(game) }
@@ -127,7 +127,7 @@ internal class GameInfoViewModel @AssistedInject constructor(
         viewModelScope.launch {
             useCases.getGameImageUrlsUseCase.execute(
                 GetGameImageUrlsUseCase.Params(
-                    gameId = destination.gameId,
+                    gameId = route.gameId,
                     imageType = imageType,
                 ),
             )
@@ -137,13 +137,13 @@ internal class GameInfoViewModel @AssistedInject constructor(
                 dispatchCommand(GeneralCommand.ShowLongToast(errorMapper.mapToMessage(it)))
             }
             .collect { imageUrls ->
-                route(GameInfoRoute.ImageViewer(imageUrls, title, initialPosition))
+                navigate(GameInfoDirection.ImageViewer(imageUrls, title, initialPosition))
             }
         }
     }
 
     fun onBackButtonClicked() {
-        route(GameInfoRoute.Back)
+        navigate(GameInfoDirection.Back)
     }
 
     fun onCoverClicked() {
@@ -156,7 +156,7 @@ internal class GameInfoViewModel @AssistedInject constructor(
     fun onLikeButtonClicked() {
         viewModelScope.launch {
             useCases.toggleGameLikeStateUseCase
-                .execute(ToggleGameLikeStateUseCase.Params(destination.gameId))
+                .execute(ToggleGameLikeStateUseCase.Params(route.gameId))
         }
     }
 
@@ -185,6 +185,6 @@ internal class GameInfoViewModel @AssistedInject constructor(
     }
 
     fun onRelatedGameClicked(game: GameInfoRelatedGameUiModel) {
-        route(GameInfoRoute.Info(gameId = game.id))
+        navigate(GameInfoDirection.Info(gameId = game.id))
     }
 }

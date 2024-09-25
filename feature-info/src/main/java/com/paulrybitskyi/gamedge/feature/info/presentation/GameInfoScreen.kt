@@ -46,10 +46,10 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.common.ui.DirectionsHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalUrlOpener
 import com.paulrybitskyi.gamedge.common.ui.OnLifecycleEvent
-import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.base.events.Direction
 import com.paulrybitskyi.gamedge.common.ui.rememberWindowInsetsController
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.theme.darkScrim
@@ -83,21 +83,21 @@ import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
 fun GameInfoScreen(
-    destination: GameInfoDestination,
-    onRoute: (Route) -> Unit,
+    route: GameInfoRoute,
+    onNavigate: (Direction) -> Unit,
 ) {
     GameInfoScreen(
         viewModel = hiltViewModel<GameInfoViewModel, GameInfoViewModel.Factory>(
-            creationCallback = { factory -> factory.create(destination) },
+            creationCallback = { factory -> factory.create(route) },
         ),
-        onRoute = onRoute,
+        onNavigate = onNavigate,
     )
 }
 
 @Composable
 private fun GameInfoScreen(
     viewModel: GameInfoViewModel,
-    onRoute: (Route) -> Unit,
+    onNavigate: (Direction) -> Unit,
 ) {
     val urlOpener = LocalUrlOpener.current
     val context = LocalContext.current
@@ -111,7 +111,7 @@ private fun GameInfoScreen(
             }
         }
     }
-    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
+    DirectionsHandler(viewModel = viewModel, onNavigate = onNavigate)
     StatusBarHandler()
     GameInfoScreen(
         uiState = viewModel.uiState.collectAsState().value,

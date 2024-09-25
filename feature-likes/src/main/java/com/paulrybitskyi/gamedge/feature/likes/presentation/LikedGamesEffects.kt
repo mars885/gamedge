@@ -18,9 +18,9 @@
 
 package com.paulrybitskyi.gamedge.feature.likes.presentation
 
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.base.events.Direction
 
-sealed class LikedGamesRoute : Route {
-    data object Search : LikedGamesRoute()
-    data class Info(val gameId: Int) : LikedGamesRoute()
+sealed class LikedGamesDirection : Direction {
+    data object Search : LikedGamesDirection()
+    data class Info(val gameId: Int) : LikedGamesDirection()
 }

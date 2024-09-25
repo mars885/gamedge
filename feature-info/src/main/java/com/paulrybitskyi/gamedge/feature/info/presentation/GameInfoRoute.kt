@@ -3,6 +3,6 @@ package com.paulrybitskyi.gamedge.feature.info.presentation
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GameInfoDestination(
+data class GameInfoRoute(
     val gameId: Int,
 )

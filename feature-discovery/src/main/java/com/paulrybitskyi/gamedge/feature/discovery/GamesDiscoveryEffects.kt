@@ -18,10 +18,10 @@
 
 package com.paulrybitskyi.gamedge.feature.discovery
 
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.base.events.Direction
 
-sealed class GamesDiscoveryRoute : Route {
-    data object Search : GamesDiscoveryRoute()
-    data class Category(val category: String) : GamesDiscoveryRoute()
-    data class Info(val gameId: Int) : GamesDiscoveryRoute()
+sealed class GamesDiscoveryDirection : Direction {
+    data object Search : GamesDiscoveryDirection()
+    data class Category(val category: String) : GamesDiscoveryDirection()
+    data class Info(val gameId: Int) : GamesDiscoveryDirection()
 }

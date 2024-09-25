@@ -56,7 +56,7 @@ internal class GamesCategoryViewModelTest {
         GamesCategoryViewModel(
             stringProvider = FakeStringProvider(),
             transitionAnimationDuration = 0L,
-            destination = GamesCategoryDestination(category = GamesCategory.POPULAR.name),
+            route = GamesCategoryRoute(category = GamesCategory.POPULAR.name),
             useCases = setupUseCases(),
             uiModelMapper = FakeGameCategoryUiModelMapper(),
             dispatcherProvider = mainCoroutineRule.dispatcherProvider,
@@ -177,18 +177,18 @@ internal class GamesCategoryViewModelTest {
     }
 
     @Test
-    fun `Routes to previous screen when toolbar left button is clicked`() {
+    fun `Navigates to previous screen when toolbar left button is clicked`() {
         runTest {
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onToolbarLeftButtonClicked()
 
-                assertThat(awaitItem()).isInstanceOf(GamesCategoryRoute.Back::class.java)
+                assertThat(awaitItem()).isInstanceOf(GamesCategoryDirection.Back::class.java)
             }
         }
     }
 
     @Test
-    fun `Routes to game info screen when game is clicked`() {
+    fun `Navigates to game info screen when game is clicked`() {
         runTest {
             val game = GameCategoryUiModel(
                 id = 1,
@@ -196,13 +196,13 @@ internal class GamesCategoryViewModelTest {
                 coverUrl = null,
             )
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onGameClicked(game)
 
-                val route = awaitItem()
+                val direction = awaitItem()
 
-                assertThat(route).isInstanceOf(GamesCategoryRoute.Info::class.java)
-                assertThat((route as GamesCategoryRoute.Info).gameId).isEqualTo(game.id)
+                assertThat(direction).isInstanceOf(GamesCategoryDirection.Info::class.java)
+                assertThat((direction as GamesCategoryDirection.Info).gameId).isEqualTo(game.id)
             }
         }
     }

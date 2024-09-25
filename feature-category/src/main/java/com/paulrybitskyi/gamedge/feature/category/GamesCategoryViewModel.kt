@@ -57,7 +57,7 @@ internal class GamesCategoryViewModel @AssistedInject constructor(
     @TransitionAnimationDuration
     transitionAnimationDuration: Long,
     @Assisted
-    private val destination: GamesCategoryDestination,
+    private val route: GamesCategoryRoute,
     private val useCases: GamesCategoryUseCases,
     private val uiModelMapper: GameCategoryUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
@@ -67,7 +67,7 @@ internal class GamesCategoryViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(destination: GamesCategoryDestination): GamesCategoryViewModel
+        fun create(route: GamesCategoryRoute): GamesCategoryViewModel
     }
 
     private var isObservingGames = false
@@ -77,7 +77,7 @@ internal class GamesCategoryViewModel @AssistedInject constructor(
     private var observeGamesUseCaseParams = ObserveGamesUseCaseParams()
     private var refreshGamesUseCaseParams = RefreshGamesUseCaseParams()
 
-    private val gamesCategory = GamesCategory.valueOf(destination.category)
+    private val gamesCategory = GamesCategory.valueOf(route.category)
     private val gamesCategoryKeyType = gamesCategory.toKeyType()
 
     private var gamesObservingJob: Job? = null
@@ -174,11 +174,11 @@ internal class GamesCategoryViewModel @AssistedInject constructor(
     }
 
     fun onToolbarLeftButtonClicked() {
-        route(GamesCategoryRoute.Back)
+        navigate(GamesCategoryDirection.Back)
     }
 
     fun onGameClicked(game: GameCategoryUiModel) {
-        route(GamesCategoryRoute.Info(game.id))
+        navigate(GamesCategoryDirection.Info(game.id))
     }
 
     fun onBottomReached() {

@@ -57,11 +57,11 @@ import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
 import com.paulrybitskyi.commons.SdkInfo
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
+import com.paulrybitskyi.gamedge.common.ui.DirectionsHandler
 import com.paulrybitskyi.gamedge.common.ui.LocalNetworkStateProvider
 import com.paulrybitskyi.gamedge.common.ui.LocalTextSharer
 import com.paulrybitskyi.gamedge.common.ui.OnLifecycleEvent
-import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.base.events.Direction
 import com.paulrybitskyi.gamedge.common.ui.findWindow
 import com.paulrybitskyi.gamedge.common.ui.images.defaultImageRequest
 import com.paulrybitskyi.gamedge.common.ui.rememberWindowInsetsController
@@ -79,21 +79,21 @@ private const val ZoomScaleInitial = 1f
 
 @Composable
 fun ImageViewerScreen(
-    destination: ImageViewerDestination,
-    onRoute: (Route) -> Unit,
+    route: ImageViewerRoute,
+    onNavigate: (Direction) -> Unit,
 ) {
     ImageViewerScreen(
         viewModel = hiltViewModel<ImageViewerViewModel, ImageViewerViewModel.Factory>(
-            creationCallback = { factory -> factory.create(destination) },
+            creationCallback = { factory -> factory.create(route) },
         ),
-        onRoute = onRoute,
+        onNavigate = onNavigate,
     )
 }
 
 @Composable
 private fun ImageViewerScreen(
     viewModel: ImageViewerViewModel,
-    onRoute: (Route) -> Unit,
+    onNavigate: (Direction) -> Unit,
 ) {
     val textSharer = LocalTextSharer.current
     val context = LocalContext.current
@@ -105,7 +105,7 @@ private fun ImageViewerScreen(
             }
         }
     }
-    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
+    DirectionsHandler(viewModel = viewModel, onNavigate = onNavigate)
     SystemBarsColorHandler()
     ImageViewerScreen(
         uiState = viewModel.uiState.collectAsState().value,

@@ -142,15 +142,15 @@ internal class GamesDiscoveryViewModel @Inject constructor(
     }
 
     fun onSearchButtonClicked() {
-        route(GamesDiscoveryRoute.Search)
+        navigate(GamesDiscoveryDirection.Search)
     }
 
     fun onCategoryMoreButtonClicked(category: String) {
-        route(GamesDiscoveryRoute.Category(category))
+        navigate(GamesDiscoveryDirection.Category(category))
     }
 
     fun onCategoryGameClicked(item: GamesDiscoveryItemGameUiModel) {
-        route(GamesDiscoveryRoute.Info(gameId = item.id))
+        navigate(GamesDiscoveryDirection.Info(gameId = item.id))
     }
 
     fun onRefreshRequested() {

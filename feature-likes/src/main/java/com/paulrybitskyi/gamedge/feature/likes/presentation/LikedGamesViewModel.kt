@@ -139,11 +139,11 @@ internal class LikedGamesViewModel @Inject constructor(
     }
 
     fun onSearchButtonClicked() {
-        route(LikedGamesRoute.Search)
+        navigate(LikedGamesDirection.Search)
     }
 
     fun onGameClicked(game: GameUiModel) {
-        route(LikedGamesRoute.Info(game.id))
+        navigate(LikedGamesDirection.Info(game.id))
     }
 
     fun onBottomReached() {

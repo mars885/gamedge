@@ -57,7 +57,7 @@ internal class GameInfoViewModelTest {
     private val SUT by lazy {
         GameInfoViewModel(
             transitionAnimationDuration = 0L,
-            destination = GameInfoDestination(gameId = 1),
+            route = GameInfoRoute(gameId = 1),
             useCases = useCases,
             uiModelMapper = FakeGameInfoUiModelMapper(),
             dispatcherProvider = mainCoroutineRule.dispatcherProvider,
@@ -116,20 +116,20 @@ internal class GameInfoViewModelTest {
     }
 
     @Test
-    fun `Routes to image viewer screen when artwork is clicked`() {
+    fun `Navigates to image viewer screen when artwork is clicked`() {
         runTest {
             coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Ok(listOf()))
 
             val artworkIndex = 10
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onArtworkClicked(artworkIndex = artworkIndex)
 
-                val route = awaitItem()
+                val direction = awaitItem()
 
-                assertThat(route).isInstanceOf(GameInfoRoute.ImageViewer::class.java)
-                assertThat((route as GameInfoRoute.ImageViewer).initialPosition).isEqualTo(artworkIndex)
+                assertThat(direction).isInstanceOf(GameInfoDirection.ImageViewer::class.java)
+                assertThat((direction as GameInfoDirection.ImageViewer).initialPosition).isEqualTo(artworkIndex)
             }
         }
     }
@@ -165,28 +165,28 @@ internal class GameInfoViewModelTest {
     }
 
     @Test
-    fun `Routes to previous screen when back button is clicked`() {
+    fun `Navigates to previous screen when back button is clicked`() {
         runTest {
             coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onBackButtonClicked()
 
-                assertThat(awaitItem()).isInstanceOf(GameInfoRoute.Back::class.java)
+                assertThat(awaitItem()).isInstanceOf(GameInfoDirection.Back::class.java)
             }
         }
     }
 
     @Test
-    fun `Routes to image viewer screen when cover is clicked`() {
+    fun `Navigates to image viewer screen when cover is clicked`() {
         runTest {
             coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Ok(listOf()))
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onCoverClicked()
 
-                assertThat(awaitItem()).isInstanceOf(GameInfoRoute.ImageViewer::class.java)
+                assertThat(awaitItem()).isInstanceOf(GameInfoDirection.ImageViewer::class.java)
             }
         }
     }
@@ -245,20 +245,20 @@ internal class GameInfoViewModelTest {
     }
 
     @Test
-    fun `Routes to image viewer screen when screenshot is clicked`() {
+    fun `Navigates to image viewer screen when screenshot is clicked`() {
         runTest {
             coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
             coEvery { useCases.getGameImageUrlsUseCase.execute(any()) } returns flowOf(Ok(listOf()))
 
             val screenshotIndex = 10
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onScreenshotClicked(screenshotIndex = screenshotIndex)
 
-                val route = awaitItem()
+                val direction = awaitItem()
 
-                assertThat(route).isInstanceOf(GameInfoRoute.ImageViewer::class.java)
-                assertThat((route as GameInfoRoute.ImageViewer).initialPosition).isEqualTo(screenshotIndex)
+                assertThat(direction).isInstanceOf(GameInfoDirection.ImageViewer::class.java)
+                assertThat((direction as GameInfoDirection.ImageViewer).initialPosition).isEqualTo(screenshotIndex)
             }
         }
     }
@@ -343,7 +343,7 @@ internal class GameInfoViewModelTest {
     }
 
     @Test
-    fun `Routes to game info when related game is clicked`() {
+    fun `Navigates to game info when related game is clicked`() {
         runTest {
             coEvery { useCases.getGameInfoUseCase.execute(any()) } returns flowOf(GAME_INFO)
 
@@ -353,13 +353,13 @@ internal class GameInfoViewModelTest {
                 coverUrl = "url",
             )
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onRelatedGameClicked(relatedGame)
 
-                val route = awaitItem()
+                val direction = awaitItem()
 
-                assertThat(route).isInstanceOf(GameInfoRoute.Info::class.java)
-                assertThat((route as GameInfoRoute.Info).gameId).isEqualTo(relatedGame.id)
+                assertThat(direction).isInstanceOf(GameInfoDirection.Info::class.java)
+                assertThat((direction as GameInfoDirection.Info).gameId).isEqualTo(relatedGame.id)
             }
         }
     }

@@ -18,9 +18,9 @@
 
 package com.paulrybitskyi.gamedge.feature.category
 
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.base.events.Direction
 
-sealed class GamesCategoryRoute : Route {
-    data class Info(val gameId: Int) : GamesCategoryRoute()
-    data object Back : GamesCategoryRoute()
+sealed class GamesCategoryDirection : Direction {
+    data class Info(val gameId: Int) : GamesCategoryDirection()
+    data object Back : GamesCategoryDirection()
 }

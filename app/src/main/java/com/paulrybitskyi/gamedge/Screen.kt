@@ -24,47 +24,47 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavController
-import com.paulrybitskyi.gamedge.feature.category.GamesCategoryDestination
-import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryDestination
-import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerDestination
-import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoDestination
-import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesDestination
-import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsDestination
-import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchDestination
-import com.paulrybitskyi.gamedge.feature.settings.presentation.SettingsDestination
+import com.paulrybitskyi.gamedge.feature.category.GamesCategoryRoute
+import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryRoute
+import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerRoute
+import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoRoute
+import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesRoute
+import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsRoute
+import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchRoute
+import com.paulrybitskyi.gamedge.feature.settings.presentation.SettingsRoute
 import kotlin.reflect.KClass
 
 internal val START_SCREEN = Screen.GamesDiscovery
 
 internal sealed class Screen(val routeClass: KClass<*>) {
 
-    data object GamesDiscovery : Screen(GamesDiscoveryDestination::class)
-    data object LikedGames : Screen(LikedGamesDestination::class)
-    data object GamingNews : Screen(GamingNewsDestination::class)
-    data object Settings : Screen(SettingsDestination::class)
-    data object GamesSearch : Screen(GamesSearchDestination::class)
-    data object GamesCategory : Screen(GamesCategoryDestination::class) {
+    data object GamesDiscovery : Screen(GamesDiscoveryRoute::class)
+    data object LikedGames : Screen(LikedGamesRoute::class)
+    data object GamingNews : Screen(GamingNewsRoute::class)
+    data object Settings : Screen(SettingsRoute::class)
+    data object GamesSearch : Screen(GamesSearchRoute::class)
+    data object GamesCategory : Screen(GamesCategoryRoute::class) {
 
-        fun createRoute(category: String): GamesCategoryDestination {
-            return GamesCategoryDestination(category = category)
+        fun createRoute(category: String): GamesCategoryRoute {
+            return GamesCategoryRoute(category = category)
         }
     }
 
-    data object GameInfo : Screen(GameInfoDestination::class) {
+    data object GameInfo : Screen(GameInfoRoute::class) {
 
-        fun createRoute(gameId: Int): GameInfoDestination {
-            return GameInfoDestination(gameId = gameId)
+        fun createRoute(gameId: Int): GameInfoRoute {
+            return GameInfoRoute(gameId = gameId)
         }
     }
 
-    data object ImageViewer : Screen(ImageViewerDestination::class) {
+    data object ImageViewer : Screen(ImageViewerRoute::class) {
 
         fun createRoute(
             imageUrls: List<String>,
             title: String? = null,
             initialPosition: Int = 0,
-        ): ImageViewerDestination {
-            return ImageViewerDestination(
+        ): ImageViewerRoute {
+            return ImageViewerRoute(
                 imageUrls = imageUrls,
                 title = title,
                 initialPosition = initialPosition,

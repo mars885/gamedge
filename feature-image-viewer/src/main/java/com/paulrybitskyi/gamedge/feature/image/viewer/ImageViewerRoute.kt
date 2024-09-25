@@ -3,7 +3,7 @@ package com.paulrybitskyi.gamedge.feature.image.viewer
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ImageViewerDestination(
+data class ImageViewerRoute(
     val imageUrls: List<String>,
     val title: String?,
     val initialPosition: Int,

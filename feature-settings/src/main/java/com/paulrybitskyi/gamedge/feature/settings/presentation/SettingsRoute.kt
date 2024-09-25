@@ -3,4 +3,4 @@ package com.paulrybitskyi.gamedge.feature.settings.presentation
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object SettingsDestination
+data object SettingsRoute

@@ -71,12 +71,12 @@ internal class GamesSearchViewModelTest {
     }
 
     @Test
-    fun `Routes to previous screen when toolbar back button is clicked`() {
+    fun `Navigates to previous screen when toolbar back button is clicked`() {
         runTest {
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onToolbarBackButtonClicked()
 
-                assertThat(awaitItem()).isInstanceOf(GamesSearchRoute.Back::class.java)
+                assertThat(awaitItem()).isInstanceOf(GamesSearchDirection.Back::class.java)
             }
         }
     }
@@ -214,7 +214,7 @@ internal class GamesSearchViewModelTest {
     }
 
     @Test
-    fun `Routes to info screen when game is clicked`() {
+    fun `Navigates to info screen when game is clicked`() {
         runTest {
             val game = GameUiModel(
                 id = 1,
@@ -225,13 +225,13 @@ internal class GamesSearchViewModelTest {
                 description = null,
             )
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onGameClicked(game)
 
-                val route = awaitItem()
+                val direction = awaitItem()
 
-                assertThat(route).isInstanceOf(GamesSearchRoute.Info::class.java)
-                assertThat((route as GamesSearchRoute.Info).gameId).isEqualTo(game.id)
+                assertThat(direction).isInstanceOf(GamesSearchDirection.Info::class.java)
+                assertThat((direction as GamesSearchDirection.Info).gameId).isEqualTo(game.id)
             }
         }
     }

@@ -39,8 +39,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.DirectionsHandler
+import com.paulrybitskyi.gamedge.common.ui.base.events.Direction
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.AnimatedContentContainer
 import com.paulrybitskyi.gamedge.common.ui.widgets.FiniteUiState
@@ -54,24 +54,24 @@ import com.paulrybitskyi.gamedge.core.R as CoreR
 
 @Composable
 fun GamesCategoryScreen(
-    destination: GamesCategoryDestination,
-    onRoute: (Route) -> Unit,
+    route: GamesCategoryRoute,
+    onNavigate: (Direction) -> Unit,
 ) {
     GamesCategoryScreen(
         viewModel = hiltViewModel<GamesCategoryViewModel, GamesCategoryViewModel.Factory>(
-            creationCallback = { factory -> factory.create(destination) },
+            creationCallback = { factory -> factory.create(route) },
         ),
-        onRoute = onRoute,
+        onNavigate = onNavigate,
     )
 }
 
 @Composable
 private fun GamesCategoryScreen(
     viewModel: GamesCategoryViewModel,
-    onRoute: (Route) -> Unit,
+    onNavigate: (Direction) -> Unit,
 ) {
     CommandsHandler(viewModel = viewModel)
-    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
+    DirectionsHandler(viewModel = viewModel, onNavigate = onNavigate)
     GamesCategoryScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onBackButtonClicked = viewModel::onToolbarLeftButtonClicked,

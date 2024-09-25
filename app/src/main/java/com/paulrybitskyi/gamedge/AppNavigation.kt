@@ -35,18 +35,18 @@ import androidx.navigation.get
 import androidx.navigation.toRoute
 import com.paulrybitskyi.gamedge.common.ui.HorizontalSliding
 import com.paulrybitskyi.gamedge.common.ui.OvershootScaling
-import com.paulrybitskyi.gamedge.feature.category.GamesCategoryRoute
+import com.paulrybitskyi.gamedge.feature.category.GamesCategoryDirection
 import com.paulrybitskyi.gamedge.feature.category.GamesCategoryScreen
-import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryRoute
+import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryDirection
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryScreen
-import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerRoute
+import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerDirection
 import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerScreen
-import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoRoute
+import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoDirection
 import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoScreen
-import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesRoute
+import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesDirection
 import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesScreen
 import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsScreen
-import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchRoute
+import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchDirection
 import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchScreen
 import com.paulrybitskyi.gamedge.feature.settings.presentation.SettingsScreen
 import kotlin.reflect.KClass
@@ -107,16 +107,16 @@ private fun NavGraphBuilder.gamesDiscoveryScreen(
         },
         popExitTransition = { null },
     ) {
-        GamesDiscoveryScreen(modifier) { route ->
-            when (route) {
-                is GamesDiscoveryRoute.Search -> {
+        GamesDiscoveryScreen(modifier) { direction ->
+            when (direction) {
+                is GamesDiscoveryDirection.Search -> {
                     navController.navigate(Screen.GamesSearch.route)
                 }
-                is GamesDiscoveryRoute.Category -> {
-                    navController.navigate(Screen.GamesCategory.createRoute(category = route.category))
+                is GamesDiscoveryDirection.Category -> {
+                    navController.navigate(Screen.GamesCategory.createRoute(category = direction.category))
                 }
-                is GamesDiscoveryRoute.Info -> {
-                    navController.navigate(Screen.GameInfo.createRoute(gameId = route.gameId))
+                is GamesDiscoveryDirection.Info -> {
+                    navController.navigate(Screen.GameInfo.createRoute(gameId = direction.gameId))
                 }
             }
         }
@@ -146,13 +146,13 @@ private fun NavGraphBuilder.likedGamesScreen(
         },
         popExitTransition = { null },
     ) {
-        LikedGamesScreen(modifier) { route ->
-            when (route) {
-                is LikedGamesRoute.Search -> {
+        LikedGamesScreen(modifier) { direction ->
+            when (direction) {
+                is LikedGamesDirection.Search -> {
                     navController.navigate(Screen.GamesSearch.route)
                 }
-                is LikedGamesRoute.Info -> {
-                    navController.navigate(Screen.GameInfo.createRoute(gameId = route.gameId))
+                is LikedGamesDirection.Info -> {
+                    navController.navigate(Screen.GameInfo.createRoute(gameId = direction.gameId))
                 }
             }
         }
@@ -205,12 +205,12 @@ private fun NavGraphBuilder.gamesSearchScreen(navController: NavHostController) 
             }
         },
     ) {
-        GamesSearchScreen { route ->
-            when (route) {
-                is GamesSearchRoute.Info -> {
-                    navController.navigate(Screen.GameInfo.createRoute(gameId = route.gameId))
+        GamesSearchScreen { direction ->
+            when (direction) {
+                is GamesSearchDirection.Info -> {
+                    navController.navigate(Screen.GameInfo.createRoute(gameId = direction.gameId))
                 }
-                is GamesSearchRoute.Back -> {
+                is GamesSearchDirection.Back -> {
                     navController.popBackStack()
                 }
             }
@@ -246,12 +246,12 @@ private fun NavGraphBuilder.gamesCategoryScreen(navController: NavHostController
             }
         },
     ) { entry ->
-        GamesCategoryScreen(destination = entry.toRoute()) { route ->
-            when (route) {
-                is GamesCategoryRoute.Info -> {
-                    navController.navigate(Screen.GameInfo.createRoute(gameId = route.gameId))
+        GamesCategoryScreen(route = entry.toRoute()) { direction ->
+            when (direction) {
+                is GamesCategoryDirection.Info -> {
+                    navController.navigate(Screen.GameInfo.createRoute(gameId = direction.gameId))
                 }
-                is GamesCategoryRoute.Back -> {
+                is GamesCategoryDirection.Back -> {
                     navController.popBackStack()
                 }
             }
@@ -301,21 +301,21 @@ private fun NavGraphBuilder.gameInfoScreen(navController: NavHostController) {
             }
         },
     ) { entry ->
-        GameInfoScreen(destination = entry.toRoute()) { route ->
-            when (route) {
-                is GameInfoRoute.ImageViewer -> {
+        GameInfoScreen(route = entry.toRoute()) { direction ->
+            when (direction) {
+                is GameInfoDirection.ImageViewer -> {
                     navController.navigate(
                         Screen.ImageViewer.createRoute(
-                            imageUrls = route.imageUrls,
-                            title = route.title,
-                            initialPosition = route.initialPosition,
+                            imageUrls = direction.imageUrls,
+                            title = direction.title,
+                            initialPosition = direction.initialPosition,
                         ),
                     )
                 }
-                is GameInfoRoute.Info -> {
-                    navController.navigate(Screen.GameInfo.createRoute(gameId = route.gameId))
+                is GameInfoDirection.Info -> {
+                    navController.navigate(Screen.GameInfo.createRoute(gameId = direction.gameId))
                 }
-                is GameInfoRoute.Back -> {
+                is GameInfoDirection.Back -> {
                     navController.popBackStack()
                 }
             }
@@ -341,9 +341,9 @@ private fun NavGraphBuilder.imageViewerScreen(navController: NavHostController) 
             }
         },
     ) { entry ->
-        ImageViewerScreen(destination = entry.toRoute()) { route ->
-            when (route) {
-                is ImageViewerRoute.Back -> navController.popBackStack()
+        ImageViewerScreen(route = entry.toRoute()) { direction ->
+            when (direction) {
+                is ImageViewerDirection.Back -> navController.popBackStack()
             }
         }
     }

@@ -37,8 +37,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.DirectionsHandler
+import com.paulrybitskyi.gamedge.common.ui.base.events.Direction
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.RefreshableContent
 import com.paulrybitskyi.gamedge.common.ui.widgets.categorypreview.GamesCategoryPreview
@@ -57,12 +57,12 @@ private const val PullRefreshIntentionalDelay = 300L
 @Composable
 fun GamesDiscoveryScreen(
     modifier: Modifier,
-    onRoute: (Route) -> Unit,
+    onNavigate: (Direction) -> Unit,
 ) {
     GamesDiscoveryScreen(
         viewModel = hiltViewModel(),
         modifier = modifier,
-        onRoute = onRoute,
+        onNavigate = onNavigate,
     )
 }
 
@@ -70,10 +70,10 @@ fun GamesDiscoveryScreen(
 private fun GamesDiscoveryScreen(
     viewModel: GamesDiscoveryViewModel,
     modifier: Modifier,
-    onRoute: (Route) -> Unit,
+    onNavigate: (Direction) -> Unit,
 ) {
     CommandsHandler(viewModel = viewModel)
-    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
+    DirectionsHandler(viewModel = viewModel, onNavigate = onNavigate)
     GamesDiscoveryScreen(
         items = viewModel.items.collectAsState().value,
         onCategoryMoreButtonClicked = viewModel::onCategoryMoreButtonClicked,

@@ -36,7 +36,7 @@ internal class ImageViewerViewModelTest {
 
     private val SUT by lazy {
         ImageViewerViewModel(
-            destination = ImageViewerDestination(
+            route = ImageViewerRoute(
                 imageUrls = listOf("url1", "url2", "url3"),
                 title = "",
                 initialPosition = INITIAL_POSITION,
@@ -86,12 +86,12 @@ internal class ImageViewerViewModelTest {
     }
 
     @Test
-    fun `Routes to previous screen when back button is clicked`() {
+    fun `Navigates to previous screen when back button is clicked`() {
         runTest {
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onBackPressed()
 
-                assertThat(awaitItem()).isInstanceOf(ImageViewerRoute.Back::class.java)
+                assertThat(awaitItem()).isInstanceOf(ImageViewerDirection.Back::class.java)
             }
         }
     }

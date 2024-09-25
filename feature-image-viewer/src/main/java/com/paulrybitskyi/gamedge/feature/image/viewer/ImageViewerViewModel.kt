@@ -39,18 +39,18 @@ internal const val KEY_SELECTED_POSITION = "selected_position"
 @HiltViewModel(assistedFactory = ImageViewerViewModel.Factory::class)
 internal class ImageViewerViewModel @AssistedInject constructor(
     @Assisted
-    destination: ImageViewerDestination,
+    route: ImageViewerRoute,
     private val stringProvider: StringProvider,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
     @AssistedFactory
     interface Factory {
-        fun create(destination: ImageViewerDestination): ImageViewerViewModel
+        fun create(route: ImageViewerRoute): ImageViewerViewModel
     }
 
-    private val args = destination.copy(
-        title = destination.title ?: stringProvider.getString(
+    private val args = route.copy(
+        title = route.title ?: stringProvider.getString(
             R.string.image_viewer_default_toolbar_title,
         ),
     )
@@ -123,6 +123,6 @@ internal class ImageViewerViewModel @AssistedInject constructor(
     }
 
     fun onBackPressed() {
-        route(ImageViewerRoute.Back)
+        navigate(ImageViewerDirection.Back)
     }
 }
