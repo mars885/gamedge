@@ -136,7 +136,7 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
     fun onToolbarBackButtonClicked() {
-        route(GamesSearchRoute.Back)
+        navigate(GamesSearchDirection.Back)
     }
 
     fun onToolbarClearButtonClicked() {
@@ -242,7 +242,7 @@ internal class GamesSearchViewModel @Inject constructor(
     }
 
     fun onGameClicked(game: GameUiModel) {
-        route(GamesSearchRoute.Info(game.id))
+        navigate(GamesSearchDirection.Info(game.id))
     }
 
     fun onBottomReached() {

@@ -23,13 +23,13 @@ import com.paulrybitskyi.commons.ktx.showLongToast
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.common.ui.base.events.Command
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.base.events.Direction
 import com.paulrybitskyi.gamedge.common.ui.base.events.common.GeneralCommand
 
 @Composable
 fun CommandsHandler(
     viewModel: BaseViewModel,
-    onHandleCommand: ((Command) -> Unit)? = null,
+    onCommand: ((Command) -> Unit)? = null,
 ) {
     val context = LocalContext.current
 
@@ -38,19 +38,19 @@ fun CommandsHandler(
             when (command) {
                 is GeneralCommand.ShowShortToast -> context.showShortToast(command.message)
                 is GeneralCommand.ShowLongToast -> context.showLongToast(command.message)
-                else -> onHandleCommand?.invoke(command)
+                else -> onCommand?.invoke(command)
             }
         }
     }
 }
 
 @Composable
-fun RoutesHandler(
+fun DirectionsHandler(
     viewModel: BaseViewModel,
-    onRoute: (Route) -> Unit,
+    onNavigate: (Direction) -> Unit,
 ) {
     LaunchedEffect(viewModel) {
-        viewModel.routeFlow
-            .collect(onRoute)
+        viewModel.directionFlow
+            .collect(onNavigate)
     }
 }

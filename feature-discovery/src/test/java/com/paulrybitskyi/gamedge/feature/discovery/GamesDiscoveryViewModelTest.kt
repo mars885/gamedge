@@ -129,34 +129,34 @@ internal class GamesDiscoveryViewModelTest {
     }
 
     @Test
-    fun `Routes to search screen when search button is clicked`() {
+    fun `Navigates to search screen when search button is clicked`() {
         runTest {
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onSearchButtonClicked()
 
-                assertThat(awaitItem()).isInstanceOf(GamesDiscoveryRoute.Search::class.java)
+                assertThat(awaitItem()).isInstanceOf(GamesDiscoveryDirection.Search::class.java)
             }
         }
     }
 
     @Test
-    fun `Routes to games category screen when more button is clicked`() {
+    fun `Navigates to games category screen when more button is clicked`() {
         runTest {
             val categoryName = GamesDiscoveryCategory.POPULAR.name
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onCategoryMoreButtonClicked(categoryName)
 
-                val route = awaitItem()
+                val direction = awaitItem()
 
-                assertThat(route).isInstanceOf(GamesDiscoveryRoute.Category::class.java)
-                assertThat((route as GamesDiscoveryRoute.Category).category).isEqualTo(categoryName)
+                assertThat(direction).isInstanceOf(GamesDiscoveryDirection.Category::class.java)
+                assertThat((direction as GamesDiscoveryDirection.Category).category).isEqualTo(categoryName)
             }
         }
     }
 
     @Test
-    fun `Routes to game info screen when game is clicked`() {
+    fun `Navigates to game info screen when game is clicked`() {
         runTest {
             val item = GamesDiscoveryItemGameUiModel(
                 id = 1,
@@ -164,13 +164,13 @@ internal class GamesDiscoveryViewModelTest {
                 coverUrl = null,
             )
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onCategoryGameClicked(item)
 
-                val route = awaitItem()
+                val direction = awaitItem()
 
-                assertThat(route).isInstanceOf(GamesDiscoveryRoute.Info::class.java)
-                assertThat((route as GamesDiscoveryRoute.Info).gameId).isEqualTo(item.id)
+                assertThat(direction).isInstanceOf(GamesDiscoveryDirection.Info::class.java)
+                assertThat((direction as GamesDiscoveryDirection.Info).gameId).isEqualTo(item.id)
             }
         }
     }

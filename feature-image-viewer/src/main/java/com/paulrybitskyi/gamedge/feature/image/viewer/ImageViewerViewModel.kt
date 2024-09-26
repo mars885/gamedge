@@ -20,7 +20,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.common.ui.base.BaseViewModel
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
-import com.paulrybitskyi.gamedge.core.utils.fromCsv
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,22 +32,28 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 import com.paulrybitskyi.gamedge.core.R as CoreR
-
-internal const val PARAM_TITLE = "title"
-internal const val PARAM_INITIAL_POSITION = "initial-position"
-internal const val PARAM_IMAGE_URLS = "image-urls"
 
 internal const val KEY_SELECTED_POSITION = "selected_position"
 
-@HiltViewModel
-internal class ImageViewerViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = ImageViewerViewModel.Factory::class)
+internal class ImageViewerViewModel @AssistedInject constructor(
+    @Assisted
+    route: ImageViewerRoute,
     private val stringProvider: StringProvider,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
-    private val title: String
+    @AssistedFactory
+    interface Factory {
+        fun create(route: ImageViewerRoute): ImageViewerViewModel
+    }
+
+    private val args = route.copy(
+        title = route.title ?: stringProvider.getString(
+            R.string.image_viewer_default_toolbar_title,
+        ),
+    )
 
     private val _uiState = MutableStateFlow(createInitialUiState())
 
@@ -55,13 +63,10 @@ internal class ImageViewerViewModel @Inject constructor(
     val uiState: StateFlow<ImageViewerUiState> = _uiState.asStateFlow()
 
     init {
-        title = savedStateHandle.get<String>(PARAM_TITLE)
-            ?: stringProvider.getString(R.string.image_viewer_default_toolbar_title)
-
         _uiState.update {
             it.copy(
                 selectedImageUrlIndex = getSelectedPosition(),
-                imageUrls = parseImageUrls(),
+                imageUrls = args.imageUrls,
             )
         }
 
@@ -77,14 +82,7 @@ internal class ImageViewerViewModel @Inject constructor(
     }
 
     private fun getSelectedPosition(): Int {
-        return savedStateHandle.get(KEY_SELECTED_POSITION)
-            ?: checkNotNull(savedStateHandle.get<Int>(PARAM_INITIAL_POSITION))
-    }
-
-    private fun parseImageUrls(): List<String> {
-        return savedStateHandle.get<String>(PARAM_IMAGE_URLS)
-            ?.fromCsv()
-            ?: error("No image urls provided.")
+        return savedStateHandle[KEY_SELECTED_POSITION] ?: checkNotNull(args.initialPosition)
     }
 
     private fun observeSelectedPositionChanges() {
@@ -93,17 +91,17 @@ internal class ImageViewerViewModel @Inject constructor(
             .distinctUntilChanged()
             .onEach { selectedImageUrlIndex ->
                 _uiState.update { it.copy(toolbarTitle = updateToolbarTitle()) }
-                savedStateHandle.set(KEY_SELECTED_POSITION, selectedImageUrlIndex)
+                savedStateHandle[KEY_SELECTED_POSITION] = selectedImageUrlIndex
             }
             .launchIn(viewModelScope)
     }
 
     private fun updateToolbarTitle(): String {
-        if (currentUiState.imageUrls.size == 1) return title
+        if (currentUiState.imageUrls.size == 1) return args.requireTitle()
 
         return stringProvider.getString(
             R.string.image_viewer_toolbar_title_template,
-            title,
+            args.requireTitle(),
             (currentUiState.selectedImageUrlIndex + 1),
             currentUiState.imageUrls.size,
         )
@@ -125,6 +123,6 @@ internal class ImageViewerViewModel @Inject constructor(
     }
 
     fun onBackPressed() {
-        route(ImageViewerRoute.Back)
+        navigate(ImageViewerDirection.Back)
     }
 }

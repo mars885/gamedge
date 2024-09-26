@@ -16,32 +16,41 @@
 
 package com.paulrybitskyi.gamedge
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.SizeTransform
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import androidx.navigation.compose.ComposeNavigator
+import androidx.navigation.compose.ComposeNavigatorDestinationBuilder
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
+import androidx.navigation.get
+import androidx.navigation.toRoute
 import com.paulrybitskyi.gamedge.common.ui.HorizontalSliding
 import com.paulrybitskyi.gamedge.common.ui.OvershootScaling
-import com.paulrybitskyi.gamedge.feature.category.GamesCategoryRoute
+import com.paulrybitskyi.gamedge.feature.category.GamesCategoryDirection
 import com.paulrybitskyi.gamedge.feature.category.GamesCategoryScreen
-import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryRoute
+import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryDirection
 import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryScreen
-import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerRoute
+import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerDirection
 import com.paulrybitskyi.gamedge.feature.image.viewer.ImageViewerScreen
-import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoRoute
+import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoDirection
 import com.paulrybitskyi.gamedge.feature.info.presentation.GameInfoScreen
-import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesRoute
+import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesDirection
 import com.paulrybitskyi.gamedge.feature.likes.presentation.LikedGamesScreen
 import com.paulrybitskyi.gamedge.feature.news.presentation.GamingNewsScreen
-import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchRoute
+import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchDirection
 import com.paulrybitskyi.gamedge.feature.search.presentation.GamesSearchScreen
 import com.paulrybitskyi.gamedge.feature.settings.presentation.SettingsScreen
+import kotlin.reflect.KClass
+import kotlin.reflect.KType
 
 @Composable
 internal fun AppNavigation(
@@ -50,19 +59,19 @@ internal fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = START_SCREEN.route,
+        startDestination = START_SCREEN.routeClass,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
     ) {
-        discoverScreen(
+        gamesDiscoveryScreen(
             navController = navController,
             modifier = modifier,
         )
-        likesScreen(
+        likedGamesScreen(
             navController = navController,
             modifier = modifier,
         )
-        newsScreen(modifier = modifier)
+        gamingNewsScreen(modifier = modifier)
         settingsScreen(modifier = modifier)
         gamesSearchScreen(navController = navController)
         gamesCategoryScreen(navController = navController)
@@ -71,12 +80,12 @@ internal fun AppNavigation(
     }
 }
 
-private fun NavGraphBuilder.discoverScreen(
+private fun NavGraphBuilder.gamesDiscoveryScreen(
     navController: NavHostController,
     modifier: Modifier,
 ) {
     composable(
-        route = Screen.Discover.route,
+        route = Screen.GamesDiscovery.routeClass,
         enterTransition = { null },
         exitTransition = {
             when (Screen.forRoute(targetState.destination.requireRoute())) {
@@ -98,28 +107,28 @@ private fun NavGraphBuilder.discoverScreen(
         },
         popExitTransition = { null },
     ) {
-        GamesDiscoveryScreen(modifier) { route ->
-            when (route) {
-                is GamesDiscoveryRoute.Search -> {
+        GamesDiscoveryScreen(modifier) { direction ->
+            when (direction) {
+                is GamesDiscoveryDirection.Search -> {
                     navController.navigate(Screen.GamesSearch.route)
                 }
-                is GamesDiscoveryRoute.Category -> {
-                    navController.navigate(Screen.GamesCategory.createLink(route.category))
+                is GamesDiscoveryDirection.Category -> {
+                    navController.navigate(Screen.GamesCategory.createRoute(category = direction.category))
                 }
-                is GamesDiscoveryRoute.Info -> {
-                    navController.navigate(Screen.GameInfo.createLink(route.gameId))
+                is GamesDiscoveryDirection.Info -> {
+                    navController.navigate(Screen.GameInfo.createRoute(gameId = direction.gameId))
                 }
             }
         }
     }
 }
 
-private fun NavGraphBuilder.likesScreen(
+private fun NavGraphBuilder.likedGamesScreen(
     navController: NavHostController,
     modifier: Modifier,
 ) {
     composable(
-        route = Screen.Likes.route,
+        route = Screen.LikedGames.routeClass,
         enterTransition = { null },
         exitTransition = {
             when (Screen.forRoute(targetState.destination.requireRoute())) {
@@ -137,43 +146,39 @@ private fun NavGraphBuilder.likesScreen(
         },
         popExitTransition = { null },
     ) {
-        LikedGamesScreen(modifier) { route ->
-            when (route) {
-                is LikedGamesRoute.Search -> {
+        LikedGamesScreen(modifier) { direction ->
+            when (direction) {
+                is LikedGamesDirection.Search -> {
                     navController.navigate(Screen.GamesSearch.route)
                 }
-                is LikedGamesRoute.Info -> {
-                    navController.navigate(Screen.GameInfo.createLink(route.gameId))
+                is LikedGamesDirection.Info -> {
+                    navController.navigate(Screen.GameInfo.createRoute(gameId = direction.gameId))
                 }
             }
         }
     }
 }
 
-private fun NavGraphBuilder.newsScreen(modifier: Modifier) {
-    composable(
-        route = Screen.News.route,
-    ) {
+private fun NavGraphBuilder.gamingNewsScreen(modifier: Modifier) {
+    composable(route = Screen.GamingNews.routeClass) {
         GamingNewsScreen(modifier)
     }
 }
 
 private fun NavGraphBuilder.settingsScreen(modifier: Modifier) {
-    composable(
-        route = Screen.Settings.route,
-    ) {
+    composable(route = Screen.Settings.routeClass) {
         SettingsScreen(modifier)
     }
 }
 
 private fun NavGraphBuilder.gamesSearchScreen(navController: NavHostController) {
     composable(
-        route = Screen.GamesSearch.route,
+        route = Screen.GamesSearch.routeClass,
         enterTransition = {
             when (Screen.forRoute(initialState.destination.requireRoute())) {
-                Screen.News,
-                Screen.Discover,
-                Screen.Likes,
+                Screen.GamingNews,
+                Screen.GamesDiscovery,
+                Screen.LikedGames,
                 -> OvershootScaling.enter()
                 else -> null
             }
@@ -192,20 +197,20 @@ private fun NavGraphBuilder.gamesSearchScreen(navController: NavHostController) 
         },
         popExitTransition = {
             when (Screen.forRoute(targetState.destination.requireRoute())) {
-                Screen.News,
-                Screen.Discover,
-                Screen.Likes,
+                Screen.GamingNews,
+                Screen.GamesDiscovery,
+                Screen.LikedGames,
                 -> OvershootScaling.popExit()
                 else -> null
             }
         },
     ) {
-        GamesSearchScreen { route ->
-            when (route) {
-                is GamesSearchRoute.Info -> {
-                    navController.navigate(Screen.GameInfo.createLink(route.gameId))
+        GamesSearchScreen { direction ->
+            when (direction) {
+                is GamesSearchDirection.Info -> {
+                    navController.navigate(Screen.GameInfo.createRoute(gameId = direction.gameId))
                 }
-                is GamesSearchRoute.Back -> {
+                is GamesSearchDirection.Back -> {
                     navController.popBackStack()
                 }
             }
@@ -215,13 +220,10 @@ private fun NavGraphBuilder.gamesSearchScreen(navController: NavHostController) 
 
 private fun NavGraphBuilder.gamesCategoryScreen(navController: NavHostController) {
     composable(
-        route = Screen.GamesCategory.route,
-        arguments = listOf(
-            navArgument(Screen.GamesCategory.Parameters.CATEGORY) { type = NavType.StringType },
-        ),
+        route = Screen.GamesCategory.routeClass,
         enterTransition = {
             when (Screen.forRoute(initialState.destination.requireRoute())) {
-                Screen.Discover -> HorizontalSliding.enter()
+                Screen.GamesDiscovery -> HorizontalSliding.enter()
                 else -> null
             }
         },
@@ -239,17 +241,17 @@ private fun NavGraphBuilder.gamesCategoryScreen(navController: NavHostController
         },
         popExitTransition = {
             when (Screen.forRoute(targetState.destination.requireRoute())) {
-                Screen.Discover -> HorizontalSliding.popExit()
+                Screen.GamesDiscovery -> HorizontalSliding.popExit()
                 else -> null
             }
         },
-    ) {
-        GamesCategoryScreen { route ->
-            when (route) {
-                is GamesCategoryRoute.Info -> {
-                    navController.navigate(Screen.GameInfo.createLink(route.gameId))
+    ) { entry ->
+        GamesCategoryScreen(route = entry.toRoute()) { direction ->
+            when (direction) {
+                is GamesCategoryDirection.Info -> {
+                    navController.navigate(Screen.GameInfo.createRoute(gameId = direction.gameId))
                 }
-                is GamesCategoryRoute.Back -> {
+                is GamesCategoryDirection.Back -> {
                     navController.popBackStack()
                 }
             }
@@ -259,14 +261,11 @@ private fun NavGraphBuilder.gamesCategoryScreen(navController: NavHostController
 
 private fun NavGraphBuilder.gameInfoScreen(navController: NavHostController) {
     composable(
-        route = Screen.GameInfo.route,
-        arguments = listOf(
-            navArgument(Screen.GameInfo.Parameters.GAME_ID) { type = NavType.IntType },
-        ),
+        route = Screen.GameInfo.routeClass,
         enterTransition = {
             when (Screen.forRoute(initialState.destination.requireRoute())) {
-                Screen.Discover,
-                Screen.Likes,
+                Screen.GamesDiscovery,
+                Screen.LikedGames,
                 Screen.GamesSearch,
                 Screen.GamesCategory,
                 Screen.GameInfo,
@@ -292,8 +291,8 @@ private fun NavGraphBuilder.gameInfoScreen(navController: NavHostController) {
         },
         popExitTransition = {
             when (Screen.forRoute(targetState.destination.requireRoute())) {
-                Screen.Discover,
-                Screen.Likes,
+                Screen.GamesDiscovery,
+                Screen.LikedGames,
                 Screen.GamesSearch,
                 Screen.GamesCategory,
                 Screen.GameInfo,
@@ -301,22 +300,22 @@ private fun NavGraphBuilder.gameInfoScreen(navController: NavHostController) {
                 else -> null
             }
         },
-    ) {
-        GameInfoScreen { route ->
-            when (route) {
-                is GameInfoRoute.ImageViewer -> {
+    ) { entry ->
+        GameInfoScreen(route = entry.toRoute()) { direction ->
+            when (direction) {
+                is GameInfoDirection.ImageViewer -> {
                     navController.navigate(
-                        Screen.ImageViewer.createLink(
-                            title = route.title,
-                            initialPosition = route.initialPosition,
-                            imageUrls = route.imageUrls,
+                        Screen.ImageViewer.createRoute(
+                            imageUrls = direction.imageUrls,
+                            title = direction.title,
+                            initialPosition = direction.initialPosition,
                         ),
                     )
                 }
-                is GameInfoRoute.Info -> {
-                    navController.navigate(Screen.GameInfo.createLink(route.gameId))
+                is GameInfoDirection.Info -> {
+                    navController.navigate(Screen.GameInfo.createRoute(gameId = direction.gameId))
                 }
-                is GameInfoRoute.Back -> {
+                is GameInfoDirection.Back -> {
                     navController.popBackStack()
                 }
             }
@@ -326,21 +325,7 @@ private fun NavGraphBuilder.gameInfoScreen(navController: NavHostController) {
 
 private fun NavGraphBuilder.imageViewerScreen(navController: NavHostController) {
     composable(
-        route = Screen.ImageViewer.route,
-        arguments = listOf(
-            navArgument(Screen.ImageViewer.Parameters.TITLE) {
-                type = NavType.StringType
-                nullable = true
-            },
-            navArgument(Screen.ImageViewer.Parameters.INITIAL_POSITION) {
-                type = NavType.IntType
-                defaultValue = 0
-            },
-            navArgument(Screen.ImageViewer.Parameters.IMAGE_URLS) {
-                type = NavType.StringType
-                nullable = true
-            },
-        ),
+        route = Screen.ImageViewer.routeClass,
         enterTransition = {
             when (Screen.forRoute(initialState.destination.requireRoute())) {
                 Screen.GameInfo -> HorizontalSliding.enter()
@@ -355,11 +340,43 @@ private fun NavGraphBuilder.imageViewerScreen(navController: NavHostController) 
                 else -> null
             }
         },
-    ) {
-        ImageViewerScreen { route ->
-            when (route) {
-                is ImageViewerRoute.Back -> navController.popBackStack()
+    ) { entry ->
+        ImageViewerScreen(route = entry.toRoute()) { direction ->
+            when (direction) {
+                is ImageViewerDirection.Back -> navController.popBackStack()
             }
         }
     }
+}
+
+@Suppress("LongParameterList")
+private fun NavGraphBuilder.composable(
+    route: KClass<*>,
+    typeMap: Map<KType, NavType<*>> = emptyMap(),
+    deepLinks: List<NavDeepLink> = emptyList(),
+    enterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
+    exitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
+    popEnterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? =
+        enterTransition,
+    popExitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? =
+        exitTransition,
+    sizeTransform: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> SizeTransform?)? = null,
+    content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
+) {
+    destination(
+        ComposeNavigatorDestinationBuilder(
+            provider[ComposeNavigator::class],
+            route,
+            typeMap,
+            content,
+        )
+        .apply {
+            deepLinks.forEach { deepLink -> deepLink(deepLink) }
+            this.enterTransition = enterTransition
+            this.exitTransition = exitTransition
+            this.popEnterTransition = popEnterTransition
+            this.popExitTransition = popExitTransition
+            this.sizeTransform = sizeTransform
+        },
+    )
 }

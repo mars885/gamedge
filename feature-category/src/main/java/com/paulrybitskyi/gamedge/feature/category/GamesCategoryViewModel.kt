@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.category
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.paulrybitskyi.gamedge.common.domain.common.DispatcherProvider
 import com.paulrybitskyi.gamedge.common.domain.common.entities.nextLimit
@@ -31,9 +30,11 @@ import com.paulrybitskyi.gamedge.core.ErrorMapper
 import com.paulrybitskyi.gamedge.core.Logger
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.gamedge.core.utils.onError
-import com.paulrybitskyi.gamedge.feature.category.di.GamesCategoryKey
 import com.paulrybitskyi.gamedge.feature.category.widgets.GameCategoryUiModelMapper
 import com.paulrybitskyi.gamedge.feature.category.widgets.mapToUiModels
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
@@ -49,22 +50,25 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-private const val PARAM_GAMES_CATEGORY = "category"
-
-@HiltViewModel
-internal class GamesCategoryViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+@HiltViewModel(assistedFactory = GamesCategoryViewModel.Factory::class)
+internal class GamesCategoryViewModel @AssistedInject constructor(
     stringProvider: StringProvider,
     @TransitionAnimationDuration
     transitionAnimationDuration: Long,
+    @Assisted
+    private val route: GamesCategoryRoute,
     private val useCases: GamesCategoryUseCases,
     private val uiModelMapper: GameCategoryUiModelMapper,
     private val dispatcherProvider: DispatcherProvider,
     private val errorMapper: ErrorMapper,
     private val logger: Logger,
 ) : BaseViewModel() {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(route: GamesCategoryRoute): GamesCategoryViewModel
+    }
 
     private var isObservingGames = false
     private var isRefreshingGames = false
@@ -73,8 +77,8 @@ internal class GamesCategoryViewModel @Inject constructor(
     private var observeGamesUseCaseParams = ObserveGamesUseCaseParams()
     private var refreshGamesUseCaseParams = RefreshGamesUseCaseParams()
 
-    private val gamesCategory: GamesCategory
-    private val gamesCategoryKeyType: GamesCategoryKey.Type
+    private val gamesCategory = GamesCategory.valueOf(route.category)
+    private val gamesCategoryKeyType = gamesCategory.toKeyType()
 
     private var gamesObservingJob: Job? = null
     private var gamesRefreshingJob: Job? = null
@@ -87,9 +91,6 @@ internal class GamesCategoryViewModel @Inject constructor(
     val uiState: StateFlow<GamesCategoryUiState> = _uiState.asStateFlow()
 
     init {
-        gamesCategory = GamesCategory.valueOf(checkNotNull(savedStateHandle.get<String>(PARAM_GAMES_CATEGORY)))
-        gamesCategoryKeyType = gamesCategory.toKeyType()
-
         _uiState.update {
             it.copy(title = stringProvider.getString(gamesCategory.titleId))
         }
@@ -173,11 +174,11 @@ internal class GamesCategoryViewModel @Inject constructor(
     }
 
     fun onToolbarLeftButtonClicked() {
-        route(GamesCategoryRoute.Back)
+        navigate(GamesCategoryDirection.Back)
     }
 
     fun onGameClicked(game: GameCategoryUiModel) {
-        route(GamesCategoryRoute.Info(game.id))
+        navigate(GamesCategoryDirection.Info(game.id))
     }
 
     fun onBottomReached() {

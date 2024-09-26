@@ -21,12 +21,9 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.paulrybitskyi.gamedge.common.testing.FakeStringProvider
 import com.paulrybitskyi.gamedge.common.testing.domain.MainCoroutineRule
-import io.mockk.every
-import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
 
@@ -37,27 +34,18 @@ internal class ImageViewerViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule(StandardTestDispatcher())
 
-    private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true) {
-        every { get<String>(PARAM_TITLE) } returns ""
-        every { get<Int>(PARAM_INITIAL_POSITION) } returns INITIAL_POSITION
-        every { get<String>(PARAM_IMAGE_URLS) } returns "url1,url2,url3"
-        every { get<Int>(KEY_SELECTED_POSITION) } returns INITIAL_POSITION
-    }
-
     private val SUT by lazy {
         ImageViewerViewModel(
+            route = ImageViewerRoute(
+                imageUrls = listOf("url1", "url2", "url3"),
+                title = "",
+                initialPosition = INITIAL_POSITION,
+            ),
             stringProvider = FakeStringProvider(),
-            savedStateHandle = savedStateHandle,
+            savedStateHandle = SavedStateHandle(
+                initialState = mapOf(KEY_SELECTED_POSITION to INITIAL_POSITION),
+            ),
         )
-    }
-
-    @Test
-    fun `Throws error when image urls are not provided`() {
-        every { savedStateHandle.get<String>(PARAM_IMAGE_URLS) } returns null
-
-        assertThrows(IllegalStateException::class.java) {
-            SUT
-        }
     }
 
     @Test
@@ -98,12 +86,12 @@ internal class ImageViewerViewModelTest {
     }
 
     @Test
-    fun `Routes to previous screen when back button is clicked`() {
+    fun `Navigates to previous screen when back button is clicked`() {
         runTest {
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onBackPressed()
 
-                assertThat(awaitItem()).isInstanceOf(ImageViewerRoute.Back::class.java)
+                assertThat(awaitItem()).isInstanceOf(ImageViewerDirection.Back::class.java)
             }
         }
     }

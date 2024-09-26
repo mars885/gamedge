@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.feature.category
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.github.michaelbull.result.Ok
 import com.google.common.truth.Truth.assertThat
@@ -55,21 +54,15 @@ internal class GamesCategoryViewModelTest {
     private val logger = FakeLogger()
     private val SUT by lazy {
         GamesCategoryViewModel(
-            savedStateHandle = setupSavedStateHandle(),
             stringProvider = FakeStringProvider(),
             transitionAnimationDuration = 0L,
+            route = GamesCategoryRoute(category = GamesCategory.POPULAR.name),
             useCases = setupUseCases(),
             uiModelMapper = FakeGameCategoryUiModelMapper(),
             dispatcherProvider = mainCoroutineRule.dispatcherProvider,
             errorMapper = FakeErrorMapper(),
             logger = logger,
         )
-    }
-
-    private fun setupSavedStateHandle(): SavedStateHandle {
-        return mockk(relaxed = true) {
-            every { get<String>(any()) } returns GamesCategory.POPULAR.name
-        }
     }
 
     private fun setupUseCases(): GamesCategoryUseCases {
@@ -184,18 +177,18 @@ internal class GamesCategoryViewModelTest {
     }
 
     @Test
-    fun `Routes to previous screen when toolbar left button is clicked`() {
+    fun `Navigates to previous screen when toolbar left button is clicked`() {
         runTest {
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onToolbarLeftButtonClicked()
 
-                assertThat(awaitItem()).isInstanceOf(GamesCategoryRoute.Back::class.java)
+                assertThat(awaitItem()).isInstanceOf(GamesCategoryDirection.Back::class.java)
             }
         }
     }
 
     @Test
-    fun `Routes to game info screen when game is clicked`() {
+    fun `Navigates to game info screen when game is clicked`() {
         runTest {
             val game = GameCategoryUiModel(
                 id = 1,
@@ -203,13 +196,13 @@ internal class GamesCategoryViewModelTest {
                 coverUrl = null,
             )
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onGameClicked(game)
 
-                val route = awaitItem()
+                val direction = awaitItem()
 
-                assertThat(route).isInstanceOf(GamesCategoryRoute.Info::class.java)
-                assertThat((route as GamesCategoryRoute.Info).gameId).isEqualTo(game.id)
+                assertThat(direction).isInstanceOf(GamesCategoryDirection.Info::class.java)
+                assertThat((direction as GamesCategoryDirection.Info).gameId).isEqualTo(game.id)
             }
         }
     }

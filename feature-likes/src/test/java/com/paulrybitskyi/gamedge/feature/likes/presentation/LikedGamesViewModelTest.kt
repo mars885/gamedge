@@ -101,18 +101,18 @@ internal class LikedGamesViewModelTest {
     }
 
     @Test
-    fun `Routes to search screen when search button is clicked`() {
+    fun `Navigates to search screen when search button is clicked`() {
         runTest {
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onSearchButtonClicked()
 
-                assertThat(awaitItem()).isInstanceOf(LikedGamesRoute.Search::class.java)
+                assertThat(awaitItem()).isInstanceOf(LikedGamesDirection.Search::class.java)
             }
         }
     }
 
     @Test
-    fun `Routes to info screen when game is clicked`() {
+    fun `Navigates to info screen when game is clicked`() {
         runTest {
             val game = GameUiModel(
                 id = 1,
@@ -123,13 +123,13 @@ internal class LikedGamesViewModelTest {
                 description = null,
             )
 
-            SUT.routeFlow.test {
+            SUT.directionFlow.test {
                 SUT.onGameClicked(game)
 
-                val route = awaitItem()
+                val direction = awaitItem()
 
-                assertThat(route).isInstanceOf(LikedGamesRoute.Info::class.java)
-                assertThat((route as LikedGamesRoute.Info).gameId).isEqualTo(game.id)
+                assertThat(direction).isInstanceOf(LikedGamesDirection.Info::class.java)
+                assertThat((direction as LikedGamesDirection.Info).gameId).isEqualTo(game.id)
             }
         }
     }

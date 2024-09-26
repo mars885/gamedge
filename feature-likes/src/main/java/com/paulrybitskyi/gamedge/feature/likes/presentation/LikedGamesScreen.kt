@@ -28,8 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
-import com.paulrybitskyi.gamedge.common.ui.RoutesHandler
-import com.paulrybitskyi.gamedge.common.ui.base.events.Route
+import com.paulrybitskyi.gamedge.common.ui.DirectionsHandler
+import com.paulrybitskyi.gamedge.common.ui.base.events.Direction
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.GameUiModel
 import com.paulrybitskyi.gamedge.common.ui.widgets.games.Games
@@ -41,12 +41,12 @@ import com.paulrybitskyi.gamedge.core.R as CoreR
 @Composable
 fun LikedGamesScreen(
     modifier: Modifier,
-    onRoute: (Route) -> Unit,
+    onNavigate: (Direction) -> Unit,
 ) {
     LikedGamesScreen(
         viewModel = hiltViewModel(),
         modifier = modifier,
-        onRoute = onRoute,
+        onNavigate = onNavigate,
     )
 }
 
@@ -54,10 +54,10 @@ fun LikedGamesScreen(
 private fun LikedGamesScreen(
     viewModel: LikedGamesViewModel,
     modifier: Modifier,
-    onRoute: (Route) -> Unit,
+    onNavigate: (Direction) -> Unit,
 ) {
     CommandsHandler(viewModel = viewModel)
-    RoutesHandler(viewModel = viewModel, onRoute = onRoute)
+    DirectionsHandler(viewModel = viewModel, onNavigate = onNavigate)
     LikedGamesScreen(
         uiState = viewModel.uiState.collectAsState().value,
         onSearchButtonClicked = viewModel::onSearchButtonClicked,
