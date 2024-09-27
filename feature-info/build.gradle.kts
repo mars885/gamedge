@@ -21,3 +21,7 @@ plugins {
 android {
     namespace = "com.paulrybitskyi.gamedge.feature.info"
 }
+
+dependencies {
+    implementation(libs.materialComponents)
+}

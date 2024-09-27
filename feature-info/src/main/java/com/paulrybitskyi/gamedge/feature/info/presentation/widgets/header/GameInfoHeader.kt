@@ -18,6 +18,12 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header
 
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.drawable.Animatable
+import android.util.Log
+import android.widget.ImageView
+import androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
@@ -31,7 +37,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
@@ -49,15 +54,24 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.viewinterop.NoOpUpdate
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.paulrybitskyi.commons.ktx.getCompatDrawable
+import com.paulrybitskyi.commons.ktx.onClick
+import com.paulrybitskyi.commons.ktx.postAction
+import com.paulrybitskyi.commons.ktx.postActionDelayed
 import com.paulrybitskyi.gamedge.common.ui.clickable
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.theme.lightScrim
@@ -97,6 +111,8 @@ internal fun GameInfoHeader(
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
 ) {
+    val colors = GamedgeTheme.colors
+    val density = LocalDensity.current
     val artworks = headerInfo.artworks
     val isPageIndicatorVisible by remember(artworks) { mutableStateOf(artworks.size > 1) }
     var selectedArtworkPage by rememberSaveable { mutableIntStateOf(0) }
@@ -201,27 +217,29 @@ internal fun GameInfoHeader(
             onCoverClicked = if (headerInfo.hasCoverImageUrl) onCoverClicked else null,
         )
 
-        FloatingActionButton(
-            onClick = onLikeButtonClicked,
+        // Animated selector drawables are not currently supported by the Jetpack Compose:
+        // https://issuetracker.google.com/issues/212418566. However, since the link/unlike
+        // animation is so gorgeous, it'd sad if we didn't use it, so we are using the legacy
+        // View here to render it. Consider to migrate to the Jetpack Compose when the support
+        // arrives.
+        AndroidView(
+            factory = { context ->
+                LikeButton(context).apply {
+                    supportBackgroundTintList = ColorStateList.valueOf(colors.secondary.toArgb())
+                    size = FloatingActionButton.SIZE_NORMAL
+                    setMaxImageSize(with(density) { 52.dp.toPx().toInt() })
+                    setImageDrawable(context.getCompatDrawable(CoreR.drawable.heart_animated_selector))
+                    supportImageTintList = ColorStateList.valueOf(colors.onSecondary.toArgb())
+                    onClick { onLikeButtonClicked() }
+                }
+            },
             modifier = Modifier.layoutId(ConstraintIdLikeButton),
-            backgroundColor = GamedgeTheme.colors.secondary,
-        ) {
-            // Animated selector drawables are not currently supported by the Jetpack Compose.
-            // https://issuetracker.google.com/issues/212418566
-            // Consider to use the R.drawable.heart_animated_selector when the support arrives.
-
-            Icon(
-                painter = rememberAnimatedVectorPainter(
-                    animatedImageVector = AnimatedImageVector.animatedVectorResource(
-                        CoreR.drawable.heart_animated_fill,
-                    ),
-                    atEnd = headerInfo.isLiked,
-                ),
-                contentDescription = null,
-                modifier = Modifier.size(52.dp),
-                tint = GamedgeTheme.colors.onSecondary,
-            )
-        }
+            // Have to provide any lambda here for optimizations to kick in (even if it's a no-op)
+            onReset = NoOpUpdate,
+            update = { view ->
+                view.isLiked = headerInfo.isLiked
+            },
+        )
 
         Text(
             text = headerInfo.title,
@@ -299,6 +317,33 @@ internal fun GameInfoHeader(
             iconSize = InfoIconSize,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
+    }
+}
+
+private class LikeButton(context: Context) : FloatingActionButton(context) {
+
+    private companion object {
+        const val STATE_CHECKED = android.R.attr.state_checked
+        const val STATE_CHECKED_ON = (STATE_CHECKED * 1)
+        const val STATE_CHECKED_OFF = (STATE_CHECKED * -1)
+    }
+
+    var isLiked: Boolean
+        set(value) { setImageState(intArrayOf(if(value) STATE_CHECKED_ON else STATE_CHECKED_OFF), true) }
+        get() = drawableState.contains(STATE_CHECKED_ON)
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+        // This is a hacky solution to fix a very strange case, where a user likes a game,
+        // scrolls the view out of the screen or goes to a another screen (e.g., a related game)
+        // and comes back, then the like button resets its icon from a filled heart to an empty
+        // heart. To fix it, when this view gets reattached to the window, we are asking the button
+        // to reset its state and then go to the liked state again.
+        if(isLiked) {
+            isLiked = false
+            isLiked = true
+        }
     }
 }
 
