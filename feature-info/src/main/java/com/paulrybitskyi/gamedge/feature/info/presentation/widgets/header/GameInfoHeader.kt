@@ -20,13 +20,6 @@ package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.drawable.Animatable
-import android.util.Log
-import android.widget.ImageView
-import androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -70,8 +63,6 @@ import androidx.constraintlayout.compose.Dimension
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.paulrybitskyi.commons.ktx.getCompatDrawable
 import com.paulrybitskyi.commons.ktx.onClick
-import com.paulrybitskyi.commons.ktx.postAction
-import com.paulrybitskyi.commons.ktx.postActionDelayed
 import com.paulrybitskyi.gamedge.common.ui.clickable
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.theme.lightScrim
@@ -329,7 +320,9 @@ private class LikeButton(context: Context) : FloatingActionButton(context) {
     }
 
     var isLiked: Boolean
-        set(value) { setImageState(intArrayOf(if(value) STATE_CHECKED_ON else STATE_CHECKED_OFF), true) }
+        set(value) {
+            setImageState(intArrayOf(if (value) STATE_CHECKED_ON else STATE_CHECKED_OFF), true)
+        }
         get() = drawableState.contains(STATE_CHECKED_ON)
 
     override fun onAttachedToWindow() {
@@ -340,7 +333,7 @@ private class LikeButton(context: Context) : FloatingActionButton(context) {
         // and comes back, then the like button resets its icon from a filled heart to an empty
         // heart. To fix it, when this view gets reattached to the window, we are asking the button
         // to reset its state and then go to the liked state again.
-        if(isLiked) {
+        if (isLiked) {
             isLiked = false
             isLiked = true
         }
