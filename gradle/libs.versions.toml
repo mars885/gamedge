@@ -36,6 +36,7 @@ constraintLayout = "1.1.0-beta01"
 composeHilt = "1.2.0"
 
 # Google
+materialComponents = "1.12.0"
 protobuf = "4.28.2"
 
 # Square
@@ -127,6 +128,7 @@ composeConstraintLayout = { module = "androidx.constraintlayout:constraintlayout
 composeHilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "composeHilt" }
 
 # Google
+materialComponents = { module = "com.google.android.material:material", version.ref = "materialComponents" }
 daggerHiltCore = { module = "com.google.dagger:hilt-core", version.ref = "daggerHilt" }
 daggerHiltCoreCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "daggerHilt" }
 daggerHiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "daggerHilt" }
