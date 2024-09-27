@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -39,6 +41,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,6 +67,7 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.Gam
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetails
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetailsUiModel
+import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoAnimatableHeader
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoHeader
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoHeaderUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModel
@@ -233,67 +237,75 @@ private fun SuccessState(
     onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = contentPadding,
-        verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
-    ) {
-        headerItem(
-            model = gameInfo.headerModel,
-            onArtworkClicked = onArtworkClicked,
-            onBackButtonClicked = onBackButtonClicked,
-            onCoverClicked = onCoverClicked,
-            onLikeButtonClicked = onLikeButtonClicked,
-        )
+    GameInfoAnimatableHeader(
+        headerInfo = gameInfo.headerModel,
+        onArtworkClicked = onArtworkClicked,
+        onBackButtonClicked = onBackButtonClicked,
+        onCoverClicked = onCoverClicked,
+        onLikeButtonClicked = onLikeButtonClicked,
+    ) { modifier ->
+        val layoutDirection = LocalLayoutDirection.current
+        val spacing = GamedgeTheme.spaces.spacing_3_5
 
-        if (gameInfo.hasVideos) {
-            videosItem(
-                videos = gameInfo.videoModels,
-                onVideoClicked = onVideoClicked,
-            )
-        }
+        LazyColumn(
+            modifier = modifier,
+            contentPadding = PaddingValues(
+                start = contentPadding.calculateStartPadding(layoutDirection),
+                top = contentPadding.calculateTopPadding().plus(spacing),
+                end = contentPadding.calculateEndPadding(layoutDirection),
+                bottom = contentPadding.calculateBottomPadding(),
+            ),
+            verticalArrangement = Arrangement.spacedBy(spacing),
+        ) {
+            if (gameInfo.hasVideos) {
+                videosItem(
+                    videos = gameInfo.videoModels,
+                    onVideoClicked = onVideoClicked,
+                )
+            }
 
-        if (gameInfo.hasScreenshots) {
-            screenshotsItem(
-                screenshots = gameInfo.screenshotModels,
-                onScreenshotClicked = onScreenshotClicked,
-            )
-        }
+            if (gameInfo.hasScreenshots) {
+                screenshotsItem(
+                    screenshots = gameInfo.screenshotModels,
+                    onScreenshotClicked = onScreenshotClicked,
+                )
+            }
 
-        if (gameInfo.hasSummary) {
-            summaryItem(model = checkNotNull(gameInfo.summary))
-        }
+            if (gameInfo.hasSummary) {
+                summaryItem(model = checkNotNull(gameInfo.summary))
+            }
 
-        if (gameInfo.hasDetails) {
-            detailsItem(model = checkNotNull(gameInfo.detailsModel))
-        }
+            if (gameInfo.hasDetails) {
+                detailsItem(model = checkNotNull(gameInfo.detailsModel))
+            }
 
-        if (gameInfo.hasLinks) {
-            linksItem(
-                model = gameInfo.linkModels,
-                onLinkClicked = onLinkClicked,
-            )
-        }
+            if (gameInfo.hasLinks) {
+                linksItem(
+                    model = gameInfo.linkModels,
+                    onLinkClicked = onLinkClicked,
+                )
+            }
 
-        if (gameInfo.hasCompanies) {
-            companiesItem(
-                model = gameInfo.companyModels,
-                onCompanyClicked = onCompanyClicked,
-            )
-        }
+            if (gameInfo.hasCompanies) {
+                companiesItem(
+                    model = gameInfo.companyModels,
+                    onCompanyClicked = onCompanyClicked,
+                )
+            }
 
-        if (gameInfo.hasOtherCompanyGames) {
-            relatedGamesItem(
-                model = checkNotNull(gameInfo.otherCompanyGames),
-                onGameClicked = onRelatedGameClicked,
-            )
-        }
+            if (gameInfo.hasOtherCompanyGames) {
+                relatedGamesItem(
+                    model = checkNotNull(gameInfo.otherCompanyGames),
+                    onGameClicked = onRelatedGameClicked,
+                )
+            }
 
-        if (gameInfo.hasSimilarGames) {
-            relatedGamesItem(
-                model = checkNotNull(gameInfo.similarGames),
-                onGameClicked = onRelatedGameClicked,
-            )
+            if (gameInfo.hasSimilarGames) {
+                relatedGamesItem(
+                    model = checkNotNull(gameInfo.similarGames),
+                    onGameClicked = onRelatedGameClicked,
+                )
+            }
         }
     }
 }

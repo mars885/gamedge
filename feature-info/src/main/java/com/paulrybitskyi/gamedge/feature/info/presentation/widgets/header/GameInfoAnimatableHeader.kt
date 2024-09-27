@@ -18,12 +18,10 @@
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header
 
-import android.annotation.SuppressLint
+import android.content.Context
+import android.content.res.ColorStateList
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -35,7 +33,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
@@ -61,16 +58,31 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstrainScope
+import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.compose.InvalidationStrategy
 import androidx.constraintlayout.compose.MotionLayout
+import androidx.constraintlayout.compose.MotionScene
+import androidx.constraintlayout.compose.MotionSceneScope
+import androidx.constraintlayout.compose.OnSwipe
+import androidx.constraintlayout.compose.SwipeDirection
+import androidx.constraintlayout.compose.SwipeMode
+import androidx.constraintlayout.compose.SwipeSide
+import androidx.constraintlayout.compose.SwipeTouchUp
 import androidx.constraintlayout.compose.Transition
 import androidx.constraintlayout.compose.Visibility
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.paulrybitskyi.commons.ktx.getCompatDrawable
+import com.paulrybitskyi.commons.ktx.onClick
+import com.paulrybitskyi.commons.ktx.postAction
 import com.paulrybitskyi.commons.ktx.statusBarHeight
 import com.paulrybitskyi.gamedge.common.ui.clickable
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
+import com.paulrybitskyi.gamedge.common.ui.theme.Spaces
 import com.paulrybitskyi.gamedge.common.ui.theme.darkScrim
 import com.paulrybitskyi.gamedge.common.ui.theme.lightScrim
 import com.paulrybitskyi.gamedge.common.ui.theme.subtitle3
@@ -81,6 +93,10 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artwor
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModel
 import org.intellij.lang.annotations.Language
 import com.paulrybitskyi.gamedge.core.R as CoreR
+
+private const val NameSetExpanded = "expanded"
+private const val NameSetCollapsed = "collapsed"
+private const val NameTransition = "expanded_to_collapsed"
 
 private const val ConstraintIdArtworks = "artworks"
 private const val ConstraintIdArtworksScrim = "artworks_scrim"
@@ -100,6 +116,10 @@ private const val ConstraintIdAgeRating = "age_rating"
 private const val ConstraintIdGameCategory = "game_category"
 private const val ConstraintIdList = "list"
 
+private const val CustomAttributeTextColor = "text_color"
+
+private val ScrimContentColor = Color.White
+
 private val CoverSpace = 40.dp
 private val InfoIconSize = 34.dp
 
@@ -110,9 +130,9 @@ private val ArtworksHeightExpanded = 240.dp
 private val ArtworksHeightCollapsed = 56.dp
 
 private val PageIndicatorDeltaXCollapsed = 60.dp
-private val CoverDeltaXCollapsed = -130.dp
-private val CoverDeltaYCollapsed = -60.dp
-private val SecondaryTextDeltaXCollapsed = -8.dp
+private val CoverDeltaXCollapsed = (-130).dp
+private val CoverDeltaYCollapsed = (-60).dp
+private val SecondaryTextDeltaXCollapsed = (-8).dp
 
 private enum class State {
     Expanded,
@@ -137,6 +157,8 @@ internal fun GameInfoAnimatableHeader(
         label = "GameInfoAnimatableHeaderProgress",
     )
 
+    val colors = GamedgeTheme.colors
+    val density = LocalDensity.current
     val artworks = headerInfo.artworks
     val isPageIndicatorVisible = remember(artworks) { artworks.size > 1 }
     val hasDefaultPlaceholderArtwork = remember(artworks) {
@@ -166,17 +188,21 @@ internal fun GameInfoAnimatableHeader(
     }
 
     MotionLayout(
-        // motionScene = MotionScene(constructJson()),
-        start = constructExpandedConstraintSet(
+        motionScene = rememberMotionScene(
             hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
             isSecondTitleVisible = isSecondTitleVisible,
         ),
-        end = constructCollapsedConstraintSet(
-            hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
-        ),
-        transition = Transition(constructTransition()),
-        modifier = Modifier.fillMaxSize(),
         progress = progress,
+        modifier = Modifier.fillMaxSize(),
+        transitionName = NameTransition,
+        invalidationStrategy = remember {
+            InvalidationStrategy(
+                onObservedStateChange = {
+                    @Suppress("UNUSED_EXPRESSION")
+                    headerInfo
+                },
+            )
+        }
     ) {
         Artworks(
             artworks = artworks,
@@ -218,7 +244,7 @@ internal fun GameInfoAnimatableHeader(
                     shape = CircleShape,
                 )
                 .padding(GamedgeTheme.spaces.spacing_1_5),
-            tint = GamedgeTheme.colors.onPrimary,
+            tint = ScrimContentColor,
         )
 
         if (isPageIndicatorVisible) {
@@ -239,7 +265,7 @@ internal fun GameInfoAnimatableHeader(
                         vertical = GamedgeTheme.spaces.spacing_1_5,
                         horizontal = GamedgeTheme.spaces.spacing_2_0,
                     ),
-                color = GamedgeTheme.colors.onPrimary,
+                color = ScrimContentColor,
                 style = GamedgeTheme.typography.subtitle3,
             )
         }
@@ -269,36 +295,36 @@ internal fun GameInfoAnimatableHeader(
             onCoverClicked = if (headerInfo.hasCoverImageUrl) onCoverClicked else null,
         )
 
-        FloatingActionButton(
-            onClick = onLikeButtonClicked,
+        // Animated selector drawables are not currently supported by the Jetpack Compose:
+        // https://issuetracker.google.com/issues/212418566. However, since the link/unlike
+        // animation is so gorgeous, it'd sad if we didn't use it, so we are using the legacy
+        // View here to render it. Consider to migrate to the Jetpack Compose when the support
+        // arrives.
+        AndroidView(
+            factory = { context ->
+                LikeButton(context).apply {
+                    supportBackgroundTintList = ColorStateList.valueOf(colors.secondary.toArgb())
+                    size = FloatingActionButton.SIZE_NORMAL
+                    setMaxImageSize(with(density) { 52.dp.toPx().toInt() })
+                    setImageDrawable(context.getCompatDrawable(CoreR.drawable.heart_animated_selector))
+                    supportImageTintList = ColorStateList.valueOf(colors.onSecondary.toArgb())
+                    onClick { onLikeButtonClicked() }
+                }
+            },
             modifier = Modifier
                 .layoutId(ConstraintIdLikeButton)
                 .drawOnTop(),
-            backgroundColor = GamedgeTheme.colors.secondary,
-        ) {
-            // Animated selector drawables are not currently supported by the Jetpack Compose.
-            // https://issuetracker.google.com/issues/212418566
-            // Consider to use the R.drawable.heart_animated_selector when the support arrives.
-
-            Icon(
-                painter = rememberAnimatedVectorPainter(
-                    animatedImageVector = AnimatedImageVector.animatedVectorResource(
-                        CoreR.drawable.heart_animated_fill,
-                    ),
-                    atEnd = headerInfo.isLiked,
-                ),
-                contentDescription = null,
-                modifier = Modifier.size(52.dp),
-                tint = GamedgeTheme.colors.onSecondary,
-            )
-        }
+            update = { view ->
+                view.isLiked = headerInfo.isLiked
+            },
+        )
 
         Text(
             text = headerInfo.title,
             modifier = Modifier
                 .layoutId(ConstraintIdFirstTitle)
                 .drawOnTop(),
-            color = GamedgeTheme.colors.onPrimary,
+            color = customColor(ConstraintIdFirstTitle, CustomAttributeTextColor),
             overflow = firstTitleOverflowMode,
             maxLines = 1,
             onTextLayout = { textLayoutResult ->
@@ -307,7 +333,9 @@ internal fun GameInfoAnimatableHeader(
                     val firstTitleOffset = Offset(firstTitleWidth, 0f)
                     val firstTitleVisibleTextEndIndex = textLayoutResult.getOffsetForPosition(firstTitleOffset) + 1
 
-                    secondTitleText = headerInfo.title.substring(firstTitleVisibleTextEndIndex)
+                    if (firstTitleVisibleTextEndIndex in headerInfo.title.indices) {
+                        secondTitleText = headerInfo.title.substring(firstTitleVisibleTextEndIndex)
+                    }
                 }
             },
             style = GamedgeTheme.typography.h6,
@@ -319,8 +347,6 @@ internal fun GameInfoAnimatableHeader(
                 .drawOnTop(),
         ) {
             if (isSecondTitleVisible) {
-                // Remove font padding once https://issuetracker.google.com/issues/171394808
-                // is implemented (includeFontPadding="false" in XML)
                 Text(
                     text = secondTitleText,
                     color = GamedgeTheme.colors.onPrimary,
@@ -405,306 +431,459 @@ internal fun GameInfoAnimatableHeader(
 }
 
 @Composable
-private fun constructExpandedConstraintSet(
-    hasDefaultPlaceholderArtwork: Boolean = false,
-    isSecondTitleVisible: Boolean = false,
+private fun rememberMotionScene(
+    hasDefaultPlaceholderArtwork: Boolean,
+    isSecondTitleVisible: Boolean,
+): MotionScene {
+    val spaces = GamedgeTheme.spaces
+    val artworksHeightInCollapsedState = calculateArtworksHeightInCollapsedState()
+    val statusBarHeight = calculateStatusBarHeightInDp()
+    val firstTitleColorInExpandedState = GamedgeTheme.colors.onPrimary
+    val firstTitleColorInCollapsedState = ScrimContentColor
+
+    return MotionScene {
+        val refs = ConstraintLayoutRefs(this)
+
+        addConstraintSet(
+            constraintSet = constructExpandedConstraintSet(
+                refs = refs,
+                spaces = spaces,
+                hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
+                isSecondTitleVisible = isSecondTitleVisible,
+                firstTitleTextColor = firstTitleColorInExpandedState,
+            ),
+            name = NameSetExpanded,
+        )
+        addConstraintSet(
+            constraintSet = constructCollapsedConstraintSet(
+                refs = refs,
+                spaces = spaces,
+                hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
+                artworksHeight = artworksHeightInCollapsedState,
+                statusBarHeight = statusBarHeight,
+                firstTitleTextColor = firstTitleColorInCollapsedState,
+            ),
+            name = NameSetCollapsed,
+        )
+        addTransition(
+            transition = constructTransition(
+                refs = refs,
+                firstTitleColorInExpandedState = firstTitleColorInExpandedState,
+                firstTitleColorInCollapsedState = firstTitleColorInCollapsedState,
+            ),
+            name = NameTransition,
+        )
+    }
+}
+
+@Composable
+private fun calculateArtworksHeightInCollapsedState(): Dp {
+    return ArtworksHeightCollapsed + calculateStatusBarHeightInDp()
+}
+
+@Composable
+private fun calculateStatusBarHeightInDp(): Dp {
+    val statusBarHeight = LocalContext.current.statusBarHeight
+
+    return with(LocalDensity.current) { statusBarHeight.toDp() }
+}
+
+private class ConstraintLayoutRefs(
+    val artworks: ConstrainedLayoutReference,
+    val artworksScrim: ConstrainedLayoutReference,
+    val backButton: ConstrainedLayoutReference,
+    val pageIndicator: ConstrainedLayoutReference,
+    val backdrop: ConstrainedLayoutReference,
+    val coverSpace: ConstrainedLayoutReference,
+    val cover: ConstrainedLayoutReference,
+    val likeButton: ConstrainedLayoutReference,
+    val firstTitle: ConstrainedLayoutReference,
+    val secondTitle: ConstrainedLayoutReference,
+    val releaseDate: ConstrainedLayoutReference,
+    val developerName: ConstrainedLayoutReference,
+    val rating: ConstrainedLayoutReference,
+    val likeCount: ConstrainedLayoutReference,
+    val ageRating: ConstrainedLayoutReference,
+    val gameCategory: ConstrainedLayoutReference,
+    val list: ConstrainedLayoutReference,
+) {
+    constructor(motionSceneScope: MotionSceneScope): this(
+        artworks = motionSceneScope.createRefFor(ConstraintIdArtworks),
+        artworksScrim = motionSceneScope.createRefFor(ConstraintIdArtworksScrim),
+        backButton = motionSceneScope.createRefFor(ConstraintIdBackButton),
+        pageIndicator = motionSceneScope.createRefFor(ConstraintIdPageIndicator),
+        backdrop = motionSceneScope.createRefFor(ConstraintIdBackdrop),
+        coverSpace = motionSceneScope.createRefFor(ConstraintIdCoverSpace),
+        cover = motionSceneScope.createRefFor(ConstraintIdCover),
+        likeButton = motionSceneScope.createRefFor(ConstraintIdLikeButton),
+        firstTitle = motionSceneScope.createRefFor(ConstraintIdFirstTitle),
+        secondTitle = motionSceneScope.createRefFor(ConstraintIdSecondTitle),
+        releaseDate = motionSceneScope.createRefFor(ConstraintIdReleaseDate),
+        developerName = motionSceneScope.createRefFor(ConstraintIdDeveloperName),
+        rating = motionSceneScope.createRefFor(ConstraintIdRating),
+        likeCount = motionSceneScope.createRefFor(ConstraintIdLikeCount),
+        ageRating = motionSceneScope.createRefFor(ConstraintIdAgeRating),
+        gameCategory = motionSceneScope.createRefFor(ConstraintIdGameCategory),
+        list = motionSceneScope.createRefFor(ConstraintIdList),
+    )
+}
+
+private fun MotionSceneScope.constructExpandedConstraintSet(
+    refs: ConstraintLayoutRefs,
+    spaces: Spaces,
+    hasDefaultPlaceholderArtwork: Boolean,
+    isSecondTitleVisible: Boolean,
+    firstTitleTextColor: Color,
 ): ConstraintSet {
-    val pageIndicatorMargin = GamedgeTheme.spaces.spacing_2_5
-    val backdropElevation = GamedgeTheme.spaces.spacing_0_5
+    val pageIndicatorMargin = spaces.spacing_2_5
+    val backdropElevation = spaces.spacing_0_5
     val coverSpaceMargin = CoverSpace
-    val coverMarginStart = GamedgeTheme.spaces.spacing_3_5
-    val likeBtnMarginEnd = GamedgeTheme.spaces.spacing_2_5
-    val titleMarginStart = GamedgeTheme.spaces.spacing_3_5
+    val coverMarginStart = spaces.spacing_3_5
+    val likeBtnMarginEnd = spaces.spacing_2_5
+    val titleMarginStart = spaces.spacing_3_5
     val firstTitleMarginTop = titleMarginStart
-    val firstTitleMarginEnd = GamedgeTheme.spaces.spacing_1_0
-    val secondTitleMarginEnd = GamedgeTheme.spaces.spacing_3_5
-    val releaseDateMarginTop = GamedgeTheme.spaces.spacing_2_5
-    val releaseDateMarginHorizontal = GamedgeTheme.spaces.spacing_3_5
-    val developerNameMarginHorizontal = GamedgeTheme.spaces.spacing_3_5
-    val bottomBarrierMargin = GamedgeTheme.spaces.spacing_5_0
-    val infoItemMarginBottom = GamedgeTheme.spaces.spacing_3_5
+    val firstTitleMarginEnd = spaces.spacing_1_0
+    val secondTitleMarginEnd = spaces.spacing_3_5
+    val releaseDateMarginTop = spaces.spacing_2_5
+    val releaseDateMarginHorizontal = spaces.spacing_3_5
+    val developerNameMarginHorizontal = spaces.spacing_3_5
+    val bottomBarrierMargin = spaces.spacing_5_0
+    val infoItemMarginBottom = spaces.spacing_3_5
 
     return ConstraintSet {
-        val artworks = createRefFor(ConstraintIdArtworks)
-        val artworksScrim = createRefFor(ConstraintIdArtworksScrim)
-        val backButton = createRefFor(ConstraintIdBackButton)
-        val pageIndicator = createRefFor(ConstraintIdPageIndicator)
-        val backdrop = createRefFor(ConstraintIdBackdrop)
-        val coverSpace = createRefFor(ConstraintIdCoverSpace)
-        val cover = createRefFor(ConstraintIdCover)
-        val likeButton = createRefFor(ConstraintIdLikeButton)
-        val firstTitle = createRefFor(ConstraintIdFirstTitle)
-        val secondTitle = createRefFor(ConstraintIdSecondTitle)
-        val releaseDate = createRefFor(ConstraintIdReleaseDate)
-        val developerName = createRefFor(ConstraintIdDeveloperName)
-        val bottomBarrier = createBottomBarrier(cover, developerName, margin = bottomBarrierMargin)
-        val rating = createRefFor(ConstraintIdRating)
-        val likeCount = createRefFor(ConstraintIdLikeCount)
-        val ageRating = createRefFor(ConstraintIdAgeRating)
-        val gameCategory = createRefFor(ConstraintIdGameCategory)
-        val list = createRefFor(ConstraintIdList)
+        val bottomBarrier = createBottomBarrier(
+            refs.cover,
+            refs.developerName,
+            margin = bottomBarrierMargin,
+        )
 
-        constrain(artworks) {
+        constrain(refs.artworks) {
             width = Dimension.fillToConstraints
             height = Dimension.value(ArtworksHeightExpanded)
             top.linkTo(parent.top)
             centerHorizontallyTo(parent)
         }
-        constrain(artworksScrim) {
+        constrain(refs.artworksScrim) {
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
-            centerVerticallyTo(artworks)
-            centerHorizontallyTo(artworks)
+            centerVerticallyTo(refs.artworks)
+            centerHorizontallyTo(refs.artworks)
             visibility = if (hasDefaultPlaceholderArtwork) {
                 Visibility.Gone
             } else {
                 Visibility.Invisible
             }
         }
-        constrain(backButton) {
+        constrain(refs.backButton) {
             top.linkTo(parent.top)
             start.linkTo(parent.start)
         }
-        constrain(pageIndicator) {
+        constrain(refs.pageIndicator) {
             top.linkTo(parent.top, pageIndicatorMargin)
             end.linkTo(parent.end, pageIndicatorMargin)
         }
-        constrain(backdrop) {
+        constrain(refs.backdrop) {
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
-            top.linkTo(artworks.bottom)
-            bottom.linkTo(list.top)
+            top.linkTo(refs.artworks.bottom)
+            bottom.linkTo(refs.list.top)
             centerHorizontallyTo(parent)
             translationZ = backdropElevation
         }
-        constrain(coverSpace) {
+        constrain(refs.coverSpace) {
             start.linkTo(parent.start)
-            bottom.linkTo(artworks.bottom, coverSpaceMargin)
+            bottom.linkTo(refs.artworks.bottom, coverSpaceMargin)
         }
-        constrain(cover) {
-            top.linkTo(coverSpace.bottom)
+        constrain(refs.cover) {
+            top.linkTo(refs.coverSpace.bottom)
             start.linkTo(parent.start, coverMarginStart)
         }
-        constrain(likeButton) {
-            top.linkTo(artworks.bottom)
-            bottom.linkTo(artworks.bottom)
+        constrain(refs.likeButton) {
+            top.linkTo(refs.artworks.bottom)
+            bottom.linkTo(refs.artworks.bottom)
             end.linkTo(parent.end, likeBtnMarginEnd)
         }
-        constrain(firstTitle) {
+        constrain(refs.firstTitle) {
             width = Dimension.fillToConstraints
-            top.linkTo(artworks.bottom, firstTitleMarginTop)
-            start.linkTo(cover.end, titleMarginStart)
-            end.linkTo(likeButton.start, firstTitleMarginEnd)
+            top.linkTo(refs.artworks.bottom, firstTitleMarginTop)
+            start.linkTo(refs.cover.end, titleMarginStart)
+            end.linkTo(refs.likeButton.start, firstTitleMarginEnd)
+            customColor(CustomAttributeTextColor, firstTitleTextColor)
         }
-        constrain(secondTitle) {
+        constrain(refs.secondTitle) {
             width = Dimension.fillToConstraints
-            top.linkTo(firstTitle.bottom)
-            start.linkTo(cover.end, titleMarginStart)
+            top.linkTo(refs.firstTitle.bottom)
+            start.linkTo(refs.cover.end, titleMarginStart)
             end.linkTo(parent.end, secondTitleMarginEnd)
             isVisible = isSecondTitleVisible
         }
-        constrain(releaseDate) {
+        constrain(refs.releaseDate) {
             width = Dimension.fillToConstraints
-            top.linkTo(secondTitle.bottom, releaseDateMarginTop, releaseDateMarginTop)
-            start.linkTo(cover.end, releaseDateMarginHorizontal)
+            top.linkTo(refs.secondTitle.bottom, releaseDateMarginTop, releaseDateMarginTop)
+            start.linkTo(refs.cover.end, releaseDateMarginHorizontal)
             end.linkTo(parent.end, releaseDateMarginHorizontal)
         }
-        constrain(developerName) {
+        constrain(refs.developerName) {
             width = Dimension.fillToConstraints
-            top.linkTo(releaseDate.bottom)
-            start.linkTo(cover.end, developerNameMarginHorizontal)
+            top.linkTo(refs.releaseDate.bottom)
+            start.linkTo(refs.cover.end, developerNameMarginHorizontal)
             end.linkTo(parent.end, developerNameMarginHorizontal)
         }
-        constrain(rating) {
+        constrain(refs.rating) {
             width = Dimension.fillToConstraints
             top.linkTo(bottomBarrier)
-            bottom.linkTo(list.top, infoItemMarginBottom)
-            linkTo(start = parent.start, end = likeCount.start, bias = 0.25f)
+            bottom.linkTo(refs.list.top, infoItemMarginBottom)
+            linkTo(start = parent.start, end = refs.likeCount.start, bias = 0.25f)
         }
-        constrain(likeCount) {
+        constrain(refs.likeCount) {
             width = Dimension.fillToConstraints
             top.linkTo(bottomBarrier)
-            bottom.linkTo(list.top, infoItemMarginBottom)
-            linkTo(start = rating.end, end = ageRating.start, bias = 0.25f)
+            bottom.linkTo(refs.list.top, infoItemMarginBottom)
+            linkTo(start = refs.rating.end, end = refs.ageRating.start, bias = 0.25f)
         }
-        constrain(ageRating) {
+        constrain(refs.ageRating) {
             width = Dimension.fillToConstraints
             top.linkTo(bottomBarrier)
-            bottom.linkTo(list.top, infoItemMarginBottom)
-            linkTo(start = likeCount.end, end = gameCategory.start, bias = 0.25f)
+            bottom.linkTo(refs.list.top, infoItemMarginBottom)
+            linkTo(start = refs.likeCount.end, end = refs.gameCategory.start, bias = 0.25f)
         }
-        constrain(gameCategory) {
+        constrain(refs.gameCategory) {
             width = Dimension.fillToConstraints
             top.linkTo(bottomBarrier)
-            bottom.linkTo(list.top, infoItemMarginBottom)
-            linkTo(start = ageRating.end, end = parent.end, bias = 0.25f)
+            bottom.linkTo(refs.list.top, infoItemMarginBottom)
+            linkTo(start = refs.ageRating.end, end = parent.end, bias = 0.25f)
         }
-        constrain(list) {
+        constrain(refs.list) {
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
-            top.linkTo(rating.bottom)
+            top.linkTo(refs.rating.bottom)
             bottom.linkTo(parent.bottom)
             centerHorizontallyTo(parent)
         }
     }
 }
 
-@SuppressLint("Range")
-@Composable
-private fun constructCollapsedConstraintSet(
-    hasDefaultPlaceholderArtwork: Boolean = false,
+private fun MotionSceneScope.constructCollapsedConstraintSet(
+    refs: ConstraintLayoutRefs,
+    spaces: Spaces,
+    hasDefaultPlaceholderArtwork: Boolean,
+    artworksHeight: Dp,
+    statusBarHeight: Dp,
+    firstTitleTextColor: Color,
 ): ConstraintSet {
-    val artworksHeight = calculateArtworksHeightInCollapsedState()
-    val statusBarHeight = calculateStatusBarHeightInDp()
-    val pageIndicatorMargin = GamedgeTheme.spaces.spacing_2_5
-    val backdropElevation = GamedgeTheme.spaces.spacing_1_0
+    val pageIndicatorMargin = spaces.spacing_2_5
+    val backdropElevation = spaces.spacing_1_0
     val coverSpaceMargin = CoverSpace
-    val coverMarginStart = GamedgeTheme.spaces.spacing_3_5
-    val likeBtnMarginEnd = GamedgeTheme.spaces.spacing_2_5
-    val titleMarginStart = GamedgeTheme.spaces.spacing_3_5
-    val firstTitleMarginStart = GamedgeTheme.spaces.spacing_7_5
-    val firstTitleMarginEnd = GamedgeTheme.spaces.spacing_6_0
-    val secondTitleMarginEnd = GamedgeTheme.spaces.spacing_3_5
-    val releaseDateMarginTop = GamedgeTheme.spaces.spacing_2_5
-    val releaseDateMarginHorizontal = GamedgeTheme.spaces.spacing_3_5
-    val developerNameMarginHorizontal = GamedgeTheme.spaces.spacing_3_5
-    val infoItemVerticalMargin = GamedgeTheme.spaces.spacing_3_5
+    val coverMarginStart = spaces.spacing_3_5
+    val likeBtnMarginEnd = spaces.spacing_2_5
+    val titleMarginStart = spaces.spacing_3_5
+    val firstTitleMarginStart = spaces.spacing_7_5
+    val firstTitleMarginEnd = spaces.spacing_6_0
+    val secondTitleMarginEnd = spaces.spacing_3_5
+    val releaseDateMarginTop = spaces.spacing_2_5
+    val releaseDateMarginHorizontal = spaces.spacing_3_5
+    val developerNameMarginHorizontal = spaces.spacing_3_5
+    val infoItemVerticalMargin = spaces.spacing_3_5
 
     return ConstraintSet {
-        val artworks = createRefFor(ConstraintIdArtworks)
-        val artworksScrim = createRefFor(ConstraintIdArtworksScrim)
-        val backButton = createRefFor(ConstraintIdBackButton)
-        val pageIndicator = createRefFor(ConstraintIdPageIndicator)
-        val backdrop = createRefFor(ConstraintIdBackdrop)
-        val coverSpace = createRefFor(ConstraintIdCoverSpace)
-        val cover = createRefFor(ConstraintIdCover)
-        val likeButton = createRefFor(ConstraintIdLikeButton)
-        val firstTitle = createRefFor(ConstraintIdFirstTitle)
-        val secondTitle = createRefFor(ConstraintIdSecondTitle)
-        val releaseDate = createRefFor(ConstraintIdReleaseDate)
-        val developerName = createRefFor(ConstraintIdDeveloperName)
-        val rating = createRefFor(ConstraintIdRating)
-        val likeCount = createRefFor(ConstraintIdLikeCount)
-        val ageRating = createRefFor(ConstraintIdAgeRating)
-        val gameCategory = createRefFor(ConstraintIdGameCategory)
-        val list = createRefFor(ConstraintIdList)
-
-        constrain(artworks) {
+        constrain(refs.artworks) {
             width = Dimension.fillToConstraints
             height = Dimension.value(artworksHeight)
             top.linkTo(parent.top)
-            bottom.linkTo(backdrop.top)
+            bottom.linkTo(refs.backdrop.top)
             centerHorizontallyTo(parent)
         }
-        constrain(artworksScrim) {
+        constrain(refs.artworksScrim) {
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
-            centerVerticallyTo(artworks)
-            centerHorizontallyTo(artworks)
+            centerVerticallyTo(refs.artworks)
+            centerHorizontallyTo(refs.artworks)
             visibility = if (hasDefaultPlaceholderArtwork) {
                 Visibility.Gone
             } else {
                 Visibility.Visible
             }
         }
-        constrain(backButton) {
+        constrain(refs.backButton) {
             top.linkTo(parent.top)
             start.linkTo(parent.start)
         }
-        constrain(pageIndicator) {
+        constrain(refs.pageIndicator) {
             top.linkTo(parent.top, pageIndicatorMargin)
             end.linkTo(parent.end, pageIndicatorMargin)
             translationX = PageIndicatorDeltaXCollapsed
         }
-        constrain(backdrop) {
+        constrain(refs.backdrop) {
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
-            top.linkTo(artworks.bottom)
-            bottom.linkTo(list.top)
+            top.linkTo(refs.artworks.bottom)
+            bottom.linkTo(refs.list.top)
             centerHorizontallyTo(parent)
             translationZ = backdropElevation
         }
-        constrain(coverSpace) {
+        constrain(refs.coverSpace) {
             start.linkTo(parent.start)
-            bottom.linkTo(artworks.bottom, coverSpaceMargin)
+            bottom.linkTo(refs.artworks.bottom, coverSpaceMargin)
         }
-        constrain(cover) {
-            top.linkTo(coverSpace.bottom)
+        constrain(refs.cover) {
+            top.linkTo(refs.coverSpace.bottom)
             start.linkTo(parent.start, coverMarginStart)
             translationX = CoverDeltaXCollapsed
             translationY = CoverDeltaYCollapsed
         }
-        constrain(likeButton) {
-            top.linkTo(artworks.bottom)
-            bottom.linkTo(artworks.bottom)
+        constrain(refs.likeButton) {
+            top.linkTo(refs.artworks.bottom)
+            bottom.linkTo(refs.artworks.bottom)
             end.linkTo(parent.end, likeBtnMarginEnd)
             alpha = 0f
             setScale(LikeButtonScaleCollapsed)
         }
-        constrain(firstTitle) {
+        constrain(refs.firstTitle) {
             width = Dimension.fillToConstraints
-            top.linkTo(artworks.top, statusBarHeight)
-            bottom.linkTo(artworks.bottom)
-            start.linkTo(backButton.end, firstTitleMarginStart)
+            top.linkTo(refs.artworks.top, statusBarHeight)
+            bottom.linkTo(refs.artworks.bottom)
+            start.linkTo(refs.backButton.end, firstTitleMarginStart)
             end.linkTo(parent.end, firstTitleMarginEnd)
             setScale(FirstTitleScaleCollapsed)
+            customColor(CustomAttributeTextColor, firstTitleTextColor)
         }
-        constrain(secondTitle) {
+        constrain(refs.secondTitle) {
             width = Dimension.fillToConstraints
-            top.linkTo(firstTitle.bottom)
-            start.linkTo(cover.end, titleMarginStart)
+            top.linkTo(refs.firstTitle.bottom)
+            start.linkTo(refs.cover.end, titleMarginStart)
             end.linkTo(parent.end, secondTitleMarginEnd)
             alpha = 0f
             translationX = SecondaryTextDeltaXCollapsed
         }
-        constrain(releaseDate) {
+        constrain(refs.releaseDate) {
             width = Dimension.fillToConstraints
-            top.linkTo(secondTitle.bottom, releaseDateMarginTop, releaseDateMarginTop)
-            start.linkTo(cover.end, releaseDateMarginHorizontal)
+            top.linkTo(refs.secondTitle.bottom, releaseDateMarginTop, releaseDateMarginTop)
+            start.linkTo(refs.cover.end, releaseDateMarginHorizontal)
             end.linkTo(parent.end, releaseDateMarginHorizontal)
             alpha = 0f
             translationX = SecondaryTextDeltaXCollapsed
         }
-        constrain(developerName) {
+        constrain(refs.developerName) {
             width = Dimension.fillToConstraints
-            top.linkTo(releaseDate.bottom)
-            start.linkTo(cover.end, developerNameMarginHorizontal)
+            top.linkTo(refs.releaseDate.bottom)
+            start.linkTo(refs.cover.end, developerNameMarginHorizontal)
             end.linkTo(parent.end, developerNameMarginHorizontal)
             alpha = 0f
             translationX = SecondaryTextDeltaXCollapsed
         }
-        constrain(rating) {
+        constrain(refs.rating) {
             width = Dimension.fillToConstraints
-            top.linkTo(artworks.bottom, infoItemVerticalMargin)
-            bottom.linkTo(list.top, infoItemVerticalMargin)
-            linkTo(start = parent.start, end = likeCount.start, bias = 0.25f)
+            top.linkTo(refs.artworks.bottom, infoItemVerticalMargin)
+            bottom.linkTo(refs.list.top, infoItemVerticalMargin)
+            linkTo(start = parent.start, end = refs.likeCount.start, bias = 0.25f)
         }
-        constrain(likeCount) {
+        constrain(refs.likeCount) {
             width = Dimension.fillToConstraints
-            top.linkTo(artworks.bottom, infoItemVerticalMargin)
-            bottom.linkTo(list.top, infoItemVerticalMargin)
-            linkTo(start = rating.end, end = ageRating.start, bias = 0.25f)
+            top.linkTo(refs.artworks.bottom, infoItemVerticalMargin)
+            bottom.linkTo(refs.list.top, infoItemVerticalMargin)
+            linkTo(start = refs.rating.end, end = refs.ageRating.start, bias = 0.25f)
         }
-        constrain(ageRating) {
+        constrain(refs.ageRating) {
             width = Dimension.fillToConstraints
-            top.linkTo(artworks.bottom, infoItemVerticalMargin)
-            bottom.linkTo(list.top, infoItemVerticalMargin)
-            linkTo(start = likeCount.end, end = gameCategory.start, bias = 0.25f)
+            top.linkTo(refs.artworks.bottom, infoItemVerticalMargin)
+            bottom.linkTo(refs.list.top, infoItemVerticalMargin)
+            linkTo(start = refs.likeCount.end, end = refs.gameCategory.start, bias = 0.25f)
         }
-        constrain(gameCategory) {
+        constrain(refs.gameCategory) {
             width = Dimension.fillToConstraints
-            top.linkTo(artworks.bottom, infoItemVerticalMargin)
-            bottom.linkTo(list.top, infoItemVerticalMargin)
-            linkTo(start = ageRating.end, end = parent.end, bias = 0.25f)
+            top.linkTo(refs.artworks.bottom, infoItemVerticalMargin)
+            bottom.linkTo(refs.list.top, infoItemVerticalMargin)
+            linkTo(start = refs.ageRating.end, end = parent.end, bias = 0.25f)
         }
-        constrain(list) {
+        constrain(refs.list) {
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
-            top.linkTo(rating.bottom)
+            top.linkTo(refs.rating.bottom)
             bottom.linkTo(parent.bottom)
             centerHorizontallyTo(parent)
         }
     }
+}
+
+private fun MotionSceneScope.constructTransition(
+    refs: ConstraintLayoutRefs,
+    firstTitleColorInExpandedState: Color,
+    firstTitleColorInCollapsedState: Color,
+): Transition {
+    return Transition(from = NameSetExpanded, to = NameSetCollapsed) {
+        keyAttributes(refs.secondTitle) {
+            frame(frame = 15) {
+                alpha = 0f
+                translationX = SecondaryTextDeltaXCollapsed
+            }
+        }
+        keyAttributes(refs.releaseDate) {
+            frame(frame = 15) {
+                alpha = 0f
+                translationX = SecondaryTextDeltaXCollapsed
+            }
+        }
+        keyAttributes(refs.developerName) {
+            frame(frame = 15) {
+                alpha = 0f
+                translationX = SecondaryTextDeltaXCollapsed
+            }
+        }
+        keyAttributes(refs.cover) {
+            frame(frame = 50) {
+                alpha = 0f
+                translationX = CoverDeltaXCollapsed
+                translationY = CoverDeltaYCollapsed
+            }
+        }
+        keyAttributes(refs.firstTitle) {
+            frame(frame = 40) {
+                customColor(CustomAttributeTextColor, firstTitleColorInExpandedState)
+            }
+            frame(frame = 60) {
+                customColor(CustomAttributeTextColor, firstTitleColorInCollapsedState)
+            }
+        }
+        keyAttributes(refs.likeButton) {
+            frame(frame = 60) {
+                alpha = 0f
+                scaleX = 0f
+                scaleY = 0f
+            }
+        }
+        keyAttributes(refs.pageIndicator) {
+            frame(frame = 80) {
+                translationX = PageIndicatorDeltaXCollapsed
+            }
+        }
+
+        onSwipe = OnSwipe(
+            anchor = refs.list,
+            side = SwipeSide.Top,
+            direction = SwipeDirection.Up,
+            onTouchUp = SwipeTouchUp.AutoComplete,
+            mode = SwipeMode.Velocity,
+        )
+    }
+}
+
+private class LikeButton(context: Context) : FloatingActionButton(context) {
+
+    private companion object {
+        const val STATE_CHECKED = android.R.attr.state_checked
+        const val STATE_CHECKED_ON = (STATE_CHECKED * 1)
+        const val STATE_CHECKED_OFF = (STATE_CHECKED * -1)
+    }
+
+    var isLiked: Boolean
+        set(value) {
+            // Just calling setImageState() directly doesn't work, so we need
+            // to postpone it just a bit.
+            postAction {
+                setImageState(intArrayOf(if (value) STATE_CHECKED_ON else STATE_CHECKED_OFF), true)
+            }
+        }
+        get() = drawableState.contains(STATE_CHECKED_ON)
 }
 
 private var ConstrainScope.isVisible: Boolean
@@ -719,8 +898,7 @@ private fun ConstrainScope.setScale(scale: Float) {
 }
 
 @Language("json5")
-@Composable
-private fun constructTransition(): String {
+private fun constructTransitionJson(): String {
     /*
         onSwipe: {
           direction: "up",
@@ -738,6 +916,13 @@ private fun constructTransition(): String {
           easing: "easeInOut",
           duration: 400,
           pathMotionArc: "none",
+          onSwipe: {
+              direction: "up",
+              touchUp: "autocomplete",
+              anchor: "$ConstraintIdList",
+              side: "top",
+              mode: "velocity",
+          },
           KeyFrames: {
               KeyAttributes: [
                   {
@@ -1133,18 +1318,6 @@ private fun constructJson(): String {
           }
         }
     """.trimIndent()
-}
-
-@Composable
-private fun calculateArtworksHeightInCollapsedState(): Dp {
-    return ArtworksHeightCollapsed + calculateStatusBarHeightInDp()
-}
-
-@Composable
-private fun calculateStatusBarHeightInDp(): Dp {
-    val statusBarHeight = LocalContext.current.statusBarHeight
-
-    return with(LocalDensity.current) { statusBarHeight.toDp() }
 }
 
 private fun Modifier.drawOnTop(): Modifier {

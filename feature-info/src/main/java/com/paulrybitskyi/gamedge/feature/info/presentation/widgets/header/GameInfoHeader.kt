@@ -215,7 +215,7 @@ internal fun GameInfoHeader(
         // arrives.
         AndroidView(
             factory = { context ->
-                LikeButton(context).apply {
+                LikeButton0(context).apply {
                     supportBackgroundTintList = ColorStateList.valueOf(colors.secondary.toArgb())
                     size = FloatingActionButton.SIZE_NORMAL
                     setMaxImageSize(with(density) { 52.dp.toPx().toInt() })
@@ -251,8 +251,6 @@ internal fun GameInfoHeader(
 
         Box(modifier = Modifier.layoutId(ConstraintIdSecondTitle)) {
             if (isSecondTitleVisible) {
-                // Remove font padding once https://issuetracker.google.com/issues/171394808
-                // is implemented (includeFontPadding="false" in XML)
                 Text(
                     text = secondTitleText,
                     color = GamedgeTheme.colors.onPrimary,
@@ -311,7 +309,7 @@ internal fun GameInfoHeader(
     }
 }
 
-private class LikeButton(context: Context) : FloatingActionButton(context) {
+private class LikeButton0(context: Context) : FloatingActionButton(context) {
 
     private companion object {
         const val STATE_CHECKED = android.R.attr.state_checked
