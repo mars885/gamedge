@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.feature.info.presentation
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,18 +35,24 @@ import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.Velocity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
@@ -237,18 +244,22 @@ private fun SuccessState(
     onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
+    val listState = rememberLazyListState()
+
     GameInfoAnimatableHeader(
         headerInfo = gameInfo.headerModel,
+        listState = listState,
         onArtworkClicked = onArtworkClicked,
         onBackButtonClicked = onBackButtonClicked,
         onCoverClicked = onCoverClicked,
         onLikeButtonClicked = onLikeButtonClicked,
-    ) { modifier ->
+    ) { modifier, nestedConnection ->
         val layoutDirection = LocalLayoutDirection.current
         val spacing = GamedgeTheme.spaces.spacing_3_5
 
         LazyColumn(
-            modifier = modifier,
+            modifier = modifier.nestedScroll(nestedConnection),
+            state = listState,
             contentPadding = PaddingValues(
                 start = contentPadding.calculateStartPadding(layoutDirection),
                 top = contentPadding.calculateTopPadding().plus(spacing),

@@ -20,10 +20,10 @@ package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header
 
 import android.content.Context
 import android.content.res.ColorStateList
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.EaseInOut
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,26 +31,35 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -68,11 +77,6 @@ import androidx.constraintlayout.compose.InvalidationStrategy
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
 import androidx.constraintlayout.compose.MotionSceneScope
-import androidx.constraintlayout.compose.OnSwipe
-import androidx.constraintlayout.compose.SwipeDirection
-import androidx.constraintlayout.compose.SwipeMode
-import androidx.constraintlayout.compose.SwipeSide
-import androidx.constraintlayout.compose.SwipeTouchUp
 import androidx.constraintlayout.compose.Transition
 import androidx.constraintlayout.compose.Visibility
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -91,12 +95,15 @@ import com.paulrybitskyi.gamedge.common.ui.widgets.Info
 import com.paulrybitskyi.gamedge.feature.info.R
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.Artworks
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModel
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.Language
 import com.paulrybitskyi.gamedge.core.R as CoreR
 
-private const val NameSetExpanded = "expanded"
-private const val NameSetCollapsed = "collapsed"
-private const val NameTransition = "expanded_to_collapsed"
+private const val ConstraintSetNameExpanded = "expanded"
+private const val ConstraintSetNameCollapsed = "collapsed"
+private const val TransitionName = "fancy_transition"
 
 private const val ConstraintIdArtworks = "artworks"
 private const val ConstraintIdArtworksScrim = "artworks_scrim"
@@ -134,28 +141,34 @@ private val CoverDeltaXCollapsed = (-130).dp
 private val CoverDeltaYCollapsed = (-60).dp
 private val SecondaryTextDeltaXCollapsed = (-8).dp
 
-private enum class State {
-    Expanded,
-    Collapsed,
-}
+private val AnimatableSaver = Saver(
+    save = { animatable -> animatable.value },
+    restore = ::Animatable,
+)
 
-// Try out this again when a new version of MotionLayout for compose
-// comes out (as of 12.06.2022, the latest is 1.1.0-alpha02).
 @Composable
 internal fun GameInfoAnimatableHeader(
     headerInfo: GameInfoHeaderUiModel,
+    listState: LazyListState,
     onArtworkClicked: (artworkIndex: Int) -> Unit,
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
-    content: @Composable (Modifier) -> Unit,
+    content: @Composable (Modifier, NestedScrollConnection) -> Unit,
 ) {
-    var state by remember { mutableStateOf(State.Expanded) }
-    val progress by animateFloatAsState(
-        targetValue = if (state == State.Expanded) 0f else 1f,
-        animationSpec = tween(3000),
-        label = "GameInfoAnimatableHeaderProgress",
-    )
+    val maxPx = 555f
+    val minPx = 228f
+    val progress = rememberSaveable(saver = AnimatableSaver) {
+        Animatable(0f).apply {
+            updateBounds(0f, 1f)
+        }
+    }
+    var headerHeight by remember {
+        mutableFloatStateOf(
+            if (progress.value == 0f) maxPx else minPx
+        )
+    }
+    val coroutineScope = rememberCoroutineScope()
 
     val colors = GamedgeTheme.colors
     val density = LocalDensity.current
@@ -174,15 +187,89 @@ internal fun GameInfoAnimatableHeader(
     }
     val isArtworkInteractionEnabled by remember {
         derivedStateOf {
-            progress < 0.01f
+            progress.value < 0.01f
         }
     }
     val firstTitleOverflowMode by remember {
         derivedStateOf {
-            if (progress < 0.95f) {
+            if (progress.value < 0.95f) {
                 TextOverflow.Clip
             } else {
                 TextOverflow.Ellipsis
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        snapshotFlow { listState.isScrollInProgress }
+            .distinctUntilChanged()
+            .filterNot { it }
+            .collect {
+                val currentProgress = progress.value
+
+                if (currentProgress != 0f && currentProgress != 1f) {
+                    val newProgress = if (currentProgress < 0.5f) 0f else 1f
+                    val duration = (300 + (1200 - 300) * 4 * currentProgress * (1 - currentProgress)).toInt()
+
+                    launch {
+                        progress.animateTo(
+                            targetValue = newProgress,
+                            animationSpec = tween(duration, easing = EaseInOut),
+                            block = {
+                                headerHeight = minPx + (1 - value) * (maxPx - minPx)
+                            }
+                        )
+                    }
+                }
+            }
+    }
+
+    val nestedConnection = remember(listState, coroutineScope) {
+        object : NestedScrollConnection {
+
+            private fun consume(available: Offset): Offset {
+                val height = headerHeight
+
+                if (height + available.y > maxPx) {
+                    headerHeight = maxPx
+                    updateProgress()
+                    return Offset(0f, maxPx - height)
+                }
+
+                if (height + available.y < minPx) {
+                    headerHeight = minPx
+                    updateProgress()
+                    return Offset(0f, minPx - height)
+                }
+
+                headerHeight += available.y / 2
+                updateProgress()
+
+                return Offset(0f, available.y)
+            }
+
+            private fun updateProgress() {
+                val newProgress = 1 - (headerHeight - minPx) / (maxPx - minPx)
+
+                coroutineScope.launch {
+                    progress.snapTo(newProgress)
+                }
+            }
+
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                if (listState.canScrollBackward) {
+                    return Offset.Zero
+                }
+
+                return consume(available)
+            }
+
+            override fun onPostScroll(consumed: Offset, available: Offset, source: NestedScrollSource): Offset {
+                return if (available.y > 0 && !listState.canScrollBackward) {
+                    consume(available)
+                } else {
+                    Offset.Zero
+                }
             }
         }
     }
@@ -192,9 +279,9 @@ internal fun GameInfoAnimatableHeader(
             hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
             isSecondTitleVisible = isSecondTitleVisible,
         ),
-        progress = progress,
+        progress = progress.value,
         modifier = Modifier.fillMaxSize(),
-        transitionName = NameTransition,
+        transitionName = TransitionName,
         invalidationStrategy = remember {
             InvalidationStrategy(
                 onObservedStateChange = {
@@ -277,7 +364,18 @@ internal fun GameInfoAnimatableHeader(
                     color = GamedgeTheme.colors.surface,
                     shape = RectangleShape,
                 )
-                .clip(RectangleShape),
+                .clip(RectangleShape)
+                .onGloballyPositioned {
+/*                    Log.e("kimahri", "onGloballyPositioned, progress = $progress, size = ${it.size}")
+                    if (progress == 0f) {
+                        expandedHeight = it.size.height
+                    }
+
+                    if (progress == 1f) {
+                        collapsedHeight = it.size.height
+                    }
+                    Log.e("wakka", "backdrop = ${it.size}")*/
+                },
         )
 
         Spacer(
@@ -385,16 +483,7 @@ internal fun GameInfoAnimatableHeader(
             title = headerInfo.rating,
             modifier = Modifier
                 .layoutId(ConstraintIdRating)
-                .drawOnTop()
-                .clickable {
-                    @Suppress("ForbiddenComment")
-                    // TODO: To be removed, only for debugging purposes
-                    state = if (state == State.Expanded) {
-                        State.Collapsed
-                    } else {
-                        State.Expanded
-                    }
-                },
+                .drawOnTop(),
             iconSize = InfoIconSize,
             titleTextStyle = GamedgeTheme.typography.caption,
         )
@@ -426,7 +515,7 @@ internal fun GameInfoAnimatableHeader(
             titleTextStyle = GamedgeTheme.typography.caption,
         )
 
-        content(Modifier.layoutId(ConstraintIdList))
+        content(Modifier.layoutId(ConstraintIdList), nestedConnection)
     }
 }
 
@@ -441,38 +530,46 @@ private fun rememberMotionScene(
     val firstTitleColorInExpandedState = GamedgeTheme.colors.onPrimary
     val firstTitleColorInCollapsedState = ScrimContentColor
 
-    return MotionScene {
-        val refs = ConstraintLayoutRefs(this)
+    return remember(
+        spaces,
+        artworksHeightInCollapsedState,
+        statusBarHeight,
+        firstTitleColorInExpandedState,
+        firstTitleColorInCollapsedState
+    ) {
+        MotionScene {
+            val refs = ConstraintLayoutRefs(this)
 
-        addConstraintSet(
-            constraintSet = constructExpandedConstraintSet(
-                refs = refs,
-                spaces = spaces,
-                hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
-                isSecondTitleVisible = isSecondTitleVisible,
-                firstTitleTextColor = firstTitleColorInExpandedState,
-            ),
-            name = NameSetExpanded,
-        )
-        addConstraintSet(
-            constraintSet = constructCollapsedConstraintSet(
-                refs = refs,
-                spaces = spaces,
-                hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
-                artworksHeight = artworksHeightInCollapsedState,
-                statusBarHeight = statusBarHeight,
-                firstTitleTextColor = firstTitleColorInCollapsedState,
-            ),
-            name = NameSetCollapsed,
-        )
-        addTransition(
-            transition = constructTransition(
-                refs = refs,
-                firstTitleColorInExpandedState = firstTitleColorInExpandedState,
-                firstTitleColorInCollapsedState = firstTitleColorInCollapsedState,
-            ),
-            name = NameTransition,
-        )
+            addConstraintSet(
+                constraintSet = constructExpandedConstraintSet(
+                    refs = refs,
+                    spaces = spaces,
+                    hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
+                    isSecondTitleVisible = isSecondTitleVisible,
+                    firstTitleTextColor = firstTitleColorInExpandedState,
+                ),
+                name = ConstraintSetNameExpanded,
+            )
+            addConstraintSet(
+                constraintSet = constructCollapsedConstraintSet(
+                    refs = refs,
+                    spaces = spaces,
+                    hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
+                    artworksHeight = artworksHeightInCollapsedState,
+                    statusBarHeight = statusBarHeight,
+                    firstTitleTextColor = firstTitleColorInCollapsedState,
+                ),
+                name = ConstraintSetNameCollapsed,
+            )
+            addTransition(
+                transition = constructTransition(
+                    refs = refs,
+                    firstTitleColorInExpandedState = firstTitleColorInExpandedState,
+                    firstTitleColorInCollapsedState = firstTitleColorInCollapsedState,
+                ),
+                name = TransitionName,
+            )
+        }
     }
 }
 
@@ -810,7 +907,7 @@ private fun MotionSceneScope.constructTransition(
     firstTitleColorInExpandedState: Color,
     firstTitleColorInCollapsedState: Color,
 ): Transition {
-    return Transition(from = NameSetExpanded, to = NameSetCollapsed) {
+    return Transition(from = ConstraintSetNameExpanded, to = ConstraintSetNameCollapsed) {
         keyAttributes(refs.secondTitle) {
             frame(frame = 15) {
                 alpha = 0f
@@ -857,13 +954,13 @@ private fun MotionSceneScope.constructTransition(
             }
         }
 
-        onSwipe = OnSwipe(
+/*        onSwipe = OnSwipe(
             anchor = refs.list,
             side = SwipeSide.Top,
             direction = SwipeDirection.Up,
             onTouchUp = SwipeTouchUp.AutoComplete,
             mode = SwipeMode.Velocity,
-        )
+        )*/
     }
 }
 
