@@ -23,30 +23,18 @@
 # Protobuf
 -keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
 
-# KotlinX Serialization
-# Keep `Companion` object fields of serializable classes.
-# This avoids serializer lookup through `getDeclaredClasses` as done for named companion objects.
--if @kotlinx.serialization.Serializable class **
--keepclassmembers class <1> {
-    static <1>$Companion Companion;
-}
+# Prevents issues like ths one: https://github.com/Kotlin/kotlinx.serialization/issues/2385
+# Custom rule that keeps a class that meets the following criteria:
+# - Is annotated by the @Serialization annotation
+# - Lives inside a package or subpackages of com.paulrybitskyi.gamedge.feature
+# - Has a name that ends with the "Route" word
+-keep @kotlinx.serialization.Serializable class com.paulrybitskyi.gamedge.feature.**.*Route
 
-# Keep `serializer()` on companion objects (both default and named) of serializable classes.
--if @kotlinx.serialization.Serializable class ** {
-    static **$* *;
-}
--keepclassmembers class <2>$<3> {
-    kotlinx.serialization.KSerializer serializer(...);
-}
+# Prevents issues like ths one: https://github.com/square/retrofit/issues/3774
+-keep,allowobfuscation,allowshrinking class com.github.michaelbull.result.Result
 
-# Keep `INSTANCE.serializer()` of serializable objects.
--if @kotlinx.serialization.Serializable class ** {
-    public static ** INSTANCE;
+# Prevents issues where the @Apicalypse annotation is not being kept by ProGuard
+# and, as a result, the API queries are genereted incorrectly
+-keepclassmembers,allowobfuscation,allowshrinking class ** {
+    @com.paulrybitskyi.gamedge.igdb.apicalypse.**.Apicalypse <fields>;
 }
--keepclassmembers class <1> {
-    public static <1> INSTANCE;
-    kotlinx.serialization.KSerializer serializer(...);
-}
-
-# @Serializable and @Polymorphic are used at runtime for polymorphic serialization.
--keepattributes RuntimeVisibleAnnotations,AnnotationDefault
