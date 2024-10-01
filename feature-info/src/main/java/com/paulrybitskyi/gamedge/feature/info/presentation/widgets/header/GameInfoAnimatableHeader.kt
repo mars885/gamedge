@@ -59,7 +59,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -98,8 +97,10 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artwor
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.launch
-import org.intellij.lang.annotations.Language
 import com.paulrybitskyi.gamedge.core.R as CoreR
+
+private const val AutoTransitionAnimationDurationMin = 300
+private const val AutoTransitionAnimationDurationMax = 1_200
 
 private const val ConstraintSetNameExpanded = "expanded"
 private const val ConstraintSetNameCollapsed = "collapsed"
@@ -141,6 +142,18 @@ private val CoverDeltaXCollapsed = (-130).dp
 private val CoverDeltaYCollapsed = (-60).dp
 private val SecondaryTextDeltaXCollapsed = (-8).dp
 
+private enum class State(val progress: Float) {
+    Expanded(progress = 0f),
+    Collapsed(progress = 1f);
+
+    companion object {
+
+        fun fromProgressOrNull(progress: Float): State? {
+            return entries.firstOrNull { state -> state.progress == progress }
+        }
+    }
+}
+
 private val AnimatableSaver = Saver(
     save = { animatable -> animatable.value },
     restore = ::Animatable,
@@ -156,22 +169,22 @@ internal fun GameInfoAnimatableHeader(
     onLikeButtonClicked: () -> Unit,
     content: @Composable (Modifier, NestedScrollConnection) -> Unit,
 ) {
-    val maxPx = 555f
+    // minHeaderHeight = ArtworksHeightInCollapsedState +
     val minPx = 228f
-    val progress = rememberSaveable(saver = AnimatableSaver) {
-        Animatable(0f).apply {
-            updateBounds(0f, 1f)
-        }
-    }
-    var headerHeight by remember {
-        mutableFloatStateOf(
-            if (progress.value == 0f) maxPx else minPx
-        )
-    }
-    val coroutineScope = rememberCoroutineScope()
+    val maxPx = 555f
+
 
     val colors = GamedgeTheme.colors
     val density = LocalDensity.current
+    val progress = rememberSaveable(saver = AnimatableSaver) {
+        Animatable(State.Expanded.progress)
+    }
+    var headerHeight by remember {
+        mutableFloatStateOf(
+            if (progress.value == State.Expanded.progress) maxPx else minPx
+        )
+    }
+    val coroutineScope = rememberCoroutineScope()
     val artworks = headerInfo.artworks
     val isPageIndicatorVisible = remember(artworks) { artworks.size > 1 }
     val hasDefaultPlaceholderArtwork = remember(artworks) {
@@ -203,20 +216,24 @@ internal fun GameInfoAnimatableHeader(
     LaunchedEffect(Unit) {
         snapshotFlow { listState.isScrollInProgress }
             .distinctUntilChanged()
-            .filterNot { it }
+            .filterNot { isScrolling -> isScrolling }
             .collect {
                 val currentProgress = progress.value
 
-                if (currentProgress != 0f && currentProgress != 1f) {
-                    val newProgress = if (currentProgress < 0.5f) 0f else 1f
-                    val duration = (300 + (1200 - 300) * 4 * currentProgress * (1 - currentProgress)).toInt()
+                if (State.fromProgressOrNull(currentProgress) == null) {
+                    val newState = if (currentProgress < 0.5f) State.Expanded else State.Collapsed
+                    val duration = calculateAutoTransitionDuration(currentProgress)
 
                     launch {
                         progress.animateTo(
-                            targetValue = newProgress,
-                            animationSpec = tween(duration, easing = EaseInOut),
+                            targetValue = newState.progress,
+                            animationSpec = tween(durationMillis = duration, easing = EaseInOut),
                             block = {
-                                headerHeight = minPx + (1 - value) * (maxPx - minPx)
+                                headerHeight = calculateHeaderHeightGivenProgress(
+                                    progress = value,
+                                    minHeaderHeight = minPx,
+                                    maxHeaderHeight = maxPx,
+                                )
                             }
                         )
                     }
@@ -249,7 +266,11 @@ internal fun GameInfoAnimatableHeader(
             }
 
             private fun updateProgress() {
-                val newProgress = 1 - (headerHeight - minPx) / (maxPx - minPx)
+                val newProgress = calculateProgressGivenHeaderHeight(
+                    headerHeight = headerHeight,
+                    minHeaderHeight = minPx,
+                    maxHeaderHeight = maxPx,
+                )
 
                 coroutineScope.launch {
                     progress.snapTo(newProgress)
@@ -257,11 +278,11 @@ internal fun GameInfoAnimatableHeader(
             }
 
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (listState.canScrollBackward) {
-                    return Offset.Zero
+                return if (listState.canScrollBackward) {
+                    Offset.Zero
+                } else {
+                    consume(available)
                 }
-
-                return consume(available)
             }
 
             override fun onPostScroll(consumed: Offset, available: Offset, source: NestedScrollSource): Offset {
@@ -364,18 +385,7 @@ internal fun GameInfoAnimatableHeader(
                     color = GamedgeTheme.colors.surface,
                     shape = RectangleShape,
                 )
-                .clip(RectangleShape)
-                .onGloballyPositioned {
-/*                    Log.e("kimahri", "onGloballyPositioned, progress = $progress, size = ${it.size}")
-                    if (progress == 0f) {
-                        expandedHeight = it.size.height
-                    }
-
-                    if (progress == 1f) {
-                        collapsedHeight = it.size.height
-                    }
-                    Log.e("wakka", "backdrop = ${it.size}")*/
-                },
+                .clip(RectangleShape),
         )
 
         Spacer(
@@ -406,6 +416,8 @@ internal fun GameInfoAnimatableHeader(
                     setMaxImageSize(with(density) { 52.dp.toPx().toInt() })
                     setImageDrawable(context.getCompatDrawable(CoreR.drawable.heart_animated_selector))
                     supportImageTintList = ColorStateList.valueOf(colors.onSecondary.toArgb())
+                    // Disabling the ripple because it cripples the animation a bit
+                    rippleColor = colors.secondary.toArgb()
                     onClick { onLikeButtonClicked() }
                 }
             },
@@ -571,18 +583,6 @@ private fun rememberMotionScene(
             )
         }
     }
-}
-
-@Composable
-private fun calculateArtworksHeightInCollapsedState(): Dp {
-    return ArtworksHeightCollapsed + calculateStatusBarHeightInDp()
-}
-
-@Composable
-private fun calculateStatusBarHeightInDp(): Dp {
-    val statusBarHeight = LocalContext.current.statusBarHeight
-
-    return with(LocalDensity.current) { statusBarHeight.toDp() }
 }
 
 private class ConstraintLayoutRefs(
@@ -953,14 +953,6 @@ private fun MotionSceneScope.constructTransition(
                 translationX = PageIndicatorDeltaXCollapsed
             }
         }
-
-/*        onSwipe = OnSwipe(
-            anchor = refs.list,
-            side = SwipeSide.Top,
-            direction = SwipeDirection.Up,
-            onTouchUp = SwipeTouchUp.AutoComplete,
-            mode = SwipeMode.Velocity,
-        )*/
     }
 }
 
@@ -994,429 +986,47 @@ private fun ConstrainScope.setScale(scale: Float) {
     scaleY = scale
 }
 
-@Language("json5")
-private fun constructTransitionJson(): String {
-    /*
-        onSwipe: {
-          direction: "up",
-          touchUp: "decelerateComplete",
-          anchor: "$ConstraintIdList",
-          side: "top",
-          mode: "velocity",
-        },
-     */
-
-    return """
-        {
-          from: "start",
-          to: "end",
-          easing: "easeInOut",
-          duration: 400,
-          pathMotionArc: "none",
-          onSwipe: {
-              direction: "up",
-              touchUp: "autocomplete",
-              anchor: "$ConstraintIdList",
-              side: "top",
-              mode: "velocity",
-          },
-          KeyFrames: {
-              KeyAttributes: [
-                  {
-                    target: ["$ConstraintIdSecondTitle"],
-                    frames: [15, 100],
-                    alpha: [0, 0],
-                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
-                  },
-                  {
-                    target: ["$ConstraintIdReleaseDate"],
-                    frames: [15, 100],
-                    alpha: [0, 0],
-                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
-                  },
-                  {
-                    target: ["$ConstraintIdDeveloperName"],
-                    frames: [15, 100],
-                    alpha: [0, 0],
-                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
-                  },
-                  {
-                    target: ["$ConstraintIdCover"],
-                    frames: [50],
-                    alpha: 0,
-                    translationX: ${CoverDeltaXCollapsed.value.toInt()},
-                    translationY: ${CoverDeltaYCollapsed.value.toInt()},
-                  },
-                  {
-                    target: ["$ConstraintIdLikeButton"],
-                    frames: [60],
-                    alpha: 0,
-                    scaleX: 0,
-                    scaleY: 0,
-                  },
-                  {
-                    target: ["$ConstraintIdPageIndicator"],
-                    frames: [80],
-                    translationX: ${PageIndicatorDeltaXCollapsed.value.toInt()},
-                  }
-             ]
-          }
-        }
-    """.trimIndent()
-}
-
-@Suppress("UnusedPrivateMember")
-@Language("json5")
-@Composable
-private fun constructJson(): String {
-    /*
-        For it to work properly, the following things must be completed:
-        1. Creating a bottom barrier of cover & developerName components.
-        2. Custom properties (like scrim color & backdrop elevation) must
-        referenced from the MotionLayout's content parameter.
-        3. Scrim color should not be hardcoded in raw JSON.
-        4. Scrim color should not be applied when default artwork image is used.
-     */
-
-    val statusBarHeight = calculateStatusBarHeightInDp().value.toInt()
-    val density = LocalDensity.current
-
-    val scrimColorExpanded = Integer.toHexString(Color.Transparent.toArgb())
-    val pageIndicatorMargin = GamedgeTheme.spaces.spacing_2_5.value.toInt()
-    val backdropElevationExpanded = GamedgeTheme.spaces.spacing_0_5.value.toInt()
-    val coverSpaceMargin = CoverSpace.value.toInt()
-    val coverMarginStart = GamedgeTheme.spaces.spacing_3_5.value.toInt()
-    val likeBtnMarginEnd = GamedgeTheme.spaces.spacing_2_5.value.toInt()
-    val titleMarginStart = GamedgeTheme.spaces.spacing_3_5.value.toInt()
-    val firstTitleMarginTop = titleMarginStart
-    val firstTitleMarginEnd = GamedgeTheme.spaces.spacing_1_0.value.toInt()
-    val secondTitleMarginEnd = GamedgeTheme.spaces.spacing_3_5.value.toInt()
-    val releaseDateMarginTop = GamedgeTheme.spaces.spacing_2_5.value.toInt()
-    val releaseDateMarginHorizontal = GamedgeTheme.spaces.spacing_3_5.value.toInt()
-    val developerNameMarginHorizontal = GamedgeTheme.spaces.spacing_3_5.value.toInt()
-    val bottomBarrierMargin = GamedgeTheme.spaces.spacing_5_0.value.toInt()
-    val infoItemMarginBottom = GamedgeTheme.spaces.spacing_3_5.value.toInt()
-
-    val scrimColorCollapsed = Integer.toHexString(GamedgeTheme.colors.darkScrim.toArgb())
-    val artworksHeightCollapsed = calculateArtworksHeightInCollapsedState().value.toInt()
-    val backdropElevationCollapsed = GamedgeTheme.spaces.spacing_1_0.value.toInt()
-    val firstTitleMarginStartCollapsed = GamedgeTheme.spaces.spacing_7_5.value.toInt()
-    val firstTitleMarginEndCollapsed = GamedgeTheme.spaces.spacing_6_0.value.toInt()
-    val infoItemVerticalMarginCollapsed = GamedgeTheme.spaces.spacing_3_5.value.toInt()
-    val pageIndicatorDeltaXInPx = with(density) { PageIndicatorDeltaXCollapsed.roundToPx() }
-    val coverDeltaXInPx = with(density) { CoverDeltaXCollapsed.roundToPx() }
-    val coverDeltaYInPx = with(density) { CoverDeltaYCollapsed.roundToPx() }
-    val secondaryTextDeltaXInPx = with(density) { SecondaryTextDeltaXCollapsed.roundToPx() }
-
-    return """
-        {
-          ConstraintSets: {
-            start: {
-              $ConstraintIdArtworks: {
-                width: "spread",
-                height: ${ArtworksHeightExpanded.value.toInt()},
-                top: ["parent", "top"],
-                start: ["parent", "start"],
-                end: ["parent", "end"],
-              },
-              $ConstraintIdArtworksScrim: {
-                width: "spread",
-                height: "spread",
-                top: ["artworks", "top"],
-                bottom: ["artworks", "bottom"],
-                start: ["artworks", "start"],
-                end: ["artworks", "end"],
-                visibility: "invisible",
-                custom: {
-                  scrim_color: "#$scrimColorExpanded",
-                },
-              },
-              $ConstraintIdBackButton: {
-                top: ["parent", "top"],
-                start: ["parent", "start"],
-              },
-              $ConstraintIdPageIndicator: {
-                top: ["parent", "top", $pageIndicatorMargin],
-                end: ["parent", "end", $pageIndicatorMargin],
-              },
-              $ConstraintIdBackdrop: {
-                width: "spread",
-                height: "spread",
-                top: ["artworks", "bottom"],
-                bottom: ["list", "top"],
-                start: ["parent", "start"],
-                end: ["parent", "end"],
-                custom: {
-                  elevation: $backdropElevationExpanded,
-                },
-              },
-              $ConstraintIdCoverSpace: {
-                start: ["parent", "start"],
-                bottom: ["artworks", "bottom", $coverSpaceMargin],
-              },
-              $ConstraintIdCover: {
-                top: ["cover_space", "bottom"],
-                start: ["parent", "start", $coverMarginStart],
-              },
-              $ConstraintIdLikeButton: {
-                top: ["artworks", "bottom"],
-                bottom: ["artworks", "bottom"],
-                end: ["parent", "end", $likeBtnMarginEnd],
-              },
-              $ConstraintIdFirstTitle: {
-                width: "spread",
-                top: ["artworks", "bottom", $firstTitleMarginTop],
-                start: ["cover", "end", $titleMarginStart],
-                end: ["like_button", "start", $firstTitleMarginEnd],
-              },
-              $ConstraintIdSecondTitle: {
-                width: "spread",
-                top: ["first_title", "bottom"],
-                start: ["cover", "end", $titleMarginStart],
-                end: ["parent", "end", $secondTitleMarginEnd],
-              },
-              $ConstraintIdReleaseDate: {
-                width: "spread",
-                top: ["second_title", "bottom", $releaseDateMarginTop],
-                start: ["cover", "end", $releaseDateMarginHorizontal],
-                end: ["parent", "end", $releaseDateMarginHorizontal],
-              },
-              $ConstraintIdDeveloperName: {
-                width: "spread",
-                top: ["release_date", "bottom"],
-                start: ["cover", "end", $developerNameMarginHorizontal],
-                end: ["parent", "end", $developerNameMarginHorizontal],
-              },
-              $ConstraintIdRating: {
-                width: "spread",
-                top: ["cover", "bottom", $bottomBarrierMargin],
-                bottom: ["list", "top", $infoItemMarginBottom],
-                start: ["parent", "start"],
-                end: ["like_count", "start"],
-                hBias: 0.25
-              },
-              $ConstraintIdLikeCount: {
-                width: "spread",
-                top: ["cover", "bottom", $bottomBarrierMargin],
-                bottom: ["list", "top", $infoItemMarginBottom],
-                start: ["rating", "end"],
-                end: ["age_rating", "start"],
-                hBias: 0.25
-              },
-              $ConstraintIdAgeRating: {
-                width: "spread",
-                top: ["cover", "bottom", $bottomBarrierMargin],
-                bottom: ["list", "top", $infoItemMarginBottom],
-                start: ["like_count", "end"],
-                end: ["game_category", "start"],
-                hBias: 0.25
-              },
-              $ConstraintIdGameCategory: {
-                width: "spread",
-                top: ["cover", "bottom", $bottomBarrierMargin],
-                bottom: ["list", "top", $infoItemMarginBottom],
-                start: ["age_rating", "end"],
-                end: ["parent", "end"],
-                hBias: 0.25
-              },
-              $ConstraintIdList: {
-                width: "spread",
-                height: "spread",
-                top: ["rating", "bottom"],
-                bottom: ["parent", "bottom"],
-                start: ["parent", "start"],
-                end: ["parent", "end"],
-              },
-            },
-            end: {
-              $ConstraintIdArtworks: {
-                width: "spread",
-                height: $artworksHeightCollapsed,
-                top: ["parent", "top"],
-                bottom: ["backdrop", "top"],
-                start: ["parent", "start"],
-                end: ["parent", "end"],
-              },
-              $ConstraintIdArtworksScrim: {
-                width: "spread",
-                height: "spread",
-                top: ["artworks", "top"],
-                bottom: ["artworks", "bottom"],
-                start: ["artworks", "start"],
-                end: ["artworks", "end"],
-                visibility: "visible",
-                custom: {
-                  scrim_color: "#$scrimColorCollapsed",
-                },
-              },
-              $ConstraintIdBackButton: {
-                top: ["parent", "top"],
-                start: ["parent", "start"],
-              },
-              $ConstraintIdPageIndicator: {
-                top: ["parent", "top", $pageIndicatorMargin],
-                end: ["parent", "end", $pageIndicatorMargin],
-                translationX: $pageIndicatorDeltaXInPx,
-              },
-              $ConstraintIdBackdrop: {
-                width: "spread",
-                height: "spread",
-                top: ["artworks", "bottom"],
-                bottom: ["list", "top"],
-                start: ["parent", "start"],
-                end: ["parent", "end"],
-                custom: {
-                  elevation: $backdropElevationCollapsed,
-                },
-              },
-              $ConstraintIdCoverSpace: {
-                start: ["parent", "start"],
-                bottom: ["artworks", "bottom", $coverSpaceMargin],
-              },
-              $ConstraintIdCover: {
-                top: ["cover_space", "bottom"],
-                start: ["parent", "start", $coverMarginStart],
-                translationX: $coverDeltaXInPx,
-                translationY: $coverDeltaYInPx,
-                visibility: "invisible",
-              },
-              $ConstraintIdLikeButton: {
-                top: ["artworks", "bottom"],
-                bottom: ["artworks", "bottom"],
-                end: ["parent", "end", $likeBtnMarginEnd],
-                alpha: 0,
-                scaleX: 0,
-                scaleY: 0,
-              },
-              $ConstraintIdFirstTitle: {
-                width: "spread",
-                top: ["artworks", "top", $statusBarHeight],
-                bottom: ["artworks", "bottom"],
-                start: ["back_button", "end", $firstTitleMarginStartCollapsed],
-                end: ["parent", "end", $firstTitleMarginEndCollapsed],
-                scaleX: 1.1,
-                scaleY: 1.1,
-              },
-              $ConstraintIdSecondTitle: {
-                width: "spread",
-                top: ["first_title", "bottom"],
-                start: ["cover", "end", $titleMarginStart],
-                end: ["parent", "end", $secondTitleMarginEnd],
-                alpha: 0,
-                translationX: $secondaryTextDeltaXInPx,
-              },
-              $ConstraintIdReleaseDate: {
-                width: "spread",
-                top: ["second_title", "bottom", $releaseDateMarginTop],
-                start: ["cover", "end", $releaseDateMarginHorizontal],
-                end: ["parent", "end", $releaseDateMarginHorizontal],
-                alpha: 0,
-                translationX: $secondaryTextDeltaXInPx,
-              },
-              $ConstraintIdDeveloperName: {
-                width: "spread",
-                top: ["release_date", "bottom"],
-                start: ["cover", "end", $developerNameMarginHorizontal],
-                end: ["parent", "end", $developerNameMarginHorizontal],
-                alpha: 0,
-                translationX: $secondaryTextDeltaXInPx,
-              },
-              $ConstraintIdRating: {
-                width: "spread",
-                top: ["artworks", "bottom", $infoItemVerticalMarginCollapsed],
-                bottom: ["list", "top", $infoItemVerticalMarginCollapsed],
-                start: ["parent", "start"],
-                end: ["like_count", "start"],
-                hBias: 0.25
-              },
-              $ConstraintIdLikeCount: {
-                width: "spread",
-                top: ["artworks", "bottom", $infoItemVerticalMarginCollapsed],
-                bottom: ["list", "top", $infoItemVerticalMarginCollapsed],
-                start: ["rating", "end"],
-                end: ["age_rating", "start"],
-                hBias: 0.25
-              },
-              $ConstraintIdAgeRating: {
-                width: "spread",
-                top: ["artworks", "bottom", $infoItemVerticalMarginCollapsed],
-                bottom: ["list", "top", $infoItemVerticalMarginCollapsed],
-                start: ["like_count", "end"],
-                end: ["game_category", "start"],
-                hBias: 0.25
-              },
-              $ConstraintIdGameCategory: {
-                width: "spread",
-                top: ["artworks", "bottom", $infoItemVerticalMarginCollapsed],
-                bottom: ["list", "top", $infoItemVerticalMarginCollapsed],
-                start: ["age_rating", "end"],
-                end: ["parent", "end"],
-                hBias: 0.25
-              },
-              $ConstraintIdList: {
-                width: "spread",
-                height: "spread",
-                top: ["rating", "bottom"],
-                bottom: ["parent", "bottom"],
-                start: ["parent", "start"],
-                end: ["parent", "end"],
-              },
-            }
-          },
-          Transitions: {
-            default: {
-              from: "start",
-              to: "end",
-              easing: "easeInOut",
-              duration: 400,
-              pathMotionArc: "none",
-              KeyFrames: {
-                KeyAttributes: [
-                  {
-                    target: ["$ConstraintIdSecondTitle"],
-                    frames: [15, 100],
-                    alpha: [0, 0],
-                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
-                  },
-                  {
-                    target: ["$ConstraintIdReleaseDate"],
-                    frames: [15, 100],
-                    alpha: [0, 0],
-                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
-                  },
-                  {
-                    target: ["$ConstraintIdDeveloperName"],
-                    frames: [15, 100],
-                    alpha: [0, 0],
-                    translationX: ${SecondaryTextDeltaXCollapsed.value.toInt()},
-                  },
-                  {
-                    target: ["$ConstraintIdCover"],
-                    frames: [50],
-                    alpha: 0,
-                    translationX: ${CoverDeltaXCollapsed.value.toInt()},
-                    translationY: ${CoverDeltaYCollapsed.value.toInt()},
-                  },
-                  {
-                    target: ["$ConstraintIdLikeButton"],
-                    frames: [60],
-                    alpha: 0,
-                    scaleX: 0,
-                    scaleY: 0,
-                  },
-                  {
-                    target: ["$ConstraintIdPageIndicator"],
-                    frames: [80],
-                    translationX: ${PageIndicatorDeltaXCollapsed.value.toInt()},
-                  }
-                ]
-              }
-            }
-          }
-        }
-    """.trimIndent()
-}
-
 private fun Modifier.drawOnTop(): Modifier {
     return zIndex(Float.MAX_VALUE)
+}
+
+/**
+ * Calculates a duration for the auto transition in the following way:
+ * - for progress that is zero, the duration is minimal (0f -> min)
+ * - for progress that is half way, the duration is maximal (0.5f - max)
+ * - for progress that is one, the duration is minimal (1f - min)
+ **/
+private fun calculateAutoTransitionDuration(progress: Float): Int {
+    val minDuration = AutoTransitionAnimationDurationMin
+    val maxDuration = AutoTransitionAnimationDurationMax
+
+    return (minDuration + (maxDuration - minDuration) * 4 * progress * (1 - progress)).toInt()
+}
+
+private fun calculateHeaderHeightGivenProgress(
+    progress: Float,
+    minHeaderHeight: Float,
+    maxHeaderHeight: Float,
+): Float {
+    return minHeaderHeight + (1 - progress) * (maxHeaderHeight - minHeaderHeight)
+}
+
+private fun calculateProgressGivenHeaderHeight(
+    headerHeight: Float,
+    minHeaderHeight: Float,
+    maxHeaderHeight: Float,
+): Float {
+    return 1 - (headerHeight - minHeaderHeight) / (maxHeaderHeight - minHeaderHeight)
+}
+
+@Composable
+private fun calculateArtworksHeightInCollapsedState(): Dp {
+    return ArtworksHeightCollapsed + calculateStatusBarHeightInDp()
+}
+
+@Composable
+private fun calculateStatusBarHeightInDp(): Dp {
+    val statusBarHeight = LocalContext.current.statusBarHeight
+
+    return with(LocalDensity.current) { statusBarHeight.toDp() }
 }
