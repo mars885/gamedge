@@ -253,12 +253,12 @@ private fun SuccessState(
         onBackButtonClicked = onBackButtonClicked,
         onCoverClicked = onCoverClicked,
         onLikeButtonClicked = onLikeButtonClicked,
-    ) { modifier, nestedConnection ->
+    ) { modifier ->
         val layoutDirection = LocalLayoutDirection.current
         val spacing = GamedgeTheme.spaces.spacing_3_5
 
         LazyColumn(
-            modifier = modifier.nestedScroll(nestedConnection),
+            modifier = modifier,
             state = listState,
             contentPadding = PaddingValues(
                 start = contentPadding.calculateStartPadding(layoutDirection),

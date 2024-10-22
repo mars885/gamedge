@@ -25,8 +25,9 @@ import androidx.compose.animation.core.EaseInOut
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -58,6 +59,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -73,6 +75,8 @@ import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.InvalidationStrategy
+import androidx.constraintlayout.compose.KeyAttributeScope
+import androidx.constraintlayout.compose.KeyPositionScope
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
 import androidx.constraintlayout.compose.MotionSceneScope
@@ -122,7 +126,6 @@ private const val ConstraintIdRating = "rating"
 private const val ConstraintIdLikeCount = "like_count"
 private const val ConstraintIdAgeRating = "age_rating"
 private const val ConstraintIdGameCategory = "game_category"
-private const val ConstraintIdList = "list"
 
 private const val CustomAttributeTextColor = "text_color"
 
@@ -131,6 +134,7 @@ private val ScrimContentColor = Color.White
 private val CoverSpace = 40.dp
 private val InfoIconSize = 34.dp
 
+private const val FirstTitleScaleExpanded = 1f
 private const val FirstTitleScaleCollapsed = 1.1f
 private const val LikeButtonScaleCollapsed = 0f
 
@@ -139,8 +143,7 @@ private val ArtworksHeightCollapsed = 56.dp
 
 private val PageIndicatorDeltaXCollapsed = 60.dp
 private val CoverDeltaXCollapsed = (-130).dp
-private val CoverDeltaYCollapsed = (-60).dp
-private val SecondaryTextDeltaXCollapsed = (-8).dp
+private val CoverDeltaYCollapsed = (-40).dp
 
 private enum class State(val progress: Float) {
     Expanded(progress = 0f),
@@ -167,7 +170,7 @@ internal fun GameInfoAnimatableHeader(
     onBackButtonClicked: () -> Unit,
     onCoverClicked: () -> Unit,
     onLikeButtonClicked: () -> Unit,
-    content: @Composable (Modifier, NestedScrollConnection) -> Unit,
+    content: @Composable (Modifier) -> Unit,
 ) {
     // minHeaderHeight = ArtworksHeightInCollapsedState +
     val minPx = 228f
@@ -300,240 +303,239 @@ internal fun GameInfoAnimatableHeader(
         }
     }
 
-    MotionLayout(
-        motionScene = rememberMotionScene(
-            hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
-            isSecondTitleVisible = isSecondTitleVisible,
-        ),
-        progress = progress.value,
-        modifier = Modifier.fillMaxSize(),
-        transitionName = TransitionName,
-        invalidationStrategy = remember {
-            InvalidationStrategy(
-                onObservedStateChange = {
-                    @Suppress("UNUSED_EXPRESSION")
-                    headerInfo
+    Column {
+        MotionLayout(
+            motionScene = rememberMotionScene(
+                hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
+                isSecondTitleVisible = isSecondTitleVisible,
+            ),
+            progress = progress.value,
+            modifier = Modifier
+                .fillMaxWidth()
+                .drawOnTop(),
+            transitionName = TransitionName,
+            invalidationStrategy = remember {
+                InvalidationStrategy(
+                    onObservedStateChange = @Suppress("UNUSED_EXPRESSION") {
+                        headerInfo
+                    },
+                )
+            }
+        ) {
+            Artworks(
+                artworks = artworks,
+                isScrollingEnabled = isArtworkInteractionEnabled,
+                modifier = Modifier.layoutId(ConstraintIdArtworks),
+                onArtworkChanged = { page ->
+                    selectedArtworkPage = page
+                },
+                onArtworkClicked = { artworkIndex ->
+                    if (isArtworkInteractionEnabled) {
+                        onArtworkClicked(artworkIndex)
+                    }
                 },
             )
-        }
-    ) {
-        Artworks(
-            artworks = artworks,
-            isScrollingEnabled = isArtworkInteractionEnabled,
-            modifier = Modifier.layoutId(ConstraintIdArtworks),
-            onArtworkChanged = { page ->
-                selectedArtworkPage = page
-            },
-            onArtworkClicked = { artworkIndex ->
-                if (isArtworkInteractionEnabled) {
-                    onArtworkClicked(artworkIndex)
-                }
-            },
-        )
 
-        Box(
-            modifier = Modifier
-                .layoutId(ConstraintIdArtworksScrim)
-                .background(GamedgeTheme.colors.darkScrim),
-        )
-
-        Icon(
-            painter = painterResource(CoreR.drawable.arrow_left),
-            contentDescription = null,
-            modifier = Modifier
-                .layoutId(ConstraintIdBackButton)
-                .statusBarsPadding()
-                .size(56.dp)
-                .clickable(
-                    indication = ripple(
-                        bounded = false,
-                        radius = 18.dp,
-                    ),
-                    onClick = onBackButtonClicked,
-                )
-                .padding(GamedgeTheme.spaces.spacing_2_5)
-                .background(
-                    color = GamedgeTheme.colors.lightScrim,
-                    shape = CircleShape,
-                )
-                .padding(GamedgeTheme.spaces.spacing_1_5),
-            tint = ScrimContentColor,
-        )
-
-        if (isPageIndicatorVisible) {
-            Text(
-                text = stringResource(
-                    R.string.game_info_header_page_indicator_template,
-                    selectedArtworkPage + 1,
-                    headerInfo.artworks.size,
-                ),
+            Box(
                 modifier = Modifier
-                    .layoutId(ConstraintIdPageIndicator)
+                    .layoutId(ConstraintIdArtworksScrim)
+                    .background(GamedgeTheme.colors.darkScrim),
+            )
+
+            Icon(
+                painter = painterResource(CoreR.drawable.arrow_left),
+                contentDescription = null,
+                modifier = Modifier
+                    .layoutId(ConstraintIdBackButton)
                     .statusBarsPadding()
+                    .size(56.dp)
+                    .clickable(
+                        indication = ripple(
+                            bounded = false,
+                            radius = 18.dp,
+                        ),
+                        onClick = onBackButtonClicked,
+                    )
+                    .padding(GamedgeTheme.spaces.spacing_2_5)
                     .background(
                         color = GamedgeTheme.colors.lightScrim,
-                        shape = RoundedCornerShape(20.dp),
+                        shape = CircleShape,
                     )
-                    .padding(
-                        vertical = GamedgeTheme.spaces.spacing_1_5,
-                        horizontal = GamedgeTheme.spaces.spacing_2_0,
-                    ),
-                color = ScrimContentColor,
-                style = GamedgeTheme.typography.subtitle3,
+                    .padding(GamedgeTheme.spaces.spacing_1_5),
+                tint = ScrimContentColor,
             )
-        }
 
-        Box(
-            modifier = Modifier
-                .layoutId(ConstraintIdBackdrop)
-                .background(
-                    color = GamedgeTheme.colors.surface,
-                    shape = RectangleShape,
+            if (isPageIndicatorVisible) {
+                Text(
+                    text = stringResource(
+                        R.string.game_info_header_page_indicator_template,
+                        selectedArtworkPage + 1,
+                        headerInfo.artworks.size,
+                    ),
+                    modifier = Modifier
+                        .layoutId(ConstraintIdPageIndicator)
+                        .statusBarsPadding()
+                        .background(
+                            color = GamedgeTheme.colors.lightScrim,
+                            shape = RoundedCornerShape(20.dp),
+                        )
+                        .padding(
+                            vertical = GamedgeTheme.spaces.spacing_1_5,
+                            horizontal = GamedgeTheme.spaces.spacing_2_0,
+                        ),
+                    color = ScrimContentColor,
+                    style = GamedgeTheme.typography.subtitle3,
                 )
-                .clip(RectangleShape),
-        )
+            }
 
-        Spacer(
-            Modifier
-                .layoutId(ConstraintIdCoverSpace)
-                .height(CoverSpace),
-        )
-
-        GameCover(
-            title = null,
-            imageUrl = headerInfo.coverImageUrl,
-            modifier = Modifier
-                .layoutId(ConstraintIdCover)
-                .drawOnTop(),
-            onCoverClicked = if (headerInfo.hasCoverImageUrl) onCoverClicked else null,
-        )
-
-        // Animated selector drawables are not currently supported by the Jetpack Compose:
-        // https://issuetracker.google.com/issues/212418566. However, since the link/unlike
-        // animation is so gorgeous, it'd sad if we didn't use it, so we are using the legacy
-        // View here to render it. Consider to migrate to the Jetpack Compose when the support
-        // arrives.
-        AndroidView(
-            factory = { context ->
-                LikeButton(context).apply {
-                    supportBackgroundTintList = ColorStateList.valueOf(colors.secondary.toArgb())
-                    size = FloatingActionButton.SIZE_NORMAL
-                    setMaxImageSize(with(density) { 52.dp.toPx().toInt() })
-                    setImageDrawable(context.getCompatDrawable(CoreR.drawable.heart_animated_selector))
-                    supportImageTintList = ColorStateList.valueOf(colors.onSecondary.toArgb())
-                    // Disabling the ripple because it cripples the animation a bit
-                    rippleColor = colors.secondary.toArgb()
-                    // Disabling the shadow to avoid it being clipped when animating to collapsed state
-                    // (especially can be seen on the light theme)
-                    compatElevation = 0f
-                    onClick { onLikeButtonClicked() }
-                }
-            },
-            modifier = Modifier
-                .layoutId(ConstraintIdLikeButton)
-                .drawOnTop(),
-            update = { view ->
-                view.isLiked = headerInfo.isLiked
-            },
-        )
-
-        Text(
-            text = headerInfo.title,
-            modifier = Modifier
-                .layoutId(ConstraintIdFirstTitle)
-                .drawOnTop(),
-            // When restoring state, customColor function returns invalid color (black color
-            // when in collapsed state), so a little fix here to set the correct color
-            color = if (isInCollapsedState) {
-                ScrimContentColor
-            } else {
-                customColor(ConstraintIdFirstTitle, CustomAttributeTextColor)
-            },
-            overflow = firstTitleOverflowMode,
-            maxLines = 1,
-            onTextLayout = { textLayoutResult ->
-                if (textLayoutResult.hasVisualOverflow && secondTitleText.isEmpty()) {
-                    val firstTitleWidth = textLayoutResult.size.width.toFloat()
-                    val firstTitleOffset = Offset(firstTitleWidth, 0f)
-                    val firstTitleVisibleTextEndIndex = textLayoutResult.getOffsetForPosition(firstTitleOffset) + 1
-
-                    if (firstTitleVisibleTextEndIndex in headerInfo.title.indices) {
-                        secondTitleText = headerInfo.title.substring(firstTitleVisibleTextEndIndex)
-                    }
-                }
-            },
-            style = GamedgeTheme.typography.h6,
-        )
-
-        Text(
-            text = secondTitleText,
-            modifier = Modifier
-                .layoutId(ConstraintIdSecondTitle)
-                .drawOnTop(),
-            color = GamedgeTheme.colors.onPrimary,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 2,
-            style = GamedgeTheme.typography.h6,
-        )
-
-        Text(
-            text = headerInfo.releaseDate,
-            modifier = Modifier
-                .layoutId(ConstraintIdReleaseDate)
-                .drawOnTop(),
-            color = GamedgeTheme.colors.onSurface,
-            style = GamedgeTheme.typography.subtitle3,
-        )
-
-        if (headerInfo.hasDeveloperName) {
-            Text(
-                text = checkNotNull(headerInfo.developerName),
+            Box(
                 modifier = Modifier
-                    .layoutId(ConstraintIdDeveloperName)
+                    .layoutId(ConstraintIdBackdrop)
+                    .background(
+                        color = GamedgeTheme.colors.surface,
+                        shape = RectangleShape,
+                    )
+                    .clip(RectangleShape),
+            )
+
+            Spacer(
+                Modifier
+                    .layoutId(ConstraintIdCoverSpace)
+                    .height(CoverSpace),
+            )
+
+            GameCover(
+                title = null,
+                imageUrl = headerInfo.coverImageUrl,
+                modifier = Modifier
+                    .layoutId(ConstraintIdCover)
+                    .drawOnTop(),
+                onCoverClicked = if (headerInfo.hasCoverImageUrl) onCoverClicked else null,
+            )
+
+            // Animated selector drawables are not currently supported by the Jetpack Compose:
+            // https://issuetracker.google.com/issues/212418566. However, since the link/unlike
+            // animation is so gorgeous, it'd sad if we didn't use it, so we are using the legacy
+            // View here to render it. Consider to migrate to the Jetpack Compose when the support
+            // arrives.
+            AndroidView(
+                factory = { context ->
+                    LikeButton(context).apply {
+                        supportBackgroundTintList = ColorStateList.valueOf(colors.secondary.toArgb())
+                        size = FloatingActionButton.SIZE_NORMAL
+                        setMaxImageSize(with(density) { 52.dp.toPx().toInt() })
+                        setImageDrawable(context.getCompatDrawable(CoreR.drawable.heart_animated_selector))
+                        supportImageTintList = ColorStateList.valueOf(colors.onSecondary.toArgb())
+                        // Disabling the ripple because it cripples the animation a bit
+                        rippleColor = colors.secondary.toArgb()
+                        // Disabling the shadow to avoid it being clipped when animating to collapsed state
+                        // (especially can be seen on the light theme)
+                        compatElevation = 0f
+                        onClick { onLikeButtonClicked() }
+                    }
+                },
+                modifier = Modifier
+                    .layoutId(ConstraintIdLikeButton)
+                    .drawOnTop(),
+                update = { view ->
+                    view.isLiked = headerInfo.isLiked
+                },
+            )
+
+            Text(
+                text = headerInfo.title,
+                modifier = Modifier
+                    .layoutId(ConstraintIdFirstTitle)
+                    .drawOnTop(),
+                // When restoring state, customColor function returns invalid color (black color
+                // when in collapsed state), so a little fix here to set the correct color
+                color = if (isInCollapsedState) {
+                    ScrimContentColor
+                } else {
+                    customColor(ConstraintIdFirstTitle, CustomAttributeTextColor)
+                },
+                overflow = firstTitleOverflowMode,
+                maxLines = 1,
+                onTextLayout = { textLayoutResult ->
+                    if (textLayoutResult.hasVisualOverflow && secondTitleText.isEmpty()) {
+                        val firstTitleWidth = textLayoutResult.size.width.toFloat()
+                        val firstTitleOffset = Offset(firstTitleWidth, 0f)
+                        val firstTitleVisibleTextEndIndex = textLayoutResult.getOffsetForPosition(firstTitleOffset) + 1
+
+                        if (firstTitleVisibleTextEndIndex in headerInfo.title.indices) {
+                            secondTitleText = headerInfo.title.substring(firstTitleVisibleTextEndIndex)
+                        }
+                    }
+                },
+                style = GamedgeTheme.typography.h6,
+            )
+
+            Text(
+                text = secondTitleText,
+                modifier = Modifier
+                    .layoutId(ConstraintIdSecondTitle)
+                    .drawOnTop(),
+                color = GamedgeTheme.colors.onPrimary,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 2,
+                style = GamedgeTheme.typography.h6,
+            )
+
+            Text(
+                text = headerInfo.releaseDate,
+                modifier = Modifier
+                    .layoutId(ConstraintIdReleaseDate)
                     .drawOnTop(),
                 color = GamedgeTheme.colors.onSurface,
                 style = GamedgeTheme.typography.subtitle3,
             )
+
+            if (headerInfo.hasDeveloperName) {
+                Text(
+                    text = checkNotNull(headerInfo.developerName),
+                    modifier = Modifier
+                        .layoutId(ConstraintIdDeveloperName)
+                        .drawOnTop(),
+                    color = GamedgeTheme.colors.onSurface,
+                    style = GamedgeTheme.typography.subtitle3,
+                )
+            }
+
+            val infoItemModifier = Modifier
+                .drawOnTop()
+                .padding(vertical = GamedgeTheme.spaces.spacing_3_5)
+
+            Info(
+                icon = painterResource(CoreR.drawable.star_circle_outline),
+                title = headerInfo.rating,
+                modifier = infoItemModifier.layoutId(ConstraintIdRating),
+                iconSize = InfoIconSize,
+                titleTextStyle = GamedgeTheme.typography.caption,
+            )
+            Info(
+                icon = painterResource(CoreR.drawable.account_heart_outline),
+                title = headerInfo.likeCount,
+                modifier = infoItemModifier.layoutId(ConstraintIdLikeCount),
+                iconSize = InfoIconSize,
+                titleTextStyle = GamedgeTheme.typography.caption,
+            )
+            Info(
+                icon = painterResource(CoreR.drawable.age_rating_outline),
+                title = headerInfo.ageRating,
+                modifier = infoItemModifier.layoutId(ConstraintIdAgeRating),
+                iconSize = InfoIconSize,
+                titleTextStyle = GamedgeTheme.typography.caption,
+            )
+            Info(
+                icon = painterResource(CoreR.drawable.shape_outline),
+                title = headerInfo.gameCategory,
+                modifier = infoItemModifier.layoutId(ConstraintIdGameCategory),
+                iconSize = InfoIconSize,
+                titleTextStyle = GamedgeTheme.typography.caption,
+            )
         }
 
-        Info(
-            icon = painterResource(CoreR.drawable.star_circle_outline),
-            title = headerInfo.rating,
-            modifier = Modifier
-                .layoutId(ConstraintIdRating)
-                .drawOnTop(),
-            iconSize = InfoIconSize,
-            titleTextStyle = GamedgeTheme.typography.caption,
-        )
-        Info(
-            icon = painterResource(CoreR.drawable.account_heart_outline),
-            title = headerInfo.likeCount,
-            modifier = Modifier
-                .layoutId(ConstraintIdLikeCount)
-                .drawOnTop(),
-            iconSize = InfoIconSize,
-            titleTextStyle = GamedgeTheme.typography.caption,
-        )
-        Info(
-            icon = painterResource(CoreR.drawable.age_rating_outline),
-            title = headerInfo.ageRating,
-            modifier = Modifier
-                .layoutId(ConstraintIdAgeRating)
-                .drawOnTop(),
-            iconSize = InfoIconSize,
-            titleTextStyle = GamedgeTheme.typography.caption,
-        )
-        Info(
-            icon = painterResource(CoreR.drawable.shape_outline),
-            title = headerInfo.gameCategory,
-            modifier = Modifier
-                .layoutId(ConstraintIdGameCategory)
-                .drawOnTop(),
-            iconSize = InfoIconSize,
-            titleTextStyle = GamedgeTheme.typography.caption,
-        )
-
-        content(Modifier.layoutId(ConstraintIdList), nestedConnection)
+        content(Modifier.nestedScroll(nestedConnection))
     }
 }
 
@@ -574,6 +576,7 @@ private fun rememberMotionScene(
                     refs = refs,
                     spaces = spaces,
                     hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
+                    isSecondTitleVisible = isSecondTitleVisible,
                     artworksHeight = artworksHeightInCollapsedState,
                     statusBarHeight = statusBarHeight,
                     firstTitleTextColor = firstTitleColorInCollapsedState,
@@ -610,7 +613,6 @@ private class ConstraintLayoutRefs(
     val likeCount: ConstrainedLayoutReference,
     val ageRating: ConstrainedLayoutReference,
     val gameCategory: ConstrainedLayoutReference,
-    val list: ConstrainedLayoutReference,
 ) {
     constructor(motionSceneScope: MotionSceneScope): this(
         artworks = motionSceneScope.createRefFor(ConstraintIdArtworks),
@@ -629,7 +631,6 @@ private class ConstraintLayoutRefs(
         likeCount = motionSceneScope.createRefFor(ConstraintIdLikeCount),
         ageRating = motionSceneScope.createRefFor(ConstraintIdAgeRating),
         gameCategory = motionSceneScope.createRefFor(ConstraintIdGameCategory),
-        list = motionSceneScope.createRefFor(ConstraintIdList),
     )
 }
 
@@ -645,15 +646,11 @@ private fun MotionSceneScope.constructExpandedConstraintSet(
     val coverSpaceMargin = CoverSpace
     val coverMarginStart = spaces.spacing_3_5
     val likeBtnMarginEnd = spaces.spacing_2_5
-    val titleMarginStart = spaces.spacing_3_5
-    val firstTitleMarginTop = titleMarginStart
+    val textHorizontalMargin = spaces.spacing_3_5
+    val firstTitleMarginTop = textHorizontalMargin
     val firstTitleMarginEnd = spaces.spacing_1_0
-    val secondTitleMarginEnd = spaces.spacing_3_5
     val releaseDateMarginTop = spaces.spacing_2_5
-    val releaseDateMarginHorizontal = spaces.spacing_3_5
-    val developerNameMarginHorizontal = spaces.spacing_3_5
-    val bottomBarrierMargin = spaces.spacing_5_0
-    val infoItemMarginBottom = spaces.spacing_3_5
+    val bottomBarrierMargin = spaces.spacing_1_5
 
     return ConstraintSet {
         val bottomBarrier = createBottomBarrier(
@@ -691,7 +688,7 @@ private fun MotionSceneScope.constructExpandedConstraintSet(
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
             top.linkTo(refs.artworks.bottom)
-            bottom.linkTo(refs.list.top)
+            bottom.linkTo(refs.rating.bottom)
             centerHorizontallyTo(parent)
             translationZ = backdropElevation
         }
@@ -711,59 +708,49 @@ private fun MotionSceneScope.constructExpandedConstraintSet(
         constrain(refs.firstTitle) {
             width = Dimension.fillToConstraints
             top.linkTo(refs.artworks.bottom, firstTitleMarginTop)
-            start.linkTo(refs.cover.end, titleMarginStart)
+            start.linkTo(refs.cover.end, textHorizontalMargin)
             end.linkTo(refs.likeButton.start, firstTitleMarginEnd)
+            setScale(FirstTitleScaleExpanded)
             customColor(CustomAttributeTextColor, firstTitleTextColor)
         }
         constrain(refs.secondTitle) {
             width = Dimension.fillToConstraints
             top.linkTo(refs.firstTitle.bottom)
-            start.linkTo(refs.cover.end, titleMarginStart)
-            end.linkTo(parent.end, secondTitleMarginEnd)
+            start.linkTo(refs.cover.end, textHorizontalMargin)
+            end.linkTo(parent.end, textHorizontalMargin)
             isVisible = isSecondTitleVisible
         }
         constrain(refs.releaseDate) {
             width = Dimension.fillToConstraints
             top.linkTo(refs.secondTitle.bottom, releaseDateMarginTop, releaseDateMarginTop)
-            start.linkTo(refs.cover.end, releaseDateMarginHorizontal)
-            end.linkTo(parent.end, releaseDateMarginHorizontal)
+            start.linkTo(refs.cover.end, textHorizontalMargin)
+            end.linkTo(parent.end, textHorizontalMargin)
         }
         constrain(refs.developerName) {
             width = Dimension.fillToConstraints
             top.linkTo(refs.releaseDate.bottom)
-            start.linkTo(refs.cover.end, developerNameMarginHorizontal)
-            end.linkTo(parent.end, developerNameMarginHorizontal)
+            start.linkTo(refs.cover.end, textHorizontalMargin)
+            end.linkTo(parent.end, textHorizontalMargin)
         }
         constrain(refs.rating) {
             width = Dimension.fillToConstraints
             top.linkTo(bottomBarrier)
-            bottom.linkTo(refs.list.top, infoItemMarginBottom)
             linkTo(start = parent.start, end = refs.likeCount.start, bias = 0.25f)
         }
         constrain(refs.likeCount) {
             width = Dimension.fillToConstraints
             top.linkTo(bottomBarrier)
-            bottom.linkTo(refs.list.top, infoItemMarginBottom)
             linkTo(start = refs.rating.end, end = refs.ageRating.start, bias = 0.25f)
         }
         constrain(refs.ageRating) {
             width = Dimension.fillToConstraints
             top.linkTo(bottomBarrier)
-            bottom.linkTo(refs.list.top, infoItemMarginBottom)
             linkTo(start = refs.likeCount.end, end = refs.gameCategory.start, bias = 0.25f)
         }
         constrain(refs.gameCategory) {
             width = Dimension.fillToConstraints
             top.linkTo(bottomBarrier)
-            bottom.linkTo(refs.list.top, infoItemMarginBottom)
             linkTo(start = refs.ageRating.end, end = parent.end, bias = 0.25f)
-        }
-        constrain(refs.list) {
-            width = Dimension.fillToConstraints
-            height = Dimension.fillToConstraints
-            top.linkTo(refs.rating.bottom)
-            bottom.linkTo(parent.bottom)
-            centerHorizontallyTo(parent)
         }
     }
 }
@@ -772,6 +759,7 @@ private fun MotionSceneScope.constructCollapsedConstraintSet(
     refs: ConstraintLayoutRefs,
     spaces: Spaces,
     hasDefaultPlaceholderArtwork: Boolean,
+    isSecondTitleVisible: Boolean,
     artworksHeight: Dp,
     statusBarHeight: Dp,
     firstTitleTextColor: Color,
@@ -781,14 +769,10 @@ private fun MotionSceneScope.constructCollapsedConstraintSet(
     val coverSpaceMargin = CoverSpace
     val coverMarginStart = spaces.spacing_3_5
     val likeBtnMarginEnd = spaces.spacing_2_5
-    val titleMarginStart = spaces.spacing_3_5
+    val textHorizontalMargin = spaces.spacing_3_5
     val firstTitleMarginStart = spaces.spacing_7_5
     val firstTitleMarginEnd = spaces.spacing_6_0
-    val secondTitleMarginEnd = spaces.spacing_3_5
     val releaseDateMarginTop = spaces.spacing_2_5
-    val releaseDateMarginHorizontal = spaces.spacing_3_5
-    val developerNameMarginHorizontal = spaces.spacing_3_5
-    val infoItemVerticalMargin = spaces.spacing_3_5
 
     return ConstraintSet {
         constrain(refs.artworks) {
@@ -821,8 +805,7 @@ private fun MotionSceneScope.constructCollapsedConstraintSet(
         constrain(refs.backdrop) {
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
-            top.linkTo(refs.artworks.bottom)
-            bottom.linkTo(refs.list.top)
+            centerVerticallyTo(refs.rating)
             centerHorizontallyTo(parent)
             translationZ = backdropElevation
         }
@@ -835,6 +818,9 @@ private fun MotionSceneScope.constructCollapsedConstraintSet(
             start.linkTo(parent.start, coverMarginStart)
             translationX = CoverDeltaXCollapsed
             translationY = CoverDeltaYCollapsed
+            // We need to set it to Gone to avoid the cover taking up the vertical space,
+            // which increases the size of the header in collapsed state
+            visibility = Visibility.Gone
         }
         constrain(refs.likeButton) {
             top.linkTo(refs.artworks.bottom)
@@ -855,57 +841,44 @@ private fun MotionSceneScope.constructCollapsedConstraintSet(
         constrain(refs.secondTitle) {
             width = Dimension.fillToConstraints
             top.linkTo(refs.firstTitle.bottom)
-            start.linkTo(refs.cover.end, titleMarginStart)
-            end.linkTo(parent.end, secondTitleMarginEnd)
+            start.linkTo(refs.firstTitle.start)
+            end.linkTo(parent.end, textHorizontalMargin)
+            isVisible = isSecondTitleVisible
             alpha = 0f
-            translationX = SecondaryTextDeltaXCollapsed
         }
         constrain(refs.releaseDate) {
             width = Dimension.fillToConstraints
             top.linkTo(refs.secondTitle.bottom, releaseDateMarginTop, releaseDateMarginTop)
-            start.linkTo(refs.cover.end, releaseDateMarginHorizontal)
-            end.linkTo(parent.end, releaseDateMarginHorizontal)
+            start.linkTo(refs.firstTitle.start)
+            end.linkTo(parent.end, textHorizontalMargin)
             alpha = 0f
-            translationX = SecondaryTextDeltaXCollapsed
         }
         constrain(refs.developerName) {
             width = Dimension.fillToConstraints
             top.linkTo(refs.releaseDate.bottom)
-            start.linkTo(refs.cover.end, developerNameMarginHorizontal)
-            end.linkTo(parent.end, developerNameMarginHorizontal)
+            start.linkTo(refs.firstTitle.start)
+            end.linkTo(parent.end, textHorizontalMargin)
             alpha = 0f
-            translationX = SecondaryTextDeltaXCollapsed
         }
         constrain(refs.rating) {
             width = Dimension.fillToConstraints
-            top.linkTo(refs.artworks.bottom, infoItemVerticalMargin)
-            bottom.linkTo(refs.list.top, infoItemVerticalMargin)
+            top.linkTo(refs.artworks.bottom)
             linkTo(start = parent.start, end = refs.likeCount.start, bias = 0.25f)
         }
         constrain(refs.likeCount) {
             width = Dimension.fillToConstraints
-            top.linkTo(refs.artworks.bottom, infoItemVerticalMargin)
-            bottom.linkTo(refs.list.top, infoItemVerticalMargin)
+            top.linkTo(refs.artworks.bottom)
             linkTo(start = refs.rating.end, end = refs.ageRating.start, bias = 0.25f)
         }
         constrain(refs.ageRating) {
             width = Dimension.fillToConstraints
-            top.linkTo(refs.artworks.bottom, infoItemVerticalMargin)
-            bottom.linkTo(refs.list.top, infoItemVerticalMargin)
+            top.linkTo(refs.artworks.bottom)
             linkTo(start = refs.likeCount.end, end = refs.gameCategory.start, bias = 0.25f)
         }
         constrain(refs.gameCategory) {
             width = Dimension.fillToConstraints
-            top.linkTo(refs.artworks.bottom, infoItemVerticalMargin)
-            bottom.linkTo(refs.list.top, infoItemVerticalMargin)
+            top.linkTo(refs.artworks.bottom)
             linkTo(start = refs.ageRating.end, end = parent.end, bias = 0.25f)
-        }
-        constrain(refs.list) {
-            width = Dimension.fillToConstraints
-            height = Dimension.fillToConstraints
-            top.linkTo(refs.rating.bottom)
-            bottom.linkTo(parent.bottom)
-            centerHorizontallyTo(parent)
         }
     }
 }
@@ -917,22 +890,26 @@ private fun MotionSceneScope.constructTransition(
     firstTitleColorInCollapsedState: Color,
 ): Transition {
     return Transition(from = ConstraintSetNameExpanded, to = ConstraintSetNameCollapsed) {
+        // Don't scale the first title until the secondary texts (second title,
+        // release date and developer name) is gone
+        keyAttributes(refs.firstTitle) {
+            frame(frame = 15) {
+                setScale(FirstTitleScaleExpanded)
+            }
+        }
         keyAttributes(refs.secondTitle) {
             frame(frame = 15) {
                 alpha = 0f
-                translationX = SecondaryTextDeltaXCollapsed
             }
         }
         keyAttributes(refs.releaseDate) {
             frame(frame = 15) {
                 alpha = 0f
-                translationX = SecondaryTextDeltaXCollapsed
             }
         }
         keyAttributes(refs.developerName) {
             frame(frame = 15) {
                 alpha = 0f
-                translationX = SecondaryTextDeltaXCollapsed
             }
         }
         keyAttributes(refs.cover) {
@@ -940,6 +917,11 @@ private fun MotionSceneScope.constructTransition(
                 alpha = 0f
                 translationX = CoverDeltaXCollapsed
                 translationY = CoverDeltaYCollapsed
+            }
+        }
+        keyPositions(refs.cover) {
+            frame(frame = 50) {
+                setSizePercentage(0f)
             }
         }
         keyAttributes(refs.firstTitle) {
@@ -963,8 +945,7 @@ private fun MotionSceneScope.constructTransition(
         keyAttributes(refs.likeButton) {
             frame(frame = 60) {
                 alpha = 0f
-                scaleX = 0f
-                scaleY = 0f
+                setScale(LikeButtonScaleCollapsed)
             }
         }
         keyAttributes(refs.pageIndicator) {
@@ -1003,6 +984,16 @@ private var ConstrainScope.isVisible: Boolean
 private fun ConstrainScope.setScale(scale: Float) {
     scaleX = scale
     scaleY = scale
+}
+
+private fun KeyAttributeScope.setScale(scale: Float) {
+    scaleX = scale
+    scaleY = scale
+}
+
+private fun KeyPositionScope.setSizePercentage(percentage: Float) {
+    percentWidth = percentage
+    percentHeight = percentage
 }
 
 private fun Modifier.drawOnTop(): Modifier {
