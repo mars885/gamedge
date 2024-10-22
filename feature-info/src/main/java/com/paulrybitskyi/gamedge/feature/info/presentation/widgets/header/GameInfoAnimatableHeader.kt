@@ -212,6 +212,11 @@ internal fun GameInfoAnimatableHeader(
             }
         }
     }
+    val isInCollapsedState by remember {
+        derivedStateOf {
+            State.fromProgressOrNull(progress.value) == State.Collapsed
+        }
+    }
 
     LaunchedEffect(Unit) {
         snapshotFlow { listState.isScrollInProgress }
@@ -418,6 +423,9 @@ internal fun GameInfoAnimatableHeader(
                     supportImageTintList = ColorStateList.valueOf(colors.onSecondary.toArgb())
                     // Disabling the ripple because it cripples the animation a bit
                     rippleColor = colors.secondary.toArgb()
+                    // Disabling the shadow to avoid it being clipped when animating to collapsed state
+                    // (especially can be seen on the light theme)
+                    compatElevation = 0f
                     onClick { onLikeButtonClicked() }
                 }
             },
@@ -434,11 +442,17 @@ internal fun GameInfoAnimatableHeader(
             modifier = Modifier
                 .layoutId(ConstraintIdFirstTitle)
                 .drawOnTop(),
-            color = customColor(ConstraintIdFirstTitle, CustomAttributeTextColor),
+            // When restoring state, customColor function returns invalid color (black color
+            // when in collapsed state), so a little fix here to set the correct color
+            color = if (isInCollapsedState) {
+                ScrimContentColor
+            } else {
+                customColor(ConstraintIdFirstTitle, CustomAttributeTextColor)
+            },
             overflow = firstTitleOverflowMode,
             maxLines = 1,
             onTextLayout = { textLayoutResult ->
-                if (textLayoutResult.hasVisualOverflow) {
+                if (textLayoutResult.hasVisualOverflow && secondTitleText.isEmpty()) {
                     val firstTitleWidth = textLayoutResult.size.width.toFloat()
                     val firstTitleOffset = Offset(firstTitleWidth, 0f)
                     val firstTitleVisibleTextEndIndex = textLayoutResult.getOffsetForPosition(firstTitleOffset) + 1
@@ -451,21 +465,16 @@ internal fun GameInfoAnimatableHeader(
             style = GamedgeTheme.typography.h6,
         )
 
-        Box(
+        Text(
+            text = secondTitleText,
             modifier = Modifier
                 .layoutId(ConstraintIdSecondTitle)
                 .drawOnTop(),
-        ) {
-            if (isSecondTitleVisible) {
-                Text(
-                    text = secondTitleText,
-                    color = GamedgeTheme.colors.onPrimary,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 2,
-                    style = GamedgeTheme.typography.h6,
-                )
-            }
-        }
+            color = GamedgeTheme.colors.onPrimary,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 2,
+            style = GamedgeTheme.typography.h6,
+        )
 
         Text(
             text = headerInfo.releaseDate,
@@ -476,18 +485,15 @@ internal fun GameInfoAnimatableHeader(
             style = GamedgeTheme.typography.subtitle3,
         )
 
-        Box(
-            modifier = Modifier
-                .layoutId(ConstraintIdDeveloperName)
-                .drawOnTop(),
-        ) {
-            if (headerInfo.hasDeveloperName) {
-                Text(
-                    text = checkNotNull(headerInfo.developerName),
-                    color = GamedgeTheme.colors.onSurface,
-                    style = GamedgeTheme.typography.subtitle3,
-                )
-            }
+        if (headerInfo.hasDeveloperName) {
+            Text(
+                text = checkNotNull(headerInfo.developerName),
+                modifier = Modifier
+                    .layoutId(ConstraintIdDeveloperName)
+                    .drawOnTop(),
+                color = GamedgeTheme.colors.onSurface,
+                style = GamedgeTheme.typography.subtitle3,
+            )
         }
 
         Info(
@@ -543,11 +549,12 @@ private fun rememberMotionScene(
     val firstTitleColorInCollapsedState = ScrimContentColor
 
     return remember(
+        hasDefaultPlaceholderArtwork,
+        isSecondTitleVisible,
         spaces,
         artworksHeightInCollapsedState,
         statusBarHeight,
         firstTitleColorInExpandedState,
-        firstTitleColorInCollapsedState
     ) {
         MotionScene {
             val refs = ConstraintLayoutRefs(this)
@@ -576,6 +583,7 @@ private fun rememberMotionScene(
             addTransition(
                 transition = constructTransition(
                     refs = refs,
+                    isSecondTitleVisible = isSecondTitleVisible,
                     firstTitleColorInExpandedState = firstTitleColorInExpandedState,
                     firstTitleColorInCollapsedState = firstTitleColorInCollapsedState,
                 ),
@@ -904,6 +912,7 @@ private fun MotionSceneScope.constructCollapsedConstraintSet(
 
 private fun MotionSceneScope.constructTransition(
     refs: ConstraintLayoutRefs,
+    isSecondTitleVisible: Boolean,
     firstTitleColorInExpandedState: Color,
     firstTitleColorInCollapsedState: Color,
 ): Transition {
@@ -941,6 +950,16 @@ private fun MotionSceneScope.constructTransition(
                 customColor(CustomAttributeTextColor, firstTitleColorInCollapsedState)
             }
         }
+
+        if (isSecondTitleVisible) {
+            // To prevent the first title overlapping with the like button
+            keyPositions(refs.firstTitle) {
+                frame(frame = 60) {
+                    percentWidth = 0.5f
+                }
+            }
+        }
+
         keyAttributes(refs.likeButton) {
             frame(frame = 60) {
                 alpha = 0f
