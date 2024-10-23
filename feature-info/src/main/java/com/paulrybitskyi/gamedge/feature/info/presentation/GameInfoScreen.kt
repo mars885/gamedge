@@ -17,7 +17,6 @@
 package com.paulrybitskyi.gamedge.feature.info.presentation
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -42,17 +41,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.Velocity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.paulrybitskyi.commons.ktx.showShortToast
 import com.paulrybitskyi.gamedge.common.ui.CommandsHandler
@@ -74,7 +68,6 @@ import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.Gam
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.companies.GameInfoCompanyUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetails
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.details.GameInfoDetailsUiModel
-import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoAnimatableHeader
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoHeader
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.GameInfoHeaderUiModel
 import com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header.artworks.GameInfoArtworkUiModel
@@ -246,7 +239,7 @@ private fun SuccessState(
 ) {
     val listState = rememberLazyListState()
 
-    GameInfoAnimatableHeader(
+    GameInfoHeader(
         headerInfo = gameInfo.headerModel,
         listState = listState,
         onArtworkClicked = onArtworkClicked,
@@ -318,24 +311,6 @@ private fun SuccessState(
                 )
             }
         }
-    }
-}
-
-private fun LazyListScope.headerItem(
-    model: GameInfoHeaderUiModel,
-    onArtworkClicked: (artworkIndex: Int) -> Unit,
-    onBackButtonClicked: () -> Unit,
-    onCoverClicked: () -> Unit,
-    onLikeButtonClicked: () -> Unit,
-) {
-    gameInfoItem(item = GameInfoItem.Header) {
-        GameInfoHeader(
-            headerInfo = model,
-            onArtworkClicked = onArtworkClicked,
-            onBackButtonClicked = onBackButtonClicked,
-            onCoverClicked = onCoverClicked,
-            onLikeButtonClicked = onLikeButtonClicked,
-        )
     }
 }
 
@@ -441,19 +416,18 @@ private enum class GameInfoItem(
     val key: Int,
     val contentType: Int,
 ) {
-    Header(key = 1, contentType = 1),
-    Videos(key = 2, contentType = 2),
-    Screenshots(key = 3, contentType = 3),
-    Summary(key = 4, contentType = 4),
-    Details(key = 5, contentType = 5),
-    Links(key = 6, contentType = 6),
-    Companies(key = 7, contentType = 7),
+    Videos(key = 1, contentType = 1),
+    Screenshots(key = 2, contentType = 2),
+    Summary(key = 3, contentType = 3),
+    Details(key = 4, contentType = 4),
+    Links(key = 5, contentType = 5),
+    Companies(key = 6, contentType = 6),
 
     // Both other & similar games is the same composable
     // filled with different data. That's why contentType
     // is the same for them two.
-    OtherCompanyGames(key = 8, contentType = 8),
-    SimilarGames(key = 9, contentType = 8),
+    OtherCompanyGames(key = 7, contentType = 7),
+    SimilarGames(key = 8, contentType = 7),
 }
 
 // TODO (02.01.2022): Currently, preview height is limited to 2k DP.
