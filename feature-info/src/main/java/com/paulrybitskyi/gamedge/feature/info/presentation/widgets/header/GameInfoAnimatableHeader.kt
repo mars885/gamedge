@@ -20,6 +20,7 @@ package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header
 
 import android.content.Context
 import android.content.res.ColorStateList
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.EaseInOut
 import androidx.compose.animation.core.tween
@@ -27,10 +28,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -39,6 +42,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -61,7 +65,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -86,7 +90,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.paulrybitskyi.commons.ktx.getCompatDrawable
 import com.paulrybitskyi.commons.ktx.onClick
 import com.paulrybitskyi.commons.ktx.postAction
-import com.paulrybitskyi.commons.ktx.statusBarHeight
 import com.paulrybitskyi.gamedge.common.ui.clickable
 import com.paulrybitskyi.gamedge.common.ui.theme.GamedgeTheme
 import com.paulrybitskyi.gamedge.common.ui.theme.Spaces
@@ -128,6 +131,8 @@ private const val ConstraintIdAgeRating = "age_rating"
 private const val ConstraintIdGameCategory = "game_category"
 
 private const val CustomAttributeTextColor = "text_color"
+
+private const val HeightUnspecified = -1f
 
 private val ScrimContentColor = Color.White
 
@@ -172,21 +177,17 @@ internal fun GameInfoAnimatableHeader(
     onLikeButtonClicked: () -> Unit,
     content: @Composable (Modifier) -> Unit,
 ) {
-    // minHeaderHeight = ArtworksHeightInCollapsedState +
-    val minPx = 228f
-    val maxPx = 555f
-
-
     val colors = GamedgeTheme.colors
     val density = LocalDensity.current
     val progress = rememberSaveable(saver = AnimatableSaver) {
         Animatable(State.Expanded.progress)
     }
-    var headerHeight by remember {
-        mutableFloatStateOf(
-            if (progress.value == State.Expanded.progress) maxPx else minPx
-        )
-    }
+
+    val artworksHeightInCollapsedState = calculateArtworksHeightInCollapsedState()
+    var minHeaderHeightInPx by rememberSaveable { mutableFloatStateOf(HeightUnspecified) }
+    var maxHeaderHeightInPx by rememberSaveable { mutableFloatStateOf(HeightUnspecified) }
+    var headerHeightInPx by rememberSaveable { mutableFloatStateOf(HeightUnspecified) }
+
     val coroutineScope = rememberCoroutineScope()
     val artworks = headerInfo.artworks
     val isPageIndicatorVisible = remember(artworks) { artworks.size > 1 }
@@ -221,6 +222,22 @@ internal fun GameInfoAnimatableHeader(
         }
     }
 
+    DisposableEffect(minHeaderHeightInPx, maxHeaderHeightInPx) {
+        val shouldSetInitialHeaderHeight = minHeaderHeightInPx != HeightUnspecified &&
+            maxHeaderHeightInPx != HeightUnspecified &&
+            headerHeightInPx == HeightUnspecified
+
+        if (shouldSetInitialHeaderHeight) {
+            headerHeightInPx = when (State.fromProgressOrNull(progress.value)) {
+                State.Expanded -> maxHeaderHeightInPx
+                State.Collapsed -> minHeaderHeightInPx
+                null -> error("Invalid progress value: ${progress.value}")
+            }
+        }
+
+        onDispose {}
+    }
+
     LaunchedEffect(Unit) {
         snapshotFlow { listState.isScrollInProgress }
             .distinctUntilChanged()
@@ -237,10 +254,10 @@ internal fun GameInfoAnimatableHeader(
                             targetValue = newState.progress,
                             animationSpec = tween(durationMillis = duration, easing = EaseInOut),
                             block = {
-                                headerHeight = calculateHeaderHeightGivenProgress(
+                                headerHeightInPx = calculateHeaderHeightGivenProgress(
                                     progress = value,
-                                    minHeaderHeight = minPx,
-                                    maxHeaderHeight = maxPx,
+                                    minHeaderHeight = minHeaderHeightInPx,
+                                    maxHeaderHeight = maxHeaderHeightInPx,
                                 )
                             }
                         )
@@ -249,43 +266,12 @@ internal fun GameInfoAnimatableHeader(
             }
     }
 
-    val nestedConnection = remember(listState, coroutineScope) {
+    val nestedConnection = remember(listState) {
         object : NestedScrollConnection {
 
-            private fun consume(available: Offset): Offset {
-                val height = headerHeight
-
-                if (height + available.y > maxPx) {
-                    headerHeight = maxPx
-                    updateProgress()
-                    return Offset(0f, maxPx - height)
-                }
-
-                if (height + available.y < minPx) {
-                    headerHeight = minPx
-                    updateProgress()
-                    return Offset(0f, minPx - height)
-                }
-
-                headerHeight += available.y / 2
-                updateProgress()
-
-                return Offset(0f, available.y)
-            }
-
-            private fun updateProgress() {
-                val newProgress = calculateProgressGivenHeaderHeight(
-                    headerHeight = headerHeight,
-                    minHeaderHeight = minPx,
-                    maxHeaderHeight = maxPx,
-                )
-
-                coroutineScope.launch {
-                    progress.snapTo(newProgress)
-                }
-            }
-
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                // If the list can scroll backward, then we need to allow it to consume the delta.
+                // Otherwise, we consume it to update the header height & progress.
                 return if (listState.canScrollBackward) {
                     Offset.Zero
                 } else {
@@ -294,10 +280,45 @@ internal fun GameInfoAnimatableHeader(
             }
 
             override fun onPostScroll(consumed: Offset, available: Offset, source: NestedScrollSource): Offset {
-                return if (available.y > 0 && !listState.canScrollBackward) {
+                // We need to handle the onPostScroll in order to consume the leftover delta after a user
+                // flings a list from the bottom to the top so that the header could expand automatically.
+                return if (!listState.canScrollBackward && available.y > 0) {
                     consume(available)
                 } else {
                     Offset.Zero
+                }
+            }
+
+            private fun consume(available: Offset): Offset {
+                val currentHeight = headerHeightInPx
+
+                return when {
+                    currentHeight + available.y > maxHeaderHeightInPx -> {
+                        onUpdateValues(maxHeaderHeightInPx)
+                        Offset(0f, maxHeaderHeightInPx - currentHeight)
+                    }
+                    currentHeight + available.y < minHeaderHeightInPx -> {
+                        onUpdateValues(minHeaderHeightInPx)
+                        Offset(0f, minHeaderHeightInPx - currentHeight)
+                    }
+                    else -> {
+                        onUpdateValues(headerHeightInPx + available.y)
+                        Offset(0f, available.y)
+                    }
+                }
+            }
+
+            private fun onUpdateValues(newHeaderHeight: Float) {
+                headerHeightInPx = newHeaderHeight
+
+                val newProgress = calculateProgressGivenHeaderHeight(
+                    headerHeight = newHeaderHeight,
+                    minHeaderHeight = minHeaderHeightInPx,
+                    maxHeaderHeight = maxHeaderHeightInPx,
+                )
+
+                coroutineScope.launch {
+                    progress.snapTo(newProgress)
                 }
             }
         }
@@ -308,11 +329,19 @@ internal fun GameInfoAnimatableHeader(
             motionScene = rememberMotionScene(
                 hasDefaultPlaceholderArtwork = hasDefaultPlaceholderArtwork,
                 isSecondTitleVisible = isSecondTitleVisible,
+                artworksHeightInCollapsedState = artworksHeightInCollapsedState,
             ),
             progress = progress.value,
             modifier = Modifier
                 .fillMaxWidth()
-                .drawOnTop(),
+                .drawOnTop()
+                .onGloballyPositioned { coordinates ->
+                    val state = State.fromProgressOrNull(progress.value)
+
+                    if (state == State.Expanded && maxHeaderHeightInPx == HeightUnspecified) {
+                        maxHeaderHeightInPx = coordinates.size.height.toFloat()
+                    }
+                },
             transitionName = TransitionName,
             invalidationStrategy = remember {
                 InvalidationStrategy(
@@ -501,37 +530,34 @@ internal fun GameInfoAnimatableHeader(
                 )
             }
 
-            val infoItemModifier = Modifier
-                .drawOnTop()
-                .padding(vertical = GamedgeTheme.spaces.spacing_3_5)
-
-            Info(
-                icon = painterResource(CoreR.drawable.star_circle_outline),
+            InfoItem(
+                iconId = CoreR.drawable.star_circle_outline,
                 title = headerInfo.rating,
-                modifier = infoItemModifier.layoutId(ConstraintIdRating),
-                iconSize = InfoIconSize,
-                titleTextStyle = GamedgeTheme.typography.caption,
+                modifier = Modifier
+                    .layoutId(ConstraintIdRating)
+                    // Grabbing the height of any info item here to calculate the min header height
+                    .onGloballyPositioned { coordinates ->
+                        if (minHeaderHeightInPx == HeightUnspecified) {
+                            minHeaderHeightInPx = with(density) {
+                                artworksHeightInCollapsedState.roundToPx() + coordinates.size.height.toFloat()
+                            }
+                        }
+                    },
             )
-            Info(
-                icon = painterResource(CoreR.drawable.account_heart_outline),
+            InfoItem(
+                iconId = CoreR.drawable.account_heart_outline,
                 title = headerInfo.likeCount,
-                modifier = infoItemModifier.layoutId(ConstraintIdLikeCount),
-                iconSize = InfoIconSize,
-                titleTextStyle = GamedgeTheme.typography.caption,
+                modifier = Modifier.layoutId(ConstraintIdLikeCount),
             )
-            Info(
-                icon = painterResource(CoreR.drawable.age_rating_outline),
+            InfoItem(
+                iconId = CoreR.drawable.age_rating_outline,
                 title = headerInfo.ageRating,
-                modifier = infoItemModifier.layoutId(ConstraintIdAgeRating),
-                iconSize = InfoIconSize,
-                titleTextStyle = GamedgeTheme.typography.caption,
+                modifier = Modifier.layoutId(ConstraintIdAgeRating),
             )
-            Info(
-                icon = painterResource(CoreR.drawable.shape_outline),
+            InfoItem(
+                iconId = CoreR.drawable.shape_outline,
                 title = headerInfo.gameCategory,
-                modifier = infoItemModifier.layoutId(ConstraintIdGameCategory),
-                iconSize = InfoIconSize,
-                titleTextStyle = GamedgeTheme.typography.caption,
+                modifier = Modifier.layoutId(ConstraintIdGameCategory),
             )
         }
 
@@ -543,9 +569,9 @@ internal fun GameInfoAnimatableHeader(
 private fun rememberMotionScene(
     hasDefaultPlaceholderArtwork: Boolean,
     isSecondTitleVisible: Boolean,
+    artworksHeightInCollapsedState: Dp,
 ): MotionScene {
     val spaces = GamedgeTheme.spaces
-    val artworksHeightInCollapsedState = calculateArtworksHeightInCollapsedState()
     val statusBarHeight = calculateStatusBarHeightInDp()
     val firstTitleColorInExpandedState = GamedgeTheme.colors.onPrimary
     val firstTitleColorInCollapsedState = ScrimContentColor
@@ -975,6 +1001,23 @@ private class LikeButton(context: Context) : FloatingActionButton(context) {
         get() = drawableState.contains(STATE_CHECKED_ON)
 }
 
+@Composable
+private fun InfoItem(
+    @DrawableRes iconId: Int,
+    title: String,
+    modifier: Modifier,
+) {
+    Info(
+        icon = painterResource(iconId),
+        title = title,
+        modifier = modifier
+            .padding(vertical = GamedgeTheme.spaces.spacing_3_5)
+            .drawOnTop(),
+        iconSize = InfoIconSize,
+        titleTextStyle = GamedgeTheme.typography.caption,
+    )
+}
+
 private var ConstrainScope.isVisible: Boolean
     set(isVisible) {
         visibility = if (isVisible) Visibility.Visible else Visibility.Gone
@@ -1003,8 +1046,8 @@ private fun Modifier.drawOnTop(): Modifier {
 /**
  * Calculates a duration for the auto transition in the following way:
  * - for progress that is zero, the duration is minimal (0f -> min)
- * - for progress that is half way, the duration is maximal (0.5f - max)
- * - for progress that is one, the duration is minimal (1f - min)
+ * - for progress that is half way, the duration is maximal (0.5f -> max)
+ * - for progress that is one, the duration is minimal (1f -> min)
  **/
 private fun calculateAutoTransitionDuration(progress: Float): Int {
     val minDuration = AutoTransitionAnimationDurationMin
@@ -1036,7 +1079,7 @@ private fun calculateArtworksHeightInCollapsedState(): Dp {
 
 @Composable
 private fun calculateStatusBarHeightInDp(): Dp {
-    val statusBarHeight = LocalContext.current.statusBarHeight
+    val density = LocalDensity.current
 
-    return with(LocalDensity.current) { statusBarHeight.toDp() }
+    return with(density) { WindowInsets.statusBars.getTop(density).toDp() }
 }
