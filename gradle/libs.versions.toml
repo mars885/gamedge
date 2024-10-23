@@ -37,7 +37,7 @@ composeHilt = "1.2.0"
 
 # Google
 materialComponents = "1.12.0"
-protobuf = "4.28.2"
+protobuf = "4.28.3"
 
 # Square
 javaPoet = "1.13.0"
