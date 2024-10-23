@@ -13,7 +13,7 @@ The aim of this project is to showcase the latest trends in Android development 
 
 ## Contents
 * [Demonstration](#demonstration)
-  * [Videos](#videos)
+  * [Video](#video)
   * [Screenshots](#screenshots)
 * [Tech Stack](#tech-stack)
 * [Architecture](#architecture)
@@ -27,26 +27,9 @@ The aim of this project is to showcase the latest trends in Android development 
 
 ## Demonstration
 
-### Videos
+### Video
 
-<details>
-<summary><b>Demo 1</b></summary>
-</p>
-
-https://user-images.githubusercontent.com/14782808/111520186-88671800-8760-11eb-8995-8e45a5cd9213.mp4
-</details>
-<details>
-<summary><b>Demo 2</b></summary>
-</p>
-
-https://user-images.githubusercontent.com/14782808/111520260-9b79e800-8760-11eb-9665-1062ed2b2c24.mp4
-</details>
-<details>
-<summary><b>Demo 3</b></summary>
-</p>
-
-https://user-images.githubusercontent.com/14782808/111520365-b187a880-8760-11eb-9dbe-0ffc44635ef8.mp4
-</details>
+https://github.com/user-attachments/assets/a8cde6c6-1e89-4986-a5d7-3dc98cb014c5
 
 ### Screenshots
 
