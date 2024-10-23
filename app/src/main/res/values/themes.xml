@@ -20,6 +20,6 @@
     <style name="GamedgeThemeSplash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/light_colorPrimary</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_dark</item>
-        <item name="postSplashScreenTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
+        <item name="postSplashScreenTheme">@android:style/Theme.Material.Light.NoActionBar</item>
     </style>
 </resources>

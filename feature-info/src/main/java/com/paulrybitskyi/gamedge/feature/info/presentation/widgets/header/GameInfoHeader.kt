@@ -21,6 +21,7 @@ package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header
 import android.content.Context
 import android.content.res.ColorStateList
 import androidx.annotation.DrawableRes
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.EaseInOut
 import androidx.compose.animation.core.tween
@@ -982,7 +983,15 @@ private fun MotionSceneScope.constructTransition(
     }
 }
 
-private class LikeButton(context: Context) : FloatingActionButton(context) {
+private class LikeButton(context: Context) : FloatingActionButton(
+    // Have to wrap the context in the MaterialComponents theme, because otherwise
+    // the view is going to crash on initialization requesting to be wrapped in either
+    // Theme.AppCompat or Theme.MaterialComponents.
+    ContextThemeWrapper(
+        context,
+        com.google.android.material.R.style.Theme_MaterialComponents,
+    ),
+) {
 
     private companion object {
         const val STATE_CHECKED = android.R.attr.state_checked
