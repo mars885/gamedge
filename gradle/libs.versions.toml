@@ -30,7 +30,7 @@ dataStore = "1.1.1"
 viewModel = "2.8.5" # to be deleted when the linked issue at use site is fixed
 
 # Compose
-composeBom = "2024.09.02"
+composeBom = "2024.10.00"
 navigation = "2.8.3"
 constraintLayout = "1.1.0-rc01"
 composeHilt = "1.2.0"
