@@ -6,13 +6,13 @@ appVersionCode = "1"
 appVersionName = "1.0.0"
 jvmToolchain = "17"
 
-kotlin = "2.0.20"
+kotlin = "2.0.21"
 daggerHilt = "2.52"
 
 # Plugins
 androidPlugin = "8.6.1"
 protobufPlugin = "0.9.4"
-kspPlugin = "2.0.20-1.0.25"
+kspPlugin = "2.0.21-1.0.25"
 gradleVersionsPlugin = "0.51.0"
 detektPlugin = "1.23.7"
 ktlintPlugin = "12.1.1"
@@ -22,7 +22,7 @@ coroutines = "1.9.0"
 serialization = "1.7.3"
 
 # AndroidX
-activity = "1.9.2"
+activity = "1.9.3"
 splash = "1.0.1"
 browser = "1.8.0"
 room = "2.6.1"
@@ -30,14 +30,14 @@ dataStore = "1.1.1"
 viewModel = "2.8.5" # to be deleted when the linked issue at use site is fixed
 
 # Compose
-composeBom = "2024.09.02"
-navigation = "2.8.1"
-constraintLayout = "1.1.0-beta01"
+composeBom = "2024.10.00"
+navigation = "2.8.3"
+constraintLayout = "1.1.0-rc01"
 composeHilt = "1.2.0"
 
 # Google
 materialComponents = "1.12.0"
-protobuf = "4.28.2"
+protobuf = "4.28.3"
 
 # Square
 javaPoet = "1.13.0"
@@ -63,8 +63,8 @@ ktlint = "1.3.1"
 jUnit = "4.13.2"
 jUnitExt = "1.2.1"
 truth = "1.4.4"
-mockk = "1.13.12"
-turbine = "1.1.0"
+mockk = "1.13.13"
+turbine = "1.2.0"
 testRunner = "1.6.2"
 archCore = "2.2.0"
 mockWebServer = "4.12.0"
