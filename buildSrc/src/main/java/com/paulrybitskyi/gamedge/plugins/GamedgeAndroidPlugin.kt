@@ -30,6 +30,7 @@ class GamedgeAndroidPlugin : Plugin<Project> {
     private companion object {
         const val APPLICATION_ID = "com.paulrybitskyi.gamedge"
         const val BUILD_TYPE_DEBUG = "debug"
+        const val BUILD_TYPE_DEBUG_SUFFIX = ".debug"
         const val BUILD_TYPE_RELEASE = "release"
         const val SIGNING_CONFIG_RELEASE = "release"
         const val KEYSTORE_FILE_NAME = "keystore.properties"
@@ -131,6 +132,9 @@ class GamedgeAndroidPlugin : Plugin<Project> {
                 }
 
                 buildTypes {
+                    getByName(BUILD_TYPE_DEBUG) {
+                        applicationIdSuffix = BUILD_TYPE_DEBUG_SUFFIX
+                    }
                     getByName(BUILD_TYPE_RELEASE) {
                         isMinifyEnabled = true
                         signingConfig = signingConfigs.getByName(SIGNING_CONFIG_RELEASE)
