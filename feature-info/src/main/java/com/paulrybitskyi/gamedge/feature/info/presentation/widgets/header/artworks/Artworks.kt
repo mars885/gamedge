@@ -92,9 +92,7 @@ private fun Artwork(
 private fun ArtworksPreview() {
     GamedgeTheme {
         Artworks(
-            artworks = listOf(
-                GameInfoArtworkUiModel.DefaultImage,
-            ),
+            artworks = listOf(GameInfoArtworkUiModel.DefaultImage),
             isScrollingEnabled = true,
             modifier = Modifier,
             onArtworkChanged = {},

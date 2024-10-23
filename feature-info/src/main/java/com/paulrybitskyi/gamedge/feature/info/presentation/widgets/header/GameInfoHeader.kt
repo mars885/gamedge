@@ -146,7 +146,7 @@ private const val FirstTitleScaleExpanded = 1f
 private const val FirstTitleScaleCollapsed = 1.1f
 private const val LikeButtonScaleCollapsed = 0f
 
-private val ArtworksHeightExpanded = 240.dp
+private val ArtworksHeightExpanded = 246.dp
 private val ArtworksHeightCollapsed = 56.dp
 
 private val PageIndicatorDeltaXCollapsed = 60.dp
