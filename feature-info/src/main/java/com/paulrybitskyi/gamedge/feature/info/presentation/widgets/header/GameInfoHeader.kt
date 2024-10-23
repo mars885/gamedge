@@ -800,7 +800,8 @@ private fun MotionSceneScope.constructCollapsedConstraintSet(
     val likeBtnMarginEnd = spaces.spacing_2_5
     val textHorizontalMargin = spaces.spacing_3_5
     val firstTitleMarginStart = spaces.spacing_7_5
-    val firstTitleMarginEnd = spaces.spacing_6_0
+    // Have to set a bigger end margin because of the scaling applied
+    val firstTitleMarginEnd = spaces.spacing_9_0
     val releaseDateMarginTop = spaces.spacing_2_5
 
     return ConstraintSet {
