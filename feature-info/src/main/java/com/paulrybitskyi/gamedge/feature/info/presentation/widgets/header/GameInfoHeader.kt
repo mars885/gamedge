@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("LongMethod")
+@file:Suppress("LongMethod", "MagicNumber", "LongParameterList")
 
 package com.paulrybitskyi.gamedge.feature.info.presentation.widgets.header
 
@@ -155,7 +155,8 @@ private val CoverDeltaYCollapsed = (-40).dp
 
 private enum class State(val progress: Float) {
     Expanded(progress = 0f),
-    Collapsed(progress = 1f);
+    Collapsed(progress = 1f),
+    ;
 
     companion object {
 
@@ -171,6 +172,7 @@ private val AnimatableSaver = Saver(
 )
 
 @Composable
+@Suppress("CyclomaticComplexMethod")
 internal fun GameInfoHeader(
     headerInfo: GameInfoHeaderUiModel,
     listState: LazyListState,
@@ -262,7 +264,7 @@ internal fun GameInfoHeader(
                                     minHeaderHeight = minHeaderHeightInPx,
                                     maxHeaderHeight = maxHeaderHeightInPx,
                                 )
-                            }
+                            },
                         )
                     }
                 }
@@ -352,7 +354,7 @@ internal fun GameInfoHeader(
                         headerInfo
                     },
                 )
-            }
+            },
         ) {
             Artworks(
                 artworks = artworks,
@@ -643,7 +645,7 @@ private class ConstraintLayoutRefs(
     val ageRating: ConstrainedLayoutReference,
     val gameCategory: ConstrainedLayoutReference,
 ) {
-    constructor(motionSceneScope: MotionSceneScope): this(
+    constructor(motionSceneScope: MotionSceneScope) : this(
         artworks = motionSceneScope.createRefFor(ConstraintIdArtworks),
         artworksScrim = motionSceneScope.createRefFor(ConstraintIdArtworksScrim),
         backButton = motionSceneScope.createRefFor(ConstraintIdBackButton),
