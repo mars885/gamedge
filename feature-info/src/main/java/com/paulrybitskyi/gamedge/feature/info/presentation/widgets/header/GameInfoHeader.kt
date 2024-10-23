@@ -37,6 +37,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -71,6 +72,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -1091,4 +1093,31 @@ private fun calculateStatusBarHeightInDp(): Dp {
     val density = LocalDensity.current
 
     return with(density) { WindowInsets.statusBars.getTop(density).toDp() }
+}
+
+@PreviewLightDark
+@Composable
+private fun GameInfoHeaderPreview() {
+    GamedgeTheme {
+        GameInfoHeader(
+            headerInfo = GameInfoHeaderUiModel(
+                artworks = listOf(GameInfoArtworkUiModel.DefaultImage),
+                isLiked = true,
+                coverImageUrl = null,
+                title = "God of War Ragnarok",
+                releaseDate = "Nov 09, 2022 (a year ago)",
+                developerName = "SIE Santa Monica Studio",
+                rating = "93%",
+                likeCount = "77",
+                ageRating = "PEGI-18",
+                gameCategory = "Main",
+            ),
+            listState = rememberLazyListState(),
+            onArtworkClicked = {},
+            onBackButtonClicked = {},
+            onCoverClicked = {},
+            onLikeButtonClicked = {},
+            content = {},
+        )
+    }
 }
