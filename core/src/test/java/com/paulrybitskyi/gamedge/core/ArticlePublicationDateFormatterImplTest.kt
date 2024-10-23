@@ -17,6 +17,7 @@
 package com.paulrybitskyi.gamedge.core
 
 import com.google.common.truth.Truth.assertThat
+import com.paulrybitskyi.gamedge.common.testing.FakeLocaleProvider
 import com.paulrybitskyi.gamedge.core.formatters.ArticlePublicationDateFormatterImpl
 import com.paulrybitskyi.gamedge.core.formatters.RelativeDateFormatter
 import com.paulrybitskyi.gamedge.core.providers.TimeFormat
@@ -50,6 +51,7 @@ internal class ArticlePublicationDateFormatterImplTest {
             relativeDateFormatter = relativeDateFormatter,
             timeProvider = timeProvider,
             timeFormatProvider = timeFormatProvider,
+            localeProvider = FakeLocaleProvider(),
         )
 
         every { relativeDateFormatter.formatRelativeDate(any()) } returns RELATIVE_DATE

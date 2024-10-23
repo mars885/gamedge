@@ -16,6 +16,7 @@
 
 package com.paulrybitskyi.gamedge.core.formatters
 
+import com.paulrybitskyi.gamedge.core.providers.LocaleProvider
 import com.paulrybitskyi.gamedge.core.providers.TimeFormat
 import com.paulrybitskyi.gamedge.core.providers.TimeFormatProvider
 import com.paulrybitskyi.gamedge.core.providers.TimeProvider
@@ -36,6 +37,7 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
     private val relativeDateFormatter: RelativeDateFormatter,
     private val timeProvider: TimeProvider,
     private val timeFormatProvider: TimeFormatProvider,
+    private val localeProvider: LocaleProvider,
 ) : ArticlePublicationDateFormatter {
 
     private companion object {
@@ -68,7 +70,9 @@ internal class ArticlePublicationDateFormatterImpl @Inject constructor(
 
     private fun formatAsAbsoluteDate(dateTime: LocalDateTime): String {
         val pattern = getAbsoluteDatePattern(dateTime)
-        val formattedDate = DateTimeFormatter.ofPattern(pattern).format(dateTime)
+        val formattedDate = DateTimeFormatter
+            .ofPattern(pattern, localeProvider.getLocale())
+            .format(dateTime)
 
         return formattedDate
     }

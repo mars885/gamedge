@@ -20,6 +20,7 @@ import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 import com.paulrybitskyi.gamedge.common.domain.games.entities.ReleaseDate
 import com.paulrybitskyi.gamedge.common.domain.games.entities.ReleaseDateCategory
 import com.paulrybitskyi.gamedge.core.R
+import com.paulrybitskyi.gamedge.core.providers.LocaleProvider
 import com.paulrybitskyi.gamedge.core.providers.StringProvider
 import com.paulrybitskyi.hiltbinder.BindType
 import java.time.Instant
@@ -36,6 +37,7 @@ interface GameReleaseDateFormatter {
 internal class GameReleaseDateFormatterImpl @Inject constructor(
     private val stringProvider: StringProvider,
     private val relativeDateFormatter: RelativeDateFormatter,
+    private val localeProvider: LocaleProvider,
 ) : GameReleaseDateFormatter {
 
     private companion object {
@@ -76,7 +78,7 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
     private fun ReleaseDate.formatCompleteDate(): String {
         val releaseLocalDateTime = toLocalDateTime()
         val formattedReleaseDate = DateTimeFormatter
-            .ofPattern(COMPLETE_DATE_FORMATTING_PATTERN)
+            .ofPattern(COMPLETE_DATE_FORMATTING_PATTERN, localeProvider.getLocale())
             .format(releaseLocalDateTime)
 
         return buildString {
@@ -89,7 +91,7 @@ internal class GameReleaseDateFormatterImpl @Inject constructor(
 
     private fun ReleaseDate.formatDaylessDate(): String {
         return DateTimeFormatter
-            .ofPattern(DAYLESS_DATE_FORMATTING_PATTERN)
+            .ofPattern(DAYLESS_DATE_FORMATTING_PATTERN, localeProvider.getLocale())
             .format(toLocalDateTime())
     }
 
