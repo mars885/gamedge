@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -32,6 +34,7 @@ import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -39,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -233,86 +237,80 @@ private fun SuccessState(
     onCompanyClicked: (GameInfoCompanyUiModel) -> Unit,
     onRelatedGameClicked: (GameInfoRelatedGameUiModel) -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = contentPadding,
-        verticalArrangement = Arrangement.spacedBy(GamedgeTheme.spaces.spacing_3_5),
-    ) {
-        headerItem(
-            model = gameInfo.headerModel,
-            onArtworkClicked = onArtworkClicked,
-            onBackButtonClicked = onBackButtonClicked,
-            onCoverClicked = onCoverClicked,
-            onLikeButtonClicked = onLikeButtonClicked,
-        )
+    val listState = rememberLazyListState()
 
-        if (gameInfo.hasVideos) {
-            videosItem(
-                videos = gameInfo.videoModels,
-                onVideoClicked = onVideoClicked,
-            )
+    GameInfoHeader(
+        headerInfo = gameInfo.headerModel,
+        listState = listState,
+        onArtworkClicked = onArtworkClicked,
+        onBackButtonClicked = onBackButtonClicked,
+        onCoverClicked = onCoverClicked,
+        onLikeButtonClicked = onLikeButtonClicked,
+    ) { modifier ->
+        val layoutDirection = LocalLayoutDirection.current
+        val spacing = GamedgeTheme.spaces.spacing_3_5
+
+        LazyColumn(
+            modifier = modifier,
+            state = listState,
+            contentPadding = PaddingValues(
+                start = contentPadding.calculateStartPadding(layoutDirection),
+                top = contentPadding.calculateTopPadding().plus(spacing),
+                end = contentPadding.calculateEndPadding(layoutDirection),
+                bottom = contentPadding.calculateBottomPadding(),
+            ),
+            verticalArrangement = Arrangement.spacedBy(spacing),
+        ) {
+            if (gameInfo.hasVideos) {
+                videosItem(
+                    videos = gameInfo.videoModels,
+                    onVideoClicked = onVideoClicked,
+                )
+            }
+
+            if (gameInfo.hasScreenshots) {
+                screenshotsItem(
+                    screenshots = gameInfo.screenshotModels,
+                    onScreenshotClicked = onScreenshotClicked,
+                )
+            }
+
+            if (gameInfo.hasSummary) {
+                summaryItem(model = checkNotNull(gameInfo.summary))
+            }
+
+            if (gameInfo.hasDetails) {
+                detailsItem(model = checkNotNull(gameInfo.detailsModel))
+            }
+
+            if (gameInfo.hasLinks) {
+                linksItem(
+                    model = gameInfo.linkModels,
+                    onLinkClicked = onLinkClicked,
+                )
+            }
+
+            if (gameInfo.hasCompanies) {
+                companiesItem(
+                    model = gameInfo.companyModels,
+                    onCompanyClicked = onCompanyClicked,
+                )
+            }
+
+            if (gameInfo.hasOtherCompanyGames) {
+                relatedGamesItem(
+                    model = checkNotNull(gameInfo.otherCompanyGames),
+                    onGameClicked = onRelatedGameClicked,
+                )
+            }
+
+            if (gameInfo.hasSimilarGames) {
+                relatedGamesItem(
+                    model = checkNotNull(gameInfo.similarGames),
+                    onGameClicked = onRelatedGameClicked,
+                )
+            }
         }
-
-        if (gameInfo.hasScreenshots) {
-            screenshotsItem(
-                screenshots = gameInfo.screenshotModels,
-                onScreenshotClicked = onScreenshotClicked,
-            )
-        }
-
-        if (gameInfo.hasSummary) {
-            summaryItem(model = checkNotNull(gameInfo.summary))
-        }
-
-        if (gameInfo.hasDetails) {
-            detailsItem(model = checkNotNull(gameInfo.detailsModel))
-        }
-
-        if (gameInfo.hasLinks) {
-            linksItem(
-                model = gameInfo.linkModels,
-                onLinkClicked = onLinkClicked,
-            )
-        }
-
-        if (gameInfo.hasCompanies) {
-            companiesItem(
-                model = gameInfo.companyModels,
-                onCompanyClicked = onCompanyClicked,
-            )
-        }
-
-        if (gameInfo.hasOtherCompanyGames) {
-            relatedGamesItem(
-                model = checkNotNull(gameInfo.otherCompanyGames),
-                onGameClicked = onRelatedGameClicked,
-            )
-        }
-
-        if (gameInfo.hasSimilarGames) {
-            relatedGamesItem(
-                model = checkNotNull(gameInfo.similarGames),
-                onGameClicked = onRelatedGameClicked,
-            )
-        }
-    }
-}
-
-private fun LazyListScope.headerItem(
-    model: GameInfoHeaderUiModel,
-    onArtworkClicked: (artworkIndex: Int) -> Unit,
-    onBackButtonClicked: () -> Unit,
-    onCoverClicked: () -> Unit,
-    onLikeButtonClicked: () -> Unit,
-) {
-    gameInfoItem(item = GameInfoItem.Header) {
-        GameInfoHeader(
-            headerInfo = model,
-            onArtworkClicked = onArtworkClicked,
-            onBackButtonClicked = onBackButtonClicked,
-            onCoverClicked = onCoverClicked,
-            onLikeButtonClicked = onLikeButtonClicked,
-        )
     }
 }
 
@@ -418,19 +416,18 @@ private enum class GameInfoItem(
     val key: Int,
     val contentType: Int,
 ) {
-    Header(key = 1, contentType = 1),
-    Videos(key = 2, contentType = 2),
-    Screenshots(key = 3, contentType = 3),
-    Summary(key = 4, contentType = 4),
-    Details(key = 5, contentType = 5),
-    Links(key = 6, contentType = 6),
-    Companies(key = 7, contentType = 7),
+    Videos(key = 1, contentType = 1),
+    Screenshots(key = 2, contentType = 2),
+    Summary(key = 3, contentType = 3),
+    Details(key = 4, contentType = 4),
+    Links(key = 5, contentType = 5),
+    Companies(key = 6, contentType = 6),
 
     // Both other & similar games is the same composable
     // filled with different data. That's why contentType
     // is the same for them two.
-    OtherCompanyGames(key = 8, contentType = 8),
-    SimilarGames(key = 9, contentType = 8),
+    OtherCompanyGames(key = 7, contentType = 7),
+    SimilarGames(key = 8, contentType = 7),
 }
 
 // TODO (02.01.2022): Currently, preview height is limited to 2k DP.

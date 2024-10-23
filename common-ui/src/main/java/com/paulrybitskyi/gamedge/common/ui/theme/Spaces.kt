@@ -42,6 +42,9 @@ class Spaces(
     spacing_6_5: Dp = 26.dp,
     spacing_7_0: Dp = 28.dp,
     spacing_7_5: Dp = 30.dp,
+    spacing_8_0: Dp = 32.dp,
+    spacing_8_5: Dp = 34.dp,
+    spacing_9_0: Dp = 36.dp,
 ) {
     var spacing_0_5 by mutableStateOf(spacing_0_5)
         private set
@@ -73,6 +76,12 @@ class Spaces(
         private set
     var spacing_7_5 by mutableStateOf(spacing_7_5)
         private set
+    var spacing_8_0 by mutableStateOf(spacing_8_0)
+        private set
+    var spacing_8_5 by mutableStateOf(spacing_8_5)
+        private set
+    var spacing_9_0 by mutableStateOf(spacing_9_0)
+        private set
 
     override fun toString(): String {
         return "Spaces(" +
@@ -90,7 +99,10 @@ class Spaces(
             "spacing_6_0=$spacing_6_0, " +
             "spacing_6_5=$spacing_6_5, " +
             "spacing_7_0=$spacing_7_0, " +
-            "spacing_7_5=$spacing_7_5" +
+            "spacing_7_5=$spacing_7_5, " +
+            "spacing_8_0=$spacing_8_0, " +
+            "spacing_8_5=$spacing_8_5, " +
+            "spacing_9_0=$spacing_9_0" +
             ")"
     }
 }
