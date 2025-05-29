@@ -38,6 +38,6 @@ data class ApiWebsite(
     object Schema {
         const val ID = "id"
         const val URL = "url"
-        const val CATEGORY = "category"
+        const val CATEGORY = "type"
     }
 }

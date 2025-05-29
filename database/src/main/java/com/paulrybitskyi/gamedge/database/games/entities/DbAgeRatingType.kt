@@ -18,11 +18,6 @@ package com.paulrybitskyi.gamedge.database.games.entities
 
 enum class DbAgeRatingType {
     UNKNOWN,
-    THREE,
-    SEVEN,
-    TWELVE,
-    SIXTEEN,
-    EIGHTEEN,
     RP,
     EC,
     E,
@@ -30,4 +25,9 @@ enum class DbAgeRatingType {
     T,
     M,
     AO,
+    THREE,
+    SEVEN,
+    TWELVE,
+    SIXTEEN,
+    EIGHTEEN,
 }

@@ -38,6 +38,6 @@ data class ApiReleaseDate(
     object Schema {
         const val DATE = "date"
         const val YEAR = "y"
-        const val CATEGORY = "category"
+        const val CATEGORY = "date_format"
     }
 }

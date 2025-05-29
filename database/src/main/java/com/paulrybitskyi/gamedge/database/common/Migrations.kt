@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
+@file:Suppress("ClassName")
+
 package com.paulrybitskyi.gamedge.database.common
 
+import androidx.room.DeleteColumn
+import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
@@ -50,6 +54,9 @@ private val MIGRATION_FROM_1_TO_2 = object : Migration(1, 2) {
     }
 }
 
-internal val MIGRATIONS = arrayOf<Migration>(
+@DeleteColumn(tableName = "games", columnName = "follower_count")
+internal class MIGRATION_FROM_2_TO_3_SPEC : AutoMigrationSpec
+
+internal val MANUAL_MIGRATIONS = arrayOf<Migration>(
     MIGRATION_FROM_1_TO_2,
 )

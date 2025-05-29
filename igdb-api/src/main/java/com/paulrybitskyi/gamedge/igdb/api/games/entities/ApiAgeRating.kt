@@ -33,7 +33,7 @@ data class ApiAgeRating(
 ) {
 
     object Schema {
-        const val CATEGORY = "category"
-        const val RATING = "rating"
+        const val CATEGORY = "organization"
+        const val RATING = "rating_category"
     }
 }
