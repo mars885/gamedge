@@ -140,7 +140,7 @@ internal class GamesServiceTest {
                         [
                             {
                                 "id": 144133,
-                                "category": 0,
+                                "game_type": 0,
                                 "first_release_date": 1614556800,
                                 "hypes": 1,
                                 "name": "Gloam",
@@ -149,7 +149,7 @@ internal class GamesServiceTest {
                             },
                             {
                                 "id": 126356,
-                                "category": 0,
+                                "game_type": 0,
                                 "first_release_date": 1613692800,
                                 "name": "Survival Vacancy",
                                 "rating": 70.0,
