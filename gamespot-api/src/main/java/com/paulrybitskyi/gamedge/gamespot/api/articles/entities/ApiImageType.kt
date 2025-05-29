@@ -36,7 +36,7 @@ enum class ApiImageType(val rawType: String) {
     internal companion object {
 
         fun String.asImageType(): ApiImageType {
-            return values().find { it.rawType == this } ?: UNKNOWN
+            return entries.find { it.rawType == this } ?: UNKNOWN
         }
     }
 }

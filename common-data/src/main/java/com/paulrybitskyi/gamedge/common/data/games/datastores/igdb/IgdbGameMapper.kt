@@ -57,7 +57,6 @@ internal class IgdbGameMapper @Inject constructor() {
     fun mapToDomainGame(apiGame: ApiGame): Game {
         return Game(
             id = apiGame.id,
-            followerCount = apiGame.followerCount,
             hypeCount = apiGame.hypeCount,
             releaseDate = apiGame.releaseDate,
             criticsRating = apiGame.criticsRating,

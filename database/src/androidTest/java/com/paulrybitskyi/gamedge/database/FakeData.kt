@@ -39,7 +39,6 @@ internal val DB_ARTICLES = listOf(
 
 internal val DB_GAME = DbGame(
     id = 1,
-    followerCount = null,
     hypeCount = null,
     releaseDate = null,
     criticsRating = null,

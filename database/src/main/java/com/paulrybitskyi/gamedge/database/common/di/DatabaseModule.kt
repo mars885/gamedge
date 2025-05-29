@@ -20,7 +20,7 @@ import android.content.Context
 import androidx.room.Room
 import com.paulrybitskyi.gamedge.database.Constants
 import com.paulrybitskyi.gamedge.database.GamedgeDatabase
-import com.paulrybitskyi.gamedge.database.common.MIGRATIONS
+import com.paulrybitskyi.gamedge.database.common.MANUAL_MIGRATIONS
 import com.paulrybitskyi.gamedge.database.common.RoomTypeConverter
 import com.paulrybitskyi.gamedge.database.common.addTypeConverters
 import dagger.Module
@@ -47,7 +47,7 @@ internal object DatabaseModule {
             Constants.DATABASE_NAME,
         )
         .addTypeConverters(typeConverters)
-        .addMigrations(*MIGRATIONS)
+        .addMigrations(*MANUAL_MIGRATIONS)
         .build()
     }
 }

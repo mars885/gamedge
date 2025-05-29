@@ -27,24 +27,24 @@ import kotlinx.serialization.encoding.Encoder
 @Serializable(with = AgeRatingTypeSerializer::class)
 enum class ApiAgeRatingType(val rawValue: Int) {
     UNKNOWN(rawValue = -1),
-    THREE(rawValue = 1),
-    SEVEN(rawValue = 2),
-    TWELVE(rawValue = 3),
-    SIXTEEN(rawValue = 4),
-    EIGHTEEN(rawValue = 5),
-    RP(rawValue = 6),
-    EC(rawValue = 7),
-    E(rawValue = 8),
-    E10(rawValue = 9),
-    T(rawValue = 10),
-    M(rawValue = 11),
-    AO(rawValue = 12),
+    RP(rawValue = 1),
+    EC(rawValue = 2),
+    E(rawValue = 3),
+    E10(rawValue = 4),
+    T(rawValue = 5),
+    M(rawValue = 6),
+    AO(rawValue = 7),
+    THREE(rawValue = 8),
+    SEVEN(rawValue = 9),
+    TWELVE(rawValue = 10),
+    SIXTEEN(rawValue = 11),
+    EIGHTEEN(rawValue = 12),
     ;
 
     internal companion object {
 
         fun Int.asAgeRatingType(): ApiAgeRatingType {
-            return values().find { it.rawValue == this } ?: UNKNOWN
+            return entries.find { it.rawValue == this } ?: UNKNOWN
         }
     }
 }

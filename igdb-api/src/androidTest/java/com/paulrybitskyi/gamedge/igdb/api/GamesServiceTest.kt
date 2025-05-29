@@ -140,9 +140,8 @@ internal class GamesServiceTest {
                         [
                             {
                                 "id": 144133,
-                                "category": 0,
+                                "game_type": 0,
                                 "first_release_date": 1614556800,
-                                "follows": 5,
                                 "hypes": 1,
                                 "name": "Gloam",
                                 "rating": 99.1794871794872,
@@ -150,7 +149,7 @@ internal class GamesServiceTest {
                             },
                             {
                                 "id": 126356,
-                                "category": 0,
+                                "game_type": 0,
                                 "first_release_date": 1613692800,
                                 "name": "Survival Vacancy",
                                 "rating": 70.0,
@@ -167,7 +166,6 @@ internal class GamesServiceTest {
                     id = 144133,
                     category = ApiCategory.MAIN_GAME,
                     releaseDate = 1614556800L,
-                    followerCount = 5,
                     hypeCount = 1,
                     name = "Gloam",
                     usersRating = 99.1794871794872,

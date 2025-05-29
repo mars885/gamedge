@@ -23,7 +23,6 @@ import com.paulrybitskyi.gamedge.common.domain.games.entities.Game
 
 val DOMAIN_GAME = Game(
     id = 1,
-    followerCount = null,
     hypeCount = null,
     releaseDate = null,
     criticsRating = null,

@@ -18,7 +18,6 @@ package com.paulrybitskyi.gamedge.common.domain.games.entities
 
 data class Game(
     val id: Int,
-    val followerCount: Int?,
     val hypeCount: Int?,
     val releaseDate: Long?,
     val criticsRating: Double?,

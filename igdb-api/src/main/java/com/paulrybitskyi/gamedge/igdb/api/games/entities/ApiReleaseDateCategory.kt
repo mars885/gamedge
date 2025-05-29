@@ -42,7 +42,7 @@ enum class ApiReleaseDateCategory(val rawValue: Int) {
     internal companion object {
 
         fun Int.asReleaseDateCategory(): ApiReleaseDateCategory {
-            return values().find { it.rawValue == this } ?: UNKNOWN
+            return entries.find { it.rawValue == this } ?: UNKNOWN
         }
     }
 }

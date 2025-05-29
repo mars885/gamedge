@@ -33,7 +33,6 @@ import androidx.room.Index
 )
 data class DbGame(
     @ColumnInfo(name = Schema.ID) val id: Int,
-    @ColumnInfo(name = Schema.FOLLOWER_COUNT) val followerCount: Int?,
     @ColumnInfo(name = Schema.HYPE_COUNT) val hypeCount: Int?,
     @ColumnInfo(name = Schema.RELEASE_DATE) val releaseDate: Long?,
     @ColumnInfo(name = Schema.CRITICS_RATING) val criticsRating: Double?,
@@ -63,7 +62,6 @@ data class DbGame(
     object Schema {
         const val TABLE_NAME = "games"
         const val ID = "id"
-        const val FOLLOWER_COUNT = "follower_count"
         const val HYPE_COUNT = "hype_count"
         const val RELEASE_DATE = "release_date"
         const val CRITICS_RATING = "critics_rating"

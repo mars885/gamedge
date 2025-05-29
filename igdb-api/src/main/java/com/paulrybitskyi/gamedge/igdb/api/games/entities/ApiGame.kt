@@ -27,9 +27,6 @@ data class ApiGame(
     @Apicalypse(Schema.ID)
     @SerialName(Schema.ID)
     val id: Int,
-    @Apicalypse(Schema.FOLLOWER_COUNT)
-    @SerialName(Schema.FOLLOWER_COUNT)
-    val followerCount: Int? = null,
     @Apicalypse(Schema.HYPE_COUNT)
     @SerialName(Schema.HYPE_COUNT)
     val hypeCount: Int? = null,
@@ -106,7 +103,6 @@ data class ApiGame(
 
     object Schema {
         const val ID = "id"
-        const val FOLLOWER_COUNT = "follows"
         const val HYPE_COUNT = "hypes"
         const val RELEASE_DATE = "first_release_date"
         const val CRITICS_RATING = "aggregated_rating"
@@ -115,7 +111,7 @@ data class ApiGame(
         const val NAME = "name"
         const val SUMMARY = "summary"
         const val STORYLINE = "storyline"
-        const val CATEGORY = "category"
+        const val CATEGORY = "game_type"
         const val COVER = "cover"
         const val RELEASE_DATES = "release_dates"
         const val AGE_RATINGS = "age_ratings"

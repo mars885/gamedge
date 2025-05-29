@@ -61,7 +61,6 @@ internal class DbGameMapper @Inject constructor() {
     fun mapToDomainGame(dbGame: DbGame): Game {
         return Game(
             id = dbGame.id,
-            followerCount = dbGame.followerCount,
             hypeCount = dbGame.hypeCount,
             releaseDate = dbGame.releaseDate,
             criticsRating = dbGame.criticsRating,
@@ -217,7 +216,6 @@ internal class DbGameMapper @Inject constructor() {
     fun mapToDatabaseGame(domainGame: Game): DbGame {
         return DbGame(
             id = domainGame.id,
-            followerCount = domainGame.followerCount,
             hypeCount = domainGame.hypeCount,
             releaseDate = domainGame.releaseDate,
             criticsRating = domainGame.criticsRating,
