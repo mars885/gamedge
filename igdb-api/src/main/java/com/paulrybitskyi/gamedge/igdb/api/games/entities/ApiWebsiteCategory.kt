@@ -47,7 +47,7 @@ enum class ApiWebsiteCategory(val rawValue: Int) {
     internal companion object {
 
         fun Int.asWebsiteCategory(): ApiWebsiteCategory {
-            return values().find { it.rawValue == this } ?: UNKNOWN
+            return entries.find { it.rawValue == this } ?: UNKNOWN
         }
     }
 }

@@ -40,7 +40,7 @@ enum class ApiCategory(val rawValue: Int) {
     internal companion object {
 
         fun Int.asCategory(): ApiCategory {
-            return values().find { it.rawValue == this } ?: UNKNOWN
+            return entries.find { it.rawValue == this } ?: UNKNOWN
         }
     }
 }

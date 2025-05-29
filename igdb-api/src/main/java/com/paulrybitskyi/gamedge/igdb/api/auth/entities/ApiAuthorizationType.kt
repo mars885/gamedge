@@ -24,7 +24,7 @@ enum class ApiAuthorizationType(val rawType: String) {
     companion object {
 
         fun forRawType(rawType: String): ApiAuthorizationType {
-            return values().find { it.rawType == rawType }
+            return entries.find { it.rawType == rawType }
                 ?: throw IllegalArgumentException("No auth type with raw type = $rawType.")
         }
     }

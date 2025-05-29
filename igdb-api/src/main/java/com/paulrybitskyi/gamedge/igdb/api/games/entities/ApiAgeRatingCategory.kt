@@ -34,7 +34,7 @@ enum class ApiAgeRatingCategory(val rawValue: Int) {
     internal companion object {
 
         fun Int.asAgeRatingCategory(): ApiAgeRatingCategory {
-            return values().find { it.rawValue == this } ?: UNKNOWN
+            return entries.find { it.rawValue == this } ?: UNKNOWN
         }
     }
 }
