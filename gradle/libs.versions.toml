@@ -42,7 +42,7 @@ protobuf = "4.33.2"
 # Square
 javaPoet = "1.13.0"
 okHttp = "4.12.0"
-retrofit = "2.11.0"
+retrofit = "3.0.0"
 retrofitKotlinxSerializationConverter = "1.0.0"
 
 # Commons
