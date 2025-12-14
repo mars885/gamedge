@@ -10,7 +10,7 @@ kotlin = "2.2.21"
 daggerHilt = "2.57.2"
 
 # Plugins
-androidPlugin = "8.6.1"
+androidPlugin = "8.13.2"
 protobufPlugin = "0.9.4"
 kspPlugin = "2.3.3"
 gradleVersionsPlugin = "0.51.0"
