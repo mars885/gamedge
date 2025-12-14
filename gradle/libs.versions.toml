@@ -65,7 +65,7 @@ jUnitExt = "1.3.0"
 truth = "1.4.5"
 mockk = "1.14.7"
 turbine = "1.2.1"
-testRunner = "1.6.2"
+testRunner = "1.7.0"
 archCore = "2.2.0"
 mockWebServer = "4.12.0"
 
