@@ -21,7 +21,7 @@ import kotlinx.serialization.json.Json
 inline fun <reified T> Json.decodeFromStringOrNull(json: String): T? {
     return try {
         decodeFromString(json)
-    } catch (ignore: Throwable) {
+    } catch (_: Throwable) {
         null
     }
 }
