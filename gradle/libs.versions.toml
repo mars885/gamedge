@@ -24,7 +24,7 @@ serialization = "1.9.0"
 # AndroidX
 activity = "1.12.1"
 splash = "1.2.0"
-browser = "1.8.0"
+browser = "1.9.0"
 room = "2.8.4"
 dataStore = "1.1.1"
 viewModel = "2.8.5" # to be deleted when the linked issue at use site is fixed
