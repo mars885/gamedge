@@ -30,7 +30,7 @@ interface ImageLoaderInitializer {
 
 @BindType
 internal class CoilInitializer @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
 ) : ImageLoaderInitializer {
 
     private companion object {
