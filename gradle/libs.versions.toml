@@ -25,7 +25,7 @@ serialization = "1.7.3"
 activity = "1.9.3"
 splash = "1.0.1"
 browser = "1.8.0"
-room = "2.6.1"
+room = "2.8.4"
 dataStore = "1.1.1"
 viewModel = "2.8.5" # to be deleted when the linked issue at use site is fixed
 
