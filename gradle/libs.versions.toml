@@ -13,7 +13,7 @@ daggerHilt = "2.57.2"
 androidPlugin = "8.13.2"
 protobufPlugin = "0.9.5"
 kspPlugin = "2.3.3"
-gradleVersionsPlugin = "0.51.0"
+gradleVersionsPlugin = "0.53.0"
 detektPlugin = "1.23.7"
 ktlintPlugin = "12.1.1"
 
