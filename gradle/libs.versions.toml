@@ -54,7 +54,7 @@ commonsWindowAnims = "1.0.2"
 # Misc
 desugaredJdk = "2.1.2"
 kotlinResult = "2.0.0"
-hiltBinder = "1.1.3"
+hiltBinder = "1.1.4"
 coil = "2.7.0"
 zoomable = "1.6.2"
 ktlint = "1.3.1"
