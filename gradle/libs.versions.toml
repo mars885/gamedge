@@ -15,7 +15,7 @@ protobufPlugin = "0.9.5"
 kspPlugin = "2.3.3"
 gradleVersionsPlugin = "0.53.0"
 detektPlugin = "1.23.8"
-ktlintPlugin = "12.1.1"
+ktlintPlugin = "14.0.1"
 
 # Kotlin
 coroutines = "1.10.2"
