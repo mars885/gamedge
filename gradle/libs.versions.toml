@@ -1,7 +1,7 @@
 [versions]
 compileSdk = "35"
 targetSdk = "35"
-minSdk = "21"
+minSdk = "23"
 appVersionCode = "1"
 appVersionName = "1.0.0"
 jvmToolchain = "17"
