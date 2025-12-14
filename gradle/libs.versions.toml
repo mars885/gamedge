@@ -7,7 +7,7 @@ appVersionName = "1.0.0"
 jvmToolchain = "17"
 
 kotlin = "2.2.21"
-daggerHilt = "2.52"
+daggerHilt = "2.57.2"
 
 # Plugins
 androidPlugin = "8.6.1"
