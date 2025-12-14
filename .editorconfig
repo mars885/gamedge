@@ -22,3 +22,5 @@ ktlint_standard_function-naming = disabled
 ktlint_standard_filename = disabled
 ktlint_standard_property-naming = disabled
 ktlint_standard_enum-wrapping = disabled
+ktlint_standard_blank-line-between-when-conditions = disabled
+ktlint_standard_when-entry-bracing = disabled
