@@ -39,9 +39,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import coil.size.Size
-import coil.transform.Transformation
+import androidx.core.graphics.createBitmap
+import coil3.compose.rememberAsyncImagePainter
+import coil3.request.transformations
+import coil3.size.Size
+import coil3.transform.Transformation
 import com.paulrybitskyi.commons.ktx.centerX
 import com.paulrybitskyi.commons.ktx.centerY
 import com.paulrybitskyi.commons.ktx.hasTransparentPixels
@@ -199,7 +201,7 @@ private fun CompanyDetails(
 private class LogoImageTransformation(
     private val logoContainerWidth: Int,
     private val logoContainerHeight: Int,
-) : Transformation {
+) : Transformation() {
 
     private companion object {
         private const val FILL_COLOR_CALCULATION_PIXEL_OFFSET = 10
@@ -209,13 +211,12 @@ private class LogoImageTransformation(
     override val cacheKey = "logo: w - $logoContainerWidth, h - $logoContainerHeight"
 
     override suspend fun transform(input: Bitmap, size: Size): Bitmap {
-        val targetBitmap = Bitmap
-            .createBitmap(
-                logoContainerWidth,
-                logoContainerHeight,
-                checkNotNull(input.config) { "The input bitmap must have a config." },
-            )
-            .apply { eraseColor(input.calculateFillColor()) }
+        val targetBitmap = createBitmap(
+            logoContainerWidth,
+            logoContainerHeight,
+            checkNotNull(input.config) { "The input bitmap must have a config." },
+        )
+        .apply { eraseColor(input.calculateFillColor()) }
 
         val targetCenterX = targetBitmap.centerX
         val targetCenterY = targetBitmap.centerY

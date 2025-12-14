@@ -19,7 +19,11 @@ package com.paulrybitskyi.gamedge.common.ui.images
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import coil.request.ImageRequest
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import coil3.request.error
+import coil3.request.fallback
+import coil3.request.placeholder
 
 private const val CROSSFADE_ANIMATION_DURATION = 200
 

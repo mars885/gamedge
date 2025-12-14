@@ -17,9 +17,9 @@
 package com.paulrybitskyi.gamedge.common.ui.images
 
 import android.content.Context
-import coil.Coil
-import coil.ImageLoader
-import coil.memory.MemoryCache
+import coil3.ImageLoader
+import coil3.SingletonImageLoader
+import coil3.memory.MemoryCache
 import com.paulrybitskyi.hiltbinder.BindType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -38,14 +38,14 @@ internal class CoilInitializer @Inject constructor(
     }
 
     override fun init() {
-        Coil.setImageLoader(
+        SingletonImageLoader.setSafe {
             ImageLoader.Builder(context)
                 .memoryCache {
-                    MemoryCache.Builder(context)
-                        .maxSizePercent(MEMORY_CACHE_MAX_HEAP_PERCENTAGE)
+                    MemoryCache.Builder()
+                        .maxSizePercent(context, MEMORY_CACHE_MAX_HEAP_PERCENTAGE)
                         .build()
                 }
-                .build(),
-        )
+                .build()
+        }
     }
 }
