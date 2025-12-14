@@ -17,6 +17,8 @@
 package com.paulrybitskyi.gamedge.common.domain.common.extensions
 
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.annotation.UnsafeResultErrorAccess
+import com.github.michaelbull.result.annotation.UnsafeResultValueAccess
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapEither
 import com.github.michaelbull.result.mapError
@@ -35,6 +37,7 @@ fun <T> Flow<DomainResult<T>>.onEachFailure(action: suspend (Error) -> Unit): Fl
     return onEach { it.onFailure(action) }
 }
 
+@OptIn(UnsafeResultValueAccess::class, UnsafeResultErrorAccess::class)
 fun <T> Flow<DomainResult<T>>.resultOrError(): Flow<T> {
     return map { result ->
         if (result.isOk) return@map result.value
