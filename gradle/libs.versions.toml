@@ -56,7 +56,7 @@ desugaredJdk = "2.1.5"
 kotlinResult = "2.1.0"
 hiltBinder = "1.1.4"
 coil = "3.3.0"
-zoomable = "1.6.2"
+zoomable = "1.7.0"
 ktlint = "1.3.1"
 
 # Testing
