@@ -30,5 +30,5 @@ dependencies {
     implementation(project(localModules.core))
     implementation(project(localModules.commonUi))
 
-    implementation(libs.coil)
+    implementation(libs.bundles.imageLoading)
 }

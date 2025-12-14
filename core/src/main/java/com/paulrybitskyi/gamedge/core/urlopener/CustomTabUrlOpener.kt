@@ -73,9 +73,9 @@ internal class CustomTabUrlOpener @Inject constructor(
     }
 
     private data class BrowserColors(
-        @ColorRes val toolbar: Int,
-        @ColorRes val secondaryToolbar: Int,
-        @ColorRes val navigationBar: Int,
+        @param:ColorRes val toolbar: Int,
+        @param:ColorRes val secondaryToolbar: Int,
+        @param:ColorRes val navigationBar: Int,
     ) {
 
         companion object {

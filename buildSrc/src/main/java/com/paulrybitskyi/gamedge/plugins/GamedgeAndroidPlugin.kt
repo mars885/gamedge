@@ -79,6 +79,12 @@ class GamedgeAndroidPlugin : Plugin<Project> {
             }
         }
 
+        lintOptions {
+            // Ignore LocalContext.current.getString() calls since stringResource
+            // cannot be used in non-composable contexts (e.g., click handlers)
+            disable.add("LocalContextGetResourceValueCall")
+        }
+
         compileOptions {
             val javaVersion = JavaVersion.toVersion(libs.versions.jvmToolchain.get().toInt())
 

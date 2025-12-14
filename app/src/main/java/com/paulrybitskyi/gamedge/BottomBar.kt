@@ -119,9 +119,9 @@ private fun BottomBarNavigation(
 }
 
 private enum class BottomNavigationItemModel(
-    @DrawableRes
+    @param:DrawableRes
     val iconId: Int,
-    @StringRes
+    @param:StringRes
     val titleId: Int,
     val screen: Screen,
 ) {

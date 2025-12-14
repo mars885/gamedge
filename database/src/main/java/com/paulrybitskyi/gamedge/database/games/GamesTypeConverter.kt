@@ -58,13 +58,13 @@ internal class GamesTypeConverter @Inject constructor(
     }
 
     @TypeConverter
-    fun fromImage(image: DbImage?): String {
-        return jsonConverter.toJson(image)
+    fun fromImage(image: DbImage?): String? {
+        return image?.let(jsonConverter::toJson)
     }
 
     @TypeConverter
-    fun toImage(json: String): DbImage? {
-        return jsonConverter.fromJson(json)
+    fun toImage(json: String?): DbImage? {
+        return json?.let(jsonConverter::fromJson)
     }
 
     @TypeConverter

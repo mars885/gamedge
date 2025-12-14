@@ -31,5 +31,5 @@ dependencies {
     implementation(libs.commonsCore)
     implementation(libs.commonsKtx)
 
-    implementation(libs.coil)
+    implementation(libs.bundles.imageLoading)
 }

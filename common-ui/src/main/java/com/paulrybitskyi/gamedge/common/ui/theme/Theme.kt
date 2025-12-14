@@ -16,7 +16,6 @@
 
 package com.paulrybitskyi.gamedge.common.ui.theme
 
-import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.LocalContentAlpha
@@ -58,16 +57,14 @@ fun GamedgeTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
-        CompositionLocalProvider(LocalElevationOverlay provides null) {
-            MaterialTheme(
-                colors = if (useDarkTheme) darkColors() else lightColors(),
-                typography = typography,
-                shapes = shapes,
-            ) {
-                CompositionLocalProvider(LocalContentAlpha provides DefaultContentAlpha) {
-                    content()
-                }
+    CompositionLocalProvider(LocalElevationOverlay provides null) {
+        MaterialTheme(
+            colors = if (useDarkTheme) darkColors() else lightColors(),
+            typography = typography,
+            shapes = shapes,
+        ) {
+            CompositionLocalProvider(LocalContentAlpha provides DefaultContentAlpha) {
+                content()
             }
         }
     }

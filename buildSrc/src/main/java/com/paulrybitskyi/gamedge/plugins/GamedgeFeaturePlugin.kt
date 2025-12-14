@@ -30,7 +30,7 @@ class GamedgeFeaturePlugin : Plugin<Project> {
         add("implementation", libs.composeNavigation.get())
         add("implementation", libs.commonsCore.get())
         add("implementation", libs.commonsKtx.get())
-        add("implementation", libs.coil.get())
+        addBundle("implementation", libs.bundles.imageLoading.get())
         add("testImplementation", project(localModules.commonTesting))
         addBundle("testImplementation", libs.bundles.testing.get())
     }
