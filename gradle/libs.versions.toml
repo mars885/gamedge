@@ -124,7 +124,7 @@ composeAnimation = { module = "androidx.compose.animation:animation-graphics" }
 
 composeNavigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 composeConstraintLayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintLayout" }
-composeHilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "composeHilt" }
+composeHilt = { module = "androidx.hilt:hilt-lifecycle-viewmodel-compose", version.ref = "composeHilt" }
 
 # Google
 materialComponents = { module = "com.google.android.material:material", version.ref = "materialComponents" }
