@@ -52,7 +52,7 @@ commonsNetwork = "1.0.3"
 commonsWindowAnims = "1.0.2"
 
 # Misc
-desugaredJdk = "2.1.2"
+desugaredJdk = "2.1.5"
 kotlinResult = "2.0.0"
 hiltBinder = "1.1.4"
 coil = "2.7.0"
