@@ -42,7 +42,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.splash)
 
-    implementation(libs.composeNavigation)
+    implementation(libs.bundles.composeNavigation)
 
     implementation(libs.commonsCore)
     implementation(libs.commonsKtx)
