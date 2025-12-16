@@ -12,19 +12,18 @@ class GamedgeDaggerHiltPlugin : Plugin<Project> {
     }
 
     private fun Project.setupPlugins(): Unit = with(plugins) {
-        apply(libs.plugins.gamedgeKotlinKapt.get().pluginId)
         apply(libs.plugins.ksp.get().pluginId)
         apply(libs.plugins.daggerHilt.get().pluginId)
     }
 
     private fun Project.addDependencies(): Unit = with(dependencies) {
         add("implementation", libs.daggerHiltAndroid.get())
-        add("kapt", libs.daggerHiltAndroidCompiler.get())
+        add("ksp", libs.daggerHiltAndroidCompiler.get())
 
         add("implementation", libs.hiltBinder.get())
         add("ksp", libs.hiltBinderCompiler.get())
 
         add("androidTestImplementation", libs.daggerHiltTesting.get())
-        add("kaptAndroidTest", libs.daggerHiltAndroidCompiler.get())
+        add("kspAndroidTest", libs.daggerHiltAndroidCompiler.get())
     }
 }

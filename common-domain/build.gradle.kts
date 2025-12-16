@@ -17,14 +17,15 @@
 plugins {
     id(libs.plugins.kotlinJvm.get().pluginId)
     id(libs.plugins.gamedgeKotlinCoroutines.get().pluginId)
-    id(libs.plugins.gamedgeKotlinKapt.get().pluginId)
+
+    alias(libs.plugins.ksp)
 }
 
 dependencies {
     implementation(libs.kotlinResult)
 
     implementation(libs.daggerHiltCore)
-    kapt(libs.daggerHiltCoreCompiler)
+    ksp(libs.daggerHiltCoreCompiler)
 
     testImplementation(project(localModules.commonTestingDomain))
     testImplementation(libs.bundles.testing)
