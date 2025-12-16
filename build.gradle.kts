@@ -25,7 +25,6 @@ plugins {
     id(libs.plugins.androidLibrary.get().pluginId) apply false
     id(libs.plugins.kotlinJvm.get().pluginId) apply false
     id(libs.plugins.kotlinAndroid.get().pluginId) apply false
-    id(libs.plugins.kotlinKapt.get().pluginId) apply false
     id(libs.plugins.protobuf.get().pluginId) apply false
 
     alias(libs.plugins.jetpackCompose) apply false

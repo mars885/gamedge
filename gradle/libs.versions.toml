@@ -73,7 +73,6 @@ androidApplication = { id = "com.android.application", version.ref = "androidPlu
 androidLibrary = { id = "com.android.library", version.ref = "androidPlugin" }
 kotlinJvm = { id = "kotlin", version.ref = "kotlin" }
 kotlinAndroid = { id = "kotlin-android", version.ref = "kotlin" }
-kotlinKapt = { id = "kotlin-kapt", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 jetpackCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
@@ -84,7 +83,6 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektPlugin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
 gamedgeAndroid = { id = "com.paulrybitskyi.gamedge.android" }
 gamedgeKotlinCoroutines = { id = "com.paulrybitskyi.gamedge.kotlin.coroutines" }
-gamedgeKotlinKapt = { id = "com.paulrybitskyi.gamedge.kotlin.kapt" }
 gamedgeProtobuf = { id = "com.paulrybitskyi.gamedge.protobuf" }
 gamedgeJetpackCompose = { id = "com.paulrybitskyi.gamedge.jetpack.compose" }
 gamedgeDaggerHilt = { id = "com.paulrybitskyi.gamedge.dagger.hilt" }
