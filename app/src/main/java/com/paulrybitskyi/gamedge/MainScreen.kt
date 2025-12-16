@@ -19,25 +19,32 @@ package com.paulrybitskyi.gamedge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation3.runtime.rememberNavBackStack
+import com.paulrybitskyi.gamedge.feature.discovery.GamesDiscoveryRoute
+import com.paulrybitskyi.gamedge.navigation.AppNavigation
+import com.paulrybitskyi.gamedge.navigation.decorators.rememberConfigurableSaveableStateHolderNavEntryDecorator
+import com.paulrybitskyi.gamedge.navigation.decorators.rememberConfigurableViewModelStoreNavEntryDecorator
 
 @Composable
 internal fun MainScreen() {
-    val navController = rememberNavController()
-    val currentScreen by navController.currentScreenAsState()
+    val backStack = rememberNavBackStack(GamesDiscoveryRoute)
 
     Scaffold(
         bottomBar = {
-            BottomBar(
-                navController = navController,
-                currentScreen = currentScreen,
-            )
+            BottomBar(backStack = backStack)
         },
         content = { paddingValues ->
             AppNavigation(
-                navController = navController,
+                backStack = backStack,
+                entryDecorators = listOf(
+                    rememberConfigurableSaveableStateHolderNavEntryDecorator(
+                        removeSavedStateOnPop = Any::isNotBottomNavScreen,
+                    ),
+                    rememberConfigurableViewModelStoreNavEntryDecorator(
+                        removeViewModelStoreOnPop = Any::isNotBottomNavScreen,
+                    ),
+                ),
                 modifier = Modifier.padding(paddingValues),
             )
         },

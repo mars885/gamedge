@@ -1,5 +1,6 @@
 package com.paulrybitskyi.gamedge.feature.image.viewer
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -7,7 +8,7 @@ data class ImageViewerRoute(
     val imageUrls: List<String>,
     val title: String?,
     val initialPosition: Int,
-) {
+) : NavKey {
 
     init {
         require(imageUrls.isNotEmpty()) {

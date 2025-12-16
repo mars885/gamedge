@@ -42,6 +42,33 @@ sealed interface TransitionAnimations {
     fun popExit(): ExitTransition
 }
 
+data object Fading : TransitionAnimations {
+
+    override fun enter(): EnterTransition {
+        return fadeIn(
+            animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
+        )
+    }
+
+    override fun exit(): ExitTransition {
+        return fadeOut(
+            animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
+        )
+    }
+
+    override fun popEnter(): EnterTransition {
+        return fadeIn(
+            animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
+        )
+    }
+
+    override fun popExit(): ExitTransition {
+        return fadeOut(
+            animationSpec = tween(TransitionAnimations.DefaultAnimationDuration),
+        )
+    }
+}
+
 data object OvershootScaling : TransitionAnimations {
 
     private const val FadingAnimationDuration = 100
