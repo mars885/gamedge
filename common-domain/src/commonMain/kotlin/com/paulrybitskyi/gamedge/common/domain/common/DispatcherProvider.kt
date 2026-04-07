@@ -14,23 +14,12 @@
  * limitations under the License.
  */
 
-plugins {
-    id(libs.plugins.gamedgeKotlinMultiplatform.get().pluginId)
-}
+package com.paulrybitskyi.gamedge.common.domain.common
 
-kotlin {
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(localModules.commonDomain))
-            }
-        }
-        jvmMain {
-            dependencies {
-                implementation(libs.jUnit)
-                implementation(libs.mockk)
-                implementation(libs.coroutinesTesting)
-            }
-        }
-    }
+import kotlinx.coroutines.CoroutineDispatcher
+
+interface DispatcherProvider {
+    val main: CoroutineDispatcher
+    val io: CoroutineDispatcher
+    val computation: CoroutineDispatcher
 }

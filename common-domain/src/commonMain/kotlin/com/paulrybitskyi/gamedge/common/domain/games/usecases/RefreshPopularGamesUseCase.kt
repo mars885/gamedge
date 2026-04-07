@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Paul Rybitskyi, oss@paulrybitskyi.com
+ * Copyright 2020 Paul Rybitskyi, oss@paulrybitskyi.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,8 @@
  * limitations under the License.
  */
 
-plugins {
-    id(libs.plugins.gamedgeKotlinMultiplatform.get().pluginId)
-}
+package com.paulrybitskyi.gamedge.common.domain.games.usecases
 
-kotlin {
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(localModules.commonDomain))
-            }
-        }
-        jvmMain {
-            dependencies {
-                implementation(libs.jUnit)
-                implementation(libs.mockk)
-                implementation(libs.coroutinesTesting)
-            }
-        }
-    }
-}
+import com.paulrybitskyi.gamedge.common.domain.games.RefreshableGamesUseCase
+
+interface RefreshPopularGamesUseCase : RefreshableGamesUseCase

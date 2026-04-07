@@ -15,10 +15,16 @@
  */
 
 plugins {
-    id(libs.plugins.kotlinJvm.get().pluginId)
+    id(libs.plugins.gamedgeKotlinMultiplatform.get().pluginId)
 }
 
-dependencies {
-    testImplementation(libs.jUnit)
-    testImplementation(libs.truth)
+kotlin {
+    sourceSets {
+        jvmTest {
+            dependencies {
+                implementation(libs.jUnit)
+                implementation(libs.truth)
+            }
+        }
+    }
 }

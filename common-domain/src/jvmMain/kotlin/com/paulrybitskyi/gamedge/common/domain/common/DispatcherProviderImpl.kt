@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-plugins {
-    id(libs.plugins.gamedgeKotlinMultiplatform.get().pluginId)
-}
+package com.paulrybitskyi.gamedge.common.domain.common
 
-kotlin {
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(localModules.commonDomain))
-            }
-        }
-        jvmMain {
-            dependencies {
-                implementation(libs.jUnit)
-                implementation(libs.mockk)
-                implementation(libs.coroutinesTesting)
-            }
-        }
-    }
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+internal class DispatcherProviderImpl @Inject constructor() : DispatcherProvider {
+    override val main: CoroutineDispatcher = Dispatchers.Main
+    override val io: CoroutineDispatcher = Dispatchers.IO
+    override val computation: CoroutineDispatcher = Dispatchers.Default
 }
