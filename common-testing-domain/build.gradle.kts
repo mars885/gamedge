@@ -15,14 +15,22 @@
  */
 
 plugins {
-    id(libs.plugins.kotlinJvm.get().pluginId)
-    id(libs.plugins.gamedgeKotlinCoroutines.get().pluginId)
+    id(libs.plugins.gamedgeKotlinMultiplatform.get().pluginId)
 }
 
-dependencies {
-    implementation(project(localModules.commonDomain))
-
-    implementation(libs.jUnit)
-    implementation(libs.mockk)
-    implementation(libs.coroutinesTesting)
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(project(localModules.commonDomain))
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation(libs.jUnit)
+                implementation(libs.mockk)
+                implementation(libs.coroutinesTesting)
+            }
+        }
+    }
 }
