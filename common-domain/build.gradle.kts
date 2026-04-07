@@ -15,18 +15,33 @@
  */
 
 plugins {
-    id(libs.plugins.kotlinJvm.get().pluginId)
-    id(libs.plugins.gamedgeKotlinCoroutines.get().pluginId)
+    id(libs.plugins.gamedgeKotlinMultiplatform.get().pluginId)
 
     alias(libs.plugins.ksp)
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(libs.coroutinesCore)
+                api(libs.kotlinResult)
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation(libs.daggerHiltCore)
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation(project(localModules.commonTestingDomain))
+                implementation(libs.bundles.testing)
+            }
+        }
+    }
+}
+
 dependencies {
-    implementation(libs.kotlinResult)
-
-    implementation(libs.daggerHiltCore)
-    ksp(libs.daggerHiltCoreCompiler)
-
-    testImplementation(project(localModules.commonTestingDomain))
-    testImplementation(libs.bundles.testing)
+    add("kspJvm", libs.daggerHiltCoreCompiler)
 }
