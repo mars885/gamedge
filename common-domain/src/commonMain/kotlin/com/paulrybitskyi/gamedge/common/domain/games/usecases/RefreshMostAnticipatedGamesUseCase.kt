@@ -14,17 +14,8 @@
  * limitations under the License.
  */
 
-plugins {
-    id(libs.plugins.gamedgeKotlinMultiplatform.get().pluginId)
-}
+package com.paulrybitskyi.gamedge.common.domain.games.usecases
 
-kotlin {
-    sourceSets {
-        jvmTest {
-            dependencies {
-                implementation(libs.jUnit)
-                implementation(libs.truth)
-            }
-        }
-    }
-}
+import com.paulrybitskyi.gamedge.common.domain.games.RefreshableGamesUseCase
+
+interface RefreshMostAnticipatedGamesUseCase : RefreshableGamesUseCase

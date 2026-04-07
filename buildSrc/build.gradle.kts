@@ -33,6 +33,10 @@ gradlePlugin {
             id = "com.paulrybitskyi.gamedge.kotlin.coroutines"
             implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeKotlinCoroutinesPlugin"
         }
+        create("com.paulrybitskyi.gamedge.kotlin.multiplatform") {
+            id = "com.paulrybitskyi.gamedge.kotlin.multiplatform"
+            implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeKotlinMultiplatformPlugin"
+        }
         create("com.paulrybitskyi.gamedge.protobuf") {
             id = "com.paulrybitskyi.gamedge.protobuf"
             implementationClass = "com.paulrybitskyi.gamedge.plugins.GamedgeProtobufPlugin"

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Paul Rybitskyi, oss@paulrybitskyi.com
+ * Copyright 2022 Paul Rybitskyi, oss@paulrybitskyi.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-plugins {
-    id(libs.plugins.gamedgeKotlinMultiplatform.get().pluginId)
-}
+package com.paulrybitskyi.gamedge.common.domain.common
 
-kotlin {
-    sourceSets {
-        jvmTest {
-            dependencies {
-                implementation(libs.jUnit)
-                implementation(libs.truth)
-            }
-        }
-    }
+import kotlinx.coroutines.CoroutineDispatcher
+
+interface DispatcherProvider {
+    val main: CoroutineDispatcher
+    val io: CoroutineDispatcher
+    val computation: CoroutineDispatcher
 }
